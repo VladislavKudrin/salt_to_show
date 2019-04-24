@@ -1,0 +1,29 @@
+from django.conf.urls import url
+
+
+
+from .views import (
+    ProductListView, 
+    ProductDetailSlugView,
+    ProductCreateView,
+    AccountProductListView,
+    ProductUpdateView
+
+    )
+
+
+
+urlpatterns = [
+    url(r'^$', ProductListView.as_view(), name='list'),
+    url(r'^create/$', ProductCreateView.as_view(), name='create'),
+    url(r'^list/$', AccountProductListView.as_view(), name='user-list'),
+    url(r'^update/(?P<slug>[\w-]+)/$', ProductUpdateView.as_view(), name='update'),
+    url(r'^(?P<slug>[\w-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
+
+
+
+
+]
+
+
+

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<div class='row'>
+	<div class='col-12'>
+		<h1>Account</h1>
+		<hr>
+	</div>
+	<div class='col-12 col-md-3 my-3'>
+		<div class="card"">
+		  <div class="card-body">
+		    <h5 class="card-title">User Detail</h5>
+		    	<div class='list-group'>
+		    		<a class='list-group-item' href='{% url "accounts:user-update" %}'>Update Details</a>
+		    		<a class='list-group-item' href='{% url "password_change" %}'>Change Password</a>
+		    	</div>
+		  </div>
+		</div>
+	</div>
+
+
+
+
+	<div class='col-12 col-md-3 my-3'>
+		<div class="card"">
+		  <div class="card-body">
+		    <h5 class="card-title">History</h5>
+		    	<div class='list-group'>
+		    		<a class='list-group-item' href='{% url "accounts:history-product" %}'>Object Viewed</a>
+		    	</div>
+		  </div>
+		</div>
+	</div>
+	<div class='col-12 col-md-3 my-3'>
+		<div class="card">
+		  <div class="card-body">
+		    <h5 class="card-title">Products</h5>
+				<div class='list-group'>
+		    		<a class='list-group-item' href='{% url "products:create" %}'>Create New Product</a>
+		    		<a class='list-group-item' href='{% url "products:user-list" %}'>Product Library</a>
+		    	</div>
+		  </div>
+		</div>
+	</div>
+
+	<div class='col-12 col-md-3 my-3'>
+		<div class="card">
+		  <div class="card-body">
+		    <h5 class="card-title">Orders</h5>
+				<div class='list-group'>
+		    		<a class='list-group-item' href='#'>Addresses</a>
+		    		<a class='list-group-item' href='#'>Payment Method</a>
+		    		<a class='list-group-item' href='{% url "orders:list" %}'>Orders</a>
+		    	</div>
+		  </div>
+		</div>
+	</div>
+
+	<div class='col-12 col-md-3 my-3'>
+		<div class="card"">
+		  <div class="card-body">
+		    <h5 class="card-title">Preferences</h5>
+		    	<div class='list-group'>
+		    		<a class='list-group-item' href='{% url "marketing-pref" %}'>Email Marketing</a>
+		    	</div>
+		  </div>
+		</div>
+	</div>
+
+
+	<div class='col-12 col-md-3 my-3'>
+		<div class="card"">
+		  <div class="card-body">
+		    <h5 class="card-title">Support</h5>
+		    	<div class='list-group'>
+		    		<a class='list-group-item' href='{% url "about" %}'>About</a>
+		    		<a class='list-group-item' href='{% url "contact" %}'>Contact</a>
+		    	</div>
+		  </div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
