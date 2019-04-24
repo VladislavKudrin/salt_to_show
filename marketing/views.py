@@ -15,6 +15,8 @@ MAILCHIMP_EMAIL_LIST_ID = getattr(settings, "MAILCHIMP_EMAIL_LIST_ID", None)
 
 
 class MailChimpWebhookView(CsrfExemptMixin, View):
+	def get(self, request, *args, **kwargs):
+		return HttpResponse("Thank you", status=200)
 	def post(self, request, *args, **kwargs):
 		data = request.POST
 		list_id = data.get('data[list_id]')
@@ -40,6 +42,7 @@ class MailChimpWebhookView(CsrfExemptMixin, View):
 						)
 					
 		return HttpResponse("Thank you", status=200)
+
 
 
 
