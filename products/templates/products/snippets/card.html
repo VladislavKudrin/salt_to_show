@@ -7,6 +7,7 @@
     <p class="card-text">{{ instance.description|linebreaks|truncatewords:12 }}</p>
     {% if request.user == instance.user %}
    		<a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>
+      {{ instance.user }}
     	{% include 'products/snippets/logged-user-update-card.html' with instance=instance %}
     {% else %}
     	<a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>

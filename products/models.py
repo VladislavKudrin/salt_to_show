@@ -79,6 +79,9 @@ class Product(models.Model):
 	def get_absolute_url_for_update(self):
 		#return "/products/{slug}/".format(slug=self.slug)
 		return reverse('products:update', kwargs={"slug":self.slug})
+	def get_absolute_url_for_delete(self):
+		#return "/products/{slug}/".format(slug=self.slug)
+		return reverse('products:delete', kwargs={"slug":self.slug})
 
 	def __str__(self):
 		return self.title

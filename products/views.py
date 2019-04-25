@@ -1,8 +1,10 @@
 from django.views.generic import ListView, DetailView
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -217,9 +219,49 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
 
+class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
+	template_name = 'products/product-delete.html'
+	model = Product
+	success_url='/products/list/'
+	def get_object(self, *args, **kwargs):
+		request = self.request
+		slug = self.kwargs.get('slug')
+		user = self.request.user
+		#instance = get_object_or_404(Product, slug=slug, active=True)
+		try:
+			instance = Product.objects.get(slug=slug, active=True, user=user)
+		except Product.DoesNotExist:
+			raise Http404("Not found!")
+		except Product.MultipleObjectsReturned:
+			qs = Product.objects.filter(slug=slug, active=True, user=user)
+			instance = qs.first()
+		except:
+			raise Http404("Hmm")
 
+		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+		return instance
 
-
-
-
-
+def product_delete(request):
+	if request.user.is_authenticated():
+		product_id=request.POST.get('product_id')
+		user = request.user
+		product_user = request.POST.get('user_product')
+		if product_id is not None and str(user)==str(product_user):
+			try:
+				product_obj = Product.objects.get(id=product_id, user = user)
+			except Product.DoesNotExist:
+				print("Show message to user!")
+				return redirect("accounts:home")
+			if product_obj.user == user:
+				product_obj.delete()
+				deleted = True
+			if request.is_ajax():
+				print("Ajax request")
+				json_data={
+					"deleted":deleted,
+				}
+				#return JsonResponse({"message":"Error 400"}, status_code=400)
+				return JsonResponse(json_data, status=200)
+		return redirect("products:user-list")
+	else:
+		return redirect('login')
