@@ -169,17 +169,17 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 class ProductCreateView(LoginRequiredMixin, CreateView):
 	template_name = 'products/product-create.html'
 	form_class = ProductCreateForm
-	def post(self, request, *args, **kwargs):
-		user = request.user
-		form = self.form_class(request.POST, request.FILES)
-		if form.is_valid():
-			product = form.save()
-			product.user = user
-			product.active = True
-			product.save()
-			return super(ProductCreateView, self).form_valid(form)
+
+	def form_valid(self, form):
+		user = self.request.user
+		product = form.save()
+		product.user = user
+		product.active = True
+		product.save()
+		return super(ProductCreateView, self).form_valid(form)
 		
-		
+
+
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductCreateView, self).get_context_data(*args, **kwargs)
 		context['title']='Create New Product'
