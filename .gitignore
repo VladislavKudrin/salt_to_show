@@ -3,6 +3,7 @@
 .env
 *.sublime-project
 fasttracktojquery/
+db.sqlite3
 
 
 # Virtualenv related
