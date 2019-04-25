@@ -1,8 +1,9 @@
 from django.views.generic import ListView, DetailView
 from django.http import Http404
+from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -219,7 +220,24 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
 
-
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+	form_class = ProductCreateForm
+	template_name = 'products/product-delete.html'
+	success_url = '/products/'
+	def get_object(self, *args, **kwargs):
+		request = self.request
+		slug = self.kwargs.get('slug')
+		user = self.request.user
+		try:
+			instance = Product.objects.get(slug=slug, active=True, user=user)
+		except Product.DoesNotExist:
+			raise Http404("Not found!")
+		except Product.MultipleObjectsReturned:
+			qs = Product.objects.filter(slug=slug, active=True, user=user)
+			instance = qs.first()
+		except:
+			raise Http404("Hmm")
+		return instance
 
 
 

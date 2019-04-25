@@ -7,7 +7,8 @@ from .views import (
     ProductDetailSlugView,
     ProductCreateView,
     AccountProductListView,
-    ProductUpdateView
+    ProductUpdateView,
+    ProductDeleteView
 
     )
 
@@ -18,10 +19,8 @@ urlpatterns = [
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
     url(r'^list/$', AccountProductListView.as_view(), name='user-list'),
     url(r'^update/(?P<slug>[\w-]+)/$', ProductUpdateView.as_view(), name='update'),
+    url(r'^delete/(?P<slug>[\w-]+)/$', ProductDeleteView.as_view(), name='delete'),
     url(r'^(?P<slug>[\w-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
-
-
-
 
 ]
 
