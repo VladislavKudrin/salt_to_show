@@ -58,6 +58,9 @@ $(document).ready(
 
 
 
+  
+
+
 
 
 
@@ -98,6 +101,14 @@ $(document).ready(
 
 
 
+
+  
+      var deleteForm=$(".delete-product-ajax")
+      deleteForm.submit(
+      function(event){
+      event.preventDefault()
+      console.log('JOPA')
+    })
 
 
 
