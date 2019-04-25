@@ -166,6 +166,7 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 	return render(request, "products/detail.html", context)
 
 #PIZDA
+#PIZDAAA
 class ProductCreateView(LoginRequiredMixin, CreateView):
 	template_name = 'products/product-create.html'
 	form_class = ProductCreateForm
