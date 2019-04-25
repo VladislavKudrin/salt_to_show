@@ -164,7 +164,7 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 		'object': instance
 	}
 	return render(request, "products/detail.html", context)
-
+#Hui
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
 	template_name = 'products/product-create.html'
