@@ -47,8 +47,8 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		# 	views_ids.append(x.object_id)
 		return views
 		
-	def get_context_data(self, *args, **kwargs):
-		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs) 
+	def get_context_data(self, *args, **kwargs): #overwrite method
+		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  #default method
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
 		return context
@@ -164,6 +164,11 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 		'object': instance
 	}
 	return render(request, "products/detail.html", context)
+
+
+#PIZDA
+#PIZDAAA
+
 #Hui
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -178,11 +183,11 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 		product.save()
 		return super(ProductCreateView, self).form_valid(form)
 		
+#justin
 
-
-	def get_context_data(self, *args, **kwargs):
-		context = super(ProductCreateView, self).get_context_data(*args, **kwargs)
-		context['title']='Create New Product'
+	def get_context_data(self, *args, **kwargs): #overwriting default
+		context = super(ProductCreateView, self).get_context_data(*args, **kwargs) #default method
+		context['title']='Create New Product' #add kwarg / add your field for html
 		return context
 	
 
