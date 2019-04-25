@@ -179,7 +179,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 		product.save()
 		return super(ProductCreateView, self).form_valid(form)
 		
-
+#justin
 
 	def get_context_data(self, *args, **kwargs): #overwriting default
 		context = super(ProductCreateView, self).get_context_data(*args, **kwargs) #default method
