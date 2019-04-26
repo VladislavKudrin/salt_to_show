@@ -17,3 +17,19 @@
     </form>
   </script>
 {% endverbatim %}
+
+
+{% verbatim %}
+<script id='delete-product-confirm-form' type='text/x-jsrender'>
+<form class='delete-product-confirm-form' method='POST' action='{{:action_url}}' data-endpoint='{{:data_endpoint}}' next_url='{{:next_url}}' class="form">
+ <div class="form-group">
+  <input type="text" placeholder="Why you want to delete these product?" class=" form-control" required />
+  <input type='hidden' class='title' name='product_title' value='{{:product_title}}' />
+  <input type='hidden' name='product_id' value='{{:product_id}}' />
+  <input type='hidden' name='user_product' value='{{:user}}' />
+
+</div>
+</form>
+</script>
+{% endverbatim %}
+
