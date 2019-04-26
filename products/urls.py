@@ -8,14 +8,8 @@ from .views import (
     ProductCreateView,
     AccountProductListView,
     ProductUpdateView,
-<<<<<<< HEAD
-    ProductUserDeleteView,
     product_delete,
     ProductDeleteView
-=======
-    ProductDeleteView,
-    product_delete
->>>>>>> ea19238426a1088a70954b14ccbdf3cc7896e3c6
 
 
     )
