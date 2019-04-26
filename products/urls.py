@@ -8,8 +8,8 @@ from .views import (
     ProductCreateView,
     AccountProductListView,
     ProductUpdateView,
-    ProductDeleteView,
-    product_delete
+    product_delete,
+    ProductDeleteView
 
 
     )
