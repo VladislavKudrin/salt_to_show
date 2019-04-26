@@ -9,7 +9,8 @@ from .views import (
     AccountProductListView,
     ProductUpdateView,
     ProductUserDeleteView,
-    product_delete
+    product_delete,
+    ProductDeleteView
 
 
     )
