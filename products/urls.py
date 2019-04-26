@@ -8,15 +8,20 @@ from .views import (
     ProductCreateView,
     AccountProductListView,
     ProductUpdateView,
+<<<<<<< HEAD
     ProductUserDeleteView,
     product_delete,
     ProductDeleteView
+=======
+    ProductDeleteView,
+    product_delete
+>>>>>>> ea19238426a1088a70954b14ccbdf3cc7896e3c6
 
 
     )
 
 
-
+#adelia test
 urlpatterns = [
     url(r'^$', ProductListView.as_view(), name='list'),
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
