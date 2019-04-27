@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
@@ -241,6 +242,8 @@ class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
 
+		
+@login_required
 def product_delete(request):
 	if request.user.is_authenticated():
 		product_id=request.POST.get('product_id')

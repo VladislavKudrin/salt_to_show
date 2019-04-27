@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #third party
     'storages',
+    'social_django',
 
     #our apps
     'addresses',
@@ -83,7 +84,14 @@ MAILCHIMP_API_KEY           = 'eaa4d8d1c40ca0c010bd4ae4f53da4ea-us20'
 MAILCHIMP_DATA_CENTER       = 'us20'
 MAILCHIMP_EMAIL_LIST_ID     = '956c560eab'
 
+#SOCIAL_AUTH
+SOCIAL_AUTH_FACEBOOK_KEY = '673730826416925'       
+SOCIAL_AUTH_FACEBOOK_SECRET = 'cfda3019290b037aa783b9c5dc82cb11'  
 
+AUTHENTICATION_BACKENDS = [
+        'social_core.backends.facebook.FacebookOAuth2',
+        'django.contrib.auth.backends.ModelBackend',
+        ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

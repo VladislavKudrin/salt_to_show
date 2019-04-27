@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #third party
     'storages',
+    'social_django',
 
     #our apps
     'addresses',
@@ -84,7 +85,14 @@ MAILCHIMP_API_KEY           = os.environ.get('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER       = 'us20'
 MAILCHIMP_EMAIL_LIST_ID     = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')
 
+#SOCIAL_AUTH
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')       
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')  
 
+AUTHENTICATION_BACKENDS = [
+        'social_core.backends.facebook.FacebookOAuth2',
+        'django.contrib.auth.backends.ModelBackend',
+        ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
