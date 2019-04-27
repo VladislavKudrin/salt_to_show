@@ -2,7 +2,11 @@ from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse
 from django.urls import reverse
 
+
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
+
+
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -49,8 +53,8 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		# 	views_ids.append(x.object_id)
 		return views
 		
-	def get_context_data(self, *args, **kwargs):
-		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs) 
+	def get_context_data(self, *args, **kwargs): #overwrite method
+		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  #default method
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
 		return context
@@ -166,6 +170,11 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 		'object': instance
 	}
 	return render(request, "products/detail.html", context)
+
+
+#PIZDA
+#PIZDAAA
+
 #Hui
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -180,11 +189,11 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 		product.save()
 		return super(ProductCreateView, self).form_valid(form)
 		
+#justin
 
-
-	def get_context_data(self, *args, **kwargs):
-		context = super(ProductCreateView, self).get_context_data(*args, **kwargs)
-		context['title']='Create New Product'
+	def get_context_data(self, *args, **kwargs): #overwriting default
+		context = super(ProductCreateView, self).get_context_data(*args, **kwargs) #default method
+		context['title']='Create New Product' #add kwarg / add your field for html
 		return context
 	
 
@@ -216,7 +225,24 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
 
-
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+	form_class = ProductCreateForm
+	template_name = 'products/product-delete.html'
+	success_url = '/products/'
+	def get_object(self, *args, **kwargs):
+		request = self.request
+		slug = self.kwargs.get('slug')
+		user = self.request.user
+		try:
+			instance = Product.objects.get(slug=slug, active=True, user=user)
+		except Product.DoesNotExist:
+			raise Http404("Not found!")
+		except Product.MultipleObjectsReturned:
+			qs = Product.objects.filter(slug=slug, active=True, user=user)
+			instance = qs.first()
+		except:
+			raise Http404("Hmm")
+		return instance
 
 
 class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
