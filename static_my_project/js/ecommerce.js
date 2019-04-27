@@ -151,9 +151,11 @@ $(document).ready(
                         title: 'Thank you for your money!',
                         content:'Product has been deleted. Mojete sosnut pisku',
                         buttons:{
-                          confirm: function(){
+                          confirm: { 
+                            text: 'Ok',
+                            action: function(){
                             window.location.href=next_url
-                          },
+                          }},
                         }
                       })},
                     error: function(errorData){
