@@ -59,6 +59,7 @@ urlpatterns = [
    #url(r'^accounts/login/$', RedirectView.as_view(url='/login') ),
     url(r'^accounts/login/$', RedirectView.as_view(url='/account')),
     url(r'^accounts/$', RedirectView.as_view(url='/account')),
+    url(r'^accounts/profile/$', RedirectView.as_view(url='/account')),
     url(r'^account/', include("accounts.urls",namespace='accounts')),
     url(r'^accounts/', include("accounts.passwords.urls")),
     url(r'^orders/', include("orders.urls", namespace='orders')),

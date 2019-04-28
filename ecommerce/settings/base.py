@@ -85,11 +85,12 @@ MAILCHIMP_DATA_CENTER       = 'us20'
 MAILCHIMP_EMAIL_LIST_ID     = '956c560eab'
 
 #SOCIAL_AUTH
-SOCIAL_AUTH_FACEBOOK_KEY = '673730826416925'       
-SOCIAL_AUTH_FACEBOOK_SECRET = 'cfda3019290b037aa783b9c5dc82cb11'  
+SOCIAL_AUTH_VK_OAUTH2_KEY = '6964301'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'VlpGUDIiIaf3S7zavzVt'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
 AUTHENTICATION_BACKENDS = [
-        'social_core.backends.facebook.FacebookOAuth2',
+        'social_core.backends.vk.VKOAuth2',
         'django.contrib.auth.backends.ModelBackend',
         ]
 
