@@ -31,7 +31,13 @@ from django.views.generic import TemplateView, RedirectView
 #     ProductFeaturedListView
 #     )
 from billing.views import payment_method_view, payment_method_createview
-from addresses.views import checkout_address_create_view, checkout_address_reuse_view
+from addresses.views import (
+    AddressCreateView,
+    AddressListView,
+    AddressUpdateView,
+    checkout_address_create_view, 
+    checkout_address_reuse_view
+    )
 from accounts.views import LoginView, RegisterView, GuestRegisterView
 from .views import home_page, about_page, contact_page 
 from carts.views import cart_detail_api_view
@@ -46,6 +52,10 @@ urlpatterns = [
     url(r'^contact/$', contact_page, name='contact'),
     url(r'^about/$', about_page, name='about'),
 	url(r'^admin/', admin.site.urls,),
+    url(r'^address/$', RedirectView.as_view(url='/addresses')),
+    url(r'^addresses/$', AddressListView.as_view(), name='addresses'),
+    url(r'^addresses/create/$', AddressCreateView.as_view(), name='address-create'),
+    url(r'^addresses/(?P<pk>\d+)/$', AddressUpdateView.as_view(), name='address-update'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^register/guest/$', GuestRegisterView.as_view(), name='guest_register'),
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
