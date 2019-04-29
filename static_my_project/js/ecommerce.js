@@ -100,6 +100,9 @@ $(document).ready(
       }
 
 
+  
+
+
   //Product Delete Alert Ajax
 
     var deleteForm=$(".delete-product-form")
@@ -144,14 +147,15 @@ $(document).ready(
                     method: httpMethod,
                     data: formData,
                     success: function(){
-                      console.log('jopa')
                       $.confirm({
                         title: 'Thank you for your money!',
                         content:'Product has been deleted. Mojete sosnut pisku',
                         buttons:{
-                          confirm: function(){
+                          confirm: { 
+                            text: 'Ok',
+                            action: function(){
                             window.location.href=next_url
-                          },
+                          }},
                         }
                       })},
                     error: function(errorData){

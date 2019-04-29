@@ -39,6 +39,7 @@ from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 urlpatterns = [
     url(r'^$', home_page, name = 'home'),
     url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'social-auth/', include('social_django.urls', namespace="social")),
     url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
     url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
@@ -58,6 +59,7 @@ urlpatterns = [
    #url(r'^accounts/login/$', RedirectView.as_view(url='/login') ),
     url(r'^accounts/login/$', RedirectView.as_view(url='/account')),
     url(r'^accounts/$', RedirectView.as_view(url='/account')),
+    url(r'^accounts/profile/$', RedirectView.as_view(url='/account')),
     url(r'^account/', include("accounts.urls",namespace='accounts')),
     url(r'^accounts/', include("accounts.passwords.urls")),
     url(r'^orders/', include("orders.urls", namespace='orders')),

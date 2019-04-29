@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #third party
     'storages',
+    'social_django',
 
     #our apps
     'addresses',
@@ -83,7 +84,15 @@ MAILCHIMP_API_KEY           = 'eaa4d8d1c40ca0c010bd4ae4f53da4ea-us20'
 MAILCHIMP_DATA_CENTER       = 'us20'
 MAILCHIMP_EMAIL_LIST_ID     = '956c560eab'
 
+#SOCIAL_AUTH
+SOCIAL_AUTH_VK_OAUTH2_KEY = '6964301'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'VlpGUDIiIaf3S7zavzVt'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
+AUTHENTICATION_BACKENDS = [
+        'social_core.backends.vk.VKOAuth2',
+        'django.contrib.auth.backends.ModelBackend',
+        ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,6 +102,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #third party
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 
@@ -115,6 +127,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+
+                #djangoSocial
+                'social_django.context_processors.backends',  
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
