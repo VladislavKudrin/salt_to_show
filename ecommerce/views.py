@@ -18,7 +18,6 @@ def contact_page(request):
 	contact_form=ContactForm(request.POST or None)
 	context = {
 		'title':'Contact Page',
-		'content':'Welcome to the contact page',
 		'form':contact_form
 
 	}
@@ -34,7 +33,7 @@ def contact_page(request):
 			return HttpResponse(errors, status=400, content_type='application/json')
 	# if request.method =="POST":
 	# 	print(request.POST)
-	return render(request, "contact/view.html", context)
+	return render(request, "contact/contact.html", context)
 
 def home_page(request):
 	#print(dir(request.session))
