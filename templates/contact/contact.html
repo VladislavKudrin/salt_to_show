@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 <div class='text-center'>
   <h1>{{ title }}</h1>
-  <h1>Hello! We're working</h1>
 </div>
 
-<div class='container'>
+<div class='container-fluid'>
   <div class='row'>
-    <div class='col'>
-      <p>{{ content }}</p>
-      <div class='col-sm-6 col-12'>
+      <div class='col-md-9 col-lg-9 mx-auto'>
         <form class ='contact-form' method = 'POST' action='{% url "contact" %}'> {% csrf_token %}
-           {{ form }}
-           <button type="submit" class="btn btn-dark">Submit</button>
+           {{ form|crispy }}
+           <button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button>
         </form>
+        <br>
 
 
           <!--<form method = 'POST'> {% csrf_token %}
@@ -23,8 +23,7 @@
               <textarea name='content' placeholder = 'Your content' class='form-control'></textarea>
               <button type= 'submit' class='btn-default'>Submit</button>
               </form> -->
-      </div>
-    </div>  
+      </div>  
   </div>
 </div>
 {% endblock %}
