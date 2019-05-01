@@ -51,6 +51,8 @@ class Order(models.Model):
 	billing_profile 	= models.ForeignKey(BillingProfile, null=True, blank=True)
 	shipping_address	= models.ForeignKey(Address, related_name="shipping_address", null=True, blank=True)
 	billing_address		= models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
+	shipping_address_final    = models.TextField(blank=True, null=True)
+	billing_address_final     = models.TextField(blank=True, null=True)
 	cart 				= models.ForeignKey(Cart)
 	status 				= models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
 	shipping_total 		= models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
@@ -110,6 +112,12 @@ def pre_save_create_order_id(sender, instance, *args, **kwargs):
 	qs=Order.objects.filter(cart=instance.cart).exclude(billing_profile=instance.billing_profile)
 	if qs.exists():
 		qs.update(active=False)
+
+	if instance.shipping_address and not instance.shipping_address_final:
+	    instance.shipping_address_final = instance.shipping_address.get_address()
+
+	if instance.billing_address and not instance.billing_address_final:
+	    instance.billing_address_final = instance.billing_address.get_address()
 	"""
 Допустим, пользовател зашел как гость, создается корзина, привязанная к сессии,
 после ввода имейла создается профиль оплаты. Профиль оплаты и корзина проверяется

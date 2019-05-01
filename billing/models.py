@@ -9,8 +9,6 @@ from accounts.models import GuestEmail
 import stripe
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe")
 STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk')
-stripe.api_key="sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe"
-
 
 User=settings.AUTH_USER_MODEL
 

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     #third party
     'storages',
     'social_django',
+    'crispy_forms',
 
     #our apps
     'addresses',
@@ -76,9 +77,13 @@ LOGOUT_URL = '/logout/'
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_PUB_KEY =  os.environ.get('STRIPE_PUB_KEY')
+# import stripe
+# STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+# STRIPE_PUB_KEY =  os.environ.get('STRIPE_PUB_KEY')
+# stripe.api_key = STRIPE_SECRET_KEY
 
+#CRISPY 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #MAILCHIMP
 MAILCHIMP_API_KEY           = os.environ.get('MAILCHIMP_API_KEY')
@@ -90,10 +95,20 @@ SOCIAL_AUTH_VK_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_VK_OAUTH2_KEY')
 SOCIAL_AUTH_VK_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_VK_OAUTH2_SECRET')
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
+#GOOGLE 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '940431062117-rs5fjkdr1kv6u8knopnoh0v6bp7bs29r.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '0DxTUlxTO2zgi3-D1Lgl18q2'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
+
+
 AUTHENTICATION_BACKENDS = [
         'social_core.backends.vk.VKOAuth2',
         'django.contrib.auth.backends.ModelBackend',
+        'social_core.backends.google.GooglePlusAuth',
+        'social_core.backends.open_id.OpenIdAuth',
+        'social_core.backends.google.GoogleOAuth2',
         ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,10 +144,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                #djangoSocial
-                'social_django.context_processors.backends',  
-                'social_django.context_processors.login_redirect',
+                'social_django.context_processors.backends',  # <- Here
+                'social_django.context_processors.login_redirect', # <- Here
             ],
         },
     },

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import stripe
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     #third party
     'storages',
     'social_django',
+    'crispy_forms',
 
     #our apps
     'addresses',
@@ -76,8 +78,13 @@ LOGOUT_URL = '/logout/'
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
-STRIPE_SECRET_KEY = "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe"
-STRIPE_PUB_KEY =  "pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk"
+#STRIPE
+STRIPE_SECRET_KEY = "sk_test_REAVuHTtQBJVnT7IpoKavJpL"
+STRIPE_PUB_KEY =  "pk_test_GoRpsjlzZ5HC3eqcLe7Nhzcr"
+stripe.api_key = STRIPE_SECRET_KEY
+
+#CRISPY 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 #MAILCHIMP
 MAILCHIMP_API_KEY           = 'eaa4d8d1c40ca0c010bd4ae4f53da4ea-us20'
@@ -89,10 +96,22 @@ SOCIAL_AUTH_VK_OAUTH2_KEY = '6964301'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'VlpGUDIiIaf3S7zavzVt'
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
+#GOOGLE 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '940431062117-rs5fjkdr1kv6u8knopnoh0v6bp7bs29r.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '0DxTUlxTO2zgi3-D1Lgl18q2'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
+
+
+
+
 AUTHENTICATION_BACKENDS = [
         'social_core.backends.vk.VKOAuth2',
         'django.contrib.auth.backends.ModelBackend',
+        'social_core.backends.google.GooglePlusAuth',
+        'social_core.backends.open_id.OpenIdAuth',
+        'social_core.backends.google.GoogleOAuth2',
         ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,11 +146,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-
-                #djangoSocial
-                'social_django.context_processors.backends',  
-                'social_django.context_processors.login_redirect',
+                'social_django.context_processors.backends',  # <- Here
+                'social_django.context_processors.login_redirect', # <- Here
             ],
         },
     },
