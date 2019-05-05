@@ -42,7 +42,9 @@ from accounts.views import LoginView, RegisterView, GuestRegisterView
 from .views import home_page, about_page, contact_page 
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
+from django_private_chat import urls as django_private_chat_urls
 urlpatterns = [
+    url(r'^', include('django_private_chat.urls')),
     url(r'^$', home_page, name = 'home'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'social-auth/', include('social_django.urls', namespace="social")),
