@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_private_chat',
     'sass_processor',
-
+  
     #our apps
     'addresses',
     'products',
@@ -105,6 +105,10 @@ SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '940431062117-rs5fjkdr1kv6u8knopnoh0v6bp7bs29r.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '0DxTUlxTO2zgi3-D1Lgl18q2'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
+#PRIVATE_CHAT
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 #SASS
 SASS_PROCESSOR_INCLUDE_DIRS = (

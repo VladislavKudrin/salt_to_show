@@ -1,19 +1,22 @@
+    
 <div class="card" style="width: 18rem;">
   {% if instance.image %}
-  	<img src="{{ instance.image.url }}" class="card-img-top" alt="...">
+    <img src="{{ instance.image.url }}" class="card-img-top" alt="...">
   {% endif %}
   <div class="card-body">
     <h5 class="card-title">{{ instance.title }}</h5>
     <p class="card-text">{{ instance.description|linebreaks|truncatewords:12 }}</p>
     {% if request.user == instance.user %}
-   		<a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>
+      <a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>
       {{ instance.user }}
-    	{% include 'products/snippets/logged-user-update-card.html' with instance=instance %}
+      {% include 'products/snippets/logged-user-update-card.html' with instance=instance %}
     {% else %}
-    	<a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>
-    	<span style='margin-top:1px; margin-left: 1px; display: inline-block'>
+      <a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>
+      <span style='margin-top:1px; margin-left: 1px; display: inline-block'>
     {% include 'products/snippets/update-cart.html' with product=instance cart=cart %}</span> 
     {% endif %}
 
   </div>
 </div>
+
+

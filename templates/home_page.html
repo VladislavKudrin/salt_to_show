@@ -2,31 +2,53 @@
 {% load static %}
 
 {% block base_head %}
-  <link rel="stylesheet" href='{% static "css/main.css" %}'> 
+  <link rel="stylesheet" href='{% static "css/main.css" %}'>
+  
 {% endblock %}
 
 {% block content %}
-<div class='text-center'>
-  <h1>{{ title }}</h1>
-  <h1>Hello! We're working</h1>
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class='text-center'>
+        <h1 style="color: black;">Envision Outfit</h1>
+        <a href="http://127.0.0.1:8000/products/"><img src="https://allhdwallpapers.com/wp-content/uploads/2018/03/Supreme-Wallpapers-desktop-and-mobile-HD-13.jpg" class="img-fluid" alt="..."></a>
+      </div>
+    </div>  
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="text-left">
+        <h5 style="color: black;">New Arrivals</h5>
+        <h5 style="color: black;">Shop By Category</h5>
+        <h5 style="color: black;">Popular Brands</h5>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<footer class="page-footer font-small my-4">
+    <div class="container-fluid text-left">
+      <div class="row">
+        <div class="col-md-6 mt-md-0 mt-3">
+          <a href="" class="text-body">About</a>
+          <a href="" class="text-body">Help</a>
+          <a class="text-body" href='{% url "contact" %}' >Contact</a>
+        </div>
+    <div class="footer-copyright text-left py-3">© 2019 Envision Outfit</div>
+</footer>
 
 
-<div class='row'>
-  <div class='col'>
-    <img src="{% static 'img/beach.jpg' %}" class='img-fluid'>
-    <p>{{ content }}</p>
-  </div>  
-</div>
-    <!-- PREMIUM CONTENT -->
-{% if request.user.is_authenticated %}
+
+<!--{% if request.user.is_authenticated %}
 <div class='row'>
   <div class='col'>
     <h1>Premium</h1> 
     <p>{{ premium_content }}</p>
   </div>
 </div>
-{% endif %}
+{% endif %} -->
 
 {% endblock %}
 
