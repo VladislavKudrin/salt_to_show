@@ -29,11 +29,11 @@ DEBUG = False
 ALLOWED_HOSTS = ['.herokuapp.com']
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
+EMAIL_HOST_USER = 'romhedoo@gmail.com' 
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommerce.envision@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Python ecommerce <romhedoo@gmail.com>'
 BASE_URL = 'https://envision-outfit.herokuapp.com'
 
 MANAGERS = (
@@ -41,6 +41,10 @@ MANAGERS = (
 )
 
 ADMINS = MANAGERS
+
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 # Application definition
 
@@ -55,6 +59,8 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
+    'django_private_chat',
+    'sass_processor',
 
     #our apps
     'addresses',
@@ -100,6 +106,17 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '940431062117-rs5fjkdr1kv6u8knopnoh0v6bp7bs29r.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '0DxTUlxTO2zgi3-D1Lgl18q2'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
 
+#SASS
+SASS_PROCESSOR_INCLUDE_DIRS = (
+    os.path.join(BASE_DIR, 'static_my_project/bootstrap-4.1.3'),
+    os.path.join(BASE_DIR, 'static_my_project/custom_scss'),
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+)
 
 AUTHENTICATION_BACKENDS = [
         'social_core.backends.vk.VKOAuth2',

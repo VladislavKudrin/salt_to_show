@@ -1,5 +1,12 @@
 {% load static %}
 
+{% load sass_tags %}
+
+
+<!-- <link href="{% sass_src 'bootstrap-4.1.3/scss/bootstrap.scss' %}" rel="stylesheet" type="text/css" /> not needed anymore-->
+
+<link href="{% sass_src 'custom_scss/custom.scss' %}" rel="stylesheet" type="text/css" />
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,6 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Base Template</title>
       {% include 'base/css.html' %}
+
+
       {% block base_head %}{% endblock %}
   </head>
   <body>
