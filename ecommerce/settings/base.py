@@ -29,11 +29,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
-EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_HOST_USER = 'romhedoo@gmail.com' 
+EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommerce.envision@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Python ecommerce <romhedoo@gmail.com>'
 BASE_URL = '127.0.0.1:8000'
 
 MANAGERS = (
@@ -42,6 +42,9 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 # Application definition
 
@@ -56,7 +59,8 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'django_private_chat'
+    'django_private_chat',
+    'sass_processor',
 
     #our apps
     'addresses',
@@ -106,8 +110,17 @@ CHAT_WS_SERVER_HOST = 'localhost'
 CHAT_WS_SERVER_PORT = 5002
 CHAT_WS_SERVER_PROTOCOL = 'ws'
 
+#SASS
+SASS_PROCESSOR_INCLUDE_DIRS = (
+    os.path.join(BASE_DIR, 'static_my_project/bootstrap-4.1.3'),
+    os.path.join(BASE_DIR, 'static_my_project/custom_scss'),
+)
 
-
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+)
 
 AUTHENTICATION_BACKENDS = [
         'social_core.backends.vk.VKOAuth2',
@@ -116,7 +129,6 @@ AUTHENTICATION_BACKENDS = [
         'social_core.backends.open_id.OpenIdAuth',
         'social_core.backends.google.GoogleOAuth2',
         ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

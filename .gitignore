@@ -4,13 +4,17 @@
 *.sublime-project
 fasttracktojquery/
 db.sqlite3
-<<<<<<< HEAD
 *.sqlite3
 
 # Ignore the default SQLite database.
 *.sqlite3
-=======
->>>>>>> a88d7729cfe2d2967336e70415947c6649de3645
+
+#test templates 
+templates/test1.html
+templates/test2.html
+templates/template.html
+templates/django_private_chat/
+
 
 # Virtualenv related
 bin/
