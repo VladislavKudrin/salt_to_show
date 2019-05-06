@@ -7,7 +7,7 @@
 		<h1>{{ object.title }}</h1>
 		{{ object.timestamp|timesince }} ago
 		{{ object.description|linebreaks }} <br/>
-		{{ object.user }}
+		<a href='{{ object.user.get_absolute_url }}'>{{ object.user.username }}</a>
 		{% if object.image %}
 			<img src="{{ object.image.url }}" class = 'img-fluid'/>
 		{% endif %}

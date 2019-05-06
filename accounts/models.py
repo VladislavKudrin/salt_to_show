@@ -8,6 +8,8 @@ from django.contrib.auth.models import (
 		AbstractBaseUser, BaseUserManager
 
 )
+import random
+import os
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.utils import timezone
@@ -17,16 +19,29 @@ from ecommerce.utils import random_string_generator, unique_key_generator
 
 DEFAULT_ACTIVATION_DAYS = getattr(settings, "DEFAULT_ACTIVATION_DAYS", 7)
 
+def get_filename_ext(filepath):
+	base_name = os.path.basename(filepath)
+	name, ext = os.path.splitext(base_name)
+	return name, ext
 
+def upload_image_path(instance, filename):
+	new_filename = random.randint(1,31231231)
+	name, ext = get_filename_ext(filename)
+	final_filename = '{new_filename}{ext}'.format(new_filename=new_filename,ext=ext)
+	return "profile_fotos/{new_filename}/{final_filename}".format(
+		new_filename=new_filename,
+		final_filename=final_filename)
+	
 class UserManager(BaseUserManager):
-	def create_user(self, email, full_name = None, password=None, is_active = True, is_staff=False, is_admin=False):
+	def create_user(self, email, username, full_name = None, password=None, is_active = True, is_staff=False, is_admin=False):
 		if not email:
-			raise ValueError("Users must have an email address!")
+			raise ValueError("Users must have an email address and username!")
 		# if not password:
 		# 	raise ValueError("Users must have a password!")
 		user_obj = self.model(
 				email = self.normalize_email(email),
-				full_name = full_name
+				username = username,
+				full_name = full_name,
 			)
 
 		user_obj.set_password(password)
@@ -36,43 +51,51 @@ class UserManager(BaseUserManager):
 		user_obj.save(using=self._db)
 		return user_obj
 
-	def create_staffuser(self, email, full_name=None, password = None):
+	def create_staffuser(self, email, username, full_name=None, password = None ):
 		user = self.create_user(
 				email,
+				username,
 				full_name,
 				password = password,
 				is_staff = True
+				
 			)
 		return user
 
-	def create_superuser(self, email, full_name=None, password = None):
+	def create_superuser(self, email, username, full_name=None, password = None):
 		user = self.create_user(
 				email,
+				username,
 				full_name,
 				password = password,
 				is_staff = True,
 				is_admin = True
+				
 			)
 		return user
 
 
 class User(AbstractBaseUser):
-	username 	= models.CharField(max_length=255, blank=True, null=True)
-	email 		= models.EmailField(max_length=255, unique=True)
-	full_name 	= models.CharField(max_length=255, blank=True, null=True)
-	is_active 	= models.BooleanField(default=True)
-	staff 		= models.BooleanField(default=False)
-	admin 		= models.BooleanField(default=False)
-	timestamp	= models.DateTimeField(auto_now_add=True)
-
+	username 		= models.CharField(max_length=255, blank=False, null=True, unique=True)
+	email 			= models.EmailField(max_length=255, unique=True)
+	full_name 		= models.CharField(max_length=255, blank=True, null=True)
+	is_active 		= models.BooleanField(default=True)
+	staff 			= models.BooleanField(default=False)
+	admin 			= models.BooleanField(default=False)
+	timestamp		= models.DateTimeField(auto_now_add=True)
+	profile_foto	= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	
 	USERNAME_FIELD = 'email'
 	#email and password by default
-	REQUIRED_FIELDS = []#['full_name']
+	REQUIRED_FIELDS = ['username']#['full_name']
 
 	objects=UserManager()
 
 	def __str__(self):
 		return self.email
+
+	def get_absolute_url(self):
+		return reverse('accounts:profile', kwargs={"username":self.username})
 
 	def get_full_name(self):
 		if self.full_name:
@@ -97,9 +120,16 @@ class User(AbstractBaseUser):
 	def is_admin(self):
 		return self.admin
 
+
+
 # class Profile(models.Model):
-# 	user = models.OneToOneField(User)
-# 	#extend extra data	
+# 	user 					= models.OneToOneField(User)
+# 	full_name 				= models.CharField(max_length=255, blank=True, null=True)
+# 	profile_foto			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	
+# 	def __str__(self):
+# 		return self.user.username
+
 
 class EmailActivationQuerySet(models.query.QuerySet):
 	def confirmable(self):
@@ -207,6 +237,10 @@ pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 
 
 def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
+	# profile_obj = Profile.objects.get_or_create(user=instance)
+	# username_exists = User.objects.filter(username = instance.username)
+	# if username_exists.exists():
+	# 	raise ValueError("Username already exists")
 	if created:
 		obj = EmailActivation.objects.create(user=instance, email=instance.email)
 		obj.send_activation()

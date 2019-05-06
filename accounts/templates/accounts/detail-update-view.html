@@ -8,9 +8,17 @@
   <form method = 'POST' action='
   {% if action_url %}
     {{ action_url }}
-  {% endif %}'> {% csrf_token %}
+  {% endif %}' enctype='multipart/form-data'> {% csrf_token %}
     {% if next_url %}
       <input type='hidden' name='next' value='{{ next_url }}' />
+    {% endif %}
+    {% if object.profile_foto %}
+    <div class="media">
+      <img src="{{ object.profile_foto.url }}" class="mr-1" alt="..." style="width: 200px;">
+      <div class="media-body">
+        <h5 class="mt-0">Profile Foto</h5>
+      </div>
+    </div>
     {% endif %}
     {{ form.as_p }}
     <label for='email'>Email</label>
