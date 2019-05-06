@@ -11,6 +11,7 @@ django-braces==1.13.0
 django-compressor==2.2
 django-crispy-forms==1.7.2
 django-model-utils==3.1.2
+django-paypal==1.0.0
 django-private-chat==0.2.2
 django-sass-processor==0.7.3
 django-storages==1.7.1
@@ -36,5 +37,5 @@ social-auth-app-django==3.1.0
 social-auth-core==3.1.0
 stripe==2.26.0
 urllib3==1.24.1
-websockets==3.2
+websockets==7.0
 whitenoise==4.1.2
