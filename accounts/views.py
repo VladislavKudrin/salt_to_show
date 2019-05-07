@@ -165,7 +165,7 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 		return context
 
 	def get_success_url(self):
-		return reverse("accounts:home")
+		return reverse("accounts:user-update")
 
 
 # def register_page(request):
@@ -176,6 +176,27 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 # 	if form.is_valid():
 # 		form.save()
 # 	return render(request, "accounts/register.html", context)
+
+
+class ProfileView(DetailView):
+	template_name = 'accounts/profile.html'
+	def get_object(self, *args, **kwargs):
+		username = self.kwargs.get('username')
+		try:
+			instance = User.objects.get(username=username)
+		except Profile.DoesNotExist:
+			raise Http404("Not found!")
+		return instance
+
+
+
+
+
+
+
+
+
+
 
 
 

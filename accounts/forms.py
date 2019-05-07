@@ -49,10 +49,15 @@ class UserAdminCreationForm(forms.ModelForm):
 
 
 class UserDetailChangeForm(forms.ModelForm):
+    username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
     full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control'}))
     class Meta:
         model = User
-        fields = ['full_name']
+        fields = [
+                'full_name',
+                'username',
+                'profile_foto'
+                    ]
 
 class UserAdminChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
@@ -171,7 +176,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('full_name', 'email',)
+        fields = ('full_name', 'email', 'username')
 
     def clean_password2(self):
         # Check that the two password entries match
