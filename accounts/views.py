@@ -1,3 +1,5 @@
+from django.http import Http404
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -11,10 +13,10 @@ from django.views.generic import CreateView, FormView, DetailView, View, UpdateV
 from django.views.generic.edit import FormMixin
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
-
+from django.http import HttpResponseRedirect
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
-from .models import GuestEmail, EmailActivation
+from .models import GuestEmail, EmailActivation, User
 from .forms import LoginForm, RegisterForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 
@@ -180,13 +182,19 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
+
+	def post(self, request, *args, **kwargs):
+		next_ = request.POST.get('next', '/')
+		username = self.kwargs.get('username')
+		redirect_url = next_ + 'dialogs/' + username
+		return HttpResponseRedirect(redirect_url)
 	def get_object(self, *args, **kwargs):
 		username = self.kwargs.get('username')
 		try:
-			instance = User.objects.get(username=username)
-		except Profile.DoesNotExist:
-			raise Http404("Not found!")
-		return instance
+			user_instance = User.objects.filter_by_username(username=username)
+		except User.DoesNotExist:
+			raise Http404("Not Found")
+		return User.objects.filter_by_username(username=username)
 
 
 
