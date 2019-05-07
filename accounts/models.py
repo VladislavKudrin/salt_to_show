@@ -13,9 +13,12 @@ import os
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.utils import timezone
+from django.shortcuts import redirect
 
 from ecommerce.utils import random_string_generator, unique_key_generator
 #send_mail(subject, message, from_email, recipient_list, html_message)
+
+
 
 DEFAULT_ACTIVATION_DAYS = getattr(settings, "DEFAULT_ACTIVATION_DAYS", 7)
 
@@ -33,6 +36,13 @@ def upload_image_path(instance, filename):
 		final_filename=final_filename)
 	
 class UserManager(BaseUserManager):
+	def filter_by_username(self, username):
+		user_email_obj = self.filter(username=username).first()
+		print('HELLLLLLLLLLLOOOOOOOOO')
+		print(user_email_obj)
+		user_obj = self.get_by_natural_key(username=user_email_obj)
+		return user_obj
+	
 	def create_user(self, email, username, full_name = None, password=None, is_active = True, is_staff=False, is_admin=False):
 		if not email:
 			raise ValueError("Users must have an email address and username!")
@@ -93,6 +103,12 @@ class User(AbstractBaseUser):
 
 	def __str__(self):
 		return self.email
+
+
+
+	# def begin_chat_url(self):
+	# 	return redirect()
+
 
 	def get_absolute_url(self):
 		return reverse('accounts:profile', kwargs={"username":self.username})

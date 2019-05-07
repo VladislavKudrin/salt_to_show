@@ -1,7 +1,8 @@
 {% load static %}
-<!-- Bootstrap CSS 
+{% load sass_tags %}
+<!--  Bootstrap CSS --> 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
--->	
+	
 
 <!-- FontAwesome CSS -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -13,5 +14,9 @@
 <!-- Custom Stripe Styling -->
 	<link rel="stylesheet" href="{% static 'css/stripe-custom-style.css' %}"> 
 
+    <link href="{% static 'django_private_chat/css/django_private_chat.css' %}" rel="stylesheet" type="text/css" media="all">
+
+
+	<link href="{% sass_src 'custom_scss/custom.scss' %}" rel="stylesheet" type="text/css" />
 
 
