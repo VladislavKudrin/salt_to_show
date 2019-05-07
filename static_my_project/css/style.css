@@ -1,0 +1,17 @@
+.scrollable {
+	height: 600px;
+	overflow: scroll;
+}
+
+.test{
+	background-color: black;
+}
+
+.pointer:hover{
+	cursor:pointer;
+}
+
+.user-table:hover{
+	cursor:pointer;
+	background: #f5f5f5;
+}
