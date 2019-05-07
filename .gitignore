@@ -13,7 +13,7 @@ db.sqlite3
 templates/test1.html
 templates/test2.html
 templates/template.html
-templates/django_private_chat/
+
 
 
 # Virtualenv related
