@@ -183,11 +183,17 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
 
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProfileView, self).get_context_data(*args,**kwargs)
+		context['btn_title'] = 'Begin Chat with '
+		return context
+
 	def post(self, request, *args, **kwargs):
 		next_ = request.POST.get('next', '/')
 		username = self.kwargs.get('username')
 		redirect_url = next_ + 'dialogs/' + username
 		return HttpResponseRedirect(redirect_url)
+	
 	def get_object(self, *args, **kwargs):
 		username = self.kwargs.get('username')
 		try:
