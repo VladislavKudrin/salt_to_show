@@ -58,3 +58,8 @@ class GuestEmailAdmin(admin.ModelAdmin):
 
 
 admin.site.register(GuestEmail, GuestEmailAdmin)
+
+
+
+
+# admin.site.register(Profile)

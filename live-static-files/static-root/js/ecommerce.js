@@ -58,6 +58,9 @@ $(document).ready(
 
 
 
+  
+
+
 
 
 
@@ -96,6 +99,86 @@ $(document).ready(
                    
       }
 
+
+  
+
+
+  //Product Delete Alert Ajax
+
+    var deleteForm=$(".delete-product-form")
+    var instance_id = deleteForm.attr("data_id")
+    var instance_title = deleteForm.attr("product_title")
+    var instance_user = deleteForm.attr("data_user")
+    var action = deleteForm.attr("action")
+    var data_endpoint = deleteForm.attr("data-endpoint")
+    var next_url = deleteForm.attr("next_url")
+    var deleteTemplate = $.templates("#delete-product-confirm-form")
+    var deleteTemplateDataContext = {
+       action_url: action,
+       data_endpoint: data_endpoint,
+       user: instance_user,
+       product_id: instance_id,
+       product_title:instance_title,
+       next_url:next_url
+            }
+    var deleteTemplateHtml  = deleteTemplate.render(deleteTemplateDataContext)
+
+      deleteForm.submit(
+      function(event){
+      var thisForm = $(this)
+      var dataEndpoint = thisForm.attr("action");
+      var actionEndpoint = thisForm.attr("data-endpoint");
+      var httpMethod = thisForm.attr("method");
+
+      var formData = thisForm.serialize();
+      event.preventDefault()
+      console.log(deleteTemplateHtml)
+      var deleteComfirmFormTemplate = $.templates("#delete-product-confirm-form")
+      $.confirm({
+    title: 'Delete Your Product?',
+    content: '' + deleteTemplateHtml,
+    buttons: {
+        formSubmit: {
+            text: 'Delete',
+            btnClass: 'btn btn-dark',
+            action: function () {
+                $.ajax({
+                    url: actionEndpoint,
+                    method: httpMethod,
+                    data: formData,
+                    success: function(){
+                      $.confirm({
+                        title: 'Thank you for your money!',
+                        content:'Product has been deleted. Mojete sosnut pisku',
+                        buttons:{
+                          confirm: { 
+                            text: 'Ok',
+                            action: function(){
+                            window.location.href=next_url
+                          }},
+                        }
+                      })},
+                    error: function(errorData){
+                      console.log(errorData)
+                      $.alert({
+                          title: 'Error',
+                          content: 'Romaloh',
+                          theme: "modern"
+                              });
+                                               }
+                      })
+
+            }
+        },
+        cancel: function () {
+            //close
+        },
+    },
+});
+
+
+
+    })
 
 
 

@@ -6,14 +6,32 @@
 
 <div class="container-fluid">
 	<div class='row'>
-		<div class="mx-auto col-xs-3 col-md-9 col-lg-9 text-center">
-			<h1>Register</h1>
-			<form method = 'POST'> {% csrf_token %}
-   				{{ form|crispy }}
-   				<button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button>
-			</form>
+        <div class="mx-auto col-md-9 col-lg-9 ">
+            <div class="text-center">
+
+					<h1>Register</h1>
+					<form method = 'POST'> {% csrf_token %}
+							{{ form|crispy }}
+							<button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button><br>
+					</form>
+
+						<h1>Or log in with:</h1><br>
+			        <a href="{% url 'social:begin' 'vk-oauth2' %}">  <button class="btn btn-outline-dark btn-block">
+			             <i class="fab fa-vk ml-1 mr-1"></i>
+			            </button>
+			            </a>
+			        <br>
+
+			        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-outline-dark btn-block">
+						<i class="fab fa-google"></i>
+			        </button>
+			        </a>
+			</div>
 		</div>
 	</div>
 </div>
+
+
+
 
 {% endblock %}

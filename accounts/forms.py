@@ -49,10 +49,15 @@ class UserAdminCreationForm(forms.ModelForm):
 
 
 class UserDetailChangeForm(forms.ModelForm):
+    username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
     full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control'}))
     class Meta:
         model = User
-        fields = ['full_name']
+        fields = [
+                'full_name',
+                'username',
+                'profile_foto'
+                    ]
 
 class UserAdminChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
@@ -166,12 +171,26 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    full_name = forms.CharField(
+        widget=forms.TextInput(
+        attrs={'placeholder': 'Your Full Name'}), label=''
+        )
+    email = forms.CharField(
+        widget=forms.EmailInput(
+        attrs={'placeholder': 'Your Email'}), label=''
+        )
+    username = forms.CharField(
+        widget=forms.TextInput(
+        attrs={'placeholder': 'Your Username'}), label=''
+        )
+    password1 = forms.CharField(label='', widget=forms.PasswordInput(
+        attrs={'placeholder': 'Your Password'}))
+    password2 = forms.CharField(label='', widget=forms.PasswordInput(
+        attrs={'placeholder': 'Confirm your Password'}))
 
     class Meta:
         model = User
-        fields = ('full_name', 'email',)
+        fields = ('full_name', 'email', 'username')
 
     def clean_password2(self):
         # Check that the two password entries match
