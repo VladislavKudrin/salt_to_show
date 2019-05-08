@@ -100,6 +100,11 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		context['cart']=cart_obj
 		return context
 
+	def post(self, request, *args, **kwargs):
+		next_ = request.POST.get('next', '/')
+		username = request.POST.get('chat_with', '/')
+		redirect_url = next_ + 'dialogs/' + username
+		return redirect(redirect_url)
 
 	def get_object(self, *args, **kwargs):
 		request = self.request
