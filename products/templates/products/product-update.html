@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-
-
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class='col-12 col-md-6 mx-auto'>
@@ -12,9 +11,9 @@
     {% if next_url %}
       <input type='hidden' name='next' value='{{ next_url }}' />
     {% endif %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-dark my-3">Create</button>
-    <a href='{% url "home" %}'>Back</a>
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-dark btn-lg btn-block mt-3">Create</button>
+    <small><a href='{% url "home" %}'>Back</a></small>
   </form>
 </div>
 

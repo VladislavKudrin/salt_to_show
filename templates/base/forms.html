@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 
 
 {% block content %}
@@ -12,8 +12,8 @@
     {% if next_url %}
       <input type='hidden' name='next' value='{{ next_url }}' />
     {% endif %}
-    {{ form.as_p }}
-    <button type="submit" class="btn-default">Save</button>
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-dark btn-lg btn-block">Save</button>
   </form>
 </div>
 

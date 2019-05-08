@@ -1,15 +1,24 @@
-<form method = 'POST' action='
-{% if action_url %}
-	{{ action_url }}
-{% else %}
-	{% url "login" %}
-{% endif %}'> {% csrf_token %}
-	{% if next_url %}
-		<input type='hidden' name='next' value='{{ next_url }}' />
-	{% endif %}
-	{% if address_type %}
-		<input type='hidden' name='address_type' value='{{ address_type }}' />
-	{% endif %}
-	{{ form.as_p }}
-	<button type="submit" class="btn-default">Submit</button>
-</form>
+{% load crispy_forms_tags %}
+
+<!-- <div class='container-fluid'>
+  <div class='row'>
+      <div class='col-md-9 col-lg-9 mx-auto'> -->
+
+		<form method = 'POST' action='
+		{% if action_url %}
+			{{ action_url }}
+		{% else %}
+			{% url "login" %}
+		{% endif %}'> {% csrf_token %}
+			{% if next_url %}
+				<input type='hidden' name='next' value='{{ next_url }}' />
+			{% endif %}
+			{% if address_type %}
+				<input type='hidden' name='address_type' value='{{ address_type }}' />
+			{% endif %}
+			{{ form|crispy }}
+			<button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button>
+		</form>
+<!-- 	  </div>	
+  </div>
+</div> -->

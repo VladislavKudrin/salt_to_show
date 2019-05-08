@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 
 
 {% block content %}
 <div class='col-12 col-md-6 mx-auto'>
   {% if title %}<h1 class='my-3'>{{ title }}</h1>{% endif %}
   <form method = 'POST' enctype='multipart/form-data'> {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" value="Submit" class="btn btn-dark my-3">Create</button>
-    <a href='{% url "accounts:home" %}'>Back</a>
+    {{ form|crispy }}
+    <button type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">Create</button>
+    <small><a href='{% url "accounts:home" %}'>Back</a></small><br>
   </form>
 </div>
 

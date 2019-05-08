@@ -1,5 +1,5 @@
 {% if address_qs.exists %}
-	<form method='POST' action='{{ action_url }}'> {% csrf_token %}
+	<form class="mt-2" method='POST' action='{{ action_url }}'> {% csrf_token %}
 		{% if address_type %}
 			<input type='hidden' name='address_type' value='{{ address_type }}' />
 		{% endif %}
@@ -12,6 +12,6 @@
                 {{ address.get_short_address }}
 			</label></br>
 		{% endfor %}
-		<button type='submit' class='btn btn-success'>Use Address</button>
+		<button type='submit' class="btn btn-dark btn-lg">Use Address</button>
 	</form>
 {% endif %}
