@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse
 from django.urls import reverse
-
+from django.views.generic.edit import FormMixin
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -68,11 +68,10 @@ class ProductListView(ListView):
 	# 	context = super(ProductListView, self).get_context_data(*args, **kwargs)
 	##super обращается к классу-родителю, вызывает родитель-метод get_context_data
 	# 	print(context)
-	# 	return context
-
+	# 	return contex
 	def get_queryset(self, *args, **kwargs):
-		request = self.request
-		return Product.objects.all()
+		qs = Product.objects.all()
+		return qs
 		
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductListView, self).get_context_data(*args, **kwargs) 

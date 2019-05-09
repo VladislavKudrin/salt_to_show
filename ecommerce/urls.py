@@ -64,6 +64,7 @@ urlpatterns = [
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include("products.urls",namespace='products')), #namespace классифицирует адрес, так как у одного имени может быть несколько адресов
     url(r'^search/', include("search.urls",namespace='search')),
+    url(r'^filter/', include("categories.urls",namespace='categories')),
     url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(),name='marketing-pref'),
     url(r'^settings/$', RedirectView.as_view(url='/account')),
     url(r'^webhooks/mailchimp/$', MailChimpWebhookView.as_view(),name='webhook-mailchimp'),

@@ -29,6 +29,7 @@ from .signals import user_logged_in_signal
 class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 	template_name = 'accounts/home.html' 
 	def get_object(self):
+		user=User.objects.check_username(self.request.user)
 		return self.request.user
 
 class AccountEmailActivateView(FormMixin, View):

@@ -36,10 +36,17 @@ def upload_image_path(instance, filename):
 		final_filename=final_filename)
 	
 class UserManager(BaseUserManager):
+	def check_username(self, instance):
+		username = instance.username
+		user = self.filter(username=username)
+		if user.exists():
+			size = random.randint(7,15)
+			rand_str = random_string_generator(size=size)
+			username = instance.username + rand_str
+		return username
+
 	def filter_by_username(self, username):
 		user_email_obj = self.filter(username=username).first()
-		print('HELLLLLLLLLLLOOOOOOOOO')
-		print(user_email_obj)
 		user_obj = self.get_by_natural_key(username=user_email_obj)
 		return user_obj
 	
@@ -253,11 +260,10 @@ pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 
 
 def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
-	# profile_obj = Profile.objects.get_or_create(user=instance)
-	# username_exists = User.objects.filter(username = instance.username)
-	# if username_exists.exists():
-	# 	raise ValueError("Username already exists")
 	if created:
+		username = User.objects.check_username(instance)
+		instance.username = username
+		instance.save()
 		obj = EmailActivation.objects.create(user=instance, email=instance.email)
 		obj.send_activation()
 

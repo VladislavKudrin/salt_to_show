@@ -9,7 +9,10 @@ class ProductCreateForm(forms.ModelForm):
 		'title',
 		'description',
 		'price',
-		'image'
+		'image',
+		'sex',
+		'category',
+
 
 	]
 

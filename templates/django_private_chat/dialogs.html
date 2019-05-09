@@ -8,49 +8,53 @@
 
 {% block content %}
     <input id="owner_username" type="hidden" value="{{ request.user.username }}">
-
+<div class='container' style="border: 3px solid" >
     <div class='row'>
         <div class="col-md-3 p-0">
-            <div class="scrollable">
-                <table class="table ">
-                    <tbody class="user-list-div">
-                            {% for dialog in object_list %}
-                                <tr>
-                                    <td class='user-table'>
-                                    {% if dialog.owner == request.user %}
-                                        {% with dialog.opponent.username as username %}
+            <div class='row ml-0 center d-flex p-1'style="height: 75px;border: 1px solid">
+                <img src="{{ owner_picture.url }}" class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px">
+            </div>
+            <div class="row ml-0 scrollable" style="height: 500px;">
+                    <table class="table">
+                        <tbody class="user-list-div">
+                                {% for dialog in object_list %}
+                                    <tr>
+                                        <td class='user-table p-0'>
+                                        {% if dialog.owner == request.user %}
+                                            {% with dialog.opponent.username as username %}
+                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}"
+                                                   class="btn" style="height: 70px; width: 100%; padding-top: 22px">{% trans "" %} {{ username }}</a>
+                                            {% endwith %}
+                                        {% else %}
+                                            {% with dialog.owner.username as username %}
                                             <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}"
-                                               class="btn" style="height: 100%; width: 100%">{% trans "Chat with" %} {{ username }}</a>
-                                        {% endwith %}
-                                    {% else %}
-                                        {% with dialog.owner.username as username %}
-                                        <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}"
-                                               class="btn" style="height: 100%; width: 100%">{% trans "Chat with" %} {{ username }}</a>
-                                        {% endwith %}
-                                    {% endif %}
-                                 </td>
-                                </tr>
-                            {% endfor %}
-                    </tbody> 
-                </table>
+                                                   class="btn " style="height: 70px; width: 100%; padding-top: 22px">{% trans "" %} {{ username }}</a>
+                                            {% endwith %}
+                                        {% endif %}
+                                     </td>
+                                    </tr>
+                                {% endfor %}
+                        </tbody> 
+                    </table>
             </div>
         </div>
 
 
 
-        <div class="col-md-9 ">
-             <div class="row">
-                <p>
+        <div class="col-md-9 p-0">
+             <div class="row pl-3">
+                <p class='col'>
                     {% if opponent_picture %}
-                        <img src="{{ opponent_picture.url }}" class="img-thumbnail ml-2" alt="..." style="width: 100px;">
+                        <img src="{{ opponent_picture.url }}" class="img-thumbnail ml-4" alt="..." style="width:60px; height: 60px">
                     {% else %}
-                        <img src="{% static 'img/user_noname.png' %}" class="img-thumbnail ml-2" alt="..." style="width: 100px;">
+                        <img src="{% static 'img/user_noname.png' %}" class="img-thumbnail ml-4" alt="..." style="width:60px; height: 60px">
                     {% endif %}
                     {{ opponent_username }}
                 </p>
-                <p class="text-success" id="online-status" style="display: none">{% trans "Online" %}</p>
+                <p class="text-success col" id="online-status" style="display: none">{% trans "Online" %}</p>
                 <p class="text-danger" id="offline-status" style="display: none">{% trans "Offline" %}</p>
                 <div class="col-md-3 col-md-offset-9">
+                    <i class="fas fa-paperclip fa-3x pull-right mt-2 ml-5 nav-item pointer"></i>
                     <span class="pull-right" hidden id="typing-text">
                         <strong>{{ opponent_username }} {% trans "is typing..." %}</strong>
                     </span>
@@ -58,9 +62,9 @@
             </div>
 
 
-            <div class="row">
-                <div class="messages-container" style="width: 1000px; height: 500px;">
-                    <div id="messages" class="messages" style="width: 1000px; height: 500px;">
+            <div class="row pl-3">
+                <div class="container" style=" height: 500px;">
+                    <div id="messages" class="messages" style="height: 500px;">
                         {% for msg in active_dialog.messages.all %}
                             <div class="row {% if msg.read %}msg-read{% else %}msg-unread{% endif %}"
                                  data-id="{{ msg.id }}">
@@ -78,15 +82,15 @@
 
 
 
-                <div class="row add-message m-0">
+                <div class="row add-message mt-0">
                     <div class="col-md-9">
-                        <div class="form-group m-0">
+                        <div class="form-group ml-4">
                             <textarea id="chat-message" class="form-control message"
                                   placeholder="{% trans 'Write a message' %}"></textarea>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2 p-0">
                         <div class="form-group clearfix m-0">
                             <i id="btn-send-message" class="fas fa-paper-plane fa-3x pull-right send-message pointer mt-2" value="{% trans 'Send' %}" ></i>
                         </div>
@@ -95,7 +99,7 @@
 
         </div>
     </div>
-
+</div>
 
 {% endblock %}
 
@@ -183,7 +187,7 @@
             function setUserOnlineOffline(username, online) {
                 var elem = $("#user-" + username);
                 if (online) {
-                    elem.attr("class", "btn btn-success");
+                    elem.attr("class", "btn btn-dark");
                 } else {
                     elem.attr("class", "btn btn-danger");
                 }
@@ -217,7 +221,7 @@
                         type: "check-online",
                         session_key: '{{ request.session.session_key }}',
                         username: opponent_username
-                        {#                      Sending username because the user needs to know if his opponent is online #}
+                        
                     });
                     var onConnectPacket = JSON.stringify({
                         type: "online",
@@ -239,7 +243,7 @@
                         type: "offline",
                         session_key: '{{ request.session.session_key }}',
                         username: opponent_username,
-                        {# Sending username because to let opponnent know that the user went offline #}
+                        
                     });
                     console.log('unloading, sending:', onClosePacket);
                     websocket.send(onClosePacket);
@@ -322,6 +326,13 @@
                 });
                 websocket.send(newMessagePacket)
             }
+
+            function sendImage(image){
+
+
+                
+            }
+
 
             $('#chat-message').keypress(function (e) {
                 if (e.which == 13 && this.value) {
