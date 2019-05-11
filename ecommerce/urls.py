@@ -38,7 +38,7 @@ from addresses.views import (
     checkout_address_create_view, 
     checkout_address_reuse_view
     )
-from accounts.views import LoginView, RegisterView, GuestRegisterView
+from accounts.views import RegisterLoginView, GuestRegisterView
 from .views import home_page, about_page, contact_page, test_page
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
@@ -47,7 +47,7 @@ urlpatterns = [
     url(r'^', include('django_private_chat.urls')),
     url(r'^test/$', test_page, name = 'test'),
     url(r'^$', home_page, name = 'home'),
-    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^login/$', RegisterLoginView.as_view(), name='login'),
     url(r'social-auth/', include('social_django.urls', namespace="social")),
     url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
     url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
@@ -59,7 +59,7 @@ urlpatterns = [
     url(r'^addresses/$', AddressListView.as_view(), name='addresses'),
     url(r'^addresses/create/$', AddressCreateView.as_view(), name='address-create'),
     url(r'^addresses/(?P<pk>\d+)/$', AddressUpdateView.as_view(), name='address-update'),
-    url(r'^register/$', RegisterView.as_view(), name='register'),
+    # url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^register/guest/$', GuestRegisterView.as_view(), name='guest_register'),
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include("products.urls",namespace='products')), #namespace классифицирует адрес, так как у одного имени может быть несколько адресов

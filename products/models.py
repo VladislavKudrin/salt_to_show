@@ -10,6 +10,7 @@ from django.urls import reverse
 
 
 
+
 def get_filename_ext(filepath):
 	base_name = os.path.basename(filepath)
 	name, ext = os.path.splitext(base_name)
@@ -43,7 +44,6 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		return self.filter(lookups).distinct()
 
 	def by_category_gender(self, query_category, query_gender):
-		print("Jopa")
 		# for x in query:
 		lookups_gender=(Q(category__iexact='nothing'))
 		for x in query_gender:
@@ -105,7 +105,6 @@ class Product(models.Model):
 	slug			= models.SlugField(default=None, unique = True, blank=True)
 	description 	= models.TextField()
 	price 			= models.DecimalField(decimal_places=2, max_digits=20, default=39.99)
-	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	featured		= models.BooleanField(default=False)
 	active			= models.BooleanField(default=True)
 	timestamp		= models.DateTimeField(auto_now_add=True)
@@ -142,6 +141,22 @@ def product_pre_save_reciever(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
+
+
+class Image(models.Model):
+	product 		= models.ForeignKey(Product, default=None, related_name='images')
+	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+
+	def __str__(self):
+		return self.product.title
+
+
+
+
+
+
+
+
 
 
 

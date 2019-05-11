@@ -12,7 +12,12 @@
     <div class='row'>
         <div class="col-md-3 p-0">
             <div class='row ml-0 center d-flex p-1'style="height: 75px;border: 1px solid">
+                {% if owner_picture %}
                 <img src="{{ owner_picture.url }}" class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px">
+                }
+                {% else %}
+                <img src="{% static 'img/user_noname.png' %}" class="img-thumbnail ml-4" alt="..." style="width:60px; height: 60px">
+                {% endif %}
             </div>
             <div class="row ml-0 scrollable" style="height: 500px;">
                     <table class="table">
