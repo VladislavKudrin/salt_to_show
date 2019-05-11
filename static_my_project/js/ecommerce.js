@@ -278,3 +278,107 @@ $(document).ready(
     }
   }
         )
+
+
+
+// Wishlist
+
+    var productForm=$(".form-product-ajax-wishlist")
+    productForm.submit(
+
+      function(event){
+
+        event.preventDefault()
+        var thisForm = $(this)
+        var actionEndpoint = thisForm.attr("action");
+        var actionEndpoint = thisForm.attr("data-endpoint");
+        var httpMethod = thisForm.attr("method");
+        var formData = thisForm.serialize();
+
+        $.ajax({
+          url: actionEndpoint,
+          method: httpMethod,
+          data: formData,
+          success: function(data){
+            var submitSpan = thisForm.find(".submit-span-wishlist")
+            if (data.added){
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-2x'></i></button>")
+            }
+            else {
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-2x'></i></button>")
+            }},
+        
+          error: function(errorData){
+            $.alert({
+              title: 'OOps!',
+              content: 'Simple alert!',
+              theme: "modern"
+            });
+  }
+})
+
+
+
+
+
+      }
+
+
+
+
+
+    )
+      
+    
+
+  //   function refreshCart(){
+  //     console.log("privet")
+  //     var cartTable = $(".cart-table")
+  //     var cartBody = cartTable.find(".cart-body")
+  //     //cartBody.html("<h1>Changed</h1>")
+  //     var productRows = cartBody.find(".cart-product")
+  //     var currentUrl = window.location.href
+  //     var refreshCartUrl='/api/cart/';
+  //     var refreshCartMethod = "GET";
+  //     var data = {};
+  //     $.ajax({
+  //       url: refreshCartUrl,
+  //       method: refreshCartMethod,
+  //       data: data,
+  //       success: function(data){
+  //         var hiddenCartItemRemoveForm = $(".cart-item-remove-form")
+  //         if (data.products.length > 0){
+  //           productRows.html(" ")
+  //           i = data.products.length
+  //           $.each(data.products,
+  //             function(index, value){
+  //               console.log(value)
+  //               var newCartItemRemove = hiddenCartItemRemoveForm.clone()
+  //               newCartItemRemove.css("display", "block")
+  //               //newCartItemRemove.removeClass("hidden-class")
+  //               newCartItemRemove.find(".cart-item-product-id").val(value.id)
+  //               cartBody.prepend(
+  //                 "<tr><th scope=\"row\">" + i + "</th><td><a href='" + value.url + "'>" + value.title + "</a>" + newCartItemRemove.html() + "<td>" + value.price + "</td>" + "</td></tr>")
+  //               i--
+
+  //             })
+            
+  //           cartBody.find(".cart-subtotal").text(data.subtotal)
+  //           cartBody.find(".cart-total").text(data.total)
+  //         } 
+  //         else{
+  //           window.location.href = currentUrl
+  //         }
+  //       },
+  //       error: function(errorData){
+  //         $.alert({
+  //             title: 'OOps!',
+  //             content: 'Simple alert!',
+  //             theme: "modern"
+  //           });
+  //       }
+      
+  //     })
+  //   }
+  // }
+  //       )

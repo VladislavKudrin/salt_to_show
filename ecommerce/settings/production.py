@@ -46,6 +46,9 @@ CHAT_WS_SERVER_HOST = 'localhost'
 CHAT_WS_SERVER_PORT = 5002
 CHAT_WS_SERVER_PROTOCOL = 'ws'
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 31536000 #1 year
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -243,7 +246,7 @@ MEDIA_URL = "/media/"
 # MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 
 
