@@ -2,7 +2,14 @@
 
 
 {% block content %}
-
+<!-- {% if messages %}
+<div class="alert alert-{{ messages.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style='height: 15px'>
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+{% endif %} -->
 
 <div class='row'>
 	<div class='col-12'>
@@ -10,7 +17,7 @@
 		<hr>
 	</div>
 	<div class='col-12 col-md-3 my-3'>
-		<div class="card"">
+		<div class="card">
 		  <div class="card-body">
 		    <h5 class="card-title">User Detail</h5>
 		    	<div class='list-group'>
@@ -25,7 +32,7 @@
 
 
 	<div class='col-12 col-md-3 my-3'>
-		<div class="card"">
+		<div class="card">
 		  <div class="card-body">
 		    <h5 class="card-title">History</h5>
 		    	<div class='list-group'>
@@ -60,7 +67,7 @@
 	</div>
 
 	<div class='col-12 col-md-3 my-3'>
-		<div class="card"">
+		<div class="card">
 		  <div class="card-body">
 		    <h5 class="card-title">Preferences</h5>
 		    	<div class='list-group'>
@@ -72,7 +79,7 @@
 
 
 	<div class='col-12 col-md-3 my-3'>
-		<div class="card"">
+		<div class="card">
 		  <div class="card-body">
 		    <h5 class="card-title">Support</h5>
 		    	<div class='list-group'>

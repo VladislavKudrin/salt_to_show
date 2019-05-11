@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'orders',
     'accounts',
     'billing',
+    'categories'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -243,7 +244,7 @@ MEDIA_URL = "/media/"
 # MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 
 
