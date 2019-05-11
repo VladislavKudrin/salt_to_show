@@ -1,16 +1,16 @@
 import datetime
 
-AWS_GROUP_NAME = 'Vlad_eCommerce_Group'
-AWS_USERNAME = 'vlad-ecommerce-user'
-AWS_ACCESS_KEY_ID = 'AKIA5747RSWQPVXDBXNF'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_GROUP_NAME = 'EnvisionGroup'
+AWS_USERNAME = 'envision-user'
+AWS_ACCESS_KEY_ID = 'AKIA2R5PIZK6CADVS36G'
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
 
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
-AWS_STORAGE_BUCKET_NAME = 'vlad-ecommerce-1'
+AWS_STORAGE_BUCKET_NAME = 'envision-ecommerce-1'
 S3DIRECT_REGION = 'us-east-2'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME

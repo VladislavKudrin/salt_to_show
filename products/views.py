@@ -14,8 +14,14 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
+<<<<<<< HEAD
+from .models import Product
+from .forms import ProductCreateForm
+from accounts.models import User
+=======
 from .models import Product, Image
 from .forms import ProductCreateForm, ImageForm
+>>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
 
 
 class ProductFeaturedListView(ListView):
@@ -177,6 +183,8 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 	return render(request, "products/detail.html", context)
 
 
+<<<<<<< HEAD
+=======
 
 
 
@@ -210,6 +218,7 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 # 	{'postForm': postForm, 'formset': formset},
 # 	context_instance=RequestContext(request))
 
+>>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
 class ProductCreateView(LoginRequiredMixin, CreateView):
 	image_form_set = modelformset_factory(Image, form = ImageForm, extra=3)
 	def post(self, request, *args, **kwargs):
@@ -236,6 +245,17 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 		return render(request, 'products/product-create.html', context)
 
 
+<<<<<<< HEAD
+	def form_valid(self, form):
+		user = self.request.user
+		product = form.save()
+		product.user = user
+		product.active = True
+		product.save()
+		return super(ProductCreateView, self).form_valid(form)
+		
+=======
+>>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
 
 	def get_context_data(self, *args, **kwargs): #overwriting default
 		context = super(ProductCreateView, self).get_context_data(*args, **kwargs) #default method
@@ -339,3 +359,50 @@ def product_delete(request):
 		return redirect("products:user-list")
 	else:
 		return redirect('login')
+
+class WishListView(LoginRequiredMixin, ListView):
+	template_name = 'products/wish-list.html'
+	def get_queryset(self, *args, **kwargs):
+		user = self.request.user
+		wishes = user.wishes.all()
+		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
+		return Product.objects.filter(pk__in=wishes)
+
+
+def wishlistupdate(request):
+	product_id =request.POST.get('pk')
+	product_obj = Product.objects.get(pk=product_id)
+	request.user.wishes.add(product_obj)
+	return redirect("accounts:home")
+
+
+def wishlistupdate(request):
+	product_id=request.POST.get('product_id')
+	user = request.user
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			print("Show message to user!")
+			return redirect("products:wish-list")
+		# cart_obj, new_obj = User.objects.get_or_create(request)
+		if product_obj in user.wishes.all():
+			user.wishes.remove(product_obj)
+			added = False
+		else:
+			user.wishes.add(product_obj)
+			added = True
+		#request.session['cart_items']=cart_obj.products.count()
+		if request.is_ajax():
+			print("Ajax request YES")
+			json_data={
+				"added": added,
+				"removed": not added,
+				#"wishes":cart_obj.products.count()
+			}
+			return JsonResponse(json_data, status=200)
+	return redirect("products:wish-list")
+
+
+
+

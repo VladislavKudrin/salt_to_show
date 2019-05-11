@@ -151,7 +151,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 	        
 # 	return render(request, "accounts/login.html", context)
 
-#User = get_user_model()
+# #User = get_user_model()
 
 
 
@@ -208,11 +208,6 @@ class ProfileView(DetailView):
 		except User.DoesNotExist:
 			raise Http404("Not Found")
 		return User.objects.filter_by_username(username=username)
-
-
-
-
-
 
 
 

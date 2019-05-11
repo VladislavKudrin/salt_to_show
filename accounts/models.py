@@ -16,6 +16,7 @@ from django.utils import timezone
 from django.shortcuts import redirect
 
 from ecommerce.utils import random_string_generator, unique_key_generator
+from products.models import Product
 #send_mail(subject, message, from_email, recipient_list, html_message)
 
 
@@ -100,10 +101,15 @@ class User(AbstractBaseUser):
 	admin 			= models.BooleanField(default=False)
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	profile_foto	= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	wishes 			= models.ManyToManyField(Product, related_name='users')
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default
+<<<<<<< HEAD
+	REQUIRED_FIELDS = []#additional required field
+=======
 	REQUIRED_FIELDS = []#['full_name']
+>>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
 
 	objects=UserManager()
 
@@ -133,6 +139,10 @@ class User(AbstractBaseUser):
 	def has_module_perms(self, app_label):
 		return True
 
+	def get_wishes(self):
+		if self.wishes:
+			return self.wishes
+		pass
 
 	@property
 	def is_staff(self):

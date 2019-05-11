@@ -22,9 +22,12 @@
 	<div class='col-12 col-md-6'>
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% include 'products/wish-list-update.html' with product=object %}
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller ' object=object.user %}
 			{% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+			{% include 'products/wish-list-update.html' with product=object %}
+
 		{% endif %}
 	</div>
 </div>

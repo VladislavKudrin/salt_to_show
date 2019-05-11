@@ -27,7 +27,7 @@ ecommerce/settings/local.py
 live-static-files/
 # src/<yourproject>/settings/local.py
 # static-cdn/  # any collected static files 
-
+live-static-files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

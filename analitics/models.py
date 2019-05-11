@@ -83,9 +83,9 @@ class UserSession(models.Model):
 		session_key = self.session_key
 		
 		try:
-			Session.objects.get(pk=session_key).delete()
+			Session.objects.get(pk=session_key)
 			self.active = False
-			self.ended = True
+			self.ended = False
 			self.save()
 		except:
 			pass
