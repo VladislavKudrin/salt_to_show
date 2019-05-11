@@ -14,14 +14,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
-<<<<<<< HEAD
-from .models import Product
-from .forms import ProductCreateForm
+
+
 from accounts.models import User
-=======
 from .models import Product, Image
 from .forms import ProductCreateForm, ImageForm
->>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
 
 
 class ProductFeaturedListView(ListView):
@@ -183,11 +180,6 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 	return render(request, "products/detail.html", context)
 
 
-<<<<<<< HEAD
-=======
-
-
-
 
 
 # @login_required
@@ -218,7 +210,6 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 # 	{'postForm': postForm, 'formset': formset},
 # 	context_instance=RequestContext(request))
 
->>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
 class ProductCreateView(LoginRequiredMixin, CreateView):
 	image_form_set = modelformset_factory(Image, form = ImageForm, extra=3)
 	def post(self, request, *args, **kwargs):
@@ -245,17 +236,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 		return render(request, 'products/product-create.html', context)
 
 
-<<<<<<< HEAD
-	def form_valid(self, form):
-		user = self.request.user
-		product = form.save()
-		product.user = user
-		product.active = True
-		product.save()
-		return super(ProductCreateView, self).form_valid(form)
-		
-=======
->>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
+	# def form_valid(self, form):
+	# 	user = self.request.user
+	# 	product = form.save()
+	# 	product.user = user
+	# 	product.active = True
+	# 	product.save()
+	# 	return super(ProductCreateView, self).form_valid(form)
+
 
 	def get_context_data(self, *args, **kwargs): #overwriting default
 		context = super(ProductCreateView, self).get_context_data(*args, **kwargs) #default method

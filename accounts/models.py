@@ -105,11 +105,9 @@ class User(AbstractBaseUser):
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default
-<<<<<<< HEAD
+
 	REQUIRED_FIELDS = []#additional required field
-=======
-	REQUIRED_FIELDS = []#['full_name']
->>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
+
 
 	objects=UserManager()
 

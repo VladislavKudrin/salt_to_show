@@ -228,7 +228,7 @@ class RegisterLoginForm(forms.ModelForm):
             pass
         return data
 
-<<<<<<< HEAD
+# <<<<<<< HEAD
     # def form_valid(self, form):
     # request = self.request
     # next_ = request.GET.get('next')
@@ -254,87 +254,88 @@ class RegisterLoginForm(forms.ModelForm):
     # return super(LoginView, self).form_invalid(form)
 
 
-class RegisterForm(forms.ModelForm):
-    """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
-    # full_name = forms.CharField(
-    #     widget=forms.TextInput(
-    #     attrs={'placeholder': 'Your Full Name'}), label=''
-    #     )
-    email = forms.CharField(
-        widget=forms.EmailInput(
-        attrs={'placeholder': 'Your Email'}), label=''
-        )
-    # username = forms.CharField(
-    #     widget=forms.TextInput(
-    #     attrs={'placeholder': 'Your Username'}), label=''
-    #     )
-    password1 = forms.CharField(label='', widget=forms.PasswordInput(
-        attrs={'placeholder': 'Your Password'}))
-    # password2 = forms.CharField(label='', widget=forms.PasswordInput(
-    #     attrs={'placeholder': 'Confirm your Password'}))
+# class RegisterForm(forms.ModelForm):
+#     """A form for creating new users. Includes all the required
+#     fields, plus a repeated password."""
+#     # full_name = forms.CharField(
+#     #     widget=forms.TextInput(
+#     #     attrs={'placeholder': 'Your Full Name'}), label=''
+#     #     )
+#     email = forms.CharField(
+#         widget=forms.EmailInput(
+#         attrs={'placeholder': 'Your Email'}), label=''
+#         )
+#     # username = forms.CharField(
+#     #     widget=forms.TextInput(
+#     #     attrs={'placeholder': 'Your Username'}), label=''
+#     #     )
+#     password1 = forms.CharField(label='', widget=forms.PasswordInput(
+#         attrs={'placeholder': 'Your Password'}))
+#     # password2 = forms.CharField(label='', widget=forms.PasswordInput(
+#     #     attrs={'placeholder': 'Confirm your Password'}))
 
-# class LoginForm(forms.Form):
-#     email=forms.EmailField(label='Email')
-#     password=forms.CharField(widget=forms.PasswordInput())
+# # class LoginForm(forms.Form):
+# #     email=forms.EmailField(label='Email')
+# #     password=forms.CharField(widget=forms.PasswordInput())
 
-#     def __init__(self, request, *args, **kwargs):
-#         self.request = request
-#         super(LoginForm,self).__init__(*args,**kwargs)
+# #     def __init__(self, request, *args, **kwargs):
+# #         self.request = request
+# #         super(LoginForm,self).__init__(*args,**kwargs)
 
-    def clean(self):
-        request = self.request
-        data = self.cleaned_data
-        email = data.get("email")
-        password = data.get("password")
-        qs = User.objects.filter(email=email)
-        if qs.exists():
-            #user email is registred, check active
-            not_active = qs.filter(is_active=False)
-            if not_active.exists():
-                ##check email activation
-                link = reverse("accounts:resend-activation")
-                reconfirm_msg="""Go to <a href='{resend_link}'>
-                resend confirmation email</a>.
-                """.format(resend_link = link)
-                confirm_email=EmailActivation.objects.filter(email=email)
-                is_confirmable = confirm_email.confirmable().exists()
-                if is_confirmable:
-                    msg1 = "Please check your email to confirm your account. "+ reconfirm_msg
-                    raise forms.ValidationError(mark_safe(msg1))
-                email_confirm_exists_qs = EmailActivation.objects.email_exists(email).exists()
-                if email_confirm_exists_qs:
-                    msg2 = "Email not confirmed. "+reconfirm_msg
-                    raise forms.ValidationError(mark_safe(msg2))
-                if not is_confirmable and not email_confirm_exists_qs:
-                    raise forms.ValidationError("This user is inactive")
-        user = authenticate(request, username=email, password=password)
-        if user is None:
-            raise forms.ValidationError("Invelid credentials")
-        login(request, user)
-        self.user = user
-        user_logged_in_signal.send(user.__class__, instance = user, request = request)
-        try:
-            del request.session['guest_email_id']
-        except:
-            pass
-        return data
+#     def clean(self):
+#         request = self.request
+#         data = self.cleaned_data
+#         email = data.get("email")
+#         password = data.get("password")
+#         qs = User.objects.filter(email=email)
+#         if qs.exists():
+#             #user email is registred, check active
+#             not_active = qs.filter(is_active=False)
+#             if not_active.exists():
+#                 ##check email activation
+#                 link = reverse("accounts:resend-activation")
+#                 reconfirm_msg="""Go to <a href='{resend_link}'>
+#                 resend confirmation email</a>.
+#                 """.format(resend_link = link)
+#                 confirm_email=EmailActivation.objects.filter(email=email)
+#                 is_confirmable = confirm_email.confirmable().exists()
+#                 if is_confirmable:
+#                     msg1 = "Please check your email to confirm your account. "+ reconfirm_msg
+#                     raise forms.ValidationError(mark_safe(msg1))
+#                 email_confirm_exists_qs = EmailActivation.objects.email_exists(email).exists()
+#                 if email_confirm_exists_qs:
+#                     msg2 = "Email not confirmed. "+reconfirm_msg
+#                     raise forms.ValidationError(mark_safe(msg2))
+#                 if not is_confirmable and not email_confirm_exists_qs:
+#                     raise forms.ValidationError("This user is inactive")
+#         user = authenticate(request, username=email, password=password)
+#         if user is None:
+#             raise forms.ValidationError("Invelid credentials")
+#         login(request, user)
+#         self.user = user
+#         user_logged_in_signal.send(user.__class__, instance = user, request = request)
+#         try:
+#             del request.session['guest_email_id']
+#         except:
+#             pass
+#         return data
 
         
-    class Meta:
-        model = User
-        fields = ('email',)
+#     class Meta:
+#         model = User
+#         fields = ('email',)
 
-    # def clean_password2(self):
-    #     # Check that the two password entries match
-    #     password1 = self.cleaned_data.get("password1")
-    #     password2 = self.cleaned_data.get("password2")
-    #     if password1 and password2 and password1 != password2:
-    #         raise forms.ValidationError("Passwords don't match")
-    #     return password2
+#     # def clean_password2(self):
+#     #     # Check that the two password entries match
+#     #     password1 = self.cleaned_data.get("password1")
+#     #     password2 = self.cleaned_data.get("password2")
+#     #     if password1 and password2 and password1 != password2:
+#     #         raise forms.ValidationError("Passwords don't match")
+#     #     return password2
 
-=======
->>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
+# =======
+# >>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
+
     def save(self, commit=True):
         # Save the provided password in hashed format
         user = super(RegisterLoginForm, self).save(commit=False)
