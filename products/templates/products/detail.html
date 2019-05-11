@@ -8,10 +8,17 @@
 		{{ object.timestamp|timesince }} ago
 		{{ object.description|linebreaks }} <br/>
 		<a class='btn btn-success' href='{{ object.user.get_absolute_url }}'>{{ object.user.username }}</a>
-		{% if object.image %}
-			<img src="{{ object.image.url }}" class = 'img-fluid'/>
+		{% if object.images.all %}
+			{% for image in object.images.all %}
+				<img src="{{ image.image.url }}" class="img-thumbnail ml-2" alt="..." style="width:200px; height: 200px">
+			{% endfor %}
 		{% endif %}
 	</div>
+
+	<button type="submit"  class="hidden-button">
+      	<i class="fas fa-heart"></i>
+	</button>
+	
 	<div class='col-12 col-md-6'>
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}

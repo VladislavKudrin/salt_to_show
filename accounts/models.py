@@ -37,14 +37,20 @@ def upload_image_path(instance, filename):
 		final_filename=final_filename)
 	
 class UserManager(BaseUserManager):
+	def check_username(self, instance):
+		username = instance.username
+		user = self.filter(username=username)
+		if user.exists():
+			rand_str = random_string_generator(size=1)
+			username = instance.username + rand_str
+		return username
+
 	def filter_by_username(self, username):
 		user_email_obj = self.filter(username=username).first()
-		print('HELLLLLLLLLLLOOOOOOOOO')
-		print(user_email_obj)
 		user_obj = self.get_by_natural_key(username=user_email_obj)
 		return user_obj
 	
-	def create_user(self, email, username, full_name = None, password=None, is_active = True, is_staff=False, is_admin=False):
+	def create_user(self, email, username=None, full_name = None, password=None, is_active = False, is_staff=False, is_admin=False):
 		if not email:
 			raise ValueError("Users must have an email address and username!")
 		# if not password:
@@ -62,7 +68,7 @@ class UserManager(BaseUserManager):
 		user_obj.save(using=self._db)
 		return user_obj
 
-	def create_staffuser(self, email, username, full_name=None, password = None ):
+	def create_staffuser(self, email, username=None, full_name=None, password = None ):
 		user = self.create_user(
 				email,
 				username,
@@ -73,7 +79,7 @@ class UserManager(BaseUserManager):
 			)
 		return user
 
-	def create_superuser(self, email, username, full_name=None, password = None):
+	def create_superuser(self, email, username=None, full_name=None, password = None):
 		user = self.create_user(
 				email,
 				username,
@@ -99,7 +105,11 @@ class User(AbstractBaseUser):
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default
+<<<<<<< HEAD
 	REQUIRED_FIELDS = []#additional required field
+=======
+	REQUIRED_FIELDS = []#['full_name']
+>>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
 
 	objects=UserManager()
 
@@ -256,16 +266,19 @@ def pre_save_email_activation(sender, instance, *args, **kwargs):
 			instance.key = unique_key_generator(instance)
 
 pre_save.connect(pre_save_email_activation, sender=EmailActivation)
+	
+def pre_save_user_create_reciever(sender, instance, *args, **kwargs):
+	if instance.username:
+		username = User.objects.check_username(instance)
+		instance.username = username
 
+pre_save.connect(pre_save_user_create_reciever, sender=User)
 
 def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
-	# profile_obj = Profile.objects.get_or_create(user=instance)
-	# username_exists = User.objects.filter(username = instance.username)
-	# if username_exists.exists():
-	# 	raise ValueError("Username already exists")
 	if created:
 		obj = EmailActivation.objects.create(user=instance, email=instance.email)
 		obj.send_activation()
+		instance.save()
 
 post_save.connect(post_save_user_create_reciever, sender=User)
 

@@ -97,13 +97,95 @@ class GuestForm(forms.ModelForm):
         return obj
 
 
-class LoginForm(forms.Form):
-    email=forms.EmailField(label='Email')
-    password=forms.CharField(widget=forms.PasswordInput())
+# class LoginForm(forms.Form):
+#     email=forms.EmailField(label='Email')
+#     password=forms.CharField(widget=forms.PasswordInput())
+
+#     def __init__(self, request, *args, **kwargs):
+#         self.request = request
+#         super(LoginForm,self).__init__(*args,**kwargs)
+
+#     def clean(self):
+#         request = self.request
+#         data = self.cleaned_data
+#         email = data.get("email")
+#         password = data.get("password")
+#         qs = User.objects.filter(email=email)
+#         if qs.exists():
+#             #user email is registred, check active
+#             not_active = qs.filter(is_active=False)
+#             if not_active.exists():
+#                 ##check email activation
+#                 link = reverse("accounts:resend-activation")
+#                 reconfirm_msg="""Go to <a href='{resend_link}'>
+#                 resend confirmation email</a>.
+#                 """.format(resend_link = link)
+#                 confirm_email=EmailActivation.objects.filter(email=email)
+#                 is_confirmable = confirm_email.confirmable().exists()
+#                 if is_confirmable:
+#                     msg1 = "Please check your email to confirm your account. "+ reconfirm_msg
+#                     raise forms.ValidationError(mark_safe(msg1))
+#                 email_confirm_exists_qs = EmailActivation.objects.email_exists(email).exists()
+#                 if email_confirm_exists_qs:
+#                     msg2 = "Email not confirmed. "+reconfirm_msg
+#                     raise forms.ValidationError(mark_safe(msg2))
+#                 if not is_confirmable and not email_confirm_exists_qs:
+#                     raise forms.ValidationError("This user is inactive")
+#         user = authenticate(request, username=email, password=password)
+#         if user is None:
+#             raise forms.ValidationError("Invelid credentials")
+#         login(request, user)
+#         self.user = user
+#         user_logged_in_signal.send(user.__class__, instance = user, request = request)
+#         try:
+#             del request.session['guest_email_id']
+#         except:
+#             pass
+#         return data
+
+    # def form_valid(self, form):
+    # request = self.request
+    # next_ = request.GET.get('next')
+    # next_post = request.POST.get('next')
+    # redirect_path=next_ or next_post or None
+    # email = form.cleaned_data.get("email")
+    # password = form.cleaned_data.get("password")        
+
+    # if user is not None:
+    #     if not user.is_active:
+    #         messages.error(request, "This user is inactive!")
+    #         return super(LoginView, self).form_invalid(form)
+    #     login(request, user)
+    #     user_logged_in_signal.send(user.__class__, instance = user, request = request)
+    #     try:
+    #         del request.session['guest_email_id']
+    #     except:
+    #         pass
+    #     if is_safe_url(redirect_path, request.get_host()):
+    #         return redirect(redirect_path)
+    #     else:
+    #         return redirect("/")
+    # return super(LoginView, self).form_invalid(form)
+
+
+class RegisterLoginForm(forms.ModelForm):
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+    class Meta:
+        model = User
+        fields = ('email',)
+
+    email = forms.CharField(
+        widget=forms.EmailInput(
+        attrs={'placeholder': 'Your Email'}), label=''
+        )
+
+    password = forms.CharField(label='', widget=forms.PasswordInput(
+        attrs={'placeholder': 'Your Password'}))
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
-        super(LoginForm,self).__init__(*args,**kwargs)
+        super(RegisterLoginForm,self).__init__(*args,**kwargs)
 
     def clean(self):
         request = self.request
@@ -111,6 +193,9 @@ class LoginForm(forms.Form):
         email = data.get("email")
         password = data.get("password")
         qs = User.objects.filter(email=email)
+        if not qs.exists():
+            username = email.split("@")[0]
+            User.objects.create_user(email=email, username=username, password=password)
         if qs.exists():
             #user email is registred, check active
             not_active = qs.filter(is_active=False)
@@ -124,7 +209,7 @@ class LoginForm(forms.Form):
                 is_confirmable = confirm_email.confirmable().exists()
                 if is_confirmable:
                     msg1 = "Please check your email to confirm your account. "+ reconfirm_msg
-                    raise forms.ValidationError(mark_safe(msg1))
+                    raise forms.ValidationError(mark_safe(msg1))  
                 email_confirm_exists_qs = EmailActivation.objects.email_exists(email).exists()
                 if email_confirm_exists_qs:
                     msg2 = "Email not confirmed. "+reconfirm_msg
@@ -143,6 +228,7 @@ class LoginForm(forms.Form):
             pass
         return data
 
+<<<<<<< HEAD
     # def form_valid(self, form):
     # request = self.request
     # next_ = request.GET.get('next')
@@ -247,10 +333,12 @@ class RegisterForm(forms.ModelForm):
     #         raise forms.ValidationError("Passwords don't match")
     #     return password2
 
+=======
+>>>>>>> 3f04dcfd8bd18e9b4c1f30c2a729790f730d6cd9
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super(RegisterForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
+        user = super(RegisterLoginForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
         user.is_active=False #confirmation email
         # obj, is_created = EmailActivation.objects.create(user=user)
         # obj.send_activation_email()

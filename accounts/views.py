@@ -17,7 +17,7 @@ from django.http import HttpResponseRedirect
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User
-from .forms import LoginForm, RegisterForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
+from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 
 
@@ -29,6 +29,7 @@ from .signals import user_logged_in_signal
 class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 	template_name = 'accounts/home.html' 
 	def get_object(self):
+		user=User.objects.check_username(self.request.user)
 		return self.request.user
 
 class AccountEmailActivateView(FormMixin, View):
@@ -43,7 +44,10 @@ class AccountEmailActivateView(FormMixin, View):
 				obj = confirm_qs.first()
 				obj.activate()
 				messages.success(request, "Your Email has been confirmed. Please login.")
-				return redirect("login")
+				email = qs.first().user.email
+				password = qs.first().user.password
+				login(request, qs.first().user, backend='django.contrib.auth.backends.ModelBackend') 
+				return redirect("accounts:home")
 			else:
 				activated_qs = qs.filter(activated=True)
 				if activated_qs.exists():
@@ -105,10 +109,10 @@ class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
 	# 	return redirect(self.get_next_url())
 
 
-class LoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
-	form_class = LoginForm
+class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
+	form_class = RegisterLoginForm
 	success_url = '/'
-	template_name = 'accounts/login.html'
+	template_name = 'accounts/register.html'
 	default_next='/'
 
 	def form_valid(self, form):
@@ -150,10 +154,13 @@ class LoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 # #User = get_user_model()
 
 
-class RegisterView(CreateView):
-	form_class = RegisterForm
-	template_name = 'accounts/register.html'
-	success_url = '/login/'
+
+
+
+
+
+
+
 
 class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = UserDetailChangeForm
