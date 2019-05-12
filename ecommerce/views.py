@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, get_user_model
 
 from .forms import ContactForm
 def test_page(request):
-	return render(request, "test_vlad/first.html", {})
+	return render(request, "categories/slidebar.html", {})
 
 
 
