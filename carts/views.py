@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
  
-from accounts.forms import LoginForm, GuestForm
+from accounts.forms import RegisterLoginForm, GuestForm
 from accounts.models import GuestEmail
 from addresses.models import Address
 from addresses.forms import AddressForm, AddressCheckoutForm
@@ -84,7 +84,7 @@ def checkout_home(request):
 	if cart_created or cart_obj.products.count()==0:
 		return redirect("carts:home")
 
-	login_form = LoginForm(request=request)
+	login_form = RegisterLoginForm(request=request)
 	guest_form = GuestForm(request=request)
 	address_form = AddressCheckoutForm()
 	billing_address_id = request.session.get("billing_address_id", None)

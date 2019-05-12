@@ -46,6 +46,9 @@ CHAT_WS_SERVER_HOST = 'localhost'
 CHAT_WS_SERVER_PORT = 5002
 CHAT_WS_SERVER_PROTOCOL = 'ws'
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 31536000 #1 year
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -73,6 +76,7 @@ INSTALLED_APPS = [
     'orders',
     'accounts',
     'billing',
+    'categories'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -143,6 +147,19 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.social_details',
+#     'social_core.pipeline.social_auth.social_uid',
+#     'social_core.pipeline.social_auth.social_user',
+#     'social_core.pipeline.user.get_username',
+#     'social_core.pipeline.user.create_user',
+#     'social_core.pipeline.social_auth.associate_user',
+#     'social_core.pipeline.social_auth.load_extra_data',
+#     'social_core.pipeline.user.user_details',
+#     'social_core.pipeline.social_auth.associate_by_email',
+#     # 'social_core.pipeline.user.make_active',
+
+# )
 
 
 

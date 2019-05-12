@@ -2,6 +2,18 @@
 	color: black;
 } 
 
+.hidden-button {
+  background: none;
+  padding: 0px;
+  border: none;
+}
+
+.hidden-button-outline:focus {
+   outline: none; 
+}
+
+
+
 .dropdown-menu {
   width: 100px; 
 }

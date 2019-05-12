@@ -17,7 +17,7 @@ from django.http import HttpResponseRedirect
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User
-from .forms import LoginForm, RegisterForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
+from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 
 
@@ -29,6 +29,7 @@ from .signals import user_logged_in_signal
 class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 	template_name = 'accounts/home.html' 
 	def get_object(self):
+		user=User.objects.check_username(self.request.user)
 		return self.request.user
 
 class AccountEmailActivateView(FormMixin, View):
@@ -43,7 +44,10 @@ class AccountEmailActivateView(FormMixin, View):
 				obj = confirm_qs.first()
 				obj.activate()
 				messages.success(request, "Your Email has been confirmed. Please login.")
-				return redirect("login")
+				email = qs.first().user.email
+				password = qs.first().user.password
+				login(request, qs.first().user, backend='django.contrib.auth.backends.ModelBackend') 
+				return redirect("accounts:home")
 			else:
 				activated_qs = qs.filter(activated=True)
 				if activated_qs.exists():
@@ -105,10 +109,10 @@ class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
 	# 	return redirect(self.get_next_url())
 
 
-class LoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
-	form_class = LoginForm
+class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
+	form_class = RegisterLoginForm
 	success_url = '/'
-	template_name = 'accounts/login.html'
+	template_name = 'accounts/register.html'
 	default_next='/'
 
 	def form_valid(self, form):
@@ -116,44 +120,47 @@ class LoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		return redirect(next_path)
 
 
-def login_page(request):
-	form = LoginForm(request.POST or None)
-	context ={
+# def login_page(request):
+# 	form = LoginForm(request.POST or None)
+# 	context ={
 
-		'form':form
+# 		'form':form
 
-	}
-	#print(request.user.is_authenticated())
+# 	}
+# 	#print(request.user.is_authenticated())
 
-	next_ = request.GET.get('next')
-	next_post = request.POST.get('next')
-	redirect_path=next_ or next_post or None
-	if form.is_valid():
-		username = form.cleaned_data.get("username")
-		password = form.cleaned_data.get("password")		
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request, user)
-			try:
-				del request.session['guest_email_id']
-			except:
-				pass
-			if is_safe_url(redirect_path, request.get_host()):
-				return redirect(redirect_path)
-			else:
-				return redirect("/")
-		else:
-			print("Error")
+# 	next_ = request.GET.get('next')
+# 	next_post = request.POST.get('next')
+# 	redirect_path=next_ or next_post or None
+# 	if form.is_valid():
+# 		username = form.cleaned_data.get("username")
+# 		password = form.cleaned_data.get("password")		
+# 		user = authenticate(request, username=username, password=password)
+# 		if user is not None:
+# 			login(request, user)
+# 			try:
+# 				del request.session['guest_email_id']
+# 			except:
+# 				pass
+# 			if is_safe_url(redirect_path, request.get_host()):
+# 				return redirect(redirect_path)
+# 			else:
+# 				return redirect("/")
+# 		else:
+# 			print("Error")
 	        
-	return render(request, "accounts/login.html", context)
+# 	return render(request, "accounts/login.html", context)
 
-#User = get_user_model()
+# #User = get_user_model()
 
 
-class RegisterView(CreateView):
-	form_class = RegisterForm
-	template_name = 'accounts/register.html'
-	success_url = '/login/'
+
+
+
+
+
+
+
 
 class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = UserDetailChangeForm
@@ -183,11 +190,17 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
 
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProfileView, self).get_context_data(*args,**kwargs)
+		context['btn_title'] = 'Begin Chat with '
+		return context
+
 	def post(self, request, *args, **kwargs):
 		next_ = request.POST.get('next', '/')
 		username = self.kwargs.get('username')
 		redirect_url = next_ + 'dialogs/' + username
 		return HttpResponseRedirect(redirect_url)
+	
 	def get_object(self, *args, **kwargs):
 		username = self.kwargs.get('username')
 		try:
@@ -195,11 +208,6 @@ class ProfileView(DetailView):
 		except User.DoesNotExist:
 			raise Http404("Not Found")
 		return User.objects.filter_by_username(username=username)
-
-
-
-
-
 
 
 
