@@ -6,7 +6,6 @@ from django.views.generic.edit import FormMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 
-from django.forms import modelformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -184,17 +183,17 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 
 # @login_required
 # def product_create_view(request):
-# 	ImageFormSet = modelformset_factory(Image,
+# 	Imageimage_form = modelimage_form_factory(Image,
 # 										form=ImageForm, extra=3)
 # 	if request.method == 'POST':
 # 		productForm = ProductForm(request.POST)
-# 		formset = ImageFormSet(request.POST, request.FILES,
+# 		image_form = Imageimage_form(request.POST, request.FILES,
 # 									queryset=Image.objects.none())
-# 		if productForm.is_valid() and formset.is_valid():
+# 		if productForm.is_valid() and image_form.is_valid():
 # 			product = postForm.save(commit=False)
 # 			product.user = request.user
 # 			product.save()
-# 			for form in formset.cleaned_data:
+# 			for form in image_form.cleaned_data:
 # 	image = form['image']
 # 	photo = Images(post=post_form, image=image)
 # 	photo.save()
@@ -202,37 +201,54 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 # 	"Posted!")
 # 	return HttpResponseRedirect("/")
 # 	else:
-# 	print postForm.errors, formset.errors
+# 	print postForm.errors, image_form.errors
 # 	else:
 # 	postForm = PostForm()
-# 	formset = ImageFormSet(queryset=Images.objects.none())
+# 	image_form = Imageimage_form(queryset=Images.objects.none())
 # 	return render(request, 'index.html',
-# 	{'postForm': postForm, 'formset': formset},
+# 	{'postForm': postForm, 'image_form': image_form},
 # 	context_instance=RequestContext(request))
 
+# class BasePhotosimage_form(BaseModelimage_form):
+
+    #By default, when you create a image_form from a model, the image_form
+    #will use a queryset that includes all objects in the model
+
+    # def __init__(self, *args, **kwargs):
+    #     if 'city' in kwargs.keys():
+    #         city = kwargs.pop('city')
+    #     else:
+    #         city = None
+    #     super().__init__(*args, **kwargs)
+    #     if city and isinstance(instance, Cities):
+    #         self.queryset = Image.objects.filter(city=city)
+    #     else:
+    #         self.queryset = Description_Photos.objects.none()
+
+
 class ProductCreateView(LoginRequiredMixin, CreateView):
-	image_form_set = modelformset_factory(Image, form = ImageForm, extra=3)
-	def post(self, request, *args, **kwargs):
+
+	def post(self, request, *args, **kwargs): 
 		product_form = ProductCreateForm(request.POST)
-		formset = self.image_form_set(request.POST, request.FILES, queryset=Image.objects.none())
-		if product_form.is_valid() and formset.is_valid():
+		image_form = ImageForm(request.POST, request.FILES)
+		files = request.FILES.getlist('image')
+		if product_form.is_valid() and image_form.is_valid():
 			product = product_form.save(commit=False)
 			product.user = request.user
 			product.active = True
 			product.save()
-			for form in formset.cleaned_data:
-				image = form['image']
+			for image in files:
 				product_foto = Image(product=product, image=image)
 				product_foto.save()
 			return super(ProductCreateView, self).form_valid(product_form)
 
 	def get(self, request, *args, **kwargs):
 		product_form = ProductCreateForm()
-		formset = self.image_form_set(queryset=Image.objects.none())
+		image_form = ImageForm(request.POST, request.FILES)
 		context={}
 		context['title']='Create New Product' #add kwarg / add your field for html
-		context['productForm'] = product_form
-		context['formset'] = formset
+		context['product_form'] = product_form
+		context['image_form'] = image_form
 		return render(request, 'products/product-create.html', context)
 
 
