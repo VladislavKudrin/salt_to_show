@@ -42,7 +42,7 @@ class UserManager(BaseUserManager):
 		user = self.filter(username=username)
 		if user.exists():
 			rand_str = random_string_generator(size=1)
-			username = instance.username + rand_str
+			username = str(instance.username) + rand_str
 		return username
 
 	def filter_by_username(self, username):
@@ -50,7 +50,7 @@ class UserManager(BaseUserManager):
 		user_obj = self.get_by_natural_key(username=user_email_obj)
 		return user_obj
 	
-	def create_user(self, email, username=None, full_name = None, password=None, is_active = False, is_staff=False, is_admin=False):
+	def create_user(self, email, username=None, full_name = None, password=None, is_active = True, is_staff=False, is_admin=False):
 		if not email:
 			raise ValueError("Users must have an email address and username!")
 		# if not password:
@@ -68,7 +68,7 @@ class UserManager(BaseUserManager):
 		user_obj.save(using=self._db)
 		return user_obj
 
-	def create_staffuser(self, email, username=None, full_name=None, password = None ):
+	def create_staffuser(self, email, username=None, full_name=None, password = None):
 		user = self.create_user(
 				email,
 				username,

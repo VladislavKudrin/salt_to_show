@@ -195,7 +195,7 @@ class RegisterLoginForm(forms.ModelForm):
         qs = User.objects.filter(email=email)
         if not qs.exists():
             username = email.split("@")[0]
-            User.objects.create_user(email=email, username=username, password=password)
+            User.objects.create_user(email=email, username=username, password=password, is_active=False)
         if qs.exists():
             #user email is registred, check active
             not_active = qs.filter(is_active=False)
