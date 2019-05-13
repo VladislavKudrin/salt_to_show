@@ -1,5 +1,4 @@
 from django import forms
-
 from .models import Product, Image
 
 class ProductCreateForm(forms.ModelForm):

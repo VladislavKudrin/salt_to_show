@@ -252,6 +252,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 		return render(request, 'products/product-create.html', context)
 
 
+
 	# def form_valid(self, form):
 	# 	user = self.request.user
 	# 	product = form.save()
