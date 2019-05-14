@@ -3,18 +3,17 @@
 {% block content %}
 
 <div class='row'>
-  <div class='col-12 my-3'>
+	{% include 'sidebar.html' %}
+  <div class='col-9 mx-auto'>
     <h1>Product View History</h1>
-  </div>
-  {% for obj in object_list %}
-  
-    <div class='col'>
+
+    {% for obj in object_list %}    
 
       {{ forloop.counter }}
       {% include 'products/snippets/card.html' with instance=obj.content_object %}
 
-    </div>
-  {% endfor %}
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}

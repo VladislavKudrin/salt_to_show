@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class='row'>
+    {% include "sidebar.html" %}
 <div class='col-12'>
 <h1>Address{% if object_list.count > 1%}es{% endif %} </h1> <br>
 <a href='{% url "address-create" %}' class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add new</a>
