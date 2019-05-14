@@ -1,22 +1,19 @@
 from django import forms
-
 from .models import Product, Image
 
 class ProductCreateForm(forms.ModelForm):
 	class Meta:
 		model = Product
 		fields = [
+		'sex',
+		'category',
 		'title',
 		'description',
 		'price',
-		'sex',
-		'category',
-
-
 	]
 
 class ImageForm(forms.ModelForm):
-	image = forms.ImageField(label='Image')
+	image = forms.ImageField(label='Image', widget=forms.ClearableFileInput(attrs={'multiple': True}))
 	class Meta:
 		model = Image
 		fields = [
