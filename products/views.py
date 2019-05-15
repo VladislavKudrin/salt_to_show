@@ -22,6 +22,16 @@ from accounts.models import User
 from .models import Product, Image
 from .forms import ProductCreateForm, ImageForm
 
+from django.db.utils import OperationalError
+format_list = [('', '(all)')]
+geom_type_list = [('', '(all)')]
+try:
+    format_list.extend([(i[0],i[0]) 
+        for i in Product.objects.values_list('size')])
+except OperationalError:
+    pass  # happens when db doesn't exist yet, views.py should be
+          # importable without this side effect
+
 
 class ProductFeaturedListView(ListView):
 	#queryset = Product.objects.all()

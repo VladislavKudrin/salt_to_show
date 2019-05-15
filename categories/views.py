@@ -7,11 +7,11 @@ from products.models import Product
 
 
 
+
 class CategoryFilterView(ListView):
 	#queryset = Product.objects.all()
-	sizes = Size.objects.all()
-	print(sizes)
 	template_name = "categories/view.html"
+	sizes = Size.objects.all()
 	fields_category = [
 					'footwear',
 					'outwear',
