@@ -17,3 +17,135 @@
 .dropdown-menu {
   width: 100px; 
 }
+
+
+
+.img-size {
+  height: 100px;
+  width: 100px;
+}
+
+.container-fluid-product {
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 30px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.limit {
+  max-height:1%;
+  overflow:hidden;
+}
+
+.contact-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 50px;
+  width: 50px;
+  outline: black;
+  background-size: 100%, 100%;
+  border-radius: 0%;
+  border: 1px solid black;
+  background-image: none;
+  background-color: rgba(166, 174, 176, 0.5);
+}
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 30px;
+  color: black;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 30px;
+  color: black;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+.btn-dark {
+	background-color:#000;
+	color: #FFF;  
+}
+
+.btn-dark:hover{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+.btn-dark:focus{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+.btn-dark:active{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+
+
+.carousel .carousel-inner {
+    height: 1200px;
+    background: #ffffff;
+}
+
+.carousel-item{
+    position: relative;
+    transition: transform 0s;
+    height:100%;
+    background: #ffffff;
+}
+
+.carousel-item-active{
+    position: relative;
+    transition: transform 0s;
+    height:100%;
+    background: #ffffff;
+}
+
+.carousel-control-prev{
+	position: absolute;
+    height: 500px;
+}
+
+.carousel-control-next{
+	position: absolute;
+    height: 500px;
+}
+
+.error
+    {
+        color: red;
+    }
+
+.error input, .error select {
+border: 2px red solid;
+}
+
+
+.alert alert-block alert-danger{
+    color: black;
+}
+
+
+.card-body {
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+
+}
+
+
+.card-img-top {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+}
+
+

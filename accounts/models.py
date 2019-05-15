@@ -37,6 +37,7 @@ def upload_image_path(instance, filename):
 		final_filename=final_filename)
 	
 class UserManager(BaseUserManager):
+	error_css_class = 'error'
 	def check_username(self, instance):
 		username = instance.username
 		user = self.filter(username=username)
@@ -203,6 +204,7 @@ class EmailActivation(models.Model):
 	timestamp 		= models.DateTimeField(auto_now_add = True)
 	update 			= models.DateTimeField(auto_now = True)
 
+	error_css_class = 'error'
 	objects = EmailActivationManager()
 	def __str__(self):
 		return self.email
