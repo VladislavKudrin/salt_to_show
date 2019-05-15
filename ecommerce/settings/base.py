@@ -73,6 +73,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_private_chat',
     'sass_processor',
+    'rest_framework',
+    'django_file_form',
+    'django_file_form.ajaxuploader',
+    'django_bootstrap3_form',
+    'django_pony_forms',  
 
     #our apps
     'addresses',
@@ -85,7 +90,8 @@ INSTALLED_APPS = [
     'orders',
     'accounts',
     'billing',
-    'categories'
+    'categories',
+    'test_ecommerce'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
