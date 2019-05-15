@@ -3,33 +3,21 @@
 
 {% block content %}
 
+<div class='col-3'>
+	<nav id='sidebar' class="navbar navbar-expand-lg navbar-light bg-white">
 
-
-<nav id='sidebar' class="navbar navbar-expand-lg navbar-light bg-white">
-
-	<ul class="list-unstyled components">
-		<li><h1>Account</h1></li><br>
-		<li><h3>User Detail</h3>
-		<li><a href='{% url "accounts:user-update" %}'>Update Details</a></li>
-		<li><a href='{% url "password_change" %}'>Change Password</a></li><br>
+		<ul class="list-unstyled components">
+			<li><a href='{% url "accounts:home" %}'>Account</a></li><br>
 			
-		<li><h3>History</h3></li>
-		<li><a href='{% url "accounts:history-product" %}'>Object Viewed</a></li><br>
+			<li><a href="#">Chat</a></li><br>
+			<li><a href='{% url "products:user-list" %}'>Product Library</a></li><br>
+			<li><a href='{% url "accounts:history-product" %}'>Object Viewed</a></li><br>
+			<li><a href='{% url "products:wish-list" %}'>Wishlist</a></li><br>
 
-		<li><h3>Products</h3>
-		<li><a href='{% url "products:create" %}'>Create New Product</a></li>
-		<li><a href='{% url "products:user-list" %}'>Product Library</a></li>
-		<li><a href='{% url "products:wish-list" %}'>Wishlist</a></li><br>
-			
-		<li><h3>Orders</h3>
-		<li><a href='{% url "addresses" %}'>Addresses</a></li>
-		<li><a href="#">Payment Method</a></li>
-		<li><a href='{% url "orders:list" %}'>Orders</a></li><br>
-
-		<li><h3>Preferences</h3></li>
-		<li><a href='{% url "marketing-pref" %}'>Email Marketing</a></li>
-	</ul>
-</nav>
-
-
+			<li><a href='{% url "accounts:user-update" %}'>Update Details</a></li><br>
+			<li><a href='{% url "password_change" %}'>Change Password</a></li><br>
+			<li><a href='{% url "marketing-pref" %}'>Email Marketing</a></li><br>
+		</ul>
+	</nav>
+</div>
 {% endblock %}
