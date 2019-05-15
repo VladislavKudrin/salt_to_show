@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^delete/(?P<slug>[\w.@+-]+)/$', ProductDeleteView.as_view(), name='delete'),
     url(r'^(?P<slug>[\w.@+-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
 
+
 ]
 
 

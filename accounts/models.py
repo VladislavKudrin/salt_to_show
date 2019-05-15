@@ -37,6 +37,7 @@ def upload_image_path(instance, filename):
 		final_filename=final_filename)
 	
 class UserManager(BaseUserManager):
+	error_css_class = 'error'
 	def check_username(self, instance):
 		username = instance.username
 		user = self.filter(username=username)
@@ -50,7 +51,9 @@ class UserManager(BaseUserManager):
 		user_obj = self.get_by_natural_key(username=user_email_obj)
 		return user_obj
 	
-	def create_user(self, email, username=None, full_name = None, password=None, is_active = True, is_staff=False, is_admin=False):
+
+
+	def create_user(self, email, username=None, full_name = None, password=None, is_active=True, is_staff=False, is_admin=False):
 		if not email:
 			raise ValueError("Users must have an email address and username!")
 		# if not password:
@@ -79,14 +82,15 @@ class UserManager(BaseUserManager):
 			)
 		return user
 
-	def create_superuser(self, email, username=None, full_name=None, password = None):
+	def create_superuser(self, email, username=None, full_name=None, password = None, is_admin=None, is_active=None):
 		user = self.create_user(
 				email,
 				username,
 				full_name,
 				password = password,
 				is_staff = True,
-				is_admin = True
+				is_active = True,
+				is_admin = True,
 				
 			)
 		return user
@@ -202,6 +206,7 @@ class EmailActivation(models.Model):
 	timestamp 		= models.DateTimeField(auto_now_add = True)
 	update 			= models.DateTimeField(auto_now = True)
 
+	error_css_class = 'error'
 	objects = EmailActivationManager()
 	def __str__(self):
 		return self.email

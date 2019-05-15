@@ -2,94 +2,34 @@
 
 
 {% block content %}
-<!-- {% if messages %}
-<div class="alert alert-{{ messages.tags }} alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style='height: 15px'>
-        <span aria-hidden="true">&times;</span>
-    </button>
-    {{ message }}
-</div>
-{% endif %} -->
-
-<div class='row'>
-	<div class='col-12'>
-		<h1>Account</h1>
-		<hr>
-	</div>
-	<div class='col-12 col-md-3 my-3'>
-		<div class="card">
-		  <div class="card-body">
-		    <h5 class="card-title">User Detail</h5>
-		    	<div class='list-group'>
-		    		<a class='list-group-item' href='{% url "accounts:user-update" %}'>Update Details</a>
-		    		<a class='list-group-item' href='{% url "password_change" %}'>Change Password</a>
-		    	</div>
-		  </div>
-		</div>
-	</div>
 
 
 
+<nav id='sidebar' class="navbar navbar-expand-lg navbar-light bg-white">
 
-	<div class='col-12 col-md-3 my-3'>
-		<div class="card">
-		  <div class="card-body">
-		    <h5 class="card-title">History</h5>
-		    	<div class='list-group'>
-		    		<a class='list-group-item' href='{% url "accounts:history-product" %}'>Object Viewed</a>
-		    	</div>
-		  </div>
-		</div>
-	</div>
-	<div class='col-12 col-md-3 my-3'>
-		<div class="card">
-		  <div class="card-body">
-		    <h5 class="card-title">Products</h5>
-				<div class='list-group'>
-		    		<a class='list-group-item' href='{% url "products:create" %}'>Create New Product</a>
-		    		<a class='list-group-item' href='{% url "products:user-list" %}'>Product Library</a>
-	    		    <a class='list-group-item' href='{% url "products:wish-list" %}'>Wishlist</a>
-		    	</div>
-		  </div>
-		</div>
-	</div>
+	<ul class="list-unstyled components">
+		<li><h1>Account</h1></li><br>
+		<li><h3>User Detail</h3>
+		<li><a href='{% url "accounts:user-update" %}'>Update Details</a></li>
+		<li><a href='{% url "password_change" %}'>Change Password</a></li><br>
+			
+		<li><h3>History</h3></li>
+		<li><a href='{% url "accounts:history-product" %}'>Object Viewed</a></li><br>
 
-	<div class='col-12 col-md-3 my-3'>
-		<div class="card">
-		  <div class="card-body">
-		    <h5 class="card-title">Orders</h5>
-				<div class='list-group'>
-                <a class='list-group-item' href='{% url "addresses" %}'>Addresses</a>
-		    		<a class='list-group-item' href='#'>Payment Method</a>
-		    		<a class='list-group-item' href='{% url "orders:list" %}'>Orders</a>
-		    	</div>
-		  </div>
-		</div>
-	</div>
+		<li><h3>Products</h3>
+		<li><a href='{% url "products:create" %}'>Create New Product</a></li>
+		<li><a href='{% url "products:user-list" %}'>Product Library</a></li>
+		<li><a href='{% url "products:wish-list" %}'>Wishlist</a></li><br>
+			
+		<li><h3>Orders</h3>
+		<li><a href='{% url "addresses" %}'>Addresses</a></li>
+		<li><a href="#">Payment Method</a></li>
+		<li><a href='{% url "orders:list" %}'>Orders</a></li><br>
 
-	<div class='col-12 col-md-3 my-3'>
-		<div class="card">
-		  <div class="card-body">
-		    <h5 class="card-title">Preferences</h5>
-		    	<div class='list-group'>
-		    		<a class='list-group-item' href='{% url "marketing-pref" %}'>Email Marketing</a>
-		    	</div>
-		  </div>
-		</div>
-	</div>
+		<li><h3>Preferences</h3></li>
+		<li><a href='{% url "marketing-pref" %}'>Email Marketing</a></li>
+	</ul>
+</nav>
 
-
-	<div class='col-12 col-md-3 my-3'>
-		<div class="card">
-		  <div class="card-body">
-		    <h5 class="card-title">Support</h5>
-		    	<div class='list-group'>
-		    		<a class='list-group-item' href='{% url "about" %}'>About</a>
-		    		<a class='list-group-item' href='{% url "contact" %}'>Contact</a>
-		    	</div>
-		  </div>
-		</div>
-	</div>
-</div>
 
 {% endblock %}

@@ -1,16 +1,14 @@
 from django.http import JsonResponse
 from django import forms
-
-
 from django_file_form.forms import MultipleUploadedFileField, FileFormMixin
-
-
 from .models import Product, Image
 
 class ProductCreateForm(FileFormMixin, forms.ModelForm):
 	class Meta:
 		model = Product
 		fields = [
+		'sex',
+		'category',
 		'title',
 		'description',
 		'price',
@@ -62,8 +60,3 @@ class ImageForm(ProductCreateForm):
 
 
 
-
-
-
-
-		

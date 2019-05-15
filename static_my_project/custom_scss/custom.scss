@@ -1,12 +1,13 @@
 @import "../bootstrap-4.1.3/scss/bootstrap"; 
 @import "../bootstrap-4.1.3/scss/variables";
 
-$theme-colors: (primary: $warning); 
+$theme-colors: (primary: $dark); 
 
-$navbar-light-color: $red;
+$carousel-indicator-active-bg: $black;
 
-nav{
-	border: 1px black;
-}
+$carousel-control-next-icon-bg: ;
+
+$carousel-transition:transform: .5s ease;
+
 
 @import "../bootstrap-4.1.3/scss/bootstrap";
