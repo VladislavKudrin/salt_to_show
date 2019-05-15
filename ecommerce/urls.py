@@ -45,7 +45,7 @@ from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 from django_private_chat import urls as django_private_chat_urls
 urlpatterns = [
     url(r'^', include('django_private_chat.urls')),
-    url(r'^test/$', test_page, name = 'test'),
+    url(r'^upload/', include('django_file_form.urls')),
     url(r'^$', home_page, name = 'home'),
     url(r'^login/$', RegisterLoginView.as_view(), name='login'),
     url(r'social-auth/', include('social_django.urls', namespace="social")),
@@ -79,6 +79,7 @@ urlpatterns = [
     url(r'^orders/', include("orders.urls", namespace='orders')),
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
+    url(r'^test/', include("test_ecommerce.urls",namespace='test')),
 
 
 

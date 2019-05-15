@@ -2,13 +2,15 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
 
-
+from .models import Size
 from products.models import Product
 
 
 
 class CategoryFilterView(ListView):
 	#queryset = Product.objects.all()
+	sizes = Size.objects.all()
+	print(sizes)
 	template_name = "categories/view.html"
 	fields_category = [
 					'footwear',
@@ -22,7 +24,7 @@ class CategoryFilterView(ListView):
 					'woman',
 					'unisex'
 					]
-
+	
 
 	def post(self, request, *args, **kwargs):
 		request = self.request
@@ -43,6 +45,7 @@ class CategoryFilterView(ListView):
 			context['object_list'] = filtred_qs
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
+		context['sizes']=self.sizes
 		return render(self.request, "categories/view.html", context)
 
 
@@ -50,6 +53,7 @@ class CategoryFilterView(ListView):
 		context={}
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
+		context['sizes']=self.sizes
 		return render(request, "categories/view.html", context)
 
 

@@ -7,7 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Base Template</title>
       {% include 'base/css.html' %}
+      <style type="text/css">
+        #id_category::after{
+  background-color: black;
+              }
 
+      </style>
 
       {% block base_head %}{% endblock %}
   </head>
@@ -31,7 +36,23 @@
       {% include 'base/js.html' %}
       {% block extra_js %}{% endblock extra_js %}
       {% block javascript %}{% endblock %}
+<script type="text/javascript">
+    // Add slideDown animation to Bootstrap dropdown when expanding.
+  $('.dropdown').on('show.bs.dropdown', function() {
+    $(this).find('.customdrop').first().stop(true, true).slideDown();
+  });
+
+  // Add slideUp animation to Bootstrap dropdown when collapsing.
+  $('.dropdown').on('hide.bs.dropdown', function() {
+    $(this).find('.customdrop').first().stop(true, true).slideUp();
+  });
+  $('.customdrop').click(function(e) {
+    e.stopPropagation();
+});
+</script>
 
   </body>
 </html>
+
+
 	
