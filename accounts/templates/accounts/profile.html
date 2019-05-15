@@ -2,17 +2,38 @@
 {% block content %}
 
 <div class='row'>
-	<div class='col-12 col-md-6'>
-		<h1>{{ object.title }}</h1>
-		{{ object.description|linebreaks }} <br/>
-		{{ object.username }}
-		{% if object.profile_foto %}
-			<img src="{{ object.profile_foto.url }}" class = 'img-fluid'/>
-		{% endif %}
-	</div>
-	<div>
-		{% include 'accounts/snippets/begin-chat.html' %}
-	</div>
+<div class='col-12 col-md-4 mx-auto'>
+	<h1 class="display-4">{{ object.username }}</h1>
+
+	{% if object.profile_foto %}
+	<img src="{{ object.profile_foto.url }}" class = 'img-fluid'/>
+	{% endif %}
+
+<div>
+	{% include 'accounts/snippets/begin-chat.html' %}
+<div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div class='row'>
+	<div class='col-6'>
+	{% for obj in products %}
+		<div class='col'>
+			{{ forloop.counter }}
+			{% include 'products/snippets/card.html' with instance=obj %}
+			{% if forloop.counter|divisibleby:1 %}
+				</div></div><div class='row'><div class='col-6'><hr/></div>
+			{% else %}
+				</div>
+			{% endif %}
+	{% endfor %}
+</div>
+
+</div>
 
 		
 {% endblock %}

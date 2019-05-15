@@ -19,6 +19,7 @@ from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
+from products.models import Product
 
 
 # @login_required
@@ -33,6 +34,7 @@ class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 		return self.request.user
 
 class AccountEmailActivateView(FormMixin, View):
+	error_css_class = 'error'
 	success_url='/login/'
 	form_class=ReactivateEmailForm
 	def get(self, request, key=None, *args, **kwargs):
@@ -43,7 +45,7 @@ class AccountEmailActivateView(FormMixin, View):
 			if confirm_qs.count()==1:
 				obj = confirm_qs.first()
 				obj.activate()
-				messages.success(request, "Your Email has been confirmed. Please login.")
+				messages.add_message(request, messages.SUCCESS, 'Welcome to your account!')
 				email = qs.first().user.email
 				password = qs.first().user.password
 				login(request, qs.first().user, backend='django.contrib.auth.backends.ModelBackend') 
@@ -55,7 +57,7 @@ class AccountEmailActivateView(FormMixin, View):
 					msg = """Your Email has already been confirmed
 					Do you need to <a href="{link}">reset your password</a>?
 					""".format(link=reset_link)
-					messages.success(request,mark_safe(msg))
+					messages.add_message(request, messages.SUCCESS, mark_safe(msg))
 					return redirect("login")
 		context={
 			'form': self.get_form(),
@@ -110,6 +112,7 @@ class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
 
 
 class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
+	error_css_class = 'error'
 	form_class = RegisterLoginForm
 	success_url = '/'
 	template_name = 'accounts/register.html'
@@ -192,6 +195,9 @@ class ProfileView(DetailView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
+		username = self.kwargs.get('username')
+		user  = User.objects.filter_by_username(username=username)
+		context['products'] = Product.objects.filter(user=user)
 		context['btn_title'] = 'Begin Chat with '
 		return context
 
@@ -201,13 +207,18 @@ class ProfileView(DetailView):
 		redirect_url = next_ + 'dialogs/' + username
 		return HttpResponseRedirect(redirect_url)
 	
-	def get_object(self, *args, **kwargs):
+	def get_object(self, *args, **kwargs): 
 		username = self.kwargs.get('username')
 		try:
 			user_instance = User.objects.filter_by_username(username=username)
 		except User.DoesNotExist:
 			raise Http404("Not Found")
 		return User.objects.filter_by_username(username=username)
+
+
+		
+
+
 
 
 

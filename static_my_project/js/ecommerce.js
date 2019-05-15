@@ -310,8 +310,8 @@ $(document).ready(
         
           error: function(errorData){
             $.alert({
-              title: 'OOps!',
-              content: 'Simple alert!',
+              title: 'Oops!',
+              content: "Apparently you haven't signed up yet...",
               theme: "modern"
             });
   }
