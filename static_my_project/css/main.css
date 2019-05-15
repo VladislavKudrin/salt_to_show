@@ -1,7 +1,3 @@
-.navbar-custom{
-	color: black;
-} 
-
 .hidden-button {
   background: none;
   padding: 0px;
@@ -12,8 +8,25 @@
    outline: none; 
 }
 
-
-
 .dropdown-menu {
   width: 100px; 
+}
+
+a {
+	color: black;
+}
+
+a:hover {
+	color: black;
+	background-color: #e8eaef;
+	text-decoration: none;
+}
+
+#sidebar {
+	border-right: 1px solid #e8eaef;
+}
+
+
+ul {
+	list-style: none;
 }
