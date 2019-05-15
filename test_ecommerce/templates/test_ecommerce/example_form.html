@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'ajaxuploader/css/fileuploader.css' %}">
+    <link rel="stylesheet" href="{% static 'css/example.css' %}">
+    <link rel="stylesheet" href="{% static 'django_bootstrap3_form/bootstrap/dist/css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container">
+
+            <form
+        method="POST"
+        enctype="multipart/form-data"
+        id="example-form"
+    >
+        {% csrf_token %}
+        {{ form }}
+        <input class="btn btn-primary" type="submit" value="Save" />
+    </form>
+
+    {% include 'django_file_form/upload_template.html' %}
+
+    {% if use_ajax %}
+        <script src="{% static 'jquery/dist/jquery.js' %}"></script>
+        <script src="{% static 'ajaxuploader/js/fileuploader.js' %}"></script>
+        <script src="{% static 'file_form/file_form.js' %}"></script>
+        <script>
+            $(function() {
+                initUploadFields($('#example-form'), { prefix: 'example' });
+            });
+        </script>
+    {% endif %}
+
+    </div>
+</body>
+</html>

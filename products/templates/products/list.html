@@ -2,26 +2,37 @@
 
 {% block content %}
 
-<div class='row'>
-	<div class='col-3'>
+
+<!-- 	<div class='col-1'>
 		{% include 'categories/snippets/filter-box.html' with instance=obj %}
 	</div>
-	<div class='col-9'>
-		<div class="col">
-			<div class='row'>
-				{% for obj in object_list %}
-					<div class='col'>
-						{{ forloop.counter }}
-						{% include 'products/snippets/card.html' with instance=obj %}
-						{% if forloop.counter|divisibleby:2 %}
-							</div></div><div class='row'><div class='col-12'><hr/></div>
+ -->
+<div class='row'>
+<div class="col-lg-12">
+	
+					{% for obj in object_list %}
+					<div class="card">
+				{% include 'products/snippets/card.html' with instance=obj %}
+			
+				
+					
+<!-- 						{{ forloop.counter }}
+							
+						{% if forloop.counter|divisibleby:4 %}
+							</div></div><div class='row'><<div class="card"><hr/></div>
 						{% else %}
 							</div>
-						{% endif %}
+						{% endif %} -->
+
+
+					</div>
 				{% endfor %}
-		</div>
-	</div>
 </div>
+
+</div>
+</div>
+
+
 
 {% endblock %}
 

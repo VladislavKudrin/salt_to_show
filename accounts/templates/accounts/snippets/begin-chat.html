@@ -5,6 +5,6 @@
 {% csrf_token %}
     <input type="hidden" name="next" value="{% url 'home' %}">
     <input type="hidden" name="chat_with" value="{{ object.username }}">
-    <button class="btn btn-primary" type="submit">{{ btn_title }}{{ object.username }}</button>
+    <button class="btn btn-dark btn-lg btn-block" type="submit">{{ btn_title }}{{ object.username }}</button>
 </form>
 {% endif %}
