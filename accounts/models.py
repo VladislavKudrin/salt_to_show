@@ -51,6 +51,8 @@ class UserManager(BaseUserManager):
 		user_obj = self.get_by_natural_key(username=user_email_obj)
 		return user_obj
 	
+
+
 	def create_user(self, email, username=None, full_name = None, password=None, is_active=True, is_staff=False, is_admin=False):
 		if not email:
 			raise ValueError("Users must have an email address and username!")
@@ -69,7 +71,7 @@ class UserManager(BaseUserManager):
 		user_obj.save(using=self._db)
 		return user_obj
 
-	def create_staffuser(self, email, username=None, full_name=None, password = None ):
+	def create_staffuser(self, email, username=None, full_name=None, password = None):
 		user = self.create_user(
 				email,
 				username,

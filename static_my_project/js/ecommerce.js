@@ -126,11 +126,15 @@ $(document).ready(
       deleteForm.submit(
       function(event){
       var thisForm = $(this)
+      console.log(thisForm)
       var dataEndpoint = thisForm.attr("action");
       var actionEndpoint = thisForm.attr("data-endpoint");
       var httpMethod = thisForm.attr("method");
-
+      console.log('hello')
+      console.log(actionEndpoint)
+      console.log(httpMethod)
       var formData = thisForm.serialize();
+      console.log(formData)
       event.preventDefault()
       console.log(deleteTemplateHtml)
       var deleteComfirmFormTemplate = $.templates("#delete-product-confirm-form")
@@ -147,6 +151,7 @@ $(document).ready(
                     method: httpMethod,
                     data: formData,
                     success: function(){
+
                       $.confirm({
                         title: 'Thank you for your money!',
                         content:'Product has been deleted. Mojete sosnut pisku',
@@ -192,6 +197,7 @@ $(document).ready(
         var thisForm = $(this)
         var actionEndpoint = thisForm.attr("action");
         var actionEndpoint = thisForm.attr("data-endpoint");
+        console.log(actionEndpoint)
         var httpMethod = thisForm.attr("method");
         var formData = thisForm.serialize();
 

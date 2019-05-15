@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
-
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 
@@ -10,10 +10,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+
+from django_file_form.uploader import FileFormUploader
+
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
-
+from categories.models import Size
 
 from accounts.models import User
 from .models import Product, Image
@@ -180,93 +183,33 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 
 
 
-
-# @login_required
-# def product_create_view(request):
-# 	Imageimage_form = modelimage_form_factory(Image,
-# 										form=ImageForm, extra=3)
-# 	if request.method == 'POST':
-# 		productForm = ProductForm(request.POST)
-# 		image_form = Imageimage_form(request.POST, request.FILES,
-# 									queryset=Image.objects.none())
-# 		if productForm.is_valid() and image_form.is_valid():
-# 			product = postForm.save(commit=False)
-# 			product.user = request.user
-# 			product.save()
-# 			for form in image_form.cleaned_data:
-# 	image = form['image']
-# 	photo = Images(post=post_form, image=image)
-# 	photo.save()
-# 	messages.success(request,
-# 	"Posted!")
-# 	return HttpResponseRedirect("/")
-# 	else:
-# 	print postForm.errors, image_form.errors
-# 	else:
-# 	postForm = PostForm()
-# 	image_form = Imageimage_form(queryset=Images.objects.none())
-# 	return render(request, 'index.html',
-# 	{'postForm': postForm, 'image_form': image_form},
-# 	context_instance=RequestContext(request))
-
-# class BasePhotosimage_form(BaseModelimage_form):
-
-    #By default, when you create a image_form from a model, the image_form
-    #will use a queryset that includes all objects in the model
-
-    # def __init__(self, *args, **kwargs):
-    #     if 'city' in kwargs.keys():
-    #         city = kwargs.pop('city')
-    #     else:
-    #         city = None
-    #     super().__init__(*args, **kwargs)
-    #     if city and isinstance(instance, Cities):
-    #         self.queryset = Image.objects.filter(city=city)
-    #     else:
-    #         self.queryset = Description_Photos.objects.none()
-
-
-class ProductCreateView(LoginRequiredMixin, CreateView):
-
-	def post(self, request, *args, **kwargs): 
-		product_form = ProductCreateForm(request.POST)
-		image_form = ImageForm(request.POST, request.FILES)
-		files = request.FILES.getlist('image')
-		if product_form.is_valid() and image_form.is_valid():
-			product = product_form.save(commit=False)
-			product.user = request.user
-			product.active = True
-			product.save()
-			for image in files:
-				product_foto = Image(product=product, image=image)
-				product_foto.save()
-			return super(ProductCreateView, self).form_valid(product_form)
+class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
+	form_class = ImageForm
+	template_name = 'products/product-create.html'
 
 	def get(self, request, *args, **kwargs):
-		product_form = ProductCreateForm()
-		image_form = ImageForm(request.POST, request.FILES)
+		if request.is_ajax():
+			selected = self.request.GET.get('selected')
+			if selected is not None:
+				qs = Size.objects.filter(size_for__iexact=selected)
+				sizes = [{
+						"size": data.size,
+						"id":data.id 
+						} 
+						for data in qs]
+				json_data={
+						'sizes': sizes
+							}
+				return JsonResponse(json_data)
+		product_form = ImageForm(request)
 		context={}
-		context['title']='Create New Product' #add kwarg / add your field for html
-		context['product_form'] = product_form
-		context['image_form'] = image_form
+		context['title']='Create New Product'
+		context['form']=product_form
 		return render(request, 'products/product-create.html', context)
-
-
-
-	# def form_valid(self, form):
-	# 	user = self.request.user
-	# 	product = form.save()
-	# 	product.user = user
-	# 	product.active = True
-	# 	product.save()
-	# 	return super(ProductCreateView, self).form_valid(form)
-
-
-	def get_context_data(self, *args, **kwargs): #overwriting default
-		context = super(ProductCreateView, self).get_context_data(*args, **kwargs) #default method
-		context['title']='Create New Product' #add kwarg / add your field for html
-		return context
-	
+	def form_valid(self, form):
+		product = form.save()
+		url = product.get_absolute_url()
+		return redirect(url)
 
 class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
@@ -409,5 +352,4 @@ def wishlistupdate(request):
 	return redirect("products:wish-list")
 
 
-
-
+handle_upload = FileFormUploader()

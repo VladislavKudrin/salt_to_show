@@ -7,7 +7,7 @@ from ecommerce.utils import unique_slug_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
-
+from categories.models import Size
 
 
 
@@ -88,11 +88,13 @@ class ProductManager(models.Manager):
 User=settings.AUTH_USER_MODEL
 
 CATEGORY_CHOICES = (
+	('select a category', 'Select a category'),
 	('tops', 'Tops'),
 	('bottoms', 'Bottoms'),
 	('accessories', 'Accessories'),
 	('outwear', 'Outwear'),
 	('footwear', 'Footwear'),
+	('big', 'Big')
 	)
 SEX_CHOICES = (
 	('man', 'Man'),
@@ -110,7 +112,7 @@ class Product(models.Model):
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	category 		= models.CharField(max_length=120, default='all', choices=CATEGORY_CHOICES)
 	sex 			= models.CharField(max_length=120, default='not picked', choices=SEX_CHOICES)
-
+	size 			= models.ForeignKey(Size, blank=True, null=True)
 
 
 	objects = ProductManager()

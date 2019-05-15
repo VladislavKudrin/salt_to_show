@@ -166,7 +166,6 @@ class RegisterLoginForm(forms.ModelForm):
 
         return data
 
-
     def save(self, commit=True):
         user = super(RegisterLoginForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password"])
