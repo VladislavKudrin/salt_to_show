@@ -101,7 +101,6 @@ class GuestForm(forms.ModelForm):
 
 
 class RegisterLoginForm(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ('email',)
@@ -112,36 +111,15 @@ class RegisterLoginForm(forms.ModelForm):
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Your Password'}))
 
     def __init__(self, request, *args, **kwargs):
-        link = reverse("accounts:resend-activation")
-        reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
         self.request = request
         super(RegisterLoginForm,self).__init__(*args,**kwargs)
 
     def clean(self):
-        request = self.request
-        data = self.cleaned_data
-        email = data.get("email")
-        password = data.get("password")
-        user_objects = User.objects.filter(email=email)
-        if user_objects.filter(is_active=False).exists(): 
-            link = reverse("accounts:resend-activation")
-            reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
-            confirm_email=EmailActivation.objects.filter(email=email) #not activated email?
-            link_sent = confirm_email.confirmable().exists()
-            if link_sent:
-                msg1 = "Please check your email to confirm your account. " + reconfirm_msg
-                messages.add_message(request, messages.SUCCESS, mark_safe(msg1))
+        link = reverse("accounts:resend-activation")
+        reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
+        self.cleaned_data['msg'] = reconfirm_msg
 
-        #------------Not activated email?------------
-            link_sent2 = EmailActivation.objects.email_exists(email).exists() #link_sent2 
-            if link_sent2:
-                msg2 = "Email not confirmed. " +reconfirm_msg
-                messages.add_message(request, messages.DEBUG, mark_safe(msg1))
 
-        #------------No link sent to this email------
-            if not link_sent and not link_sent2:
-                raise forms.ValidationError("Please try with another email.")
-        return data
 
     def save(self, commit=True):
         request = self.request

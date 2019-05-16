@@ -121,11 +121,21 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 	def form_valid(self, form):
 		next_path = self.get_next_url()
 		user = authenticate(form.request, username=form.cleaned_data.get('email'), password=form.cleaned_data.get('password'))
-		if user is None:
+		user_objects = User.objects.filter(email=form.cleaned_data.get('email')).exists()
+		link_sent2 = EmailActivation.objects.email_exists(form.cleaned_data.get('email')).exists()
+		if user_objects is False:
 			form.save()
 			next_path = 'login'
-			msg1 = "Please check your email to confirm your account. "
+			msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
+		elif link_sent2:
+			next_path = 'login'
+			msg2 = "Email not confirmed. " + form.cleaned_data.get('msg')
+			messages.add_message(form.request, messages.ERROR, mark_safe(msg2))
+		elif user is None:
+			next_path = 'login'
+			messages.add_message(form.request, messages.ERROR, mark_safe("Invelid credentials"))
+			return redirect(next_path)
 		else:
 			login(form.request, user)
 

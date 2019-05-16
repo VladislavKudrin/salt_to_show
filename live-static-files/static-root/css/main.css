@@ -8,46 +8,157 @@
    outline: none; 
 }
 
-
-
-
-body {
-  font: 1rem/1.5 var(--font-family-sans-serif);
+.dropdown-menu {
+  width: 100px; 
 }
+
 a {
-  color: var(--blue);
+	color: black;
+}
+
+a:hover {
+	color: black;
+	background-color: #e8eaef;
+	text-decoration: none;
+}
+
+#sidebar {
+	border-right: 1px solid #e8eaef;
 }
 
 
-:root {
-  --blue: #007bff;
-  --indigo: #6610f2;
-  --purple: #6f42c1;
-  --pink: #e83e8c;
-  --red: #dc3545;
-  --orange: #fd7e14;
-  --yellow: #ffc107;
-  --green: #28a745;
-  --teal: #20c997;
-  --cyan: #17a2b8;
-  --white: #fff;
-  --gray: #6c757d;
-  --gray-dark: #343a40;
-  --primary: #007bff;
-  --secondary: #6c757d;
-  --success: #28a745;
-  --info: #17a2b8;
-  --warning: #ffc107;
-  --danger: #dc3545;
-  --light: #f8f9fa;
-  --dark: #343a40;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+ul {
+	list-style: none;
+}
+
+
+.img-size {
+  height: 100px;
+  width: 100px;
+}
+
+.container-fluid-product {
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 30px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.limit {
+  max-height:1%;
+  overflow:hidden;
+}
+
+.contact-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 50px;
+  width: 50px;
+  outline: black;
+  background-size: 100%, 100%;
+  border-radius: 0%;
+  border: 1px solid black;
+  background-image: none;
+  background-color: rgba(166, 174, 176, 0.5);
+}
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 30px;
+  color: black;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 30px;
+  color: black;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+.btn-dark {
+	background-color:#000;
+	color: #FFF;  
+}
+
+.btn-dark:hover{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+.btn-dark:focus{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+.btn-dark:active{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+
+
+.carousel .carousel-inner {
+    height: 1200px;
+    background: #ffffff;
+}
+
+.carousel-item{
+    position: relative;
+    transition: transform 0s;
+    height:100%;
+    background: #ffffff;
+}
+
+.carousel-item-active{
+    position: relative;
+    transition: transform 0s;
+    height:100%;
+    background: #ffffff;
+}
+
+.carousel-control-prev{
+	position: absolute;
+    height: 500px;
+}
+
+.carousel-control-next{
+	position: absolute;
+    height: 500px;
+}
+
+.error
+    {
+        color: red;
+    }
+
+.error input, .error select {
+border: 2px red solid;
+}
+
+
+.alert alert-block alert-danger{
+    color: black;
+}
+
+
+.card-body {
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+
+}
+
+
+.card-img-top {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+}
 
 
 
