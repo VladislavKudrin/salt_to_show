@@ -120,6 +120,15 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 
 	def form_valid(self, form):
 		next_path = self.get_next_url()
+		user = authenticate(form.request, username=form.cleaned_data.get('email'), password=form.cleaned_data.get('password'))
+		if user is None:
+			form.save()
+			next_path = 'login'
+			msg1 = "Please check your email to confirm your account. "
+			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
+		else:
+			login(form.request, user)
+
 		return redirect(next_path)
 
 
