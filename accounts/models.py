@@ -105,7 +105,7 @@ class User(AbstractBaseUser):
 	admin 			= models.BooleanField(default=False)
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	profile_foto	= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-	wishes 			= models.ManyToManyField(Product, related_name='users')
+	wishes 			= models.ManyToManyField(Product, related_name='users', blank=True)
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default
