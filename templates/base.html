@@ -2,6 +2,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,7 +18,7 @@
 
   </head>
   <body>
-
+    {% include 'base/js.html' %}
     {% include 'base/css.html' %}
     {% block base_head %}{% endblock %}
 </head>
@@ -31,7 +32,7 @@
 
 
 
-      {% include 'base/js.html' %}
+
       {% block extra_js %}{% endblock extra_js %}
       {% block javascript %}{% endblock %}
 <script type="text/javascript">

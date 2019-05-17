@@ -20,7 +20,7 @@ from categories.models import Size
 
 from accounts.models import User
 from .models import Product, Image
-from .forms import ProductCreateForm, ImageForm
+from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 
 from django.db.utils import OperationalError
 format_list = [('', '(all)')]
@@ -213,6 +213,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				return JsonResponse(json_data)
 		product_form = ImageForm(request)
 		context={}
+		context['button']='Create'
 		context['title']='Create New Product'
 		context['form']=product_form
 		return render(request, 'products/product-create.html', context)
@@ -228,9 +229,10 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 		return Product.objects.by_user(request.user)
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
-	form_class = ProductCreateForm
-	template_name = 'products/product-update.html'
+class ProductUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
+	form_class = ProductUpdateForm
+	template_name = 'products/product-create.html'
+
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get('slug')
@@ -248,6 +250,13 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
+		context['title'] = 'Update'
+		context['button']='Update' 
+		return context
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
 	form_class = ProductCreateForm
@@ -327,11 +336,11 @@ class WishListView(LoginRequiredMixin, ListView):
 		return Product.objects.filter(pk__in=wishes)
 
 
-def wishlistupdate(request):
-	product_id =request.POST.get('pk')
-	product_obj = Product.objects.get(pk=product_id)
-	request.user.wishes.add(product_obj)
-	return redirect("accounts:home")
+# def wishlistupdate(request):
+# 	product_id =request.POST.get('pk')
+# 	product_obj = Product.objects.get(pk=product_id)
+# 	request.user.wishes.add(product_obj)
+# 	return redirect("accounts:home")
 
 
 def wishlistupdate(request):

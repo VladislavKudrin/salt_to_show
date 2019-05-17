@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse
 
@@ -9,6 +9,12 @@ from django_file_form.uploader import FileFormUploader
 from . import forms
 from .models import Example
 
+def rendertest(request):
+    context = {
+        'title':'About Page',
+        'content':'Welcome to the about page'
+    }
+    return render(request, "test_ecommerce/test.html", context)
 
 class BaseFormView(generic.FormView):
     template_name = 'test_ecommerce/example_form.html'

@@ -1,4 +1,5 @@
 $(document).ready(
+  
   function(){
     //contactFormHandler
     var contactForm = $('.contact-form')

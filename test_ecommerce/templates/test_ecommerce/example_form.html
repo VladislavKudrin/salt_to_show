@@ -1,41 +1,39 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>{% block title %}{% endblock %}</title>
-    {{ block.super }}
-    <link rel="stylesheet" href="{% static 'ajaxuploader/css/fileuploader.css' %}">
-    <link rel="stylesheet" href="{% static 'css/example.css' %}">
-    <link rel="stylesheet" href="{% static 'django_bootstrap3_form/bootstrap/dist/css/bootstrap.css' %}">
-</head>
-<body>
-    <div class="container">
 
-            <form
-        method="POST"
-        enctype="multipart/form-data"
-        id="example-form"
-    >
-        {% csrf_token %}
-        {{ form }}
-        <input class="btn btn-primary" type="submit" value="Save" />
-    </form>
 
-    {% include 'django_file_form/upload_template.html' %}
+{% block content %}
 
-    {% if use_ajax %}
-        <script src="{% static 'jquery/dist/jquery.js' %}"></script>
-        <script src="{% static 'ajaxuploader/js/fileuploader.js' %}"></script>
-        <script src="{% static 'file_form/file_form.js' %}"></script>
-        <script>
-            $(function() {
-                initUploadFields($('#example-form'), { prefix: 'example' });
-            });
-        </script>
-    {% endif %}
+  <style>
+ #sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
+  #sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
+  </style>
 
-    </div>
-</body>
-</html>
+<ul id="sortable">
+  <li class="ui-state-default">1</li>
+  <li class="ui-state-default">2</li>
+  <li class="ui-state-default">3</li>
+  <li class="ui-state-default">4</li>
+  <li class="ui-state-default">5</li>
+  <li class="ui-state-default">6</li>
+  <li class="ui-state-default">7</li>
+  <li class="ui-state-default">8</li>
+  <li class="ui-state-default">9</li>
+  <li class="ui-state-default">10</li>
+  <li class="ui-state-default">11</li>
+  <li class="ui-state-default">12</li>
+</ul>
+
+
+
+<script type="text/javascript">
+  $( function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+  } );
+
+  </script>
+
+
+{% endblock %}

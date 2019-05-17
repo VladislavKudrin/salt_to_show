@@ -148,7 +148,8 @@ pre_save.connect(product_pre_save_reciever,sender=Product)
 class Image(models.Model):
 	product 		= models.ForeignKey(Product, default=None, related_name='images')
 	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-
+	image_order 	= models.DecimalField(decimal_places=0, max_digits=20, default=1)
+	slug			= models.SlugField(default=None, null=True, blank=False)
 	def __str__(self):
 		return self.product.title
 

@@ -7,7 +7,7 @@ $(document).ready(
     var selected_option_value_1=$("#id_category option:selected").val();
     console.log(selected_option_value_1)
     categoryField.change(
-      function(event){
+      function(){
         var actionEndpoint = '/products/create/'
         var formData = $("#id_category option:selected").val()
         console.log(formData)
