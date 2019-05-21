@@ -1,3 +1,13 @@
+.d-block{
+  position: absolute;
+  object-fit: cover;
+  max-width: 800px;
+  max-height: 1800px;
+  min-width: 288px;
+  min-height: 288px;
+  object-fit: cover;
+  align-items: center;
+}
 
 .navbar-wish-count {
     color: #cf6369;
@@ -283,7 +293,9 @@ a {
 	padding-right: 140px;
 }
 
-
+.carousel-inner{
+  max-height: 700px;
+}
 
 ul {
 	list-style: none;
@@ -321,10 +333,9 @@ html,body{
 
 .container-fluid-product {
     height: 100%;
-    padding-left: 20px;
-    padding-right: 30px;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    max-height: 2000px;
+    padding-top: 50px;
+    padding-bottom: 150px;
 }
 
 .limit {

@@ -6,7 +6,6 @@
 {% block content %}
 
 <div class="row">
-  {% include "sidebar.html" %}
   <div class='col-9 mx-auto'>
   {% if title %}<h1 class='my-3'>{{ title }}</h1>{% endif %}
   <form method = 'POST' enctype='multipart/form-data'> {% csrf_token %}

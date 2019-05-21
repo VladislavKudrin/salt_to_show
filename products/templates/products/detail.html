@@ -20,13 +20,13 @@
 
 			{% with object.images.all|first as image %}
 			<div class="carousel-item active" class="carousel slide" data-interval="false">
-			<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
+			<img src="{{ image.image.url }}" class="d-block w-100" alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
 			</div>
 			{% endwith %}
 
 			{% for image in object.images.all|slice:"1:" %}
 			<div class="carousel-item" data-interval="false">
-			<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
+			<img src="{{ image.image.url }}" class="d-block w-100" alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
 			</div>
 			{% endfor %}
 

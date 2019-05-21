@@ -21,28 +21,32 @@
 </div>
 
 
-
 <div class='row'>
 	<div class='col-12'><br>
 		<h6 class="font-weight-bold" id="products-by-user">Products By:</h6>
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-3">
-		{% for obj in products %}
-		<div class='col'>
-			{{ forloop.counter }}
+<div class='row'>
+	{% for obj in products %}
+		<div class='col-3 position-relative'>
 			{% include 'products/snippets/card.html' with instance=obj %}
-			{% if forloop.counter|divisibleby:1 %}
-				</div></div><div class='row'><div class='col-6'><hr/></div>
+			{% if forloop.counter|divisibleby:4 %}
+				</div>
+				</div>
+				<div class='row'>
+				<div class='col-12'>
+				</div>
 			{% else %}
 				</div>
 			{% endif %}
-		{% endfor %}
-		</div>
-	</div>
+
+	{% endfor %}
 </div>
+
+
+
+
 
 		
 {% endblock %}
