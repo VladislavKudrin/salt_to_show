@@ -14,19 +14,17 @@
               }
 
       </style>
-
   </head>
   <body>
 
     {% include 'base/css.html' %}
     {% block base_head %}{% endblock %}
-</head>
-<body>
 
     {% include 'base/navbar.html' with brand_name='eCommerce' %}
-    <div class='container-fluid'>
+    <div class='container-fluid mt-5' style="padding:0; margin:0;">
     {% include 'base/messages.html' %}
     {% block content %}{% endblock %}
+    {% include 'base/footer.html' %}
     </div>
 
 
@@ -48,6 +46,7 @@
     e.stopPropagation();
 });
 </script>
+
 
 
 </body>

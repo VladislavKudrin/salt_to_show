@@ -1,5 +1,9 @@
 $(document).ready(
+
+
   function(){
+  
+
     //contactFormHandler
     var contactForm = $('.contact-form')
     var contactFormMethod = contactForm.attr("method")
@@ -54,7 +58,7 @@ $(document).ready(
             {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false)}, 1000)
           }
         })
-      })
+      });
 
 
 
@@ -62,6 +66,10 @@ $(document).ready(
 
 
 
+
+
+
+   
 
 
 

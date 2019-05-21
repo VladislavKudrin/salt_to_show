@@ -1,17 +1,19 @@
-<div class='col-3'>
-	<nav id='sidebar' class="navbar navbar-expand-lg navbar-light bg-white">
+<div class="row no gutters">
+	<div class='col-12'>
+		<nav id='sidebar' class="navbar navbar-expand-lg navbar-light bg-white">
 
-		<ul class="skip list-unstyled components">
-			<li><a href='{% url "accounts:home" %}'>Account</a></li><br>
-			
-			<li><a href="#">Chat</a></li><br>
-			<li><a href='{% url "products:user-list" %}'>Product Library</a></li><br>
-			<li><a href='{% url "accounts:history-product" %}'>Object Viewed</a></li><br>
-			<li><a href='{% url "products:wish-list" %}'>Wishlist</a></li><br>
+			<ul class="skip list-unstyled components">
+				<li><a href='{% url "accounts:home" %}'>My Account</a></li><br>
+				
+				<li><a href="#">Chat</a></li><br>
+				<li><a href='{% url "products:user-list" %}'>Product Library</a></li><br>
+				<li><a href='{% url "accounts:history-product" %}'>Object Viewed</a></li><br>
+				<li><a href='{% url "products:wish-list" %}'>Wishlist</a></li><br>
 
-			<li><a href='{% url "accounts:user-update" %}'>Update Details</a></li><br>
-			<li><a href='{% url "password_change" %}'>Change Password</a></li><br>
-			<li><a href='{% url "marketing-pref" %}'>Email Marketing</a></li><br>
-		</ul>
-	</nav>
+				<li><a href='{% url "accounts:user-update" %}'>Update Details</a></li><br>
+				<li><a href='{% url "password_change" %}'>Change Password</a></li><br>
+				<li><a href='{% url "marketing-pref" %}'>Email Marketing</a></li><br>
+			</ul>
+		</nav>
+	</div>
 </div>
