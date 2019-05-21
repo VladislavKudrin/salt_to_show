@@ -38,7 +38,7 @@ from addresses.views import (
     checkout_address_create_view, 
     checkout_address_reuse_view
     )
-from accounts.views import RegisterLoginView, GuestRegisterView
+from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, wishlistupdate
 from .views import home_page, about_page, contact_page, test_page
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView

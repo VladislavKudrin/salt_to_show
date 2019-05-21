@@ -11,6 +11,7 @@ from categories.models import Size
 
 
 
+    
 def get_filename_ext(filepath):
 	base_name = os.path.basename(filepath)
 	name, ext = os.path.splitext(base_name)
@@ -118,15 +119,12 @@ class Product(models.Model):
 	objects = ProductManager()
 
 	def get_absolute_url(self):
-		#return "/products/{slug}/".format(slug=self.slug)
-		return reverse('products:detail', kwargs={"slug":self.slug})
+		return "/products/{slug}/".format(slug=self.slug)
+		#return reverse("products:detail", kwargs={"slug":self.slug})
 
 	def get_absolute_url_for_update(self):
 		#return "/products/{slug}/".format(slug=self.slug)
 		return reverse('products:update', kwargs={"slug":self.slug})
-	def get_absolute_url_for_delete(self):
-		#return "/products/{slug}/".format(slug=self.slug)
-		return reverse('products:delete', kwargs={"slug":self.slug})
 
 	def get_absolute_url_for_delete(self):
 		#return "/products/{slug}/".format(slug=self.slug)

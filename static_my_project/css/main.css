@@ -1,3 +1,94 @@
+.navbar-wish-count {
+    color: #cf6369;
+    position: absolute;
+    top: 30px;
+    right: 22px;
+    font-size: 14px;
+    max-width: 10px;
+}
+
+.fas{
+  color:rgba(190, 45, 51, 0.74);
+}
+
+.far{
+  color:rgba(195, 63, 40, 0.2);
+}
+
+.wish-div a{
+    display:inline-block;
+    color:black;
+    position:absolute;
+/*    margin-left:100px;
+    padding:1px 1px;*/
+    background-color: transparent;
+    visibility: hidden;
+}
+
+.wish-div:hover a {
+    visibility: visible;
+    background-color: transparent;
+}
+
+.like-center {
+  position: absolute;
+  top: 104px;
+  right: 104px;
+}
+
+.one-line{
+    width: 288px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display:inline-block;
+}
+
+.poloska{
+  /*border-top: 1px solid #e8eaef;*/
+  margin-top: 5px;
+}
+
+.card-img-top {
+    max-width: 288px;
+    max-height: 288px;
+    min-width: 288px;
+    min-height: 288px;
+    object-fit: cover;
+    align-items: center;
+    margin-bottom: 10px;
+
+    cursor: pointer;
+    display: inline-block;
+    border: 0px solid #ccc;
+    position: relative;
+}
+
+.card-text{
+  word-wrap: break-word;
+}
+
+.card{
+  overflow: hidden;
+  display: flex;
+  border: none;
+}
+
+
+.card-body {
+
+  height: 100px;
+  width: 288px;
+  object-fit: cover;
+  border-top: 1px solid #e8eaef;
+  padding: 0;
+
+}
+
+ol {
+  list-style: none;
+}
+
 .hidden-button {
   background: none;
   padding: 0px;
@@ -146,19 +237,7 @@ border: 2px red solid;
 }
 
 
-.card-body {
-  height: 300px;
-  width: 300px;
-  object-fit: cover;
 
-}
-
-
-.card-img-top {
-    width: 85%;
-    height: 85%;
-    object-fit: contain;
-}
 
 
 

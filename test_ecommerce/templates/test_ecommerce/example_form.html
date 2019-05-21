@@ -1,41 +1,84 @@
 {% load static %}
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>{% block title %}{% endblock %}</title>
-    {{ block.super }}
-    <link rel="stylesheet" href="{% static 'ajaxuploader/css/fileuploader.css' %}">
-    <link rel="stylesheet" href="{% static 'css/example.css' %}">
-    <link rel="stylesheet" href="{% static 'django_bootstrap3_form/bootstrap/dist/css/bootstrap.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Base Template</title>
+      {% include 'base/css.html' %}
+      </style>
+      {% block javascript %}{% endblock %}
+            {% include 'base/js.html' %}
+      {% block extra_js %}{% endblock extra_js %}
+  </head>
+  <body>
+
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>
+    <style>
+    #container {
+      position: relative;
+      margin: 0px auto;
+      padding: 0px;
+      width: 600px;
+      height: 400px;
+      overflow: auto;
+    }
+    #container .content {
+      background-image: url('./assets/azusa.jpg');
+      width: 1280px;
+      height: 720px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="content">
+      </div>
+    </div>
+
+    <p style='text-align: center'>
+      Width <input type='text' id='width' value='600'>
+      Height <input type='text' id='height' value='400'>
+      <button onclick='updateSize()'>Change!</button>
+    </p>
+
+    <script>
+    var $ = document.querySelector.bind(document);
+    var ps = new PerfectScrollbar('#container');
+    function updateSize() {
+      var width = parseInt($('#width').value, 1);
+      var height = parseInt($('#height').value, 1);
+      $('#container').style.width = width + 'px';
+      $('#container').style.height = height + 'px';
+      ps.update();
+    }
+    </script>
+
+
+
+
+
+    {% include 'base/css.html' %}
+    {% block base_head %}{% endblock %}
 </head>
 <body>
-    <div class="container">
 
-            <form
-        method="POST"
-        enctype="multipart/form-data"
-        id="example-form"
-    >
-        {% csrf_token %}
-        {{ form }}
-        <input class="btn btn-primary" type="submit" value="Save" />
-    </form>
-
-    {% include 'django_file_form/upload_template.html' %}
-
-    {% if use_ajax %}
-        <script src="{% static 'jquery/dist/jquery.js' %}"></script>
-        <script src="{% static 'ajaxuploader/js/fileuploader.js' %}"></script>
-        <script src="{% static 'file_form/file_form.js' %}"></script>
-        <script>
-            $(function() {
-                initUploadFields($('#example-form'), { prefix: 'example' });
-            });
-        </script>
-    {% endif %}
-
+    {% include 'base/navbar.html' with brand_name='eCommerce' %}
+    <div class='container-fluid'>
+    {% include 'base/messages.html' %}
+    {% block content %}{% endblock %}
     </div>
+
+
+
+
+
+
+
 </body>
 </html>
+
+

@@ -50,6 +50,18 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
+from marketing.models import MarketingPreference
+
+
+class MarketingPreferenceForm(forms.ModelForm):
+    subscribed = forms.BooleanField(label = 'Recieve Marketing Email?', required=False)
+    class Meta:
+        model = MarketingPreference
+        fields = [
+            'subscribed',
+
+        ]
+
 class UserDetailChangeForm(forms.ModelForm):
     username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
     full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control'}))

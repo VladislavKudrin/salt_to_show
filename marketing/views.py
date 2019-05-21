@@ -49,7 +49,7 @@ class MailChimpWebhookView(CsrfExemptMixin, View):
 
 class MarketingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
 	form_class = MarketingPreferenceForm
-	template_name = 'base/forms.html'
+	template_name = 'accounts/detail-update-view.html'
 	success_url = '/settings/email/'
 	success_message = 'Your Email pref had been updated!'
 
@@ -61,6 +61,7 @@ class MarketingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(MarketingPreferenceUpdateView, self).get_context_data(*args, **kwargs)
 		context['title'] = 'Update Email Preferences'
+		context['marketing_in_action'] = True
 		return context
 
 	def get_object(self):

@@ -1,25 +1,42 @@
 
-<div class="card text-center">
+<style type="text/css">
+.span {
+  color: red;
+}
+</style>
 
-  <div class="card-body w-25">
-      <a href="{{ instance.get_absolute_url }}">
-
-
-                    <class="card-title w25">{{ instance.title }}</class="card-title>
-                      {% if instance.images %}
-                        {% with instance.images.all|first as image %}
-                        <img src="{{ image.image.url }}" class="card-img-top w-75" alt="...">
-                        {% endwith %}
-                      {% endif %}
-          
-
-                    {% if request.user.is_authenticated %}
-                    {% include 'products/wish-list-update.html' with product=instance %}
-                    {% endif %}
-
-</a>
-  </div>
+<div class="card position-relative">
+  {% if instance.images %}
+  {% with instance.images.all|first as image %}
+   <div class="wish-div">
+        <img class="card-img-top" src="{{ image.image.url }}"  alt="No photo">
+          <a class="like-center">{% include 'accounts/wish-list-update.html' with product=instance %}</a>
 
 </div>
+
+  {% endwith %}
+  {% endif %}
+  <div class="card-body position-relative">
+    <a href="{{ instance.get_absolute_url }}">
+      <div class="row position-relative poloska font-weight-bold">
+        <div class="col position-static text-left">
+          {{ instance.category }}
+        </div>
+        <div class="col position-static text-center">
+          {{ instance.sex }}
+        </div>
+        <div class="col position-static text-right">
+          {{ instance.price }}
+        </div>
+      </div>
+      <div class="row position-relative">
+        <div class="col position-static one-line">
+          {{ instance.title }}
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
 
 

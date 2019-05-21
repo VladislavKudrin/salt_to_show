@@ -7,6 +7,8 @@
 {% url 'carts:home' as cart_url %}
 {% url 'accounts:home' as account_url %}
 {% url 'products:create' as products_create_url %}
+{% url 'accounts:wish-list' as wish_list %}
+
 {% load static %}
   
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white">
@@ -51,6 +53,13 @@
         <li class="nav-item {% if request.path == product_list_url %}active{% endif %}">
           <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ wish_list }}">
+            <span class='navbar-wish-count'>{{ request.user.wishes.all.count }}</span>
+            <i class="fas fa-heart fa-2x"></i>
+          </a>
+        </li>
+
     </ul>
     </div>
   </div> 
