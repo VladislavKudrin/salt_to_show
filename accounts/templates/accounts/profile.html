@@ -2,26 +2,35 @@
 {% block content %}
 
 <div class='row'>
-<div class='col-12 col-md-4 mx-auto'>
-	<h1 class="display-4">{{ object.username }}</h1>
+	<div class='col-1,5 mx-auto'>
+		{% if object.profile_foto %}
+		<img src="{{ object.profile_foto.url }}" class="avatar"/>
+		{% endif %}
+	</div>
+</div>
+<div class='row'>
+	<div class='col-1,5 mx-auto'>	
+		<h1 class="display-4">{{ object.username }}</h1>
+	</div>
+</div>
 
-	{% if object.profile_foto %}
-	<img src="{{ object.profile_foto.url }}" class = 'img-fluid'/>
-	{% endif %}
+<div class="row">
+	<div class="col-3 mx-auto">
+		{% include 'accounts/snippets/begin-chat.html' %}
+	</div>
+</div>
 
-<div>
-	{% include 'accounts/snippets/begin-chat.html' %}
-<div>
-
-</div>
-</div>
-</div>
-</div>
 
 
 <div class='row'>
-	<div class='col-6'>
-	{% for obj in products %}
+	<div class='col-12'><br>
+		<h6 class="font-weight-bold" id="products-by-user">Products By:</h6>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-3">
+		{% for obj in products %}
 		<div class='col'>
 			{{ forloop.counter }}
 			{% include 'products/snippets/card.html' with instance=obj %}
@@ -30,9 +39,9 @@
 			{% else %}
 				</div>
 			{% endif %}
-	{% endfor %}
-</div>
-
+		{% endfor %}
+		</div>
+	</div>
 </div>
 
 		

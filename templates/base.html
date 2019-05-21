@@ -22,19 +22,17 @@
 
 
       </style>
-
   </head>
   <body>
 
     {% include 'base/css.html' %}
     {% block base_head %}{% endblock %}
-</head>
-<body>
 
     {% include 'base/navbar.html' with brand_name='eCommerce' %}
-    <div class='container-fluid'>
+    <div class='container-fluid mt-5' style="padding:0; margin:0;">
     {% include 'base/messages.html' %}
     {% block content %}{% endblock %}
+    {% include 'base/footer.html' %}
     </div>
 
 
@@ -56,30 +54,6 @@
   $('.customdrop').click(function(e) {
     e.stopPropagation();
 });
-</script>
-
-
-<!-- <script type="text/javascript">
-  $(".card-img-top").mouseenter(function() {
-    $("#wishlist-hidden").slideDown();
-});
-$(".card-img-top").mouseleave(function() {
-    $("#wishlist-hidden").slideUp();
-});
-</script> -->
-
-<script>
-$( ".carousel-control-prev" ).hover(
-  function() {
-    $( this ).prepend( $( "<span> ****** </span>" ) );
-  }, function() {
-    $( this ).find( "span:last" ).remove();
-  }
-);
-
-console.log('dfdsfd');
-
- 
 </script>
 
 
