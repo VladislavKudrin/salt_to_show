@@ -103,6 +103,10 @@ ol {
   list-style: none;
 }
 
+#mssg-text {
+  overflow-wrap: break-word;
+}
+
 /*@font-face {
   font-family: 'Cuprum';
   font-style: italic;
@@ -228,7 +232,7 @@ ol {
 
 
 
-.my-custom-scrollbar {
+#table-scroll .my-custom-scrollbar {
   position: relative;
   width: 250px;
   height: 90%;

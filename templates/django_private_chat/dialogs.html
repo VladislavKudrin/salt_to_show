@@ -8,9 +8,9 @@
 
 {% block content %}
 
-<div class="container" style="min-width:1280px; max-width:1280px; padding:0px; margin:0px;">
+<div class="container" style="min-width:1349px; max-width:1349px; padding:0px; margin:0px;">
 <input id="owner_username" type="hidden" value="{{ request.user.username }}">
-    <div class='row position-relative' style="padding: 0; margin:0; height:600px; max-width:1295px; ">
+    <div class='row position-relative' style="padding: 0; margin:0; height:600px; max-width:1349px; ">
     <div class="col position-relative" style="padding: 0; margin:0;">
 
 
@@ -48,8 +48,8 @@
             <div class="row position-relative" style="padding: 0; margin: 0;">
 
                 <div class="col-2 position-relative" style="border-right: 1px solid #e8eaef; padding: 0; margin: 0; height: 430px; min-width: 225px; max-width: 225px;">
-                    <div class="row my-custom-scrollbar my-custom-scrollbar-primary position-relative" style="height: 429px; padding: 0; margin:0; min-width: 225px; max-width: 225px;">
-                        <table class="table my-custom-scrollbar my-custom-scrollbar-primary position-relative" style="padding: 0; margin: 0; height: 430px;">
+                    <div id="table-scroll" class="row my-custom-scrollbar position-relative" style="height: 429px; padding: 0; margin:0; min-width: 225px; max-width: 225px;">
+                        <table class="table position-relative" style="padding: 0; margin: 0; height: 430px;">
                             <tbody class="user-list-div position-relative" style="padding: 0; margin: 0;">
                                 {% for dialog in object_list %}
                                     <tr class="position-relative" style="padding: 0; margin: 0;">
@@ -73,16 +73,14 @@
                         
                                  
             
-                <div class="col-9 position-relative" style="padding:0; margin: 0;">
-
-
+                <div class="col-9 my-custom-scrollbar position-relative" style="padding:0; margin: 0; min-width: 1124px;">
                     <div class="row position-relative" style="padding:0; margin: 0;">
-                        <div class="col position-relative" style="min-height: 350px; max-height: 350px; padding:0; margin: 0;">
-                                 <div id="messages" class="messages position-relative" style="padding:5px 0px; margin: 0px 25px;">
+                        <div class="col  position-relative" style="min-height: 350px; max-height: 350px; padding:0; margin: 0;">
+                                 <div id="messages" class="messages position-relative" style="padding:5px 0px; margin-left:25px;">
                                     {% for msg in active_dialog.messages.all %}
-                                    <div class="row position-static {% if msg.read %}msg-read{% else %}msg-unread{% endif %}" data-id="{{ msg.id }}" style="padding:0; margin: 0;">
-                                        <p class="{% if msg.sender == request.user %}pull-left{% else %}pull-right{% endif %}">
-                                        <span class="username">{{ msg.sender.username }}:
+                                    <div class="row position-static {% if msg.read %}msg-read{% else %}msg-unread{% endif %}" data-id="{{ msg.id }}" style="padding:0; margin: 0;" id="mssg-text">
+                                        <p class="{% if msg.sender == request.user %}pull-left{% else %}pull-right{% endif %}" style="min-width: 1000px; max-width: 1000px;">
+                                        <span class="username mx-auto">{{ msg.sender.username }}:
                                         </span>
                                         {{ msg.text }}
                                         <span class="timestamp">&ndash; 
@@ -99,14 +97,14 @@
 
 
                     <div class="row position-relative add-message mt-0" id="align-items-chat" style="padding:0; margin: 0;">
-                        <div class="col-10 p-0 position-static" style="padding:0; margin: 0;">
+                        <div class="col-11 p-0 position-static" style="padding:0; margin: 0;">
                             <div class="form-group" style="padding:0; margin: 0px 25px;">
                                 <textarea id="chat-message" class="form-control message" placeholder="{% trans 'Write a message' %}" style="padding:0; margin: 0;">
                                 </textarea>
                            </div>
                         </div>
 
-                        <div class="col-2 mx-auto d-flex align-items-center position-static" style="padding:0; margin: 0;">
+                        <div class="col-1 mx-auto d-flex align-items-center position-static" style="padding:0; margin: 0;">
                             <div class="form-group clearfix">
                                 <i id="btn-send-message" class="fas fa-paper-plane fa-2x pull-right send-message pointer" value="{% trans 'Send' %}" >                                  
                                 </i>
