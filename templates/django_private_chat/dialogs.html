@@ -7,8 +7,10 @@
 {% endblock css %}
 
 {% block content %}
+
+<div class="container" style="min-width:1280px; max-width:1280px; padding:0px; margin:0px;">
 <input id="owner_username" type="hidden" value="{{ request.user.username }}">
-    <div class='row position-relative' style="padding: 0; margin:0; height:600px; width:1349px">
+    <div class='row position-relative' style="padding: 0; margin:0; height:600px; max-width:1295px; ">
     <div class="col position-relative" style="padding: 0; margin:0;">
 
 
@@ -119,7 +121,7 @@
     </div>
     </div> 
 
-
+</div>
 {% endblock %}
 
 {% block extra_js %}
