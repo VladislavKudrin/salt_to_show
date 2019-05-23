@@ -1,3 +1,43 @@
+
+    // //Auto Search
+    // var searchForm = $(".search-form")
+    // var searchInput = searchForm.find("[name='q']") //input name = 'q'
+    // var typingTimer;
+    // var typingInterval = 500 //0.5 seconds
+    // var searchBtn = searchForm.find("[type='submit']")
+    // // console.log(searchBtn)
+    // searchInput.keyup(
+    //   function(event){
+    //     clearTimeout(typingTimer)
+    //     typingTimer = setTimeout(performSearch, typingInterval)
+    //   })
+    //   searchInput.keydown(
+    //  //key pressed
+    //   function(event){
+    //     clearTimeout(typingTimer)
+     
+    //   })
+      
+    //   function displaySearching(){
+    //     searchBtn.addClass("disabled")
+    //     searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
+    //   }
+
+    //   function performSearch(){
+    //     displaySearching()
+    //     var query = searchInput.val()
+    //     setTimeout(function(){
+    //       window.location.href='/search/?q=' + query   
+    //     }, 1000)
+                   
+    //   }
+
+
+
+
+
+
+
 $(document).ready(
 
 
@@ -76,36 +116,6 @@ $(document).ready(
 
 
 
-    //Auto Search
-    var searchForm = $(".search-form")
-    var searchInput = searchForm.find("[name='q']") //input name = 'q'
-    var typingTimer;
-    var typingInterval = 500 //0.5 seconds
-    var searchBtn = searchForm.find("[type='submit']")
-    searchInput.keyup(  //released key
-      function(event){
-        clearTimeout(typingTimer)
-        typingTimer = setTimeout(performSearch, typingInterval)
-      })
-    searchInput.keydown( //key pressed
-      function(event){
-        clearTimeout(typingTimer)
-     
-      })
-      
-      function displaySearching(){
-        searchBtn.addClass("disabled")
-        searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
-      }
-
-      function performSearch(){
-        displaySearching()
-        var query = searchInput.val()
-        setTimeout(function(){
-          window.location.href='/search/?q=' + query   
-        }, 1000)
-                   
-      }
 
 
   

@@ -19,9 +19,36 @@
   background-color: black;
   color:black;
 }
+  .ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+  }
+ 
+ #searchAutoComplete{
+  width: 120px;
+  -webkit-transition: width .20s ease-in-out;
+  transition: width .20s ease-in-out;
+}
+
+#searchAutoComplete:focus {
+  width: 250px;
+}
+
+#searchAutoComplete::focus-within {
+  background: black;
+}
 
 
       </style>
+
   </head>
   <body>
 
@@ -29,9 +56,10 @@
     {% block base_head %}{% endblock %}
 
     {% include 'base/navbar.html' with brand_name='eCommerce' %}
-  
+  <div class="container-fluid p-0 m-0 ajax-search">
     {% include 'base/messages.html' %}
     {% block content %}{% endblock %}
+  </div>
     {% include 'base/footer.html' %}
  
 
@@ -41,19 +69,38 @@
       {% block extra_js %}{% endblock extra_js %}
       {% block javascript %}{% endblock %}
 
-<script type="text/javascript">
-    // Add slideDown animation to Bootstrap dropdown when expanding.
-  $('.dropdown').on('show.bs.dropdown', function() {
-    $(this).find('.customdrop').first().stop(true, true).slideDown();
-  });
 
-  // Add slideUp animation to Bootstrap dropdown when collapsing.
-  $('.dropdown').on('hide.bs.dropdown', function() {
-    $(this).find('.customdrop').first().stop(true, true).slideUp();
-  });
-  $('.customdrop').click(function(e) {
-    e.stopPropagation();
-});
+<script type="text/javascript">
+        var searchForm = $(".search-form")
+        var searchInput = searchForm.find("[name='q']") //input name = 'q'
+        var typingTimer;
+        var actionEndpoint = searchForm.attr("action");
+        // var typingInterval = 50 //0.5 seconds
+        var searchBtn = searchForm.find("[type='submit']")
+  
+$(document).ready(
+      (function() {
+      $.ajax({
+      url: actionEndpoint,
+      data: searchInput,
+      success: function(data){
+      var availableTags = data.filtered_products
+                  $( "#searchAutoComplete" ).autocomplete({
+                    source: availableTags
+                  });
+          }, 
+          error: function(errorData){
+              $.alert({
+                  title: 'OOps!',
+                  content: 'Simple alert!',
+                  theme: "modern"
+                });
+            }
+      })//ajax
+      }
+      ))//docreary
+        
+
 </script>
 
 
