@@ -10,52 +10,55 @@
       {% block javascript %}{% endblock %}
             {% include 'base/js.html' %}
       {% block extra_js %}{% endblock extra_js %}
+
+
+  <!-- ... [OTHER INCLUDES] ... -->
+    
+
+    <link rel='stylesheet' href="{% static 'unitegallery-master/source/unitegallery/css/unite-gallery.css' %}" type='text/css' /> 
+      <link rel='stylesheet' href="{% static 'unitegallery-master/source/unitegallery/themes/default/ug-theme-default.css' %}" type='text/css' /> 
+
+    <script type='text/javascript' src="{% static 'unitegallery-master/source/unitegallery/themes/default/ug-theme-default.js' %}"></script> 
+
+    <script type='text/javascript' src="{% static 'unitegallery-master/source/unitegallery/js/ug-api.js' %}"></script> 
+        <script type='text/javascript' src="{% static 'unitegallery-master/source/unitegallery/js/ug-gallery.js' %}"></script> 
+            <script type='text/javascript' src="{% static 'unitegallery-master/source/unitegallery/js/ug-common-libraries.js' %}"></script> 
+
+  
+    
+
+
   </head>
   <body>
 
 
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>
-    <style>
-    #container {
-      position: relative;
-      margin: 0px auto;
-      padding: 0px;
-      width: 600px;
-      height: 400px;
-      overflow: auto;
-    }
-    #container .content {
-      background-image: url('./assets/azusa.jpg');
-      width: 1280px;
-      height: 720px;
-    }
-    </style>
-  </head>
-  <body>
-    <div id="container">
-      <div class="content">
-      </div>
+  <div id="gallery" style="display:none;">
+    
+      <img alt="Image 1 Title" src="thumbs/image1.jpg"
+        data-image="https://news.nationalgeographic.com/content/dam/news/2018/05/17/you-can-train-your-cat/02-cat-training-NationalGeographic_1484324.ngsversion.1526587209178.adapt.1900.1.jpg"
+        data-description="Image 1 Description">
+      
+      <img alt="Image 2 Title" src="thumbs/image2.jpg"
+        data-image="https://news.nationalgeographic.com/content/dam/news/2018/05/17/you-can-train-your-cat/02-cat-training-NationalGeographic_1484324.ngsversion.1526587209178.adapt.1900.1.jpg"
+        data-description="Image 2 Description">
+    
     </div>
 
-    <p style='text-align: center'>
-      Width <input type='text' id='width' value='600'>
-      Height <input type='text' id='height' value='400'>
-      <button onclick='updateSize()'>Change!</button>
-    </p>
+    <style>
 
-    <script>
-    var $ = document.querySelector.bind(document);
-    var ps = new PerfectScrollbar('#container');
-    function updateSize() {
-      var width = parseInt($('#width').value, 1);
-      var height = parseInt($('#height').value, 1);
-      $('#container').style.width = width + 'px';
-      $('#container').style.height = height + 'px';
-      ps.update();
-    }
+
+    </style>
+
+
+
+<script type="text/javascript"> 
+      
+      jQuery(document).ready(function(){ 
+        jQuery("#gallery").unitegallery(); 
+      }); 
+    
     </script>
+
 
 
 
