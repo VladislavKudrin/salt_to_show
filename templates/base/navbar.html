@@ -82,8 +82,13 @@
         <li class="nav-item {% if request.path == products_create_url %}active{% endif %}">
           <a class="btn btn-dark mr-2" role="button" href="{{ products_create_url }}">Sell</a>          
         </li>
+<<<<<<< HEAD
         <li class="nav-item ml-0 {% if request.path == product_list_url %}active{% endif %}" style="justify-content: flex-end;">
         <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
+=======
+        <li class="nav-item {% if request.path == product_list_url %}active{% endif %}">
+          <a class="btn btn-dark" role="button" href="{{ filter_url }}">Buy</a>
+>>>>>>> vlad
         </li>
         <li class="nav-item m-0 pb-0">
         <a class="nav-link m-0 pb-0" href="{{ wish_list }}">
