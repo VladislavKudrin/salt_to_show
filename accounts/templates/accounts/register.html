@@ -9,13 +9,13 @@
         <div class="mx-auto col-md-9 col-lg-9 ">
             <div class="text-center">
 
-					<h1>Register</h1>
+					<h2>Register</h2>
 					<form method = 'POST'> {% csrf_token %}
 							{{ form|crispy }}
 							<button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button><br>
 					</form>
 
-						<h1>Or log in with:</h1><br>
+						<h2>Or log in with:</h2><br>
 			        <a href="{% url 'social:begin' 'vk-oauth2' %}">  <button class="btn btn-outline-dark btn-block">
 			             <i class="fab fa-vk ml-1 mr-1"></i>
 			            </button>
@@ -26,6 +26,8 @@
 						<i class="fab fa-google"></i>
 			        </button>
 			        </a>
+
+			        <br><small><a href='{% url "password_reset" %}'>Forgot Password?</a></small>
 			</div>
 		</div>
 	</div>
