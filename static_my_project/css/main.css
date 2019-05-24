@@ -128,12 +128,12 @@ background-color: black;
     max-width: 10px;
 }
 
-.fas{
+.fa-heart {
   color:rgba(190, 45, 51, 0.74);
 }
 
-.far{
-  color:rgba(195, 63, 40, 0.2);
+.fa-user {
+  color: black;
 }
 
 .wish-div a{
@@ -320,9 +320,9 @@ ol {
   margin-left: 390px;
 }
 
-#opponent-name {
+/*#opponent-name {
   margin-left: -50px;
-}
+}*/
 
 .ps__rail-x {
   margin-right: 10px;
@@ -337,15 +337,35 @@ ol {
   width: 250px;
 }
 
+.msg-unread{
+  padding: 0;
+  margin: 0;
+}
 
+table {
+  display: inline-block;
+}
+
+
+.my-custom-scrollbar {
+  position: absolute;
+}
 
 #table-scroll .my-custom-scrollbar {
   position: relative;
   width: 250px;
   height: 90%;
-  border: 0;
-  
+  border: 0;  
 }
+
+#messages .my-custom-scrollbar {
+  position: relative;
+ 
+  width: 1000px;
+  height: 90%;
+  border: 0;  
+}
+
 
 #conversations {
   text-align: left;

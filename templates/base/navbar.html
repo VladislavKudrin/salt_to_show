@@ -26,6 +26,7 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 collapsenav">
         <div class="d-flex flex-nowrap align-items-end">
         {% include 'search/snippets/search-form.html' %}
+
         </div>
         </div>
         </li>
@@ -34,27 +35,35 @@
         <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
         </li>
 
-        {% if request.user.is_authenticated %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsenav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    
+<!--     <div class="d-flex w-100 justify-content-end order-3 collapsenav"> -->
+<!--       <ul class="navbar-nav ml-auto"> -->
+      {% if request.user.is_authenticated %}
         <li class="nav-item dropdown ml-0 mr-0">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ account_url }}">Home</a>
-        <a class="dropdown-item" href="#">Billing</a>
-        <a class="dropdown-item" href="#">Preferences</a>
-        <a class="dropdown-item" href="#">History</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ logout_url }}">Logout</a>
-        </div>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a>
+          <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ account_url }}">Home</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="#">Chat</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
+
+
         </li>
 
         {% else %}
         <li class="nav-item {% if request.path == login_url %}active{% endif %}">
         <a class="nav-link" href="{{ login_url }}">Login/Sign Up</a>
         </li>
-        {% endif %}
-        
-        <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}">
-        <a class="btn btn-dark mx-2" role="button" href="{{ products_create_url }}">Sell</a>          
+  
+      {% endif %}
+        <li class="nav-item {% if request.path == products_create_url %}active{% endif %}">
+          <a class="btn btn-dark mr-2" role="button" href="{{ products_create_url }}">Sell</a>          
         </li>
         <li class="nav-item ml-0 {% if request.path == product_list_url %}active{% endif %}" style="justify-content: flex-end;">
         <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
