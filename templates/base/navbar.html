@@ -7,6 +7,7 @@
 {% url 'carts:home' as cart_url %}
 {% url 'accounts:home' as account_url %}
 {% url 'products:create' as products_create_url %}
+{% url 'categories:filter' as filter_url %}
 {% load static %}
   
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white">
@@ -15,10 +16,13 @@
     <form class="d-flex flex-nowrap align-items-center">
         {% include 'search/snippets/search-form.html' %}
       </form>
-    
+      {% if request.path == filter_url %}
+      <button class='btn btn-dark'id='trigger'>Open Filter</button>
+      {% endif %}
   </div>
 
   <!--search & logo-->
+  
   <div class="mx-auto order-0">
     <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsenav">
@@ -49,7 +53,7 @@
           <a class="btn btn-dark mx-2" role="button" href="{{ products_create_url }}">Sell</a>          
         </li>
         <li class="nav-item {% if request.path == product_list_url %}active{% endif %}">
-          <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
+          <a class="btn btn-dark" role="button" href="{{ filter_url }}">Buy</a>
         </li>
     </ul>
     </div>

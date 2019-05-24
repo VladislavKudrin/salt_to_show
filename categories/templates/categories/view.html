@@ -2,23 +2,42 @@
 
 {% block content %}
 
+
 <div class='row'>
-	<div class='col-3'>
+	<div class='col-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
 		{% include 'categories/snippets/filter-box.html' with instance=obj %}
 	</div>
-	<div class='col-9'>
-		<div class="col">
+{% if filter_gender or filter_category or filter_size %}
+	<div class='col-12 text-center'>Results for:
+		{% if filter_gender %}
+			{% for gender in filter_gender %}
+			<b>{{ gender }}</b>
+			{% endfor %}
+		{% endif %}
+		{% if filter_category %}
+			{% for category in filter_category %}
+			<b>{{ category }}</b>
+			{% endfor %}
+		{% endif %}
+		{% if filter_size %}
+			{% for size in filter_size %}
+			<b>{{ size }}</b>
+			{% endfor %}
+		{% endif %}
+{% endif %}
+	</div>
+		<div class="col" id='main-col'>
 			<div class='row'>
-				{% for obj in object_list %}
-					<div class='col'>
-						{{ forloop.counter }}
-						{% include 'products/snippets/card.html' with instance=obj %}
-						{% if forloop.counter|divisibleby:2 %}
-							</div></div><div class='row'><div class='col-12'><hr/></div>
-						{% else %}
-							</div>
-						{% endif %}
-				{% endfor %}
+					{% for obj in object_list %}
+						<div class='col'>
+							{{ forloop.counter }}
+							{% include 'products/snippets/card.html' with instance=obj %}
+							{% if forloop.counter|divisibleby:4 %}
+								</div></div><div class='row'><div class='col-12'><hr/></div>
+							{% else %}
+								</div>
+							{% endif %}
+					{% endfor %}					
 		</div>
 	</div>
 </div>

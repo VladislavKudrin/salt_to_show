@@ -1,17 +1,20 @@
+from pathlib import Path
 from django.views.generic import ListView, DetailView
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-
+from django_file_form.models import UploadedFile
 from django_file_form.uploader import FileFormUploader
+from django_file_form.forms import ExistingFile
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -112,6 +115,13 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs) 
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
+		new_all_=[]
+		request = self.request
+		slug = self.kwargs.get('slug')
+		all_ = Image.objects.all().filter(slug=slug)
+		for idx, image in enumerate(all_):
+			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
+		context['images'] = new_all_
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -191,15 +201,22 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 	}
 	return render(request, "products/detail.html", context)
 
+def image_update_view(request):
+	if request.POST:
+		data = request.POST.getlist('data[]')
+		for idx, image_key in enumerate(data):
+			Image.objects.filter(unique_image_id=image_key).update(image_order=idx+1)
+	return redirect('home')
 
 
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
-
 	def get(self, request, *args, **kwargs):
 		if request.is_ajax():
-			selected = self.request.GET.get('selected')
+			selected = self.request.GET.get('selected', None)
+			if selected == "select a category":
+				selected = None
 			if selected is not None:
 				qs = Size.objects.filter(size_for__iexact=selected)
 				sizes = [{
@@ -216,11 +233,21 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		context['button']='Create'
 		context['title']='Create New Product'
 		context['form']=product_form
+
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
 		product = form.save()
 		url = product.get_absolute_url()
 		return redirect(url)
+	def form_invalid(self, form):
+		messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
+		context={
+			'form': form,
+			'button': 'Create',
+			'title':'Create New Product'
+		}
+		return render(self.request, 'products/product-create.html', context)
+
 
 class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
@@ -229,10 +256,19 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 		return Product.objects.by_user(request.user)
 
 
-class ProductUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = ProductUpdateForm
 	template_name = 'products/product-create.html'
 
+	def get_form_kwargs(self):
+		kwargs = super(ProductUpdateView, self).get_form_kwargs()
+		kwargs['request'] = self.request
+		slug = self.kwargs.get('slug')
+		if slug is not None:
+			kwargs['slug'] = slug
+			product = Product.objects.get(slug=slug)
+		return kwargs
+	
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get('slug')
@@ -253,8 +289,15 @@ class ProductUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
+		request = self.request
+		slug = self.kwargs.get('slug')
 		context['title'] = 'Update'
 		context['button']='Update' 
+		new_all_=[]
+		all_ = Image.objects.all().filter(slug=slug)
+		for idx, image in enumerate(all_):
+			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
+		context['images'] = new_all_
 		return context
 
 

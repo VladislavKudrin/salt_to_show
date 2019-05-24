@@ -18,16 +18,20 @@
 			</ol>
 			<div class="carousel-inner">
 
-			{% with object.images.all|first as image %}
-			<div class="carousel-item active" class="carousel slide" data-interval="false">
-			<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
-			</div>
-			{% endwith %}
+			{% for image in images %}
+			 {% if image.image_order == 1 %}
+				<div class="carousel-item active" class="carousel slide" data-interval="false">
+				<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
+				</div>
+			{% endif %}
+			{% endfor %}
 
-			{% for image in object.images.all|slice:"1:" %}
-			<div class="carousel-item" data-interval="false">
-			<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
-			</div>
+			{% for image in images %}
+				{% if not image.image_order == 1 %}
+					<div class="carousel-item" data-interval="false">
+					<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
+					</div>
+				{% endif %}
 			{% endfor %}
 
 			

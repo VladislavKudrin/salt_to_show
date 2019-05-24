@@ -21,7 +21,7 @@ class BaseFormView(generic.FormView):
     use_ajax = True
 
     def get_success_url(self):
-        return reverse('example_success')
+        return reverse('test:example_success')
 
     def form_valid(self, form):
         form.save()
@@ -38,7 +38,7 @@ class ExampleView(BaseFormView):
 
 
 class ExampleSuccessView(generic.TemplateView):
-    template_name = 'success.html'
+    template_name = 'test_ecommerce/success.html'
 
 
 class MultipleExampleView(BaseFormView):
@@ -56,9 +56,9 @@ class ExistingFileExampleView(BaseFormView):
         form_kwargs = super(ExistingFileExampleView, self).get_form_kwargs()
 
         example = Example.objects.get(id=self.kwargs['id'])
-
         if example.input_file:
             name = Path(example.input_file.name).name
+            print(name)
             form_kwargs['initial'] = dict(
                 input_file=ExistingFile(name)
             )
