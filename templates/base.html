@@ -7,12 +7,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Base Template</title>
-<<<<<<< HEAD
-    {% include 'base/css.html' %}
-    <style type="text/css">
-    </style>
-</head>
-=======
 
 
     {% include 'base/css.html' %}
@@ -24,22 +18,13 @@
   </head>
 
 
->>>>>>> vlad
 <body>
-    {% include 'base/css.html' %}
-    {% block base_head %}{% endblock %}
+
     {% include 'base/navbar.html' with brand_name='eCommerce' %}
-    <div class="container-fluid p-0 m-0 ajax-search">
+    <div class='container-fluid'>
     {% include 'base/messages.html' %}
     {% block content %}{% endblock %}
     </div>
-<<<<<<< HEAD
-    {% include 'base/footer.html' %}
-    {% include 'base/js.html' %}
-    {% block extra_js %}{% endblock extra_js %}
-    {% block javascript %}{% endblock %}
-<script type="text/javascript">
-=======
 
 
 
@@ -49,7 +34,6 @@
   .customDropright{
     background-color: white; 
     border: none
-
   }
   .filter-boxes{
     height: 200px;
@@ -58,13 +42,10 @@
   .customDropright:hover{
     background-color: white; 
     border: none
-
   }
-
   .customDropright:focus {
    outline: none; 
 }
-
 </style>
 
 
@@ -72,24 +53,16 @@
   <script type="text/javascript">
 $(document).ready(
   function(){
-
 var formCreate = $('#customSort')
-
-
-
-
-
 //update
    var galleryUpdate = $('#gallery')
    console.log(galleryUpdate)
    var formSubmit = $('#example-form-1')
    var action = formSubmit.attr("action_url")
    formSubmit.submit(
-
     function(event){
   var currentPath = window.location.href
   var elements = $('#example-form-1 ul li')
-
 if (currentPath.indexOf("update") != -1){
     var keyArray = []
     console.log(action)
@@ -115,18 +88,14 @@ if (currentPath.indexOf("update") != -1){
     }//error
     })//ajax
     }//if_current_path_update
-
-
    })//submit_update_create
-
  
     // There's the gallery and the trash
-
     $("#customSort").sortable();
     $("#customSort").disableSelection();
 })//document ready
->>>>>>> vlad
 </script>
+
+
 </body>
 </html>
-

@@ -379,15 +379,7 @@ def product_delete(request):
 	else:
 		return redirect('login')
 
-<<<<<<< HEAD
-# class WishListView(LoginRequiredMixin, ListView):
-# 	template_name = 'products/wish-list.html'
-# 	def get_queryset(self, *args, **kwargs):
-# 		user = self.request.user
-# 		wishes = user.wishes.all()
-# 		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
-# 		return Product.objects.filter(pk__in=wishes)
-=======
+
 class WishListView(LoginRequiredMixin, ListView):
 	template_name = 'products/wish-list.html'
 	def get_queryset(self, *args, **kwargs):
@@ -395,45 +387,10 @@ class WishListView(LoginRequiredMixin, ListView):
 		wishes = user.wishes.all()
 		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
 		return Product.objects.filter(pk__in=wishes)
->>>>>>> vlad
 
 
-# def wishlistupdate(request):
-# 	product_id =request.POST.get('pk')
-# 	product_obj = Product.objects.get(pk=product_id)
-# 	request.user.wishes.add(product_obj)
-# 	return redirect("accounts:home")
 
 
-<<<<<<< HEAD
-# def wishlistupdate(request):
-# 	product_id=request.POST.get('product_id')
-# 	user = request.user
-# 	user_wishes = user.wishes.all()
-# 	if product_id is not None:
-# 		try:
-# 			product_obj = Product.objects.get(id=product_id)
-# 		except Product.DoesNotExist:
-# 			print("Show message to user!")
-# 			return redirect("products:wish-list")
-# 		# cart_obj, new_obj = User.objects.get_or_create(request)
-# 		if product_obj in user_wishes:
-# 			user.wishes.remove(product_obj)
-# 			added = False
-# 		else:
-# 			user.wishes.add(product_obj)
-# 			added = True
-# 		request.session['wish_items']= user_wishes.count()
-# 		if request.is_ajax():
-# 			print("Ajax request YES")
-# 			json_data={
-# 				"added": added,
-# 				"removed": not added,
-# 				# "wishes_count": user_wishes.count(),
-# 			}
-# 			return JsonResponse(json_data, status=200)
-# 	return redirect("products:wish-list")
-=======
 def wishlistupdate(request):
 	product_id=request.POST.get('product_id')
 	user = request.user
@@ -460,7 +417,6 @@ def wishlistupdate(request):
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("products:wish-list")
->>>>>>> vlad
 
 
 handle_upload = FileFormUploader()

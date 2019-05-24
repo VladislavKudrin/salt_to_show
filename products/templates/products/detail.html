@@ -12,21 +12,6 @@
 	<div class='col-12 col-md-8 align-top' style="max-height: 800px">
 
 			{% if object.images.all %}
-<<<<<<< HEAD
-			<div class="carousel slide" data-interval="false" data-ride="carousel">
-			<div class="carousel-inner" style="max-height: 800px">
-			{% with object.images.all|first as image %}
-				<div class="carousel-item active" style="max-height: 800px" class="carousel slide" data-interval="false">
-					<img class="d-block img w-100" src="{{ image.image.url }}" alt="Second slide">
-				</div>
-			{% endwith %}
-			{% for image in object.images.all|slice:"1:" %}
-				<div class="carousel-item align-top" data-interval="false">
-					<div class="carousel-img">
-						<img class="d-block img w-100" src="{{ image.image.url }}" alt="Second slide" alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
-					</div>
-				</div>
-=======
 
 			<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
 			<ol class="carousel-indicators">
@@ -47,7 +32,6 @@
 					<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
 					</div>
 				{% endif %}
->>>>>>> vlad
 			{% endfor %}
 			
 			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

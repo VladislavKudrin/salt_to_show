@@ -11,7 +11,7 @@ var actionEndpoint = searchForm.attr("action");
 // searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
 //         }
 $(document).ready(
-<<<<<<< HEAD
+
       (function() {
       $.ajax({
       url: actionEndpoint,
@@ -37,7 +37,7 @@ $(document).ready(
             }
       })//ajax
       }
-      ))//docreary
+
 
       
 // //Auto Search
@@ -79,12 +79,9 @@ $(document).ready(
 
 
 
-$(document).ready(
 
 
-=======
-  
->>>>>>> vlad
+
   function(){
   
 
