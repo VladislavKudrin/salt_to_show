@@ -1,17 +1,20 @@
+from pathlib import Path
 from django.views.generic import ListView, DetailView
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-
+from django_file_form.models import UploadedFile
 from django_file_form.uploader import FileFormUploader
+from django_file_form.forms import ExistingFile
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -20,7 +23,7 @@ from categories.models import Size
 
 from accounts.models import User
 from .models import Product, Image
-from .forms import ProductCreateForm, ImageForm
+from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 
 from django.db.utils import OperationalError
 format_list = [('', '(all)')]
@@ -121,6 +124,13 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs) 
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
+		new_all_=[]
+		request = self.request
+		slug = self.kwargs.get('slug')
+		all_ = Image.objects.all().filter(slug=slug)
+		for idx, image in enumerate(all_):
+			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
+		context['images'] = new_all_
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -200,15 +210,22 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 	}
 	return render(request, "products/detail.html", context)
 
+def image_update_view(request):
+	if request.POST:
+		data = request.POST.getlist('data[]')
+		for idx, image_key in enumerate(data):
+			Image.objects.filter(unique_image_id=image_key).update(image_order=idx+1)
+	return redirect('home')
 
 
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
-
 	def get(self, request, *args, **kwargs):
 		if request.is_ajax():
-			selected = self.request.GET.get('selected')
+			selected = self.request.GET.get('selected', None)
+			if selected == "select a category":
+				selected = None
 			if selected is not None:
 				qs = Size.objects.filter(size_for__iexact=selected)
 				sizes = [{
@@ -222,13 +239,24 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				return JsonResponse(json_data)
 		product_form = ImageForm(request)
 		context={}
+		context['button']='Create'
 		context['title']='Create New Product'
 		context['form']=product_form
+
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
 		product = form.save()
 		url = product.get_absolute_url()
 		return redirect(url)
+	def form_invalid(self, form):
+		messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
+		context={
+			'form': form,
+			'button': 'Create',
+			'title':'Create New Product'
+		}
+		return render(self.request, 'products/product-create.html', context)
+
 
 class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
@@ -238,8 +266,18 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
-	form_class = ProductCreateForm
-	template_name = 'products/product-update.html'
+	form_class = ProductUpdateForm
+	template_name = 'products/product-create.html'
+
+	def get_form_kwargs(self):
+		kwargs = super(ProductUpdateView, self).get_form_kwargs()
+		kwargs['request'] = self.request
+		slug = self.kwargs.get('slug')
+		if slug is not None:
+			kwargs['slug'] = slug
+			product = Product.objects.get(slug=slug)
+		return kwargs
+	
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get('slug')
@@ -257,6 +295,20 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
+		request = self.request
+		slug = self.kwargs.get('slug')
+		context['title'] = 'Update'
+		context['button']='Update' 
+		new_all_=[]
+		all_ = Image.objects.all().filter(slug=slug)
+		for idx, image in enumerate(all_):
+			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
+		context['images'] = new_all_
+		return context
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
 	form_class = ProductCreateForm
@@ -327,6 +379,7 @@ def product_delete(request):
 	else:
 		return redirect('login')
 
+<<<<<<< HEAD
 # class WishListView(LoginRequiredMixin, ListView):
 # 	template_name = 'products/wish-list.html'
 # 	def get_queryset(self, *args, **kwargs):
@@ -334,6 +387,15 @@ def product_delete(request):
 # 		wishes = user.wishes.all()
 # 		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
 # 		return Product.objects.filter(pk__in=wishes)
+=======
+class WishListView(LoginRequiredMixin, ListView):
+	template_name = 'products/wish-list.html'
+	def get_queryset(self, *args, **kwargs):
+		user = self.request.user
+		wishes = user.wishes.all()
+		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
+		return Product.objects.filter(pk__in=wishes)
+>>>>>>> vlad
 
 
 # def wishlistupdate(request):
@@ -343,6 +405,7 @@ def product_delete(request):
 # 	return redirect("accounts:home")
 
 
+<<<<<<< HEAD
 # def wishlistupdate(request):
 # 	product_id=request.POST.get('product_id')
 # 	user = request.user
@@ -370,6 +433,34 @@ def product_delete(request):
 # 			}
 # 			return JsonResponse(json_data, status=200)
 # 	return redirect("products:wish-list")
+=======
+def wishlistupdate(request):
+	product_id=request.POST.get('product_id')
+	user = request.user
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			print("Show message to user!")
+			return redirect("products:wish-list")
+		# cart_obj, new_obj = User.objects.get_or_create(request)
+		if product_obj in user.wishes.all():
+			user.wishes.remove(product_obj)
+			added = False
+		else:
+			user.wishes.add(product_obj)
+			added = True
+		#request.session['cart_items']=cart_obj.products.count()
+		if request.is_ajax():
+			print("Ajax request YES")
+			json_data={
+				"added": added,
+				"removed": not added,
+				#"wishes":cart_obj.products.count()
+			}
+			return JsonResponse(json_data, status=200)
+	return redirect("products:wish-list")
+>>>>>>> vlad
 
 
 handle_upload = FileFormUploader()

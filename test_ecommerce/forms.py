@@ -46,7 +46,7 @@ class ExistingFileForm(ExampleForm):
     prefix = 'example'
 
     def get_upload_url(self):
-        return reverse('example_handle_upload')
+        return reverse('test:example_handle_upload')
 
 
 

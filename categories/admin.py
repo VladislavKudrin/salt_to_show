@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Size
+from .models import Size, Brand
 
 class SizeAdmin(admin.ModelAdmin):
 	list_display = ['__str__', 'size_for']
@@ -9,3 +9,5 @@ class SizeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Size, SizeAdmin)
+
+admin.site.register(Brand)

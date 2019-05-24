@@ -7,8 +7,12 @@
 {% url 'carts:home' as cart_url %}
 {% url 'accounts:home' as account_url %}
 {% url 'products:create' as products_create_url %}
+<<<<<<< HEAD
 {% url 'accounts:wish-list' as wish_list %}
 
+=======
+{% url 'categories:filter' as filter_url %}
+>>>>>>> vlad
 {% load static %}
   
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white pb-0">
@@ -26,6 +30,7 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 collapsenav">
         <div class="d-flex flex-nowrap align-items-end">
         {% include 'search/snippets/search-form.html' %}
+<<<<<<< HEAD
 
         </div>
         </div>
@@ -35,6 +40,18 @@
         <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
         </li>
 
+=======
+      </form>
+      {% if request.path == filter_url %}
+      <button class='btn btn-dark'id='trigger'>Open Filter</button>
+      {% endif %}
+  </div>
+
+  <!--search & logo-->
+  
+  <div class="mx-auto order-0">
+    <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
+>>>>>>> vlad
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsenav">
         <span class="navbar-toggler-icon"></span>
       </button>

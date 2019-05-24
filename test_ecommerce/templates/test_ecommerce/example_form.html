@@ -1,4 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
 <head>
@@ -85,3 +87,33 @@
 </html>
 
 
+=======
+
+
+
+{% block content %}
+
+  
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        id="example-form"
+    >
+        {% csrf_token %}
+        {{ form }}
+        <input class="btn btn-primary" type="submit" value="Save" />
+    </form>
+
+    {% include 'django_file_form/upload_template.html' %}
+
+    {% if use_ajax %}
+
+        <script>
+            $(function() {
+                initUploadFields($('#example-form'), { prefix: 'example' });
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+>>>>>>> vlad

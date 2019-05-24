@@ -3,11 +3,11 @@ from django.db.models import Q
 import random
 import os
 from django.db import models
-from ecommerce.utils import unique_slug_generator
+from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
-from categories.models import Size
+from categories.models import Size, Brand
 
 
 
@@ -44,26 +44,43 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 				)
 		return self.filter(lookups).distinct()
 
-	def by_category_gender(self, query_category, query_gender):
-		# for x in query:
+	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
+		lookups_brand=(Q(category__iexact='nothing'))
+		for x in qs_brand:
+			lookups_brand=lookups_brand|(Q(brand=x))
+		filtered_brand = self.filter(lookups_brand)
 		lookups_gender=(Q(category__iexact='nothing'))
 		for x in query_gender:
 			lookups_gender=lookups_gender|(Q(sex__iexact=x))
 		filtered_gender = self.filter(lookups_gender)
-		print(filtered_gender)
 		lookups_category=(Q(category__iexact='nothing'))
 		for x in query_category:
 			lookups_category=lookups_category|(Q(category__iexact=x))
-		# for x in query:
-		# 	qs[x] = Product.objects.filter(category=x)
-		# print(qs)
-		# for product in qs:
-		# 	print(product)
-		if len(query_category)==0:
+		filtered_category = self.filter(lookups_category)
+		lookups_size=(Q(category__iexact='nothing'))
+		for x in query_size:
+			lookups_size=lookups_size|(Q(size=x))
+		if len(query_category)==0 and len(query_gender)==0 and len(qs_brand)==0:
+			return self.all()
+		elif len(query_category)==0 and len(query_gender)==0:
+			return self.filter(lookups_brand)
+		elif len(query_category)==0 and len(qs_brand)==0:
 			return self.filter(lookups_gender)
-		if len(query_gender) == 0:
+		elif len(query_category)==0:
+			return filtered_brand.filter(lookups_gender)
+		elif len(query_gender)==0 and len(query_size)==0:
+			return filtered_brand.filter(lookups_category)
+		elif len(query_gender)==0:
+			return filtered_brand.filter(lookups_category).filter(lookups_size)
+		elif len(query_size)==0:
+			return filtered_brand.filter(lookups_gender).filter(lookups_category)
+		elif len(query_gender) == 0 and len(query_size)==0:
 			return self.filter(lookups_category)
-		return filtered_gender.filter(lookups_category)
+		elif len(query_gender) == 0:
+			return filtered_category.filter(lookups_size)
+		elif len(query_size)==0:
+			return filtered_gender.filter(lookups_category)
+		return filtered_brand.filter(lookups_gender).filter(lookups_category).filter(lookups_size)
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -81,8 +98,8 @@ class ProductManager(models.Manager):
 		if qs.count() == 1:
 			return qs.first()
 		return None
-	def by_category_gender(self, query_category, query_gender):
-		return self.get_queryset().by_category_gender(query_category, query_gender)
+	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
+		return self.get_queryset().by_category_gender(query_category, query_gender, query_size, qs_brand)
 	def search(self, query):
 		return self.get_queryset().active().search(query)
 
@@ -113,7 +130,8 @@ class Product(models.Model):
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	category 		= models.CharField(max_length=120, default='all', choices=CATEGORY_CHOICES)
 	sex 			= models.CharField(max_length=120, default='not picked', choices=SEX_CHOICES)
-	size 			= models.ForeignKey(Size, blank=True, null=True)
+	size 			= models.ForeignKey(Size, blank=False, null=True)
+	brand 			= models.ForeignKey(Brand, blank=True, null=True)
 
 
 	objects = ProductManager()
@@ -125,10 +143,6 @@ class Product(models.Model):
 	def get_absolute_url_for_update(self):
 		#return "/products/{slug}/".format(slug=self.slug)
 		return reverse('products:update', kwargs={"slug":self.slug})
-
-	def get_absolute_url_for_delete(self):
-		#return "/products/{slug}/".format(slug=self.slug)
-		return reverse('products:delete', kwargs={"slug":self.slug}) #url products look for name delete
 
 	def __str__(self):
 		return self.title
@@ -146,12 +160,19 @@ pre_save.connect(product_pre_save_reciever,sender=Product)
 class Image(models.Model):
 	product 		= models.ForeignKey(Product, default=None, related_name='images')
 	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-
+	image_order 	= models.DecimalField(decimal_places=0, max_digits=20, default=1)
+	slug			= models.SlugField(default=None, null=True, blank=False)
+	unique_image_id = models.CharField(max_length = 120, default=None, unique = True, blank=False, null=True)
 	def __str__(self):
-		return self.product.title
+		return self.product.title + str(self.image_order)
 
 
 
+def image_pre_save_reciever(sender, instance, *args, **kwargs):
+	if not instance.unique_image_id:
+		instance.unique_image_id = unique_image_id_generator(instance)
+
+pre_save.connect(image_pre_save_reciever,sender=Image)
 
 
 
