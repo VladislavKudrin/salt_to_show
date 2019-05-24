@@ -23,7 +23,7 @@ include/
 pip-selfcheck.json
 
 # Django related 
-ecommerce/settings/local.py
+
 live-static-files/
 # src/<yourproject>/settings/local.py
 # static-cdn/  # any collected static files 
