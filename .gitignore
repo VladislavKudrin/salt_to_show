@@ -127,3 +127,4 @@ ENV/
 
 # mypy
 .mypy_cache/
+*.sqlite3
