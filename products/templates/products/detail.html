@@ -6,30 +6,26 @@
 <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
 
 {% block content %}
-
+<div class="container" style="width:1500px; padding:0px;">
 <div class="container-fluid container-fluid-product">
 <div class='row'>
-	<div class='col-12 col-md-8 limit'>
+	<div class='col-12 col-md-8 align-top' style="max-height: 800px">
 
 			{% if object.images.all %}
-
-			<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
-			<ol class="carousel-indicators">
-			</ol>
-			<div class="carousel-inner">
-
+			<div class="carousel slide" data-interval="false" data-ride="carousel">
+			<div class="carousel-inner" style="max-height: 800px">
 			{% with object.images.all|first as image %}
-			<div class="carousel-item active" class="carousel slide" data-interval="false">
-			<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
-			</div>
+				<div class="carousel-item active" style="max-height: 800px" class="carousel slide" data-interval="false">
+					<img class="d-block img w-100" src="{{ image.image.url }}" alt="Second slide">
+				</div>
 			{% endwith %}
-
 			{% for image in object.images.all|slice:"1:" %}
-			<div class="carousel-item" data-interval="false">
-			<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
-			</div>
+				<div class="carousel-item align-top" data-interval="false">
+					<div class="carousel-img">
+						<img class="d-block img w-100" src="{{ image.image.url }}" alt="Second slide" alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
+					</div>
+				</div>
 			{% endfor %}
-
 			
 			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -41,7 +37,6 @@
 			</a>
 			</div>
 			</div>
-
 			{% endif %}
 	</div>
 
@@ -55,7 +50,7 @@
 			</div>
 		
 		<div class='col-3'>
-		{% include 'products/wish-list-update.html' with product=object %}
+		{% include 'accounts/wish-list-update-detail.html' with product=object %}
 		</div>
 
 		</div>
@@ -70,6 +65,12 @@
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
 			{% endif %}
 			
+
+
+
+
+
+
 			<br/>
 			<b> Description </b>
 			<br/>
@@ -82,6 +83,7 @@
 		</div>
 	</div>
 
+</div>
 </div>
 </div>
 {% endblock %}

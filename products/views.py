@@ -33,6 +33,15 @@ except OperationalError:
           # importable without this side effect
 
 
+from django import template
+
+register = template.Library()
+
+@register.filter
+def to_none(value):
+    return ""
+
+
 class ProductFeaturedListView(ListView):
 	#queryset = Product.objects.all()
 	template_name = "products/list.html"
@@ -122,7 +131,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
 	def get_object(self, *args, **kwargs):
 		request = self.request
-		slug = self.kwargs.get('slug')
+		slug = self.kwargs.get("slug")
 		
 		#instance = get_object_or_404(Product, slug=slug, active=True)
 		try:
@@ -318,48 +327,49 @@ def product_delete(request):
 	else:
 		return redirect('login')
 
-class WishListView(LoginRequiredMixin, ListView):
-	template_name = 'products/wish-list.html'
-	def get_queryset(self, *args, **kwargs):
-		user = self.request.user
-		wishes = user.wishes.all()
-		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
-		return Product.objects.filter(pk__in=wishes)
+# class WishListView(LoginRequiredMixin, ListView):
+# 	template_name = 'products/wish-list.html'
+# 	def get_queryset(self, *args, **kwargs):
+# 		user = self.request.user
+# 		wishes = user.wishes.all()
+# 		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
+# 		return Product.objects.filter(pk__in=wishes)
 
 
-def wishlistupdate(request):
-	product_id =request.POST.get('pk')
-	product_obj = Product.objects.get(pk=product_id)
-	request.user.wishes.add(product_obj)
-	return redirect("accounts:home")
+# def wishlistupdate(request):
+# 	product_id =request.POST.get('pk')
+# 	product_obj = Product.objects.get(pk=product_id)
+# 	request.user.wishes.add(product_obj)
+# 	return redirect("accounts:home")
 
 
-def wishlistupdate(request):
-	product_id=request.POST.get('product_id')
-	user = request.user
-	if product_id is not None:
-		try:
-			product_obj = Product.objects.get(id=product_id)
-		except Product.DoesNotExist:
-			print("Show message to user!")
-			return redirect("products:wish-list")
-		# cart_obj, new_obj = User.objects.get_or_create(request)
-		if product_obj in user.wishes.all():
-			user.wishes.remove(product_obj)
-			added = False
-		else:
-			user.wishes.add(product_obj)
-			added = True
-		#request.session['cart_items']=cart_obj.products.count()
-		if request.is_ajax():
-			print("Ajax request YES")
-			json_data={
-				"added": added,
-				"removed": not added,
-				#"wishes":cart_obj.products.count()
-			}
-			return JsonResponse(json_data, status=200)
-	return redirect("products:wish-list")
+# def wishlistupdate(request):
+# 	product_id=request.POST.get('product_id')
+# 	user = request.user
+# 	user_wishes = user.wishes.all()
+# 	if product_id is not None:
+# 		try:
+# 			product_obj = Product.objects.get(id=product_id)
+# 		except Product.DoesNotExist:
+# 			print("Show message to user!")
+# 			return redirect("products:wish-list")
+# 		# cart_obj, new_obj = User.objects.get_or_create(request)
+# 		if product_obj in user_wishes:
+# 			user.wishes.remove(product_obj)
+# 			added = False
+# 		else:
+# 			user.wishes.add(product_obj)
+# 			added = True
+# 		request.session['wish_items']= user_wishes.count()
+# 		if request.is_ajax():
+# 			print("Ajax request YES")
+# 			json_data={
+# 				"added": added,
+# 				"removed": not added,
+# 				# "wishes_count": user_wishes.count(),
+# 			}
+# 			return JsonResponse(json_data, status=200)
+# 	return redirect("products:wish-list")
 
 
 handle_upload = FileFormUploader()

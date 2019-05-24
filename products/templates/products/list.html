@@ -1,38 +1,27 @@
 {% extends "base.html" %}
-
+{% load for_loop_extras %}
 {% block content %}
 
-
-<!-- 	<div class='col-1'>
-		{% include 'categories/snippets/filter-box.html' with instance=obj %}
-	</div>
- -->
+<div class="container ajax-search" style="width:1500px; padding:0px;">
 <div class='row'>
-<div class="col-lg-12">
-	
-					{% for obj in object_list %}
-					<div class="card">
-				{% include 'products/snippets/card.html' with instance=obj %}
-			
-				
-					
-<!-- 						{{ forloop.counter }}
-							
-						{% if forloop.counter|divisibleby:4 %}
-							</div></div><div class='row'><<div class="card"><hr/></div>
-						{% else %}
-							</div>
-						{% endif %} -->
+	{% for obj in object_list %}
+		<div class='col-3 position-relative'>
+			{{ forloop.counter|to_none }}
+			{% include 'products/snippets/card.html' with instance=obj %}
+			{% if forloop.counter|divisibleby:4 %}
+				</div>
+				</div>
+				<div class='row'>
+				<div class='col-12'>
+				</div>
+			{% else %}
+				</div>
+			{% endif %}
 
-
-					</div>
-				{% endfor %}
-</div>
-
-</div>
+	{% endfor %}
 </div>
 
 
-
+</div>
 {% endblock %}
 

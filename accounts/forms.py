@@ -50,6 +50,18 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
+from marketing.models import MarketingPreference
+
+
+class MarketingPreferenceForm(forms.ModelForm):
+    subscribed = forms.BooleanField(label = 'Recieve Marketing Email?', required=False)
+    class Meta:
+        model = MarketingPreference
+        fields = [
+            'subscribed',
+
+        ]
+
 class UserDetailChangeForm(forms.ModelForm):
     username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
     full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control'}))
@@ -115,73 +127,38 @@ class RegisterLoginForm(forms.ModelForm):
         super(RegisterLoginForm,self).__init__(*args,**kwargs)
 
     def clean(self):
+        link = reverse("accounts:resend-activation")
+        reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
+        self.cleaned_data['msg'] = reconfirm_msg
+
+
+
+    def save(self, commit=True):
         request = self.request
         data = self.cleaned_data
         email = data.get("email")
         password = data.get("password")
         user_objects = User.objects.filter(email=email)
-
-#-----------LOGIN--------------------------
-        if user_objects.exists() and user_objects.filter(is_active=True): 
-            user = authenticate(request, username=email, password=password)
-            self.user = user
-            login(self.request, user)
-            messages.add_message(request, messages.SUCCESS, 'Welcome back!')
-
-        #----Deleting guest mails if there are any-----------------
-            user_logged_in_signal.send(user.__class__, instance = user, request = request)
-            try:
-                del request.session['guest_email_id']
-            except:
-                pass
-
-#------------CREATE USER---------------------
         if not user_objects.exists(): 
-            username = email.split("@")[0]
+            username = User.objects.check_username(username=email.split("@")[0])
             User.objects.create_user(email=email, username=username, password=password, is_active=False)
 
-            # if user is None:
-            #     raise forms.ValidationError("Oops... something went wrong. Please contact us!")
+
+
+
+
+#----Deleting guest mails if there are any-----------------
+    # user_logged_in_signal.send(user.__class__, instance = user, request = request)
+    # try:
+    #     del request.session['guest_email_id']
+    # except:
+    #     pass
+
+
+    # if user is None:
+    #     raise forms.ValidationError("Oops... something went wrong. Please contact us!")
 
 #-------------ACTIVE-FALSE-----------------
-        if user_objects.filter(is_active=False).exists(): 
-            link = reverse("accounts:resend-activation")
-            reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
-            confirm_email=EmailActivation.objects.filter(email=email) #not activated email?
-            link_sent = confirm_email.confirmable().exists()
-            
-            if link_sent:
-                msg1 = "Please check your email to confirm your account. " + reconfirm_msg
-                messages.add_message(request, messages.SUCCESS, mark_safe(msg1))
-
-        #------------Not activated email?------------
-            link_sent2 = EmailActivation.objects.email_exists(email).exists() #link_sent2 
-            if link_sent2:
-                msg2 = "Email not confirmed. " +reconfirm_msg
-                messages.add_message(request, messages.DEBUG, mark_safe(msg1))
-
-        #------------No link sent to this email------
-            if not link_sent and not link_sent2:
-                raise forms.ValidationError("Please try with another email.")
-
-        return data
-
-    def save(self, commit=True):
-        user = super(RegisterLoginForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password"])
-        user.is_active=False 
-        # obj, is_created = EmailActivation.objects.create(user=user)
-        # obj.send_activation_email()
-        if commit:
-            user.save()
-        login(self.request, user)
-        return user
-
-
-
-
-
-
 
 
 

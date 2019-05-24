@@ -7,105 +7,122 @@
 {% endblock css %}
 
 {% block content %}
-    <input id="owner_username" type="hidden" value="{{ request.user.username }}">
-<div class='container' style="border: 3px solid" >
-    <div class='row'>
-        <div class="col-md-3 p-0">
-            <div class='row ml-0 center d-flex p-1'style="height: 75px;border: 1px solid">
-                {% if owner_picture %}
-                <img src="{{ owner_picture.url }}" class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px">
-                }
-                {% else %}
-                <img src="{% static 'img/user_noname.png' %}" class="img-thumbnail ml-4" alt="..." style="width:60px; height: 60px">
-                {% endif %}
+
+<div class="container" style="min-width:1349px; max-width:1349px; padding:0px; margin:0px;">
+<input id="owner_username" type="hidden" value="{{ request.user.username }}">
+    <div class='row position-relative' style="padding: 0; margin:0; height:600px; max-width:1349px; ">
+    <div class="col position-relative" style="padding: 0; margin:0;">
+
+
+            <div class='row position-relative d-flex mx-0 ' style="height: 75px; padding: 0; margin: 0; border-bottom: 1px solid #e8eaef; border-top: 1px solid #e8eaef;"> 
+
+
+                <div class="col-2 position-static d-flex align-items-center" style="border-right: 1px solid #e8eaef; padding: 0; margin: 0;" >
+                    {% if active_dialog.owner.profile_foto %}
+                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{{ active_dialog.owner.profile_foto.url }}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
+                    {% else %}
+                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" " class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
+                    {% endif %}
+                </div>
+
+
+
+                <div class='col-4 position-static d-flex align-items-center' style="padding: 0; margin:0;">
+                    
+                   {% if active_dialog.opponent.profile_foto %}
+                        <a href="{{ active_dialog.opponent.get_absolute_url }}"><img src="{{ active_dialog.opponent.profile_foto.url }}" id="opponent-pic" class="img-thumbnail" alt="..." style="width:60px; height: 60px; margin-left: 390px;"></a>
+                    {% else %}
+                        <a href="{{ active_dialog.opponent.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" id="opponent-pic" class="img-thumbnail" alt="..." style="width:60px; height: 60px; margin-left: 390px;"></a>
+                    {% endif %} 
+                    
+                </div>
+
+                <div class="col-6 position-static d-flex align-items-center" style="padding: 0px 10px; margin: 0;">
+                    <div id="opponent-name">     
+                                {{ opponent_username }}
+
+                    </div>
+                    <!-- <div class="text-success" id="online-status">{% trans "Online" %}</div>
+                    <div class="text-danger" id="offline-status">{% trans "Offline" %}</div>  -->
+                </div>
             </div>
-            <div class="row ml-0 scrollable" style="height: 500px;">
-                    <table class="table">
-                        <tbody class="user-list-div">
+                       
+
+            <div class="row position-relative" style="padding: 0; margin: 0;">
+
+                <div class="col-2 position-relative" style="border-right: 1px solid #e8eaef; padding: 0; margin: 0; height: 430px; min-width: 225px; max-width: 225px;">
+                    <div id="table-scroll" class="row my-custom-scrollbar position-relative" style="height: 429px; padding: 0; margin:0; min-width: 225px; max-width: 225px;">
+                        <table class="table position-relative" style="padding: 0; margin: 0; height: 430px;">
+                            <tbody class="user-list-div position-relative" style="padding: 0; margin: 0;">
                                 {% for dialog in object_list %}
-                                    <tr>
-                                        <td class='user-table p-0'>
+                                    <tr class="position-relative" style="padding: 0; margin: 0;">
+                                        <td id="conversations" class='user-table position-static' style="padding: 0; margin: 0;">
                                         {% if dialog.owner == request.user %}
                                             {% with dialog.opponent.username as username %}
-                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}"
-                                                   class="btn" style="height: 70px; width: 100%; padding-top: 22px">{% trans "" %} {{ username }}</a>
+                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans "" %} {{ username }}</a>
                                             {% endwith %}
                                         {% else %}
-                                            {% with dialog.owner.username as username %}
-                                            <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}"
-                                                   class="btn " style="height: 70px; width: 100%; padding-top: 22px">{% trans "" %} {{ username }}</a>
-                                            {% endwith %}
+                                                {% with dialog.owner.username as username %}
+                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans "" %} {{ username }}</a>
+                                                {% endwith %}
                                         {% endif %}
-                                     </td>
+                                        </td>
                                     </tr>
                                 {% endfor %}
-                        </tbody> 
-                    </table>
-            </div>
-        </div>
+                            </tbody> 
+                        </table>
+                    </div>
+                </div>                    
+                        
+                                 
+            
+                <div class="col-9 position-relative" style="padding:0; margin: 0; min-width: 1124px;">
+                    <div  class="row position-relative" style="padding:0; margin: 0;">
+                        <div class="col  position-relative" style="min-height: 350px; max-height: 350px; padding:0; margin: 0;">
+                                 <div id="messages" class="messages my-custom-scrollbar position-relative" style="padding:5px 0px; margin-left:25px;">
+                                    {% for msg in active_dialog.messages.all %}
+                                    <div class="row position-static {% if msg.read %}msg-read{% else %}msg-unread{% endif %}" data-id="{{ msg.id }}" style="padding:0; margin: 0;" id="mssg-text">
+                                        <p class="{% if msg.sender == request.user %}pull-left{% else %}pull-right{% endif %}" style="min-width: 1000px; max-width: 1000px;">
+                                        <span class="username">{{ msg.sender.username }}:
+                                        </span>
+                                        {{ msg.text }}
+                                        <span class="timestamp">&ndash; 
+                                            <span data-livestamp="{{ msg.get_formatted_create_datetime }}">{{ msg.get_formatted_create_datetime }}</span>
+                                        </span>
+                                        </p>
+                                    </div>
+
+                                    {% endfor %}
+                                </div>
+                        </div>
+                    </div>                           
 
 
 
-        <div class="col-md-9 p-0">
-             <div class="row pl-3">
-                <p class='col'>
-                    {% if opponent_picture %}
-                        <img src="{{ opponent_picture.url }}" class="img-thumbnail ml-4" alt="..." style="width:60px; height: 60px">
-                    {% else %}
-                        <img src="{% static 'img/user_noname.png' %}" class="img-thumbnail ml-4" alt="..." style="width:60px; height: 60px">
-                    {% endif %}
-                    {{ opponent_username }}
-                </p>
-                <p class="text-success col" id="online-status" style="display: none">{% trans "Online" %}</p>
-                <p class="text-danger" id="offline-status" style="display: none">{% trans "Offline" %}</p>
-                <div class="col-md-3 col-md-offset-9">
-                    <i class="fas fa-paperclip fa-3x pull-right mt-2 ml-5 nav-item pointer"></i>
-                    <span class="pull-right" hidden id="typing-text">
-                        <strong>{{ opponent_username }} {% trans "is typing..." %}</strong>
-                    </span>
-                </div>
-            </div>
+                    <div class="row position-relative add-message mt-0" id="align-items-chat" style="padding:0; margin: 0;">
+                        <div class="col-11 p-0 position-static" style="padding:0; margin: 0;">
+                            <div class="form-group" style="padding:0; margin: 0px 25px;">
+                                <textarea id="chat-message" class="form-control message" placeholder="{% trans 'Write a message' %}" style="padding:0; margin: 0;">
+                                </textarea>
+                           </div>
+                        </div>
 
-
-            <div class="row pl-3">
-                <div class="container" style=" height: 500px;">
-                    <div id="messages" class="messages" style="height: 500px;">
-                        {% for msg in active_dialog.messages.all %}
-                            <div class="row {% if msg.read %}msg-read{% else %}msg-unread{% endif %}"
-                                 data-id="{{ msg.id }}">
-                                <p class="{% if msg.sender == request.user %}pull-left{% else %}pull-right{% endif %}">
-                                    <span class="username">{{ msg.sender.username }}:</span>
-                                    {{ msg.text }}
-                                    <span class="timestamp">&ndash; <span
-                                            data-livestamp="{{ msg.get_formatted_create_datetime }}">{{ msg.get_formatted_create_datetime }}</span></span>
-                                </p>
+                        <div class="col-1 mx-auto d-flex align-items-center position-static" style="padding:0; margin: 0;">
+                            <div class="form-group clearfix">
+                                <i id="btn-send-message" class="fas fa-paper-plane fa-2x pull-right send-message pointer" value="{% trans 'Send' %}" >                                  
+                                </i>
                             </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-
-
-                <div class="row add-message mt-0">
-                    <div class="col-md-9">
-                        <div class="form-group ml-4">
-                            <textarea id="chat-message" class="form-control message"
-                                  placeholder="{% trans 'Write a message' %}"></textarea>
                         </div>
                     </div>
+                                   
+                </div> 
+            </div> 
 
-                    <div class="col-md-2 p-0">
-                        <div class="form-group clearfix m-0">
-                            <i id="btn-send-message" class="fas fa-paper-plane fa-3x pull-right send-message pointer mt-2" value="{% trans 'Send' %}" ></i>
-                        </div>
-                    </div>
-                </div>
 
-        </div>
     </div>
-</div>
+    </div> 
 
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -113,6 +130,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollmonitor/1.2.0/scrollMonitor.js"
             integrity="sha256-BseZlDlA+yL4qu+Voi82iFa5aaifralQEXIjOjaXgeo=" crossorigin="anonymous"></script>
     <script>
+        //Scrolling
+        const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
+        const ps = new PerfectScrollbar('.my-custom-scrollbar', {
+            wheelSpeed: 1,
+            wheelPropagation: false,
+            swipeEasing: true,
+            suppressScrollX: true,
+            // minScrollbarLength: 10,
+            // maxScrollbarLength: 10
+
+        });
+
+        $('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
+        // var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
+
+
+        
         var base_ws_server_path = "{{ ws_server_path }}";
         $(document).ready(function () {
             var websocket = null;
@@ -367,6 +402,8 @@
             setupChatWebSocket();
             scrollToLastMessage();
         });
+
+
 
     </script>
 {% endblock %}

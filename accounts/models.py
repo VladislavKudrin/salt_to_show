@@ -15,7 +15,7 @@ from django.template.loader import get_template
 from django.utils import timezone
 from django.shortcuts import redirect
 
-from ecommerce.utils import random_string_generator, unique_key_generator
+from ecommerce.utils import random_string_generator, unique_key_generator, random_string_generator_username
 from products.models import Product
 #send_mail(subject, message, from_email, recipient_list, html_message)
 
@@ -38,13 +38,13 @@ def upload_image_path(instance, filename):
 	
 class UserManager(BaseUserManager):
 	error_css_class = 'error'
-	def check_username(self, instance):
-		username = instance.username
+	def check_username(self, username):
 		user = self.filter(username=username)
-		if user.exists():
-			rand_str = random_string_generator(size=1)
-			username = str(instance.username) + rand_str
+		if user.exists(): 
+			username_new = str(username) + random_string_generator_username()
+			return username_new
 		return username
+
 
 	def filter_by_username(self, username):
 		user_email_obj = self.filter(username=username).first()
@@ -270,12 +270,7 @@ def pre_save_email_activation(sender, instance, *args, **kwargs):
 
 pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 	
-def pre_save_user_create_reciever(sender, instance, *args, **kwargs):
-	if instance.username:
-		username = User.objects.check_username(instance)
-		instance.username = username
 
-pre_save.connect(pre_save_user_create_reciever, sender=User)
 
 def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
 	if created:

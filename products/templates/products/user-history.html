@@ -2,18 +2,35 @@
 
 {% block content %}
 
+<div class="container" style="width:1500px; padding:0px;">
+
+
+
 <div class='row'>
-	{% include 'sidebar.html' %}
-  <div class='col-9 mx-auto'>
-    <h1>Product View History</h1>
 
-    {% for obj in object_list %}    
+	{% include "sidebar.html" %} 
 
-      {{ forloop.counter }}
-      {% include 'products/snippets/card.html' with instance=obj.content_object %}
+	<div class='col'>
+		<div class='row'>
+			{% for obj in object_list %}
+				<div class='col-3 position-relative'>
+					{% include 'products/snippets/card.html' with instance=obj.content_object %}
+					{% if forloop.counter|divisibleby:4 %}
+						</div>
+						</div>
+						<div class='row'>
+						<div class='col-12'>
+						</div>
+					{% else %}
+						</div>
+					{% endif %}
+			{% endfor %}
+	</div>
+	
+</div>
 
-    {% endfor %}
-  </div>
+
+
 </div>
 
 {% endblock %}

@@ -7,8 +7,6 @@ class ProductCreateForm(FileFormMixin, forms.ModelForm):
 	class Meta:
 		model = Product
 		fields = [
-		'sex',
-		'category',
 		'title',
 		'description',
 		'price',
