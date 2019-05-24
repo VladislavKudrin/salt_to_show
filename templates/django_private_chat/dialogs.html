@@ -18,10 +18,10 @@
 
 
                 <div class="col-2 position-static d-flex align-items-center" style="border-right: 1px solid #e8eaef; padding: 0; margin: 0;" >
-                    {% if owner_picture %}
-                    <img src="{{ owner_picture.url }}"  class="img-thumbnail mx-auto" alt="..." style="width:60px; height: 60px">
+                    {% if active_dialog.owner.profile_foto %}
+                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{{ active_dialog.owner.profile_foto.url }}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
                     {% else %}
-                    <img src="{% static 'img/user_noname.png' %}" " class="img-thumbnail mx-auto" alt="..." style="width:60px; height: 60px">
+                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" " class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
                     {% endif %}
                 </div>
 
@@ -29,18 +29,21 @@
 
                 <div class='col-4 position-static d-flex align-items-center' style="padding: 0; margin:0;">
                     
-                   {% if opponent_picture %}
-                        <img src="{{ opponent_picture.url }}" id="opponent-pic" class="img-thumbnail" alt="..." style="width:60px; height: 60px; margin-left: 390px;">
+                   {% if active_dialog.opponent.profile_foto %}
+                        <a href="{{ active_dialog.opponent.get_absolute_url }}"><img src="{{ active_dialog.opponent.profile_foto.url }}" id="opponent-pic" class="img-thumbnail" alt="..." style="width:60px; height: 60px; margin-left: 390px;"></a>
                     {% else %}
-                        <img src="{% static 'img/user_noname.png' %}" id="opponent-pic" class="img-thumbnail" alt="..." style="width:60px; height: 60px; margin-left: 390px;">
+                        <a href="{{ active_dialog.opponent.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" id="opponent-pic" class="img-thumbnail" alt="..." style="width:60px; height: 60px; margin-left: 390px;"></a>
                     {% endif %} 
                     
                 </div>
 
-                <div id="opponent-name" class="col-6 position-static d-flex align-items-center" style="padding: 0px 10px; margin: 0;">
-                    
-                            {{ opponent_username }}
+                <div class="col-6 position-static d-flex align-items-center" style="padding: 0px 10px; margin: 0;">
+                    <div id="opponent-name">     
+                                {{ opponent_username }}
 
+                    </div>
+                    <!-- <div class="text-success" id="online-status">{% trans "Online" %}</div>
+                    <div class="text-danger" id="offline-status">{% trans "Offline" %}</div>  -->
                 </div>
             </div>
                        
@@ -73,14 +76,14 @@
                         
                                  
             
-                <div class="col-9 my-custom-scrollbar position-relative" style="padding:0; margin: 0; min-width: 1124px;">
-                    <div class="row position-relative" style="padding:0; margin: 0;">
+                <div class="col-9 position-relative" style="padding:0; margin: 0; min-width: 1124px;">
+                    <div  class="row position-relative" style="padding:0; margin: 0;">
                         <div class="col  position-relative" style="min-height: 350px; max-height: 350px; padding:0; margin: 0;">
-                                 <div id="messages" class="messages position-relative" style="padding:5px 0px; margin-left:25px;">
+                                 <div id="messages" class="messages my-custom-scrollbar position-relative" style="padding:5px 0px; margin-left:25px;">
                                     {% for msg in active_dialog.messages.all %}
                                     <div class="row position-static {% if msg.read %}msg-read{% else %}msg-unread{% endif %}" data-id="{{ msg.id }}" style="padding:0; margin: 0;" id="mssg-text">
                                         <p class="{% if msg.sender == request.user %}pull-left{% else %}pull-right{% endif %}" style="min-width: 1000px; max-width: 1000px;">
-                                        <span class="username mx-auto">{{ msg.sender.username }}:
+                                        <span class="username">{{ msg.sender.username }}:
                                         </span>
                                         {{ msg.text }}
                                         <span class="timestamp">&ndash; 
@@ -129,7 +132,7 @@
     <script>
         //Scrolling
         const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
-        const ps = new PerfectScrollbar(myCustomScrollbar, {
+        const ps = new PerfectScrollbar('.my-custom-scrollbar', {
             wheelSpeed: 1,
             wheelPropagation: false,
             swipeEasing: true,
@@ -139,7 +142,9 @@
 
         });
 
-        var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
+        $('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
+        // var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
 
 
         

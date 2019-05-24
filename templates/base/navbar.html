@@ -31,12 +31,15 @@
       <ul class="navbar-nav ml-auto">
       {% if request.user.is_authenticated %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin: 0;"><i class="far fa-user fa-2x"></i></a>
           <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
             <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ account_url }}">Home</a>
-            <a class="dropdown-item" href="#">Billing</a>
-            <a class="dropdown-item" href="#">Preferences</a>
-            <a class="dropdown-item" href="#">History</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="#">Chat</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
+
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ logout_url }}">Logout</a>
           </div>
@@ -47,7 +50,7 @@
         </li>
       {% endif %}
         <li class="nav-item {% if request.path == products_create_url %}active{% endif %}">
-          <a class="btn btn-dark mx-2" role="button" href="{{ products_create_url }}">Sell</a>          
+          <a class="btn btn-dark mr-2" role="button" href="{{ products_create_url }}">Sell</a>          
         </li>
         <li class="nav-item {% if request.path == product_list_url %}active{% endif %}">
           <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
