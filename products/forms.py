@@ -88,8 +88,7 @@ class ProductUpdateForm(ProductCreateForm):
 		size = Size.objects.filter(size_for__icontains=category)
 		self.fields['size'].queryset = size
 		brand = Brand.objects.get(id=self.initial['brand'])
-		if brand.exists():
-				self.initial['brand']=brand.brand_name
+		self.initial['brand']=brand.brand_name
 
 		def get_upload_url(self):
 			return reverse('products:example_handle_upload')
