@@ -30,7 +30,7 @@ $(document).ready(
             }
       })//ajax
       
-
+})
 
       
 
@@ -107,36 +107,36 @@ $(document).ready(
 
 
 
-    //Auto Search
-    var searchForm = $(".search-form")
-    var searchInput = searchForm.find("[name='q']") //input name = 'q'
-    var typingTimer;
-    var typingInterval = 500 //0.5 seconds
-    var searchBtn = searchForm.find("[type='submit']")
-    searchInput.keyup(  //released key
-      function(event){
-        clearTimeout(typingTimer)
-        typingTimer = setTimeout(performSearch, typingInterval)
-      })
-    searchInput.keydown( //key pressed
-      function(event){
-        clearTimeout(typingTimer)
+    // //Auto Search
+    // var searchForm = $(".search-form")
+    // var searchInput = searchForm.find("[name='q']") //input name = 'q'
+    // var typingTimer;
+    // var typingInterval = 500 //0.5 seconds
+    // var searchBtn = searchForm.find("[type='submit']")
+    // searchInput.keyup(  //released key
+    //   function(event){
+    //     clearTimeout(typingTimer)
+    //     typingTimer = setTimeout(performSearch, typingInterval)
+    //   })
+    // searchInput.keydown( //key pressed
+    //   function(event){
+    //     clearTimeout(typingTimer)
      
-      })
+    //   })
       
-      function displaySearching(){
-        searchBtn.addClass("disabled")
-        searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
-      }
+    //   function displaySearching(){
+    //     searchBtn.addClass("disabled")
+    //     searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
+    //   }
 
-      function performSearch(){
-        displaySearching()
-        var query = searchInput.val()
-        setTimeout(function(){
-          window.location.href='/search/?q=' + query   
-        }, 1000)
+    //   function performSearch(){
+    //     displaySearching()
+    //     var query = searchInput.val()
+    //     setTimeout(function(){
+    //       window.location.href='/search/?q=' + query   
+    //     }, 1000)
                    
-      }
+    //   }
 
 
   
@@ -211,7 +211,6 @@ $(document).ready(
                               });
                                                }
                       })
-
             }
         },
         cancel: function () {
@@ -221,114 +220,54 @@ $(document).ready(
 });
 
 
-
     })
 
 
+// Wishlist Product List View
 
-
-
-    //delete add cart Ajax
-    var productForm=$(".form-product-ajax")
+    var productForm=$(".form-product-ajax-wishlist")
     productForm.submit(
+
       function(event){
+
         event.preventDefault()
         var thisForm = $(this)
         var actionEndpoint = thisForm.attr("action");
         var actionEndpoint = thisForm.attr("data-endpoint");
-        console.log(actionEndpoint)
         var httpMethod = thisForm.attr("method");
         var formData = thisForm.serialize();
 
-        console.log(thisForm.attr("action"), thisForm.attr("method"))
         $.ajax({
           url: actionEndpoint,
           method: httpMethod,
           data: formData,
           success: function(data){
-            var submitSpan = thisForm.find(".submit-span")
+            var submitSpan = thisForm.find(".submit-span-wishlist")
             if (data.added){
-              submitSpan.html("In Cart <button type='submit' class='btn btn-link'>Remove?</button>")
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-5x'></i></button>")
             }
             else {
-              submitSpan.html("<button type='submit' class='btn btn-dark'>Add to Cart</button>")
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-5x'></i></button>")
             }
-            var navbarCount = $(".navbar-cart-count")
-            navbarCount.text(data.cartItemCount)
-            var currentPath = window.location.href
 
-            if (currentPath.indexOf("cart") != -1){
-              refreshCart()
-            }
-          },
+            var navbarCount = $(".navbar-wish-count")
+            navbarCount.text(data.wishes_count)
+        },
           error: function(errorData){
             $.alert({
-              title: 'OOps!',
-              content: 'Simple alert!',
-              theme: "modern"
+              title: 'Oops!',
+              content: errorData,
+              theme: "modern",
             });
-          }
-
-        })
+  }
+})
       }
     )
-    function refreshCart(){
-      console.log("privet")
-      var cartTable = $(".cart-table")
-      var cartBody = cartTable.find(".cart-body")
-      //cartBody.html("<h1>Changed</h1>")
-      var productRows = cartBody.find(".cart-product")
-      var currentUrl = window.location.href
-      var refreshCartUrl='/api/cart/';
-      var refreshCartMethod = "GET";
-      var data = {};
-      $.ajax({
-        url: refreshCartUrl,
-        method: refreshCartMethod,
-        data: data,
-        success: function(data){
-          var hiddenCartItemRemoveForm = $(".cart-item-remove-form")
-          if (data.products.length > 0){
-            productRows.html(" ")
-            i = data.products.length
-            $.each(data.products,
-              function(index, value){
-                console.log(value)
-                var newCartItemRemove = hiddenCartItemRemoveForm.clone()
-                newCartItemRemove.css("display", "block")
-                //newCartItemRemove.removeClass("hidden-class")
-                newCartItemRemove.find(".cart-item-product-id").val(value.id)
-                cartBody.prepend(
-                  "<tr><th scope=\"row\">" + i + "</th><td><a href='" + value.url + "'>" + value.title + "</a>" + newCartItemRemove.html() + "<td>" + value.price + "</td>" + "</td></tr>")
-                i--
-
-              })
-            
-            cartBody.find(".cart-subtotal").text(data.subtotal)
-            cartBody.find(".cart-total").text(data.total)
-          } 
-          else{
-            window.location.href = currentUrl
-          }
-        },
-        error: function(errorData){
-          $.alert({
-              title: 'OOps!',
-              content: 'Simple alert!',
-              theme: "modern"
-            });
-        }
       
-      })
-    }
-  }
-        )
 
+// Wishlist Product Detail View
 
-
-// Wishlist
-
-    var productForm=$(".form-product-ajax-wishlist")
+      var productForm=$(".form-product-ajax-wishlist-detail")
     productForm.submit(
 
       function(event){
@@ -351,31 +290,66 @@ $(document).ready(
             }
             else {
               submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-2x'></i></button>")
-            }},
-        
+            }
+
+            var navbarCount = $(".navbar-wish-count")
+            navbarCount.text(data.wishes_count)
+        },
           error: function(errorData){
             $.alert({
               title: 'Oops!',
-              content: "Apparently you haven't signed up yet...",
-              theme: "modern"
+              content: errorData,
+              theme: "modern",
             });
   }
 })
-
-
-
-
-
       }
-
-
-
-
-
     )
-      
-    
 
+  //   //delete add cart Ajax
+  //   var productForm=$(".form-product-ajax")
+  //   productForm.submit(
+  //     function(event){
+  //       event.preventDefault()
+  //       var thisForm = $(this)
+  //       var actionEndpoint = thisForm.attr("action");
+  //       var actionEndpoint = thisForm.attr("data-endpoint");
+  //       console.log(actionEndpoint)
+  //       var httpMethod = thisForm.attr("method");
+  //       var formData = thisForm.serialize();
+
+  //       console.log(thisForm.attr("action"), thisForm.attr("method"))
+  //       $.ajax({
+  //         url: actionEndpoint,
+  //         method: httpMethod,
+  //         data: formData,
+  //         success: function(data){
+  //           var submitSpan = thisForm.find(".submit-span")
+  //           if (data.added){
+  //             submitSpan.html("In Cart <button type='submit' class='btn btn-link'>Remove?</button>")
+  //           }
+  //           else {
+  //             submitSpan.html("<button type='submit' class='btn btn-dark'>Add to Cart</button>")
+  //           }
+  //           var navbarCount = $(".navbar-cart-count")
+  //           navbarCount.text(data.cartItemCount)
+  //           var currentPath = window.location.href
+
+  //           if (currentPath.indexOf("cart") != -1){
+  //             refreshCart()
+  //           }
+  //         },
+  //         error: function(errorData){
+  //           $.alert({
+  //             title: 'OOps!',
+  //             content: 'Simple alert!',
+  //             theme: "modern"
+  //           });
+  //         }
+
+  //       })
+  //     }
+  //   )
   //   function refreshCart(){
   //     console.log("privet")
   //     var cartTable = $(".cart-table")
@@ -426,4 +400,58 @@ $(document).ready(
   //     })
   //   }
   // }
-  //       )
+  //  )
+
+
+
+
+
+  //   function refreshCart(){
+  //     console.log("privet")
+  //     var cartTable = $(".cart-table")
+  //     var cartBody = cartTable.find(".cart-body")
+  //     //cartBody.html("<h1>Changed</h1>")
+  //     var productRows = cartBody.find(".cart-product")
+  //     var currentUrl = window.location.href
+  //     var refreshCartUrl='/api/cart/';
+  //     var refreshCartMethod = "GET";
+  //     var data = {};
+  //     $.ajax({
+  //       url: refreshCartUrl,
+  //       method: refreshCartMethod,
+  //       data: data,
+  //       success: function(data){
+  //         var hiddenCartItemRemoveForm = $(".cart-item-remove-form")
+  //         if (data.products.length > 0){
+  //           productRows.html(" ")
+  //           i = data.products.length
+  //           $.each(data.products,
+  //             function(index, value){
+  //               console.log(value)
+  //               var newCartItemRemove = hiddenCartItemRemoveForm.clone()
+  //               newCartItemRemove.css("display", "block")
+  //               //newCartItemRemove.removeClass("hidden-class")
+  //               newCartItemRemove.find(".cart-item-product-id").val(value.id)
+  //               cartBody.prepend(
+  //                 "<tr><th scope=\"row\">" + i + "</th><td><a href='" + value.url + "'>" + value.title + "</a>" + newCartItemRemove.html() + "<td>" + value.price + "</td>" + "</td></tr>")
+  //               i--
+
+  //             })
+            
+  //           cartBody.find(".cart-subtotal").text(data.subtotal)
+  //           cartBody.find(".cart-total").text(data.total)
+  //         } 
+  //         else{
+  //           window.location.href = currentUrl
+  //         }
+  //       },
+  //       error: function(errorData){
+  //         $.alert({
+  //             title: 'OOps!',
+  //             content: 'Simple alert!',
+  //             theme: "modern"
+  //           });
+  //       }  
+  //     })
+  //   }
+  // })
