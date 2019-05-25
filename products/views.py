@@ -19,7 +19,7 @@ from django_file_form.forms import ExistingFile
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
-from categories.models import Size
+from categories.models import Size, Brand
 
 from accounts.models import User
 from .models import Product, Image
@@ -222,7 +222,14 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
 	def get(self, request, *args, **kwargs):
+		brands = Brand.objects.all()
+		brand_arr = []
+		for brand in brands:
+			brand_arr.append(str(brand))
 		if request.is_ajax():
+			json_data={
+			'brand':brand_arr,
+			}
 			selected = self.request.GET.get('selected', None)
 			if selected == "select a category":
 				selected = None
@@ -237,6 +244,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 						'sizes': sizes
 							}
 				return JsonResponse(json_data)
+			return JsonResponse(json_data)
 		product_form = ImageForm(request)
 		context={}
 		context['button']='Create'
@@ -249,7 +257,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		url = product.get_absolute_url()
 		return redirect(url)
 	def form_invalid(self, form):
-		messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
 		context={
 			'form': form,
 			'button': 'Create',

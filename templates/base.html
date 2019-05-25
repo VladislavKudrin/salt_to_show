@@ -53,10 +53,31 @@
   <script type="text/javascript">
 $(document).ready(
   function(){
+//autofill Brand
+var formSubmitBrand = $('#example-form-1')
+var actionBrand = formSubmitBrand.attr("action_url_create")
+$.ajax({
+    url: actionBrand,
+    method:'GET',
+    success: function(data){
+    var availableTags = data.brand 
+    $( ".brandautofill" ).autocomplete({
+      source: availableTags
+    });
+    },//success
+    error: function(errorData){
+    $.alert({
+    title: 'OOps!',
+    content: 'Simple alert!',
+    theme: "modern"
+    });
+    }//error
+    })//ajax
+
+ 
 var formCreate = $('#customSort')
 //update
    var galleryUpdate = $('#gallery')
-   console.log(galleryUpdate)
    var formSubmit = $('#example-form-1')
    var action = formSubmit.attr("action_url")
    formSubmit.submit(

@@ -1,17 +1,18 @@
 from django.http import JsonResponse
 from django import forms
-
+from django.contrib import messages
 
 from django_file_form.forms import MultipleUploadedFileField, FileFormMixin
 
 
 from .models import Product, Image
-from categories.models import Size
+from categories.models import Size, Brand
 
 
 
 
 class ProductCreateForm(FileFormMixin, forms.ModelForm):
+	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill', "placeholder":'Enter a Brand'}))
 	class Meta:
 		model = Product
 		fields = [
@@ -34,6 +35,17 @@ class ProductCreateForm(FileFormMixin, forms.ModelForm):
 			self.add_error('category', 'Please, select a category')
 		return data.get('category')
 
+	def clean_brand(self):
+		data = self.cleaned_data
+		brands = Brand.objects.all()
+		brand_cleaned = data.get('brand')
+		brand_instance = brands.filter(brand_name=brand_cleaned)
+		if brand_instance.exists():
+			instance=brand_instance.first()
+			return instance
+		else:
+			self.add_error('brand', 'Please, select existing brand')
+
 
 
 class ImageForm(ProductCreateForm):
@@ -45,6 +57,7 @@ class ImageForm(ProductCreateForm):
 			img_ = str(img)
 			filename, ext = img_.rsplit('.', 1)
 			if ext != 'jpg': 
+				messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
 				raise forms.ValidationError('Not')
 		return image
 
