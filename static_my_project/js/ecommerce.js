@@ -161,6 +161,7 @@ $(document).ready(
 
   
 
+  
   //Product Delete Alert Ajax
 
     var deleteForm=$(".delete-product-form")
@@ -183,6 +184,7 @@ $(document).ready(
 
       deleteForm.submit(
       function(event){
+      event.preventDefault()
       var thisForm = $(this)
       console.log(thisForm)
       var dataEndpoint = thisForm.attr("action");

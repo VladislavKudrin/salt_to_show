@@ -243,18 +243,6 @@ $(".customCheckboxaccessories").change(
 //filterboxeslogic
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 //slider filter box
 $("#slider").slideReveal({
   trigger: $("#trigger"),
@@ -264,9 +252,6 @@ $("#slider").slideReveal({
   width:'500px',
 });
 //slider filter box
-
-
-
 
 
 // Add slideDown animation to Bootstrap dropdown when expanding.
@@ -281,4 +266,82 @@ $('.customDropRight').on('hide.bs.dropdown', function() {
 $('.customDropRightMenu').click(function(e) {
   e.stopPropagation();
 });
+
+
+
+//brand and image sort
+
+var formSubmitBrand = $('#example-form-1')
+var actionBrand = formSubmitBrand.attr("action_url_create")
+$.ajax({
+    url: actionBrand,
+    method:'GET',
+    success: function(data){
+    var availableTags = data.brand 
+    $( ".brandautofill" ).autocomplete({
+      source: availableTags
+    });
+    },//success
+    error: function(errorData){
+    $.alert({
+    title: 'OOps!',
+    content: 'Simple alert!',
+    theme: "modern"
+    });
+    }//error
+    })//ajax
+
+ 
+var formCreate = $('#customSort')
+//update
+   var galleryUpdate = $('#gallery')
+   var formSubmit = $('#example-form-1')
+   var action = formSubmit.attr("action_url")
+   formSubmit.submit(
+    function(event){
+  var currentPath = window.location.href
+  var elements = $('#example-form-1 ul li')
+if (currentPath.indexOf("update") != -1){
+    var keyArray = []
+    console.log(action)
+    $.each(elements,
+    function(index, value){
+        var val = ($(value)).find("[name = 'image-id']")
+        keyArray.push(val.val())
+    })//each
+    console.log(keyArray)
+    $.ajax({
+    url: action,
+    method:'POST',
+    data: {'data[]':keyArray},
+    success: function(data){
+    console.log('hi')
+    },//success
+    error: function(errorData){
+    $.alert({
+    title: 'OOps!',
+    content: 'Simple alert!',
+    theme: "modern"
+    });
+    }//error
+    })//ajax
+    }//if_current_path_update
+   })//submit_update_create
+ 
+    // There's the gallery and the trash
+    $("#customSort").sortable();
+    $("#customSort").disableSelection();
+
+
+
+
+
+
+
+
+
+
+
+
+
   })//document.ready

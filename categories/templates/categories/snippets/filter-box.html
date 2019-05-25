@@ -1,6 +1,6 @@
 
-<form method ='POST' action='{% url "categories:filter" %}'>{% csrf_token %}
-  <a href="{% url 'categories:filter' %}" class='btn btn-dark mt-3'>All Categories</a>
+<form method ='POST' action='{% url "products:list" %}'>{% csrf_token %}
+  <a href="{% url 'products:list' %}" class='btn btn-dark mt-3'>All Categories</a>
   <hr/>
 Brand
 <div class='filter-boxes'>

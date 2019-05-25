@@ -24,3 +24,8 @@
   border: none;
 }
 
+ .filter-boxes{
+    height: 200px;
+    overflow: scroll;
+  }
+
