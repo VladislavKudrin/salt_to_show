@@ -4,28 +4,45 @@
 
 <div class="container ajax-search" style="width:1500px; padding:0px;">
 <div class='row'>
-		<div class='col-3' id='overlay-filter-box'onclick="off()">
-		{% include 'categories/snippets/filter-box.html' with instance=obj %}
-	</div>
-	<button onclick="on()">Turn on overlay effect</button>
-	{% for obj in object_list %}
-		<div class='col-3 position-relative'>
-			{{ forloop.counter|to_none }}
-			{% include 'products/snippets/card.html' with instance=obj %}
-			{% if forloop.counter|divisibleby:4 %}
-				</div>
-				</div>
-				<div class='row'>
-				<div class='col-12'>
-				</div>
-			{% else %}
-				</div>
-			{% endif %}
 
-	{% endfor %}
+
+
+
+			<div class='col-3'>
+
+			<div class='col-3' id='overlay-filter-box'onclick="off()">
+			{% include 'categories/snippets/filter-box.html' with instance=obj %}
+			</div>
+			<!-- <button onclick="on()">Turn on overlay effect</button>  -->
+
+			</div>
+
+			<div class='col-9'>
+			<div class='row'>
+			{% for obj in object_list %}
+			<div class='col-3 position-relative'>
+				{{ forloop.counter|to_none }}
+				{% include 'products/snippets/card.html' with instance=obj %}
+				{% if forloop.counter|divisibleby:4 %}
+					</div>
+					</div>
+					<div class='row'>
+					<div class='col-12'>
+					</div>
+				{% else %}
+					</div>
+				{% endif %}
+
+			{% endfor %}
+			</div>
+			</div>
+			</div>
+
+
+
 </div>
-
-
 </div>
 {% endblock %}
+
+
 
