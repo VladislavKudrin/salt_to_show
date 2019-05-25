@@ -26,7 +26,7 @@ class ProductCreateForm(FileFormMixin, forms.ModelForm):
 			]
 	def __init__(self, request, *args, **kwargs):
 		self.request = request
-		super(ProductCreateForm, self).__init__(*args, **kwargs)
+		super(ProductCreateForm, self).__init__(*args, **kwargs)	
 
 	def clean_category(self):
 		request = self.request
