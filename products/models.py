@@ -66,6 +66,10 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 			return self.filter(lookups_brand)
 		elif len(query_category)==0 and len(qs_brand)==0:
 			return self.filter(lookups_gender)
+		elif len(query_gender) == 0 and len(query_size)==0:
+			return self.filter(lookups_category)
+		elif len(query_gender) == 0 and len(qs_brand)==0:
+			return filtered_category.filter(lookups_size)
 		elif len(query_category)==0:
 			return filtered_brand.filter(lookups_gender)
 		elif len(query_gender)==0 and len(query_size)==0:
@@ -74,8 +78,6 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 			return filtered_brand.filter(lookups_category).filter(lookups_size)
 		elif len(query_size)==0:
 			return filtered_brand.filter(lookups_gender).filter(lookups_category)
-		elif len(query_gender) == 0 and len(query_size)==0:
-			return self.filter(lookups_category)
 		elif len(query_gender) == 0:
 			return filtered_category.filter(lookups_size)
 		elif len(query_size)==0:
