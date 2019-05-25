@@ -9,7 +9,7 @@ from products.models import Product
 
 
 class CategoryFilterView(ListView):
-	template_name = "categories/view.html"
+	template_name = "products/list.html"
 	sizes = [
 		Size.objects.filter(size_for='Footwear'),
 		Size.objects.filter(size_for='Outwear'),
@@ -71,7 +71,7 @@ class CategoryFilterView(ListView):
 		context['fields_gender']=self.fields_gender
 		context['sizes']=self.sizes
 		context['brands']=self.brands
-		return render(self.request, "categories/view.html", context)
+		return render(self.request, "products/list.html", context)
 
 
 	def get(self, request, *args, **kwargs):
@@ -81,7 +81,7 @@ class CategoryFilterView(ListView):
 		context['fields_gender']=self.fields_gender
 		context['sizes']=self.sizes
 		context['brands']=self.brands
-		return render(request, "categories/view.html", context)
+		return render(request, "products/list.html", context)
 
 
 

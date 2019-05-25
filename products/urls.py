@@ -13,13 +13,14 @@ from .views import (
     WishListView,
     wishlistupdate,
     handle_upload,
-    image_update_view
+    image_update_view,
 
     )
+from categories.views import CategoryFilterView
 
 
 urlpatterns = [
-    url(r'^$', ProductListView.as_view(), name='list'),
+    url(r'^$', CategoryFilterView.as_view(), name='list'),
     url(r'^handle_image_sort$', image_update_view, name='handle_image_sort'),
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
     url(r'^list/$', AccountProductListView.as_view(), name='user-list'),
