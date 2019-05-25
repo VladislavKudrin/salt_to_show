@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
+from django.views.generic import CreateView, FormView, DetailView, View, UpdateView, ListView
 from django.views.generic.edit import FormMixin
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
@@ -20,6 +20,7 @@ from .models import GuestEmail, EmailActivation, User
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 from products.models import Product
+from django.http import JsonResponse
 
 
 # @login_required
@@ -131,11 +132,14 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			return redirect(next_path)
 		elif link_sent2:
 			msg2 = "Email not confirmed. " + form.cleaned_data.get('msg')
-			messages.add_message(form.request, messages.ERROR, mark_safe(msg2))
+			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
 		elif user is None:
-			messages.add_message(form.request, messages.ERROR, mark_safe("Invelid credentials"))
+			next_path = 'login'
+			messages.add_message(form.request, messages.WARNING, mark_safe("The password seems to be wrong. Try again!"))
+			return redirect(next_path)
 		else:
 			login(form.request, user)
+			messages.add_message(form.request, messages.SUCCESS, 'Welcome back!')
 
 		return redirect(next_path)
 
@@ -191,20 +195,13 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
 		context['title'] = 'Change Your Details'
+		context['update_in_action'] = True
 		return context
 
 	def get_success_url(self):
 		return reverse("accounts:user-update")
 
 
-# def register_page(request):
-# 	form = RegisterForm(request.POST or None)
-# 	context ={
-# 		'form' : form
-# 	}
-# 	if form.is_valid():
-# 		form.save()
-# 	return render(request, "accounts/register.html", context)
 
 
 class ProfileView(DetailView):
@@ -234,8 +231,44 @@ class ProfileView(DetailView):
 
 
 		
+class WishListView(LoginRequiredMixin, ListView):
+	template_name = 'accounts/wish-list.html'
+	def get_queryset(self, *args, **kwargs):
+		user = self.request.user
+		wishes = user.wishes.all()
+		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
+		return Product.objects.filter(pk__in=wishes)
 
 
+
+
+def wishlistupdate(request):
+	product_id=request.POST.get('product_id')
+	user = request.user
+	user_wishes = user.wishes.all()
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			print("Show message to user!")
+			return redirect("accounts:wish-list")
+		if product_obj in user_wishes:
+			user.wishes.remove(product_obj)
+			added = False
+			user_wishes=user.wishes.all().count()
+		else:
+			user.wishes.add(product_obj)
+			added = True
+			user_wishes=user.wishes.all().count()
+		if request.is_ajax():
+			print("Ajax request YES")
+			json_data={
+				"added": added,
+				"removed": not added,
+				 "wishes_count": user_wishes,
+			}
+			return JsonResponse(json_data, status=200)
+	return redirect("accounts:wish-list")
 
 
 

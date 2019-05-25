@@ -28,7 +28,6 @@ class ProductCreateForm(FileFormMixin, forms.ModelForm):
 		self.request = request
 		super(ProductCreateForm, self).__init__(*args, **kwargs)	
 
-
 	def clean_category(self):
 		request = self.request
 		data = self.cleaned_data
@@ -90,6 +89,7 @@ class ProductUpdateForm(ProductCreateForm):
 		self.fields['size'].queryset = size
 		brand = Brand.objects.get(id=self.initial['brand'])
 		self.initial['brand']=brand.brand_name
+
 		def get_upload_url(self):
 			return reverse('products:example_handle_upload')
 

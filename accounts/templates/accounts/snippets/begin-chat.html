@@ -1,5 +1,5 @@
 {% if request.user.username == object.username %}
-	<a href="{% url 'accounts:user-update' %}" class="btn btn-primary">Update your profile</a>
+	<a href="{% url 'accounts:user-update' %}" class="btn btn-dark btn-lg btn-block">Update your profile</a>
 {% else %}
 <form method="POST">
 {% csrf_token %}

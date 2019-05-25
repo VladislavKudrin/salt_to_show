@@ -6,10 +6,10 @@
 <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
 
 {% block content %}
-
+<div class="container" style="width:1500px; padding:0px;">
 <div class="container-fluid container-fluid-product">
 <div class='row'>
-	<div class='col-12 col-md-8 limit'>
+	<div class='col-12 col-md-8 align-top' style="max-height: 800px">
 
 			{% if object.images.all %}
 
@@ -33,7 +33,6 @@
 					</div>
 				{% endif %}
 			{% endfor %}
-
 			
 			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -45,7 +44,6 @@
 			</a>
 			</div>
 			</div>
-
 			{% endif %}
 	</div>
 
@@ -59,7 +57,7 @@
 			</div>
 		
 		<div class='col-3'>
-		{% include 'products/wish-list-update.html' with product=object %}
+		{% include 'accounts/wish-list-update-detail.html' with product=object %}
 		</div>
 
 		</div>
@@ -74,6 +72,12 @@
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
 			{% endif %}
 			
+
+
+
+
+
+
 			<br/>
 			<b> Description </b>
 			<br/>
@@ -86,6 +90,7 @@
 		</div>
 	</div>
 
+</div>
 </div>
 </div>
 {% endblock %}

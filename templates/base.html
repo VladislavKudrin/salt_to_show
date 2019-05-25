@@ -34,7 +34,6 @@
   .customDropright{
     background-color: white; 
     border: none
-
   }
   .filter-boxes{
     height: 200px;
@@ -43,13 +42,10 @@
   .customDropright:hover{
     background-color: white; 
     border: none
-
   }
-
   .customDropright:focus {
    outline: none; 
 }
-
 </style>
 
 
@@ -57,8 +53,6 @@
   <script type="text/javascript">
 $(document).ready(
   function(){
-
-
 //autofill Brand
 var formSubmitBrand = $('#example-form-1')
 var actionBrand = formSubmitBrand.attr("action_url_create")
@@ -81,29 +75,15 @@ $.ajax({
     })//ajax
 
  
-
-
-
-
-
-
-
 var formCreate = $('#customSort')
-
-
-
-
-
 //update
    var galleryUpdate = $('#gallery')
    var formSubmit = $('#example-form-1')
    var action = formSubmit.attr("action_url")
    formSubmit.submit(
-
     function(event){
   var currentPath = window.location.href
   var elements = $('#example-form-1 ul li')
-
 if (currentPath.indexOf("update") != -1){
     var keyArray = []
     console.log(action)
@@ -129,13 +109,9 @@ if (currentPath.indexOf("update") != -1){
     }//error
     })//ajax
     }//if_current_path_update
-
-
    })//submit_update_create
-
  
     // There's the gallery and the trash
-
     $("#customSort").sortable();
     $("#customSort").disableSelection();
 })//document ready
@@ -144,4 +120,3 @@ if (currentPath.indexOf("update") != -1){
 
 </body>
 </html>
-

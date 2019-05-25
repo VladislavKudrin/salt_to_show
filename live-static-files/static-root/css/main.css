@@ -1,4 +1,291 @@
 
+.d-block{
+  position: absolute;
+  object-fit: scale-down;
+  max-width: : 550px !important;
+  max-height: 600px !important;
+/*  min-width: 288px;
+  min-height: 288px;*/
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-inner{
+  width:100%;
+/*  max-height: 400px !important;*/
+}
+
+.carousel-item{
+/*    position: relative;
+    text-align:top;
+    height:100%;*/
+}
+
+
+#id_category::after{
+background-color: black;
+    }
+
+/*.card{
+  position: relative;
+  background-color: black;
+  color:black;
+}*/
+  .ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    color: yellow;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+  }
+ 
+ #searchAutoComplete{
+  width: 200px;
+  -webkit-transition: width .20s ease-in-out;
+  transition: width .20s ease-in-out;
+  color: black;
+}
+
+
+#searchAutoComplete::focus-within {
+  background: black;
+}
+
+
+.ui-menu-item {
+      padding: 4px !important;
+}
+
+/*a.ui-state-focus {
+      background: yellow !important;
+
+}*/
+.ui-state-disabled {
+      background: none !important;
+}
+.ui-state-active {
+      background: none !important;
+      border: 1px black !important;
+}
+
+.ui-menu {
+      max-height: 200px !important;
+      background: white !important;
+      border-bottom:  1px solid black !important;
+      border-right:  1px solid black !important;
+      border-left:  1px solid black !important;
+      border-top: none !important;
+}
+
+/*.ui-autocomplete-input {
+    width:500px;
+}
+
+.ui-state-active{
+  background-color: yellow;
+  color: yellow;
+}
+.ui-menu .ui-menu-item .ui-state-disabled .ui-state-active .suggestions {
+    display: inline-block;
+    text-decoration: none;
+    color: yellow;
+    font-size: .7em;
+    cursor: pointer;
+    margin-left: 10px;
+}
+*/
+.suggestions {
+ color: black;
+}
+
+.navbar{
+  align-items: flex-start;
+}
+
+.form-control:focus {
+  border-color: black;
+  box-shadow: none;
+  transition: all 0s linear;
+}
+
+.sticky-top{
+  margin-bottom: 30px;
+}
+
+
+
+.navbar-wish-count {
+    color: #cf6369;
+    position: absolute;
+    top: 30px;
+    right: 22px;
+    font-size: 14px;
+    max-width: 10px;
+}
+
+.fa-heart {
+  color:rgba(190, 45, 51, 0.74);
+}
+
+.fa-user {
+  color: black;
+}
+
+.wish-div a{
+    display:inline-block;
+    color:black;
+    position:absolute;
+/*    margin-left:100px;
+    padding:1px 1px;*/
+    background-color: transparent;
+    visibility: hidden;
+}
+
+.wish-div:hover a {
+    visibility: visible;
+    background-color: transparent;
+}
+
+.like-center {
+  position: absolute;
+  top: 104px;
+  right: 104px;
+}
+
+.one-line{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display:inline-block;
+}
+
+.poloska{
+  /*border-top: 1px solid #e8eaef;*/
+  margin-top: 5px;
+}
+
+
+.card-img-top {
+    max-width: 288px;
+    max-height: 288px;
+    min-width: 288px;
+    min-height: 288px;
+    object-fit: cover;
+    align-items: top;
+    margin-bottom: 10px;
+
+    cursor: pointer;
+    display: inline-block;
+    border: 0px solid #ccc;
+    position: relative;
+}
+
+.card-text{
+  word-wrap: break-word;
+}
+
+.card{
+  overflow: hidden;
+  display: flex;
+  border: none;
+}
+
+
+.card-body {
+
+  height: 100px;
+  width: 288px;
+  object-fit: cover;
+  border-top: 1px solid #e8eaef;
+  padding: 0;
+
+}
+
+ol {
+  list-style: none;
+}
+
+#mssg-text {
+  overflow-wrap: break-word;
+}
+
+/*@font-face {
+  font-family: 'Cuprum';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cuprum Italic'), local('Cuprum-Italic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4m_pLmvrkcOkBNI9tEr7kVSg.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: 'Cuprum';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Cuprum Bold Italic'), local('Cuprum-BoldItalic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4h_pLmvrkcOkBNI9P7iqwuawcegg.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: 'Cuprum';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cuprum Regular'), local('Cuprum-Regular'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4k_pLmvrkcOkBNIutCt70.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: 'Cuprum';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Cuprum Bold'), local('Cuprum-Bold'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4n_pLmvrkcOkBFnc5XjJwocwM.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: 'Cuprum';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cuprum Italic'), local('Cuprum-Italic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4m_pLmvrkcOkBNI9tAr7k.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cuprum';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Cuprum Bold Italic'), local('Cuprum-BoldItalic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4h_pLmvrkcOkBNI9P7iqwqawc.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cuprum';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cuprum Regular'), local('Cuprum-Regular'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4k_pLmvrkcOkBNJutC.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cuprum';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Cuprum Bold'), local('Cuprum-Bold'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4n_pLmvrkcOkBFnc5XiJwo.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}*/
 
 
 
@@ -16,11 +303,122 @@
   width: 100px; 
 }
 
+
+/*#align-userpic-chat, #align-items-chat {
+  align-items: center;
+}*/
+
+
+    .conv-user {
+      width: 225px;
+      white-space: nowrap; /* Запрещаем перенос строк */
+      overflow: hidden; /* Обрезаем все, что не помещается в область */
+      text-overflow: ellipsis;
+    }
+
+
+
+#opponent-pic {
+  margin-left: 390px;
+}
+
+/*#opponent-name {
+  margin-left: -50px;
+}*/
+
+.ps__rail-x {
+  margin-right: 10px;
+}
+
+.ps__rail-y {
+  margin-bottom: 10px;
+  }
+
+
+#move-column {
+  width: 250px;
+}
+
+.msg-unread{
+  padding: 0;
+  margin: 0;
+}
+
+table {
+  display: inline-block;
+}
+
+
+.my-custom-scrollbar {
+  position: absolute;
+}
+
+#table-scroll .my-custom-scrollbar {
+  position: relative;
+  width: 250px;
+  height: 90%;
+  border: 0;  
+}
+
+#messages .my-custom-scrollbar {
+  position: relative;
+ 
+  width: 1000px;
+  height: 90%;
+  border: 0;  
+}
+
+
+#conversations {
+  text-align: left;
+}
+
+.table td, .table th {
+  border-top: none !important;
+}
+
+
+
+/*.add-info {
+  margin-right: 200px;
+}
+
+#clip {
+  margin-left: 100px;
+}
+
+#btn-send-message {
+  margin-left: 25px;
+}*/
+
+
+.avatar, .img-thumbnail {
+	width: 100px;
+	height: 100px;
+	border-radius: 50% !important;
+}
+
+.username {
+  color: black;
+}
+
+.msg-unread {
+  background-color: white;
+}
+
+.timestamp {
+  color: grey;
+}
+
+#products-by-user {
+	border-bottom: 1px solid #e8eaef;
+}
+
 a {
 	color: black;
 }
 
-a:hover {
+.list-unstyled a:hover {
 	color: black;
 	background-color: #e8eaef;
 	text-decoration: none;
@@ -28,12 +426,37 @@ a:hover {
 
 #sidebar {
 	border-right: 1px solid #e8eaef;
+	padding-right: 125px;
 }
 
 
 ul {
 	list-style: none;
 }
+
+html{
+  position: relative; 
+  min-height: 100%;
+}
+
+html,body{
+  margin:0;
+  padding-bottom: 50px;
+  font-family: "Cuprum", sans-serif;
+}
+
+.page-footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    border-top: 1px solid #e8eaef;
+}
+
+.pageContentWrapper{
+  margin-bottom:100px;/* Height of footer*/
+} 
 
 
 .img-size {
@@ -43,10 +466,9 @@ ul {
 
 .container-fluid-product {
     height: 100%;
-    padding-left: 20px;
-    padding-right: 30px;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    max-height: 2000px;
+    padding-top: 50px;
+    padding-bottom: 150px;
 }
 
 .limit {
@@ -150,19 +572,7 @@ border: 2px red solid;
 }
 
 
-.card-body {
-  height: 300px;
-  width: 300px;
-  object-fit: cover;
 
-}
-
-
-.card-img-top {
-    width: 85%;
-    height: 85%;
-    object-fit: contain;
-}
 
 
 

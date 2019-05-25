@@ -1,6 +1,90 @@
+//Autofill Search 
+var searchForm = $(".search-form")
+var searchInput = searchForm.find("[name='q']") //input name = 'q'
+var actionEndpoint = searchForm.attr("action");
+//var typingTimer;
+// var typingInterval = 50 //0.5 seconds
+//var searchBtn = searchForm.find("[type='submit']")
+// // define displaySearching function
+// function displaySearching(){
+// searchBtn.addClass("disabled")
+// searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
+//         }
 $(document).ready(
+
+      (function() {
+      $.ajax({
+      url: actionEndpoint,
+      data: searchInput,
+      success: function(data){
+              var availableTags = data.filtered_products
+              var searchBtn = searchForm.find("[type='submit']")
+              $( "#searchAutoComplete" ).autocomplete({
+                          source: availableTags
+                          }).data("ui-autocomplete")._renderItem=function (ul, item) { //for  clicking results
+                          return $("<li></li>")
+                          .data("item.autocomplete", item)
+                          .append("<a href='/search/?q=" + item.value + "'>"+"<span class='suggestions'>" +item.value+ "</span></a>")
+                          .appendTo(ul);
+                          };
+              }, 
+      error: function(errorData){
+          $.alert({
+              title: 'OOps!',
+              content: 'Simple alert!',
+              theme: "modern"
+            });
+            }
+      })//ajax
+      }
+
+
+      
+// //Auto Search
+// var searchForm = $(".search-form")
+// var searchInput = searchForm.find("[name='q']") //input name = 'q'
+// var typingTimer;
+// var typingInterval = 500 //0.5 seconds
+// var searchBtn = searchForm.find("[type='submit']")
+// // console.log(searchBtn)
+// searchInput.keyup(
+//   function(event){
+//     clearTimeout(typingTimer)
+//     typingTimer = setTimeout(performSearch, typingInterval)
+//   })
+//   searchInput.keydown(
+//  //key pressed
+//   function(event){
+//     clearTimeout(typingTimer)
+ 
+//   })
   
+//   function displaySearching(){
+//     searchBtn.addClass("disabled")
+//     searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
+//   }
+
+//   function performSearch(){
+//     displaySearching()
+//     var query = searchInput.val()
+//     setTimeout(function(){
+//       window.location.href='/search/?q=' + query   
+//     }, 1000)
+               
+//   }
+
+
+
+
+
+
+
+
+
+
   function(){
+  
+
     //contactFormHandler
     var contactForm = $('.contact-form')
     var contactFormMethod = contactForm.attr("method")
@@ -12,7 +96,7 @@ $(document).ready(
       } else {
         submitBtn.removeClass("disabled")
         submitBtn.html(defaultText)
-      }
+        }
     }            
     contactForm.submit(
       function(event){
@@ -32,7 +116,7 @@ $(document).ready(
               title: 'Success',
               content: data.message,
               theme: "modern"
-          })
+              })
           setTimeout(
             function()
             {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false)}, 1000)
@@ -55,7 +139,7 @@ $(document).ready(
             {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false)}, 1000)
           }
         })
-      })
+      });
 
 
 
@@ -66,43 +150,16 @@ $(document).ready(
 
 
 
+   
 
 
 
-    //Auto Search
-    var searchForm = $(".search-form")
-    var searchInput = searchForm.find("[name='q']") //input name = 'q'
-    var typingTimer;
-    var typingInterval = 500 //0.5 seconds
-    var searchBtn = searchForm.find("[type='submit']")
-    searchInput.keyup(  //released key
-      function(event){
-        clearTimeout(typingTimer)
-        typingTimer = setTimeout(performSearch, typingInterval)
-      })
-    searchInput.keydown( //key pressed
-      function(event){
-        clearTimeout(typingTimer)
-     
-      })
-      
-      function displaySearching(){
-        searchBtn.addClass("disabled")
-        searchBtn.html("<i class='fas fa-spin fa-spinner'></i> Searching....")
-      }
 
-      function performSearch(){
-        displaySearching()
-        var query = searchInput.val()
-        setTimeout(function(){
-          window.location.href='/search/?q=' + query   
-        }, 1000)
-                   
-      }
+
+
 
 
   
-
 
   //Product Delete Alert Ajax
 
@@ -288,7 +345,7 @@ $(document).ready(
 
 
 
-// Wishlist
+// Wishlist Product-List-View
 
     var productForm=$(".form-product-ajax-wishlist")
     productForm.submit(
@@ -307,39 +364,86 @@ $(document).ready(
           method: httpMethod,
           data: formData,
           success: function(data){
+            
+            var submitSpan = thisForm.find(".submit-span-wishlist")
+            if (data.added){
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-5x'></i></button>")
+            }
+            else {
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-5x'></i></button>")
+            }
+
+            
+            var navbarCount = $(".navbar-wish-count")
+            navbarCount.text(data.wishes_count) // текст с навбар коунт заменяется отправленым нами wishes_count
+
+          },
+          error: function(errorData){
+            $.alert({
+              title: 'Oops!',
+              content: errorData,
+              theme: "modern",
+
+            });
+            }
+        })
+
+     }
+
+    )
+   
+
+// Wishlist Product-Detail-View 
+
+    var productFormDetail=$(".form-product-ajax-wishlist-detail")
+    productFormDetail.submit(
+
+      function(event){
+
+        event.preventDefault()
+        var thisForm = $(this)
+        var actionEndpoint = thisForm.attr("action");
+        var actionEndpoint = thisForm.attr("data-endpoint");
+        var httpMethod = thisForm.attr("method");
+        var formData = thisForm.serialize();
+
+        $.ajax({
+          url: actionEndpoint,
+          method: httpMethod,
+          data: formData,
+          success: function(data){
+            
             var submitSpan = thisForm.find(".submit-span-wishlist")
             if (data.added){
               submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-2x'></i></button>")
             }
             else {
               submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-2x'></i></button>")
-            }},
-        
+            }
+
+            
+            var navbarCount = $(".navbar-wish-count")
+            navbarCount.text(data.wishes_count) // текст с навбар коунт заменяется отправленым нами wishes_count
+
+          },
           error: function(errorData){
             $.alert({
               title: 'Oops!',
-              content: "Apparently you haven't signed up yet...",
-              theme: "modern"
+              content: errorData,
+              theme: "modern",
+
             });
-  }
-})
+            }
+        })
 
+     }
 
-
-
-
-      }
-
-
-
-
-
-    )
-      
+    )  
     
 
-  //   function refreshCart(){
-  //     console.log("privet")
+    // function refreshCart(){
+    //   console.log("privet")
+    // }
   //     var cartTable = $(".cart-table")
   //     var cartBody = cartTable.find(".cart-body")
   //     //cartBody.html("<h1>Changed</h1>")

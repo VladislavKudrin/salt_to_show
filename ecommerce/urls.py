@@ -38,7 +38,7 @@ from addresses.views import (
     checkout_address_create_view, 
     checkout_address_reuse_view
     )
-from accounts.views import RegisterLoginView, GuestRegisterView
+from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, wishlistupdate
 from .views import home_page, about_page, contact_page, test_page
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
@@ -61,9 +61,9 @@ urlpatterns = [
     url(r'^addresses/(?P<pk>\d+)/$', AddressUpdateView.as_view(), name='address-update'),
     # url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^register/guest/$', GuestRegisterView.as_view(), name='guest_register'),
+    url(r'^search/', include("search.urls",namespace='search')),
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include("products.urls",namespace='products')), #namespace классифицирует адрес, так как у одного имени может быть несколько адресов
-    url(r'^search/', include("search.urls",namespace='search')),
     url(r'^filter/', include("categories.urls",namespace='categories')),
     url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(),name='marketing-pref'),
     url(r'^settings/$', RedirectView.as_view(url='/account')),

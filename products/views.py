@@ -36,6 +36,15 @@ except OperationalError:
           # importable without this side effect
 
 
+from django import template
+
+register = template.Library()
+
+@register.filter
+def to_none(value):
+    return ""
+
+
 class ProductFeaturedListView(ListView):
 	#queryset = Product.objects.all()
 	template_name = "products/list.html"
@@ -132,7 +141,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
 	def get_object(self, *args, **kwargs):
 		request = self.request
-		slug = self.kwargs.get('slug')
+		slug = self.kwargs.get("slug")
 		
 		#instance = get_object_or_404(Product, slug=slug, active=True)
 		try:
@@ -377,6 +386,7 @@ def product_delete(request):
 	else:
 		return redirect('login')
 
+
 class WishListView(LoginRequiredMixin, ListView):
 	template_name = 'products/wish-list.html'
 	def get_queryset(self, *args, **kwargs):
@@ -386,11 +396,6 @@ class WishListView(LoginRequiredMixin, ListView):
 		return Product.objects.filter(pk__in=wishes)
 
 
-# def wishlistupdate(request):
-# 	product_id =request.POST.get('pk')
-# 	product_obj = Product.objects.get(pk=product_id)
-# 	request.user.wishes.add(product_obj)
-# 	return redirect("accounts:home")
 
 
 def wishlistupdate(request):
