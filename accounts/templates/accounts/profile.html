@@ -1,13 +1,25 @@
 {% extends "base.html" %}
+{% load static %}	
 {% block content %}
 
 
+<div class='col-12 text-left p-0'>
+		<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-3x"></i></button>
+</div>
+
 <div class="container" style="width:1500px; padding:0px;">
 <div class='row'>
-	<div class='col-1,5 mx-auto'>
-		{% if object.profile_foto %}
-		<img src="{{ object.profile_foto.url }}" class="avatar"/>
-		{% endif %}
+
+	<div class='col-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+	  		{% include "sidebar.html" %}
+		</div>
+
+	<div class='col-5 mx-auto text-center'>
+		{% if request.user.profile_foto %}
+        <img src="{{ request.user.profile_foto.url }}"  class=" avatar img-thumbnail ml-2" alt="..." style="width:60px; height: 60px">
+        {% else %}
+        <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:60px; height: 60px">
+        {% endif %}
 	</div>
 </div>
 <div class='row'>
@@ -17,7 +29,7 @@
 </div>
 
 <div class="row">
-	<div class="col-1,5 mx-auto">
+	<div class="col-3 mx-auto">
 		{% include 'accounts/snippets/begin-chat.html' %}
 	</div>
 </div>

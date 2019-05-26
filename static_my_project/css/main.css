@@ -144,7 +144,7 @@ background-color: black;
     color: #cf6369;
     position: absolute;
     top: 30px;
-    right: 22px;
+    right: 75px;
     font-size: 14px;
     max-width: 10px;
 }
@@ -444,10 +444,10 @@ a {
 	text-decoration: none;
 }
 
-#sidebar {
+/*#sidebar {
 	border-right: 1px solid #e8eaef;
 	padding-right: 125px;
-}
+}*/
 
 
 ul {
