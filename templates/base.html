@@ -11,9 +11,7 @@
 
     {% include 'base/css.html' %}
     {% block base_head %}{% endblock %}
-    {% include 'base/js.html' %}
-    {% block extra_js %}{% endblock extra_js %}
-    {% block javascript %}{% endblock %}
+
     
   </head>
 
@@ -54,7 +52,9 @@ $(document).ready(
 
 })//document ready
 </script>
-
+    {% include 'base/js.html' %}
+    {% block extra_js %}{% endblock extra_js %}
+    {% block javascript %}{% endblock %}
 
 </body>
 </html>
