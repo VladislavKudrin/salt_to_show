@@ -19,10 +19,15 @@
 <body>
 
     {% include 'base/navbar.html' with brand_name='eCommerce' %}
-    <div class='container-fluid'>
+    <div class='container-fluid ajax-search'>
     {% include 'base/messages.html' %}
     {% block content %}{% endblock %}
     </div>
+    {% include 'base/footer.html' %}
+
+      {% include 'base/js.html' %}
+      {% block extra_js %}{% endblock extra_js %}
+      {% block javascript %}{% endblock %}
 
 
 
