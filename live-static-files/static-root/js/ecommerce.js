@@ -234,44 +234,6 @@ $(document).ready(
 
 // Wishlist Product Detail View
 
-      var productForm=$(".form-product-ajax-wishlist-detail")
-    productForm.submit(
-
-      function(event){
-
-        event.preventDefault()
-        var thisForm = $(this)
-        var actionEndpoint = thisForm.attr("action");
-        var actionEndpoint = thisForm.attr("data-endpoint");
-        var httpMethod = thisForm.attr("method");
-        var formData = thisForm.serialize();
-
-        $.ajax({
-          url: actionEndpoint,
-          method: httpMethod,
-          data: formData,
-          success: function(data){
-            var submitSpan = thisForm.find(".submit-span-wishlist")
-            if (data.added){
-              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-2x'></i></button>")
-            }
-            else {
-              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-2x'></i></button>")
-            }
-
-            var navbarCount = $(".navbar-wish-count")
-            navbarCount.text(data.wishes_count)
-        },
-          error: function(errorData){
-            $.alert({
-              title: 'Oops!',
-              content: errorData,
-              theme: "modern",
-            });
-  }
-})
-      }
-    )
 
   //   //delete add cart Ajax
   //   var productForm=$(".form-product-ajax")
