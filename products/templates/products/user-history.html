@@ -2,13 +2,19 @@
 
 {% block content %}
 
+<div class='col-12 text-left p-0'>
+		<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-3x"></i></button>
+</div>
+
 <div class="container" style="width:1500px; padding:0px;">
 
 
 
 <div class='row'>
 
-	{% include "sidebar.html" %} 
+	<div class='col-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+	  		{% include "sidebar.html" %}
+	</div> 
 
 	<div class='col'>
 		<div class='row'>
