@@ -1,3 +1,5 @@
+
+import numpy
 from pathlib import Path
 from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse, HttpResponse
@@ -6,7 +8,7 @@ from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-
+import json
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.decorators import login_required
@@ -22,7 +24,7 @@ from carts.models import Cart
 from categories.models import Size, Brand
 
 from accounts.models import User
-from .models import Product, Image
+from .models import Product, Image, ImageOrderUtil
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 
 from django.db.utils import OperationalError
@@ -210,6 +212,25 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 	}
 	return render(request, "products/detail.html", context)
 
+def image_create_order(request):
+	if request.POST:
+		data = request.POST.getlist('data[]')
+		slug = request.POST.get('slug')
+		images = Image.objects.filter(slug=slug)
+		array = numpy.array(data)
+		array = array.astype(numpy.int)
+		array = array + 1
+		for img in images:
+			min_ = min(array)
+			index_of_min = numpy.where(array==min(array))[0][0].item()
+			number = index_of_min + 1
+			img.image_order=number
+			print(img.image_order)
+			array[index_of_min]=max(array)+1
+			img.save()
+	return redirect('home')
+
+
 def image_update_view(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
@@ -221,6 +242,20 @@ def image_update_view(request):
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
+	def post(self, request, *args, **kwargs):
+		if request.is_ajax():
+			print('works')
+			form = self.get_form()
+			if form.is_valid():
+				return self.form_valid(form)
+			else:
+				errors = form.errors
+				# HttpResponse(json.dumps(errors), status=404)
+				json_data={
+						'error':errors
+				}
+				return JsonResponse(json_data, status=404)
+	
 	def get(self, request, *args, **kwargs):
 		brands = Brand.objects.all()
 		brand_arr = []
@@ -255,7 +290,14 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	def form_valid(self, form):
 		product = form.save()
 		url = product.get_absolute_url()
+		if self.request.is_ajax():	
+			json_data={
+						'url': url,
+						'slug':product.slug
+							}
+			return JsonResponse(json_data)
 		return redirect(url)
+
 	def form_invalid(self, form):
 		context={
 			'form': form,

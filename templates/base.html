@@ -42,6 +42,10 @@
   .customDropright:focus {
    outline: none; 
 }
+.brandautofill::focus-within {
+  background: black;
+}
+
 </style>
 
 
@@ -49,7 +53,93 @@
   <script type="text/javascript">
 $(document).ready(
   function(){
-//autofill Brand
+
+var formCreate = $('#customSort')
+//update
+var currentPath = window.location.href
+if (currentPath.indexOf("create") != -1){
+    var galleryUpdate = $('#gallery')
+    var formSubmit = $('#example-form-1')
+    var action = formSubmit.attr("action_url_create")
+    var action_order = formSubmit.attr("action_url_create_order")
+    formSubmit.submit(
+    function(event){
+    event.preventDefault()
+    var formData = formSubmit.serialize()
+    var elements = $('#example-form-1 ul li')
+    var keyArray = []
+    $.each(elements,
+    function(index, value){
+        console.log(value)
+        var attr = $(value).attr('qq-file-id')
+        console.log(attr)
+        keyArray.push(attr)  
+    })//eacharray
+    console.log(keyArray)
+    $.ajax({
+    url: action,
+    method:'POST',
+    data: formData,
+    success: function(data){
+      $.ajax({
+        url: action_order,
+        method:'POST',
+        data: {'data[]':keyArray, 'slug':data.slug},
+        success:function(data){
+          console.log('successsssss')
+        },//success second ajax
+        error:function(errorData){
+
+        }//error second ajax
+      })//ajax in ajax
+      console.log('hi')
+      console.log(data.url)
+      window.location.href=data.url
+    },//success
+    error: function(errorData){
+    // var errors = jQuery.parseJSON(errorData)
+    // $.each(errors,
+    //   function(index,value){
+    //     if (index=='brand' && $('.brand').length==0){
+    //       $('#id_brand').addClass('is-invalid')
+    //       $('#id_brand').after("<p class='invalid-feedback brand'><strong>"+value+"</strong></p>")
+    //     }//if brand
+    // else{
+    //   $('#id_brand').removeClass('is-invalid')
+    // }//else brand
+    // if (index=='category' && $('.category').length==0){
+    //   $('#id_category').addClass('is-invalid')
+    //   $('#id_category').after("<p class='invalid-feedback category'><strong>"+value+"</strong></p>")
+    // }//if category
+    // if (index=='image' && $('.image').length==0){
+    //   $('#id_image').addClass('is-invalid')
+    //   $('#id_image').after("<p class='invalid-feedback image'><strong>"+value+"</strong></p>")
+    // }//if image
+
+    // })//each errors
+
+    $.alert({
+    title: 'OOps!',
+    content: 'Simple alert!',
+    theme: "modern"
+    });
+    }//error
+    })//ajax
+    })//submit
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 })//document ready
 </script>

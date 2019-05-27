@@ -9,7 +9,11 @@ from django.urls import reverse
 
 from categories.models import Size, Brand
 
-
+class ImageOrderUtil(models.Model):
+	slug			= models.SlugField(default=None, unique = True, blank=True)
+	order_sequence  = models.CharField(max_length=120, blank=True, null=True)
+	def __str__(self):
+		return self.slug
 
     
 def get_filename_ext(filepath):

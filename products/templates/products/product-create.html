@@ -9,7 +9,7 @@
   <div class='col-9 mx-auto'>
   {% if title %}<h1 class='my-3'>{{ title }}</h1>{% endif %}
 
-  <form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create="{% url 'products:create' %}"action_url="{% url 'products:handle_image_sort' %}"> {% csrf_token %}
+  <form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create_order="{% url 'products:handle_image_create_sort' %}" action_url_create="{% url 'products:create' %}"action_url="{% url 'products:handle_image_sort' %}"> {% csrf_token %}
   	{{ form|crispy }}
 
 
