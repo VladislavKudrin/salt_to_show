@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.safestring import mark_safe
 from django.contrib import messages
+from django.contrib.auth.password_validation import validate_password
 from django.core.urlresolvers import reverse
 User = get_user_model()
 
@@ -120,7 +121,7 @@ class RegisterLoginForm(forms.ModelForm):
         widget=forms.EmailInput(
         attrs={'placeholder': 'Your Email'}), label=''
         )
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Your Password'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Min 8 characters, digits + numbers'}))
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -130,6 +131,15 @@ class RegisterLoginForm(forms.ModelForm):
         link = reverse("accounts:resend-activation")
         reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
         self.cleaned_data['msg'] = reconfirm_msg
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        try:
+            validate_password(password, self.instance)
+        except forms.ValidationError as error:
+            # Method inherited from BaseForm
+            self.add_error('password', error)
+        return self.cleaned_data.get('password')
 
 
 

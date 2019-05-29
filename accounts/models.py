@@ -21,6 +21,7 @@ from products.models import Product
 
 
 
+
 DEFAULT_ACTIVATION_DAYS = getattr(settings, "DEFAULT_ACTIVATION_DAYS", 7)
 
 def get_filename_ext(filepath):
@@ -154,6 +155,11 @@ class User(AbstractBaseUser):
 	def is_admin(self):
 		return self.admin
 
+
+class Wishlist(models.Model):
+	user    	= models.ForeignKey(User, related_name='wishes_user')
+	product 	= models.ForeignKey(Product, related_name='wishes_products')
+	timestamp	= models.DateTimeField(auto_now_add=True)
 
 
 # class Profile(models.Model):

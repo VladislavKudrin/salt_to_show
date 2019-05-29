@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from django.conf import settings
 from django.shortcuts import render
@@ -16,11 +17,12 @@ from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
-from .models import GuestEmail, EmailActivation, User
+from .models import GuestEmail, EmailActivation, User, Wishlist
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 from products.models import Product
 from django.http import JsonResponse
+
 
 
 # @login_required
@@ -46,7 +48,7 @@ class AccountEmailActivateView(FormMixin, View):
 			if confirm_qs.count()==1:
 				obj = confirm_qs.first()
 				obj.activate()
-				messages.add_message(request, messages.SUCCESS, 'Welcome to your account!')
+				messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
 				email = qs.first().user.email
 				password = qs.first().user.password
 				login(request, qs.first().user, backend='django.contrib.auth.backends.ModelBackend') 
@@ -139,10 +141,12 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			return redirect(next_path)
 		else:
 			login(form.request, user)
-			messages.add_message(form.request, messages.SUCCESS, 'Welcome back!')
+			messages.add_message(form.request, messages.SUCCESS, 'You are logged in successfully')
 
 		return redirect(next_path)
 
+def add_message(backend, user, request, response, *args, **kwargs):
+	messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
 
 # def login_page(request):
 # 	form = LoginForm(request.POST or None)
@@ -208,11 +212,14 @@ class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
 
 	def get_context_data(self, *args, **kwargs):
-		context = super(ProfileView, self).get_context_data(*args,**kwargs)
 		username = self.kwargs.get('username')
 		user  = User.objects.filter_by_username(username=username)
+		wishes = Wishlist.objects.filter(user=self.request.user) 
+		wished_products = [wish.product for wish in wishes]
+		context = super(ProfileView, self).get_context_data(*args,**kwargs)
 		context['products'] = Product.objects.filter(user=user)
 		context['btn_title'] = 'Begin Chat with '
+		context['wishes'] = wished_products
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -235,9 +242,26 @@ class WishListView(LoginRequiredMixin, ListView):
 	template_name = 'accounts/wish-list.html'
 	def get_queryset(self, *args, **kwargs):
 		user = self.request.user
-		wishes = user.wishes.all()
-		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
-		return Product.objects.filter(pk__in=wishes)
+		wishes = Wishlist.objects.filter(user=user)
+		wished_products = [wish.product for wish in wishes]
+		# pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
+		return wished_products
+		#context = super(WishListView, self).get_context_data(*args,**kwargs)
+		# all_wishes = user.wishes_user.all()
+		# wished_products = []
+		# for wish in all_wishes: 
+		# 	wished_products.append(wish.product)
+		# print(wished_products)
+		# return wished_products
+		# return Product.objects.filter()
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(WishListView, self).get_context_data(*args,**kwargs)
+		user = self.request.user
+		all_wishes = user.wishes_user.all()
+		wished_products = [wish.product for wish in all_wishes]
+		context['wishes'] = wished_products
+		return context
 
 
 
@@ -245,27 +269,30 @@ class WishListView(LoginRequiredMixin, ListView):
 def wishlistupdate(request):
 	product_id=request.POST.get('product_id')
 	user = request.user
-	user_wishes = user.wishes.all()
+	user_wishes = Wishlist.objects.filter(user = user)
 	if product_id is not None:
 		try:
 			product_obj = Product.objects.get(id=product_id)
 		except Product.DoesNotExist:
 			print("Show message to user!")
 			return redirect("accounts:wish-list")
-		if product_obj in user_wishes:
-			user.wishes.remove(product_obj)
+		user_wishes_exist = user_wishes.filter(product=product_obj)
+		if 	user_wishes_exist.exists():
+			print(user_wishes_exist)
+			user_wishes_exist.first().delete()
+			print(user_wishes_exist)
 			added = False
-			user_wishes=user.wishes.all().count()
+			user_wishes_exist=user_wishes.count()
 		else:
-			user.wishes.add(product_obj)
+			Wishlist.objects.create(user=user, product=product_obj)
 			added = True
-			user_wishes=user.wishes.all().count()
+			user_wishes_exist=user_wishes.count()
 		if request.is_ajax():
 			print("Ajax request YES")
 			json_data={
 				"added": added,
 				"removed": not added,
-				 "wishes_count": user_wishes,
+				 "wishes_count": user_wishes_exist,
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")

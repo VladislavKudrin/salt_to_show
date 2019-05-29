@@ -5,10 +5,11 @@ from .forms import UserAdminCreationForm, UserAdminChangeForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import GuestEmail, EmailActivation
+from .models import GuestEmail, EmailActivation, Wishlist
 
 User = get_user_model()
 
+admin.site.register(Wishlist)
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
