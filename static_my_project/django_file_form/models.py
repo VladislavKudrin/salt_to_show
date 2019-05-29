@@ -60,6 +60,7 @@ class UploadedFile(models.Model):
     field_name = models.CharField(max_length=255, null=True, blank=True)
     file_id = models.CharField(max_length=40)
     form_id = models.CharField(max_length=40)
+    order_nr = models.CharField(null=True, blank=True)
 
     objects = UploadedFileManager()
 

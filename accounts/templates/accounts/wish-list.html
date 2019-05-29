@@ -13,9 +13,10 @@
 	  		{% include "sidebar.html" %}
 	</div> 
 
+			
 	<div class='col'>
 		<div class='row'>
-			{% for obj in object_list %}
+			{% for obj in object_list %} 
 				<div class='col-3 position-relative'>
 					{% include 'products/snippets/card.html' with instance=obj %}
 					{% if forloop.counter|divisibleby:4 %}
@@ -27,6 +28,7 @@
 					{% else %}
 						</div>
 					{% endif %}
+
 			{% endfor %}
 	</div>
 	

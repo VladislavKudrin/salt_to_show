@@ -76,7 +76,6 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
 		views = request.user.objectviewed_set.by_model(Product, model_queryset=False) #.filter(content_type='product') #reverse relationship with ForeignKey
-		print(views)
 		#viewed_ids = [x.object_id for x in views]
 		# viewed_ids=[]
 		# for x in views:
@@ -84,10 +83,16 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		return views
 		
 	def get_context_data(self, *args, **kwargs): #overwrite method
+		user = self.request.user
+		all_wishes = user.wishes_user.all()
+		wished_products = [wish.product for wish in all_wishes]
 		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  #default method
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
+		context['wishes'] = wished_products
 		return context
+
+
 
 class ProductListView(ListView):
 	#queryset = Product.objects.all()
@@ -113,7 +118,7 @@ class ProductListView(ListView):
 def product_list_view(request):
 	queryset = Product.objects.all()
 	context = {
-		'object_list': queryset
+		'object_list': queryset.order_by('-timestamp')
 	}
 	return render(request, "products/list.html", context)
 
@@ -128,11 +133,15 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		context['cart']=cart_obj
 		new_all_=[]
 		request = self.request
+		user = request.user
+		all_wishes = user.wishes_user.all()
+		wished_products = [wish.product for wish in all_wishes]
 		slug = self.kwargs.get('slug')
 		all_ = Image.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
+		context['wishes']= wished_products
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -160,57 +169,63 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		return instance
 
 
-class ProductDetailView(ObjectViewedMixin, DetailView):
-	#queryset = Product.objects.all()
-	template_name = "products/detail.html"
+# class ProductDetailView(ObjectViewedMixin, DetailView):
+# 	#queryset = Product.objects.all()
+# 	template_name = "products/detail.html"
 
-	def get_context_data(self, *args, **kwargs):
-		context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-		return context
+# 	def get_context_data(self, *args, **kwargs):
+# 		user = self.request.user
+# 		all_wishes = user.wishes_user.all()
+# 		wished_products = []
+# 		for wish in all_wishes: 
+# 			wished_products.append(wish.product)
+# 		context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+# 		context['wishes']= wished_products
+# 		print(context)
+# 		return context
 
-	def get_object(self, *args, **kwargs):
-		request = self.request
-		pk = self.kwargs.get('pk')
-		instance = Product.objects.get_by_id(pk)
-		if instance is None:
-			raise Http404("Product doesnt Exist")
-		return instance
+# 	def get_object(self, *args, **kwargs):
+# 		request = self.request
+# 		pk = self.kwargs.get('pk')
+# 		instance = Product.objects.get_by_id(pk)
+# 		if instance is None:
+# 			raise Http404("Product doesnt Exist")
+# 		return instance
 
-	# def get_queryset(self, *args, **kwargs):
-	# 	request = self.request
-	# 	pk = self.kwargs.get('pk')
-	# 	return Product.objects.filter(pk=pk)
-
-
-
-def product_detail_view(request, pk=None, *args, **kwargs):
-	#instance = Product.objects.get(pk=pk)
-	#instance = get_object_or_404(Product, pk=pk)
-	# try:
-	# 	instance=Product.objects.get(id=pk)
-	# except Product.DoesNotExist:
-	# 	print('no product here')
-	# 	raise Http404("Product doesnt Exist")
-	# except:
-	# 	print('huh?')
-	instance = Product.objects.get_by_id(pk)
-	if instance is None:
-		raise Http404("Product doesnt Exist")
-	# print(instance)
-	# qs=Product.objects.filter(id=pk)
-	# #print(qs)
-	# if qs.exists() and qs.count()==1:
-	# 	instance = qs.first()
-	# else:
-	# 	raise Http404("Product doesnt Exist")
+# 	def get_queryset(self, *args, **kwargs):
+# 		request = self.request
+# 		pk = self.kwargs.get('pk')
+# 		return Product.objects.filter(pk=pk)
 
 
 
+# def product_detail_view(request, pk=None, *args, **kwargs):
+# 	user = self.request.user
+# 	all_wishes = user.wishes_user.all()
+# 	print(all_wishes)
+# 	print('fdfdfd')
+# 	wished_products = []
+# 	for wish in all_wishes: 
+# 		wished_products.append(wish.product)
+# 	# context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+# 	instance = Product.objects.get_by_id(pk)
+# 	if instance is None:
+# 		raise Http404("Product doesnt Exist")
+# 	print(instance)
+# 	# qs=Product.objects.filter(id=pk)
+# 	# #print(qs)
+# 	# if qs.exists() and qs.count()==1:
+# 	# 	instance = qs.first()
+# 	# else:
+# 	# 	raise Http404("Product doesnt Exist")
 
-	context = {
-		'object': instance
-	}
-	return render(request, "products/detail.html", context)
+
+# 	context = {
+# 		'object': instance,
+# 		'wishes': wished_products
+# 	}
+# 	# print(context)
+# 	return render(request, "products/detail.html", context)
 
 def image_create_order(request):
 	if request.POST:
@@ -310,6 +325,15 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
 		return Product.objects.by_user(request.user)
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
+		user = self.request.user
+		all_wishes = user.wishes_user.all()
+		wished_products = []
+		wished_products = [wish.product for wish in all_wishes]
+		context['wishes'] = wished_products
+		return context
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):

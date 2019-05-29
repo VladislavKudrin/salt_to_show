@@ -1,10 +1,17 @@
 <form class='form-product-ajax-wishlist' method='POST' action='{% url "accounts:wish-list-update" %}' data-endpoint='{% url "accounts:wish-list-update" %}' class="form"> {% csrf_token %}
 	<input type='hidden' name='product_id' value='{{ product.id }}' />
 	<span class='submit-span-wishlist'>
-		{% if product in user.wishes.all %}
-			<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-5x'></i></button>
+
+
+		{% if product in wishes %}
+					<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-5x'></i></button>
+
 		{% else %}
-			<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-5x'></i></button>
+
+					<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-5x'></i></button>
 		{% endif %}
+
+
+
 	</span>
 </form>
