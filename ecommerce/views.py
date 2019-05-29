@@ -1,8 +1,14 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
+from django.views.generic import FormView
+from django.core.mail import send_mail
+from django.template.loader import get_template
+from django.conf import settings
 
 from .forms import ContactForm
+
+
 def test_page(request):
 	return render(request, "categories/slidebar.html", {})
 
@@ -15,9 +21,28 @@ def about_page(request):
 	}
 	return render(request, "home_page.html", context)
 
+# class ContactPageView(RequestFormAttachMixin, FormView):
+# 	form_class = ContactForm
+# 	template_name = 'contact/contact.html'
+# 	def get_context_data(self, *args, **kwargs):
+# 		context = super(ContactPageView, self).get_context_data(*args, **kwargs)
+# 		context['title'] = 'Contact Page'
+
+# 		return context
+	
+# 	def form_valid(self, form):
+# 		print(form.cleaned_data)
+# 		if request.is_ajax():
+# 			return JsonResponse({"message":"Thank you"})
+	
+# 	def form_invalid(self, form):
+# 		errors = form.errors.as_json()
+# 		if request.is_ajax():
+# 			return HttpResponse(errors, status=400, content_type='application/json')
 def contact_page(request):
 	contact_form=ContactForm(request.POST or None)
 	context = {
+		'user_email':request.user.email,
 		'title':'Contact Page',
 		'form':contact_form
 
@@ -25,6 +50,27 @@ def contact_page(request):
 
 	if contact_form.is_valid():
 		print(contact_form.cleaned_data)
+		context = {
+						
+						'email':contact_form.cleaned_data.get('email'),
+						'content':contact_form.cleaned_data.get('content'),
+						'sender_email':request.user
+
+				}
+		txt_ = get_template("contact/email/contact_message.txt").render(context)
+		html_ = get_template("contact/email/contact_message.html").render(context)
+		subject = str(contact_form.cleaned_data.get('email'))+' User Message'
+		from_email = settings.DEFAULT_FROM_EMAIL
+		recipient_list = [from_email]
+		sent_mail=send_mail(
+					subject,
+					txt_,
+					from_email,
+					recipient_list,
+					html_message=html_,
+					fail_silently=False, 
+
+					)
 		if request.is_ajax():
 			return JsonResponse({"message":"Thank you"})
 

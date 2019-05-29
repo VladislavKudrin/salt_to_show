@@ -54,7 +54,10 @@
 $(document).ready(
   function(){
 
-var formCreate = $('#customSort')
+var contact=$('.contact-form')
+var userEmail = contact.find("[name='popchik']").val()
+var input = contact.find("[name='email']").val(userEmail)
+
 //update
 var currentPath = window.location.href
 if (currentPath.indexOf("create") != -1){
@@ -97,7 +100,8 @@ if (currentPath.indexOf("create") != -1){
       window.location.href=data.url
     },//success
     error: function(errorData){
-    // var errors = jQuery.parseJSON(errorData)
+    var errors = jQuery.parseJSON(errorData)
+    console.log(errorsDara.errors)
     // $.each(errors,
     //   function(index,value){
     //     if (index=='brand' && $('.brand').length==0){

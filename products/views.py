@@ -251,10 +251,8 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			else:
 				errors = form.errors
 				# HttpResponse(json.dumps(errors), status=404)
-				json_data={
-						'error':errors
-				}
-				return JsonResponse(json_data, status=404)
+				
+				return JsonResponse(form.errors.as_json(), status=404)
 	
 	def get(self, request, *args, **kwargs):
 		brands = Brand.objects.all()
