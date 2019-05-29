@@ -39,9 +39,6 @@ class CategoryFilterView(ListView):
 		qs_gender={}
 		qs_size={}
 		qs_brand={}
-		user = self.request.user
-		all_wishes = user.wishes_user.all()
-		wished_products = [wish.product for wish in all_wishes]
 		for data in request.POST:
 			for brand in self.brands:
 				if str(brand) == data:
@@ -73,23 +70,16 @@ class CategoryFilterView(ListView):
 		context['fields_gender']=self.fields_gender
 		context['sizes']=self.sizes
 		context['brands']=self.brands
-		context['wishes']= wished_products
 		return render(self.request, "products/list.html", context)
 
 
 	def get(self, request, *args, **kwargs):
-		user = self.request.user
-		all_wishes = user.wishes_user.all()
-		wished_products = []
-		wished_products = [wish.product for wish in all_wishes]
 		context={}
 		context['object_list']=Product.objects.all().order_by('-timestamp')
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
 		context['sizes']=self.sizes
 		context['brands']=self.brands
-		context['wishes']= wished_products
-		
 		return render(request, "products/list.html", context)
 
 

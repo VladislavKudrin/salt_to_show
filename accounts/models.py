@@ -162,6 +162,7 @@ class Wishlist(models.Model):
 	timestamp	= models.DateTimeField(auto_now_add=True)
 
 
+
 # class Profile(models.Model):
 # 	user 					= models.OneToOneField(User)
 # 	full_name 				= models.CharField(max_length=255, blank=True, null=True)

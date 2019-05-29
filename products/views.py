@@ -75,7 +75,8 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		views = request.user.objectviewed_set.by_model(Product, model_queryset=False) #.filter(content_type='product') #reverse relationship with ForeignKey
+		views = request.user.objectviewed_set.by_model(Product, model_queryset=False)
+		#.filter(content_type='product') #reverse relationship with ForeignKey
 		#viewed_ids = [x.object_id for x in views]
 		# viewed_ids=[]
 		# for x in views:
@@ -84,12 +85,12 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		
 	def get_context_data(self, *args, **kwargs): #overwrite method
 		user = self.request.user
-		all_wishes = user.wishes_user.all()
-		wished_products = [wish.product for wish in all_wishes]
+		# all_wishes = user.wishes_user.all()
+		# wished_products = [wish.product for wish in all_wishes]
 		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  #default method
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
-		context['wishes'] = wished_products
+		# context['wishes'] = wished_products
 		return context
 
 
@@ -134,14 +135,14 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		new_all_=[]
 		request = self.request
 		user = request.user
-		all_wishes = user.wishes_user.all()
-		wished_products = [wish.product for wish in all_wishes]
+		# all_wishes = user.wishes_user.all()
+		# wished_products = [wish.product for wish in all_wishes]
 		slug = self.kwargs.get('slug')
 		all_ = Image.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
-		context['wishes']= wished_products
+		# context['wishes']= wished_products
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -329,10 +330,10 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
 		user = self.request.user
-		all_wishes = user.wishes_user.all()
-		wished_products = []
-		wished_products = [wish.product for wish in all_wishes]
-		context['wishes'] = wished_products
+		# all_wishes = user.wishes_user.all()
+		# wished_products = []
+		# wished_products = [wish.product for wish in all_wishes]
+		# context['wishes'] = wished_products
 		return context
 
 

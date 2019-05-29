@@ -214,12 +214,9 @@ class ProfileView(DetailView):
 	def get_context_data(self, *args, **kwargs):
 		username = self.kwargs.get('username')
 		user  = User.objects.filter_by_username(username=username)
-		wishes = Wishlist.objects.filter(user=self.request.user) 
-		wished_products = [wish.product for wish in wishes]
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
 		context['products'] = Product.objects.filter(user=user)
 		context['btn_title'] = 'Begin Chat with '
-		context['wishes'] = wished_products
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -242,7 +239,7 @@ class WishListView(LoginRequiredMixin, ListView):
 	template_name = 'accounts/wish-list.html'
 	def get_queryset(self, *args, **kwargs):
 		user = self.request.user
-		wishes = Wishlist.objects.filter(user=user)
+		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		wished_products = [wish.product for wish in wishes]
 		# pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
 		return wished_products
@@ -255,13 +252,13 @@ class WishListView(LoginRequiredMixin, ListView):
 		# return wished_products
 		# return Product.objects.filter()
 
-	def get_context_data(self, *args, **kwargs):
-		context = super(WishListView, self).get_context_data(*args,**kwargs)
-		user = self.request.user
-		all_wishes = user.wishes_user.all()
-		wished_products = [wish.product for wish in all_wishes]
-		context['wishes'] = wished_products
-		return context
+	# def get_context_data(self, *args, **kwargs):
+	# 	context = super(WishListView, self).get_context_data(*args,**kwargs)
+	# 	user = self.request.user
+	# 	all_wishes = user.wishes_user.all()
+	# 	wished_products = [wish.product for wish in all_wishes]
+	# 	context['wishes'] = wished_products
+	# 	return context
 
 
 
@@ -278,12 +275,13 @@ def wishlistupdate(request):
 			return redirect("accounts:wish-list")
 		user_wishes_exist = user_wishes.filter(product=product_obj)
 		if 	user_wishes_exist.exists():
-			print(user_wishes_exist)
+			user.wishes.remove(product_obj)
 			user_wishes_exist.first().delete()
-			print(user_wishes_exist)
 			added = False
 			user_wishes_exist=user_wishes.count()
+
 		else:
+			user.wishes.add(product_obj)
 			Wishlist.objects.create(user=user, product=product_obj)
 			added = True
 			user_wishes_exist=user_wishes.count()

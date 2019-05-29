@@ -31,13 +31,13 @@ class SearchProductView(ListView):
 
 	def get_context_data(self,*args,**kwargs):
 		user = self.request.user
-		all_wishes = user.wishes_user.all()
-		wished_products = [wish.product for wish in all_wishes]
+		# all_wishes = user.wishes_user.all()
+		# wished_products = [wish.product for wish in all_wishes]
 		#print(wished_products)
 		context=super(SearchProductView,self).get_context_data(*args,**kwargs)
 		query=self.request.GET.get('q')
 		context['query']=self.request.GET.get('q')
-		context['wishes']= wished_products
+		# context['wishes']= wished_products
 		return context
 
 	def get_queryset(self, *args, **kwargs):
