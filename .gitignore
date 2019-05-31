@@ -16,7 +16,7 @@ templates/template.html
 templates/test1.html
 
 
-
+ecommerce/settings/local.py 
 # Virtualenv related
 bin/
 include/
