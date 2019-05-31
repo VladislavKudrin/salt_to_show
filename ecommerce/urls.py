@@ -38,13 +38,14 @@ from addresses.views import (
     checkout_address_create_view, 
     checkout_address_reuse_view
     )
-from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, wishlistupdate
+from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, wishlistupdate, chat_list_view
 from .views import home_page, about_page, contact_page, test_page
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 from django_private_chat import urls as django_private_chat_urls
 urlpatterns = [
     url(r'^', include('django_private_chat.urls')),
+    url(r'^dialog-list/$', chat_list_view, name = 'chat-list'),
     url(r'^upload/', include('django_file_form.urls')),
     url(r'^$', home_page, name = 'home'),
     url(r'^login/$', RegisterLoginView.as_view(), name='login'),

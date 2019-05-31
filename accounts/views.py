@@ -1,8 +1,7 @@
 from django.db.models import Q
-from django.http import Http404
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -14,14 +13,16 @@ from django.views.generic import CreateView, FormView, DetailView, View, UpdateV
 from django.views.generic.edit import FormMixin
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
-from django.http import HttpResponseRedirect
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User, Wishlist
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 from products.models import Product
-from django.http import JsonResponse
+
+
+from django_private_chat.models import Dialog
+from django_private_chat.views import DialogListView
 
 
 
@@ -298,9 +299,15 @@ def wishlistupdate(request):
 
 
 
+def chat_list_view(request):
+	template_name = 'accounts/chat-list.html'
+	user = request.user
+	dialogs = Dialog.objects.filter(owner=user)
+	context = {
 
-
-
+			'object_list':dialogs
+			}
+	return render(request, template_name, context)
 
 
 
