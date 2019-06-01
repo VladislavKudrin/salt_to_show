@@ -8,6 +8,7 @@ boto==2.49.0
 boto3==1.9.134
 botocore==1.12.134
 certifi==2019.3.9
+cfe==0.0.15
 channels==2.2.0
 chardet==3.0.4
 constantly==15.1.0
@@ -37,6 +38,7 @@ jmespath==0.9.4
 libsass==0.18.0
 numpy==1.16.3
 oauthlib==3.0.1
+pandas==0.24.2
 Pillow==5.4.1
 psycopg2==2.8.1
 PyHamcrest==1.9.0
@@ -58,4 +60,5 @@ txaio==18.8.1
 urllib3==1.24.1
 websockets==7.0
 whitenoise==4.1.2
+wordcloud==1.5.0
 zope.interface==4.6.0
