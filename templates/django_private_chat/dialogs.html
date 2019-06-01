@@ -42,11 +42,11 @@
                                 {{ opponent_username }}
 
                     </div>
-                    <!-- <div class="text-success" id="online-status">{% trans "Online" %}</div>
-                    <div class="text-danger" id="offline-status">{% trans "Offline" %}</div>  -->
+                    <div class="text-success ml-3" id="online-status"><i class="fas fa-circle"></i></div>
+                    <div class="text-danger ml-3" id="offline-status"><i class="fas fa-circle"></i></div> 
                 </div>
             </div>
-                       
+
 
             <div class="row position-relative" style="padding: 0; margin: 0;">
 
@@ -82,7 +82,7 @@
                                  <div id="messages" class="messages my-custom-scrollbar position-relative" style="padding:5px 0px; margin-left:25px;">
                                     {% for msg in active_dialog.messages.all %}
                                     <div class="row position-static {% if msg.read %}msg-read{% else %}msg-unread{% endif %}" data-id="{{ msg.id }}" style="padding:0; margin: 0;" id="mssg-text">
-                                        <p class="{% if msg.sender == request.user %}pull-left{% else %}pull-right{% endif %}" style="min-width: 1000px; max-width: 1000px;">
+                                        <p class="{% if msg.sender == request.user %}pull-right{% else %}pull-left{% endif %}" style="min-width: 1000px; max-width: 1000px;">
                                         <span class="username">{{ msg.sender.username }}:
                                         </span>
                                         {{ msg.text }}
@@ -227,7 +227,7 @@
             function setUserOnlineOffline(username, online) {
                 var elem = $("#user-" + username);
                 if (online) {
-                    elem.attr("class", "btn btn-dark");
+                    elem.append("class", "btn btn-dark");
                 } else {
                     elem.attr("class", "btn btn-danger");
                 }

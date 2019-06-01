@@ -20,6 +20,7 @@
     
     {% include 'products/snippets/images-upload.html' with object=object %}
     <button type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">{{ button }}</button>
+    <small><a href='{% url "accounts:home" %}'>Back</a></small><br>
   </form>
 {% include 'django_file_form/upload_template.html' %}
 
