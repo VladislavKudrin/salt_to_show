@@ -77,7 +77,8 @@ INSTALLED_APPS = [
     'django_file_form',
     'django_file_form.ajaxuploader',
     'django_bootstrap3_form',
-    'django_pony_forms',  
+    'django_pony_forms',
+      
 
     #our apps
     'addresses',
@@ -269,17 +270,17 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),
 )
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-# STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
+STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
 
 MEDIA_URL = "/media/"
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 
 

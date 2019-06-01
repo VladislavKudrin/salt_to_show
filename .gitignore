@@ -3,11 +3,9 @@
 .env
 *.sublime-project
 fasttracktojquery/
-db.sqlite3
-*.sqlite3
+
 
 # Ignore the default SQLite database.
-*.sqlite3
 
 #test templates 
 templates/test1.html
