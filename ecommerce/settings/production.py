@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
@@ -269,15 +269,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),
 )
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
-
-#STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
 
 MEDIA_URL = "/media/"
-
-# MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
-
+MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 # from ecommerce.aws.conf import *
 

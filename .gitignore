@@ -1,32 +1,7 @@
-.DS_STORE
-
-.env
-*.sublime-project
-fasttracktojquery/
-db.sqlite3
-*.sqlite3
-
-# Ignore the default SQLite database.
-*.sqlite3
-
-#test templates 
-templates/test1.html
-templates/test2.html
-templates/template.html
-templates/test1.html
-
-
-
-# Virtualenv related
+.DS_Store
 bin/
 include/
 pip-selfcheck.json
-
-# Django related 
-live-static-files/
-# src/<yourproject>/settings/local.py
-# static-cdn/  # any collected static files 
-live-static-files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -127,5 +102,3 @@ ENV/
 
 # mypy
 .mypy_cache/
-*.sqlite3
-db.sqlite3
