@@ -297,7 +297,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		product_form = ImageForm(request)
 		context={}
 		context['button']='Create'
-		context['title']='Add New Product'
+		context['title']='Create New Product'
 		context['form']=product_form
 
 		return render(request, 'products/product-create.html', context)

@@ -11,7 +11,7 @@
    <div class="wish-div">
         <img class="card-img-top" src="{{ image.image.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
           <a class="like-center">{% include 'accounts/wish-list-update.html' with product=instance %}</a>
-          
+          {{ instance }}
           
 </div>
 
