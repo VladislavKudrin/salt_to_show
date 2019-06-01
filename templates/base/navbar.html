@@ -40,17 +40,19 @@
     
 <!--     <div class="d-flex w-100 justify-content-end order-3 collapsenav"> -->
       
-        <li class="nav-item {% if request.path == products_create_url %}active{% endif %}">
-          <a class="btn btn-dark mr-2" role="button" href="{{ products_create_url }}">Sell</a>          
-        </li>
-
-        <li class="nav-item ml-0 {% if request.path == product_list_url %}active{% endif %}" style="justify-content: flex-end;">
+         <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
         <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
         </li>
 
+        <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="justify-content: flex-end;">
+          <a class="btn btn-light" role="button" href="{{ products_create_url }}">Sell</a>          
+        </li>
+
+
+
         <li class="nav-item m-0 pb-0">
         <a class="nav-link m-0 pb-0" href="{{ wish_list }}">
-        <span class='navbar-wish-count'>{{ request.user.wishes_user.all.count  }}</span>
+        <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
         <i class="fas fa-heart fa-2x"></i>
         </a>
         </li>

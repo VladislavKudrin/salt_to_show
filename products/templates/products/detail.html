@@ -53,12 +53,25 @@
 		<div class='row'>
 			<div class='col-9'>
 
-			<h5><b>{{ object.title }}</b></h5>
+			<b>{{ object.title }}</b>
 			</div>
 		
-		<div class='col-3'>
-		{% include 'accounts/wish-list-update-detail.html' with product=object %}
+
+		<div class='col-3' style='display:flex; justify-content: flex-start'>
+			<div class='row' >
+				<div class='col' style='display:flex; align-items: flex-start' >
+						{% include 'accounts/wish-list-update-detail.html' with product=object %}
+				</div>
+			
+
+				<div class='col' style='display:flex; align-items: flex-end'>
+					<b class='ml-auto' style="align-items: flex-end;"> {{ object.price }} </b>
+				</div>
+			</div>
 		</div>
+
+
+
 
 		</div>
 
@@ -72,13 +85,40 @@
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
 			{% endif %}
 			
+			<div class='row'>
+				<div class='col-4 fluid pt-2 pb-2'>
+						
+           <div class="flip-card-2 mx-auto">
+          <div class=" flip-card-2-inner">
+            <div class="flip-card-2-front">
+                  <i class="far fa-check-circle fa-1x"></i> Authentic
+                  </div>
+                  <div class="flip-card-2-back">
+                  <div class="row">
+                  <div class="col my-auto mr-2 ml-2">
+                <small>Checked on {{ object.timestamp|date }}</small>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+        </div>
 
 
 
 
 
 
+
+
+
+
+
+				</div>
+			</div>
 			<br/>
+
+<div class='col'>
 			<b> Description </b>
 			<br/>
 			<br/>
@@ -88,9 +128,14 @@
 			</small>
 		</div>
 		</div>
+		</div>
 	</div>
 
 </div>
+
+
+
 </div>
 </div>
+
 {% endblock %}
