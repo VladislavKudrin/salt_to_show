@@ -39,7 +39,6 @@ class CategoryFilterView(ListView):
 		qs_gender={}
 		qs_size={}
 		qs_brand={}
-		print(request.POST)
 		for data in request.POST:
 			for brand in self.brands:
 				if str(brand) == data:
@@ -58,7 +57,7 @@ class CategoryFilterView(ListView):
 			for size in qs_size_unfiltred:
 				if str(size)==str(data): 
 					qs_size[size]=size
-		filtred_qs = Product.objects.by_category_gender(qs_category, qs_gender, qs_size, qs_brand)
+		filtred_qs = Product.objects.by_category_gender(qs_category, qs_gender, qs_size, qs_brand).order_by('-timestamp')
 		if filtred_qs is not None:
 			context['object_list'] = filtred_qs
 		else:
@@ -76,7 +75,7 @@ class CategoryFilterView(ListView):
 
 	def get(self, request, *args, **kwargs):
 		context={}
-		context['object_list']=Product.objects.all()
+		context['object_list']=Product.objects.all().order_by('-timestamp')
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
 		context['sizes']=self.sizes
@@ -86,8 +85,6 @@ class CategoryFilterView(ListView):
 
 
 
-
-
-
+		
 
 

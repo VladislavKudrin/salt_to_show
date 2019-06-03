@@ -60,6 +60,7 @@ class UploadedFile(models.Model):
     field_name = models.CharField(max_length=255, null=True, blank=True)
     file_id = models.CharField(max_length=40)
     form_id = models.CharField(max_length=40)
+    order_nr = models.CharField(null=True, blank=True)
 
     objects = UploadedFileManager()
 
@@ -91,14 +92,15 @@ class UploadedFile(models.Model):
         return UploadedFileWithId(
             self.uploaded_file,
             self.original_filename,
-            self.file_id
+            self.file_id,
+            self.form_id
         )
 
 
 class UploadedFileWithId(File):
-    def __init__(self, _file, name, file_id):
+    def __init__(self, _file, name, file_id, form_id):
         super(UploadedFileWithId, self).__init__(_file, name)
-
+        self.form_id = form_id
         self.file_id = file_id
 
     def get_values(self):

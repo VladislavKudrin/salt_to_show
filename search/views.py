@@ -11,9 +11,7 @@ class SearchProductView(ListView):
 		if request.is_ajax():
 			query=request.GET.get('q')
 			filtered_products = []
-			print("Ajax request YES")
 			all_ = Product.objects.all()
-			print(all_)
 			all_products= []
 			for x in all_:
 				all_products.append(x.title)
@@ -32,9 +30,14 @@ class SearchProductView(ListView):
 
 
 	def get_context_data(self,*args,**kwargs):
+		user = self.request.user
+		# all_wishes = user.wishes_user.all()
+		# wished_products = [wish.product for wish in all_wishes]
+		#print(wished_products)
 		context=super(SearchProductView,self).get_context_data(*args,**kwargs)
 		query=self.request.GET.get('q')
 		context['query']=self.request.GET.get('q')
+		# context['wishes']= wished_products
 		return context
 
 	def get_queryset(self, *args, **kwargs):
@@ -42,5 +45,5 @@ class SearchProductView(ListView):
 		method_dict=request.GET
 		query=method_dict.get('q', None)
 		if query is not None:
-			return Product.objects.search(query)
+			return Product.objects.search(query).order_by('-timestamp')
 		return Product.objects.featured()

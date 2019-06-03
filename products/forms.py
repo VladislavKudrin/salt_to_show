@@ -3,16 +3,17 @@ from django import forms
 from django.contrib import messages
 
 from django_file_form.forms import MultipleUploadedFileField, FileFormMixin
+from django_file_form.models import UploadedFile
 
-
-from .models import Product, Image
+from .models import Product, Image, ImageOrderUtil
 from categories.models import Size, Brand
 
+from ecommerce.utils import random_string_generator
 
 
 
 class ProductCreateForm(FileFormMixin, forms.ModelForm):
-	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill', "placeholder":'Enter a Brand'}))
+	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Enter a Brand'}))
 	class Meta:
 		model = Product
 		fields = [
@@ -24,9 +25,10 @@ class ProductCreateForm(FileFormMixin, forms.ModelForm):
 		'category',
 		'size',
 			]
-	def __init__(self, request, *args, **kwargs):
+	def __init__(self, request, *args, **kwargs):#
+		super(ProductCreateForm, self).__init__(*args, **kwargs)
 		self.request = request
-		super(ProductCreateForm, self).__init__(*args, **kwargs)	
+	
 
 	def clean_category(self):
 		request = self.request
@@ -57,8 +59,8 @@ class ImageForm(ProductCreateForm):
 			img_ = str(img)
 			filename, ext = img_.rsplit('.', 1)
 			if ext != 'jpg': 
-				messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
-				raise forms.ValidationError('Not')
+				# messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
+				raise forms.ValidationError('Not a valid extension')
 		return image
 
 	def save(self, commit=True):
@@ -68,6 +70,7 @@ class ImageForm(ProductCreateForm):
 		if commit:
 			product.save()
 		for idx, file in enumerate(self.cleaned_data['image']):
+			print(file.form_id)
 			print(file)
 			Image.objects.create(
 				product=product,
@@ -75,13 +78,15 @@ class ImageForm(ProductCreateForm):
 				slug=product.slug,
 				image_order=idx+1
 								)
+
+
 		self.delete_temporary_files()
 		return product
 		
 
 
 class ProductUpdateForm(ProductCreateForm):
-	def __init__(self, request, slug, *args, **kwargs):
+	def __init__(self, request, slug=None, *args, **kwargs):
 		super(ProductUpdateForm, self).__init__(request, *args, **kwargs)
 		product = Product.objects.get(slug=slug)
 		category = product.category

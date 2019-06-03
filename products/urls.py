@@ -14,6 +14,7 @@ from .views import (
     wishlistupdate,
     handle_upload,
     image_update_view,
+    image_create_order
 
     )
 from categories.views import CategoryFilterView
@@ -22,6 +23,7 @@ from categories.views import CategoryFilterView
 urlpatterns = [
     url(r'^$', CategoryFilterView.as_view(), name='list'),
     url(r'^handle_image_sort$', image_update_view, name='handle_image_sort'),
+    url(r'^handle_image_create_sort$', image_create_order, name='handle_image_create_sort'),
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
     url(r'^list/$', AccountProductListView.as_view(), name='user-list'),
     url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),

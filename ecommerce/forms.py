@@ -5,19 +5,20 @@ from django import forms
 
 
 class ContactForm(forms.Form):
-	fullname = forms.CharField(widget=forms.TextInput(attrs={
-		"class":"form-control",
-		"placeholder":"Your full name"
-		}))
-	email = forms.EmailField(widget=forms.EmailInput(attrs={
+	email = forms.EmailField( widget=forms.EmailInput(attrs={
 		'class':'form-control',
 		'placeholder':'Your Email'
+
+
 		}))
 	content = forms.CharField(widget=forms.Textarea(attrs={
 		'class':'form-control',
 		'placeholder':'Your massage'
 		}))
-	
+	# def __init__(self, request, *args, **kwargs):#
+	# 	super(ContactForm, self).__init__(*args, **kwargs)
+	# 	self.request = request
+	# 	self.fields['email'] = request
 
 	# def clean_email(self):
 	# 	email = self.cleaned_data.get('email')

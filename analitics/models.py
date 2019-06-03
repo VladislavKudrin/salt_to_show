@@ -60,12 +60,19 @@ def object_viewed_reciever(sender, instance, request, *args, **kwargs):
 	user = None
 	if request.user.is_authenticated():
 		user = request.user
-	new_view_obj = ObjectViewed.objects.create(
+	filtered_queryset = ObjectViewed.objects.filter(
 			user = user,
 			content_type = c_type,
 			object_id = instance.id,
 			ip_adress = get_client_ip(request),
-		)
+			)
+	if not filtered_queryset.exists():
+		new_view_obj = ObjectViewed.objects.create(
+				user = user,
+				content_type = c_type,
+				object_id = instance.id,
+				ip_adress = get_client_ip(request),
+			)
 
 
 object_viewed_signal.connect(object_viewed_reciever)
