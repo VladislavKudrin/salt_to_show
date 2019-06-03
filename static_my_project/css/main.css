@@ -1,4 +1,6 @@
-
+.dual-collapse2 {
+  display: inline-block;
+}
 
 .custom-control-label:before{
     background-color:white;
@@ -454,6 +456,11 @@ ul {
 	list-style: none;
 }
 
+/*#sidebar {
+  position: absolute;
+  width: 100%;
+}
+*/
 html{
   position: relative; 
   min-height: 100%;
@@ -615,6 +622,11 @@ border: 2px red solid;
 .alert alert-block alert-danger{
     color: black;
 }
+
+
+
+
+
 
 
 

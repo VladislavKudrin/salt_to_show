@@ -6,10 +6,10 @@
 <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
 
 {% block content %}
-<div class="container" style="width:1500px; padding:0px;">
+<div class="container-fluid">
 <div class="container-fluid container-fluid-product">
 <div class='row'>
-	<div class='col-12 col-md-8 align-top' style="max-height: 800px">
+	<div class='col-xs-12 col-md-8 align-top' style="max-height: 800px">
 
 			{% if object.images.all %}
 
@@ -48,15 +48,15 @@
 	</div>
 
 	
-	<div class='col-12 col-md-4'>
+	<div class='col-xs-12 col-md-4'>
 
 		<div class='row'>
-			<div class='col-9'>
+			<div class='col-xs-12 col-md-9'>
 
 			<h5><b>{{ object.title }}</b></h5>
 			</div>
 		
-		<div class='col-3'>
+		<div class='col-xs-12 col-md-3'>
 		{% include 'accounts/wish-list-update-detail.html' with product=object %}
 		</div>
 
