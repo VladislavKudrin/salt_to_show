@@ -198,7 +198,7 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
-		context['title'] = 'Change Your Details'
+		context['title'] = 'Change your details'
 		context['update_in_action'] = True
 		return context
 

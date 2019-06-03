@@ -43,9 +43,8 @@ def contact_page(request):
 	contact_form=ContactForm(request.POST or None)
 	context = {
 		'user_email':request.user.email,
-		'title':'Contact Page',
+		'title':'Contact page',
 		'form':contact_form
-
 	}
 
 	if contact_form.is_valid():

@@ -7,18 +7,18 @@
     <button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-3x"></i></button>
 </div>
 
-<div class="container" style="width:1500px; padding:0px;">
+<div class="container-fluid">
 
 <div class="row">
   
-  <div class='col-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+  <div class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
     {% include "sidebar.html" %}
   </div>
 
-<div class="col-9 mx-auto">
+<div class="col-xs-12 col-md-7 mx-auto">
 
 {% if title %}
-<h1 class='my-3'>{{ title }}</h1>
+<h2>{{ title }}</h2>
 {% endif %}
 
 <form action="" method="POST" role="form" enctype='multipart/form-data'>
