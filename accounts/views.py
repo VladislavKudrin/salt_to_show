@@ -21,8 +21,6 @@ from .signals import user_logged_in_signal
 from products.models import Product
 
 
-from django_private_chat.models import Dialog
-from django_private_chat.views import DialogListView
 
 
 
@@ -299,15 +297,7 @@ def wishlistupdate(request):
 
 
 
-def chat_list_view(request):
-	template_name = 'accounts/chat-list.html'
-	user = request.user
-	dialogs = Dialog.objects.filter(owner=user)
-	context = {
 
-			'object_list':dialogs
-			}
-	return render(request, template_name, context)
 
 
 

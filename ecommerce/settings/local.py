@@ -53,7 +53,7 @@ MANAGERS = (
 ADMINS = MANAGERS
 
 CHAT_WS_SERVER_HOST = 'localhost'
-CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PORT = 50935
 CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
@@ -72,13 +72,14 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'django_private_chat',
+    # 'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',
     'django_file_form.ajaxuploader',
     'django_bootstrap3_form',
     'django_pony_forms',  
+    'channels',
 
     #our apps
     'addresses',
@@ -208,8 +209,8 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'ecommerce.wsgi.application'
-
+# WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

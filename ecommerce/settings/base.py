@@ -71,7 +71,7 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'django_private_chat',
+    # 'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',

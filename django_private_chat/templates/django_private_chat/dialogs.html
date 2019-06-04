@@ -82,6 +82,9 @@
     {{ block.super }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollmonitor/1.2.0/scrollMonitor.js"
             integrity="sha256-BseZlDlA+yL4qu+Voi82iFa5aaifralQEXIjOjaXgeo=" crossorigin="anonymous"></script>
+    
+
+
     <script>
         var base_ws_server_path = "{{ ws_server_path }}";
         $(document).ready(function () {
@@ -187,7 +190,13 @@
 
             function setupChatWebSocket() {
                 var opponent_username = getOpponnentUsername();
-                websocket = new WebSocket(base_ws_server_path + '{{ request.session.session_key }}/' + opponent_username);
+                var loc = window.location
+                var  wsStart = 'ws://' + window.location.host + window.location.pathname
+                if (loc.protocol == 'https:'){
+                    wsStart='wss://'
+                }
+                var endpoint = wsStart + loc.host + loc.pathname
+                var websocket = new WebSocket(endpoint);
 
                 websocket.onopen = function (event) {
                     var opponent_username = getOpponnentUsername();
