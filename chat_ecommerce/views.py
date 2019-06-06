@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404, HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
@@ -11,16 +11,16 @@ from .models import Thread, ChatMessage
 
 
 class InboxView(LoginRequiredMixin, ListView):
-    template_name = 'chat/inbox.html'
+    template_name = 'chat_ecommerce/inbox.html'
     def get_queryset(self):
         return Thread.objects.by_user(self.request.user)
 
 
 class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
-    template_name = 'chat/thread.html'
+    template_name = 'chat_ecommerce/thread.html'
     form_class = ComposeForm
-    success_url = './'
-
+    def get_success_url(self):
+        return self.request.path
     def get_queryset(self):
         return Thread.objects.by_user(self.request.user)
 
@@ -52,5 +52,3 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         message = form.cleaned_data.get("message")
         ChatMessage.objects.create(user=user, thread=thread, message=message)
         return super().form_valid(form)
-
-

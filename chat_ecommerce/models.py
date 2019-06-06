@@ -1,9 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
-from django.db.models.signals import post_save
-
-from .utils import broadcast_msg_to_chat, trigger_welcome_message
+from django.urls import reverse
 
 class ThreadManager(models.Manager):
     def by_user(self, user):
@@ -43,30 +41,8 @@ class Thread(models.Model):
     timestamp    = models.DateTimeField(auto_now_add=True)
     
     objects      = ThreadManager()
-
-    @property
-    def room_group_name(self):
-        return f'chat_{self.id}'
-
-    def broadcast(self, msg=None):
-        if msg is not None:
-            broadcast_msg_to_chat(msg, group_name=self.room_group_name, user='admin')
-            return True
-        return False
-
-def new_user_receiver(sender, instance, created, *args ,**kargs):
-    if created:
-        # UserKlass = instance.__class__
-        # my_admin_user = UserKlass.objects.get(id=1)
-        # obj, created = Thread.objects.get_or_new(my_admin_user, instance.username)
-        # obj.broadcast(msg='Hello and welcome')
-
-        sender_id = 1 # admin user, main sender
-        receiver_id = instance.id
-        trigger_welcome_message(sender_id, receiver_id)
-
-post_save.connect(new_user_receiver, sender=settings.AUTH_USER_MODEL)
-
+    def get_absolute_url(self):
+        return reverse('chat:chat-thread', kwargs={"username":self.second.username})
 
 class ChatMessage(models.Model):
     thread      = models.ForeignKey(Thread, null=True, blank=True, on_delete=models.SET_NULL)

@@ -267,18 +267,26 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')], # for heroku in keys vars
+        },
+    },
+}
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+# STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
+# MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
 # from ecommerce.aws.conf import *

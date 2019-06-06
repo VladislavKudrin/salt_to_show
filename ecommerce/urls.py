@@ -44,10 +44,11 @@ from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 
 urlpatterns = [
-    url(r'^upload/', include('django_file_form.urls')),
     url(r'^$', home_page, name = 'home'),
+    url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
+    url(r'^upload/', include('django_file_form.urls')),
     url(r'^login/$', RegisterLoginView.as_view(), name='login'),
-    url(r'social-auth/', include('social_django.urls', namespace="social")),
+    url(r'^social-auth/', include('social_django.urls', namespace="social")),
     url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
     url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
@@ -79,7 +80,6 @@ urlpatterns = [
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
     url(r'^test/', include("test_ecommerce.urls",namespace='test')),
-    url(r'messages/', include('chat_ecommerce.urls')),
 
 
 
