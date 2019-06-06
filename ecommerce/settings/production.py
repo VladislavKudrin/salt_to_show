@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['envision-outfit.herokuapp.com']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
@@ -51,9 +51,7 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-CHAT_WS_SERVER_HOST = 'localhost'
-CHAT_WS_SERVER_PORT = 5002
-CHAT_WS_SERVER_PROTOCOL = 'ws'
+
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_AGE = 31536000 #1 year
@@ -210,8 +208,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ecommerce.wsgi.application'
-
+# WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
