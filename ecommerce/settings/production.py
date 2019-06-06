@@ -292,6 +292,12 @@ from ecommerce.aws.conf import *
 
 
 
+CACHES = {
+    "default": {
+         "BACKEND": "redis_cache.RedisCache",
+         "LOCATION": os.environ.get('REDIS_URL'),
+    }
+}
 
 
 #Let's Encrypt ssl/tls https
