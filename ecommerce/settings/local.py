@@ -262,14 +262,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')], # for heroku in keys vars
         },
+    #"symmetric_encryption_keys": [SECRET_KEY],
     },
 }
+
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),

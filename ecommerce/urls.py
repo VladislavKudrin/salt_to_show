@@ -45,7 +45,7 @@ from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 
 urlpatterns = [
     url(r'^$', home_page, name = 'home'),
-    # url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
+    url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
     url(r'^upload/', include('django_file_form.urls')),
     url(r'^login/$', RegisterLoginView.as_view(), name='login'),
     url(r'^social-auth/', include('social_django.urls', namespace="social")),

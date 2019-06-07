@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    # 'chat_ecommerce',
+    'chat_ecommerce',
     # 'django_private_chat',
     'sass_processor',
     'rest_framework',
@@ -208,8 +208,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ecommerce.wsgi.application'
-#ASGI_APPLICATION = 'ecommerce.routing.application'
+#WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -271,6 +271,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')], # for heroku in keys vars
         },
+    #"symmetric_encryption_keys": [SECRET_KEY],
     },
 }
 
@@ -292,12 +293,12 @@ from ecommerce.aws.conf import *
 
 
 
-CACHES = {
-    "default": {
-         "BACKEND": "redis_cache.RedisCache",
-         "LOCATION": os.environ.get('REDIS_URL'),
-    }
-}
+# CACHES = {
+#     "default": {
+#          "BACKEND": "redis_cache.RedisCache",
+#          "LOCATION": os.environ.get('REDIS_URL'),
+#     }
+# }
 
 
 #Let's Encrypt ssl/tls https
