@@ -208,8 +208,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'ecommerce.wsgi.application'
-ASGI_APPLICATION = 'ecommerce.routing.application'
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
+#ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -279,7 +279,7 @@ STATICFILES_DIRS = (
 )
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 MEDIA_URL = "/media/"
