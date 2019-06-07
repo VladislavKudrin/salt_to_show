@@ -57,7 +57,10 @@ class ChatConsumer(AsyncConsumer):
 			'text':event['text']
 			})
 	async def websocket_disconnect(self, event):
-		# when the socket connects
+		await self.channel_layer.group_discard(
+				self.room_group_name, 
+				self.channel_name
+				)
 		print(event)
 
 	@database_sync_to_async
