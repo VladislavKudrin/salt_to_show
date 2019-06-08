@@ -10,14 +10,6 @@ from products.models import Product
 
 class CategoryFilterView(ListView):
 	template_name = "products/list.html"
-	sizes = [
-		Size.objects.filter(size_for='Footwear'),
-		Size.objects.filter(size_for='Outwear'),
-		Size.objects.filter(size_for='Tops'),
-		Size.objects.filter(size_for='Bottoms'),
-		Size.objects.filter(size_for='Accessories')
-			]
-	brands = Brand.objects.all()
 	fields_category = [
 					'footwear',
 					'outwear',
@@ -33,6 +25,14 @@ class CategoryFilterView(ListView):
 	
 
 	def post(self, request, *args, **kwargs):
+		sizes = [
+		Size.objects.filter(size_for='Footwear'),
+		Size.objects.filter(size_for='Outwear'),
+		Size.objects.filter(size_for='Tops'),
+		Size.objects.filter(size_for='Bottoms'),
+		Size.objects.filter(size_for='Accessories')
+			]
+		brands = Brand.objects.all()
 		request = self.request
 		context={}
 		qs_category={}
@@ -40,7 +40,7 @@ class CategoryFilterView(ListView):
 		qs_size={}
 		qs_brand={}
 		for data in request.POST:
-			for brand in self.brands:
+			for brand in brands:
 				if str(brand) == data:
 					qs_brand[brand]=brand
 			for field in self.fields_gender:
@@ -68,18 +68,26 @@ class CategoryFilterView(ListView):
 		context['filter_category'] = qs_category
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
-		context['sizes']=self.sizes
-		context['brands']=self.brands
+		context['sizes']=sizes
+		context['brands']=brands
 		return render(self.request, "products/list.html", context)
 
 
 	def get(self, request, *args, **kwargs):
+		sizes = [
+		Size.objects.filter(size_for='Footwear'),
+		Size.objects.filter(size_for='Outwear'),
+		Size.objects.filter(size_for='Tops'),
+		Size.objects.filter(size_for='Bottoms'),
+		Size.objects.filter(size_for='Accessories')
+			]
+		brands = Brand.objects.all()
 		context={}
 		context['object_list']=Product.objects.all().order_by('-timestamp')
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
-		context['sizes']=self.sizes
-		context['brands']=self.brands
+		context['sizes']=sizes
+		context['brands']=brands
 		return render(request, "products/list.html", context)
 
 

@@ -71,7 +71,8 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'django_private_chat',
+    'chat_ecommerce',
+    # 'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',
@@ -256,6 +257,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),

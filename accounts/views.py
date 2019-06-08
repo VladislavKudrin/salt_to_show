@@ -1,8 +1,7 @@
 from django.db.models import Q
-from django.http import Http404
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -14,14 +13,14 @@ from django.views.generic import CreateView, FormView, DetailView, View, UpdateV
 from django.views.generic.edit import FormMixin
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
-from django.http import HttpResponseRedirect
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User, Wishlist
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 from products.models import Product
-from django.http import JsonResponse
+
+
 
 
 
@@ -294,8 +293,6 @@ def wishlistupdate(request):
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
-
-
 
 
 

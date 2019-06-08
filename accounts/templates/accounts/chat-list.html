@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}
+{% if object_list %}
+	{% for dialog in object_list %}
+	{{ dialog }}
+	{% endfor %}
+{% else %}
+	
+
+{% endif %}
+
+
+
+{% endblock %}

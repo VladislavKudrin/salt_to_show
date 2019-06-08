@@ -53,7 +53,7 @@ MANAGERS = (
 ADMINS = MANAGERS
 
 CHAT_WS_SERVER_HOST = 'localhost'
-CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PORT = 50935
 CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
@@ -72,13 +72,15 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'django_private_chat',
+    'chat_ecommerce',
+    # 'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',
     'django_file_form.ajaxuploader',
     'django_bootstrap3_form',
     'django_pony_forms',  
+    'channels',
 
     #our apps
     'addresses',
@@ -154,6 +156,7 @@ AUTHENTICATION_BACKENDS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -208,7 +211,7 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
-
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -259,12 +262,25 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')], # for heroku in keys vars
+        },
+    #"symmetric_encryption_keys": [SECRET_KEY],
+    },
+}
+
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
-
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")

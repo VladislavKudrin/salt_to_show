@@ -21,7 +21,7 @@
                     {% if active_dialog.owner.profile_foto %}
                     <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{{ active_dialog.owner.profile_foto.url }}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
                     {% else %}
-                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" " class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
+                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
                     {% endif %}
                 </div>
 
@@ -42,8 +42,8 @@
                                 {{ opponent_username }}
 
                     </div>
-                    <div class="text-success ml-3" id="online-status"><i class="fas fa-circle"></i></div>
-                    <div class="text-danger ml-3" id="offline-status"><i class="fas fa-circle"></i></div> 
+                    <div class="text-success ml-3" id="online-status" style='display: none'><i class="fas fa-circle"></i></div>
+                    <div class="text-danger ml-3" id="offline-status" style='display: none'><i class="fas fa-circle"></i></div> 
                 </div>
             </div>
 
@@ -59,11 +59,11 @@
                                         <td id="conversations" class='user-table position-static' style="padding: 0; margin: 0;">
                                         {% if dialog.owner == request.user %}
                                             {% with dialog.opponent.username as username %}
-                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans "" %} {{ username }}</a>
+                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans username %}</a>
                                             {% endwith %}
                                         {% else %}
                                                 {% with dialog.owner.username as username %}
-                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans "" %} {{ username }}</a>
+                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans username %}</a>
                                                 {% endwith %}
                                         {% endif %}
                                         </td>
@@ -234,13 +234,13 @@
             }
 
             function gone_online() {
-                $("#offline-status").hide();
-                $("#online-status").show();
+                $("#offline-status").css('display', 'none');
+                $("#online-status").css('display', 'block');
             }
 
             function gone_offline() {
-                $("#online-status").hide();
-                $("#offline-status").show();
+                $("#online-status").css('display', 'none');
+                $("#offline-status").css('display', 'block');
             }
 
             function flash_user_button(username) {

@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['envision-outfit.herokuapp.com']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
@@ -51,9 +51,7 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-CHAT_WS_SERVER_HOST = 'localhost'
-CHAT_WS_SERVER_PORT = 5002
-CHAT_WS_SERVER_PROTOCOL = 'ws'
+
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_AGE = 31536000 #1 year
@@ -71,13 +69,15 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'django_private_chat',
+    'chat_ecommerce',
+    # 'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',
     'django_file_form.ajaxuploader',
     'django_bootstrap3_form',
-    'django_pony_forms',  
+    'django_pony_forms',
+      
 
     #our apps
     'addresses',
@@ -208,8 +208,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ecommerce.wsgi.application'
-
+#WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -224,7 +224,7 @@ DATABASES = {
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
-DATABASES['default']['CONN_MAX_AGE'] = 500
+
 
 
 # Password validation
@@ -265,25 +265,40 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')], # for heroku in keys vars
+        },
+    #"symmetric_encryption_keys": [SECRET_KEY],
+    },
+}
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),
 )
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-#STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
 
 MEDIA_URL = "/media/"
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-# from ecommerce.aws.conf import *
+from ecommerce.aws.conf import *
 
 
 
 
+# CACHES = {
+#     "default": {
+#          "BACKEND": "redis_cache.RedisCache",
+#          "LOCATION": os.environ.get('REDIS_URL'),
+#     }
+# }
 
 
 #Let's Encrypt ssl/tls https

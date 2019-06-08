@@ -42,13 +42,13 @@ from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, w
 from .views import home_page, about_page, contact_page, test_page
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
-from django_private_chat import urls as django_private_chat_urls
+
 urlpatterns = [
-    url(r'^', include('django_private_chat.urls')),
-    url(r'^upload/', include('django_file_form.urls')),
     url(r'^$', home_page, name = 'home'),
+    url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
+    url(r'^upload/', include('django_file_form.urls')),
     url(r'^login/$', RegisterLoginView.as_view(), name='login'),
-    url(r'social-auth/', include('social_django.urls', namespace="social")),
+    url(r'^social-auth/', include('social_django.urls', namespace="social")),
     url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
     url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
@@ -80,6 +80,7 @@ urlpatterns = [
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
     url(r'^test/', include("test_ecommerce.urls",namespace='test')),
+
 
 
 
