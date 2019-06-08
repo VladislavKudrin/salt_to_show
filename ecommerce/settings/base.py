@@ -35,11 +35,11 @@ SECRET_KEY = '3tb^6c3_5o-ofobpuoyb9)2o8649cv(!!b#*^=paslu(w-vl4e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
-EMAIL_HOST_PASSWORD = 'Vladislav1995'
+EMAIL_HOST_PASSWORD = 'Dkflbckfd1995'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommerce.envision@gmail.com>'
@@ -51,9 +51,6 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-CHAT_WS_SERVER_HOST = 'localhost'
-CHAT_WS_SERVER_PORT = 5002
-CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_AGE = 31536000 #1 year
@@ -71,8 +68,6 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'chat_ecommerce',
-    # 'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',
@@ -81,6 +76,7 @@ INSTALLED_APPS = [
     'django_pony_forms',  
 
     #our apps
+    'chat_ecommerce',
     'addresses',
     'products',
     'search',
