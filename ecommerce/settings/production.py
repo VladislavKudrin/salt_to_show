@@ -69,8 +69,6 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'chat_ecommerce',
-    # 'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',
@@ -80,6 +78,7 @@ INSTALLED_APPS = [
       
 
     #our apps
+    'chat_ecommerce',
     'addresses',
     'products',
     'search',
@@ -288,7 +287,7 @@ MEDIA_URL = "/media/"
 # MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-# from ecommerce.aws.conf import *
+from ecommerce.aws.conf import *
 
 
 
