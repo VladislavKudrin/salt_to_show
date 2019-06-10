@@ -1,21 +1,92 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Thread for {% if user != object.first %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
-<ul id='chat-items'>
-{% for chat in object.chatmessage_set.all %}
 
-<li>{{ chat.message }} via {{ chat.user }}</li>
+<head>
+<style type="text/css">
 
-{% endfor %}
-</ul>
 
-<form id='websocket-form' method='POST'> {% csrf_token %}
-{{form.as_p }}
-<input type='submit' class='btn btn-primary'/>
-</form>
+.my-custom-scrollbar {
+  position: absolute;
+  padding-right: 20px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
+
+/*#table-scroll .my-custom-scrollbar {
+  position: relative;
+  width: 250px;
+  height: 90%;
+  border: 0;  
+}*/
+
+#chat-items{
+	position: relative;
+	overflow:scroll;
+	height: 370px;
+}
+
+#dialogs{
+	height: 520px;
+	overflow:scroll;
+	margin-bottom: 0;
+	position: relative;
+}
+
+#dialog{
+	height:100px;
+}
+
+
+</style>
+</head>
+
+
+<div class='container-fluid m-0 p-0'>
+	<div class='row'>
+
+		<div class='col-3'>
+			<ul id='dialogs' class='my-custom-scrollbar'>
+				{% for obj in chats %}
+					{% if request.user != obj.first %}
+						<li id='dialog'><a href="{{ obj.get_absolute_url_first }}">{{ obj.first }}</a></li>
+					{% else %}
+						<li id='dialog'><a href="{{ obj.get_absolute_url_second }}">{{ obj.second }}</a></li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+
+		<div class='col-9'>
+<!-- 			<h3>Chat with {% if user != object.first %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
+ -->		<ul id='chat-items' class='my-custom-scrollbar' >
+				{% for chat in object.chatmessage_set.all %}
+					<li>
+						<p class="{% if chat.user == request.user %}pull-right{% else %}pull-left{% endif %}">
+							{{ chat.message }} via {{ chat.user.username }}
+						</p>
+					</li>
+				{% endfor %}
+			</ul>
+
+			<form id='websocket-form' method='POST'> {% csrf_token %}
+			{{form.as_p }}
+			<input type='submit' class='btn btn-dark'/>
+			</form>
+		</div>
+
+	</div>
+</div>
 
 {% endblock %}
+
+
+
+
+
+
+
+
 
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
@@ -36,8 +107,25 @@ var socket = new ReconnectingWebSocket(endpoint)
 socket.onmessage = function(e) {
 	console.log('message', e)
 	var chatDataMsg = JSON.parse(e.data)
-	chatHolder.append("<li>" + chatDataMsg.message + " via " + chatDataMsg.username + "</li>")
-}//onmessage
+	var username = chatDataMsg.username
+	var opponent_username = chatDataMsg.opponent_username
+	// var request_user = chatDataMsg.request_user
+	var req = chatDataMsg.req
+	console.log(username)
+	console.log(opponent_username)
+	console.log(req)
+	// console.log(request_user)
+	if (username === req){
+		console.log('pulling right')
+	chatHolder.append("<li>" + "<p class='pull-right'>"+ chatDataMsg.message + " via " + chatDataMsg.username + "</p>" + "</li>")	
+	}
+	else{
+		console.log('pulling left')
+		chatHolder.append("<li>" + "<p class='pull-left'>"+ chatDataMsg.message + " via " + chatDataMsg.username + "</p>" + "</li>")
+	}
+  	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
+}
+	
 
 
 socket.onopen = function(e) {
@@ -62,6 +150,26 @@ socket.onerror = function(e) {
 socket.onclose = function(e) {
 	console.log('close', e)
 }//onclose
+
+
+
+
+//Scrolling
+const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
+const ps = new PerfectScrollbar('.my-custom-scrollbar', {
+    wheelSpeed: 1,
+    wheelPropagation: false,
+    swipeEasing: true,
+    suppressScrollX: true,
+    // minScrollbarLength: 10,
+    // maxScrollbarLength: 10
+
+});
+
+$('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
+// var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
+
 
 
 </script>
