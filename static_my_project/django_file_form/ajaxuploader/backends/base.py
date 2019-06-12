@@ -20,6 +20,7 @@ class AbstractUploadBackend(object):
         a dict to be added to the render / json context"""
 
     def upload(self, uploaded, *args, **kwargs):
+        print('FLFLFLFLFL')
         try:
             for chunk in uploaded.chunks():
                 self.upload_chunk(chunk, *args, **kwargs)

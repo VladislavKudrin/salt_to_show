@@ -11,9 +11,21 @@ class LocalUploadBackend(AbstractUploadBackend):
 
     def setup(self, filename, *args, **kwargs):
         self._path = self.get_path(filename, *args, **kwargs)
+        print(self._path)
+        self._path = 'https:' + self._path
+        print(self._path)
         try:
-            os.makedirs(os.path.realpath(os.path.dirname(self._path)))
-        except OSError:
+            # os.makedirs(os.path.realpath(os.path.dirname(self._path)))
+            os.makedirs(os.path.dirname(self._path))
+            print('I Tried')
+            print('ffdfdf')
+            # pass
+        except OSError as e:
+            print(e.errno)
+            print(e.filename)
+            print(e.strerror)
+            print('EXCEPTION NAHUI')
+            print('ffffff')
             pass
         self._dest = BufferedWriter(FileIO(self._path, "w"))
 
