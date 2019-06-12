@@ -58,6 +58,17 @@ class CategoryFilterView(ListView):
 				if str(size)==str(data): 
 					qs_size[size]=size
 		filtred_qs = Product.objects.by_category_gender(qs_category, qs_gender, qs_size, qs_brand).order_by('-timestamp')
+		sort_qs = request.POST.get('qs_for_sort')
+		if sort_qs is not None:
+			lookups_products=(Q(slug__iexact='nothing'))
+			sort_qs_list = request.POST.getlist('qs_for_sort_slug')
+			for i in sort_qs_list:
+				lookups_products=lookups_products|(Q(slug__iexact=i))
+			relevant = request.POST.get('relevant')
+			high_low = request.POST.get('high_low')
+			low_high = request.POST.get('low_high')
+			sort = relevant or high_low or low_high
+			filtred_qs = Product.objects.filter(lookups_products).order_by(sort)
 		if filtred_qs is not None:
 			context['object_list'] = filtred_qs
 		else:

@@ -79,13 +79,11 @@
 			<div class='row contact-padding'>
 				<br/>
 				<div class='col-12'>
-			
 			{% if request.user.is_authenticated and request.user == object.user %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 			{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
+				{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
 			{% endif %}
-			
 			<div class='row'>
 				<div class='col-4 fluid pt-2 pb-2'>
 						

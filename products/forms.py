@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django import forms
 from django.contrib import messages
-
+from PIL import Image
 from django_file_form.forms import MultipleUploadedFileField, FileFormMixin
 from django_file_form.models import UploadedFile
 
@@ -55,10 +55,13 @@ class ImageForm(ProductCreateForm):
 	def clean_image(self):
 		data = self.cleaned_data
 		image = data.get('image')
+		if len(image)>8:
+			raise forms.ValidationError("Too many files, should be 8")
 		for img in image:
 			img_ = str(img)
 			filename, ext = img_.rsplit('.', 1)
-			if ext != 'jpg': 
+			allowed_ext = {'jpg', 'JPG', 'JPEG', 'jpeg'}
+			if ext not in allowed_ext: 
 				# messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
 				raise forms.ValidationError('Not a valid extension')
 		return image
@@ -78,8 +81,6 @@ class ImageForm(ProductCreateForm):
 				slug=product.slug,
 				image_order=idx+1
 								)
-
-
 		self.delete_temporary_files()
 		return product
 		

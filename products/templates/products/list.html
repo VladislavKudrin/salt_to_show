@@ -3,7 +3,38 @@
 {% block content %}
 
 <div class='col-12 text-right p-0'>
-		<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h fa-2x"></i></button>
+		<div class="btn-group dropleft customDropRight">
+			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fas fa-sort fa-2x"></i>
+			</button>
+			<div class="dropdown-menu customDropRightMenu" aria-labelledby="dropdownMenuButton">
+				<form class='form' method='POST' action="">{% csrf_token %}
+					{% for item in object_list %}
+						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
+					{% endfor %}
+					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
+					<input type="hidden" name="relevant" value='-timestamp'> 
+					<button type='submit' class='btn'>Relevant</button>
+				</form>
+				<form class='form' method='POST' action="">{% csrf_token %}
+					{% for item in object_list %}
+						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
+					{% endfor %}
+					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
+					<input type="hidden" name="high_low" value='-price'>
+					<button type='submit' class='btn'>Price high to low</button>
+				</form>
+				<form class='form' method='POST' action="">{% csrf_token %}
+					{% for item in object_list %}
+						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
+					{% endfor %}
+					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
+					<input type="hidden" name="low_high" value='price'>
+					<button type='submit' class='btn'>Price low to high</button>
+				</form>
+			</div>
+			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h fa-2x"></i></button>
+		</div>
 </div>
 
 <div class="container-fluid ajax-search">

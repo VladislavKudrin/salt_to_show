@@ -257,10 +257,13 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			if form.is_valid():
 				return self.form_valid(form)
 			else:
-				errors = form.errors
-				# HttpResponse(json.dumps(errors), status=404)
-				
-				return JsonResponse(form.errors.as_json(), status=404)
+				return self.form_invalid(form)
+				# errors = form.errors
+				# # HttpResponse(json.dumps(errors), status=404)
+				# response = JsonResponse({"error": "there was an error"})
+				# response.status_code = 403
+				# return(response)
+				# return JsonResponse(form.errors.as_json(), status=400)
 	
 	def get(self, request, *args, **kwargs):
 		brands = Brand.objects.all()
@@ -305,6 +308,11 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		return redirect(url)
 
 	def form_invalid(self, form):
+		if self.request.is_ajax():
+			# json_data={
+			# 	'errors':json.dumps(form.errors)
+			# 	}
+			return JsonResponse({'error':form.errors})
 		context={
 			'form': form,
 			'button': 'Create',

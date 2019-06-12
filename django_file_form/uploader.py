@@ -25,7 +25,7 @@ class FileFormUploadBackend(LocalUploadBackend):
             form_id=request.POST['form_id'],
             original_filename=original_filename,
         )
-        print(request.POST)
+        
 
         field_name = request.POST.get('field_name')
         if field_name:
