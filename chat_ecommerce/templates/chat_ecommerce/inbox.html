@@ -1,8 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% for obj in object_list %}
-<a href="{{ obj.get_absolute_url }}">{{ obj }}</a>
-{% endfor %}
+
+
+<div class='container-fluid m-0 p-0'>
+	<div class='row'>
+
+		<div class='col-4'>
+			<ul id='inbox-items'>
+				{% for obj in object_list %}
+					{% if request.user != obj.first %}
+						<li><a href="{{ obj.get_absolute_url_first }}">{{ obj.first }}</a></li>
+					{% else %}
+						<li><a href="{{ obj.get_absolute_url_second }}">{{ obj.second }}</a></li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+
+		<div class='col-8'>
+
+		</div>
+		
+	</div>
+</div>
 
 {% endblock %}
+
+
+ 

@@ -13,6 +13,9 @@ class ThreadManager(models.Manager):
     def get_or_new(self, user, other_username): # get_or_create
         username = user.username
         if username == other_username:
+            # print(other_username)
+            # print('hui')
+            # print(username)
             return None
         qlookup1 = Q(first__username=username) & Q(second__username=other_username)
         qlookup2 = Q(first__username=other_username) & Q(second__username=username)
@@ -41,8 +44,12 @@ class Thread(models.Model):
     timestamp    = models.DateTimeField(auto_now_add=True)
     
     objects      = ThreadManager()
-    def get_absolute_url(self):
+    
+    def get_absolute_url_first(self):
+        return reverse('chat:chat-thread', kwargs={"username":self.first.username})
+    def get_absolute_url_second(self):
         return reverse('chat:chat-thread', kwargs={"username":self.second.username})
+
 
 class ChatMessage(models.Model):
     thread      = models.ForeignKey(Thread, null=True, blank=True, on_delete=models.SET_NULL)

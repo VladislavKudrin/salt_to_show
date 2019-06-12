@@ -518,24 +518,7 @@ table {
 }
 
 
-.my-custom-scrollbar {
-  position: absolute;
-}
 
-#table-scroll .my-custom-scrollbar {
-  position: relative;
-  width: 250px;
-  height: 90%;
-  border: 0;  
-}
-
-#messages .my-custom-scrollbar {
-  position: relative;
- 
-  width: 1000px;
-  height: 90%;
-  border: 0;  
-}
 
 
 #conversations {

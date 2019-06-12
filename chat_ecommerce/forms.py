@@ -2,8 +2,8 @@ from django import forms
 
 
 class ComposeForm(forms.Form):
-    message = forms.CharField(
+    message = forms.CharField(label="",
             widget=forms.TextInput(
-                attrs={"class": "form-control"}
+                attrs={"class": "form-control rounder-form"}
                 )
             )

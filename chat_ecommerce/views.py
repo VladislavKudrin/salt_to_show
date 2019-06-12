@@ -16,9 +16,11 @@ class InboxView(LoginRequiredMixin, ListView):
         return Thread.objects.by_user(self.request.user)
 
 
+
 class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
     template_name = 'chat_ecommerce/thread.html'
     form_class = ComposeForm
+
     def get_success_url(self):
         return self.request.path
     def get_queryset(self):
@@ -34,6 +36,7 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.get_form()
+        context['chats'] = Thread.objects.by_user(self.request.user).order_by('-timestamp') # existing chats with other users
         return context
 
     def post(self, request, *args, **kwargs):

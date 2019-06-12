@@ -35,11 +35,15 @@ class ChatConsumer(AsyncConsumer):
 			msg = loaded_data.get('message')
 			user = self.scope['user']
 			username = 'default'
+			req = self.scope['user'].username
+			other_user = self.scope['url_route']['kwargs']['username']
 			if user.is_authenticated():
 				username = user.username
 			myResponse = {
 					'message':msg,
-					'username': username
+					'username': username,
+					'opponent_username': other_user,
+					'req': req,
 				}
 			await self.create_chat_message(user, msg)
 			await self.channel_layer.group_send(
