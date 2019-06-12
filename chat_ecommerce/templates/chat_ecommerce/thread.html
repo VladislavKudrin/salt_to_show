@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "base_no_footer.html" %}
+{% load static %}	
 
 {% block content %}
 
@@ -22,19 +23,95 @@
 
 #chat-items{
 	position: relative;
-	overflow:scroll;
-	height: 370px;
+/*	overflow:scroll;*/
+	max-height: 550px;
+}
+
+body {
+    /*overflow:hidden;*/
+    padding-bottom: 0;
+    margin-bottom:0;
+}
+
+html {
+	padding-bottom: 0;
+    margin-bottom:0;
 }
 
 #dialogs{
 	height: 520px;
+	width: 320px;
+	padding-right: 0px;
 	overflow:scroll;
 	margin-bottom: 0;
 	position: relative;
+	
+
 }
 
 #dialog{
-	height:100px;
+	height:70px;
+/*	display: flex;
+    align-items: center;*/
+}
+
+#dialog:hover{
+	background-color: #f2f2f2;
+}
+
+#input-row{
+	background-color: #efefef;
+	height: 60px;
+}
+
+.fa-paper-plane{
+	color: #9da3a5;
+}
+
+.rounder-form{
+	border-radius: 25px !important;
+}
+
+#chat-message{
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+/*	text-align: left;*/
+}
+
+button:focus {
+ 	outline:0 !important;
+}
+
+
+*:focus {
+	outline:none !important;
+}
+
+.btn:focus {
+	outline:none !important;
+}
+
+.avatar-chat{
+	width:50px; 
+	height: 50px;
+}
+
+.avatar-me{
+	width:40px; 
+	height: 40px;
+}
+
+
+.active {
+	background-color: #e9ebeb;
+}
+
+.row-dialog {
+	height: 70px;
+}
+
+.backgroundy{
+	background-color: black;
 }
 
 
@@ -45,34 +122,82 @@
 <div class='container-fluid m-0 p-0'>
 	<div class='row'>
 
+
 		<div class='col-3'>
-			<ul id='dialogs' class='my-custom-scrollbar'>
-				{% for obj in chats %}
-					{% if request.user != obj.first %}
-						<li id='dialog'><a href="{{ obj.get_absolute_url_first }}">{{ obj.first }}</a></li>
-					{% else %}
-						<li id='dialog'><a href="{{ obj.get_absolute_url_second }}">{{ obj.second }}</a></li>
-					{% endif %}
-				{% endfor %}
-			</ul>
+			<div class='row' style='height: 54px; background-color: #efefef;'>
+				<div class='col text-center my-auto'>
+{% if request.user.profile_foto %}{{request.user.profile_foto}}{% else %}<img src="{% static 'img/user_noname.png' %}" class=" avatar-me avatar">{% endif %}
+</div>
+			</div>
+			<div class='row'>
+				<ul id='dialogs' class='my-custom-scrollbar'>
+					{% for obj in chats %}
+						{% if request.user != obj.first %}
+							<li id='dialog'><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+								<div class='row row-dialog my-auto mx-auto'>
+									<div class='col-3'>
+										{% if obj.second.profile_foto %}
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail ml-2" alt="...">
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar"  >
+										{% endif %}
+									</div>
+									<div class='col-9 text-left my-auto'>
+										{{ obj.second.username }}
+									</div>
+								</div>
+							</a></li>
+						{% else %}
+							<li id='dialog'><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
+								<div class='row row-dialog my-auto mx-auto'>
+									<div class='col-3 my-auto'>
+										{% if obj.second.profile_foto %}
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail ml-2" alt="..." >
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar" >
+										{% endif %}
+									</div>
+									<div class='col-9 text-left my-auto'>
+										{{ obj.second.username }}
+									</div>
+								</div>
+							</a></li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+		</div>
 		</div>
 
+
 		<div class='col-9'>
-<!-- 			<h3>Chat with {% if user != object.first %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
+		
+<!-- style="background-image: url('{% static 'img/white-waves.png' %}')">			<h3>Chat with {% if user != object.first %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
  -->		<ul id='chat-items' class='my-custom-scrollbar' >
 				{% for chat in object.chatmessage_set.all %}
 					<li>
-						<p class="{% if chat.user == request.user %}pull-right{% else %}pull-left{% endif %}">
+						<p class="{% if chat.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
 							{{ chat.message }} via {{ chat.user.username }}
 						</p>
 					</li>
 				{% endfor %}
 			</ul>
 
+
+
 			<form id='websocket-form' method='POST'> {% csrf_token %}
-			{{form.as_p }}
-			<input type='submit' class='btn btn-dark'/>
+				<div class='row' id='input-row' style='position: fixed;bottom: 0; width:75%' >
+					<div class='col-11 my-auto pr-0'>
+						{{form }}
+						</div>
+					<div class='col-1 my-auto pl-0' >
+						<button type='submit' class='btn'>
+						<i class="fas fa-paper-plane fa-2x"></i>
+						</button>
+					</div>
+				</div>
 			</form>
+
+
 		</div>
 
 	</div>
@@ -92,6 +217,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
 </script>
 <script>
+
+//this makes the current link containing li of class "active"
+$(document).ready(function ($) {
+    var url = window.location.href;
+    var activePage = url;
+    console.log(activePage)
+    $('#dialog a').each(function () {
+        var linkPage = this.href;
+        if (activePage == linkPage) {
+            $(this).closest("li").addClass("active");
+            console.log('active')
+        }
+    });
+});
+
 
 var loc = window.location
 console.log(loc)

@@ -36,7 +36,7 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.get_form()
-        context['chats'] = Thread.objects.by_user(self.request.user) # existing chats with other users
+        context['chats'] = Thread.objects.by_user(self.request.user).order_by('-timestamp') # existing chats with other users
         return context
 
     def post(self, request, *args, **kwargs):
