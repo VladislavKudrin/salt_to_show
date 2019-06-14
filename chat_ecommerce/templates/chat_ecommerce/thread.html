@@ -1,5 +1,7 @@
 {% extends "base_no_footer.html" %}
-{% load static %}	
+{% load static %}
+{% load msg_time %}
+
 
 {% block content %}
 
@@ -24,7 +26,7 @@
 #chat-items{
 	position: relative;
 /*	overflow:scroll;*/
-	max-height: 550px;
+	max-height: 530px;
 }
 
 body {
@@ -39,13 +41,13 @@ html {
 }
 
 #dialogs{
-	height: 520px;
+	max-height: 590px;
+    overflow: auto;
 	width: 320px;
 	padding-right: 0px;
-	overflow:scroll;
+	overflow: scroll;
 	margin-bottom: 0;
 	position: relative;
-	
 
 }
 
@@ -96,7 +98,7 @@ button:focus {
 	height: 50px;
 }
 
-.avatar-me{
+.avatar-small{
 	width:40px; 
 	height: 40px;
 }
@@ -114,20 +116,30 @@ button:focus {
 	background-color: black;
 }
 
+.blacky{
+	background-color: #f2f2f2;
+}
+
 
 </style>
 </head>
 
 
 <div class='container-fluid m-0 p-0'>
-	<div class='row'>
 
+	<div class='row'>
 
 		<div class='col-3'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
-{% if request.user.profile_foto %}{{request.user.profile_foto}}{% else %}<img src="{% static 'img/user_noname.png' %}" class=" avatar-me avatar">{% endif %}
-</div>
+					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
+					{% if request.user.profile_foto %}
+						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="...">
+					{% else %}
+						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
+					{% endif %}
+					</a>
+				</div>
 			</div>
 			<div class='row'>
 				<ul id='dialogs' class='my-custom-scrollbar'>
@@ -135,15 +147,15 @@ button:focus {
 						{% if request.user != obj.first %}
 							<li id='dialog'><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
 								<div class='row row-dialog my-auto mx-auto'>
-									<div class='col-3'>
-										{% if obj.second.profile_foto %}
-											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail ml-2" alt="...">
+									<div class='col-3 my-auto'>
+										{% if obj.first.profile_foto %}
+											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="...">
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar"  >
 										{% endif %}
 									</div>
 									<div class='col-9 text-left my-auto'>
-										{{ obj.second.username }}
+										{{ obj.first.username }}
 									</div>
 								</div>
 							</a></li>
@@ -152,7 +164,7 @@ button:focus {
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}
-											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail ml-2" alt="..." >
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="..." >
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar" >
 										{% endif %}
@@ -165,42 +177,91 @@ button:focus {
 						{% endif %}
 					{% endfor %}
 				</ul>
+			</div>
 		</div>
-		</div>
-
 
 		<div class='col-9'>
-		
-<!-- style="background-image: url('{% static 'img/white-waves.png' %}')">			<h3>Chat with {% if user != object.first %}{{ object.first }}{% else %}{{ object.second }}{% endif %}</h3>
- -->		<ul id='chat-items' class='my-custom-scrollbar' >
-				{% for chat in object.chatmessage_set.all %}
-					<li>
-						<p class="{% if chat.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
-							{{ chat.message }} via {{ chat.user.username }}
-						</p>
-					</li>
-				{% endfor %}
-			</ul>
+			<div class='row' style='height: 54px; background-color: #efefef;'>
+				<div class='col text-center my-auto'>
+						{% if request.user != object.first %}
+							<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+								<div class='row'>
+									<div class='col-1 ml-auto p-0 m-0 my-auto'>
+									{% if object.first.profile_foto %}
+										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="...">
+									{% else %}
+										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar"  >
+									{% endif %}
+									</div>
+
+									<div class='col-1 mr-auto p-0 m-0 my-auto'>
+									{{ object.first.username }}
+									</div>
+								</div>
+							</a>
+						{% else %}
+							<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none;color: inherit;'>
 
 
+										{% if object.second.profile_foto %}
+											<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="..." >
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar" >
+										{% endif %}
 
-			<form id='websocket-form' method='POST'> {% csrf_token %}
-				<div class='row' id='input-row' style='position: fixed;bottom: 0; width:75%' >
-					<div class='col-11 my-auto pr-0'>
-						{{form }}
-						</div>
-					<div class='col-1 my-auto pl-0' >
-						<button type='submit' class='btn'>
-						<i class="fas fa-paper-plane fa-2x"></i>
-						</button>
+										{{ object.second.username }}
+
+							</a>
+						{% endif %}
 					</div>
 				</div>
-			</form>
+			<div class='row'>
+				<div class='col'>
+
+					<ul id='chat-items' class='my-custom-scrollbar' >
+							{% for msg in object.chatmessage_set.all %}
+								<li>
+									<div class='row'>
+									<div class="col {% if msg.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
 
 
+										
+											<div class='col-flex rounder-form mb-2 p-2' style='background-color: #f2f2f2; 
+											display:inline-block; max-width:inherit;'>
+											{{ msg.message }}<br>
+											<small> {{ msg.timestamp| print_timestamp }}</small>
+											</div>
+
+
+
+					
+									</div>
+								</div>
+
+								</li>
+							{% endfor %}
+						</ul>
+
+
+
+						<form id='websocket-form' method='POST'> {% csrf_token %}
+							<div class='row' id='input-row' style='position: fixed;bottom: 0; width:75%' >
+								<div class='col-11 my-auto pr-0'>
+									{{form }}
+									</div>
+								<div class='col-1 my-auto pl-0' >
+									<button type='submit' class='btn'>
+									<i class="fas fa-paper-plane fa-2x"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+				</div>
+			</div>
 		</div>
 
 	</div>
+
 </div>
 
 {% endblock %}
