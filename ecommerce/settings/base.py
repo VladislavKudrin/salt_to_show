@@ -88,7 +88,8 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'test_ecommerce'
+    'test_ecommerce',
+    'image_uploader'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -182,7 +183,7 @@ SOCIAL_AUTH_PIPELINE = (
 LOGOUT_REDIRECT_URL='/login/'
 ROOT_URLCONF = 'ecommerce.urls'
 
-
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 
 TEMPLATES = [
@@ -271,14 +272,13 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
 
-# #STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
 
-# MEDIA_URL = "/media/"
+MEDIA_URL = "/media/"
 
-# # MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 
 

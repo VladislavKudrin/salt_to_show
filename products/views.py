@@ -26,7 +26,7 @@ from categories.models import Size, Brand
 from accounts.models import User
 from .models import Product, Image, ImageOrderUtil
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
-
+from image_uploader.models import unique_form_id_generator
 
 
 
@@ -251,23 +251,22 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
 	def post(self, request, *args, **kwargs):
-		if request.is_ajax():
-			print('works')
-			form = self.get_form()
-			if form.is_valid():
-				return self.form_valid(form)
-			else:
-				return self.form_invalid(form)
-				# errors = form.errors
-				# # HttpResponse(json.dumps(errors), status=404)
-				# response = JsonResponse({"error": "there was an error"})
-				# response.status_code = 403
-				# return(response)
-				# return JsonResponse(form.errors.as_json(), status=400)
-	
+		form = self.get_form()
+		if form.is_valid():
+			return self.form_valid(form)
+		else:
+			return self.form_invalid(form)
+			# errors = form.errors
+			# # HttpResponse(json.dumps(errors), status=404)
+			# response = JsonResponse({"error": "there was an error"})
+			# response.status_code = 403
+			# return(response)
+			# return JsonResponse(form.errors.as_json(), status=400)
+
 	def get(self, request, *args, **kwargs):
 		brands = Brand.objects.all()
 		brand_arr = []
+		form_id = unique_form_id_generator()
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():
@@ -291,6 +290,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			return JsonResponse(json_data)
 		product_form = ImageForm(request)
 		context={}
+		context['form_id']=form_id
 		context['button']='Create'
 		context['title']='Add new product'
 		context['form']=product_form

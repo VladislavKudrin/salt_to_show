@@ -65,80 +65,126 @@
 $(document).ready(
   function(){
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 var contact=$('.contact-form')
 var userEmail = contact.find("[name='popchik']").val()
 var input = contact.find("[name='email']").val(userEmail)
 //update
 var currentPath = window.location.href
-if (currentPath.indexOf("create") != -1){
+// if (currentPath.indexOf("create") != -1){
     var galleryUpdate = $('#gallery')
     var formSubmit = $('#example-form-1')
     var action = formSubmit.attr("action_url_create")
     var action_order = formSubmit.attr("action_url_create_order")
-    function displayCreating(submitBtn, defaultText, doSubmit){
-      if (doSubmit){
-        submitBtn.addClass("disabled")
-        submitBtn.attr("disabled", true)
-        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
-      } else {
-        submitBtn.removeClass("disabled")
-        submitBtn.attr("disabled", false)
-        submitBtn.html(defaultText)
-      }
-    }        
-    formSubmit.submit(
-    function(event){
-    event.preventDefault()
-    var createFormSubmitBtn = formSubmit.find("[type='submit']")
-    var createFormSubmitBtnTxt = createFormSubmitBtn.text()
-    var formData = formSubmit.serialize()
-    var elements = $('#example-form-1 ul li')
-    var keyArray = []
-    displayCreating(createFormSubmitBtn, "",true)
-    $.each(elements,
-    function(index, value){
-        console.log(value)
-        var attr = $(value).attr('qq-file-id')
-        console.log(attr)
-        keyArray.push(attr)  
-    })//eacharray
-    console.log(keyArray)
-    $.ajax({
-    url: action,
-    method:'POST',
-    data: formData,
-    success: function(data){
-        $('.is-invalid').removeClass('is-invalid')
-        $('p').remove('.invalid-feedback')
-        if(data['error']) {
-        $.each(data['error'],
+    var buttonImageUpload = $('.image-upload-button')
+    var uploadUrl = formSubmit.attr('image_upload_url')
+
+    buttonImageUpload.change(
+        function() {
+            var imagesArr = []
+            var myFiles = $(this).prop('files');
+            var data = new FormData()
+            console.log(data)
+            console.log(myFiles)
+            $.each(myFiles, 
             function(index, value){
-                displayCreating(createFormSubmitBtn, "Create",false)
-                if ($('.'+index).length==0){
-                    $('#id_' + index).addClass('is-invalid')
-                    $('#id_' + index).after("<p class='invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
-                }//if  
-            })//each
-            }//if there are errors
-        else {
-      $.ajax({
-        url: action_order,
-        method:'POST',
-        data: {'data[]':keyArray, 'slug':data.slug},
-        success:function(data){
-          console.log('successsssss')
-            },//success second ajax
-        error:function(errorData){
-            }//error second ajax
-        })//ajax in ajax
-        window.location.href=data.url
-            }},//success
-    error:function(errorData){
-        console.log('error')
-        }//error_1
-    })//ajax
-    })//submit
-}
+                imagesArr.push(value)
+            })//each-buttonImageUpload
+            console.log(imagesArr)
+            data.append('image', imagesArr[0])
+        $.ajax({
+            url: uploadUrl,
+            method:'POST',
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success:function(data){
+            console.log('successsssss')
+            },//success ajax-image-uploader
+            error:function(errorData){
+            }//error ajax-image-uploader
+            })//ajax-image-uploader
+
+    })//change-buttonImageUpload
+
+
+//     function displayCreating(submitBtn, defaultText, doSubmit){
+//       if (doSubmit){
+//         submitBtn.addClass("disabled")
+//         submitBtn.attr("disabled", true)
+//         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
+//       } else {
+//         submitBtn.removeClass("disabled")
+//         submitBtn.attr("disabled", false)
+//         submitBtn.html(defaultText)
+//       }
+//     }        
+//     formSubmit.submit(
+//     function(event){
+//     event.preventDefault()
+//     var createFormSubmitBtn = formSubmit.find("[type='submit']")
+//     var createFormSubmitBtnTxt = createFormSubmitBtn.text()
+//     var formData = formSubmit.serialize()
+//     var elements = $('#example-form-1 ul li')
+//     var keyArray = []
+//     displayCreating(createFormSubmitBtn, "",true)
+//     $.each(elements,
+//     function(index, value){
+//         console.log(value)
+//         var attr = $(value).attr('qq-file-id')
+//         console.log(attr)
+//         keyArray.push(attr)  
+//     })//eacharray
+//     console.log(keyArray)
+//     $.ajax({
+//     url: action,
+//     method:'POST',
+//     data: formData,
+//     success: function(data){
+//         $('.is-invalid').removeClass('is-invalid')
+//         $('p').remove('.invalid-feedback')
+//         if(data['error']) {
+//         $.each(data['error'],
+//             function(index, value){
+//                 displayCreating(createFormSubmitBtn, "Create",false)
+//                 if ($('.'+index).length==0){
+//                     $('#id_' + index).addClass('is-invalid')
+//                     $('#id_' + index).after("<p class='invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
+//                 }//if  
+//             })//each
+//             }//if there are errors
+//         else {
+//       $.ajax({
+//         url: action_order,
+//         method:'POST',
+//         data: {'data[]':keyArray, 'slug':data.slug},
+//         success:function(data){
+//           console.log('successsssss')
+//             },//success second ajax
+//         error:function(errorData){
+//             }//error second ajax
+//         })//ajax in ajax
+//         window.location.href=data.url
+//             }},//success
+//     error:function(errorData){
+//         console.log('error')
+//         }//error_1
+//     })//ajax
+//     })//submit
+// }
 
 
 

@@ -12,7 +12,7 @@ from ecommerce.utils import random_string_generator
 
 
 
-class ProductCreateForm(FileFormMixin, forms.ModelForm):
+class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Enter a Brand'}))
 	class Meta:
 		model = Product
@@ -51,20 +51,23 @@ class ProductCreateForm(FileFormMixin, forms.ModelForm):
 
 
 class ImageForm(ProductCreateForm):
-	image = MultipleUploadedFileField()
+	image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button'} ))
 	def clean_image(self):
-		data = self.cleaned_data
-		image = data.get('image')
-		if len(image)>8:
-			raise forms.ValidationError("Too many files, should be 8")
-		for img in image:
-			img_ = str(img)
-			filename, ext = img_.rsplit('.', 1)
-			allowed_ext = {'jpg', 'JPG', 'JPEG', 'jpeg'}
-			if ext not in allowed_ext: 
-				# messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
-				raise forms.ValidationError('Not a valid extension')
-		return image
+		print(self.cleaned_data)
+	# image = MultipleUploadedFileField()
+	# def clean_image(self):
+	# 	data = self.cleaned_data
+	# 	image = data.get('image')
+	# 	if len(image)>8:
+	# 		raise forms.ValidationError("Too many files, should be 8")
+	# 	for img in image:
+	# 		img_ = str(img)
+	# 		filename, ext = img_.rsplit('.', 1)
+	# 		allowed_ext = {'jpg', 'JPG', 'JPEG', 'jpeg'}
+	# 		if ext not in allowed_ext: 
+	# 			# messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
+	# 			raise forms.ValidationError('Not a valid extension')
+	# 	return image
 
 	def save(self, commit=True):
 		product = super(ProductCreateForm, self).save(commit=False)
@@ -72,16 +75,16 @@ class ImageForm(ProductCreateForm):
 		product.active = True
 		if commit:
 			product.save()
-		for idx, file in enumerate(self.cleaned_data['image']):
-			print(file.form_id)
-			print(file)
-			Image.objects.create(
-				product=product,
-				image=file,
-				slug=product.slug,
-				image_order=idx+1
-								)
-		self.delete_temporary_files()
+		# for idx, file in enumerate(self.cleaned_data['image']):
+		# 	print(file.form_id)
+		# 	print(file)
+		# 	Image.objects.create(
+		# 		product=product,
+		# 		image=file,
+		# 		slug=product.slug,
+		# 		image_order=idx+1
+		# 						)
+		# self.delete_temporary_files()
 		return product
 		
 
@@ -96,8 +99,7 @@ class ProductUpdateForm(ProductCreateForm):
 		brand = Brand.objects.get(id=self.initial['brand'])
 		self.initial['brand']=brand.brand_name
 
-		def get_upload_url(self):
-			return reverse('products:example_handle_upload')
+
 
 
 
