@@ -56,3 +56,11 @@ class ChatMessage(models.Model):
     user        = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='sender', on_delete=models.CASCADE)
     message     = models.TextField()
     timestamp   = models.DateTimeField(auto_now_add=True)
+
+class Notification(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    message = models.ForeignKey(ChatMessage, on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.id}'

@@ -26,7 +26,10 @@
 #chat-items{
 	position: relative;
 /*	overflow:scroll;*/
-	max-height: 530px;
+	height:100%;
+	max-height: 526px;
+	margin-bottom: 60px;
+
 }
 
 body {
@@ -41,7 +44,7 @@ html {
 }
 
 #dialogs{
-	max-height: 590px;
+	max-height: 580px;
     overflow: auto;
 	width: 320px;
 	padding-right: 0px;
@@ -70,9 +73,6 @@ html {
 	color: #9da3a5;
 }
 
-.rounder-form{
-	border-radius: 25px !important;
-}
 
 #chat-message{
 	word-wrap: break-word;
@@ -120,6 +120,33 @@ button:focus {
 	background-color: #f2f2f2;
 }
 
+.rounder-form{
+	border-bottom-left-radius: 25px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 25px !important;
+}
+
+.rounder-msg-cloud-right{
+	border-bottom-left-radius: 25px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 0px !important;
+}
+
+.rounder-msg-cloud-left{
+	border-bottom-left-radius: 0px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 25px !important;
+}
+
+.msg-cloud{
+	background-color: #f2f2f2;
+	display:inline-block; 
+	max-width:inherit; 
+	max-width: 75%;
+}
 
 </style>
 </head>
@@ -225,14 +252,23 @@ button:focus {
 									<div class="col {% if msg.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
 
 
-										
-											<div class='col-flex rounder-form mb-2 p-2' style='background-color: #f2f2f2; 
-											display:inline-block; max-width:inherit;'>
+
+										{% if msg.user == request.user %}
+
+											<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>
 											{{ msg.message }}<br>
 											<small> {{ msg.timestamp| print_timestamp }}</small>
 											</div>
 
+										{% else %}
 
+											<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>
+											{{ msg.message }}<br>
+											<small> {{ msg.timestamp| print_timestamp }}</small>
+											</div>
+
+										{% endif %}
+								
 
 					
 									</div>
@@ -242,6 +278,10 @@ button:focus {
 							{% endfor %}
 						</ul>
 
+				</div>
+			</div>
+
+<div class='row'>
 
 
 						<form id='websocket-form' method='POST'> {% csrf_token %}
@@ -256,8 +296,10 @@ button:focus {
 								</div>
 							</div>
 						</form>
-				</div>
-			</div>
+</div>
+
+
+
 		</div>
 
 	</div>
@@ -294,8 +336,8 @@ $(document).ready(function ($) {
 });
 
 
+
 var loc = window.location
-console.log(loc)
 var formData = $("#websocket-form")
 var msgInput = $("#id_message")
 var chatHolder = $('#chat-items')
@@ -305,28 +347,41 @@ if (loc.protocol == 'https:'){
 }
 var endpoint = wsStart + loc.host + loc.pathname
 var socket = new ReconnectingWebSocket(endpoint)
+var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
 socket.onmessage = function(e) {
 	console.log('message', e)
 	var chatDataMsg = JSON.parse(e.data)
 	var username = chatDataMsg.username
+	//timestamp
+	var now = new Date()
+	var day = days[ now.getDay()];
+	var hour = (now.getHours()<10?'0':'') + now.getHours();
+	var min = (now.getMinutes()<10?'0':'') + now.getMinutes();
+	var date = day + ' '+ hour.toString() + ':' + min.toString()
+	console.log(date)
+    // Find the notification icon/button/whatever and show a red dot, add the notification_id to element as id or data attribute.
 	var opponent_username = chatDataMsg.opponent_username
 	// var request_user = chatDataMsg.request_user
 	var req = chatDataMsg.req
-	console.log(username)
-	console.log(opponent_username)
-	console.log(req)
 	// console.log(request_user)
 	if (username === req){
 		console.log('pulling right')
-	chatHolder.append("<li>" + "<p class='pull-right'>"+ chatDataMsg.message + " via " + chatDataMsg.username + "</p>" + "</li>")	
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>")
 	}
 	else{
 		console.log('pulling left')
-		chatHolder.append("<li>" + "<p class='pull-left'>"+ chatDataMsg.message + " via " + chatDataMsg.username + "</p>" + "</li>")
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>")
 	}
-  	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
+	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
+
 }
 	
+// $(#notification-element).on("click", function(){
+//       data = {"type":"notification_read", "username": username, "notification_id": notification_id};
+//       socket.send(JSON.stringify(data));
+// });
+
 
 
 socket.onopen = function(e) {

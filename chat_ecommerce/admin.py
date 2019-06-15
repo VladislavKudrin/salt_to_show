@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 
-from .models import Thread, ChatMessage
+from .models import Thread, ChatMessage, Notification
 
 class ChatMessage(admin.TabularInline):
     model = ChatMessage
@@ -9,7 +9,13 @@ class ChatMessage(admin.TabularInline):
 class ThreadAdmin(admin.ModelAdmin):
     inlines = [ChatMessage]
     class Meta:
-        model = Thread 
+        model = Thread
+
+
 
 
 admin.site.register(Thread, ThreadAdmin)
+
+admin.site.register(Notification)
+
+
