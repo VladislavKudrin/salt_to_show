@@ -30,13 +30,6 @@ from image_uploader.models import unique_form_id_generator
 
 
 
-from django import template
-
-register = template.Library()
-
-@register.filter
-def to_none(value):
-    return ""
 
 
 class ProductFeaturedListView(ListView):

@@ -110,7 +110,6 @@ if (currentPath.indexOf("create") != -1){
 function deleteItem(item){
     item.on("click", 
     function(event){
-      console.log('Ada')
         var $item = $(this),
         $target = $(event.target);
         if ($target.is("a.ui-icon-trash")) {
@@ -122,7 +121,10 @@ function deleteItem(item){
                 method:'POST',
                 data: {'data':deleteData, 'form_id':formId.val()},
                 success:function(data){
-                   $item.remove() 
+                   $item.remove()
+                   if (data.count<=8){
+                    buttonImageUpload.attr('disabled', false)
+                   } //enabelbtniflessthan8
                 },//success
                 error:function(errorData){
 
@@ -147,6 +149,9 @@ function deleteItem(item){
             var data = new FormData()
             var imagesArr = []
             var myFiles = $(this)[0].files;
+            if (myFiles.length>8){
+                return console.log('hellow')
+            }//ifmorethan8
             displayUploading(myFiles, true)
             $.each(myFiles, 
             function(index, value){
@@ -165,7 +170,6 @@ function deleteItem(item){
             success:function(data){
                  console.log(i)
                 displayUploading(myFiles, false)
-                // imageContainer.html('')
                 $.each(data.image,
                   function(index, value){
                   imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a></li>')
@@ -173,6 +177,10 @@ function deleteItem(item){
                   })//eachfoto
             var trash = $("ul.gallery > li")
             deleteItem(trash)
+            console.log(data.count)
+            if (data.count>8){
+                buttonImageUpload.attr('disabled', true)
+            }//if more than 8 already uploaded
             },//success ajax-image-uploader
             error:function(errorData){
             }//error ajax-image-uploader
@@ -218,6 +226,7 @@ function deleteItem(item){
         if(data['error']) {
         $.each(data['error'],
             function(index, value){
+                console.log(index,value)
                 displayCreating(createFormSubmitBtn, "Create",false)
                 if ($('.'+index).length==0){
                     $('#id_' + index).addClass('is-invalid')

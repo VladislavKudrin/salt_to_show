@@ -4,13 +4,15 @@ from django.contrib import messages
 from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
+from django.core.validators import validate_image_file_extension
+
 
 from .models import Product, ImageOrderUtil, ProductImage
 from categories.models import Size, Brand
 
 from ecommerce.utils import random_string_generator
 from image_uploader.models import UploadedFile
-
+from image_uploader.validators import validate_file_extension
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Enter a Brand'}))
@@ -51,10 +53,12 @@ class ProductCreateForm(forms.ModelForm):
 
 
 class ImageForm(ProductCreateForm):
-	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button'} ))
+	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		if len(cleaned_images)>8:
+			raise forms.ValidationError("Too many files, should be 8")
 		return cleaned_images
 		
 	def save(self, commit=True):
@@ -62,7 +66,6 @@ class ImageForm(ProductCreateForm):
 		product.user = self.request.user
 		product.active = True
 		form_id = self.request.POST.get('form_id')
-		print(form_id)
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']

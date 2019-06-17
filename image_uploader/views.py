@@ -18,12 +18,14 @@ def handle_upload(request):
 				lookups_images=lookups_images|(Q(file_id=qq_file_id))
 				qq_file_id += 1
 			uploaded_qs = UploadedFile.objects.filter(form_id = form_id).filter(lookups_images)
+			all_files = (len(UploadedFile.objects.filter(form_id = form_id)))
 			images = [{
 					"image_url": uploaded_obj.uploaded_file.url,
 					} 
 			for uploaded_obj in uploaded_qs]
 			json_data = {
-					'image': images
+					'image': images,
+					'count':all_files
 					}
 			return JsonResponse(json_data)
 		else:
@@ -44,9 +46,12 @@ def handle_delete(request):
 			file = UploadedFile.objects.get(file_id=id_,form_id=form_id)
 			file.uploaded_file.delete()
 			file.delete()
-
+			all_files = len(UploadedFile.objects.filter(form_id = form_id))
+			json_data = {
+						'count':all_files
+						}
+			return JsonResponse(json_data)
 	return HttpResponse('html')
 
 
 
-	
