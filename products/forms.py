@@ -2,14 +2,14 @@ from django.http import JsonResponse
 from django import forms
 from django.contrib import messages
 from PIL import Image
-from django_file_form.forms import MultipleUploadedFileField, FileFormMixin
-from django_file_form.models import UploadedFile
+from django.core.files.base import ContentFile
+from io import BytesIO
 
-from .models import Product, Image, ImageOrderUtil
+from .models import Product, ImageOrderUtil, ProductImage
 from categories.models import Size, Brand
 
 from ecommerce.utils import random_string_generator
-
+from image_uploader.models import UploadedFile
 
 
 class ProductCreateForm(forms.ModelForm):
@@ -51,42 +51,37 @@ class ProductCreateForm(forms.ModelForm):
 
 
 class ImageForm(ProductCreateForm):
-	image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button'} ))
+	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button'} ))
 	def clean_image(self):
-		print(self.cleaned_data)
-	# image = MultipleUploadedFileField()
-	# def clean_image(self):
-	# 	data = self.cleaned_data
-	# 	image = data.get('image')
-	# 	if len(image)>8:
-	# 		raise forms.ValidationError("Too many files, should be 8")
-	# 	for img in image:
-	# 		img_ = str(img)
-	# 		filename, ext = img_.rsplit('.', 1)
-	# 		allowed_ext = {'jpg', 'JPG', 'JPEG', 'jpeg'}
-	# 		if ext not in allowed_ext: 
-	# 			# messages.add_message(self.request, messages.ERROR, 'Allowed extentions are ".jpg, .jpeg"')
-	# 			raise forms.ValidationError('Not a valid extension')
-	# 	return image
-
+		form_id = self.request.POST.get('form_id')
+		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		return cleaned_images
+		
 	def save(self, commit=True):
 		product = super(ProductCreateForm, self).save(commit=False)
 		product.user = self.request.user
 		product.active = True
+		form_id = self.request.POST.get('form_id')
+		print(form_id)
 		if commit:
 			product.save()
-		# for idx, file in enumerate(self.cleaned_data['image']):
-		# 	print(file.form_id)
-		# 	print(file)
-		# 	Image.objects.create(
-		# 		product=product,
-		# 		image=file,
-		# 		slug=product.slug,
-		# 		image_order=idx+1
-		# 						)
-		# self.delete_temporary_files()
+			images = self.cleaned_data['image']
+			for idx, file in enumerate(images):
+				ProductImage.objects.create(
+					product=product,
+					image=file.uploaded_file.file,
+					slug=product.slug,
+					image_order=idx+1
+									)
+			UploadedFile.objects.delete_uploaded_files(form_id)
 		return product
 		
+class UploadFileForm(forms.Form):
+	image = forms.FileField()
+
+
+
+
 
 
 class ProductUpdateForm(ProductCreateForm):

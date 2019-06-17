@@ -24,7 +24,7 @@ from carts.models import Cart
 from categories.models import Size, Brand
 
 from accounts.models import User
-from .models import Product, Image, ImageOrderUtil
+from .models import Product, ProductImage, ImageOrderUtil
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 from image_uploader.models import unique_form_id_generator
 
@@ -130,7 +130,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		# all_wishes = user.wishes_user.all()
 		# wished_products = [wish.product for wish in all_wishes]
 		slug = self.kwargs.get('slug')
-		all_ = Image.objects.all().filter(slug=slug)
+		all_ = ProductImage.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
@@ -223,12 +223,14 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 def image_create_order(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
+		print(request.POST)
 		slug = request.POST.get('slug')
-		images = Image.objects.filter(slug=slug)
+		images = ProductImage.objects.filter(slug=slug)
 		array = numpy.array(data)
 		array = array.astype(numpy.int)
 		array = array + 1
 		for img in images:
+			print('hii')
 			min_ = min(array)
 			index_of_min = numpy.where(array==min(array))[0][0].item()
 			number = index_of_min + 1
@@ -243,7 +245,7 @@ def image_update_view(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
 		for idx, image_key in enumerate(data):
-			Image.objects.filter(unique_image_id=image_key).update(image_order=idx+1)
+			ProductImage.objects.filter(unique_image_id=image_key).update(image_order=idx+1)
 	return redirect('home')
 
 
@@ -256,6 +258,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			return self.form_valid(form)
 		else:
 			return self.form_invalid(form)
+
 			# errors = form.errors
 			# # HttpResponse(json.dumps(errors), status=404)
 			# response = JsonResponse({"error": "there was an error"})
@@ -375,7 +378,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		context['title'] = 'Update'
 		context['button']='Update' 
 		new_all_=[]
-		all_ = Image.objects.all().filter(slug=slug)
+		all_ = ProductImage.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_

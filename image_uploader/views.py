@@ -1,18 +1,52 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.core.files.uploadhandler import FileUploadHandler
+from django.db.models import Q
 
-
-
-from products.forms import ImageForm
+from image_uploader.models import UploadedFile
+from products.forms import UploadFileForm
 def handle_upload(request):
-	print('hi')
 	if request.is_ajax():
-		print('ajax')
-		print(request.FILES)
-		form = ImageForm(request.FILES)
+		form = UploadFileForm(data=request.POST, files=request.FILES)
 		if form.is_valid():
-			print('valid')
+			form_id = request.POST.get('form_id')
+			qq_file_id = int(request.POST.get('qq-file-id'))
+			images = request.FILES.getlist('image')
+			lookups_images=(Q(form_id__iexact='form_id'))
+			for x in images:
+				UploadedFile.objects.create(uploaded_file=x, form_id=form_id, file_id=qq_file_id)
+				lookups_images=lookups_images|(Q(file_id=qq_file_id))
+				qq_file_id += 1
+			uploaded_qs = UploadedFile.objects.filter(form_id = form_id).filter(lookups_images)
+			images = [{
+					"image_url": uploaded_obj.uploaded_file.url,
+					} 
+			for uploaded_obj in uploaded_qs]
+			json_data = {
+					'image': images
+					}
+			return JsonResponse(json_data)
 		else:
-			print('invalid')
+			print(form.errors)
 	return HttpResponse('html')
 
+def handle_delete(request):
+	if request.is_ajax():
+		id_ = request.POST.get('data')
+		if str(id_) == 'delete_on_reload':
+			form_id = request.POST.get('form_id')
+			files = UploadedFile.objects.filter(form_id=form_id)
+			for x in files:
+				x.uploaded_file.delete()
+				x.delete()
+		else:
+			form_id = request.POST.get('form_id')
+			file = UploadedFile.objects.get(file_id=id_,form_id=form_id)
+			file.uploaded_file.delete()
+			file.delete()
+
+	return HttpResponse('html')
+
+
+
+	

@@ -76,34 +76,85 @@ $(document).ready(
 
 
 
-
-
 var contact=$('.contact-form')
 var userEmail = contact.find("[name='popchik']").val()
 var input = contact.find("[name='email']").val(userEmail)
 //update
 var currentPath = window.location.href
-// if (currentPath.indexOf("create") != -1){
+if (currentPath.indexOf("create") != -1){
     var galleryUpdate = $('#gallery')
     var formSubmit = $('#example-form-1')
     var action = formSubmit.attr("action_url_create")
     var action_order = formSubmit.attr("action_url_create_order")
     var buttonImageUpload = $('.image-upload-button')
     var uploadUrl = formSubmit.attr('image_upload_url')
+    var deleteImageUrl = formSubmit.attr('image_delete_url')
+    var imageContainer = $('.temp-images')
+    var imageContainerParent = $('.custom-upload-file-ajax-temp') 
+    var imageContainerCol = $('#wow') 
+    var formId = $('#form_id')
+    var imagesTemplate = $.templates("#images-upload-update")
+    var i = 0
+    $(window).bind('beforeunload',function(){
+     $.ajax({
+        url: deleteImageUrl,
+        method:'POST',
+        data: {'data':'delete_on_reload', 'form_id':formId.val()},
+        success:function(data){
+                },//success
+        error:function(errorData){
 
+                }//error
+     })//ajaxbeforereload
+    })//beforereload
+function deleteItem(item){
+    item.on("click", 
+    function(event){
+      console.log('Ada')
+        var $item = $(this),
+        $target = $(event.target);
+        if ($target.is("a.ui-icon-trash")) {
+            event.preventDefault()
+            var deleteData = $item.find("[name='qq-file-id']").val()
+            // deleteData.push('formId')
+            $.ajax({
+                url: deleteImageUrl,
+                method:'POST',
+                data: {'data':deleteData, 'form_id':formId.val()},
+                success:function(data){
+                   $item.remove() 
+                },//success
+                error:function(errorData){
+
+                }//error
+            })//ajax for delete
+    }//if trash
+    })//onclicktrash
+}
+    function displayUploading(files, doUpload){
+        if(doUpload){
+        $.each(files, 
+            function(index, value){
+            imageContainer.append("<i class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner'></i>")
+            })//each-displayfilesupload
+        }//doUpload
+        else{
+            $('.fas').hide()
+        }//ifnotdoUpload
+    }//displayUploading
     buttonImageUpload.change(
         function() {
-            var imagesArr = []
-            var myFiles = $(this).prop('files');
             var data = new FormData()
-            console.log(data)
-            console.log(myFiles)
+            var imagesArr = []
+            var myFiles = $(this)[0].files;
+            displayUploading(myFiles, true)
             $.each(myFiles, 
             function(index, value){
-                imagesArr.push(value)
+                data.append('image', value)
             })//each-buttonImageUpload
-            console.log(imagesArr)
-            data.append('image', imagesArr[0])
+            data.append('form_id', formId.val())
+            data.append('qq-file-id', i)
+            console.log(i)
         $.ajax({
             url: uploadUrl,
             method:'POST',
@@ -112,79 +163,88 @@ var currentPath = window.location.href
             processData: false,
             contentType: false,
             success:function(data){
-            console.log('successsssss')
+                 console.log(i)
+                displayUploading(myFiles, false)
+                // imageContainer.html('')
+                $.each(data.image,
+                  function(index, value){
+                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a></li>')
+                  i++
+                  })//eachfoto
+            var trash = $("ul.gallery > li")
+            deleteItem(trash)
             },//success ajax-image-uploader
             error:function(errorData){
             }//error ajax-image-uploader
             })//ajax-image-uploader
-
     })//change-buttonImageUpload
 
 
-//     function displayCreating(submitBtn, defaultText, doSubmit){
-//       if (doSubmit){
-//         submitBtn.addClass("disabled")
-//         submitBtn.attr("disabled", true)
-//         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
-//       } else {
-//         submitBtn.removeClass("disabled")
-//         submitBtn.attr("disabled", false)
-//         submitBtn.html(defaultText)
-//       }
-//     }        
-//     formSubmit.submit(
-//     function(event){
-//     event.preventDefault()
-//     var createFormSubmitBtn = formSubmit.find("[type='submit']")
-//     var createFormSubmitBtnTxt = createFormSubmitBtn.text()
-//     var formData = formSubmit.serialize()
-//     var elements = $('#example-form-1 ul li')
-//     var keyArray = []
-//     displayCreating(createFormSubmitBtn, "",true)
-//     $.each(elements,
-//     function(index, value){
-//         console.log(value)
-//         var attr = $(value).attr('qq-file-id')
-//         console.log(attr)
-//         keyArray.push(attr)  
-//     })//eacharray
-//     console.log(keyArray)
-//     $.ajax({
-//     url: action,
-//     method:'POST',
-//     data: formData,
-//     success: function(data){
-//         $('.is-invalid').removeClass('is-invalid')
-//         $('p').remove('.invalid-feedback')
-//         if(data['error']) {
-//         $.each(data['error'],
-//             function(index, value){
-//                 displayCreating(createFormSubmitBtn, "Create",false)
-//                 if ($('.'+index).length==0){
-//                     $('#id_' + index).addClass('is-invalid')
-//                     $('#id_' + index).after("<p class='invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
-//                 }//if  
-//             })//each
-//             }//if there are errors
-//         else {
-//       $.ajax({
-//         url: action_order,
-//         method:'POST',
-//         data: {'data[]':keyArray, 'slug':data.slug},
-//         success:function(data){
-//           console.log('successsssss')
-//             },//success second ajax
-//         error:function(errorData){
-//             }//error second ajax
-//         })//ajax in ajax
-//         window.location.href=data.url
-//             }},//success
-//     error:function(errorData){
-//         console.log('error')
-//         }//error_1
-//     })//ajax
-//     })//submit
-// }
+    function displayCreating(submitBtn, defaultText, doSubmit){
+      if (doSubmit){
+        submitBtn.addClass("disabled")
+        submitBtn.attr("disabled", true)
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
+      } else {
+        submitBtn.removeClass("disabled")
+        submitBtn.attr("disabled", false)
+        submitBtn.html(defaultText)
+      }
+    }        
+    formSubmit.submit(
+    function(event){
+    event.preventDefault()
+    var createFormSubmitBtn = formSubmit.find("[type='submit']")
+    var createFormSubmitBtnTxt = createFormSubmitBtn.text()
+    var formData = formSubmit.serialize()
+    console.log(formData)
+    var elements = $('#example-form-1 ul li')
+    var keyArray = []
+    displayCreating(createFormSubmitBtn, "",true)
+    $.each(elements,
+    function(index, value){
+        var attr = $(value).find("[name='qq-file-id']").val()
+        console.log(attr)
+        keyArray.push(attr)  
+    })//eacharray
+    console.log(keyArray)
+    $.ajax({
+    url: action,
+    method:'POST',
+    data: formData,
+    success: function(data){
+        $('.is-invalid').removeClass('is-invalid')
+        $('p').remove('.invalid-feedback')
+        if(data['error']) {
+        $.each(data['error'],
+            function(index, value){
+                displayCreating(createFormSubmitBtn, "Create",false)
+                if ($('.'+index).length==0){
+                    $('#id_' + index).addClass('is-invalid')
+                    $('#id_' + index).after("<p class='invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
+                }//if  
+            })//each
+            }//if there are errors
+        else {
+          $.ajax({
+            url: action_order,
+            method:'POST',
+            data: {'data[]':keyArray, 'slug':data.slug},
+            success:function(data){
+              console.log('successsssss')
+                },//success second ajax
+            error:function(errorData){
+                }//error second ajax
+            })//ajax in ajax
+            window.location.href=data.url
+                }//else
+            },//success
+    error:function(errorData){
+        console.log('error')
+        }//error_1
+    })//ajax
+    })//submit
+}
 
 
 
