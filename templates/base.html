@@ -87,6 +87,8 @@ if (currentPath.indexOf("create") != -1){
     var action = formSubmit.attr("action_url_create")
     var action_order = formSubmit.attr("action_url_create_order")
     var buttonImageUpload = $('.image-upload-button')
+    buttonImageUpload.parent().prepend('<label for="image_custom" class="btn p-0 mb-0 mt-1"><i class="fas fa-upload fa-2x"></i></label>')
+     
     var uploadUrl = formSubmit.attr('image_upload_url')
     var deleteImageUrl = formSubmit.attr('image_delete_url')
     var imageContainer = $('.temp-images')
@@ -141,15 +143,20 @@ function deleteItem(item){
             })//each-displayfilesupload
         }//doUpload
         else{
-            $('.fas').hide()
+            $('.fa-spinner').hide()
         }//ifnotdoUpload
     }//displayUploading
     buttonImageUpload.change(
         function() {
+            $('#id_image').removeClass('is-invalid')
+            $('p.image').remove('.invalid-feedback')
             var data = new FormData()
             var imagesArr = []
             var myFiles = $(this)[0].files;
             if (myFiles.length>8){
+                if ($('.image').length==0){
+                    $('#id_image').addClass('is-invalid')
+                    $('#id_image').after("<p class='invalid-feedback image'><strong>Too many files. Should be less than 8</strong></p>")}//if more than 8 one time
                 return console.log('hellow')
             }//ifmorethan8
             displayUploading(myFiles, true)

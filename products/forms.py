@@ -53,7 +53,7 @@ class ProductCreateForm(forms.ModelForm):
 
 
 class ImageForm(ProductCreateForm):
-	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
+	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom', 'style':'display:none'} ))
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
