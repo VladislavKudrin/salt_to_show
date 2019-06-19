@@ -49,13 +49,17 @@ class Thread(models.Model):
         return reverse('chat:chat-thread', kwargs={"username":self.first.username})
     def get_absolute_url_second(self):
         return reverse('chat:chat-thread', kwargs={"username":self.second.username})
-
+    def __str__(self):
+        return f'{self.id}'
 
 class ChatMessage(models.Model):
     thread      = models.ForeignKey(Thread, null=True, blank=True, on_delete=models.SET_NULL)
     user        = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='sender', on_delete=models.CASCADE)
     message     = models.TextField()
     timestamp   = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.message}'
 
 class Notification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
