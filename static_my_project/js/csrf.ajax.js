@@ -1,4 +1,5 @@
 $(document).ready(
+
     function(){
         // using jQuery
         function getCookie(name) {
@@ -16,9 +17,7 @@ $(document).ready(
             }
             return cookieValue;
         }
-        
         var csrftoken = getCookie('csrftoken');
-
         function csrfSafeMethod(method) {
             // these HTTP methods do not require CSRF protection
             return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));

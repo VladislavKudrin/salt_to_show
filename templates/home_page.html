@@ -1,33 +1,156 @@
 {% extends "base.html" %}
-
-
 {% load static %}
 {% url 'products:create' as products_create_url %}
 {% url 'products:list' as product_list_url %}
 {% block content %}
 
 
+{% if request.session.language == 'RU' %}
 <div class="row fluid text-center">
-
-
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
 <div class="jumbotron jumbotron text-center pb-3 pt-5" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container"> 
-    <h5 class="display-4">AI-powered Marketplace</h5>
+    <h5 class="display-4">Маркетплейс с интеграцией ИИ</h5>
     <h3><p class="lead"></p></h3>
   </div>
-
-
 </div>
 </div>
 </div>
 </div>
-
-
 <div class="row fluid text-center">
+  <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
+    <div class="bg">
+    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
+<div class="jumbotron jumbotron text-center" style="background:transparent; background-color:transparent; color:black; ">
+  <div class="container">
+    <h1 class="display-4">ПРОДАТЬ</h1>
+    <p class="lead">Селл тител.</p>
+  </div>
+</div>
+</a>
+</div>
+</div>
+  <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
+    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
+<div class="jumbotron jumbotron text-center" style="background:transparent; background-color:transparent; color:white; ">
+  <div class="container">
+    <h1 class="display-4">КУПИТЬ</h1>
+    <p class="lead">Купить тител.</p>
+  </div>
+</div>
+</a>
+</div>
+</div>
+<div class="row fluid text-center">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
+<div class="bg">
+<div class="jumbotron jumbotron text-center" style=" background:transparent;  background-color:transparent; color:black; ">
+  <div class="container"> 
+<!--     <h5 class="display-4">BLABLA</h5> -->
+    <h3><p class="lead"></p></h3>
+  </div>
+    <div class=" row fluid">
+        <div class="col-4 fluid">
+           <div class="flip-card mx-auto">
+          <div class=" flip-card-inner">
+            <div class="flip-card-front">
+               <h3><p class="my-auto text pt-5">Надежно</p></h3>
+                  <i class=" my-auto fas fa-user-shield fa-3x"></i>
+                  </div>
+                  <div class="flip-card-back">
+                  <div class="row h-100">
+                  <div class="col my-auto mr-2 ml-2">
+               Мы проверяем загруженые вещи 24/7/365. Никаких подделок
+              </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+        </div>
+        <div class="col-4 fluid">
+           <div class="flip-card mx-auto">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <h3><p class="my-auto text pt-5">ИИ</p></h3>
+              <i class="fas fa-brain fa-3x"></i>
+            </div>
+              <div class="flip-card-back">
+               <div class="row h-100">
+                <div class="col my-auto mr-3 ml-3">
+                Мы используем ИИ, разработанный в Google, чтобы исключать подделки из нашего каталога.
+              </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+        </div>
+        <div class="col-4 fluid">
+           <div class="flip-card mx-auto">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <h3><p class="my-auto text pt-5">Просто</p></h3>
+              <i class="fas fa-hand-holding-heart fa-3x"></i>
+            </div>
+            <div class="flip-card-back">
+              <div class="row h-100">
+              <div class="col my-auto mr-1 ml-2">
+              Наш интуитивный дизайн был разработан с любовью к простоте и минимализму
+            </div>
+            </div>
+          </div>
+          </div>
+        </div> 
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Second row --> 
+<!-- 3rd row -->
+<div class="row fluid text-center">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
+<div class="bg">
+<div class="jumbotron jumbotron text-center" style="background:transparent; border-top: 1px solid black; background-color:transparent; color:black; ">
+     {% if request.user.is_authenticated %}
+                <div class="container mt-5"> 
+    <p class="lead display-4">Перейти в профиль</p>
+            {% if request.user.profile_foto %}
+            <a href="{{ request.user.get_absolute_url }}" role="button" img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
 
+            {% else %}
+            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
+            {% endif %}
+</div>
+        {% else %}
+          <div class="container mt-5"> 
+    <p class="lead display-4">Будь одним из первых пользователей</p>
 
+        <div class='col-7 mx-auto'>
+      <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">
+      <div class="lead display-6">Войти/Зарегистрироваться</div></a>
+    </div>
+      {% endif %}
+  </div>
+</div>
+</div>
+</div>
+</div>
+{% else %}
+<div class="row fluid text-center">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
+<div class="bg">
+<div class="jumbotron jumbotron text-center pb-3 pt-5" style=" background:transparent; background-color:transparent; color:black; ">
+  <div class="container"> 
+    <h5 class="display-4">AI Powered Marketplace</h5>
+    <h3><p class="lead"></p></h3>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div class="row fluid text-center">
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
@@ -40,10 +163,6 @@
 </a>
 </div>
 </div>
-
-
-
-
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
 <div class="jumbotron jumbotron text-center" style="background:transparent; background-color:transparent; color:white; ">
@@ -54,19 +173,8 @@
 </div>
 </a>
 </div>
-
-
-
 </div>
-
-
-
-
-
-
 <div class="row fluid text-center">
-
-
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
 <div class="jumbotron jumbotron text-center" style=" background:transparent;  background-color:transparent; color:black; ">
@@ -74,11 +182,7 @@
 <!--     <h5 class="display-4">BLABLA</h5> -->
     <h3><p class="lead"></p></h3>
   </div>
-
     <div class=" row fluid">
-
-
-
         <div class="col-4 fluid">
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
@@ -89,15 +193,13 @@
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2">
-                We monitor uploaded items 24/7/365. No more fakes
+               We monitor uploaded items 24/7/365. No more fakes
               </div>
               </div>
             </div>
           </div>
         </div> 
         </div>
-
-
         <div class="col-4 fluid">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
@@ -115,8 +217,6 @@
           </div>
         </div> 
         </div>
-
-
         <div class="col-4 fluid">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
@@ -134,46 +234,26 @@
           </div>
         </div> 
         </div>
-
-
-
-
-
     </div>
-
-
 </div>
 </div>
 </div>
 </div>
-
 <!-- Second row --> 
-
-
-
 <!-- 3rd row -->
-
 <div class="row fluid text-center">
-
-
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
 <div class="jumbotron jumbotron text-center" style="background:transparent; border-top: 1px solid black; background-color:transparent; color:black; ">
-
-
-
-
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
     <p class="lead display-4">Go to your profile</p>
-           
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button" <img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button" img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
 
             {% else %}
             <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
             {% endif %}
-
 </div>
         {% else %}
           <div class="container mt-5"> 
@@ -184,21 +264,12 @@
       <div class="lead display-6">Login/Sign Up</div></a>
     </div>
       {% endif %}
-
-
   </div>
 </div>
-
 </div>
 </div>
-
-
-
 </div>
-
-
-
-
+{% endif %}
 
 
 

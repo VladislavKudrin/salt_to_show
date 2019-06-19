@@ -21,6 +21,8 @@ def about_page(request):
 	}
 	return render(request, "home_page.html", context)
 
+
+
 # class ContactPageView(RequestFormAttachMixin, FormView):
 # 	form_class = ContactForm
 # 	template_name = 'contact/contact.html'
@@ -40,12 +42,13 @@ def about_page(request):
 # 		if request.is_ajax():
 # 			return HttpResponse(errors, status=400, content_type='application/json')
 def contact_page(request):
-	contact_form=ContactForm(request.POST or None)
-	context = {
+	contact_form=ContactForm(request or None)
+	if request.POST:
+		contact_form=ContactForm(request.POST or None)
+	context = { 
 		'user_email':request.user.email,
-		'title':'Contact Page',
+		'title':'Contact page',
 		'form':contact_form
-
 	}
 
 	if contact_form.is_valid():
@@ -83,16 +86,7 @@ def contact_page(request):
 	return render(request, "contact/contact.html", context)
 
 def home_page(request):
-	#print(dir(request.session))
-	#print(request.session.get("first_name", "Unknown"))
-	context = {
-		'title':'Hello World!!',
-		'content':'Welcome to the home page',
-		
-	}
-	if request.user.is_authenticated():
-		context['premium_content'] = "YEAHHHHHHH!!!!"
-	return render(request, "home_page.html", context)
+	return render(request, "home_page.html", {})
 
 def home_page_old(request):
 	html_ = """

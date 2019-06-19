@@ -10,14 +10,6 @@ from products.models import Product
 
 class CategoryFilterView(ListView):
 	template_name = "products/list.html"
-	sizes = [
-		Size.objects.filter(size_for='Footwear'),
-		Size.objects.filter(size_for='Outwear'),
-		Size.objects.filter(size_for='Tops'),
-		Size.objects.filter(size_for='Bottoms'),
-		Size.objects.filter(size_for='Accessories')
-			]
-	brands = Brand.objects.all()
 	fields_category = [
 					'footwear',
 					'outwear',
@@ -33,6 +25,14 @@ class CategoryFilterView(ListView):
 	
 
 	def post(self, request, *args, **kwargs):
+		sizes = [
+		Size.objects.filter(size_for='Footwear'),
+		Size.objects.filter(size_for='Outwear'),
+		Size.objects.filter(size_for='Tops'),
+		Size.objects.filter(size_for='Bottoms'),
+		Size.objects.filter(size_for='Accessories')
+			]
+		brands = Brand.objects.all()
 		request = self.request
 		context={}
 		qs_category={}
@@ -40,7 +40,7 @@ class CategoryFilterView(ListView):
 		qs_size={}
 		qs_brand={}
 		for data in request.POST:
-			for brand in self.brands:
+			for brand in brands:
 				if str(brand) == data:
 					qs_brand[brand]=brand
 			for field in self.fields_gender:
@@ -58,6 +58,18 @@ class CategoryFilterView(ListView):
 				if str(size)==str(data): 
 					qs_size[size]=size
 		filtred_qs = Product.objects.by_category_gender(qs_category, qs_gender, qs_size, qs_brand).order_by('-timestamp')
+		sort_qs = request.POST.get('qs_for_sort')
+		if sort_qs is not None:
+			lookups_products=(Q(slug__iexact='nothing'))
+			sort_qs_list = request.POST.getlist('qs_for_sort_slug')
+			for i in sort_qs_list:
+				lookups_products=lookups_products|(Q(slug__iexact=i))
+			print(request.POST)
+			relevant = request.POST.get('relevant')
+			high_low = request.POST.get('high_low')
+			low_high = request.POST.get('low_high')
+			sort = relevant or high_low or low_high
+			filtred_qs = Product.objects.filter(lookups_products).order_by(sort)
 		if filtred_qs is not None:
 			context['object_list'] = filtred_qs
 		else:
@@ -68,18 +80,26 @@ class CategoryFilterView(ListView):
 		context['filter_category'] = qs_category
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
-		context['sizes']=self.sizes
-		context['brands']=self.brands
+		context['sizes']=sizes
+		context['brands']=brands
 		return render(self.request, "products/list.html", context)
 
 
 	def get(self, request, *args, **kwargs):
+		sizes = [
+		Size.objects.filter(size_for='Footwear'),
+		Size.objects.filter(size_for='Outwear'),
+		Size.objects.filter(size_for='Tops'),
+		Size.objects.filter(size_for='Bottoms'),
+		Size.objects.filter(size_for='Accessories')
+			]
+		brands = Brand.objects.all()
 		context={}
 		context['object_list']=Product.objects.all().order_by('-timestamp')
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
-		context['sizes']=self.sizes
-		context['brands']=self.brands
+		context['sizes']=sizes
+		context['brands']=brands
 		return render(request, "products/list.html", context)
 
 

@@ -35,11 +35,11 @@ SECRET_KEY = '3tb^6c3_5o-ofobpuoyb9)2o8649cv(!!b#*^=paslu(w-vl4e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
-EMAIL_HOST_PASSWORD = 'Vladislav1995'
+EMAIL_HOST_PASSWORD = 'Dkflbckfd1995'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommerce.envision@gmail.com>'
@@ -51,12 +51,9 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-CHAT_WS_SERVER_HOST = 'localhost'
-CHAT_WS_SERVER_PORT = 5002
-CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-SESSION_COOKIE_AGE = 31536000 #1 year
+
 
 # Application definition
 
@@ -71,7 +68,6 @@ INSTALLED_APPS = [
     'storages',
     'social_django',
     'crispy_forms',
-    'django_private_chat',
     'sass_processor',
     'rest_framework',
     'django_file_form',
@@ -80,6 +76,7 @@ INSTALLED_APPS = [
     'django_pony_forms',  
 
     #our apps
+    'chat_ecommerce',
     'addresses',
     'products',
     'search',
@@ -91,7 +88,8 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'test_ecommerce'
+    'test_ecommerce',
+    'image_uploader'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -185,7 +183,7 @@ SOCIAL_AUTH_PIPELINE = (
 LOGOUT_REDIRECT_URL='/login/'
 ROOT_URLCONF = 'ecommerce.urls'
 
-
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 
 TEMPLATES = [
@@ -206,7 +204,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ecommerce.wsgi.application'
+# WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 
 # Database
@@ -257,6 +256,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),
 )
@@ -264,9 +272,14 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
 
+
+
 MEDIA_URL = "/media/"
+
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
+
+# from ecommerce.aws.conf import *
 
 
 

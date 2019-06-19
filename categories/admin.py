@@ -10,4 +10,3 @@ class SizeAdmin(admin.ModelAdmin):
 
 admin.site.register(Size, SizeAdmin)
 
-admin.site.register(Brand)

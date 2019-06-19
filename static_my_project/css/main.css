@@ -1,3 +1,5 @@
+
+
 /*Flip-Card Product Detail View
 */
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
@@ -518,24 +520,7 @@ table {
 }
 
 
-.my-custom-scrollbar {
-  position: absolute;
-}
 
-#table-scroll .my-custom-scrollbar {
-  position: relative;
-  width: 250px;
-  height: 90%;
-  border: 0;  
-}
-
-#messages .my-custom-scrollbar {
-  position: relative;
- 
-  width: 1000px;
-  height: 90%;
-  border: 0;  
-}
 
 
 #conversations {
@@ -603,6 +588,11 @@ ul {
 	list-style: none;
 }
 
+/*#sidebar {
+  position: absolute;
+  width: 100%;
+}
+*/
 html{
   position: relative; 
   min-height: 100%;
@@ -766,6 +756,11 @@ border: 2px red solid;
 .alert alert-block alert-danger{
     color: black;
 }
+
+
+
+
+
 
 
 

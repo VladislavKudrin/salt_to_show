@@ -1,22 +1,40 @@
+{% if request.session.language == 'RU' %}
 <div class='row'>
 	<div class='col'>
-
-<a href="{{ instance.get_absolute_url_for_update }}" class="btn btn-dark btn-block">Update</a>
-
+		<a href="{{ instance.get_absolute_url_for_update }}" class="btn btn-dark btn-block">Редактировать</a>
+	</div>
+	<div class='col'>
+		{% if instance.get_absolute_url == request.path %}
+		<form class='delete-product-form' method='POST' action='{% url "products:delete" %}' data-endpoint='{% url "products:delete" %}' next_url='{% url "products:user-list" %}' data_id='{{ instance.id }}' data_user='{{ instance.user }}'> {% csrf_token %}
+			<input type='hidden' class='title' name='product_title' value='{{ instance.title }}' />
+			<input type='hidden' name='product_id' value='{{ instance.id }}' />
+			<input type='hidden' name='user_product' value='{{ instance.user }}' />
+			<span class='submit-span'>
+				<button type='submit' class='btn btn-dark btn-block'>Удалить</button>
+			</span>
+		</form>
+		{% endif %}
+	</div>
 </div>
-
-<div class='col'
-{% if instance.get_absolute_url == request.path %}
-<form class='delete-product-form' method='POST' action='{% url "products:delete" %}' data-endpoint='{% url "products:delete" %}' next_url='{% url "products:user-list" %}' class="form" data_id='{{ instance.id }}' data_user='{{ instance.user }}'> {% csrf_token %}
-	<input type='hidden' class='title' name='product_title' value='{{ instance.title }}' />
-	<input type='hidden' name='product_id' value='{{ instance.id }}' />
-	<input type='hidden' name='user_product' value='{{ instance.user }}' />
-	<span class='submit-span'>
-		<button type='submit' class='btn btn-dark btn-block'>Delete</button>
-	</span>
-</form>
-
-</div>
+{% else %}
+<div class='row'>
+	<div class='col'>
+		<a href="{{ instance.get_absolute_url_for_update }}" class="btn btn-dark btn-block">Update</a>
+	</div>
+	<div class='col'>
+		{% if instance.get_absolute_url == request.path %}
+		<form class='delete-product-form' method='POST' action='{% url "products:delete" %}' data-endpoint='{% url "products:delete" %}' next_url='{% url "products:user-list" %}' data_id='{{ instance.id }}' data_user='{{ instance.user }}'> {% csrf_token %}
+			<input type='hidden' class='title' name='product_title' value='{{ instance.title }}' />
+			<input type='hidden' name='product_id' value='{{ instance.id }}' />
+			<input type='hidden' name='user_product' value='{{ instance.user }}' />
+			<span class='submit-span'>
+				<button type='submit' class='btn btn-dark btn-block'>Delete</button>
+			</span>
+		</form>
+		{% endif %}
+	</div>
 </div>
 {% endif %}
+
+
 

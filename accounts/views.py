@@ -1,8 +1,7 @@
 from django.db.models import Q
-from django.http import Http404
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -14,21 +13,36 @@ from django.views.generic import CreateView, FormView, DetailView, View, UpdateV
 from django.views.generic.edit import FormMixin
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
-from django.http import HttpResponseRedirect
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
-from .models import GuestEmail, EmailActivation, User, Wishlist
+from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePreference
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
 from .signals import user_logged_in_signal
 from products.models import Product
-from django.http import JsonResponse
+
+
 
 
 
 # @login_required
 # def account_home_view(request):
 # 	render(request, "accounts/home.html", {})
-
+def languge_pref_view(request):
+	default_next = "/"
+	next_ = request.GET.get('next')
+	next_post = request.POST.get('next')
+	redirect_path=next_ or next_post or None
+	language = request.GET.get('language')
+	user = request.user
+	qs_lang = LanguagePreference.objects.filter(user=user)
+	request.session['language'] = language 
+	if qs_lang.exists():
+		LanguagePreference.objects.update(user=user, language=language.lower())
+	else:
+		LanguagePreference.objects.create(user=user, language=language.lower())
+	if is_safe_url(redirect_path, request.get_host()):
+		return redirect(redirect_path)
+	return redirect(default_next)
 
 class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 	template_name = 'accounts/home.html' 
@@ -133,6 +147,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
+			print('admin')
 			msg2 = "Email not confirmed. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
 		elif user is None:
@@ -141,12 +156,19 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			return redirect(next_path)
 		else:
 			login(form.request, user)
-			messages.add_message(form.request, messages.SUCCESS, 'You are logged in successfully')
-
+			language_pref = LanguagePreference.objects.get(user=user)
+			self.request.session['language'] = language_pref.language.upper()
+			if self.request.session.get('language') == 'RU':
+				messages.add_message(form.request, messages.SUCCESS, 'Вы успешно вошли')
+			else:
+				messages.add_message(form.request, messages.SUCCESS, 'You are logged in successfully')				
 		return redirect(next_path)
 
 def add_message(backend, user, request, response, *args, **kwargs):
-	messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
+	if request.session.get('language') == 'RU':
+		messages.add_message(request, messages.SUCCESS, 'Вы успешно вошли')
+	else:
+		messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
 
 # def login_page(request):
 # 	form = LoginForm(request.POST or None)
@@ -190,7 +212,7 @@ def add_message(backend, user, request, response, *args, **kwargs):
 
 
 
-class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
+class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 	form_class = UserDetailChangeForm
 	template_name='accounts/detail-update-view.html'
 	def get_object(self):
@@ -198,7 +220,10 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
-		context['title'] = 'Change Your Details'
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Обновить профиль'
+		else:
+			context['title'] = 'Change your details'
 		context['update_in_action'] = True
 		return context
 
@@ -294,8 +319,6 @@ def wishlistupdate(request):
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
-
-
 
 
 

@@ -1,0 +1,531 @@
+{% extends "base_no_footer.html" %}
+{% load static %}
+{% load msg_time %}
+
+
+{% block content %}
+
+<head>
+<style type="text/css">
+
+
+.my-custom-scrollbar {
+  position: absolute;
+  padding-right: 20px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
+
+/*#table-scroll .my-custom-scrollbar {
+  position: relative;
+  width: 250px;
+  height: 90%;
+  border: 0;  
+}*/
+
+#chat-items{
+	position: relative;
+/*	overflow:scroll;*/
+	height:100%;
+	max-height: 526px;
+	margin-bottom: 60px;
+
+}
+
+body {
+    /*overflow:hidden;*/
+    padding-bottom: 0;
+    margin-bottom:0;
+}
+
+html {
+	padding-bottom: 0;
+    margin-bottom:0;
+}
+
+#dialogs{
+	max-height: 580px;
+    overflow: auto;
+	width: 320px;
+	padding-right: 0px;
+	overflow: scroll;
+	margin-bottom: 0;
+	position: relative;
+
+}
+
+#dialog{
+	height:70px;
+/*	display: flex;
+    align-items: center;*/
+}
+
+#dialog:hover{
+	background-color: #f2f2f2;
+}
+
+#input-row{
+	background-color: #efefef;
+	height: 60px;
+}
+
+.fa-paper-plane{
+	color: #9da3a5;
+}
+
+
+#chat-message{
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+/*	text-align: left;*/
+}
+
+button:focus {
+ 	outline:0 !important;
+}
+
+
+*:focus {
+	outline:none !important;
+}
+
+.btn:focus {
+	outline:none !important;
+}
+
+.avatar-chat{
+	width:50px; 
+	height: 50px;
+}
+
+.avatar-small{
+	width:40px; 
+	height: 40px;
+}
+
+
+.active {
+	background-color: #e9ebeb;
+}
+
+.row-dialog {
+	height: 70px;
+}
+
+.backgroundy{
+	background-color: black;
+}
+
+.blacky{
+	background-color: #f2f2f2;
+}
+
+.rounder-form{
+	border-bottom-left-radius: 25px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 25px !important;
+}
+
+.rounder-msg-cloud-right{
+	border-bottom-left-radius: 25px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 0px !important;
+}
+
+.rounder-msg-cloud-left{
+	border-bottom-left-radius: 0px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 25px !important;
+}
+
+.msg-cloud{
+	background-color: #f2f2f2;
+/*	display:inline-block; 
+	max-width:inherit; 
+	max-width: 75%;*/
+	display: inline-block;
+	max-width: 75%;
+	overflow-wrap: break-word;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #cf6369;
+  border-radius: 50% !important;
+  display: inline-block;
+}
+
+.dot_blue {
+  height: 8px;
+  width: 8px;
+  background-color: blue;
+  border-radius: 50% !important;
+  display: inline-block;
+}
+
+</style>
+</head>
+
+
+<div class='container-fluid m-0 p-0'>
+
+	<div class='row'>
+
+		<div class='col-3'>
+			<div class='row' style='height: 54px; background-color: #efefef;'>
+				<div class='col text-center my-auto'>
+					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
+					{% if request.user.profile_foto %}
+						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="...">
+					{% else %}
+						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
+					{% endif %}
+					</a>
+				</div>
+			</div>
+			<div class='row'>
+				<ul id='dialogs' class='my-custom-scrollbar'>
+					{% for obj in chats %}
+						{% if request.user != obj.first %}
+							<li id='dialog'><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+							
+								<div class='row row-dialog my-auto mx-auto'>
+									<div class='col-3 my-auto'>
+										{% if obj.first.profile_foto %}
+											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="...">
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar"  >
+										{% endif %}
+									</div>
+									<div class='col-9 text-left my-auto'>
+										{{ obj.first.username }}
+
+
+										{% if threads_with_unred %}
+										{% for noti in threads_with_unred %}
+										{% if noti == obj %}
+										<span class="dot" id="{{ obj.id }}"></span>
+											
+										{% endif %}
+										{% endfor %}
+										{% endif %}
+										<span class='obj_id_s' id="{{ obj.id }}"></span>
+
+									</div>
+								</div>
+							
+							</a></li>
+						{% else %}
+							<li id='dialog'><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
+								<div class='row row-dialog my-auto mx-auto'>
+									<div class='col-3 my-auto'>
+										{% if obj.second.profile_foto %}
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="..." >
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar" >
+										{% endif %}
+									</div>
+									<div class='col-9 text-left my-auto'>
+										{{ obj.second.username }}
+										{% if threads_with_unred %}
+										{% for noti in threads_with_unred %}
+										{% if noti == obj %}
+											<span class="dot" id="{{ obj.id }}"></span>
+										{% endif %}
+										{% endfor %}
+										{% endif %}
+											<span class='obj_id_s' id="{{ obj.id }}"></span>
+									</div>
+								</div>
+
+							</a></li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+
+		<div class='col-9'>
+			<div class='row' style='height: 54px; background-color: #efefef;'>
+				<div class='col text-center my-auto'>
+						{% if request.user != object.first %}
+							<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+								<div class='row'>
+									<div class='col-1 ml-auto p-0 m-0 my-auto'>
+									{% if object.first.profile_foto %}
+										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="...">
+									{% else %}
+										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar"  >
+									{% endif %}
+									</div>
+
+									<div class='col-1 mr-auto p-0 m-0 my-auto'>
+									{{ object.first.username }}
+									</div>
+								</div>
+							</a>
+						{% else %}
+							<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none;color: inherit;'>
+
+										{% if object.second.profile_foto %}
+											<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="..." >
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar" >
+										{% endif %}
+
+										{{ object.second.username }}
+
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			<div class='row'>
+				<div class='col'>
+
+					<ul id='chat-items' class='my-custom-scrollbar' >
+							{% for msg in object.chatmessage_set.all %}
+								<li>
+									<div class='row'>
+									<div class="col {% if msg.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
+
+
+
+										{% if msg.user == request.user %}
+
+											<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>
+											{{ msg.message }}<br>
+											<small> {{ msg.timestamp| print_timestamp }}</small>
+											</div>
+
+										{% else %}
+
+											<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>
+											{{ msg.message }}<br>
+											<small> {{ msg.timestamp| print_timestamp }}</small>
+											</div>
+
+										{% endif %}
+					
+									</div>
+								</div>
+
+								</li>
+							{% endfor %}
+						</ul>
+
+				</div>
+			</div>
+
+<div class='row'>
+
+						<form id='websocket-form' method='POST'> {% csrf_token %}
+							<div class='row' id='input-row' style='position: fixed;bottom: 0; width:75%' >
+								<div class='col-11 my-auto pr-0'>
+									{{form }}
+									</div>
+								<div class='col-1 my-auto pl-0' >
+									<button type='submit' class='btn'>
+									<i class="fas fa-paper-plane fa-2x"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+</div>
+
+
+		</div>
+
+	</div>
+
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
+</script>
+<script>
+
+
+// adds to the current li class 'active' and it becomes gray
+$(document).ready(function ($) {
+	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
+    var url = window.location.href;
+    var activePage = url;
+    $('#dialog a').each(function () {
+        var linkPage = this.href;
+        if (activePage == linkPage) {
+            $(this).closest("li").addClass("active");
+        }
+    });
+});
+
+//finds all ids containing in a class
+function storeid(){
+    var className = document.getElementsByClassName('obj_id_s');
+    var classnameCount = className.length;
+    var IdStore = new Array();
+    for(var j = 0; j < classnameCount; j++){
+        IdStore.push(className[j].id);
+    }
+    arr = IdStore.map(Number);
+    // console.log(arr)
+}
+
+var loc = window.location
+var formData = $("#websocket-form")
+var msgInput = $("#id_message")
+var chatHolder = $('#chat-items')
+var wsStart = 'ws://'
+if (loc.protocol == 'https:'){
+	wsStart = 'wss://'
+}
+var endpoint = wsStart + loc.host + loc.pathname
+var socket = new ReconnectingWebSocket(endpoint)
+var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
+
+socket.onmessage = function(e) {
+	// var dialogs = $('#dialogs')
+	// var size_dialogs = $('#dialogs li').length
+	// var dialogss = $('.obj_id_s')
+	// threads 
+	// threads_ids_with_unred = {}
+	var active = document.querySelector(".active .obj_id_s")
+	storeid();
+	// console.log(arr) // ids of all threads / array 
+	var chatDataMsg = JSON.parse(e.data)
+	var username = chatDataMsg.username
+	var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
+	found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append
+	if (typeof found !== 'undefined' && found.length > 0) {
+		for (var i = 0; i < found.length; i++) {
+	    matched_id = found[i] // find element by its id 
+	    unread_thread = document.getElementById(String(matched_id))
+		    if (unread_thread===active){
+		    	console.log('I am not marking active element, I am not stupid')
+		    }
+		    else if (unread_thread.classList.contains('dot') === true) {
+		    	console.log('I am not marking since it is already marked')
+		    }
+		    else{
+		    	console.log("Marking with  dot")
+		    	unread_thread.classList.add("dot");
+		    }
+		}
+	}
+	else{
+		var active = document.querySelector(".active .obj_id_s")
+		Array.from(document.getElementsByClassName("dot")).forEach(
+		function(element, index, array) {
+		if (element === active){
+			// console.log('I am UNMARKIN active element, I am not stupid')
+			element.classList.remove("dot")
+    	}
+    }
+);
+	}
+
+	var now = new Date()
+	var day = days[ now.getDay()];
+	var hour = (now.getHours()<10?'0':'') + now.getHours();
+	var min = (now.getMinutes()<10?'0':'') + now.getMinutes();
+	var date = day + ' '+ hour.toString() + ':' + min.toString()
+	var opponent_username = chatDataMsg.opponent_username
+	var req = chatDataMsg.req
+	if (username === req){
+		// console.log('pulling right')
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>");
+	// console.log(req)
+	}
+	else{
+		// console.log('pulling left')
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>")
+	}
+	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
+
+}
+
+
+socket.onopen = function(e) {
+	// var url = window.location.href;
+	// console.log(url)
+	// if url contains 
+	// storeid();
+	// console.log(arr) // ids of all threads / array 
+	// console.log('open', e)
+	// var chatDataMsg = JSON.parse(e.data)
+	// console.log(chatDataMsg)
+	// var username = chatDataMsg.username
+	// var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
+	// found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append some shit 
+	// console.log(found)
+	// for (var i = 0; i < found.length; i++) {
+ //    // Iterate over numeric indexes from 0 to 5, as everyone expects.
+ //    console.log(found[i]);
+ //    unredik = found[i]
+ //    // find element by its id 
+ //    var unred = $(`#${unredik}`)
+ //    console.log(unred)
+ //    // // unred.append("<div class='col' style='background-color:blue'></div>");
+ //    // unred.classList.add('.fa heart');
+ //    document.getElementById("32").className="dot_blue";
+ //    console.log(unred)
+
+	// }
+
+	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
+	// console.log('open', e)
+	formData.submit(function(event){
+		event.preventDefault()
+		var msgText = msgInput.val()
+		var finalData = {
+			'message':msgText,
+			// 'current_url': url
+		}
+		//var formDataSerialized = formData.serialize()
+		socket.send(JSON.stringify(finalData))
+		formData[0].reset()
+	})//submit
+}//onopen
+
+socket.onerror = function(e) {
+	console.log('error', e)
+}//onerror
+
+socket.onclose = function(e) {
+	console.log('close', e)
+}//onclose
+
+
+//PerfectScrollbar
+const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
+const ps = new PerfectScrollbar('.my-custom-scrollbar', {
+    wheelSpeed: 1,
+    wheelPropagation: false,
+    swipeEasing: true,
+    suppressScrollX: true,
+    // minScrollbarLength: 10,
+    // maxScrollbarLength: 10
+
+});
+
+$('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
+// var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
+
+
+</script>
+{% endblock %}

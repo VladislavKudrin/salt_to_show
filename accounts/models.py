@@ -20,8 +20,6 @@ from products.models import Product
 #send_mail(subject, message, from_email, recipient_list, html_message)
 
 
-
-
 DEFAULT_ACTIVATION_DAYS = getattr(settings, "DEFAULT_ACTIVATION_DAYS", 7)
 
 def get_filename_ext(filepath):
@@ -94,6 +92,9 @@ class UserManager(BaseUserManager):
 				is_admin = True,
 				
 			)
+		activation_admin = EmailActivation.objects.filter(user=user).first()
+		activation_admin.activated=True
+		activation_admin.save()
 		return user
 
 
@@ -154,6 +155,16 @@ class User(AbstractBaseUser):
 	@property
 	def is_admin(self):
 		return self.admin
+LANGUAGE_CHOISES = (
+	('ru', 'RU'),
+	('ua', 'UA'),
+	('en', 'EN')
+	)
+class LanguagePreference(models.Model):
+	user = models.ForeignKey(User, related_name='language')
+	language = models.CharField(max_length=120, default='en', choices=LANGUAGE_CHOISES)
+	def __str__(self):
+		return str(self.user)
 
 
 class Wishlist(models.Model):

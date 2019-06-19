@@ -21,7 +21,7 @@
                     {% if active_dialog.owner.profile_foto %}
                     <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{{ active_dialog.owner.profile_foto.url }}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
                     {% else %}
-                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" " class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
+                    <a href="{{ active_dialog.owner.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
                     {% endif %}
                 </div>
 
@@ -42,11 +42,11 @@
                                 {{ opponent_username }}
 
                     </div>
-                    <!-- <div class="text-success" id="online-status">{% trans "Online" %}</div>
-                    <div class="text-danger" id="offline-status">{% trans "Offline" %}</div>  -->
+                    <div class="text-success ml-3" id="online-status" style='display: none'><i class="fas fa-circle"></i></div>
+                    <div class="text-danger ml-3" id="offline-status" style='display: none'><i class="fas fa-circle"></i></div> 
                 </div>
             </div>
-                       
+
 
             <div class="row position-relative" style="padding: 0; margin: 0;">
 
@@ -59,11 +59,11 @@
                                         <td id="conversations" class='user-table position-static' style="padding: 0; margin: 0;">
                                         {% if dialog.owner == request.user %}
                                             {% with dialog.opponent.username as username %}
-                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans "" %} {{ username }}</a>
+                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans username %}</a>
                                             {% endwith %}
                                         {% else %}
                                                 {% with dialog.owner.username as username %}
-                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans "" %} {{ username }}</a>
+                                                <a href="{% url 'dialogs_detail' username %}" id="user-{{ username }}" class="btn text-left conv-user" style="padding: 5px 20px; margin: 0;">{% trans username %}</a>
                                                 {% endwith %}
                                         {% endif %}
                                         </td>
@@ -82,7 +82,7 @@
                                  <div id="messages" class="messages my-custom-scrollbar position-relative" style="padding:5px 0px; margin-left:25px;">
                                     {% for msg in active_dialog.messages.all %}
                                     <div class="row position-static {% if msg.read %}msg-read{% else %}msg-unread{% endif %}" data-id="{{ msg.id }}" style="padding:0; margin: 0;" id="mssg-text">
-                                        <p class="{% if msg.sender == request.user %}pull-left{% else %}pull-right{% endif %}" style="min-width: 1000px; max-width: 1000px;">
+                                        <p class="{% if msg.sender == request.user %}pull-right{% else %}pull-left{% endif %}" style="min-width: 1000px; max-width: 1000px;">
                                         <span class="username">{{ msg.sender.username }}:
                                         </span>
                                         {{ msg.text }}
@@ -227,20 +227,20 @@
             function setUserOnlineOffline(username, online) {
                 var elem = $("#user-" + username);
                 if (online) {
-                    elem.attr("class", "btn btn-dark");
+                    elem.append("class", "btn btn-dark");
                 } else {
                     elem.attr("class", "btn btn-danger");
                 }
             }
 
             function gone_online() {
-                $("#offline-status").hide();
-                $("#online-status").show();
+                $("#offline-status").css('display', 'none');
+                $("#online-status").css('display', 'block');
             }
 
             function gone_offline() {
-                $("#online-status").hide();
-                $("#offline-status").show();
+                $("#online-status").css('display', 'none');
+                $("#offline-status").css('display', 'block');
             }
 
             function flash_user_button(username) {

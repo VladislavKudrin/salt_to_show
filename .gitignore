@@ -1,4 +1,22 @@
-.DS_Store
+
+.DS_STORE
+
+.env
+*.sublime-project
+fasttracktojquery/
+
+
+# Ignore the default SQLite database.
+
+#test templates 
+templates/test1.html
+templates/test2.html
+templates/template.html
+templates/test1.html
+
+
+ecommerce/settings/local.py 
+# Virtualenv related
 bin/
 include/
 pip-selfcheck.json

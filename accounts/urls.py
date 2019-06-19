@@ -9,12 +9,14 @@ from .views import (
     ProfileView,
     WishListView,
     wishlistupdate,
+    languge_pref_view
     )
 
 
 
 urlpatterns = [
     url(r'^$',AccountHomeView.as_view(), name='home'),
+    url(r'^language/$',languge_pref_view, name='language-pref'),
     url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),
     url(r'^wishlist-update/$', wishlistupdate, name='wish-list-update'),
     url(r'^history/products/$',UserProductHistoryView.as_view(), name='history-product'),

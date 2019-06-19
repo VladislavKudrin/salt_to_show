@@ -51,7 +51,7 @@ class MarketingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
 	form_class = MarketingPreferenceForm
 	template_name = 'accounts/detail-update-view.html'
 	success_url = '/settings/email/'
-	success_message = 'Your Email pref had been updated!'
+	success_message = 'Your email preferences had been updated!'
 
 	def dispatch(self, *args, **kwargs): #грубо говоря, рендер, последний метод, который выводит класс
 		user = self.request.user
@@ -60,7 +60,7 @@ class MarketingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
 		return super(MarketingPreferenceUpdateView, self).dispatch(*args,**kwargs)
 	def get_context_data(self, *args, **kwargs):
 		context = super(MarketingPreferenceUpdateView, self).get_context_data(*args, **kwargs)
-		context['title'] = 'Update Email Preferences'
+		context['title'] = 'Update email preferences'
 		context['marketing_in_action'] = True
 		return context
 

@@ -47,9 +47,11 @@ $(document).ready(
       if (doSubmit){
         submitBtn.addClass("disabled")
         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Sending....")
+        submitBtn.attr("disabled", true)
       } else {
         submitBtn.removeClass("disabled")
         submitBtn.html(defaultText)
+        submitBtn.attr("disabled", false)
       }
     }            
     contactForm.submit(
@@ -110,7 +112,6 @@ $(document).ready(
 
 
   //Product Delete Alert Ajax
-
     var deleteForm=$(".delete-product-form")
     var instance_id = deleteForm.attr("data_id")
     var instance_title = deleteForm.attr("product_title")
@@ -128,7 +129,6 @@ $(document).ready(
        next_url:next_url
             }
     var deleteTemplateHtml  = deleteTemplate.render(deleteTemplateDataContext)
-
       deleteForm.submit(
       function(event){
       var thisForm = $(this)
