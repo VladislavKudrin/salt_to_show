@@ -64,6 +64,7 @@ class CategoryFilterView(ListView):
 			sort_qs_list = request.POST.getlist('qs_for_sort_slug')
 			for i in sort_qs_list:
 				lookups_products=lookups_products|(Q(slug__iexact=i))
+			print(request.POST)
 			relevant = request.POST.get('relevant')
 			high_low = request.POST.get('high_low')
 			low_high = request.POST.get('low_high')

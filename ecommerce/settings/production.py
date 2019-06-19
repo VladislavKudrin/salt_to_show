@@ -54,7 +54,7 @@ ADMINS = MANAGERS
 
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-SESSION_COOKIE_AGE = 31536000 #1 year
+
 
 # Application definition
 
@@ -90,7 +90,8 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'test_ecommerce'
+    'test_ecommerce',
+    'image_uploader'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -262,7 +263,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+
 
 CHANNEL_LAYERS = {
     "default": {
@@ -279,17 +280,17 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_URL = '/static/'
+
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-# MEDIA_URL = "/media/"
+# from ecommerce.aws.conf import *
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
-
-
-from ecommerce.aws.conf import *
-
-
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 
 # CACHES = {

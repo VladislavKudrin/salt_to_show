@@ -24,19 +24,12 @@ from carts.models import Cart
 from categories.models import Size, Brand
 
 from accounts.models import User
-from .models import Product, Image, ImageOrderUtil
+from .models import Product, ProductImage, ImageOrderUtil
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
+from image_uploader.models import unique_form_id_generator
 
 
 
-
-from django import template
-
-register = template.Library()
-
-@register.filter
-def to_none(value):
-    return ""
 
 
 class ProductFeaturedListView(ListView):
@@ -130,7 +123,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		# all_wishes = user.wishes_user.all()
 		# wished_products = [wish.product for wish in all_wishes]
 		slug = self.kwargs.get('slug')
-		all_ = Image.objects.all().filter(slug=slug)
+		all_ = ProductImage.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
@@ -223,12 +216,14 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 def image_create_order(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
+		print(request.POST)
 		slug = request.POST.get('slug')
-		images = Image.objects.filter(slug=slug)
+		images = ProductImage.objects.filter(slug=slug)
 		array = numpy.array(data)
 		array = array.astype(numpy.int)
 		array = array + 1
 		for img in images:
+			print('hii')
 			min_ = min(array)
 			index_of_min = numpy.where(array==min(array))[0][0].item()
 			number = index_of_min + 1
@@ -243,7 +238,7 @@ def image_update_view(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
 		for idx, image_key in enumerate(data):
-			Image.objects.filter(unique_image_id=image_key).update(image_order=idx+1)
+			ProductImage.objects.filter(unique_image_id=image_key).update(image_order=idx+1)
 	return redirect('home')
 
 
@@ -251,23 +246,23 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
 	def post(self, request, *args, **kwargs):
-		if request.is_ajax():
-			print('works')
-			form = self.get_form()
-			if form.is_valid():
-				return self.form_valid(form)
-			else:
-				return self.form_invalid(form)
-				# errors = form.errors
-				# # HttpResponse(json.dumps(errors), status=404)
-				# response = JsonResponse({"error": "there was an error"})
-				# response.status_code = 403
-				# return(response)
-				# return JsonResponse(form.errors.as_json(), status=400)
-	
+		form = self.get_form()
+		if form.is_valid():
+			return self.form_valid(form)
+		else:
+			return self.form_invalid(form)
+
+			# errors = form.errors
+			# # HttpResponse(json.dumps(errors), status=404)
+			# response = JsonResponse({"error": "there was an error"})
+			# response.status_code = 403
+			# return(response)
+			# return JsonResponse(form.errors.as_json(), status=400)
+
 	def get(self, request, *args, **kwargs):
 		brands = Brand.objects.all()
 		brand_arr = []
+		form_id = unique_form_id_generator()
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():
@@ -290,10 +285,20 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				return JsonResponse(json_data)
 			return JsonResponse(json_data)
 		product_form = ImageForm(request)
-		context={}
-		context['button']='Create'
-		context['title']='Add new product'
-		context['form']=product_form
+		if self.request.session.get('language') == 'RU':
+			context={
+			'form': product_form,
+			'button': 'Добавить',
+			'title':'Добавить новый продукт',
+			'form_id': form_id
+			}
+		else:
+			context={
+			'form': product_form,
+			'button': 'Create',
+			'title':'Add new product',
+			'form_id': form_id
+			}
 
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
@@ -313,11 +318,19 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			# 	'errors':json.dumps(form.errors)
 			# 	}
 			return JsonResponse({'error':form.errors})
-		context={
+		if self.request.session.get('language') == 'RU':
+			context={
+			'form': form,
+			'button': 'Создать',
+			'title':'Добавить новый продукт'
+			}
+		else:
+			context={
 			'form': form,
 			'button': 'Create',
-			'title':'Create new product'
-		}
+			'title':'Add new product'
+			}
+		
 		return render(self.request, 'products/product-create.html', context)
 
 
@@ -372,10 +385,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
 		request = self.request
 		slug = self.kwargs.get('slug')
-		context['title'] = 'Update'
-		context['button']='Update' 
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Редактировать'
+			context['button']='Сохранить' 
+		else:
+			context['title'] = 'Update'
+			context['button']='Update'
+		
 		new_all_=[]
-		all_ = Image.objects.all().filter(slug=slug)
+		all_ = ProductImage.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_

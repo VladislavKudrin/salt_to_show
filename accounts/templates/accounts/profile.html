@@ -1,67 +1,119 @@
 {% extends "base.html" %}
 {% load static %}	
 {% block content %}
-
-
-<div class='col-12 text-left p-0'>
-		<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-3x"></i></button>
-</div>
-
-<div class="container-fluid">
-<div class='row'>
-
-	<div class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
-	  		{% include "sidebar.html" %}
+	{% if request.session.language == 'RU' %}
+		<div class='col-12 text-left p-0'>
+				<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-3x"></i></button>
 		</div>
 
-	<div class='col-12 text-center'>
-		{% if object.profile_foto %}
-        <img src="{{ object.profile_foto.url }}"  class=" avatar img-thumbnail ml-2" alt="..." style="width:80px; height: 80px">
-        {% else %}
-        <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:80px; height: 80px">
-        {% endif %}
-	</div>
-</div>
-<div class='row mt-2'>
-	<div class='col-xs-12 col-md-5 mx-auto text-center'>	
-		<h3>{{ object.username }}</h3>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-xs-12 col-md-3 mx-auto text-center">
-		{% include 'accounts/snippets/begin-chat.html' %}
-	</div>
-</div>
+		<div class="container-fluid">
+		<div class='row'>
 
 
-<div class='row'>
-	<div class='col-12'><br>
-		<h6 class="font-weight-bold" id="products-by-user">Products By:</h6>
-	</div>
-</div>
+			<div class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+			  		{% include "sidebar.html" %}
 
-<div class='row mx-md-4'>
-	{% for obj in products %}
-		<div class='col-xs-12 col-md-3 position-relative'>
-			{% include 'products/snippets/card.html' with instance=obj %}
-			{% if forloop.counter|divisibleby:4 %}
 				</div>
-				</div>
-				<div class='row'>
-				<div class='col-12'>
-				</div>
-			{% else %}
-				</div>
-			{% endif %}
 
-	{% endfor %}
-</div>
-</div>
+			<div class='col-12 text-center'>
+				{% if request.user.profile_foto %}
+		        <img src="{{ request.user.profile_foto.url }}"  class=" avatar img-thumbnail ml-2" alt="..." style="width:80px; height: 80px">
+		        {% else %}
+		        <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:80px; height: 80px">
+		        {% endif %}
+			</div>
+		</div>
+		<div class='row mt-2'>
+			<div class='col-xs-12 col-md-5 mx-auto text-center'>	
+				<h3>{{ object.username }}</h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-3 mx-auto text-center">
+				{% include 'accounts/snippets/begin-chat.html' %}
+			</div>
+		</div>
 
 
+		<div class='row'>
+			<div class='col-12'><br>
+				<h6 class="font-weight-bold" id="products-by-user">Ваши предметы:</h6>
+			</div>
+		</div>
+
+		<div class='row mx-md-4'>
+			{% for obj in products %}
+				<div class='col-xs-12 col-md-3 position-relative'>
+					{% include 'products/snippets/card.html' with instance=obj %}
+					{% if forloop.counter|divisibleby:4 %}
+						</div>
+						</div>
+						<div class='row'>
+						<div class='col-12'>
+						</div>
+					{% else %}
+						</div>
+					{% endif %}
+
+			{% endfor %}
+		</div>
+		</div>
+{% else %}
+		<div class='col-12 text-left p-0'>
+			<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-3x"></i></button>
+		</div>
+
+		<div class="container-fluid">
+		<div class='row'>
+
+		<div class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+		  		{% include "sidebar.html" %}
+			</div>
+
+		<div class='col-12 text-center'>
+			{% if request.user.profile_foto %}
+		    <img src="{{ request.user.profile_foto.url }}"  class=" avatar img-thumbnail ml-2" alt="..." style="width:80px; height: 80px">
+		    {% else %}
+		    <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:80px; height: 80px">
+		    {% endif %}
+		</div>
+		</div>
+		<div class='row mt-2'>
+		<div class='col-xs-12 col-md-5 mx-auto text-center'>	
+			<h3>{{ object.username }}</h3>
+		</div>
+		</div>
+
+		<div class="row">
+		<div class="col-xs-12 col-md-3 mx-auto text-center">
+			{% include 'accounts/snippets/begin-chat.html' %}
+		</div>
+		</div>
 
 
+		<div class='row'>
+		<div class='col-12'><br>
+			<h6 class="font-weight-bold" id="products-by-user">Products By:</h6>
+		</div>
+		</div>
 
-		
+		<div class='row mx-md-4'>
+		{% for obj in products %}
+			<div class='col-xs-12 col-md-3 position-relative'>
+				{% include 'products/snippets/card.html' with instance=obj %}
+				{% if forloop.counter|divisibleby:4 %}
+					</div>
+					</div>
+					<div class='row'>
+					<div class='col-12'>
+					</div>
+				{% else %}
+					</div>
+				{% endif %}
+
+		{% endfor %}
+		</div>
+		</div>
+{% endif %}
 {% endblock %}

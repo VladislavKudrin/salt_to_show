@@ -23,8 +23,6 @@ def get_filename_ext(filepath):
 
 
 def upload_image_path(instance, filename):
-	print(instance)
-	print(filename)
 	new_filename = random.randint(1,31231231)
 	name, ext = get_filename_ext(filename)
 	final_filename = '{new_filename}{ext}'.format(new_filename=new_filename,ext=ext)
@@ -118,7 +116,6 @@ CATEGORY_CHOICES = (
 	('accessories', 'Accessories'),
 	('outwear', 'Outwear'),
 	('footwear', 'Footwear'),
-	('big', 'Big')
 	)
 SEX_CHOICES = (
 	('man', 'Man'),
@@ -166,7 +163,7 @@ def product_pre_save_reciever(sender, instance, *args, **kwargs):
 pre_save.connect(product_pre_save_reciever,sender=Product)
 
 
-class Image(models.Model):
+class ProductImage(models.Model):
 	product 		= models.ForeignKey(Product, default=None, related_name='images')
 	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	image_order 	= models.DecimalField(decimal_places=0, max_digits=20, default=1)
@@ -179,9 +176,9 @@ class Image(models.Model):
 
 def image_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.unique_image_id:
-		instance.unique_image_id = unique_image_id_generator(instance)
+		instance.unique_image_id = unique_image_id_generator(instance, 'product_image')
 
-pre_save.connect(image_pre_save_reciever,sender=Image)
+pre_save.connect(image_pre_save_reciever,sender=ProductImage)
 
 
 

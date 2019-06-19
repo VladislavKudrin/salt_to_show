@@ -1,5 +1,5 @@
 import datetime
-# from storages.backends.s3boto3 import S3Boto3Storage
+
 
 AWS_GROUP_NAME = 'EnvisionGroup'
 AWS_USERNAME = 'envision-user'
@@ -13,7 +13,6 @@ AWS_PRELOAD_METADATA = True
 
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
-FILE_FORM_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'envision-ecommerce-1'
 AWS_BUCKET_NAME = 'envision-ecommerce-1'
@@ -21,7 +20,6 @@ S3DIRECT_REGION = 'us-east-2'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_ROOT = MEDIA_URL
-FILE_FORM_UPLOAD_DIR = '//%s.s3.amazonaws.com/media/temp_uploads/' % AWS_STORAGE_BUCKET_NAME
 STATIC_URL = S3_URL + 'static/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 

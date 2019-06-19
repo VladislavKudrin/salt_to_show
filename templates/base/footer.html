@@ -1,15 +1,32 @@
 {% url 'contact' as contact_url %}
 {% load static %}
-
-<footer class="page-footer font-small my-4">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 col-md-7 my-4 text-right">
-          <a href="" class="text-body mr-3">About</a>
-          <a href="" class="text-body mx-3">Help</a>
-          <a href='{% url "contact" %}' class="text-body mx-3">Contact</a>
-        </div>
-        <div class="col my-4 text-right">
-          <div class="footer-copyright">© 2019 Envision Outfit</div>
-        </div>
-</footer>
+{% if request.session.language == 'RU' %}
+  <footer class="page-footer font-small my-4">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12 col-md-7 my-4 text-right">
+            <a href="" class="text-body mr-3">О нас</a>
+            <a href="" class="text-body mx-3">Помощь</a>
+            <a href='{% url "contact" %}' class="text-body mx-3">Контакт</a>
+          </div>
+          <div class="col my-4 text-right">
+            <div class="footer-copyright">© 2019 Envision Outfit</div>
+          </div>
+  </footer>
+{% else %}
+  <footer class="page-footer font-small my-4">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12 col-md-7 my-4 text-right">
+            <a href="" class="text-body mr-3">About</a>
+            <a href="" class="text-body mx-3">Help</a>
+            <a href='{% url "contact" %}' class="text-body mx-3">Contact</a>
+          </div>
+          <div class="col my-4 text-right">
+            <div class="footer-copyright">© 2019 Envision Outfit</div>
+          </div>
+  </footer>
+{% endif %}
+{% if request.session.language == 'RU' %}
+{% else %}
+{% endif %}

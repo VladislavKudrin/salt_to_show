@@ -5,35 +5,41 @@
 {% block content %}
 
 <div class="container-fluid ajax-search">
-<div class="row">
+ <div class="row">
 
   <div class='col-xs-12 col-md-7 mx-auto'>
   {% if title %}<h2 class='my-3'>{{ title }}</h2>{% endif %}
 
 
 
-  <form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create_order="{% url 'products:handle_image_create_sort' %}" action_url_create="{% url 'products:create' %}"action_url="{% url 'products:handle_image_sort' %}"> {% csrf_token %}
-  	{{ form|crispy }}
+    <form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create_order="{% url 'products:handle_image_create_sort' %}" action_url_create="{% url 'products:create' %}"action_url="{% url 'products:handle_image_sort' %}" image_upload_url="{% url 'image_uploader:image_upload_url' %}"image_delete_url="{% url 'image_uploader:image_delete_url' %}"> {% csrf_token %}
+      <input type="hidden" id='form_id' name="form_id" value='{{ form_id }}'>
+      {% if request.session.language == 'RU' %}
+        <input type="hidden" id='language' name="language" value='RU'>
+      {% else %}
+        <input type="hidden" id='language' name="language" value='EN'>
+      {% endif %}
+    	{{ form|crispy }}
 
 
-    
-    {% include 'products/snippets/images-upload.html' with object=object %}
-    <button type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">{{ button }}</button>
-  </form>
-{% include 'django_file_form/upload_template.html' %}
+      
 
-    <script src="{% static 'ajaxuploader/js/fileuploader.js' %}"></script>
-    <script src="{% static 'file_form/file_form.js' %}"></script>
-<script>
-  
-    $(function() {
-        initUploadFields($('#example-form-1'));
+      {% include 'products/snippets/images-upload.html' with object=object %}
+      
+      <div class='row ml-1'>
+        <div class="ui-widget ui-helper-clearfix custom-upload-file-ajax-temp">
+          <ul id='customSort' class="mb-2 gallery ui-helper-reset ui-helper-clearfix temp-images">
+          </ul>
+        </div>
+      </div>
+      <div class>
+        <input type="hidden" name='image' id='id_image' class='form-control'>
+      </div>
+    </form>
 
-    });
-</script>
-
-</div>
-</div>
+    <button type="submit" form='example-form-1'value="Submit" class="btn btn-dark btn-lg btn-block">{{ button }}</button>
+  </div>
+ </div>
 </div>
 
 {% endblock %}

@@ -3,31 +3,44 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class='text-center'>
-  <h2>{{ title }}</h2>
-</div>
-
-<div class='container-fluid'>
-  <div class='row'>
-      <div class='col-xs-12 col-md-7 mx-auto'>
-        <form class ='contact-form' method = 'POST' action='{% url "contact" %}'> {% csrf_token %}
-          <input type="hidden" name="popchik" value="{{ user_email }}">
-           {{ form|crispy }}
-
-           <button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button>
-        </form>
-        <br>
-
-
-          <!--<form method = 'POST'> {% csrf_token %}
-              <input type = 'text' class='form-control' placeholder = 'Name' name='fullname'>
-              <input type = 'email' class='form-control' placeholder = 'Email' name='email'>
-              <textarea name='content' placeholder = 'Your content' class='form-control'></textarea>
-              <button type= 'submit' class='btn-default'>Submit</button>
-              </form> -->
-      </div>  
+{% if request.session.language == 'RU' %}
+  <div class='text-center'>
+    <h2>Связаться с нами</h2>
   </div>
-</div>
+
+  <div class='container-fluid'>
+    <div class='row'>
+        <div class='col-xs-12 col-md-7 mx-auto'>
+          <form class ='contact-form' method = 'POST' action='{% url "contact" %}'> {% csrf_token %}
+            <input type="hidden" name="popchik" value="{{ user_email }}">
+            <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
+             {{ form|crispy }}
+             <button type="submit" class="btn btn-dark btn-lg btn-block">Отправить</button>
+          </form>
+          <br>
+        </div>  
+    </div>
+  </div>
+{% else %}
+  <div class='text-center'>
+    <h2>Contact Page</h2>
+  </div>
+
+  <div class='container-fluid'>
+    <div class='row'>
+        <div class='col-xs-12 col-md-7 mx-auto'>
+          <form class ='contact-form' method = 'POST' action='{% url "contact" %}'> {% csrf_token %}
+            <input type="hidden" name="popchik" value="{{ user_email }}">
+            <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
+             {{ form|crispy }}
+             <button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button>
+          </form>
+          <br>
+        </div>  
+    </div>
+  </div>
+{% endif %}
+
 {% endblock %}
 
 

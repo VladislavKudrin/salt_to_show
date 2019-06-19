@@ -8,7 +8,7 @@ from .models import UploadedFile
 from .util import load_class, check_permission
 from .ajaxuploader.backends.s3 import S3UploadBackend
 
-class FileFormUploadBackend(LocalUploadBackend):
+class FileFormUploadBackend(S3UploadBackend):
     UPLOAD_DIR = conf.UPLOAD_DIR
 
     def upload_complete(self, request, filename, file_id, *args, **kwargs):
@@ -25,8 +25,7 @@ class FileFormUploadBackend(LocalUploadBackend):
             form_id=request.POST['form_id'],
             original_filename=original_filename,
         )
-        print('uploade complete')
-        print(values)
+        
         
 
         field_name = request.POST.get('field_name')

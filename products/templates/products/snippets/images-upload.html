@@ -95,29 +95,12 @@
         }, 1 );
       }
     }
- 
-    // Resolve the icons behavior with event delegation
-    $( "ul.gallery > li" ).on( "click", function( event ) {
-      var $item = $( this ),
-        $target = $( event.target );
- 
-      if ( $target.is( "a.ui-icon-trash" ) ) {
-        deleteImage( $item );
-      } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
-        viewLargerImage( $target );
-      } else if ( $target.is( "a.ui-icon-refresh" ) ) {
-        recycleImage( $item );
-      }
- 
-      return false;
-    });
+
   } );
 
 
 
-
   </script>
-
 
 
 <div class="ui-widget ui-helper-clearfix custom-upload-file-ajax" style='display: {% if not object.images.all %} none {% endif %}'>

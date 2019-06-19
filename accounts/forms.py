@@ -73,6 +73,15 @@ class UserDetailChangeForm(forms.ModelForm):
                 'username',
                 'profile_foto'
                     ]
+    def __init__(self, request, *args, **kwargs):
+        super(UserDetailChangeForm, self).__init__(*args, **kwargs)
+        self.lan = request.session.get('language')
+        if self.lan == 'RU':
+            self.fields['full_name'].label = "Полное имя"
+            self.fields['username'].label = "Имя пользователя"
+            self.fields['profile_foto'].label = "Фото профиля"
+
+
 
 class UserAdminChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on

@@ -10,6 +10,7 @@ def random_string_generator(size=10, chars=string.ascii_lowercase + string.digit
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+
 def unique_key_generator(instance):
     """
     This is for a Django project with order id field.
@@ -35,11 +36,14 @@ def unique_order_id_generator(instance):
     return order_new_id
 
 
-def unique_image_id_generator(instance):
+def unique_image_id_generator(instance, image_type):
     size = random.randint(30,45)
     key = random_string_generator(size=size)
     Klass = instance.__class__
-    qs_exists = Klass.objects.filter(unique_image_id=key).exists()
+    if image_type == 'uploaded_image':
+        qs_exists = Klass.objects.filter(uploaded_file=key).exists()
+    else:
+        qs_exists = Klass.objects.filter(unique_image_id=key).exists()
     if qs_exists:
         return unique_slug_generator(instance)
     return key
@@ -55,7 +59,8 @@ def unique_slug_generator(instance, new_slug=None):
         slug = new_slug
     else:
         slug = slugify(instance.title)
-
+        if slug == '':
+            slug = random_string_generator(size=random.randint(3, 5))
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(slug=slug).exists()
     if qs_exists:

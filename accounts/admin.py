@@ -5,7 +5,7 @@ from .forms import UserAdminCreationForm, UserAdminChangeForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import GuestEmail, EmailActivation, Wishlist
+from .models import GuestEmail, EmailActivation, Wishlist, LanguagePreference
 
 User = get_user_model()
 
@@ -60,7 +60,12 @@ class GuestEmailAdmin(admin.ModelAdmin):
 
 admin.site.register(GuestEmail, GuestEmailAdmin)
 
+class LanguagePreferenceAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'language']
+    search_fields = ['user']
+    class Meta:
+        model = LanguagePreference
 
-
+admin.site.register(LanguagePreference, LanguagePreferenceAdmin)
 
 # admin.site.register(Profile)
