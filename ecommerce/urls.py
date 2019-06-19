@@ -80,7 +80,6 @@ urlpatterns = [
     url(r'^orders/', include("orders.urls", namespace='orders')),
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
-    url(r'^test/', include("test_ecommerce.urls",namespace='test')),
 
 
 

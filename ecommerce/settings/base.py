@@ -70,10 +70,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'sass_processor',
     'rest_framework',
-    'django_file_form',
-    'django_file_form.ajaxuploader',
-    'django_bootstrap3_form',
-    'django_pony_forms',  
 
     #our apps
     'chat_ecommerce',
