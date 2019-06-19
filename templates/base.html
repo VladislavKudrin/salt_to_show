@@ -2,7 +2,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -82,12 +81,13 @@ var input = contact.find("[name='email']").val(userEmail)
 //update
 var currentPath = window.location.href
 if (currentPath.indexOf("create") != -1){
+    var languageOption = $('#language').val()
     var galleryUpdate = $('#gallery')
     var formSubmit = $('#example-form-1')
     var action = formSubmit.attr("action_url_create")
     var action_order = formSubmit.attr("action_url_create_order")
     var buttonImageUpload = $('.image-upload-button')
-    buttonImageUpload.parent().prepend('<label for="image_custom" class="btn p-0 mb-0 mt-1"><i class="fas fa-upload fa-2x"></i></label>')
+    // buttonImageUpload.parent().prepend('<label for="image_custom" class="btn p-0 mb-0 mt-1"><i class="fas fa-upload fa-2x"></i></label>')
      
     var uploadUrl = formSubmit.attr('image_upload_url')
     var deleteImageUrl = formSubmit.attr('image_delete_url')
@@ -155,8 +155,15 @@ function deleteItem(item){
             var myFiles = $(this)[0].files;
             if (myFiles.length>8){
                 if ($('.image').length==0){
-                    $('#id_image').addClass('is-invalid')
-                    $('#id_image').after("<p class='invalid-feedback image'><strong>Too many files. Should be less than 8</strong></p>")}//if more than 8 one time
+                    if(languageOption=='RU'){
+                        $('#id_image').addClass('is-invalid')
+                        $('#id_image').after("<p class='invalid-feedback image'><strong>Слишком много файлов. Максимальное колличество - 8</strong></p>")}//if more than 8 one time
+                    }//if ru
+                    else{
+                        $('#id_image').addClass('is-invalid')
+                        $('#id_image').after("<p class='invalid-feedback image'><strong>Too many files. Should be less than 8</strong></p>")//if more than 8 one time
+                    }//if not ru
+                    
                 return console.log('hellow')
             }//ifmorethan8
             displayUploading(myFiles, true)
@@ -200,11 +207,20 @@ function deleteItem(item){
         submitBtn.addClass("disabled")
         submitBtn.attr("disabled", true)
         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
-      } else {
+        if(languageOption=='RU'){
+            console.log('ru')
+
+        }//if rus
+        else{
+            console.log('en')
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
+        }//if not rus
+        } //if dosubmit 
+      else {
         submitBtn.removeClass("disabled")
         submitBtn.attr("disabled", false)
         submitBtn.html(defaultText)
-      }
+      }//elsedosubmit
     }        
     formSubmit.submit(
     function(event){

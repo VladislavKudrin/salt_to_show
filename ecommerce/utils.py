@@ -59,7 +59,8 @@ def unique_slug_generator(instance, new_slug=None):
         slug = new_slug
     else:
         slug = slugify(instance.title)
-
+        if slug == '':
+            slug = random_string_generator(size=random.randint(3, 5))
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(slug=slug).exists()
     if qs_exists:

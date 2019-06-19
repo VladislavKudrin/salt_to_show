@@ -116,7 +116,6 @@ CATEGORY_CHOICES = (
 	('accessories', 'Accessories'),
 	('outwear', 'Outwear'),
 	('footwear', 'Footwear'),
-	('big', 'Big')
 	)
 SEX_CHOICES = (
 	('man', 'Man'),

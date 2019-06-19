@@ -27,16 +27,45 @@ class ProductCreateForm(forms.ModelForm):
 		'category',
 		'size',
 			]
-	def __init__(self, request, *args, **kwargs):#
+	def __init__(self, request, *args, **kwargs):
 		super(ProductCreateForm, self).__init__(*args, **kwargs)
 		self.request = request
+		self.lan = request.session.get('language')
+		if self.lan == 'RU':
+			self.fields['title'].label = "Название"
+			self.fields['description'].label = "Описание"
+			self.fields['price'].label = "Цена"
+			self.fields['brand'].label = "Бренд"
+			self.fields['brand'].widget.attrs['placeholder'] = 'Введите бренд'
+			self.fields['sex'].label = "Пол"
+			self.fields['sex'].choices = SEX_CHOICES = (
+			('man', 'Муж'),
+			('woman', 'Жен'),
+			('unisex', 'Унисекс')
+			)
+			self.fields['category'].label = "Категория"
+			self.fields['category'].choices = CATEGORY_CHOICES = (
+			('select a category', 'Выберете категорию'),
+			('tops', 'Верх'),
+			('bottoms', 'Низ'),
+			('accessories', 'Аксессуары'),
+			('outwear', 'Верхняя одежда'),
+			('footwear', 'Обувь'),
+			)
+			self.fields['size'].label = "Размер"
+
+
+		
 	
 
 	def clean_category(self):
 		request = self.request
 		data = self.cleaned_data
 		if data.get('category') == 'select a category':
-			self.add_error('category', 'Please, select a category')
+			if self.lan == 'RU':
+				self.add_error('category', 'Пожалуйста, выберите категорию')
+			else:
+				self.add_error('category', 'Please, select a category')
 		return data.get('category')
 
 	def clean_brand(self):
@@ -48,17 +77,32 @@ class ProductCreateForm(forms.ModelForm):
 			instance=brand_instance.first()
 			return instance
 		else:
-			self.add_error('brand', 'Please, select existing brand')
+			if self.lan == 'RU':
+				self.add_error('brand', 'Пожалуйста, выберите существующий бренд')
+			else:
+				self.add_error('brand', 'Please, select existing brand')
 
 
 
 class ImageForm(ProductCreateForm):
-	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom', 'style':'display:none'} ))
+	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
+	def __init__(self, request, *args, **kwargs):
+		super(ImageForm, self).__init__(request, *args, **kwargs)
+		self.fields['image'].label = "Фото"
+	
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		if len(cleaned_images)==0:
+			if self.lan == 'RU':
+				raise forms.ValidationError("Загрузите фото")
+			else:
+				raise forms.ValidationError("You should upload an image")	
 		if len(cleaned_images)>8:
-			raise forms.ValidationError("Too many files, should be 8")
+			if self.lan == 'RU':
+				raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
+			else:
+				raise forms.ValidationError("Too many files, should be 8")	
 		return cleaned_images
 		
 	def save(self, commit=True):

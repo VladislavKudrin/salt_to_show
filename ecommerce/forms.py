@@ -5,7 +5,7 @@ from django import forms
 
 
 class ContactForm(forms.Form):
-	email = forms.EmailField( widget=forms.EmailInput(attrs={
+	email = forms.EmailField(widget=forms.EmailInput(attrs={
 		'class':'form-control',
 		'placeholder':'Your Email'
 
@@ -13,12 +13,15 @@ class ContactForm(forms.Form):
 		}))
 	content = forms.CharField(widget=forms.Textarea(attrs={
 		'class':'form-control',
-		'placeholder':'Your massage'
+		'placeholder':'Your message'
 		}))
-	# def __init__(self, request, *args, **kwargs):#
-	# 	super(ContactForm, self).__init__(*args, **kwargs)
-	# 	self.request = request
-	# 	self.fields['email'] = request
+	def __init__(self, request, *args, **kwargs):
+		super(ContactForm, self).__init__(*args, **kwargs)
+		self.request = request
+		self.lan = request.session.get('language')
+		if self.lan == 'RU':
+			self.fields['content'].label = "Содержание"
+			self.fields['content'].widget.attrs['placeholder'] = 'Ваше сообщение'
 
 	# def clean_email(self):
 	# 	email = self.cleaned_data.get('email')

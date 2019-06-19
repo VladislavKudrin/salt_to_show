@@ -1,36 +1,22 @@
 {% extends "base.html" %}
 {% load for_loop_extras %}
 {% block content %}
-
+{% if request.session.language == 'RU' %}
 <div class='col-12 text-right p-0'>
 		<div class="btn-group dropleft customDropRight">
 			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<i class="fas fa-sort fa-2x"></i>
 			</button>
 			<div class="dropdown-menu customDropRightMenu" aria-labelledby="dropdownMenuButton">
-				<form class='form' method='POST' action="">{% csrf_token %}
+				<form class='form text-center' method='POST' action="">{% csrf_token %}
 					{% for item in object_list %}
 						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
 					{% endfor %}
 					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<input type="hidden" name="relevant" value='-timestamp'> 
-					<button type='submit' class='btn'>Relevant</button>
-				</form>
-				<form class='form' method='POST' action="">{% csrf_token %}
-					{% for item in object_list %}
-						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
-					{% endfor %}
-					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<input type="hidden" name="high_low" value='-price'>
-					<button type='submit' class='btn'>Price high to low</button>
-				</form>
-				<form class='form' method='POST' action="">{% csrf_token %}
-					{% for item in object_list %}
-						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
-					{% endfor %}
-					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<input type="hidden" name="low_high" value='price'>
-					<button type='submit' class='btn'>Price low to high</button>
+					<button type='submit' name="relevant" value='-timestamp' class='btn'><i class="fas fa-air-freshener"></i></button><br/>
+					<button type='submit' name="high_low" value='-price' class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-down"></i></i></i></button><br/>
+					<input type="hidden"  name="qs_for_sort" value='{{ object_list }}'>
+					<button type='submit' name="low_high" value='price'class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-up"></i></i></button>
 				</form>
 			</div>
 			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h fa-2x"></i></button>
@@ -38,41 +24,87 @@
 </div>
 
 <div class="container-fluid ajax-search">
-
-
 <div class='row'>
-
-
-		<div class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
-			{% include 'categories/snippets/filter-box.html' with instance=obj %}
-				</div>
-			{% if filter_gender or filter_category or filter_size %}
-				<div class='col-12 text-center'>Results for:
-				{% if filter_gender %}
-					{% for gender in filter_gender %}
-						<b>{{ gender }}</b>
-					{% endfor %}
-				{% endif %}
-				{% if filter_category %}
-					{% for category in filter_category %}
-					<b>{{ category }}</b>
-					{% endfor %}
-				{% endif %}
-				{% if filter_size %}
-					{% for size in filter_size %}
-					<b>{{ size }}</b>
-					{% endfor %}
-				{% endif %}
-					</div>
-			{% endif %}
+	<div class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+		{% include 'categories/snippets/filter-box.html' with instance=obj %}
 			</div>
+		{% if filter_gender or filter_category or filter_size %}
+			<div class='col-12 text-center'>
+				Результаты для:
+			{% if filter_gender %}
+				{% for gender in filter_gender %}
+						<b>{{ gender|to_rus }}</b>
+				{% endfor %}
+			{% endif %}
+			{% if filter_category %}
+				{% for category in filter_category %}
+						<b>{{ category|to_rus }}</b>
+				{% endfor %}
+			{% endif %}
+			{% if filter_size %}
+				{% for size in filter_size %}
+					<b>{{ size }}</b>
+				{% endfor %}
+			{% endif %}
+				</div>
+		{% endif %}
+</div>
+
+{% else %}
+<div class='col-12 text-right p-0'>
+		<div class="btn-group dropleft customDropRight">
+			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fas fa-sort fa-2x"></i>
+			</button>
+			<div class="dropdown-menu customDropRightMenu"style='width: 100px' aria-labelledby="dropdownMenuButton">
+				<form class='form text-center' method='POST' action="">{% csrf_token %}
+					{% for item in object_list %}
+						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
+					{% endfor %}
+					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
+					<button type='submit' name="relevant" value='-timestamp' class='btn'><i class="fas fa-air-freshener"></i></button><br/>
+					<button type='submit' name="high_low" value='-price' class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-down"></i></i></i></button><br/>
+					<input type="hidden"  name="qs_for_sort" value='{{ object_list }}'>
+					<button type='submit' name="low_high" value='price'class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-up"></i></i></button>
+				</form>
+			</div>
+			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h fa-2x"></i></button>
+		</div>
+</div>
+<div class="container-fluid ajax-search">
+<div class='row'>
+	<div class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+		{% include 'categories/snippets/filter-box.html' with instance=obj %}
+			</div>
+		{% if filter_gender or filter_category or filter_size %}
+			<div class='col-12 text-center'>
+				Results for:
+			{% if filter_gender %}
+				{% for gender in filter_gender %}
+						<b>{{ gender }}</b>
+				{% endfor %}
+			{% endif %}
+			{% if filter_category %}
+				{% for category in filter_category %}
+						<b>{{ category }}</b>
+				{% endfor %}
+			{% endif %}
+			{% if filter_size %}
+				{% for size in filter_size %}
+					<b>{{ size }}</b>
+				{% endfor %}
+			{% endif %}
+				</div>
+		{% endif %}
+</div>
+
+{% endif %}
 
 
 		<div class='col-12 m-0 p-0' id='main-col'>
 			<div class='row mx-md-4'>
 			{% for obj in object_list %}
 			<div class='col-xs-12 col-md-3 position-relative'>
-				{{ forloop.counter|to_none }}
 				{% include 'products/snippets/card.html' with instance=obj %}
 				{% if forloop.counter|divisibleby:4 %}
 					</div>

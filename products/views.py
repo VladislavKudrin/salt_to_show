@@ -285,11 +285,20 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				return JsonResponse(json_data)
 			return JsonResponse(json_data)
 		product_form = ImageForm(request)
-		context={}
-		context['form_id']=form_id
-		context['button']='Create'
-		context['title']='Add new product'
-		context['form']=product_form
+		if self.request.session.get('language') == 'RU':
+			context={
+			'form': product_form,
+			'button': 'Добавить',
+			'title':'Добавить новый продукт',
+			'form_id': form_id
+			}
+		else:
+			context={
+			'form': product_form,
+			'button': 'Create',
+			'title':'Add new product',
+			'form_id': form_id
+			}
 
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
@@ -309,11 +318,19 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			# 	'errors':json.dumps(form.errors)
 			# 	}
 			return JsonResponse({'error':form.errors})
-		context={
+		if self.request.session.get('language') == 'RU':
+			context={
+			'form': form,
+			'button': 'Создать',
+			'title':'Добавить новый продукт'
+			}
+		else:
+			context={
 			'form': form,
 			'button': 'Create',
-			'title':'Create new product'
-		}
+			'title':'Add new product'
+			}
+		
 		return render(self.request, 'products/product-create.html', context)
 
 
@@ -368,8 +385,13 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
 		request = self.request
 		slug = self.kwargs.get('slug')
-		context['title'] = 'Update'
-		context['button']='Update' 
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Редактировать'
+			context['button']='Сохранить' 
+		else:
+			context['title'] = 'Update'
+			context['button']='Update'
+		
 		new_all_=[]
 		all_ = ProductImage.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):

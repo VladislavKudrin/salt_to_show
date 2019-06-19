@@ -11,77 +11,152 @@
 {% url 'categories:filter' as filter_url %}
 
 {% load static %}
-  
 <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white pb-1">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                {% include 'search/snippets/search-form.html' %}
+    {% if request.session.language == 'RU' %}
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    {% include 'search/snippets/search-form.html' %}
+                </li>
+            </ul>
+        </div>
+
+        <div class="mx-auto order-0">
+            <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
+          
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+              
+            <li class="nav-item m-0 pb-0">
+            <form method='GET' action="{% url 'accounts:language-pref'%}">
+             <input type="hidden" name="next" value='{{ request.path }}'>
+
+             <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+              <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+              <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
+              <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}{% endif %} value="EN">EN</option>
+            </select>
+            </form>
             </li>
-        </ul>
-    </div>
-
-    <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
-      
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
           
-         
-   
-      
-         <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
-        <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
-        </li>
-
-        <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="justify-content: flex-end;">
-          <a class="btn btn-light" role="button" href="{{ products_create_url }}">Sell</a>          
-        </li>
+            <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
+                <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Купить</a>
+            </li>
+            <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="justify-content: flex-end;">
+                <a class="btn btn-light" role="button" href="{{ products_create_url }}">Продать</a>          
+            </li>
 
 
 
-        <li class="nav-item m-0 pb-0">
-        <a class="nav-link m-0 pb-0" href="{{ wish_list }}">
+            <li class="nav-item m-0 pb-0">
+            <a class="nav-link m-0 pb-0" href="{{ wish_list }}">
+            <span class='navbar-wish-count'>{{ request.user.wishes.all.count }}</span>
+            <i class="fas fa-heart fa-2x"></i>
+            </a>
+            </li>
 
-        <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
-        <i class="fas fa-heart fa-2x"></i>
-        </a>
-        </li>
-
-        {% if request.user.is_authenticated %}
-        <li class="nav-item dropdown ml-0 mr-0">
-           <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
-            {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown ml-0 mr-0">
+               <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
+                {% if request.user.profile_foto %}
+                <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                {% else %}
+                <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a>
+                {% endif %}
+              
+              
+              <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Профиль</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'home' %}dialogs/">Чат</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои предметы</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>История</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Избранное</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Настройки</a>
+              </div>
+            </li>
             {% else %}
-            <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a>
-            {% endif %}
+            <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+            <a class="nav-link" href="{{ login_url }}">Войти/Зарегистрироваться</a>
+            </li>
+          {% endif %}
+    </ul>
+    </div>
+    {% else %}
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    {% include 'search/snippets/search-form.html' %}
+                </li>
+            </ul>
+        </div>
+
+        <div class="mx-auto order-0">
+            <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
           
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+              
+            <li class="nav-item m-0 pb-0">
+            <form method='GET' action="{% url 'accounts:language-pref'%}">
+             <input type="hidden" name="next" value='{{ request.path }}'>
+
+             <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+
+              <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+              <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
+              <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
+            </select>
+            </form>
+            </li>
           
-          <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'home' %}dialogs/">Chat</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
-          </div>
-        </li>
+            <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
+                <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
+            </li>
+            <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="justify-content: flex-end;">
+                <a class="btn btn-light" role="button" href="{{ products_create_url }}">Sell</a>         
+            </li>
+            <li class="nav-item m-0 pb-0">
+            <a class="nav-link m-0 pb-0" href="{{ wish_list }}">
+            <span class='navbar-wish-count'>{{ request.user.wishes.all.count }}</span>
+            <i class="fas fa-heart fa-2x"></i>
+            </a>
+            </li>
 
-        {% else %}
-        <li class="nav-item {% if request.path == login_url %}active{% endif %}">
-        <a class="nav-link" href="{{ login_url }}">Login/Sign Up</a>
-        </li>
-  
-      {% endif %}
-
-
-
-</ul>
-</div>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown ml-0 mr-0">
+               <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
+                {% if request.user.profile_foto %}
+                <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                {% else %}
+                <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a>
+                {% endif %}
+              
+              
+              <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'home' %}dialogs/">Chat</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
+              </div>
+            </li>
+            {% else %}
+            <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+            <a class="nav-link" href="{{ login_url }}">Login/Sign Up</a>
+            </li>
+          {% endif %}
+    </ul>
+    </div>
+    {% endif %}
 </nav>

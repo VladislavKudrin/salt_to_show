@@ -53,7 +53,7 @@ ADMINS = MANAGERS
 
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-SESSION_COOKIE_AGE = 31536000 #1 year
+
 
 # Application definition
 

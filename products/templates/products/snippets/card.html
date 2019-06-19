@@ -18,15 +18,21 @@
   <div class="card-body position-relative">
     <a href="{{ instance.get_absolute_url }}">
       <div class="row position-relative poloska font-weight-bold" style="min-height: 25px; max-width: 290px;">
-
-          <div class="col position-static text-left one-line" style="max-width: 65px; padding-right:5px;">
+        {% if request.session.language == 'RU' %}
+         <div class="col position-static text-left one-line" style="max-width: 65px; padding-right:5px;">
+          {{ instance.sex|to_rus }}
+        </div>
+        <div class="col position-static text-center one-line" style="max-width: 150px; padding-left:5px; padding-right:5px;">
+          {{ instance.category|to_rus }}
+        </div>
+        {% else %}
+         <div class="col position-static text-left one-line" style="max-width: 65px; padding-right:5px;">
           {{ instance.sex }}
         </div>
-
         <div class="col position-static text-center one-line" style="max-width: 150px; padding-left:5px; padding-right:5px;">
           {{ instance.category }}
         </div>
-
+        {% endif %}
         <div class="col position-static text-right one-line" style="max-width: 75px; padding-left:5px;">
           {{ instance.price }}
         </div>
