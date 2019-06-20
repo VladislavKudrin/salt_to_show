@@ -44,47 +44,44 @@ class ChatConsumer(AsyncConsumer):
 		# 	notification.save()  #commit to DB
 		# 	print("notification read")
 		front_text = event.get('text', None)
-		# current_url = loaded_data.get('current_url')
-		# print(current_url)
-		# print('hui')
-		if front_text is not None:
-			loaded_data = json.loads(front_text) # gets json data as dictionary
-			msg = loaded_data.get('message')
-			user = self.scope['user']
-			username = 'default'
-			req = self.scope['user'].username #self.request.user.username (for testing)
-			other_user = self.scope['url_route']['kwargs']['username']
-			thread_obj = self.thread_obj
-			threads_with_unred = list(Thread.objects.filter(chatmessage__notification__user=user, chatmessage__notification__read='False').distinct().values_list('id', flat=True))
-			#returns arrray with ID's of my threads where I have unread notifications
-
-			# thread_obj_id = thread_obj.id
-			# print(thread_obj_id)
-			# thread_obj_id_dict = model_to_dict(thread_obj_id)
-			# thread_obj_dict = model_to_dict(thread_obj)
-			if user.is_authenticated():
-				username = user.username
-			myResponse = {
-					'message':msg,
-					'username': username,
-					'opponent_username': other_user,
-					'req': req,
-					'threads_by_user': threads_with_unred,
-					# 'thread': thread_obj_dict,
-					# 'thread_id': thread_obj_id,
-				}
-			await self.create_chat_message(user, msg) #create message instance AND notifications
-			await self.update_notification_status(user, thread_obj) #check notifcations status
-			await self.channel_layer.group_send(
-				self.chat_room, #where to send 
-				{
-				'type':'chat_message',
-				'text':json.dumps(myResponse)
-				}
-				)
+		loaded_data = json.loads(front_text) # gets json data as dictionary
+		req = self.scope['user'].username #self.request.user.username (for testing)
+		user = self.scope['user']
+		username = 'default'
+		if user.is_authenticated():
+			username = user.username
+		other_user = self.scope['url_route']['kwargs']['username']
+		thread_obj = self.thread_obj
+		threads_with_unred = list(Thread.objects.filter(chatmessage__notification__user=user, chatmessage__notification__read='False').distinct().values_list('id', flat=True))
+		# if front_text is not None:
+		msg = loaded_data.get('message')
+		#returns arrray with ID's of my threads where I have unread notifications
+		# thread_obj_id = thread_obj.id
+		# print(thread_obj_id)
+		# thread_obj_id_dict = model_to_dict(thread_obj_id)
+		# thread_obj_dict = model_to_dict(thread_obj)
+		myResponse = {
+				'message':msg,
+				'username': username,
+				'opponent_username': other_user,
+				'req': req,
+				'threads_by_user': threads_with_unred,
+				# 'thread': thread_obj_dict,
+				# 'thread_id': thread_obj_id,
+			}
+		print(myResponse)
+		await self.create_chat_message(user, msg) #create message instance AND notifications
+		await self.update_notification_status(user, thread_obj) #check notifcations status
+		await self.channel_layer.group_send(
+			self.chat_room, #where to send 
+			{
+			'type':'chat_message',
+			'text':json.dumps(myResponse)
+			}
+			)
 
 	async def chat_message(self, event):
-		print('message', event)
+		# print('message', event)
 		await self.send({
 			'type':'websocket.send',
 			'text':event['text']
@@ -94,7 +91,7 @@ class ChatConsumer(AsyncConsumer):
 				self.room_group_name, 
 				self.channel_name
 				)
-		print(event)
+		# print(event)
 
 	@database_sync_to_async
 	def get_thread(self, user, other_username):

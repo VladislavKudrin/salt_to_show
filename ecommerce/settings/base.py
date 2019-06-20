@@ -56,6 +56,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
 # Application definition
+MAX_UPLOAD_SIZE = "20971520"
+CONTENT_TYPES = ['image', 'video']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -275,6 +278,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
 from ecommerce.aws.conf import *
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10240000 # value in bytes
 
 
 

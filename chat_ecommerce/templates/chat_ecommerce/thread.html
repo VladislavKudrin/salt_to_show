@@ -407,6 +407,7 @@ socket.onmessage = function(e) {
 	storeid();
 	// console.log(arr) // ids of all threads / array 
 	var chatDataMsg = JSON.parse(e.data)
+	console.log(chatDataMsg)
 	var username = chatDataMsg.username
 	var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
 	found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append

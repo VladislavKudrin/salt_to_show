@@ -20,6 +20,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+MAX_UPLOAD_SIZE = "20971520"
+CONTENT_TYPES = ['image', 'video']
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -287,7 +289,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 from ecommerce.aws.conf import *
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10240000 # value in bytes
 
 # CACHES = {
 #     "default": {
