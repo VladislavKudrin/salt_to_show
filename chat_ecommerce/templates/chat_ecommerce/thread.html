@@ -448,12 +448,12 @@ socket.onmessage = function(e) {
 	var req = chatDataMsg.req
 	if (username === req){
 		// console.log('pulling right')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>");
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.req + "<br><small>" + date + "</small></div></div></div></li>");
 	// console.log(req)
 	}
 	else{
 		// console.log('pulling left')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>")
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.req + "<br><small>" + date + "</small></div></div></div></li>")
 	}
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
 
