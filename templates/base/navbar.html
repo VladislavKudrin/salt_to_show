@@ -33,11 +33,10 @@
 
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
-              
+            {% if request.user.is_authenticated %}
             <li class="nav-item m-0 pb-0">
             <form method='GET' action="{% url 'accounts:language-pref'%}">
              <input type="hidden" name="next" value='{{ request.path }}'>
-
              <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
               <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
               <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
@@ -45,7 +44,7 @@
             </select>
             </form>
             </li>
-          
+          {% endif %}
             <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
                 <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Купить</a>
             </li>
@@ -61,7 +60,6 @@
             <i class="fas fa-heart fa-2x"></i>
             </a>
             </li>
-
             {% if request.user.is_authenticated %}
             <li class="nav-item dropdown ml-0 mr-0">
                <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
@@ -107,7 +105,7 @@
 
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
-              
+            {% if request.user.is_authenticated %}
             <li class="nav-item m-0 pb-0">
             <form method='GET' action="{% url 'accounts:language-pref'%}">
              <input type="hidden" name="next" value='{{ request.path }}'>
@@ -120,7 +118,7 @@
             </select>
             </form>
             </li>
-          
+            {% endif %}
             <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
                 <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
             </li>

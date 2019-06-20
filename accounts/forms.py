@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 from django.contrib import messages
 from django.contrib.auth.password_validation import validate_password
 from django.core.urlresolvers import reverse
+import re 
 User = get_user_model()
 
 from .models import EmailActivation, GuestEmail
@@ -80,7 +81,12 @@ class UserDetailChangeForm(forms.ModelForm):
             self.fields['full_name'].label = "Полное имя"
             self.fields['username'].label = "Имя пользователя"
             self.fields['profile_foto'].label = "Фото профиля"
-
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        contains_rus = bool(re.search('[а-яА-Я]', data))
+        if contains_rus:
+            raise forms.ValidationError("Имя пользователя должно содержать только латинские символы")
+        return data
 
 
 class UserAdminChangeForm(forms.ModelForm):
