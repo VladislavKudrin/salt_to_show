@@ -11,22 +11,8 @@ body {
   padding-bottom: 25px;
 }
 
+@media only screen and (min-width: 768px) {
 
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-
-.hanger::after {
-  content: "";
-  background: url(image.jpg);
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;   
-}
 
 }
 
@@ -37,21 +23,24 @@ html, body {
 <div class="row">
   <div class="col">
 
-    <div class="row fluid hanger" style="height: 465px; background-image: url('{% static 'img/hanger_200.png' %}');">
+    <div class="row fluid hanger" style="height: 465px;">
     	<div class="col-12 pt-5" style="display: flex; justify-content: center;">
     		<h1 class="text-center">What is E N V I S I O N ?</h1>
     	</div>
     	<div class="col-12" style="display: flex; justify-content: center;">
     		<p class="text-center">Описание</p>
     	</div>
+    	<div class="col-12" style="display: flex; justify-content: flex-end;">
+    		<img src="{% static 'img/hanger_75.png' %}" style="margin-right: 75px;">
+    	</div>
     </div>
 
     	<div id="safe" class="row fluid text-center">
         <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
           <div class="bg">
-      		  <div class="jumbotron jumbotron text-center p-0 m-0" style=" background:transparent;  background-color:transparent; color:black; ">
+      		  <div class="jumbotron jumbotron p-0 m-0" style=" background:transparent;  background-color:transparent; color:black; ">
 
-          		<div id="safe" class="row fluid pt-5 pb-5 text-center" style="background-image: url('{% static 'img/white-waves.png' %}'); height: 565px;">
+          		<div id="safe" class="row fluid pt-5 pb-5" style="background-image: url('{% static 'img/white-waves.png' %}'); height: 565px;">
                 <div class="col-xs-12 col-md-4 fluid">
                  <div class="flip-card mx-auto">
                     <div class=" flip-card-inner">
@@ -71,9 +60,9 @@ html, body {
               <br>
 
           		<div id="ai" class=" row fluid pt-5 pb-5" style="background-color: white; height: 565px;">
-          			<div class="col-xs-12 col-md-4">
-              	 <p>Текст о модели AI, которая совершенствуется с каждым новым артикулом, и также способствует проверке фейков.</p>
-                </div>
+          			<div class="col-xs-12 col-md-8">
+              	 		<p>Текст о модели AI, которая совершенствуется с каждым новым артикулом, и также способствует проверке фейков.</p>
+                	</div>
                 <div class="col-xs-12 col-md-4 fluid">
                  <div class="flip-card mx-auto">
                     <div class=" flip-card-inner">
