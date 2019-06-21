@@ -7,6 +7,11 @@
 <head>
 <style type="text/css">
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 @media only screen and (min-width: 768px) {
   .flip-card-2:hover .flip-card-2-inner {
     transform: rotateY(180deg);
@@ -252,7 +257,7 @@ body {
 <div class="bg">
 <div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <h3><p class="lead">DESIGNER MARKETPLACE FOR THE NEXT GENERATION</p></h3>
+    <h3><p class="lead">Designer Marketplace For The Next Generation</p></h3>
   </div>
 
 
@@ -271,7 +276,7 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; ">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; height: 275px; overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">SELL</h1>
         <p class="lead">Contribute to the sustainable clothes-circle.</p>
@@ -283,7 +288,7 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; ">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; height: 275px; overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">BUY</h1>
         <p class="lead">Find your luxury piece without environment harm.</p>
