@@ -94,6 +94,9 @@ class UserManager(BaseUserManager):
 				is_admin = True,
 				
 			)
+		activation_admin = EmailActivation.objects.filter(user=user).first()
+		activation_admin.activated=True
+		activation_admin.save()
 		return user
 
 

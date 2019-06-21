@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from channels.consumer import AsyncConsumer
 from channels.db import database_sync_to_async
 
-from .models import Thread, ChatMessage
+from .models import Thread, ChatMessage, Notification
 
 
 class ChatConsumer(AsyncConsumer):
@@ -28,14 +28,25 @@ class ChatConsumer(AsyncConsumer):
 
 	async def websocket_receive(self, event):
 		# when the socket connects
-		print(event)
+		#print(event)
+
+		message_type = event.get('type', None)
+		if message_type == "notification_read":
+			# Update the notification read status flag in Notification model.
+			notification = Notification.object.get(id=notification_id)
+			notification.notification_read = True
+			notification.save()  #commit to DB
+			print("notification read")
+            
 		front_text = event.get('text', None)
 		if front_text is not None:
-			loaded_data = json.loads(front_text) # gets json data as dictionary
+			loaded_data = json.loads(front_text)
 			msg = loaded_data.get('message')
 			user = self.scope['user']
 			username = 'default'
 			req = self.scope['user'].username
+			scope = self.scope
+			print(scope)
 			other_user = self.scope['url_route']['kwargs']['username']
 			if user.is_authenticated():
 				username = user.username
@@ -44,8 +55,10 @@ class ChatConsumer(AsyncConsumer):
 					'username': username,
 					'opponent_username': other_user,
 					'req': req,
+					# 'notification': notification_id, #send a unique identifier for the notification
 				}
 			await self.create_chat_message(user, msg)
+			# await self.create_notification(user, msg)
 			await self.channel_layer.group_send(
 				self.chat_room, #where to send 
 				{
@@ -74,7 +87,12 @@ class ChatConsumer(AsyncConsumer):
 	@database_sync_to_async
 	def create_chat_message(self, me, msg):
 		thread_obj = self.thread_obj
-		return ChatMessage.objects.create(thread=thread_obj, user=me, message=msg)
+		msg_created = ChatMessage.objects.create(thread=thread_obj, user=me, message=msg)
+		notification_created = Notification.objects.create(notification_chat=msg_created, notification_user=me, notification_read=False)
+		print(notification_created)
+		return msg_created, notification_created
+
+
 
 
 

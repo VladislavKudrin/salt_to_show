@@ -278,16 +278,16 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_my_project"),
 )
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-MEDIA_URL = "/media/"
+# MEDIA_URL = "/media/"
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 
 

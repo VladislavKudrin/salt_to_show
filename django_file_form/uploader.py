@@ -25,7 +25,9 @@ class FileFormUploadBackend(LocalUploadBackend):
             form_id=request.POST['form_id'],
             original_filename=original_filename,
         )
-        print(request.POST)
+        print('uploade complete')
+        print(values)
+        
 
         field_name = request.POST.get('field_name')
         if field_name:
@@ -41,7 +43,8 @@ class FileFormUploadBackend(LocalUploadBackend):
 class FileFormUploader(AjaxFileUploader):
     def __init__(self, backend=None, **kwargs):
         if not backend:
-            backend = load_class('UPLOAD_BACKEND')
+            backend = LocalUploadBackend
+
         super(FileFormUploader, self).__init__(backend, **kwargs)
 
     def __call__(self, request, *args, **kwargs):

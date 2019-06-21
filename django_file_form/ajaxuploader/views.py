@@ -10,11 +10,14 @@ from django_file_form.ajaxuploader.signals import file_uploaded
 
 class AjaxFileUploader(object):
     def __init__(self, backend=None, **kwargs):
+        print('init')
+        print(backend)
         if backend is None:
             backend = LocalUploadBackend
         self.get_backend = lambda: backend(**kwargs)
 
     def __call__(self, request, *args, **kwargs):
+        print('call')
         return self._ajax_upload(request, *args, **kwargs)
 
     def _ajax_upload(self, request, *args, **kwargs):
@@ -29,6 +32,7 @@ class AjaxFileUploader(object):
             file_id = request.POST['qquuid']
 
             backend = self.get_backend()
+
 
             # custom filename handler
             filename = (backend.update_filename(request, filename, *args, **kwargs)

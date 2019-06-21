@@ -132,6 +132,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
+			print('admin')
 			msg2 = "Email not confirmed. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
 		elif user is None:

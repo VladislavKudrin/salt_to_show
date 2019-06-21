@@ -19,7 +19,8 @@ def about_page(request):
 		'title':'About Page',
 		'content':'Welcome to the about page'
 	}
-	return render(request, "home_page.html", context)
+	return render(request, "base/about_us.html", context)
+
 
 # class ContactPageView(RequestFormAttachMixin, FormView):
 # 	form_class = ContactForm
