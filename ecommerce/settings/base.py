@@ -88,7 +88,6 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'test_ecommerce',
     'image_uploader'
 ]
 
@@ -281,7 +280,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10240000 # value in bytes
