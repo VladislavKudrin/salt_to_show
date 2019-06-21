@@ -88,7 +88,6 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'test_ecommerce',
     'image_uploader'
 ]
 
