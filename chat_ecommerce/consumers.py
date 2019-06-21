@@ -48,14 +48,29 @@ class ChatConsumer(AsyncConsumer):
 		# 	notification.notification_read = True
 		# 	notification.save()  #commit to DB
 		# 	print("notification read")
+		# when the socket connects
+		#print(event)
+
+		message_type = event.get('type', None)
+		if message_type == "notification_read":
+			# Update the notification read status flag in Notification model.
+			notification = Notification.object.get(id=notification_id)
+			notification.notification_read = True
+			notification.save()  #commit to DB
+			print("notification read")
+            
 		front_text = event.get('text', None)
 		print(front_text)
 		if front_text is not None:
 			loaded_data = json.loads(front_text) # gets json data as dictionary
 			req = self.scope['user'].username #self.request.user.username (for testing)
+			msg = loaded_data.get('message')
 			user = self.scope['user']
 			# print('CURRENT USER', user)
 			username = 'default'
+			# scope = self.scope
+			# print(scope)
+			other_user = self.scope['url_route']['kwargs']['username']
 			if user.is_authenticated():
 				username = user.username
 			other_user = self.scope['url_route']['kwargs']['username']
@@ -80,7 +95,6 @@ class ChatConsumer(AsyncConsumer):
 					# 'thread_id': thread_obj_id,
 				}
 			print(myResponse)
-
 			await self.channel_layer.group_send(
 				self.chat_room, #where to send 
 				{
@@ -132,6 +146,7 @@ class ChatConsumer(AsyncConsumer):
 				unread_notifications[i].read = True
 				unread_notifications[i].save()
 				# print('Notification read=True')
+
 
 
 

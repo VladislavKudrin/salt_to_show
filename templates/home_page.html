@@ -4,71 +4,147 @@
 {% url 'products:list' as product_list_url %}
 {% block content %}
 
+<head>
+<style type="text/css">
+
+@media only screen and (min-width: 768px) {
+  .flip-card-2:hover .flip-card-2-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-2-back {
+    transform: rotateY(180deg);
+  } 
+
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  } 
+
+}
+
+@media only screen and (max-width: 768px) {
+  .flip-card-back {
+    transform: rotateY(180deg);
+  } 
+
+  #safe-card, #ai-card {
+    margin-bottom: 5px;
+  }
+
+}
+
+body {
+  padding-bottom: 25px;
+}
+</style>
+</head>
 
 {% if request.session.language == 'RU' %}
+
+
 <div class="row fluid text-center">
+
+
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center pb-3 pt-5" style=" background:transparent; background-color:transparent; color:black; ">
-  <div class="container"> 
-    <h5 class="display-4">Маркетплейс с интеграцией ИИ</h5>
-    <h3><p class="lead"></p></h3>
+<div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
+  <div class="container">
+    <h3><p class="lead">МАРКЕТПЛЕЙС НОВОГО ПОКОЛЕНИЯ</p></h3>
   </div>
+
+
+
+
+
 </div>
 </div>
 </div>
 </div>
+
+
 <div class="row fluid text-center">
+
+
+
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center" style="background:transparent; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; ">
   <div class="container">
     <h1 class="display-4">ПРОДАТЬ</h1>
-    <p class="lead">Селл тител.</p>
+    <p class="lead">Внеси свою лепту для поддержания экологии.</p>
   </div>
 </div>
 </a>
 </div>
 </div>
+
+
+
+
+
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center" style="background:transparent; background-color:transparent; color:white; ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; ">
   <div class="container">
     <h1 class="display-4">КУПИТЬ</h1>
-    <p class="lead">Купить тител.</p>
+    <p class="lead">Найди свою брендовую вещичку.</p>
   </div>
 </div>
 </a>
 </div>
+
+
+
 </div>
+
+
+
+
+
+
 <div class="row fluid text-center">
+
+
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center" style=" background:transparent;  background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; ">
   <div class="container"> 
 <!--     <h5 class="display-4">BLABLA</h5> -->
     <h3><p class="lead"></p></h3>
   </div>
+
     <div class=" row fluid">
-        <div class="col-4 fluid">
+
+
+
+        <div class="col-xs-12 col-md-4 fluid" id="safe-card">
+          <a href="{% url 'about' %}#safe">
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
             <div class="flip-card-front">
-               <h3><p class="my-auto text pt-5">Надежно</p></h3>
+               <h3><p class="my-auto text pt-5">Надёжно</p></h3>
                   <i class=" my-auto fas fa-user-shield fa-3x"></i>
                   </div>
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2">
-               Мы проверяем загруженые вещи 24/7/365. Никаких подделок
+                Мы проверяем загруженные вещи 24/7/365. Никаких фейков
               </div>
               </div>
             </div>
           </div>
-        </div> 
         </div>
-        <div class="col-4 fluid">
+        </a> 
+        </div>
+
+
+        <div class="col-xs-12 col-md-4 fluid" id="ai-card">
+          <a href="{% url 'about' %}#ai">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -78,14 +154,18 @@
               <div class="flip-card-back">
                <div class="row h-100">
                 <div class="col my-auto mr-3 ml-3">
-                Мы используем ИИ, разработанный в Google, чтобы исключать подделки из нашего каталога.
+                Мы используем ИИ, разработанный в Google, чтобы исключать подделки из нашего каталога
               </div>
               </div>
             </div>
           </div>
-        </div> 
         </div>
-        <div class="col-4 fluid">
+        </a> 
+        </div>
+
+
+        <div class="col-xs-12 col-md-4 fluid" id="simple-card">
+          <a href="{% url 'about' %}#simple">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -100,28 +180,46 @@
             </div>
           </div>
           </div>
-        </div> 
         </div>
+        </a> 
+        </div>
+
+
+
     </div>
+
+
 </div>
 </div>
 </div>
 </div>
+
 <!-- Second row --> 
+
+
+
 <!-- 3rd row -->
-<div class="row fluid text-center">
+
+<div class="row fluid text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+
+
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="bg">
-<div class="jumbotron jumbotron text-center" style="background:transparent; border-top: 1px solid black; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+
+
+
+
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
     <p class="lead display-4">Перейти в профиль</p>
+           
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button" img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button" <img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
 
             {% else %}
             <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
             {% endif %}
+
 </div>
         {% else %}
           <div class="container mt-5"> 
@@ -132,29 +230,49 @@
       <div class="lead display-6">Войти/Зарегистрироваться</div></a>
     </div>
       {% endif %}
+
+
   </div>
 </div>
+
 </div>
 </div>
+
+
+
 </div>
+
+
 {% else %}
+
 <div class="row fluid text-center">
+
+
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center pb-3 pt-5" style=" background:transparent; background-color:transparent; color:black; ">
-  <div class="container"> 
-    <h5 class="display-4">AI Powered Marketplace</h5>
-    <h3><p class="lead"></p></h3>
+<div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
+  <div class="container">
+    <h3><p class="lead">DESIGNER MARKETPLACE FOR THE NEXT GENERATION</p></h3>
   </div>
+
+
+
+
+
 </div>
 </div>
 </div>
 </div>
+
+
 <div class="row fluid text-center">
+
+
+
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center" style="background:transparent; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; ">
   <div class="container">
     <h1 class="display-4">SELL</h1>
     <p class="lead">Contribute to the sustainable clothes-circle.</p>
@@ -163,9 +281,14 @@
 </a>
 </div>
 </div>
+
+
+
+
+
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center" style="background:transparent; background-color:transparent; color:white; ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; ">
   <div class="container">
     <h1 class="display-4">BUY</h1>
     <p class="lead">Find your luxury piece without environment harm.</p>
@@ -173,17 +296,33 @@
 </div>
 </a>
 </div>
+
+
+
 </div>
+
+
+
+
+
+
 <div class="row fluid text-center">
+
+
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center" style=" background:transparent;  background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; ">
   <div class="container"> 
 <!--     <h5 class="display-4">BLABLA</h5> -->
     <h3><p class="lead"></p></h3>
   </div>
+
     <div class=" row fluid">
-        <div class="col-4 fluid">
+
+
+
+        <div class="col-xs-12 col-md-4 fluid" id="safe-card">
+          <a href="{% url 'about' %}#safe">
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
             <div class="flip-card-front">
@@ -193,14 +332,18 @@
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2">
-               We monitor uploaded items 24/7/365. No more fakes
+                We monitor uploaded items 24/7/365. No more fakes
               </div>
               </div>
             </div>
           </div>
-        </div> 
         </div>
-        <div class="col-4 fluid">
+        </a> 
+        </div>
+
+
+        <div class="col-xs-12 col-md-4 fluid" id="ai-card">
+          <a href="{% url 'about' %}#ai">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -215,9 +358,13 @@
               </div>
             </div>
           </div>
-        </div> 
         </div>
-        <div class="col-4 fluid">
+        </a> 
+        </div>
+
+
+        <div class="col-xs-12 col-md-4 fluid" id="simple-card">
+          <a href="{% url 'about' %}#simple">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -232,28 +379,46 @@
             </div>
           </div>
           </div>
-        </div> 
         </div>
+        </a> 
+        </div>
+
+
+
     </div>
+
+
 </div>
 </div>
 </div>
 </div>
+
 <!-- Second row --> 
+
+
+
 <!-- 3rd row -->
-<div class="row fluid text-center">
+
+<div class="row fluid text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+
+
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="bg">
-<div class="jumbotron jumbotron text-center" style="background:transparent; border-top: 1px solid black; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+
+
+
+
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
     <p class="lead display-4">Go to your profile</p>
+           
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button" img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button" <img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
 
             {% else %}
             <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
             {% endif %}
+
 </div>
         {% else %}
           <div class="container mt-5"> 
@@ -264,24 +429,19 @@
       <div class="lead display-6">Login/Sign Up</div></a>
     </div>
       {% endif %}
+
+
   </div>
 </div>
+
 </div>
 </div>
+
+
+
 </div>
+
 {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
 
 {% endblock %}
 

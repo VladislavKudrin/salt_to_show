@@ -275,9 +275,9 @@ background-color: black;
  color: black;
 }
 
-.navbar{
+/*.navbar{
   align-items: flex-start;
-}
+}*/
 
 .form-control:focus {
   border-color: black;
@@ -293,10 +293,11 @@ background-color: black;
 
 .navbar-wish-count {
     color: #cf6369;
-    position: absolute;
-    top: 30px;
-    right: 75px;
-    font-size: 14px;
+    margin-left: -5px;
+    /*position: absolute;
+    top: 28px;
+    right: 65px;*/
+    font-size: 10px;
     max-width: 10px;
 }
 
