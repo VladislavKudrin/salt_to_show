@@ -33,7 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = '3tb^6c3_5o-ofobpuoyb9)2o8649cv(!!b#*^=paslu(w-vl4e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -282,7 +282,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-# from ecommerce.aws.conf import *
+from ecommerce.aws.conf import *
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10240000 # value in bytes
