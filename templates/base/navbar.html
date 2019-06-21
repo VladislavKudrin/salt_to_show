@@ -146,7 +146,7 @@
               
               <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'home' %}dialogs/">Chat</a>
+                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "chat:inbox" %}''>Messages</a>
                 <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
                 <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
                 <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>

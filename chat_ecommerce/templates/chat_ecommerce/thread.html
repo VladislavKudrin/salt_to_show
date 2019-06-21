@@ -249,8 +249,12 @@ button:focus {
 			</div>
 		</div>
 
+
+
+
+
 		<div class='col-9'>
-			<div class='row' style='height: 54px; background-color: #efefef;'>
+			<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 						{% if request.user != object.first %}
 							<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
@@ -387,7 +391,12 @@ function storeid(){
 var loc = window.location
 var formData = $("#websocket-form")
 var msgInput = $("#id_message")
-var chatHolder = $('#chat-items')
+
+
+
+
+
+
 var wsStart = 'ws://'
 if (loc.protocol == 'https:'){
 	wsStart = 'wss://'
@@ -397,7 +406,10 @@ var socket = new ReconnectingWebSocket(endpoint)
 var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 
 
+
 socket.onmessage = function(e) {
+
+	console.log('MESSAGE')
 	// var dialogs = $('#dialogs')
 	// var size_dialogs = $('#dialogs li').length
 	// var dialogss = $('.obj_id_s')
@@ -446,14 +458,21 @@ socket.onmessage = function(e) {
 	var date = day + ' '+ hour.toString() + ':' + min.toString()
 	var opponent_username = chatDataMsg.opponent_username
 	var req = chatDataMsg.req
-	if (username === req){
+	console.log('ME', req)
+	console.log('OPPONENT', opponent_username)
+	var chatHolder = $('#chat-items')
+	var opponent = document.getElementsByClassName("opponent")[0].id
+	console.log('OPPONENT BY CLASS', opponent)
+	if (opponent === opponent_username){
+
 		// console.log('pulling right')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.req + "<br><small>" + date + "</small></div></div></div></li>");
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>");
 	// console.log(req)
 	}
 	else{
+		var chatHolder = $('#chat-items')
 		// console.log('pulling left')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.req + "<br><small>" + date + "</small></div></div></div></li>")
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>")
 	}
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
 
@@ -461,6 +480,13 @@ socket.onmessage = function(e) {
 
 
 socket.onopen = function(e) {
+	console.log('Websocket Opened')
+	// var chatDataMsg = JSON.parse(e.data)
+	// var backend_data = JSON.parse(e.data)
+	// var req = backend_data.req
+	// console.log(req)
+
+
 	// var url = window.location.href;
 	// console.log(url)
 	// if url contains 
@@ -486,12 +512,15 @@ socket.onopen = function(e) {
  //    console.log(unred)
 
 	// }
+	
 
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
 	// console.log('open', e)
 	formData.submit(function(event){
 		event.preventDefault()
 		var msgText = msgInput.val()
+		console.log("PISDA")
+		console.log('HUI', msgText)
 		var finalData = {
 			'message':msgText,
 			// 'current_url': url

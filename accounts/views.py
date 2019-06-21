@@ -247,7 +247,7 @@ class ProfileView(DetailView):
 	def post(self, request, *args, **kwargs):
 		next_ = request.POST.get('next', '/')
 		username = self.kwargs.get('username')
-		redirect_url = next_ + 'dialogs/' + username
+		redirect_url = next_ + 'messages/' + username
 		return HttpResponseRedirect(redirect_url)
 	
 	def get_object(self, *args, **kwargs): 
