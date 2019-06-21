@@ -33,16 +33,18 @@ def languge_pref_view(request):
 	next_post = request.POST.get('next')
 	redirect_path=next_ or next_post or None
 	language = request.GET.get('language')
-	user = request.user
-	qs_lang = LanguagePreference.objects.filter(user=user)
-	request.session['language'] = language 
-	if qs_lang.exists():
-		LanguagePreference.objects.update(user=user, language=language.lower())
-	else:
-		LanguagePreference.objects.create(user=user, language=language.lower())
-	if is_safe_url(redirect_path, request.get_host()):
-		return redirect(redirect_path)
-	return redirect(default_next)
+	request.session['language'] = language
+	if request.user.is_authenticated():
+		print(request.session['language'])
+		user = request.user
+		qs_lang = LanguagePreference.objects.filter(user=user)
+		if qs_lang.exists():
+			LanguagePreference.objects.update(user=user, language=language.lower())
+		else:
+			LanguagePreference.objects.create(user=user, language=language.lower())
+		if is_safe_url(redirect_path, request.get_host()):
+			return redirect(redirect_path)
+	return redirect(redirect_path)
 
 class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 	template_name = 'accounts/home.html' 
@@ -143,7 +145,10 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		if user_objects is False:
 			form.save()
 			next_path = 'login'
-			msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
+			if request.session.get('language') == 'RU':
+				msg1 = "Пожалуйста, проверьте свой Email, чтобы подтвердить свой аккаунт" + form.cleaned_data.get('msg')
+			else:
+				msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
@@ -155,9 +160,14 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			messages.add_message(form.request, messages.WARNING, mark_safe("The password seems to be wrong. Try again!"))
 			return redirect(next_path)
 		else:
+			language_pref_login_page = self.request.session['language']
 			login(form.request, user)
-			language_pref = LanguagePreference.objects.get(user=user)
-			self.request.session['language'] = language_pref.language.upper()
+			language_pref = LanguagePreference.objects.filter(user=user)
+			if language_pref.exists():
+				self.request.session['language'] = language_pref.first().language.upper()
+			else:
+				self.request.session['language'] = language_pref_login_page.upper()
+				LanguagePreference.objects.create(user=user, language=language_pref_login_page.lower())
 			if self.request.session.get('language') == 'RU':
 				messages.add_message(form.request, messages.SUCCESS, 'Вы успешно вошли')
 			else:

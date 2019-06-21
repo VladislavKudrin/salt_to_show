@@ -141,11 +141,17 @@ class RegisterLoginForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(RegisterLoginForm,self).__init__(*args,**kwargs)
+        if request.session.get('language') == 'RU':
+            self.fields['password'].widget.attrs['placeholder'] = 'Минимум 8 символов + цифры'
+            self.fields['email'].widget.attrs['placeholder'] = 'Ваш Email'
 
     def clean(self):
         link = reverse("accounts:resend-activation")
-        reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
-        self.cleaned_data['msg'] = reconfirm_msg
+        if self.request.session.get('language') == 'RU':
+            reconfirm_msg = """Перейдите чтобы <a href='{resend_link}'>послать письмо подтверждения еще раз</a>.""".format(resend_link=link)
+        else:
+            reconfirm_msg = """Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
+        self.cleaned_data['msg'] = reconfirm_msg                            
 
     def clean_password(self):
         password = self.cleaned_data.get('password')

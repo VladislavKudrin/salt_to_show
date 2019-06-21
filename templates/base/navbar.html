@@ -33,7 +33,7 @@
 
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
-            {% if request.user.is_authenticated %}
+
             <li class="nav-item m-0 pb-0">
             <form method='GET' action="{% url 'accounts:language-pref'%}">
              <input type="hidden" name="next" value='{{ request.path }}'>
@@ -44,7 +44,7 @@
             </select>
             </form>
             </li>
-          {% endif %}
+
             <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
                 <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Купить</a>
             </li>
@@ -105,7 +105,6 @@
 
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
-            {% if request.user.is_authenticated %}
             <li class="nav-item m-0 pb-0">
             <form method='GET' action="{% url 'accounts:language-pref'%}">
              <input type="hidden" name="next" value='{{ request.path }}'>
@@ -118,7 +117,6 @@
             </select>
             </form>
             </li>
-            {% endif %}
             <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
                 <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
             </li>
