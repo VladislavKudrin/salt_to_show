@@ -53,7 +53,8 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
@@ -206,8 +207,6 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'ecommerce.wsgi.application'
-ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

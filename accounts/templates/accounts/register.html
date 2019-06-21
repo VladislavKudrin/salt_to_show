@@ -3,13 +3,42 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
+{% if request.session.language == 'RU' %}
 <div class="container-fluid">
 	<div class='row'>
         <div class="mx-auto col-xs-12 col-md-7">
             <div class="text-center">
 
-					<h2>Register</h2>
+					<h2>Войти / Зарегистрироваться</h2>
+					<form method = 'POST'> {% csrf_token %}
+							{{ form|crispy }}
+							<button type="submit" class="btn btn-dark btn-lg btn-block">Подтвердить</button><br>
+					</form>
+
+						<h2>Или зайдите с помощью:</h2><br>
+<!-- 			        <a href="{% url 'social:begin' 'vk-oauth2' %}">  <button class="btn btn-outline-dark btn-block">
+			             <i class="fab fa-vk ml-1 mr-1"></i>
+			            </button>
+			            </a>
+			        <br> -->
+
+			        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-outline-dark btn-block">
+						<i class="fab fa-google"></i>
+			        </button>
+			        </a>
+
+			        <br><small><a href='{% url "password_reset" %}'>Забыли пароль?</a></small>
+			</div>
+		</div>
+	</div>
+</div>
+{% else %}
+<div class="container-fluid">
+	<div class='row'>
+        <div class="mx-auto col-xs-12 col-md-7">
+            <div class="text-center">
+
+					<h2>Login / Register</h2>
 					<form method = 'POST'> {% csrf_token %}
 							{{ form|crispy }}
 							<button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button><br>
@@ -32,6 +61,8 @@
 		</div>
 	</div>
 </div>
+
+{% endif %}
 
 
 

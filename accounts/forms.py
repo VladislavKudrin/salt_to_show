@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 from django.contrib import messages
 from django.contrib.auth.password_validation import validate_password
 from django.core.urlresolvers import reverse
+import re 
 User = get_user_model()
 
 from .models import EmailActivation, GuestEmail
@@ -80,7 +81,12 @@ class UserDetailChangeForm(forms.ModelForm):
             self.fields['full_name'].label = "Полное имя"
             self.fields['username'].label = "Имя пользователя"
             self.fields['profile_foto'].label = "Фото профиля"
-
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        contains_rus = bool(re.search('[а-яА-Я]', data))
+        if contains_rus:
+            raise forms.ValidationError("Имя пользователя должно содержать только латинские символы")
+        return data
 
 
 class UserAdminChangeForm(forms.ModelForm):
@@ -135,11 +141,17 @@ class RegisterLoginForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(RegisterLoginForm,self).__init__(*args,**kwargs)
+        if request.session.get('language') == 'RU':
+            self.fields['password'].widget.attrs['placeholder'] = 'Минимум 8 символов + цифры'
+            self.fields['email'].widget.attrs['placeholder'] = 'Ваш Email'
 
     def clean(self):
         link = reverse("accounts:resend-activation")
-        reconfirm_msg="""Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
-        self.cleaned_data['msg'] = reconfirm_msg
+        if self.request.session.get('language') == 'RU':
+            reconfirm_msg = """Перейдите чтобы <a href='{resend_link}'>послать письмо подтверждения еще раз</a>.""".format(resend_link=link)
+        else:
+            reconfirm_msg = """Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
+        self.cleaned_data['msg'] = reconfirm_msg                            
 
     def clean_password(self):
         password = self.cleaned_data.get('password')

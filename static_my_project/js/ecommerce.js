@@ -40,15 +40,25 @@ $(document).ready(
 
 
     //contactFormHandler
+    var language = $('#language').val()
     var contactForm = $('.contact-form')
     var contactFormMethod = contactForm.attr("method")
     var contactFormEndpoint = contactForm.attr("action")
-    function displaySubmitting(submitBtn, defaultText, doSubmit){
+    function displaySubmitting(submitBtn, defaultText, doSubmit, languageOption){
       if (doSubmit){
+        if (languageOption == 'RU'){
+        submitBtn.addClass("disabled")
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Отправка....")
+        submitBtn.attr("disabled", true)
+        }//if rus
+        else {
         submitBtn.addClass("disabled")
         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Sending....")
         submitBtn.attr("disabled", true)
-      } else {
+        }//if not rus
+        
+      } //if submit
+      else {
         submitBtn.removeClass("disabled")
         submitBtn.html(defaultText)
         submitBtn.attr("disabled", false)
@@ -61,18 +71,28 @@ $(document).ready(
         var contactFormSubmitBtnTxt = contactFormSubmitBtn.text()
         var contactFormData = contactForm.serialize()
         var thisForm = $(this)
-        displaySubmitting(contactFormSubmitBtn, "",true)
+        displaySubmitting(contactFormSubmitBtn, "",true, language)
         $.ajax({
           method: contactFormMethod,
           url: contactFormEndpoint,
           data: contactFormData,
           success: function(data){
             thisForm[0].reset()
-            $.alert({
+            if (language == 'RU'){
+              $.alert({
+              title: 'Успешно отправлено',
+              content: data.message,
+              theme: "modern"
+              })//alert
+            }//if rus
+            else {
+              $.alert({
               title: 'Success',
               content: data.message,
               theme: "modern"
-          })
+              })//alert
+            }//if not rus
+
           setTimeout(
             function()
             {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false)}, 1000)
@@ -92,7 +112,7 @@ $(document).ready(
             })
             setTimeout(
             function()
-            {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false)}, 1000)
+            {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false, language)}, 1000)
           }
         })
       })

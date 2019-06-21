@@ -88,7 +88,9 @@ class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
 	def __init__(self, request, *args, **kwargs):
 		super(ImageForm, self).__init__(request, *args, **kwargs)
-		self.fields['image'].label = "Фото"
+		self.fields['image'].label = "Image*"
+		if request.session.get('language')=='RU':
+			self.fields['image'].label = "Фото*"
 	
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
