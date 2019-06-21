@@ -19,7 +19,7 @@ def about_page(request):
 		'title':'About Page',
 		'content':'Welcome to the about page'
 	}
-	return render(request, "base/about_us.html", context)
+	return render(request, "base/about_us_5.html", context)
 
 
 
