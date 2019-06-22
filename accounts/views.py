@@ -174,7 +174,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg3))
 			return redirect(next_path)
 		else:
-			language_pref_login_page = self.request.session['language']
+			language_pref_login_page = self.request.session.get('language')
 			login(form.request, user)
 			language_pref = LanguagePreference.objects.filter(user=user)
 			if language_pref.exists():
