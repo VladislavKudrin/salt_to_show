@@ -24,9 +24,9 @@
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card-2:hover .flip-card-2-inner {
+/*.flip-card-2:hover .flip-card-2-inner {
   transform: rotateY(180deg);
-}
+}*/
 
 /* Position the front and back side */
 .flip-card-2-front, .flip-card-2-back {
@@ -49,7 +49,7 @@
   background-color: white;
 /*  background-image: url("../img/white_wall.png");*/
   color: black;
-  transform: rotateY(180deg);
+  /*transform: rotateY(180deg);*/
 } 
 
 
@@ -79,7 +79,7 @@
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
+  /*transform: rotateY(180deg);*/
 }
 
 /* Position the front and back side */
@@ -103,7 +103,7 @@
   background-color: white;
 /*  background-image: url("../img/white_wall.png");*/
   color: black;
-  transform: rotateY(180deg);
+ /* transform: rotateY(180deg);*/
 } 
 
 
@@ -275,9 +275,9 @@ background-color: black;
  color: black;
 }
 
-.navbar{
+/*.navbar{
   align-items: flex-start;
-}
+}*/
 
 .form-control:focus {
   border-color: black;
@@ -293,10 +293,11 @@ background-color: black;
 
 .navbar-wish-count {
     color: #cf6369;
-    position: absolute;
-    top: 30px;
-    right: 75px;
-    font-size: 14px;
+    margin-left: -5px;
+    /*position: absolute;
+    top: 28px;
+    right: 65px;*/
+    font-size: 10px;
     max-width: 10px;
 }
 
