@@ -33,7 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = '3tb^6c3_5o-ofobpuoyb9)2o8649cv(!!b#*^=paslu(w-vl4e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -52,10 +52,17 @@ MANAGERS = (
 ADMINS = MANAGERS
 
 
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
+
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
 # Application definition
+MAX_UPLOAD_SIZE = "20971520"
+CONTENT_TYPES = ['image', 'video']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -64,16 +71,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     #third party
     'storages',
     'social_django',
     'crispy_forms',
     'sass_processor',
     'rest_framework',
-    'django_file_form',
-    'django_file_form.ajaxuploader',
-    'django_bootstrap3_form',
-    'django_pony_forms',  
 
     #our apps
     'chat_ecommerce',
@@ -88,7 +92,6 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'test_ecommerce',
     'image_uploader'
 ]
 
@@ -204,8 +207,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'ecommerce.wsgi.application'
-ASGI_APPLICATION = 'ecommerce.routing.application'
 
 
 # Database
@@ -274,12 +275,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
 
 
-MEDIA_URL = "/media/"
+# #STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
+
+
+# MEDIA_URL = "/media/"
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
 # from ecommerce.aws.conf import *
+
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10240000 # value in bytes
+
 
 
 

@@ -14,9 +14,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from django_file_form.models import UploadedFile
-from django_file_form.uploader import FileFormUploader
-from django_file_form.forms import ExistingFile
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -509,4 +506,4 @@ def wishlistupdate(request):
 	return redirect("products:wish-list")
 
 
-handle_upload = FileFormUploader()
+

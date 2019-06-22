@@ -14,6 +14,7 @@
           <form class ='contact-form' method = 'POST' action='{% url "contact" %}'> {% csrf_token %}
             <input type="hidden" name="popchik" value="{{ user_email }}">
             <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
+            <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
              {{ form|crispy }}
              <button type="submit" class="btn btn-dark btn-lg btn-block">Отправить</button>
           </form>
@@ -30,6 +31,7 @@
     <div class='row'>
         <div class='col-xs-12 col-md-7 mx-auto'>
           <form class ='contact-form' method = 'POST' action='{% url "contact" %}'> {% csrf_token %}
+            <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
             <input type="hidden" name="popchik" value="{{ user_email }}">
             <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
              {{ form|crispy }}

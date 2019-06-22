@@ -11,154 +11,345 @@
 {% url 'categories:filter' as filter_url %}
 
 {% load static %}
-<nav class="navbar sticky-top navbar-expand-md navbar-light bg-white pb-1">
 
-    {% if request.session.language == 'RU' %}
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    {% include 'search/snippets/search-form.html' %}
-                </li>
-            </ul>
-        </div>
+<style type="text/css">
 
+@media only screen and (max-width: 768px) { 
+   .dual-collapse2 {
+    visibility: hidden; 
+    display: none; 
+  } 
 
-        <div class="mx-auto order-0">
-            <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
-          
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+@media only screen and (min-width: 768px) { 
+    #navbarToggleExternalContent {
+    visibility: hidden; 
+    display: none; 
+  } 
 
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
-              
-            <li class="nav-item m-0 pb-0">
-            <form method='GET' action="{% url 'accounts:language-pref'%}">
-             <input type="hidden" name="next" value='{{ request.path }}'>
+</style>
 
-             <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-              <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
-              <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-              <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}{% endif %} value="EN">EN</option>
-            </select>
-            </form>
-            </li>
-          
-            <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
-                <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Купить</a>
-            </li>
-            <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="justify-content: flex-end;">
-                <a class="btn btn-light" role="button" href="{{ products_create_url }}">Продать</a>          
-            </li>
-
-
-
-            <li class="nav-item m-0 pb-0">
-            <a class="nav-link m-0 pb-0" href="{{ wish_list }}">
-            <span class='navbar-wish-count'>{{ request.user.wishes.all.count }}</span>
-            <i class="fas fa-heart fa-2x"></i>
-            </a>
-            </li>
-
-            {% if request.user.is_authenticated %}
-            <li class="nav-item dropdown ml-0 mr-0">
-               <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
-                {% if request.user.profile_foto %}
-                <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
-                {% else %}
-                <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a>
-                {% endif %}
-              
-              
-              <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Профиль</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'home' %}dialogs/">Чат</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои предметы</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>История</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Избранное</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Настройки</a>
-              </div>
-            </li>
-            {% else %}
-            <li class="nav-item {% if request.path == login_url %}active{% endif %}">
-            <a class="nav-link" href="{{ login_url }}">Войти/Зарегистрироваться</a>
-            </li>
-          {% endif %}
-    </ul>
-    </div>
-    {% else %}
+{% if request.session.language == 'RU' %}
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-white">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    {% include 'search/snippets/search-form.html' %}
-                </li>
-            </ul>
+        <ul class="navbar-nav  mr-auto">
+            <li class="nav-item">
+                {% include 'search/snippets/search-form.html' %}
+            </li>
+        </ul>
+    </div>
+
+
+        <ul class="navbar-nav mx-auto" style="align-self: end;">
+            <li class="nav-item list-unstyled">
+                 <a href="{% url 'home' %}">
+                    <div class="row" style=" width: 150px" > 
+                         <div class="col">E И V I S I O N
+                         </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+
+        <!-- ЦЕМ! -->
+
+
+      
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto align-items-end">
+        <li class="nav-item m-0 pb-0">
+        <form method='GET' action="{% url 'accounts:language-pref'%}">
+         <input type="hidden" name="next" value='{{ request.path }}'>
+         <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+          <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+          <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
+          <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
+        </select>
+        </form>
+        </li>        
+         
+   
+      
+        <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Купить</a>
+        </li>
+
+        <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Продать</a>          
+        </li>
+
+
+        {% if request.user.is_authenticated %}                                
+        <li class="nav-item">
+        <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
+
+        <i class="fas fa-heart"></i>
+        <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
+        
+        </a>
+        </li>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown ml-0 mr-0">
+           <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
+            {% if request.user.profile_foto %}
+            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+            {% else %}
+            <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+            {% endif %}
+          
+          
+          <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Профиль</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Сообщения</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои айтемы</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>История</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Избранное</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Настройки</a>
+          </div>
+        </li>
+
+        {% else %}
+        <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+        <a class="nav-link" href="{{ login_url }}"><i class="fas fa-user"></i></a>
+        </li>
+  
+      {% endif %}
+
+
+
+</ul>
+</div>
+</nav>
+
+<div class="pos-f-t">
+  <div class="collapse" id="navbarToggleExternalContent">
+
+        <div class="row mr-1 ml-1">
+            <div class="col p-0">
+                {% include 'search/snippets/search-form.html' %}
+            </div>
         </div>
 
-        <div class="mx-auto order-0">
-            <a class="navbar-brand mx-auto" href="{% url 'home' %}">Envision</a>
-          
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+        <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
 
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
-              
-            <li class="nav-item m-0 pb-0">
-            <form method='GET' action="{% url 'accounts:language-pref'%}">
-             <input type="hidden" name="next" value='{{ request.path }}'>
+            <div class="col p-0 {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+                <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Купить</a>
+            </div>
 
-             <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+            <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+                <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Продать</a>
+            </div>
 
-              <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
-              <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-              <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
-            </select>
-            </form>
-            </li>
-          
-            <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" >
-                <a class="btn btn-dark" role="button" href="{{ product_list_url }}">Buy</a>
-            </li>
-            <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="justify-content: flex-end;">
-                <a class="btn btn-light" role="button" href="{{ products_create_url }}">Sell</a>         
-            </li>
-            <li class="nav-item m-0 pb-0">
-            <a class="nav-link m-0 pb-0" href="{{ wish_list }}">
-            <span class='navbar-wish-count'>{{ request.user.wishes.all.count }}</span>
-            <i class="fas fa-heart fa-2x"></i>
-            </a>
-            </li>
+            
+            {% if request.user.is_authenticated %}
+                <div class="col p-0">
+                    <a href="{{ wish_list }}">
+                        <i class="fas fa-heart"></i>
+                        <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
+                    </a>
+                </div>
+            {% endif %}
 
             {% if request.user.is_authenticated %}
-            <li class="nav-item dropdown ml-0 mr-0">
-               <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
-                {% if request.user.profile_foto %}
-                <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
-                {% else %}
-                <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a>
-                {% endif %}
+                <div class="col p-0">
+                    {% if request.user.profile_foto %}
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                    {% else %}
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+                    {% endif %}              
               
-              
-              <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'home' %}dialogs/">Chat</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
-                <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
-              </div>
-            </li>
+                    <div class="dropdown-menu dropdown-menu-right text-center p-0 mt-2" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Профиль</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Сообщения</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои айтемы</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>История</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Избранное</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Настройки</a>
+                    </div>
+                </div>
             {% else %}
-            <li class="nav-item {% if request.path == login_url %}active{% endif %}">
-            <a class="nav-link" href="{{ login_url }}">Login/Sign Up</a>
-            </li>
-          {% endif %}
-    </ul>
+                <div class="col p-0 {% if request.path == login_url %}active{% endif %}">
+                    <a href="{{ login_url }}"><i class="fas fa-user align-bottom"></i></a>                  
+                </div>
+            {% endif %}
+
+        </div>
+
     </div>
-    {% endif %}
+</div>
+ {% else %}
+ <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav  mr-auto">
+            <li class="nav-item">
+                {% include 'search/snippets/search-form.html' %}
+            </li>
+        </ul>
+    </div>
+
+    <div class="align-bottom">
+        <ul class="navbar-nav mx-auto" style="align-self: end;">
+            <li class="nav-item list-unstyled">
+                 <a href="{% url 'home' %}">
+                    <div class="row" style=" width: 150px" > 
+                         <div class="col">E И V I S I O N
+                         </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+        <!-- ЦЕМ! -->
+
+
+      
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto align-items-center">
+
+          <li class="nav-item mr-2 pb-0">
+        <form method='GET' action="{% url 'accounts:language-pref'%}">
+         <input type="hidden" name="next" value='{{ request.path }}'>
+         <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+          <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+          <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
+          <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
+        </select>
+        </form>
+        </li> 
+            
+      
+        <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
+        </li>
+
+        <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
+        </li>
+
+
+        {% if request.user.is_authenticated %}                                
+        <li class="nav-item">
+        <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
+
+        <i class="fas fa-heart"></i>
+        <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
+        
+        </a>
+        </li>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown ml-0 mr-0">
+           <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
+            {% if request.user.profile_foto %}
+            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+            {% else %}
+            <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+            {% endif %}
+          
+          
+          <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Messages</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
+            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
+          </div>
+        </li>
+
+        {% else %}
+        <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+        <a class="nav-link" href="{{ login_url }}"><i class="fas fa-user"></i></a>
+        </li>
+  
+      {% endif %}
+
+
+
+</ul>
+</div>
 </nav>
+
+<div class="pos-f-t">
+  <div class="collapse" id="navbarToggleExternalContent">
+
+        <div class="row mr-1 ml-1">
+            <div class="col p-0">
+                {% include 'search/snippets/search-form.html' %}
+            </div>
+        </div>
+
+        <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
+
+            <div class="col p-0 {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+                <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
+            </div>
+
+            <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+                <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
+            </div>
+
+            
+            {% if request.user.is_authenticated %}
+                <div class="col p-0">
+                    <a href="{{ wish_list }}">
+                        <i class="fas fa-heart"></i>
+                        <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
+                    </a>
+                </div>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+                <div class="col p-0">
+                    {% if request.user.profile_foto %}
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                    {% else %}
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+                    {% endif %}              
+              
+                    <div class="dropdown-menu dropdown-menu-right text-center p-0 mt-2" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Messages</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col p-0 {% if request.path == login_url %}active{% endif %}">
+                    <a href="{{ login_url }}"><i class="fas fa-user align-bottom"></i></a>                  
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+{% endif %}

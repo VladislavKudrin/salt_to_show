@@ -12,7 +12,6 @@ from .views import (
     ProductDeleteView,
     WishListView,
     wishlistupdate,
-    handle_upload,
     image_update_view,
     image_create_order
 
@@ -32,7 +31,6 @@ urlpatterns = [
     url(r'^update/(?P<slug>[\w.@+-]+)/$', ProductUpdateView.as_view(), name='update'),
     url(r'^delete/(?P<slug>[\w.@+-]+)/$', ProductDeleteView.as_view(), name='delete'),
     url(r'^view/(?P<slug>[\w.@+-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
-    url(r'^handle_upload$', handle_upload, name='example_handle_upload'),
     url(r'^existing/(?P<id>\d+)$', ProductUpdateView.as_view(), name='existing_file_example'),
 
 

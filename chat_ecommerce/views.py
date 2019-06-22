@@ -62,6 +62,7 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         threads_with_unred = Thread.objects.filter(chatmessage__notification__user=me, chatmessage__notification__read='False').distinct() # all threads with notifications where this specific request.user received notification! # filter by foreign key with multiple filters
         context['threads_with_unred'] = threads_with_unred
         context['form'] = self.get_form()
+
         context['chats'] = Thread.objects.by_user(self.request.user).order_by('-timestamp')
         # print(context['chats'])
          # = Thread.objects.filter(chatmessage__user__notification=1)

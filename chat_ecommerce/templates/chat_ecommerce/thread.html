@@ -8,12 +8,28 @@
 <head>
 <style type="text/css">
 
+@media only screen and (max-width: 768px) { 
+  .avatar-skip { 
+    display: none; 
+  } 
+  .username-skip { 
+    display: none; 
+  }
+  .avatar-not-skipped {
+  	margin: 0 auto;
+  }
+
+}
 
 .my-custom-scrollbar {
   position: absolute;
   padding-right: 20px;
   padding-left: 0px;
   margin-bottom: 0px;
+}
+
+#websocket-form{
+	padding-top:65px;
 }
 
 /*#table-scroll .my-custom-scrollbar {
@@ -26,9 +42,8 @@
 #chat-items{
 	position: relative;
 /*	overflow:scroll;*/
-	height:100%;
-	max-height: 526px;
-	margin-bottom: 60px;
+	max-height: 500px;
+	margin-bottom: 0px;
 
 }
 
@@ -44,7 +59,7 @@ html {
 }
 
 #dialogs{
-	max-height: 580px;
+	max-height: 500px;
     overflow: auto;
 	width: 320px;
 	padding-right: 0px;
@@ -58,6 +73,51 @@ html {
 	height:70px;
 /*	display: flex;
     align-items: center;*/
+
+}
+
+#dialog:hover{
+	background-color: #f2f2f2;
+}
+
+#input-row{
+	background-color: #efefef;
+	height: 60px;
+}
+
+.fa-paper-plane{
+	color: #9da3a5;
+}
+
+
+#chat-message{
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+/*	text-align: left;*/
+}
+
+button:focus {
+ 	outline:0 !important;
+}
+
+
+*:focus {
+	outline:none !important;
+}
+
+.btn:focus {
+	outline:none !important;
+}
+
+.avatar-chat{
+	width:50px; 
+	height: 50px;
+}
+
+.avatar-small{
+	width:40px; 
+	height: 40px;
+
 }
 
 #dialog:hover{
@@ -143,6 +203,63 @@ button:focus {
 
 .msg-cloud{
 	background-color: #f2f2f2;
+	display:inline-block; 
+	max-width:inherit; 
+	max-width: 75%;
+	line-height: 1;
+}
+
+.timestamp {
+	font-size: xx-small;
+}
+
+.dialogs-username {
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}
+
+
+
+.active {
+	background-color: #e9ebeb;
+}
+
+.row-dialog {
+	height: 70px;
+}
+
+.backgroundy{
+	background-color: black;
+}
+
+.blacky{
+	background-color: #f2f2f2;
+}
+
+.rounder-form{
+	border-bottom-left-radius: 25px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 25px !important;
+}
+
+.rounder-msg-cloud-right{
+	border-bottom-left-radius: 25px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 0px !important;
+}
+
+.rounder-msg-cloud-left{
+	border-bottom-left-radius: 0px !important;
+	border-top-left-radius: 25px !important;
+	border-top-right-radius: 25px !important;
+	border-bottom-right-radius: 25px !important;
+}
+
+.msg-cloud{
+	background-color: #f2f2f2;
 /*	display:inline-block; 
 	max-width:inherit; 
 	max-width: 75%;*/
@@ -175,7 +292,8 @@ button:focus {
 
 	<div class='row'>
 
-		<div class='col-3'>
+
+		<div class='col-5 col-md-3'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
@@ -191,17 +309,17 @@ button:focus {
 				<ul id='dialogs' class='my-custom-scrollbar'>
 					{% for obj in chats %}
 						{% if request.user != obj.first %}
-							<li id='dialog'><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+							<li id='dialog' class="mr-1"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
 							
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.first.profile_foto %}
-											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="...">
+											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="...">
 										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar"  >
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto'>
+									<div class='col-9 text-left my-auto dialogs-username'>
 										{{ obj.first.username }}
 
 
@@ -220,16 +338,16 @@ button:focus {
 							
 							</a></li>
 						{% else %}
-							<li id='dialog'><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
+							<li id='dialog' class="mr-1"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}
-											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="..." >
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="..." >
 										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar" >
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto'>
+									<div class='col-9 text-left my-auto dialogs-username'>
 										{{ obj.second.username }}
 										{% if threads_with_unred %}
 										{% for noti in threads_with_unred %}
@@ -241,7 +359,6 @@ button:focus {
 											<span class='obj_id_s' id="{{ obj.id }}"></span>
 									</div>
 								</div>
-
 							</a></li>
 						{% endif %}
 					{% endfor %}
@@ -249,36 +366,48 @@ button:focus {
 			</div>
 		</div>
 
-		<div class='col-9'>
-			<div class='row' style='height: 54px; background-color: #efefef;'>
+
+
+
+
+		<div class='col-7 col-md-9'>
+			<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
+
 				<div class='col text-center my-auto'>
 						{% if request.user != object.first %}
 							<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 								<div class='row'>
-									<div class='col-1 ml-auto p-0 m-0 my-auto'>
+
+									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
 									{% if object.first.profile_foto %}
-										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="...">
+										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2 " alt="...">
 									{% else %}
-										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar"  >
+										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 									{% endif %}
 									</div>
 
-									<div class='col-1 mr-auto p-0 m-0 my-auto'>
+									<div class='col-1 mr-auto p-0 my-auto username-skip'>
 									{{ object.first.username }}
 									</div>
 								</div>
 							</a>
 						{% else %}
-							<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none;color: inherit;'>
 
-										{% if object.second.profile_foto %}
-											<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="..." >
-										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar" >
-										{% endif %}
+							<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none;color: inherit;'> {{ object.user.get_absolute_url }}
 
-										{{ object.second.username }}
+								<div class='row'>
+									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
+									{% if object.second.profile_foto %}
+										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2 " alt="..." >
+									{% else %}
+										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar " >
+									{% endif %}
+									</div>
 
+									<div class='col-1 mr-auto p-0 my-auto username-skip'>
+									{{ object.second.username }}
+									</div>
+								</div>	
 							</a>
 						{% endif %}
 					</div>
@@ -298,17 +427,21 @@ button:focus {
 
 											<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>
 											{{ msg.message }}<br>
-											<small> {{ msg.timestamp| print_timestamp }}</small>
+
+											<span class="timestamp"> {{ msg.timestamp| print_timestamp }}</span>
+
 											</div>
 
 										{% else %}
 
 											<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>
 											{{ msg.message }}<br>
-											<small> {{ msg.timestamp| print_timestamp }}</small>
+
+											<span class="timestamp"> {{ msg.timestamp| print_timestamp }}</span>
 											</div>
 
 										{% endif %}
+								
 					
 									</div>
 								</div>
@@ -322,9 +455,11 @@ button:focus {
 
 <div class='row'>
 
+
+
 						<form id='websocket-form' method='POST'> {% csrf_token %}
 							<div class='row' id='input-row' style='position: fixed;bottom: 0; width:75%' >
-								<div class='col-11 my-auto pr-0'>
+								<div class='col-7 col-md-11 my-auto pr-0'>
 									{{form }}
 									</div>
 								<div class='col-1 my-auto pl-0' >
@@ -361,9 +496,11 @@ button:focus {
 
 // adds to the current li class 'active' and it becomes gray
 $(document).ready(function ($) {
+	window.scrollTo(0,document.body.scrollHeight);
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
     var url = window.location.href;
     var activePage = url;
+
     $('#dialog a').each(function () {
         var linkPage = this.href;
         if (activePage == linkPage) {
@@ -384,10 +521,16 @@ function storeid(){
     // console.log(arr)
 }
 
+
 var loc = window.location
 var formData = $("#websocket-form")
 var msgInput = $("#id_message")
-var chatHolder = $('#chat-items')
+
+
+
+
+
+
 var wsStart = 'ws://'
 if (loc.protocol == 'https:'){
 	wsStart = 'wss://'
@@ -398,6 +541,8 @@ var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 
 
 socket.onmessage = function(e) {
+
+	console.log('MESSAGE')
 	// var dialogs = $('#dialogs')
 	// var size_dialogs = $('#dialogs li').length
 	// var dialogss = $('.obj_id_s')
@@ -407,6 +552,7 @@ socket.onmessage = function(e) {
 	storeid();
 	// console.log(arr) // ids of all threads / array 
 	var chatDataMsg = JSON.parse(e.data)
+	console.log(chatDataMsg)
 	var username = chatDataMsg.username
 	var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
 	found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append
@@ -438,28 +584,46 @@ socket.onmessage = function(e) {
 );
 	}
 
+
 	var now = new Date()
 	var day = days[ now.getDay()];
 	var hour = (now.getHours()<10?'0':'') + now.getHours();
 	var min = (now.getMinutes()<10?'0':'') + now.getMinutes();
 	var date = day + ' '+ hour.toString() + ':' + min.toString()
+
 	var opponent_username = chatDataMsg.opponent_username
 	var req = chatDataMsg.req
-	if (username === req){
+	console.log('ME', req)
+	console.log('OPPONENT', opponent_username)
+	var chatHolder = $('#chat-items')
+	var opponent = document.getElementsByClassName("opponent")[0].id
+	console.log('OPPONENT BY CLASS', opponent)
+	if (opponent === opponent_username){
+
 		// console.log('pulling right')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>");
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><span class='timestamp'>" + date + "</span></div></div></div></li>");
 	// console.log(req)
 	}
 	else{
+		var chatHolder = $('#chat-items')
 		// console.log('pulling left')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><small>" + date + "</small></div></div></div></li>")
+	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><span class='timestamp'>" + date + "</span></div></div></div></li>")
+
 	}
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
 
 }
 
 
+
 socket.onopen = function(e) {
+	console.log('Websocket Opened')
+	// var chatDataMsg = JSON.parse(e.data)
+	// var backend_data = JSON.parse(e.data)
+	// var req = backend_data.req
+	// console.log(req)
+
+
 	// var url = window.location.href;
 	// console.log(url)
 	// if url contains 
@@ -485,12 +649,15 @@ socket.onopen = function(e) {
  //    console.log(unred)
 
 	// }
+	
 
-	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
+	// document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
 	// console.log('open', e)
 	formData.submit(function(event){
 		event.preventDefault()
 		var msgText = msgInput.val()
+		console.log("PISDA")
+		console.log('HUI', msgText)
 		var finalData = {
 			'message':msgText,
 			// 'current_url': url
@@ -516,7 +683,7 @@ const ps = new PerfectScrollbar('.my-custom-scrollbar', {
     wheelSpeed: 1,
     wheelPropagation: false,
     swipeEasing: true,
-    suppressScrollX: true,
+    // suppressScrollX: true,
     // minScrollbarLength: 10,
     // maxScrollbarLength: 10
 

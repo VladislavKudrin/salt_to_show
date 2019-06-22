@@ -20,6 +20,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+MAX_UPLOAD_SIZE = "20971520"
+CONTENT_TYPES = ['image', 'video']
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -51,7 +53,8 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
@@ -65,16 +68,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     #third party
     'storages',
     'social_django',
     'crispy_forms',
     'sass_processor',
     'rest_framework',
-    'django_file_form',
-    'django_file_form.ajaxuploader',
-    'django_bootstrap3_form',
-    'django_pony_forms',
       
 
     #our apps
@@ -90,7 +90,6 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'test_ecommerce',
     'image_uploader'
 ]
 
@@ -208,8 +207,6 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'ecommerce.wsgi.application'
-ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -282,16 +279,17 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
 
+
 STATIC_URL = '/static/'
 
-MEDIA_URL = "/media/"
+# MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 # from ecommerce.aws.conf import *
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10240000 # value in bytes
 
 # CACHES = {
 #     "default": {
