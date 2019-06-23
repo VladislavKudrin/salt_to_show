@@ -24,7 +24,13 @@
     #navbarToggleExternalContent {
     visibility: hidden; 
     display: none; 
-  } 
+  }
+
+
+.dropdown-item.active, .dropdown-item:active  {
+    text-decoration: none;
+    background-color: transparent;
+}
 
 </style>
 
@@ -39,6 +45,7 @@
     </div>
 
 
+    <div class="align-bottom"> 
         <ul class="navbar-nav mx-auto" style="align-self: end;">
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
@@ -49,6 +56,7 @@
                 </a>
             </li>
         </ul>
+    </div>
 
         <!-- ЦЕМ! -->
 
@@ -66,8 +74,8 @@
 
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto align-items-end">
-        <li class="nav-item m-0 pb-0">
+        <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item mr-2 m-0 pb-0">
         <form method='GET' action="{% url 'accounts:language-pref'%}">
          <input type="hidden" name="next" value='{{ request.path }}'>
          <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
@@ -101,7 +109,7 @@
         {% endif %}
 
         {% if request.user.is_authenticated %}
-        <li class="nav-item dropdown ml-0 mr-0">
+        <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
             <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
@@ -263,7 +271,7 @@
         {% endif %}
 
         {% if request.user.is_authenticated %}
-        <li class="nav-item dropdown ml-0 mr-0">
+        <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
             <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>

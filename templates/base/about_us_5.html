@@ -12,8 +12,9 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
-
-
+  #hanger {
+    margin-right: 75px;
+  }
 }
 
 </style>
@@ -31,7 +32,7 @@ body {
     		<p class="text-center">Описание</p>
     	</div>
     	<div class="col-12" style="display: flex; justify-content: flex-end;">
-    		<img src="{% static 'img/hanger_75.png' %}" style="margin-right: 75px;">
+    		<img id="hanger" src="{% static 'img/hanger_75.png' %}">
     	</div>
     </div>
 
@@ -51,7 +52,7 @@ body {
                     </div>
                   </div> 
                 </div>
-                <div class="col-xs-12 col-md-4">
+                <div class="col-xs-12 col-md-8">
                 	<p>Текст о том, как наши модераторы проверяют каждую вещь перед публикацией, что создает защиту от фейковых товаров.</p>
                 </div>
               </div>
@@ -89,7 +90,7 @@ body {
                     </div>
                   </div> 
                 </div>
-                <div class="col-xs-12 col-md-4">
+                <div class="col-xs-12 col-md-8">
                   <p>Красивый текст о минимализме, лёгкости и функциональности сайта.</p>
                 </div>
               </div>
