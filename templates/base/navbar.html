@@ -9,7 +9,7 @@
 {% url 'products:create' as products_create_url %}
 {% url 'accounts:wish-list' as wish_list %}
 {% url 'categories:filter' as filter_url %}
-
+{% load for_loop_extras %}
 {% load static %}
 
 <style type="text/css">
@@ -27,7 +27,7 @@
   } 
 
 </style>
-
+{{ request.session|to_default_language }}
 {% if request.session.language == 'RU' %}
 <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -71,9 +71,9 @@
         <form method='GET' action="{% url 'accounts:language-pref'%}">
          <input type="hidden" name="next" value='{{ request.path }}'>
          <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-          <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+          <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
           <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-          <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
+          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
         </select>
         </form>
         </li>        
@@ -234,9 +234,9 @@
         <form method='GET' action="{% url 'accounts:language-pref'%}">
          <input type="hidden" name="next" value='{{ request.path }}'>
          <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-          <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+           <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
           <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-          <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
+          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
         </select>
         </form>
         </li> 
