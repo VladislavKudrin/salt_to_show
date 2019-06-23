@@ -314,7 +314,7 @@ class WishListView(LoginRequiredMixin, ListView):
 
 
 
-
+@login_required
 def wishlistupdate(request):
 	product_id=request.POST.get('product_id')
 	user = request.user
