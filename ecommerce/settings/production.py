@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['envision-outfit.herokuapp.com']
 
@@ -288,7 +288,6 @@ STATIC_URL = '/static/'
 # MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
-
 
 # from ecommerce.aws.conf import *
 

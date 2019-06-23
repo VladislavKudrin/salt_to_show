@@ -24,7 +24,33 @@
     #navbarToggleExternalContent {
     visibility: hidden; 
     display: none; 
-  } 
+  }
+
+.active {
+    background-color: black !important;
+}
+
+.dropdown-item{
+    background-color: black !important;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus{
+    color: #555;
+    background-color: black; 
+}
+
+
+
+.dropdown-menu a{
+    color: #FFFFFF !important;
+}
+
+.dropdown-menu:active{
+    color: red !important;
+}
+
+
+
 
 </style>
 {{ request.session|to_default_language }}
@@ -43,7 +69,7 @@
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
                     <div class="row" style=" width: 150px" > 
-                         <div class="col">E И V I S I O N
+                         <div class="col"><span class=''>S A L T</span>
                          </div>
                     </div>
                 </a>
@@ -111,12 +137,12 @@
           
           
           <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Профиль</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Сообщения</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои айтемы</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>История</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Избранное</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Настройки</a>
+            <a class="dropdown-item" href="{{ request.user.get_absolute_url }}">Профиль</a>
+            <a class="dropdown-item" href="{% url 'chat:inbox' %}">Сообщения</a>
+            <a class="dropdown-item" href='{% url "products:user-list" %}'>Мои айтемы</a>
+            <a class="dropdown-item" href='{% url "accounts:history-product" %}'>История</a>
+            <a class="dropdown-item" href='{% url "accounts:wish-list" %}'>Избранное</a>
+            <a class="dropdown-item" href='{% url "accounts:user-update" %}'>Настройки</a>
           </div>
         </li>
 
@@ -204,7 +230,7 @@
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
                     <div class="row" style=" width: 150px" > 
-                         <div class="col">E И V I S I O N
+                         <div class="col"><span class=''>S A L T</span>
                          </div>
                     </div>
                 </a>
