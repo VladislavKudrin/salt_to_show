@@ -7,6 +7,11 @@
 <head>
 <style type="text/css">
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 @media only screen and (min-width: 768px) {
   .flip-card-2:hover .flip-card-2-inner {
     transform: rotateY(180deg);
@@ -53,7 +58,7 @@ body {
 <div class="bg">
 <div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <h3><p class="lead">МАРКЕТПЛЕЙС НОВОГО ПОКОЛЕНИЯ</p></h3>
+    <p class="lead" style='font-size: 30px;'>Маркетплейс нового поколения</p>
   </div>
 
 
@@ -73,10 +78,10 @@ body {
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;height: 275px; overflow-x: hidden;  ">
   <div class="container">
-    <h1 class="display-4">ПРОДАТЬ</h1>
-    <p class="lead">Внеси свою лепту для поддержания экологии.</p>
+    <h1 class="display-4">SELL</h1>
+    <p class="lead">Зарабатывай $ и поддерживай круговорот одежды в природе.</p>
   </div>
 </div>
 </a>
@@ -89,10 +94,10 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;height: 275px; overflow-x: hidden;  ">
   <div class="container">
-    <h1 class="display-4">КУПИТЬ</h1>
-    <p class="lead">Найди свою брендовую вещичку.</p>
+    <h1 class="display-4">BUY</h1>
+    <p class="lead">Найди свой брендовый айтем быстро и без фейков.</p>
   </div>
 </div>
 </a>
@@ -127,13 +132,13 @@ body {
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
             <div class="flip-card-front">
-               <h3><p class="my-auto text pt-5">Надёжно</p></h3>
+              <p class="lead my-auto text pt-5" style='font-size: 30px;'>Надежно</p>
                   <i class=" my-auto fas fa-user-shield fa-3x"></i>
                   </div>
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2">
-                Мы проверяем загруженные вещи 24/7/365. Никаких фейков
+                 Загруженные вещи проверяются 24/7/365. На Envision нет фейков и кидал.
               </div>
               </div>
             </div>
@@ -148,13 +153,13 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <h3><p class="my-auto text pt-5">ИИ</p></h3>
+            <p class="lead my-auto text pt-5" style='font-size: 30px;'>Современно</p>
               <i class="fas fa-brain fa-3x"></i>
             </div>
               <div class="flip-card-back">
                <div class="row h-100">
                 <div class="col my-auto mr-3 ml-3">
-                Мы используем ИИ, разработанный в Google, чтобы исключать подделки из нашего каталога
+                Мы используем Искусственный Интеллект, чтобы исключать подделки из нашего каталога.
               </div>
               </div>
             </div>
@@ -169,13 +174,13 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <h3><p class="my-auto text pt-5">Просто</p></h3>
+            <p class="lead my-auto text pt-5" style='font-size: 30px;'>Просто</p>
               <i class="fas fa-hand-holding-heart fa-3x"></i>
             </div>
             <div class="flip-card-back">
               <div class="row h-100">
               <div class="col my-auto mr-1 ml-2">
-              Наш интуитивный дизайн был разработан с любовью к простоте и минимализму
+              Наш интуитивный дизайн был разработан с любовью к простоте и минимализму.
             </div>
             </div>
           </div>
@@ -211,7 +216,7 @@ body {
 
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
-    <p class="lead display-4">Перейти в профиль</p>
+    <p class="lead" style='font-size: 30px;'>Перейти в профиль</p>
            
             {% if request.user.profile_foto %}
             <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
@@ -223,7 +228,7 @@ body {
 </div>
         {% else %}
           <div class="container mt-5"> 
-    <p class="lead display-4">Будь одним из первых пользователей</p>
+    <p class="lead" style='font-size: 30px;'>Стань одним из первых</p>
 
         <div class='col-7 mx-auto'>
       <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">
@@ -252,7 +257,7 @@ body {
 <div class="bg">
 <div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <h3><p class="lead">DESIGNER MARKETPLACE FOR THE NEXT GENERATION</p></h3>
+    <p class="lead" style='font-size: 30px;'> Fashion Marketplace Of The Next Generation</p>
   </div>
 
 
@@ -271,10 +276,10 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; ">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; height: 275px; overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">SELL</h1>
-        <p class="lead">Contribute to the sustainable clothes-circle.</p>
+        <p class="lead">Earn $ and contribute to the sustainable clothes-circle.</p>
       </div>
     </div>
     </a>
@@ -283,10 +288,10 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; ">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; height: 275px; overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">BUY</h1>
-        <p class="lead">Find your luxury piece without environment harm.</p>
+        <p class="lead">Find your designer piece without harming the environment.</p>
       </div>
     </div>
     </a>
@@ -321,13 +326,13 @@ body {
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
             <div class="flip-card-front">
-               <h3><p class="my-auto text pt-5">Safe</p></h3>
+                <p class="lead my-auto text pt-5" style='font-size: 30px;'>Safe</p>
                   <i class=" my-auto fas fa-user-shield fa-3x"></i>
                   </div>
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2">
-                We monitor uploaded items 24/7/365. No more fakes
+                Uploaded items are monitored 24/7/365. There are no fakes on Envision.
               </div>
               </div>
             </div>
@@ -342,13 +347,13 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <h3><p class="my-auto text pt-5">AI-Powered</p></h3>
+            <p class="lead my-auto text pt-5" style='font-size: 30px;'>AI-Powered</p>
               <i class="fas fa-brain fa-3x"></i>
             </div>
               <div class="flip-card-back">
                <div class="row h-100">
                 <div class="col my-auto mr-3 ml-3">
-                We use AI to detect fakes from our catalogue. Our model was developed by Google
+                We use Machine Learning to detect fakes in our catalogue.  
               </div>
               </div>
             </div>
@@ -363,13 +368,13 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <h3><p class="my-auto text pt-5">Simple</p></h3>
+              <p class="lead my-auto text pt-5" style='font-size: 30px;'>Simple</p>
               <i class="fas fa-hand-holding-heart fa-3x"></i>
             </div>
             <div class="flip-card-back">
               <div class="row h-100">
               <div class="col my-auto mr-1 ml-2">
-              Our intuitive design was made with love to simplicity and minimalism
+              Our intuitive design was made with love to simplicity and minimalism.
             </div>
             </div>
           </div>
@@ -405,7 +410,7 @@ body {
 
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
-    <p class="lead display-4">Go to your profile</p>
+    <p class="lead" style='font-size: 30px;'>Go to your profile</p>
            
             {% if request.user.profile_foto %}
             <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
@@ -417,7 +422,7 @@ body {
 </div>
         {% else %}
           <div class="container mt-5"> 
-    <p class="lead display-4">Be one of the first users</p>
+    <p class="lead" style='font-size: 30px;'>Be one of the first</p>
 
         <div class='col-7 mx-auto'>
       <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">

@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['envision-outfit.herokuapp.com']
 
@@ -53,7 +53,8 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
@@ -206,8 +207,6 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'ecommerce.wsgi.application'
-ASGI_APPLICATION = 'ecommerce.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -248,6 +247,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+DEFAULT_LANGUAGE_PREF = 'RU'
+
+
 
 TIME_ZONE = 'UTC'
 
@@ -286,7 +288,6 @@ STATIC_URL = '/static/'
 # MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
-
 
 # from ecommerce.aws.conf import *
 

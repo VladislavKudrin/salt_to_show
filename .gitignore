@@ -1,3 +1,4 @@
+
 .DS_STORE
 
 .env
@@ -19,12 +20,6 @@ ecommerce/settings/local.py
 bin/
 include/
 pip-selfcheck.json
-
-# Django related 
-live-static-files/
-# src/<yourproject>/settings/local.py
-# static-cdn/  # any collected static files 
-live-static-files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -125,5 +120,3 @@ ENV/
 
 # mypy
 .mypy_cache/
-*.sqlite3
-db.sqlite3

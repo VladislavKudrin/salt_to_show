@@ -33,16 +33,18 @@ def languge_pref_view(request):
 	next_post = request.POST.get('next')
 	redirect_path=next_ or next_post or None
 	language = request.GET.get('language')
-	user = request.user
-	qs_lang = LanguagePreference.objects.filter(user=user)
-	request.session['language'] = language 
-	if qs_lang.exists():
-		LanguagePreference.objects.update(user=user, language=language.lower())
-	else:
-		LanguagePreference.objects.create(user=user, language=language.lower())
-	if is_safe_url(redirect_path, request.get_host()):
-		return redirect(redirect_path)
-	return redirect(default_next)
+	request.session['language'] = language
+	if request.user.is_authenticated():
+		print(request.session['language'])
+		user = request.user
+		qs_lang = LanguagePreference.objects.filter(user=user)
+		if qs_lang.exists():
+			LanguagePreference.objects.update(user=user, language=language.lower())
+		else:
+			LanguagePreference.objects.create(user=user, language=language.lower())
+		if is_safe_url(redirect_path, request.get_host()):
+			return redirect(redirect_path)
+	return redirect(redirect_path)
 
 class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 	template_name = 'accounts/home.html' 
@@ -62,7 +64,10 @@ class AccountEmailActivateView(FormMixin, View):
 			if confirm_qs.count()==1:
 				obj = confirm_qs.first()
 				obj.activate()
-				messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
+				if request.session.get('language')=='RU':
+					messages.add_message(request, messages.SUCCESS, 'Вы успешно вошли')
+				else:
+					messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
 				email = qs.first().user.email
 				password = qs.first().user.password
 				login(request, qs.first().user, backend='django.contrib.auth.backends.ModelBackend') 
@@ -71,9 +76,14 @@ class AccountEmailActivateView(FormMixin, View):
 				activated_qs = qs.filter(activated=True)
 				if activated_qs.exists():
 					reset_link = reverse("password_reset")
-					msg = """Your Email has already been confirmed
-					Do you need to <a href="{link}">reset your password</a>?
-					""".format(link=reset_link)
+					if request.session.get('language')=='RU':
+						msg = """Вы уже подтвердили ваш Email. 
+						<a href="{link}">Сбросить пароль</a>?
+						""".format(link=reset_link)
+					else:
+						msg = """Your Email has already been confirmed
+						Do you need to <a href="{link}">reset your password</a>?
+						""".format(link=reset_link)
 					messages.add_message(request, messages.SUCCESS, mark_safe(msg))
 					return redirect("login")
 		context={
@@ -143,21 +153,35 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		if user_objects is False:
 			form.save()
 			next_path = 'login'
-			msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
+			if self.request.session.get('language') == 'RU':
+				msg1 = "Пожалуйста, проверьте свой Email, чтобы подтвердить свой аккаунт" + form.cleaned_data.get('msg')
+			else:
+				msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
-			print('admin')
-			msg2 = "Email not confirmed. " + form.cleaned_data.get('msg')
+			if self.request.session.get('language') == 'RU':
+				msg2 = "Email не подтвержден. " + form.cleaned_data.get('msg')
+			else:
+				msg2 = "Email not confirmed. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
 		elif user is None:
 			next_path = 'login'
-			messages.add_message(form.request, messages.WARNING, mark_safe("The password seems to be wrong. Try again!"))
+			if self.request.session.get('language') == 'RU':
+				msg3 = "Неверный пароль. Попробуйте еще раз!"
+			else:
+				msg3 = "The password seems to be wrong. Try again!"
+			messages.add_message(form.request, messages.WARNING, mark_safe(msg3))
 			return redirect(next_path)
 		else:
+			language_pref_login_page = self.request.session.get('language')
 			login(form.request, user)
-			language_pref = LanguagePreference.objects.get(user=user)
-			self.request.session['language'] = language_pref.language.upper()
+			language_pref = LanguagePreference.objects.filter(user=user)
+			if language_pref.exists():
+				self.request.session['language'] = language_pref.first().language.upper()
+			else:
+				self.request.session['language'] = language_pref_login_page.upper()
+				LanguagePreference.objects.create(user=user, language=language_pref_login_page.lower())
 			if self.request.session.get('language') == 'RU':
 				messages.add_message(form.request, messages.SUCCESS, 'Вы успешно вошли')
 			else:
@@ -241,7 +265,10 @@ class ProfileView(DetailView):
 		user  = User.objects.filter_by_username(username=username)
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
 		context['products'] = Product.objects.filter(user=user)
-		context['btn_title'] = 'Begin Chat with '
+		if self.request.session.get('language')=='RU':
+			context['btn_title'] = 'Написать '
+		else:
+			context['btn_title'] = 'Begin Chat with '
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -287,7 +314,7 @@ class WishListView(LoginRequiredMixin, ListView):
 
 
 
-
+@login_required
 def wishlistupdate(request):
 	product_id=request.POST.get('product_id')
 	user = request.user
@@ -311,7 +338,6 @@ def wishlistupdate(request):
 			added = True
 			user_wishes_exist=user_wishes.count()
 		if request.is_ajax():
-			print("Ajax request YES")
 			json_data={
 				"added": added,
 				"removed": not added,

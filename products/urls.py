@@ -10,8 +10,6 @@ from .views import (
     ProductUpdateView,
     product_delete,
     ProductDeleteView,
-    WishListView,
-    wishlistupdate,
     image_update_view,
     image_create_order
 
@@ -25,8 +23,6 @@ urlpatterns = [
     url(r'^handle_image_create_sort$', image_create_order, name='handle_image_create_sort'),
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
     url(r'^list/$', AccountProductListView.as_view(), name='user-list'),
-    url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),
-    url(r'^wishlist-update/$', wishlistupdate, name='wish-list-update'),
     url(r'^delete/$', product_delete, name='delete'),
     url(r'^update/(?P<slug>[\w.@+-]+)/$', ProductUpdateView.as_view(), name='update'),
     url(r'^delete/(?P<slug>[\w.@+-]+)/$', ProductDeleteView.as_view(), name='delete'),

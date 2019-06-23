@@ -1,6 +1,19 @@
 from django import template
 from datetime import datetime
+from django.conf import settings
+
 register = template.Library()
+
+
+@register.filter
+def to_default_language(value):
+	language = value.get('language')
+	if language is None:
+		pref = settings.DEFAULT_LANGUAGE_PREF
+		value['language'] = pref
+	else:
+		return ''
+	return ''
 
 @register.filter
 def to_none(value):

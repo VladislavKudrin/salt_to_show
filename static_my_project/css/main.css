@@ -1,5 +1,22 @@
+.dropdown-item.active, .dropdown-item:active{
+    background-color: white !important;
+    color: black !important;
+}
 
-
+.strike {
+  font-size: 1em;
+  line-height: 2em;
+  position: relative;
+}
+.strike::after {
+  border-bottom: 0.125em solid black;
+  content: "";
+  left: 0;
+  margin-top: calc(0.125em / 2 * -1);
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
 /*Flip-Card Product Detail View
 */
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */

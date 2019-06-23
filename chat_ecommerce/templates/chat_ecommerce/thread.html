@@ -28,6 +28,10 @@
   margin-bottom: 0px;
 }
 
+#websocket-form{
+	padding-top:65px;
+}
+
 /*#table-scroll .my-custom-scrollbar {
   position: relative;
   width: 250px;
@@ -38,9 +42,8 @@
 #chat-items{
 	position: relative;
 /*	overflow:scroll;*/
-	height:100%;
-	max-height: 526px;
-	margin-bottom: 60px;
+	max-height: 500px;
+	margin-bottom: 0px;
 
 }
 
@@ -56,7 +59,7 @@ html {
 }
 
 #dialogs{
-	max-height: 580px;
+	max-height: 500px;
     overflow: auto;
 	width: 320px;
 	padding-right: 0px;
@@ -493,6 +496,7 @@ button:focus {
 
 // adds to the current li class 'active' and it becomes gray
 $(document).ready(function ($) {
+	window.scrollTo(0,document.body.scrollHeight);
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
     var url = window.location.href;
     var activePage = url;
@@ -647,7 +651,7 @@ socket.onopen = function(e) {
 	// }
 	
 
-	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
+	// document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
 	// console.log('open', e)
 	formData.submit(function(event){
 		event.preventDefault()

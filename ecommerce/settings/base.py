@@ -33,7 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = '3tb^6c3_5o-ofobpuoyb9)2o8649cv(!!b#*^=paslu(w-vl4e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -50,6 +50,10 @@ MANAGERS = (
         )
 
 ADMINS = MANAGERS
+
+
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.routing.application'
 
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
@@ -203,8 +207,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'ecommerce.wsgi.application'
-ASGI_APPLICATION = 'ecommerce.routing.application'
 
 
 # Database
@@ -241,6 +243,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+DEFAULT_LANGUAGE_PREF = 'RU'
+
 
 TIME_ZONE = 'UTC'
 
@@ -272,10 +276,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
 
 
+
 # #STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
 
 
 # MEDIA_URL = "/media/"
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 

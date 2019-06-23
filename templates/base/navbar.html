@@ -9,7 +9,7 @@
 {% url 'products:create' as products_create_url %}
 {% url 'accounts:wish-list' as wish_list %}
 {% url 'categories:filter' as filter_url %}
-
+{% load for_loop_extras %}
 {% load static %}
 
 <style type="text/css">
@@ -27,13 +27,9 @@
   }
 
 
-.dropdown-item.active, .dropdown-item:active  {
-    text-decoration: none;
-    background-color: transparent;
-}
-
 </style>
 
+{{ request.session|to_default_language }}
 {% if request.session.language == 'RU' %}
 <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -50,7 +46,7 @@
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
                     <div class="row" style=" width: 150px" > 
-                         <div class="col">E N V I S I O N
+                         <div class="col"><span class=''>S A L T</span>
                          </div>
                     </div>
                 </a>
@@ -79,9 +75,9 @@
         <form method='GET' action="{% url 'accounts:language-pref'%}">
          <input type="hidden" name="next" value='{{ request.path }}'>
          <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-          <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+          <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
           <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-          <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
+          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
         </select>
         </form>
         </li>        
@@ -119,12 +115,12 @@
           
           
           <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Профиль</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Сообщения</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои айтемы</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>История</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Избранное</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Настройки</a>
+            <a class="dropdown-item" href="{{ request.user.get_absolute_url }}">Профиль</a>
+            <a class="dropdown-item" href="{% url 'chat:inbox' %}">Сообщения</a>
+            <a class="dropdown-item" href='{% url "products:user-list" %}'>Мои айтемы</a>
+            <a class="dropdown-item" href='{% url "accounts:history-product" %}'>История</a>
+            <a class="dropdown-item" href='{% url "accounts:wish-list" %}'>Избранное</a>
+            <a class="dropdown-item" href='{% url "accounts:user-update" %}'>Настройки</a>
           </div>
         </li>
 
@@ -212,7 +208,7 @@
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
                     <div class="row" style=" width: 150px" > 
-                         <div class="col">E N V I S I O N
+                         <div class="col"><span class=''>S A L T</span>
                          </div>
                     </div>
                 </a>
@@ -242,9 +238,9 @@
         <form method='GET' action="{% url 'accounts:language-pref'%}">
          <input type="hidden" name="next" value='{{ request.path }}'>
          <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-          <option {% if request.session.language == 'RU' %} selected {% endif %} value="RU">RU</option>
+           <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
           <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-          <option {% if request.session.language == 'EN' %} selected {% elif request.session.language == None %}selected{% endif %} value="EN">EN</option>
+          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
         </select>
         </form>
         </li> 
