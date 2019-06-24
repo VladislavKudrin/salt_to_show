@@ -19,8 +19,7 @@ class CategoryFilterView(ListView):
 					]
 	fields_gender = [
 					'man',
-					'woman',
-					'unisex'
+					'woman'
 					]
 	
 
