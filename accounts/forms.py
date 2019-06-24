@@ -70,16 +70,16 @@ class UserDetailChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-                'full_name',
                 'username',
+                'full_name',
                 'profile_foto'
                     ]
     def __init__(self, request, *args, **kwargs):
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
         self.lan = request.session.get('language')
         if self.lan == 'RU':
-            self.fields['full_name'].label = "Полное имя"
             self.fields['username'].label = "Имя пользователя"
+            self.fields['full_name'].label = "Имя и фамилия"
             self.fields['profile_foto'].label = "Фото профиля"
     def clean_username(self):
         data = self.cleaned_data['username']
@@ -148,7 +148,7 @@ class RegisterLoginForm(forms.ModelForm):
     def clean(self):
         link = reverse("accounts:resend-activation")
         if self.request.session.get('language') == 'RU':
-            reconfirm_msg = """Перейдите чтобы <a href='{resend_link}'>послать письмо подтверждения еще раз</a>.""".format(resend_link=link)
+            reconfirm_msg = """<a href='{resend_link}'> (Кликните, чтобы выслать подтверждение еще раз</a>.)""".format(resend_link=link)
         else:
             reconfirm_msg = """Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
         self.cleaned_data['msg'] = reconfirm_msg                            

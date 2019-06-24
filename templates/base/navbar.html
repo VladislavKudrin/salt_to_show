@@ -10,6 +10,7 @@
 {% url 'accounts:wish-list' as wish_list %}
 {% url 'categories:filter' as filter_url %}
 {% load for_loop_extras %}
+{% load notifications %}
 {% load static %}
 
 <style type="text/css">
@@ -27,8 +28,8 @@
   }
 
 
-</style>
 
+</style>
 {{ request.session|to_default_language }}
 {% if request.session.language == 'RU' %}
 <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white">
@@ -115,11 +116,21 @@
           
           
           <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ request.user.get_absolute_url }}">Профиль</a>
-            <a class="dropdown-item" href="{% url 'chat:inbox' %}">Сообщения</a>
+            <a class="dropdown-item" href="{{ request.user.get_absolute_url }}">Аккаунт</a>
+            <a class="dropdown-item" href="{% url 'chat:inbox' %}">
+                    <div class='row'>
+                        <div class='col-9 mx-auto m-0 p-0'>
+                            <div>Сообщения</div>
+                        </div>
+                        {% if request.user|get_notif > 0 %}
+                            <div class='col-3 my-auto p-1'>
+                                <div class='not-count'>{{ request.user|get_notif }}</div>
+                             </div>
+                        {% else %}
+                        {% endif %}
+                    </div>
+            </a>
             <a class="dropdown-item" href='{% url "products:user-list" %}'>Мои айтемы</a>
-            <a class="dropdown-item" href='{% url "accounts:history-product" %}'>История</a>
-            <a class="dropdown-item" href='{% url "accounts:wish-list" %}'>Избранное</a>
             <a class="dropdown-item" href='{% url "accounts:user-update" %}'>Настройки</a>
           </div>
         </li>
@@ -175,11 +186,21 @@
                     {% endif %}              
               
                     <div class="dropdown-menu dropdown-menu-right text-center p-0 mt-2" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Профиль</a>
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Сообщения</a>
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои айтемы</a>
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>История</a>
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Избранное</a>
+                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Аккаунт</a>
+                        <a class="dropdown-item" href="{% url 'chat:inbox' %}">
+                            <div class='row'>
+                                <div class='col-9 mx-auto m-0 p-0'>
+                                    <div>Сообщения</div>
+                                </div>
+                                {% if request.user|get_notif > 0 %}
+                                    <div class='col-3 my-auto p-1'>
+                                        <div class='not-count'>{{ request.user|get_notif }}</div>
+                                     </div>
+                                {% else %}
+                                {% endif %}
+                            </div>
+                        </a>
+                                    <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>Мои айтемы</a>
                         <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Настройки</a>
                     </div>
                 </div>
@@ -278,10 +299,20 @@
           
           <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
             <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Messages</a>
+            <a class="dropdown-item" href="{% url 'chat:inbox' %}">
+                    <div class='row'>
+                        <div class='col-9 mx-auto m-0 p-0'>
+                            <div>Messages</div>
+                        </div>
+                        {% if request.user|get_notif > 0 %}
+                            <div class='col-3 my-auto p-0'>
+                                <div class='not-count'>{{ request.user|get_notif }}</div>
+                             </div>
+                        {% else %}
+                        {% endif %}
+                    </div>
+            </a>
             <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
-            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
             <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
           </div>
         </li>
@@ -338,7 +369,19 @@
               
                     <div class="dropdown-menu dropdown-menu-right text-center p-0 mt-2" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{{ request.user.get_absolute_url }}">Home</a>
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href="{% url 'chat:inbox' %}">Messages</a>
+                        <a class="dropdown-item" href="{% url 'chat:inbox' %}">
+                            <div class='row'>
+                                <div class='col-9 mx-auto m-0 p-0'>
+                                    <div>Messages</div>
+                                </div>
+                                {% if request.user|get_notif > 0 %}
+                                    <div class='col-3 my-auto p-0'>
+                                        <div class='not-count'>{{ request.user|get_notif }}</div>
+                                     </div>
+                                {% else %}
+                                {% endif %}
+                            </div>
+                        </a>
                         <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
                         <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
                         <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>

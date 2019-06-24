@@ -13,10 +13,10 @@
         {% endif %}
 	</li>
 	<hr>
-	<li><a href='{% url "home" %}dialogs/'>Чат</a></li><br>
+	<li><a href='{% url "chat:inbox" %}'>Cообщения</a></li><br>
 	<li><a href='{% url "products:user-list" %}'>Мои предметы</a></li><br>
-	<li><a href='{% url "accounts:history-product" %}'>История</a></li><br>
 	<li><a href='{% url "accounts:wish-list" %}'>Избранное</a></li><br>
+	<li><a href='{% url "accounts:history-product" %}'>Просмотренное</a></li><br>
 	<li><a href='{% url "accounts:user-update" %}'>Настройки</a></li><br>
 </ul>
 </nav>
@@ -31,10 +31,10 @@
         {% endif %}
 	</li>
 	<hr>
-	<li><a href='{% url "home" %}dialogs/'>Chat</a></li><br>
+	<li><a href='{% url "chat:inbox" %}'>Messages</a></li><br>
 	<li><a href='{% url "products:user-list" %}'>My items</a></li><br>
-	<li><a href='{% url "accounts:history-product" %}'>History</a></li><br>
 	<li><a href='{% url "accounts:wish-list" %}'>Wishlist</a></li><br>
+	<li><a href='{% url "accounts:history-product" %}'>History</a></li><br>
 	<li><a href='{% url "accounts:user-update" %}'>Settings</a></li><br>
 </ul>
 </nav>

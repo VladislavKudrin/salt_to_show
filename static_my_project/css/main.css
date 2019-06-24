@@ -1,3 +1,42 @@
+@media only screen and (min-width: 768px) {
+  .flip-card-2:hover .flip-card-2-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-2-back {
+    transform: rotateY(180deg);
+  } 
+
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  } 
+
+}
+
+@media only screen and (max-width: 768px) {
+  .flip-card-back {
+    transform: rotateY(180deg);
+  } 
+
+  #safe-card, #ai-card {
+    margin-bottom: 5px;
+  }
+
+}
+
+.not-count {
+  color: white;
+  height: 16px;
+  width: 19px;
+  background-color: black;
+  font-size: 12px;
+  text-align: center;
+}
+
 .dropdown-item.active, .dropdown-item:active{
     background-color: white !important;
     color: black !important;
@@ -22,7 +61,7 @@
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card-2 {
   background-color: transparent;
-  width: 350px;
+  width: 406px;
   height: 25px;
 /*  border: 1px solid #f1f1f1;*/
   perspective: 1000px; /* Remove this if you don't want the 3D effect */

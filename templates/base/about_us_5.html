@@ -24,6 +24,7 @@ body {
 }
 
 
+
 </style>
 </head>
 
@@ -38,9 +39,14 @@ body {
     	<div class="col-12" style="display: flex; justify-content: center;">
     		<p class="text-center">Описание</p>
     	</div>
-    	<div class="col-12" style="display: flex; justify-content: flex-end;">
-    		<img id="hanger" src="{% static 'img/hanger_75.png' %}">
+
+
+    	<div class="col-12" id='back-elem' style="display: flex; justify-content: flex-end; position: fixed; top:200px;">
+    		<img id="hanger" style='height:200px; width:200px;' src="{% static 'img/S.png' %}">
     	</div>
+
+
+
     </div>
 
     	<div id="safe" class="row fluid text-center">
@@ -116,5 +122,64 @@ body {
 
 {% endblock %}
 
+{% block script %}
+<script>
+
+
+// $(window).scroll(function(){
+
+
+
+//    else if ($(window).scrollTop() >= 600) {
+//    console.log('over 1000')
+//      // change target to number
+//       // $('.hanger img').attr("src","/static/img/Oops.jpg");
+//     }
+
+//   // else if ($(window).scrollTop() >= 500) {  // change target to number
+//   //     $("#back-elem_2").css('position', 'relative');
+//   //     $("#back-elem_2").css('visibility', 'visible');
+//   //     $('.chat_window img').attr("src","img/Test2.jpg");
+//   //  }
+
+    
+// });
+
+$(window).on('scroll', function() {
+   var st = $(this).scrollTop();
+   // var wh = $(document).height();
+   var wh = $(document).height() - $(window).height();
+
+var perc = (st*100)/wh
+
+console.log('The percentage is '+perc);
+
+
+   if (perc >= 35 && perc < 63) {
+   console.log('over 35')
+      $('.hanger img').attr("src","/static/img/A.png");
+    }
+
+  else if (perc >= 60 && perc < 92) {
+   console.log('over 58')
+      $('.hanger img').attr("src","/static/img/L.png");
+    }
+
+      else if (perc >= 95 && perc < 100) {
+   console.log('over 93')
+      $('.hanger img').attr("src","/static/img/L.png");
+    }
+
+   else if (perc <= 33) {
+   console.log('over 58')
+      $('.hanger img').attr("src","/static/img/S.png");
+    }
+
+});
+
+
+
+</script>
+{% endblock %}
 
 

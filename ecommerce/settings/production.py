@@ -44,7 +44,7 @@ EMAIL_HOST_USER = 'ecommerce.envision@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommerce.envision@gmail.com>'
+DEFAULT_FROM_EMAIL = 'SALT <ecommerce.envision@gmail.com>'
 BASE_URL = 'https://envision-outfit.herokuapp.com'
 
 MANAGERS = (

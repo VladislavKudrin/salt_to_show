@@ -42,7 +42,7 @@ EMAIL_HOST_USER = 'ecommerce.envision@gmail.com'
 EMAIL_HOST_PASSWORD = 'Dkflbckfd1995'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python ecommerce <ecommerce.envision@gmail.com>'
+DEFAULT_FROM_EMAIL = 'SALT <ecommerce.envision@gmail.com>'
 BASE_URL = '127.0.0.1:8000'
 
 MANAGERS = (

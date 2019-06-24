@@ -8,6 +8,7 @@ from django.conf import settings
 
 from .mixins import RequestFormAttachMixin
 from .forms import ContactForm
+from django.contrib.auth.mixins import LoginRequiredMixin 
 
 
 def test_page(request):
@@ -20,12 +21,12 @@ def about_page(request):
 		'title':'About Page',
 		'content':'Welcome to the about page'
 	}
-	return render(request, "base/about_us_5.html", context)
+	return render(request, "base/about_us_3.html", context)
 
 
 
 
-class ContactPageView(RequestFormAttachMixin, FormView):
+class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	form_class = ContactForm
 	template_name = 'contact/contact.html'
 	def get_context_data(self, *args, **kwargs):

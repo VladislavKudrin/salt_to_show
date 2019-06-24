@@ -285,8 +285,8 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		if self.request.session.get('language') == 'RU':
 			context={
 			'form': product_form,
-			'button': 'Добавить',
-			'title':'Добавить новый продукт',
+			'button': 'Залить',
+			'title':'Добавить новый айтем',
 			'form_id': form_id
 			}
 		else:
@@ -318,8 +318,8 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		if self.request.session.get('language') == 'RU':
 			context={
 			'form': form,
-			'button': 'Создать',
-			'title':'Добавить новый продукт'
+			'button': 'Залить',
+			'title':'Добавить новый айтем'
 			}
 		else:
 			context={
