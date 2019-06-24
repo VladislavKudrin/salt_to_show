@@ -72,6 +72,10 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  #default method
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
+		if self.request.session.get('language') == 'RU':
+			context['title']='Недавно просмотренное'
+		else:
+			context['title']='Viewed items'		
 		# context['wishes'] = wished_products
 		return context
 
@@ -340,6 +344,10 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
 		user = self.request.user
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Мои айтемы'
+		else:
+			context['title'] = 'My items'
 		# all_wishes = user.wishes_user.all()
 		# wished_products = []
 		# wished_products = [wish.product for wish in all_wishes]
