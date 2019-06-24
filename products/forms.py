@@ -41,7 +41,6 @@ class ProductCreateForm(forms.ModelForm):
 			self.fields['sex'].choices = SEX_CHOICES = (
 			('man', 'Муж'),
 			('woman', 'Жен'),
-			('unisex', 'Унисекс')
 			)
 			self.fields['category'].label = "Категория"
 			self.fields['category'].choices = CATEGORY_CHOICES = (

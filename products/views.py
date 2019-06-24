@@ -296,7 +296,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			'title':'Add new product',
 			'form_id': form_id
 			}
-
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
 		product = form.save()
