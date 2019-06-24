@@ -161,6 +161,24 @@
    background: rgba(1, 1, 1, 0.1);
 }
 
+.btn.focus, .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#drop-cat {
+  width: 100% !important;
+}
+
+.dropdown-menu.customDropRightMenu {
+    width: 100% !important;
+  }
+
+
+/*#sort:hover {
+  background-color: #e8eaef;
+}*/
+
 .custom-control-label:before{
     background-color:white;
 }
@@ -341,10 +359,17 @@ background-color: black;
     background-color: transparent;
 }
 
+a:hover {
+    color: black !important;
+}
+
 .like-center {
-  position: absolute;
-  top: 104px;
-  right: 92.25px;
+  width:50%; 
+  height: 50%; 
+  position: absolute; 
+  top: 25%; 
+  left: 30%; 
+  z-index: 10;
 }
 
 .one-line{
@@ -359,19 +384,18 @@ background-color: black;
   margin-top: 5px;
 }
 
-
 .card-img-top {
     max-width: 262.5px;
-    max-height: 288px;
     min-width: 262.5px;
+    max-height: 288px;
     min-height: 288px;
+
     object-fit: cover;
     align-items: top;
     margin-bottom: 10px;
 
     cursor: pointer;
     display: inline-block;
-    border: 0px solid #ccc;
     position: relative;
 }
 
@@ -389,11 +413,17 @@ background-color: black;
 .card-body {
 
   height: 100px;
-  width: 288px;
+  width: 262.5px;
   object-fit: cover;
   border-top: 1px solid #e8eaef;
   padding: 0;
 
+}
+
+#list-col {
+  min-width: 262.5px; 
+  max-width: 262.5px;
+  margin: 0px 29px;
 }
 
 ol {
@@ -775,6 +805,12 @@ border: 2px red solid;
     color: black;
 }
 
+
+@media only screen and (max-width: 768px) {
+  #list-col {
+    margin: 0;
+  }
+}
 
 
 

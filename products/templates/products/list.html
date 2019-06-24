@@ -1,33 +1,35 @@
 {% extends "base.html" %}
 {% load for_loop_extras %}
+
+
+
 {% block content %}
 {% if request.session.language == 'RU' %}
 <div class='col-12 text-right p-0'>
 		<div class="btn-group dropleft customDropRight">
-			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fas fa-sort fa-2x"></i>
-			</button>
-			<div class="dropdown-menu customDropRightMenu" aria-labelledby="dropdownMenuButton">
+			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i></button>
+			<div id="drop-cat" class="dropdown-menu customDropRightMenu" aria-labelledby="dropdownMenuButton">
 				<form class='form text-center' method='POST' action="">{% csrf_token %}
 					{% for item in object_list %}
 						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
 					{% endfor %}
 					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<button type='submit' name="relevant" value='-timestamp' class='btn'><i class="fas fa-air-freshener"></i></button><br/>
-					<button type='submit' name="high_low" value='-price' class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-down"></i></i></i></button><br/>
+					<button id="sort" type='submit' name="relevant" value='-timestamp' class='btn'><small>Сначала новое</small></button><br/>
+					<button id="sort" type='submit' name="high_low" value='-price' class='btn'><small>По убыванию</small></button><br/>
 					<input type="hidden"  name="qs_for_sort" value='{{ object_list }}'>
-					<button type='submit' name="low_high" value='price'class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-up"></i></i></button>
+					<button id="sort" type='submit' name="low_high" value='price'class='btn'><small>По возрастанию</small></button>
 				</form>
 			</div>
-			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h fa-2x"></i></button>
+			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h"></i></button>
 		</div>
 </div>
 
 <div class="container-fluid ajax-search">
+
 <div class='row'>
 	<div class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
 		{% include 'categories/snippets/filter-box.html' with instance=obj %}
-			</div>
+	</div>
 		{% if filter_gender or filter_category or filter_size %}
 			<div class='col-12 text-center'>
 				Результаты для:
@@ -46,36 +48,36 @@
 					<b>{{ size }}</b>
 				{% endfor %}
 			{% endif %}
-				</div>
+			</div>
 		{% endif %}
 </div>
 
 {% else %}
 <div class='col-12 text-right p-0'>
 		<div class="btn-group dropleft customDropRight">
-			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fas fa-sort fa-2x"></i>
-			</button>
-			<div class="dropdown-menu customDropRightMenu"style='width: 100px' aria-labelledby="dropdownMenuButton">
+			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i></button>
+			<div id="drop-cat" class="dropdown-menu customDropRightMenu" aria-labelledby="dropdownMenuButton">
 				<form class='form text-center' method='POST' action="">{% csrf_token %}
 					{% for item in object_list %}
 						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
 					{% endfor %}
 					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<button type='submit' name="relevant" value='-timestamp' class='btn'><i class="fas fa-air-freshener"></i></button><br/>
-					<button type='submit' name="high_low" value='-price' class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-down"></i></i></i></button><br/>
+					<button id="sort" type='submit' name="relevant" value='-timestamp' class='btn'><small>New</small></button><br/>
+					<button id="sort" type='submit' name="high_low" value='-price' class='btn'><small>High price</small></button><br/>
 					<input type="hidden"  name="qs_for_sort" value='{{ object_list }}'>
-					<button type='submit' name="low_high" value='price'class='btn'><i class="fas fa-tag"><i class="fas fa-long-arrow-alt-up"></i></i></button>
+					<button id="sort" type='submit' name="low_high" value='price'class='btn'><small>Low price</small></button>
 				</form>
 			</div>
-			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h fa-2x"></i></button>
+			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h"></i></button>
 		</div>
 </div>
+
 <div class="container-fluid ajax-search">
+
 <div class='row'>
 	<div class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
 		{% include 'categories/snippets/filter-box.html' with instance=obj %}
-			</div>
+	</div>
 		{% if filter_gender or filter_category or filter_size %}
 			<div class='col-12 text-center'>
 				Results for:
@@ -94,34 +96,29 @@
 					<b>{{ size }}</b>
 				{% endfor %}
 			{% endif %}
-				</div>
+			</div>
 		{% endif %}
 </div>
 
 {% endif %}
 
+	<div class='row p-0 mx-auto'>
+	{% for obj in object_list %}
+	<div class='col-xs-12 col-md-3 p-0' id="list-col">
+		{% include 'products/snippets/card.html' with instance=obj %}
+	</div>
+		{% if forloop.counter|divisibleby:4 %}
+	</div>
+	<div class='row p-0 mx-auto'>
+		{% else %}
 
-		<div class='col-12 m-0 p-0' id='main-col'>
-			<div class='row mx-md-4'>
-			{% for obj in object_list %}
-			<div class='col-xs-12 col-md-3 position-relative'>
-				{% include 'products/snippets/card.html' with instance=obj %}
-				{% if forloop.counter|divisibleby:4 %}
-					</div>
-					</div>
-					<div class='row'>
-					<div class='col-12'>
-					</div>
-				{% else %}
-					</div>
-				{% endif %}
-			{% endfor %}
-			</div>
-		</div>
+		{% endif %}
+	{% endfor %}
+	</div>
+
 
 </div>
-</div> 
+	
 {% endblock %}
-
 
 
