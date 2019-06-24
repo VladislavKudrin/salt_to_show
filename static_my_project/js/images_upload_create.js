@@ -189,7 +189,6 @@ function deleteItem(item){
     var createFormSubmitBtn = formSubmit.find("[type='submit']")
     var createFormSubmitBtnTxt = createFormSubmitBtn.text()
     var formData = formSubmit.serialize()
-    console.log(formData)
     var elements = $('#example-form-1 ul li')
     var keyArray = []
     displayCreating(createFormSubmitBtn, "",true)
@@ -244,18 +243,17 @@ function deleteItem(item){
 
 //brand and image sort
 
-
- 
-var formCreate = $('#customSort')
 //update
-   var galleryUpdate = $('#gallery')
-   var formSubmit = $('#example-form-1')
-   var action = formSubmit.attr("action_url")
-   formSubmit.submit(
-    function(event){
-  var currentPath = window.location.href
-  var elements = $('#example-form-1 ul li')
+var currentPath = window.location.href
+
 if (currentPath.indexOf("update") != -1){
+    var formSubmit = $('#example-form-1')
+    formSubmit.submit(
+    function(event){
+    var formCreate = $('#customSort')
+    var galleryUpdate = $('#gallery')
+    var action = formSubmit.attr("action_url")
+    var elements = $('#example-form-1 ul li')
     var keyArray = []
     console.log(action)
     $.each(elements,
@@ -279,8 +277,8 @@ if (currentPath.indexOf("update") != -1){
     });
     }//error
     })//ajax
-    }//if_current_path_update
    })//submit_update_create
+}//if_current_path_update
  
     // There's the gallery and the trash
     $("#customSort").sortable();

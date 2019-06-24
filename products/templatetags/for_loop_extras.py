@@ -56,8 +56,8 @@ def to_rus_times(value):
 			value = value.replace(value.split(' ')[0], month_rus[idx])
 			print(value)
 			return value
-	time_eng = ['minutes','minute','hours', 'hour', 'day','days', 'weeks','week']
-	time_rus = ['минут','минуту','часов','час', 'день', 'дней', 'недель', 'неделю']
+	time_eng = ['minutes','minute','hours', 'hour', 'days','day', 'weeks','week']
+	time_rus = ['минут','минуту','часов', 'час', 'дней', 'день','недель', 'неделю']
 	for idx, time in enumerate(time_eng):
 		if time in value:
 			value = value.replace(time, time_rus[idx])

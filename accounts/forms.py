@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 import re 
 User = get_user_model()
 
+from marketing.models import MarketingPreference
 from .models import EmailActivation, GuestEmail
 from .signals import user_logged_in_signal
 
@@ -65,8 +66,10 @@ class MarketingPreferenceForm(forms.ModelForm):
         ]
 
 class UserDetailChangeForm(forms.ModelForm):
-    username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
+    username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your Fullname'}))
     full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), help_text='Cannot change email', required=False)
+    subscribed = forms.BooleanField(label = 'Recieve marketing email?', required=False)
     class Meta:
         model = User
         fields = [
@@ -76,17 +79,29 @@ class UserDetailChangeForm(forms.ModelForm):
                     ]
     def __init__(self, request, *args, **kwargs):
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
+        self.request = request
+        self.fields['email'].initial=request.user.email
+        self.fields['subscribed'].initial=request.user.marketing.subscribed
         self.lan = request.session.get('language')
         if self.lan == 'RU':
-            self.fields['username'].label = "Имя пользователя"
+
+            self.fields['subscribed'].label = "Получать рассылку?"
             self.fields['full_name'].label = "Имя и фамилия"
+            self.fields['username'].label = "Имя пользователя"
+            self.fields['full_name'].widget.attrs['placeholder'] = "Имя и фамилия"
             self.fields['profile_foto'].label = "Фото профиля"
+            self.fields['email'].help_text='Нельзя поменять Email'
     def clean_username(self):
         data = self.cleaned_data['username']
         contains_rus = bool(re.search('[а-яА-Я]', data))
         if contains_rus:
             raise forms.ValidationError("Имя пользователя должно содержать только латинские символы")
         return data
+
+    def clean_subscribed(self):
+        marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
+        subscribed_user = self.cleaned_data.get('subscribed')
+        marketing_pref.update(subscribed=subscribed_user)
 
 
 class UserAdminChangeForm(forms.ModelForm):

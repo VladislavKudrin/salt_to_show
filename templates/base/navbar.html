@@ -85,13 +85,15 @@
          
    
       
-        <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
-          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Купить</a>
+        <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
         </li>
 
-        <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
-          <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Продать</a>          
+        <li class="nav-item ml-0  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
         </li>
+
+        
 
 
         {% if request.user.is_authenticated %}                                
@@ -111,7 +113,7 @@
             {% if request.user.profile_foto %}
             <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
-            <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
             {% endif %}
           
           
@@ -159,12 +161,12 @@
 
         <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
 
-            <div class="col p-0 {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
-                <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Купить</a>
+            <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+                <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
             </div>
 
-            <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
-                <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Продать</a>
+            <div class="col p-0 {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+                <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
             </div>
 
             
@@ -267,15 +269,15 @@
         </li> 
             
       
-        <li class="nav-item mr-2  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
-          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
-        </li>
-
-        <li class="nav-item ml-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+        <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
           <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
         </li>
 
+        <li class="nav-item ml-0  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
+        </li>
 
+        
         {% if request.user.is_authenticated %}                                
         <li class="nav-item">
         <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
@@ -293,7 +295,7 @@
             {% if request.user.profile_foto %}
             <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
-            <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
             {% endif %}
           
           
@@ -341,15 +343,15 @@
 
         <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
 
-            <div class="col p-0 {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
-                <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
-            </div>
-
             <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
                 <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
             </div>
 
-            
+            <div class="col p-0 {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
+                <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
+            </div>
+
+                       
             {% if request.user.is_authenticated %}
                 <div class="col p-0">
                     <a href="{{ wish_list }}">
