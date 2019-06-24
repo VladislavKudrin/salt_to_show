@@ -293,8 +293,8 @@ button:focus {
 	<div class='row'>
 
 
-		<div class='col-5 col-md-3'>
-			<div class='row' style='height: 54px; background-color: #efefef;'>
+		<div class='col-5 col-md-3' style='border-right: 1px solid #efefef;'>
+			<div class='row' style='height: 54px; background-color: #efefef; border-right: 1px solid #e9ebeb;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
 					{% if request.user.profile_foto %}
@@ -309,7 +309,7 @@ button:focus {
 				<ul id='dialogs' class='my-custom-scrollbar'>
 					{% for obj in chats %}
 						{% if request.user != obj.first %}
-							<li id='dialog' class="mr-1"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
 							
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
@@ -338,7 +338,7 @@ button:focus {
 							
 							</a></li>
 						{% else %}
-							<li id='dialog' class="mr-1"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
+							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}

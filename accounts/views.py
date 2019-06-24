@@ -65,9 +65,9 @@ class AccountEmailActivateView(FormMixin, View):
 				obj = confirm_qs.first()
 				obj.activate()
 				if request.session.get('language')=='RU':
-					messages.add_message(request, messages.SUCCESS, 'Вы успешно вошли')
+					messages.add_message(request, messages.SUCCESS, 'Вы вошли')
 				else:
-					messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
+					messages.add_message(request, messages.SUCCESS, "You're in")
 				email = qs.first().user.email
 				password = qs.first().user.password
 				login(request, qs.first().user, backend='django.contrib.auth.backends.ModelBackend') 
@@ -154,7 +154,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			form.save()
 			next_path = 'login'
 			if self.request.session.get('language') == 'RU':
-				msg1 = "Пожалуйста, проверьте свой Email, чтобы подтвердить свой аккаунт" + form.cleaned_data.get('msg')
+				msg1 = "Пожалуйста, проверьте свою почту, чтобы подтвердить свой аккаунт. " + form.cleaned_data.get('msg')
 			else:
 				msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
@@ -183,16 +183,16 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 				self.request.session['language'] = language_pref_login_page.upper()
 				LanguagePreference.objects.create(user=user, language=language_pref_login_page.lower())
 			if self.request.session.get('language') == 'RU':
-				messages.add_message(form.request, messages.SUCCESS, 'Вы успешно вошли')
+				messages.add_message(form.request, messages.SUCCESS, 'Вы вошли')
 			else:
-				messages.add_message(form.request, messages.SUCCESS, 'You are logged in successfully')				
+				messages.add_message(form.request, messages.SUCCESS, "You're in")				
 		return redirect(next_path)
 
 def add_message(backend, user, request, response, *args, **kwargs):
 	if request.session.get('language') == 'RU':
-		messages.add_message(request, messages.SUCCESS, 'Вы успешно вошли')
+		messages.add_message(request, messages.SUCCESS, 'Вы вошли')
 	else:
-		messages.add_message(request, messages.SUCCESS, 'You are logged in successfully')
+		messages.add_message(request, messages.SUCCESS, "You're in")
 
 # def login_page(request):
 # 	form = LoginForm(request.POST or None)
@@ -245,9 +245,9 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
 		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Обновить профиль'
+			context['title'] = 'Освежить аккаунт'
 		else:
-			context['title'] = 'Change your details'
+			context['title'] = 'Update your details'
 		context['update_in_action'] = True
 		return context
 
@@ -268,7 +268,7 @@ class ProfileView(DetailView):
 		if self.request.session.get('language')=='RU':
 			context['btn_title'] = 'Написать '
 		else:
-			context['btn_title'] = 'Begin Chat with '
+			context['btn_title'] = 'Message'
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -304,8 +304,17 @@ class WishListView(LoginRequiredMixin, ListView):
 		# return wished_products
 		# return Product.objects.filter()
 
-	# def get_context_data(self, *args, **kwargs):
-	# 	context = super(WishListView, self).get_context_data(*args,**kwargs)
+	def get_context_data(self, *args, **kwargs):
+		context = super(WishListView, self).get_context_data(*args,**kwargs)
+		if self.request.session.get('language') == 'RU':
+			context={
+			'title':'Избранное'
+			}
+		else: 
+			context={
+			'title':'Wishlist'
+			}
+		return context
 	# 	user = self.request.user
 	# 	all_wishes = user.wishes_user.all()
 	# 	wished_products = [wish.product for wish in all_wishes]

@@ -12,35 +12,6 @@ html, body {
     overflow-x: hidden;
 }
 
-@media only screen and (min-width: 768px) {
-  .flip-card-2:hover .flip-card-2-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-2-back {
-    transform: rotateY(180deg);
-  } 
-
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-back {
-    transform: rotateY(180deg);
-  } 
-
-}
-
-@media only screen and (max-width: 768px) {
-  .flip-card-back {
-    transform: rotateY(180deg);
-  } 
-
-  #safe-card, #ai-card {
-    margin-bottom: 5px;
-  }
-
-}
 
 body {
   padding-bottom: 25px;
@@ -58,8 +29,9 @@ body {
 <div class="bg">
 <div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <p class="lead" style='font-size: 30px;'>Маркетплейс нового поколения</p>
-  </div>
+    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Базар</span> Маркерплэйс</p>
+  </div>   
+</div>
 
 
 
@@ -138,7 +110,7 @@ body {
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2">
-                 Загруженные вещи проверяются 24/7/365. На Envision нет фейков и кидал.
+                 Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.
               </div>
               </div>
             </div>
@@ -180,7 +152,7 @@ body {
             <div class="flip-card-back">
               <div class="row h-100">
               <div class="col my-auto mr-1 ml-2">
-              Наш интуитивный дизайн был разработан с любовью к простоте и минимализму.
+              Наш интуитивный дизайн разработан с любовью к простоте и минимализму.
             </div>
             </div>
           </div>
@@ -216,7 +188,7 @@ body {
 
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
-    <p class="lead" style='font-size: 30px;'>Перейти в профиль</p>
+    <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
            
             {% if request.user.profile_foto %}
             <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
@@ -257,7 +229,7 @@ body {
 <div class="bg">
 <div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <p class="lead" style='font-size: 30px;'> Fashion Marketplace Of The Next Generation</p>
+    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Bazar</span> Marketplace</p>
   </div>
 
 
@@ -291,7 +263,7 @@ body {
     <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; height: 275px; overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">BUY</h1>
-        <p class="lead">Find your designer piece without harming the environment.</p>
+        <p class="lead">Find your designer piece fast and safe.</p>
       </div>
     </div>
     </a>
@@ -332,7 +304,7 @@ body {
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2">
-                Uploaded items are monitored 24/7/365. There are no fakes on Envision.
+                Uploaded items are monitored 24/7/365. There are no fakes on SALT.
               </div>
               </div>
             </div>

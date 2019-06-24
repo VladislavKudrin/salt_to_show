@@ -35,8 +35,10 @@ html, body {
 	max-height: 550px;
 }
 
+html, body {margin: 0; height: 100%; overflow: hidden}
+
 body {
-    /*overflow:hidden;*/
+    overflow:hidden;
     padding-bottom: 0;
     margin-bottom:0;
 }
@@ -56,6 +58,18 @@ html {
 	
 
 }
+
+#dialogs-inbox{
+	min-height: 900px;
+	width: 320px;
+	padding-right: 0px;
+	overflow:scroll;
+	margin-bottom: 0;
+	position: relative;
+	
+
+}
+
 
 #dialog{
 	height:70px;
@@ -151,7 +165,7 @@ button:focus {
 				</div>
 			</div>
 			<div class='row'>
-				<ul id='dialogs' class='my-custom-scrollbar'>
+				<ul id='dialogs-inbox' class='my-custom-scrollbar'>
 
 
 					{% for obj in chats %}
@@ -216,15 +230,30 @@ button:focus {
 
 
 		<div class='col-9' style="background-image: url('{% static 'img/white-waves.png' %}')">
-			<div class='row text-center h-100 row align-items-center'>
+			<div class='row text-center h-50 row align-items-center'>
 				<div class='col'>
-					Please select a chat to start messaging
-					
+					{% if request.session.language == 'RU' %}
+					Выберите собеседника, чтобы начать диалог
+					{% else %}
+					Please select a chat to start conversation
+					{% endif %}
 				</div>
+
+
 
 			</div>
 
 		</div>
+
+		<div class='col' style="background-image: url('{% static 'img/white-waves.png' %}')">
+
+<div class='row'>
+<div class='col'>
+	dssfd
+</div>
+</div>
+</div>
+
 </div>
 
 {% endblock %}

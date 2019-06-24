@@ -9,13 +9,13 @@
         <div class="mx-auto col-xs-12 col-md-7">
             <div class="text-center">
 
-					<h2>Войти / Зарегистрироваться</h2>
+					<p class="lead" style='font-size: 30px;'>Войти / Зарегаться:</p>
 					<form method = 'POST'> {% csrf_token %}
 							{{ form|crispy }}
-							<button type="submit" class="btn btn-dark btn-lg btn-block">Подтвердить</button><br>
+							<button type="submit" class="btn btn-dark btn-lg btn-block">ОК</button><br>
 					</form>
 
-						<h2>Или зайдите с помощью:</h2><br>
+						<p class="lead" style='font-size: 30px;'>Или:</p>
 <!-- 			        <a href="{% url 'social:begin' 'vk-oauth2' %}">  <button class="btn btn-outline-dark btn-block">
 			             <i class="fab fa-vk ml-1 mr-1"></i>
 			            </button>
@@ -38,13 +38,13 @@
         <div class="mx-auto col-xs-12 col-md-7">
             <div class="text-center">
 
-					<h2>Login / Register</h2>
+					<p class="lead" style='font-size: 30px;'>Login / Register</p>
 					<form method = 'POST'> {% csrf_token %}
 							{{ form|crispy }}
 							<button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button><br>
 					</form>
 
-						<h2>Or log in with:</h2><br>
+						<p class="lead" style='font-size: 30px;'>Or log in with:</p>
 <!-- 			        <a href="{% url 'social:begin' 'vk-oauth2' %}">  <button class="btn btn-outline-dark btn-block">
 			             <i class="fab fa-vk ml-1 mr-1"></i>
 			            </button>
