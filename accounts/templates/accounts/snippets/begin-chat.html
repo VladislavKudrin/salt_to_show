@@ -1,6 +1,6 @@
 {% if request.session.language == 'RU' %}
 	{% if request.user.username == object.username %}
-		<a href="{% url 'accounts:user-update' %}" class="btn btn-dark btn-lg btn-block">Освежить аккаунт</a>
+		<a href="{% url 'accounts:user-update' %}" class="btn btn-dark btn-lg btn-block">Обновить аккаунт</a>
 	{% else %}
 	<form method="POST">
 	{% csrf_token %}

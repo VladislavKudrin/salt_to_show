@@ -51,7 +51,7 @@ class ProductCreateForm(forms.ModelForm):
 			)
 			self.fields['category'].label = "Категория"
 			self.fields['category'].choices = CATEGORY_CHOICES = (
-			('select a category', 'Выберете категорию'),
+			('select a category', 'Выберите категорию'),
 			('tops', 'Верх'),
 			('bottoms', 'Низ'),
 			('accessories', 'Аксессуары'),

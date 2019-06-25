@@ -66,7 +66,7 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 				obj = confirm_qs.first()
 				obj.activate()
 				if request.session.get('language')=='RU':
-					messages.add_message(request, messages.SUCCESS, 'Вы вошли')
+					messages.add_message(request, messages.SUCCESS, 'Ты на сайте')
 				else:
 					messages.add_message(request, messages.SUCCESS, "You're in")
 				email = qs.first().user.email
@@ -78,7 +78,7 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 				if activated_qs.exists():
 					reset_link = reverse("password_reset")
 					if request.session.get('language')=='RU':
-						msg = """Вы уже подтвердили ваш Email. 
+						msg = """Ты уже подтвердил_а ваш Email. 
 						<a href="{link}">Сбросить пароль</a>?
 						""".format(link=reset_link)
 					else:
@@ -188,14 +188,14 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 				self.request.session['language'] = language_pref_login_page.upper()
 				LanguagePreference.objects.create(user=user, language=language_pref_login_page.lower())
 			if self.request.session.get('language') == 'RU':
-				messages.add_message(form.request, messages.SUCCESS, 'Вы вошли')
+				messages.add_message(form.request, messages.SUCCESS, 'Ты на сайте')
 			else:
 				messages.add_message(form.request, messages.SUCCESS, "You're in")				
 		return redirect(next_path)
 
 def add_message(backend, user, request, response, *args, **kwargs):
 	if request.session.get('language') == 'RU':
-		messages.add_message(request, messages.SUCCESS, 'Вы вошли')
+		messages.add_message(request, messages.SUCCESS, 'Ты на сайте')
 	else:
 		messages.add_message(request, messages.SUCCESS, "You're in")
 
@@ -250,7 +250,7 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
 		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Освежить аккаунт'
+			context['title'] = 'Обновить аккаунт'
 		else:
 			context['title'] = 'Update your details'
 		return context
