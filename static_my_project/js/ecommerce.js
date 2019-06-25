@@ -135,6 +135,7 @@ $(document).ready(
 
 
   //Product Delete Alert Ajax
+    var languagePref = $('#language_pref')
     var deleteForm=$(".delete-product-form")
     var instance_id = deleteForm.attr("data_id")
     var instance_title = deleteForm.attr("product_title")
@@ -143,36 +144,47 @@ $(document).ready(
     var data_endpoint = deleteForm.attr("data-endpoint")
     var next_url = deleteForm.attr("next_url")
     var deleteTemplate = $.templates("#delete-product-confirm-form")
+    if (languagePref.val() == 'RU'){
+      var placeholderText = 'Почему?'
+      var titleConfirm = 'Удалить Айтем?'
+      var btnText = 'Удалить'
+      var titleConfirmSecond = 'Спасибо'
+      var contentConfirmSecond = 'Айтем успешно удален.'
+      var cancelText = 'Отмена'
+    }//if ru
+    else{
+      var placeholderText = 'Why you want to delete these product?'
+      var titleConfirm = 'Delete Your Product?'
+      var btnText = 'Delete'
+      var titleConfirmSecond = 'Thanks!'
+      var contentConfirmSecond = 'Product has been deleted.'
+      var cancelText = 'Cancel'
+    }//if not ru
     var deleteTemplateDataContext = {
        action_url: action,
        data_endpoint: data_endpoint,
        user: instance_user,
        product_id: instance_id,
        product_title:instance_title,
-       next_url:next_url
+       next_url:next_url,
+       placeholder_text:placeholderText
             }
     var deleteTemplateHtml  = deleteTemplate.render(deleteTemplateDataContext)
       deleteForm.submit(
       function(event){
       var thisForm = $(this)
-      console.log(thisForm)
       var dataEndpoint = thisForm.attr("action");
       var actionEndpoint = thisForm.attr("data-endpoint");
       var httpMethod = thisForm.attr("method");
-      console.log('hello')
-      console.log(actionEndpoint)
-      console.log(httpMethod)
       var formData = thisForm.serialize();
-      console.log(formData)
       event.preventDefault()
-      console.log(deleteTemplateHtml)
       var deleteComfirmFormTemplate = $.templates("#delete-product-confirm-form")
       $.confirm({
-    title: 'Delete Your Product?',
+    title: titleConfirm,
     content: '' + deleteTemplateHtml,
     buttons: {
         formSubmit: {
-            text: 'Delete',
+            text: btnText,
             btnClass: 'btn btn-dark',
             action: function () {
                 $.ajax({
@@ -182,31 +194,34 @@ $(document).ready(
                     success: function(){
 
                       $.confirm({
-                        title: 'Thank you for your money!',
-                        content:'Product has been deleted. Mojete sosnut pisku',
+                        title: titleConfirmSecond,
+                        content: contentConfirmSecond,
                         buttons:{
                           confirm: { 
                             text: 'Ok',
                             action: function(){
                             window.location.href=next_url
                           }},
-                        }
-                      })},
+                        }//buttons
+                      })},//success
                     error: function(errorData){
                       console.log(errorData)
                       $.alert({
                           title: 'Error',
                           content: 'Romaloh',
                           theme: "modern"
-                              });
-                                               }
-                      })
-            }
-        },
-        cancel: function () {
-            //close
-        },
-    },
+                              });//alert
+                                               }//error
+                      })//ajax
+            }//action
+        },//formSubmit
+        cancel: {
+          text:cancelText,
+          action: function (){
+
+          }//action cancel
+        }//cancel
+    },//buttons
 });
 
 

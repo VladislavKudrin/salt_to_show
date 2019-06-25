@@ -21,23 +21,27 @@
 	  		{% include "sidebar.html" %}
 	</div> 
 
-	<div class='col'>
-		<div class='row mx-md-4'>
-			{% for obj in object_list %}
-				<div class='col-xs-12 col-md-3 position-relative'>
-					{% include 'products/snippets/card.html' with instance=obj.content_object %}
-					{% if forloop.counter|divisibleby:4 %}
-						</div>
-						</div>
-						<div class='row'>
-						<div class='col-12 mx-md-4'>
-						</div>
-					{% else %}
-						</div>
-					{% endif %}
-			{% endfor %}
-	</div>
-	
+
+
+
+
+<div class="container">
+<div class='row'>
+	{% for obj in object_list %}
+		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+			{% include 'products/snippets/card.html' with instance=obj.content_object %}
+			{% if forloop.counter|divisibleby:4 %}
+				</div>
+				</div>
+				<div class='row'>
+				<div class='col-12'>
+				</div>
+			{% else %}
+				</div>
+			{% endif %}
+
+	{% endfor %}
+</div>
 </div>
 
 

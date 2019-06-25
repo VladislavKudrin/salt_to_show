@@ -2,10 +2,35 @@
 
 {% block content %}
 
+<style type="text/css">
+/*.span {
+  color: red;
+}
+
+
+html, body {*/
+/*    max-width: 100%;*/
+/*    overflow-x: hidden;
+}*/
+
+/*@media only screen and (min-width: 200px) { 
+}
+	.bla{
+		width: 1500px;
+	}
+*/
+
+a:hover {
+    color: black !important;
+}
+
+</style>
+
+<div class="container">
 
 <div class='row'>
 	{% for obj in object_list %}
-		<div class='col-3 position-relative'>
+		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
 			{% include 'products/snippets/card.html' with instance=obj %}
 			{% if forloop.counter|divisibleby:4 %}
 				</div>
@@ -18,6 +43,8 @@
 			{% endif %}
 
 	{% endfor %}
+</div>
+
 </div>
 
 

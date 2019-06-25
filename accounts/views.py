@@ -52,10 +52,11 @@ class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
 		user=User.objects.check_username(self.request.user)
 		return self.request.user
 
-class AccountEmailActivateView(FormMixin, View):
+class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 	error_css_class = 'error'
 	success_url='/login/'
 	form_class=ReactivateEmailForm
+	key = None
 	def get(self, request, key=None, *args, **kwargs):
 		self.key = key
 		if key is not None:
@@ -102,13 +103,15 @@ class AccountEmailActivateView(FormMixin, View):
 
 	def form_valid(self, form):
 		msg = """Activation link send. Check your Email!"""
+		if self.request.session.get('language')=='RU':
+			msg = """Активация отправлена. Проверь Email!"""
 		request = self.request
 		messages.success(request, msg)
 		email=form.cleaned_data.get("email")
 		obj = EmailActivation.objects.email_exists(email).first()
 		user = obj.user
 		new_activation = EmailActivation.objects.create(user=user, email=email)
-		new_activation.send_activation()
+		new_activation.send_activation(request.session.get('language'))
 		return super(AccountEmailActivateView, self).form_valid(form)
 
 	def form_invalid(self, form):
@@ -152,6 +155,8 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		link_sent2 = EmailActivation.objects.email_exists(form.cleaned_data.get('email')).exists()
 		if user_objects is False:
 			form.save()
+			user_created = User.objects.filter(email=form.cleaned_data.get('email')).first()
+			LanguagePreference.objects.create(user=user_created, language=self.request.session.get('language'))
 			next_path = 'login'
 			if self.request.session.get('language') == 'RU':
 				msg1 = "Пожалуйста, проверьте свою почту, чтобы подтвердить свой аккаунт. " + form.cleaned_data.get('msg')
@@ -248,7 +253,6 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 			context['title'] = 'Обновить аккаунт'
 		else:
 			context['title'] = 'Update your details'
-		context['update_in_action'] = True
 		return context
 
 	def get_success_url(self):
@@ -293,6 +297,7 @@ class WishListView(LoginRequiredMixin, ListView):
 		user = self.request.user
 		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		wished_products = [wish.product for wish in wishes]
+		print(wished_products)
 		# pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
 		return wished_products
 		#context = super(WishListView, self).get_context_data(*args,**kwargs)
@@ -305,14 +310,19 @@ class WishListView(LoginRequiredMixin, ListView):
 		# return Product.objects.filter()
 
 	def get_context_data(self, *args, **kwargs):
+		user = self.request.user
+		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
+		wished_products = [wish.product for wish in wishes]
 		context = super(WishListView, self).get_context_data(*args,**kwargs)
 		if self.request.session.get('language') == 'RU':
 			context={
-			'title':'Избранное'
+			'title':'Избранное:',
+			'wishes':wished_products
 			}
 		else: 
 			context={
-			'title':'Wishlist'
+			'title':'Wishlist:',
+			'wishes':wished_products
 			}
 		return context
 	# 	user = self.request.user

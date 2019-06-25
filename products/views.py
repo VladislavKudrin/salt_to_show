@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from django.conf import settings
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -300,6 +300,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			'title':'Add new product',
 			'form_id': form_id
 			}
+		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
 		product = form.save()
@@ -324,7 +325,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			context={
 			'form': form,
 			'button': 'Залить',
-			'title':'Добавить новый айтем'
+			'title':'Добавить новый айтем',
 			}
 		else:
 			context={
@@ -332,7 +333,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			'button': 'Create',
 			'title':'Add new product'
 			}
-		
+		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(self.request, 'products/product-create.html', context)
 
 

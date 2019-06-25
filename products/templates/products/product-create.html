@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-
+<input type="hidden" id='images-upload-limit' name="images-upload-limit" value='{{ images_upload_limit }}'>
 <div class="container-fluid ajax-search">
  <div class="row">
 
@@ -35,10 +35,11 @@
       <div class>
         <input type="hidden" name='image' id='id_image' class='form-control'>
       </div>
-      <button type="submit" form='example-form-1'value="Submit" class="btn btn-dark btn-lg btn-block">{{ button }}</button>
+
+    <button type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">{{ button }}</button>
     </form>
 
-    
+
   </div>
  </div>
 </div>

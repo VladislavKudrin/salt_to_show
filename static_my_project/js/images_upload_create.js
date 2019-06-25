@@ -41,6 +41,7 @@ if (currentPath.indexOf("create") != -1){
     var action = formSubmit.attr("action_url_create")
     var action_order = formSubmit.attr("action_url_create_order")
     var buttonImageUpload = $('.image-upload-button')
+    var imagesUploadLimit = $('#images-upload-limit')
     buttonImageUpload.hide()
     if (languageOption=='RU'){
         buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-dark mt-3">Загрузить</label>')
@@ -111,20 +112,20 @@ function deleteItem(item){
         function() {
             $('#id_image').removeClass('is-invalid')
             $('p.image').remove('.invalid-feedback')
+
             var data = new FormData()
             var imagesArr = []
             var myFiles = $(this)[0].files;
-            if (myFiles.length>8){
+            if (myFiles.length>imagesUploadLimit.val()){
                 if ($('.image').length==0){
                     if(languageOption=='RU'){
                         $('#id_image').addClass('is-invalid')
-                        $('#id_image').after("<p class='invalid-feedback image'><strong>Слишком много файлов. Максимальное колличество - 8</strong></p>")}//if more than 8 one time
+                        $('#id_image').after('<p class="invalid-feedback image"><strong>Слишком много фотографий. Максимальное колличество - '+ imagesUploadLimit.val() +'</strong></p>')}//if more than 8 one time
                     }//if ru
                     else{
                         $('#id_image').addClass('is-invalid')
-                        $('#id_image').after("<p class='invalid-feedback image'><strong>Too many files. Should be less than 8</strong></p>")//if more than 8 one time
+                        $('#id_image').after('<p class="invalid-feedback image"><strong>Too many images. Should be less than '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
                     }//if not ru
-                    
                 return console.log('hellow')
             }//ifmorethan8
             displayUploading(myFiles, true)
@@ -164,16 +165,15 @@ function deleteItem(item){
 
 
     function displayCreating(submitBtn, defaultText, doSubmit){
+        console.log('')
       if (doSubmit){
         submitBtn.addClass("disabled")
         submitBtn.attr("disabled", true)
         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
         if(languageOption=='RU'){
-            console.log('ru')
-
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Заливка....")
         }//if rus
         else{
-            console.log('en')
             submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
         }//if not rus
         } //if dosubmit 

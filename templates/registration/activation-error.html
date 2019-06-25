@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %} 
 {% block content %}
 
 <style type="text/css">
@@ -9,24 +10,48 @@
     }
 </style>
 
+{% if request.session.language == 'RU' %}
 
-
-<div class='row'>
+<div class='row mx-auto'>
     <div class="col-xs-5 col-md-12 text-md-center">
     	{% if key %}
-            <h1>Activation Error.</h1>
-            <h1>Please try again!</h1>
+      <h1>Ошибка.</h1>
+      <h1>Попробуй еще раз!</h1>
     	{% else %}
-    		<h1>Re-activate your Email below.</h1>
+    		<h1>Повторная активация Email.</h1>
     	{% endif %}
     </div>
-    <div class="col-xs-5 col-md-12 text-md-center">
+    <div class="col-4 mx-auto text-center">
             <form method='POST' action=''>{% csrf_token %}
-            	{{ form.as_p }}
-            	<input class="btn btn-dark" type='submit' value='Resend Activation'/>
+            	{{ form|crispy }}
+            	<input class="btn btn-dark" type='submit' value='Отправить'/>
             </form>
       </div>
 </div>
 
+</div>
+{% else %}
+
+<div class='row mx-auto'>
+    <div class="col-xs-5 col-md-12 text-md-center">
+        {% if key %}
+        <h1>Activation Error.</h1>
+        <h1>Please try again!</h1>
+        {% else %}
+            <h1 class='mt-5 pt-5'>Re-activate your Email below.</h1>
+        {% endif %}
+    </div>
+    <div class="col-4 mx-auto text-center">
+
+            <form method='POST' action=''>{% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-dark" type='submit' value='Resend Activation'/>
+            </form>
+      </div>
+</div>
+
+
+</div>
+{% endif %}
 
 {% endblock %}
