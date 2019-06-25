@@ -313,6 +313,8 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		return redirect(url)
 
 	def form_invalid(self, form):
+		print(form.errors)
+		print('wtfwindows')
 		if self.request.is_ajax():
 			# json_data={
 			# 	'errors':json.dumps(form.errors)

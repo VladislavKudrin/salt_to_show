@@ -46,7 +46,7 @@
         <ul class="navbar-nav mx-auto" style="align-self: end;">
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
-                    <div class="row" style=" width: 150px" > 
+                    <div class="row" style=" width:100px" > 
                          <div class="col"><span class=''>S A L T</span>
                          </div>
                     </div>
@@ -56,13 +56,6 @@
     </div>
 
         <!-- ЦЕМ! -->
-
-
-      
-        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-            <span class="navbar-toggler-icon"></span>
-        </button> -->
-
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -160,6 +153,17 @@
         </div>
 
         <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
+
+            <!-- <div class="col p-0">
+                <form method='GET' action="{% url 'accounts:language-pref'%}">
+                     <input type="hidden" name="next" value='{{ request.path }}'>
+                     <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+                      <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
+                      <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
+                      <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
+                    </select>
+                </form>
+            </div>  -->  
 
             <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
                 <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
@@ -343,6 +347,17 @@
 
         <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
 
+            <!-- <div class="col p-0">
+                <form method='GET' action="{% url 'accounts:language-pref'%}">
+                     <input type="hidden" name="next" value='{{ request.path }}'>
+                     <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+                      <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
+                      <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
+                      <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
+                    </select>
+                </form>
+            </div>  -->  
+
             <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
                 <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
             </div>
@@ -385,8 +400,6 @@
                             </div>
                         </a>
                         <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:history-product" %}'>History</a>
-                        <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:wish-list" %}'>Wishlist</a>
                         <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
                     </div>
                 </div>

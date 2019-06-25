@@ -233,6 +233,7 @@ function deleteItem(item){
             },//success
     error:function(errorData){
         console.log('error')
+        console.log(errorData)
         }//error_1
     })//ajax
     })//submit

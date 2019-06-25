@@ -15,14 +15,14 @@
 <ul id="sidebar" class="skip list-unstyled components" style="position: relative; width: 100%;">
 	<li class="mt-3">
 		{% if request.user.profile_foto %}
-        <a id="test" href="{{ request.user.get_absolute_url }}"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
+        <a href="{{ request.user.get_absolute_url }}"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
         {% else %}
-        <a id="test" href="{{ request.user.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
+        <a href="{{ request.user.get_absolute_url }}"><img src="{% static 'img/user_noname.png' %}" class="img-thumbnail ml-2" alt="..." style="width:60px; height: 60px"></a>
         {% endif %}
 	</li>
 	<hr>
 	<li><a href='{% url "chat:inbox" %}'>Cообщения</a></li><br>
-	<li><a href='{% url "products:user-list" %}'>Мои предметы</a></li><br>
+	<li><a href='{% url "products:user-list" %}'>Мои айтемы</a></li><br>
 	<li><a href='{% url "accounts:wish-list" %}'>Избранное</a></li><br>
 	<li><a href='{% url "accounts:history-product" %}'>Просмотренное</a></li><br>
 	<li><a href='{% url "accounts:user-update" %}'>Настройки</a></li><br>

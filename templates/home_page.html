@@ -12,9 +12,14 @@ html, body {
     overflow-x: hidden;
 }
 
-
 body {
   padding-bottom: 25px;
+}
+
+@media only screen and (max-width: 768px){
+  #sell-small, #buy-small {
+    font-size: 18px;
+  }
 }
 </style>
 </head>
@@ -29,7 +34,7 @@ body {
 <div class="bg">
 <div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Базар</span> Маркерплэйс</p>
+    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Базар</span> Маркетплейс</p>
   </div>   
 </div>
 
@@ -50,10 +55,10 @@ body {
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;height: 275px; overflow-x: hidden; overflow-y: hidden;  ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;height: 275px; overflow-x: hidden; overflow-y: hidden; ">
   <div class="container">
     <h1 class="display-4">SELL</h1>
-    <p class="lead">Зарабатывай $ и поддерживай круговорот одежды в природе.</p>
+    <p class="lead" id="sell-small">Зарабатывай $ и поддерживай круговорот одежды в природе.</p>
   </div>
 </div>
 </a>
@@ -66,10 +71,10 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;height: 275px; overflow-x: hidden;  ">
+<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;height: 275px; overflow-x: hidden; overflow-y: hidden;">
   <div class="container">
     <h1 class="display-4">BUY</h1>
-    <p class="lead">Найди свой брендовый айтем быстро и без фейков.</p>
+    <p class="lead" id="buy-small">Найди свой брендовый айтем быстро и без фейков.</p>
   </div>
 </div>
 </a>
@@ -202,7 +207,7 @@ body {
           <div class="container mt-5"> 
     <p class="lead" style='font-size: 30px;'>Стань одним из первых</p>
 
-        <div class='col-7 mx-auto'>
+        <div class='col-xs-12 col-md-7 mx-auto'>
       <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">
       <div class="lead display-6">Войти/Зарегистрироваться</div></a>
     </div>
@@ -247,14 +252,16 @@ body {
 
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
+    <div class="bg">
     <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
     <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; height: 275px; overflow-x: hidden; overflow-y: hidden;">
       <div class="container">
         <h1 class="display-4">SELL</h1>
-        <p class="lead">Earn $ and contribute to the sustainable clothes-circle.</p>
+        <p class="lead" id="sell-small">Earn $ and contribute to the sustainable clothes-circle.</p>
       </div>
     </div>
     </a>
+  </div>
   </div>
 
 
@@ -263,7 +270,7 @@ body {
     <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; height: 275px; overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">BUY</h1>
-        <p class="lead">Find your designer piece fast and safe.</p>
+        <p class="lead" id="buy-small">Find your designer piece fast and safe.</p>
       </div>
     </div>
     </a>
