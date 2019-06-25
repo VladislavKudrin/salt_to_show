@@ -5,7 +5,7 @@ from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
 from django.core.validators import validate_image_file_extension
-
+from django.conf import settings
 
 from .models import Product, ImageOrderUtil, ProductImage
 from categories.models import Size, Brand
@@ -46,8 +46,8 @@ class ProductCreateForm(forms.ModelForm):
 			self.fields['brand'].widget.attrs['placeholder'] = 'Введите бренд'
 			self.fields['sex'].label = "Пол"
 			self.fields['sex'].choices = SEX_CHOICES = (
-			('man', 'Муж'),
-			('woman', 'Жен'),
+			('man', 'Мужское'),
+			('woman', 'Женское'),
 			)
 			self.fields['category'].label = "Категория"
 			self.fields['category'].choices = CATEGORY_CHOICES = (
@@ -106,7 +106,7 @@ class ImageForm(ProductCreateForm):
 				raise forms.ValidationError("Загрузите фото")
 			else:
 				raise forms.ValidationError("You should upload an image")	
-		if len(cleaned_images)>8:
+		if len(cleaned_images)>settings.IMAGES_UPLOAD_LIMIT:
 			if self.lan == 'RU':
 				raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
 			else:

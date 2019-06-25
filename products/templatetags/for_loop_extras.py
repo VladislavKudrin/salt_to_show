@@ -31,7 +31,7 @@ def to_first(value):
 @register.filter
 def to_rus(value):
 	gender_eng = ['man', 'woman', 'unisex']
-	gender_rus = ['муж', 'жен', 'унисекс']
+	gender_rus = ['мужское', 'женское', 'унисекс']
 	for idx, gender in enumerate(gender_eng):
 		if gender == value:
 			return gender_rus[idx]

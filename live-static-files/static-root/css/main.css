@@ -1,11 +1,67 @@
+@media only screen and (min-width: 768px) {
+  .flip-card-2:hover .flip-card-2-inner {
+    transform: rotateY(180deg);
+  }
 
+  .flip-card-2-back {
+    transform: rotateY(180deg);
+  } 
 
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  } 
+
+}
+
+@media only screen and (max-width: 768px) {
+  .flip-card-back {
+    transform: rotateY(180deg);
+  } 
+
+  #safe-card, #ai-card {
+    margin-bottom: 5px;
+  }
+
+}
+
+.not-count {
+  color: white;
+  height: 16px;
+  width: 19px;
+  background-color: black;
+  font-size: 12px;
+  text-align: center;
+}
+
+.dropdown-item.active, .dropdown-item:active{
+    background-color: white !important;
+    color: black !important;
+}
+
+.strike {
+  font-size: 1em;
+  line-height: 2em;
+  position: relative;
+}
+.strike::after {
+  border-bottom: 0.125em solid black;
+  content: "";
+  left: 0;
+  margin-top: calc(0.125em / 2 * -1);
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
 /*Flip-Card Product Detail View
 */
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card-2 {
   background-color: transparent;
-  width: 350px;
+  width: 406px;
   height: 25px;
 /*  border: 1px solid #f1f1f1;*/
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
@@ -143,6 +199,24 @@
    border-color: black;
    background: rgba(1, 1, 1, 0.1);
 }
+
+.btn.focus, .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#drop-cat {
+  width: 100% !important;
+}
+
+.dropdown-menu.customDropRightMenu {
+    width: 100% !important;
+  }
+
+
+/*#sort:hover {
+  background-color: #e8eaef;
+}*/
 
 .custom-control-label:before{
     background-color:white;
@@ -324,10 +398,17 @@ background-color: black;
     background-color: transparent;
 }
 
+a:hover {
+    color: black !important;
+}
+
 .like-center {
-  position: absolute;
-  top: 104px;
-  right: 92.25px;
+  width:50%; 
+  height: 50%; 
+  position: absolute; 
+  top: 25%; 
+  left: 30%; 
+  z-index: 10;
 }
 
 .one-line{
@@ -342,19 +423,18 @@ background-color: black;
   margin-top: 5px;
 }
 
-
 .card-img-top {
     max-width: 262.5px;
-    max-height: 288px;
     min-width: 262.5px;
+    max-height: 288px;
     min-height: 288px;
+
     object-fit: cover;
     align-items: top;
     margin-bottom: 10px;
 
     cursor: pointer;
     display: inline-block;
-    border: 0px solid #ccc;
     position: relative;
 }
 
@@ -372,11 +452,17 @@ background-color: black;
 .card-body {
 
   height: 100px;
-  width: 288px;
+  width: 262.5px;
   object-fit: cover;
   border-top: 1px solid #e8eaef;
   padding: 0;
 
+}
+
+#list-col {
+  min-width: 262.5px; 
+  max-width: 262.5px;
+  margin: 0px 29px;
 }
 
 ol {
@@ -758,6 +844,12 @@ border: 2px red solid;
     color: black;
 }
 
+
+@media only screen and (max-width: 768px) {
+  #list-col {
+    margin: 0;
+  }
+}
 
 
 
