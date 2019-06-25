@@ -4,6 +4,31 @@
 
 
 {% block content %}
+
+<style type="text/css">
+/*.span {
+  color: red;
+}
+
+
+html, body {*/
+/*    max-width: 100%;*/
+/*    overflow-x: hidden;
+}*/
+
+/*@media only screen and (min-width: 200px) { 
+}
+	.bla{
+		width: 1500px;
+	}
+*/
+
+a:hover {
+    color: black !important;
+}
+
+</style>
+
 {% if request.session.language == 'RU' %}
 <div class='col-12 text-right p-0'>
 		<div class="btn-group dropleft customDropRight">
@@ -102,21 +127,23 @@
 
 {% endif %}
 
-	<div class='row p-0 mx-auto'>
+<div class="container">
+<div class='row'>
 	{% for obj in object_list %}
-	<div class='col-xs-12 col-md-3 p-0' id="list-col">
-		{% include 'products/snippets/card.html' with instance=obj %}
-	</div>
-		{% if forloop.counter|divisibleby:4 %}
-	</div>
-	<div class='row p-0 mx-auto'>
-		{% else %}
+		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+			{% include 'products/snippets/card.html' with instance=obj %}
+			{% if forloop.counter|divisibleby:4 %}
+				</div>
+				</div>
+				<div class='row'>
+				<div class='col-12'>
+				</div>
+			{% else %}
+				</div>
+			{% endif %}
 
-		{% endif %}
 	{% endfor %}
-	</div>
-
-
+</div>
 </div>
 	
 {% endblock %}

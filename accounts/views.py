@@ -293,6 +293,7 @@ class WishListView(LoginRequiredMixin, ListView):
 		user = self.request.user
 		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		wished_products = [wish.product for wish in wishes]
+		print(wished_products)
 		# pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
 		return wished_products
 		#context = super(WishListView, self).get_context_data(*args,**kwargs)
@@ -305,14 +306,19 @@ class WishListView(LoginRequiredMixin, ListView):
 		# return Product.objects.filter()
 
 	def get_context_data(self, *args, **kwargs):
+		user = self.request.user
+		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
+		wished_products = [wish.product for wish in wishes]
 		context = super(WishListView, self).get_context_data(*args,**kwargs)
 		if self.request.session.get('language') == 'RU':
 			context={
-			'title':'Избранное'
+			'title':'Избранное:',
+			'wishes':wished_products
 			}
 		else: 
 			context={
-			'title':'Wishlist'
+			'title':'Wishlist:',
+			'wishes':wished_products
 			}
 		return context
 	# 	user = self.request.user
