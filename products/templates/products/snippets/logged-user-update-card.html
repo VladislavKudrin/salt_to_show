@@ -1,9 +1,9 @@
 {% if request.session.language == 'RU' %}
 <div class='row'>
-	<div class='col'>
+	<div class='col-12 pb-2'>
 		<a href="{{ instance.get_absolute_url_for_update }}" class="btn btn-dark btn-block">Редактировать</a>
 	</div>
-	<div class='col'>
+	<div class='col-12'>
 		{% if instance.get_absolute_url == request.path %}
 		<form class='delete-product-form' method='POST' action='{% url "products:delete" %}' data-endpoint='{% url "products:delete" %}' next_url='{% url "products:user-list" %}' data_id='{{ instance.id }}' data_user='{{ instance.user }}'> {% csrf_token %}
 			<input type='hidden' class='title' name='product_title' value='{{ instance.title }}' />
@@ -18,10 +18,10 @@
 </div>
 {% else %}
 <div class='row'>
-	<div class='col'>
+	<div class='col-12 pb-2'>
 		<a href="{{ instance.get_absolute_url_for_update }}" class="btn btn-dark btn-block">Update</a>
 	</div>
-	<div class='col'>
+	<div class='col-12'>
 		{% if instance.get_absolute_url == request.path %}
 		<form class='delete-product-form' method='POST' action='{% url "products:delete" %}' data-endpoint='{% url "products:delete" %}' next_url='{% url "products:user-list" %}' data_id='{{ instance.id }}' data_user='{{ instance.user }}'> {% csrf_token %}
 			<input type='hidden' class='title' name='product_title' value='{{ instance.title }}' />

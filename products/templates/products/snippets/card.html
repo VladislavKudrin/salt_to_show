@@ -7,13 +7,13 @@
 </style>
 
 
-<div class="card position-relative" >
+
   {% if instance.images %}
   {% with instance.images.all|to_first as image %}
-   <div class="wish-div" >    
+  
       <a class="like-center">{% include 'accounts/wish-list-update.html' with product=instance %}</a>
       <img class="card-img-top" src="{{ image.image.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
-  </div>
+
   {% endwith %}
   {% endif %}
                 <div class="card-body position-relative">
@@ -37,7 +37,7 @@
                   </a>
                 </div>
 
-</div>
+
 
 
 
