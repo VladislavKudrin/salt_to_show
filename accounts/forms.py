@@ -9,20 +9,25 @@ import re
 User = get_user_model()
 
 from marketing.models import MarketingPreference
-from .models import EmailActivation, GuestEmail
+from .models import EmailActivation, GuestEmail, LanguagePreference
 from .signals import user_logged_in_signal
 
 class ReactivateEmailForm(forms.Form):
     error_css_class = 'error'
     email = forms.EmailField()
-
+    def __init__(self, request, *args, **kwargs):
+        super(ReactivateEmailForm, self).__init__(*args, **kwargs)
+        self.request=request
     def clean_email(self):
         email = self.cleaned_data.get('email')
         user_objects = EmailActivation.objects.email_exists(email)
         if not user_objects.exists():
-            reset_link = reverse("register")
+            reset_link = reverse("login")
             msg = """This Email does not exist. Would you like to <a href="{link}">register</a>?
             """.format(link=reset_link)
+            if self.request.session.get('language')=='RU':
+                msg = """Такого Email не существует. Хочешь <a href="{link}">зарегистрироваться</a>?
+                """.format(link=reset_link)
             raise forms.ValidationError(mark_safe(msg))
         return email
 
@@ -53,17 +58,6 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
-from marketing.models import MarketingPreference
-
-
-class MarketingPreferenceForm(forms.ModelForm):
-    subscribed = forms.BooleanField(label = 'Recieve marketing email?', required=False)
-    class Meta:
-        model = MarketingPreference
-        fields = [
-            'subscribed',
-
-        ]
 
 class UserDetailChangeForm(forms.ModelForm):
     username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your Fullname'}))
@@ -82,6 +76,7 @@ class UserDetailChangeForm(forms.ModelForm):
         self.request = request
         self.fields['email'].initial=request.user.email
         self.fields['subscribed'].initial=request.user.marketing.subscribed
+        self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
         self.lan = request.session.get('language')
         if self.lan == 'RU':
 

@@ -252,7 +252,7 @@ class EmailActivation(models.Model):
 			return True
 		return False
 
-	def send_activation(self):
+	def send_activation(self, language = None):
 		if not self.activated and not self.forced_expired:
 			if self.key:
 				base_url = getattr(settings, 'BASE_URL', 'https://envision-outfit.herokuapp.com')
@@ -266,6 +266,10 @@ class EmailActivation(models.Model):
 				txt_ = get_template("registration/emails/verify.txt").render(context)
 				html_ = get_template("registration/emails/verify.html").render(context)
 				subject = '1-Click Email Verification'
+				if language=='RU':
+					txt_ = get_template("registration/emails/verify_rus.txt").render(context)
+					html_ = get_template("registration/emails/verify_rus.html").render(context)
+					subject = 'Активация Email'
 				from_email = settings.DEFAULT_FROM_EMAIL
 				recipient_list = [self.email]
 				sent_mail=send_mail(
@@ -288,15 +292,23 @@ def pre_save_email_activation(sender, instance, *args, **kwargs):
 
 pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 	
-
-
-def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
+def post_save_language_pref(sender, instance, created, *args, **kwargs):
 	if created:
-		obj = EmailActivation.objects.create(user=instance, email=instance.email)
-		obj.send_activation()
-		instance.save()
+		is_social = instance.user.social_auth.exists()
+		if not is_social:
+			obj = EmailActivation.objects.create(user=instance.user, email=instance.user.email)
+			obj.send_activation(instance.language)
 
-post_save.connect(post_save_user_create_reciever, sender=User)
+
+post_save.connect(post_save_language_pref, sender=LanguagePreference)
+
+# def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
+# 	if created:
+# 		obj = EmailActivation.objects.create(user=instance, email=instance.email)
+# 		obj.send_activation()
+# 		instance.save()
+
+# post_save.connect(post_save_user_create_reciever, sender=User)
 
 
 class GuestEmail(models.Model):

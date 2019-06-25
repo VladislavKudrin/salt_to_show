@@ -24,7 +24,6 @@
   <form action="" method="POST" role="form" enctype='multipart/form-data'>
       {% csrf_token %}
 
-      {% if update_in_action %}
             {{ form|crispy }}
 
             {% if object.profile_foto %}
@@ -38,18 +37,12 @@
 
 
 
-
             <a href='{% url "password_change" %}' class="btn btn-outline-dark" role="button" aria-pressed="true">Изменить пароль</a>
             <button type="submit" class="mt-3 btn btn-dark btn-lg btn-block">Сохранить</button>
             <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger btn-lg btn-block" role="button" aria-pressed="true">Выйти</a>
 
 
-      {% endif %}
 
-      {% if marketing_in_action %}
-            {{ form }}
-            <button type="submit" class="mt-3 btn btn-dark btn-lg btn-block">Сохранить</button>
-      {% endif %}
 
   </form>
             
@@ -81,7 +74,6 @@
   <form action="" method="POST" role="form" enctype='multipart/form-data'>
       {% csrf_token %}
 
-      {% if update_in_action %}
             {{ form|crispy }}
 
             {% if object.profile_foto %}
@@ -99,13 +91,6 @@
             <button type="submit" class="mt-3 btn btn-dark btn-lg btn-block">Save</button>
             <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger btn-lg btn-block" role="button" aria-pressed="true">Logout</a>
 
-
-      {% endif %}
-
-      {% if marketing_in_action %}
-            {{ form }}
-            <button type="submit" class="mt-3 btn btn-dark btn-lg btn-block">Save</button>
-      {% endif %}
 
   </form>
             
