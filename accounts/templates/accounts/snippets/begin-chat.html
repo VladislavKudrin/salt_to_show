@@ -5,7 +5,7 @@
 	<form method="POST">
 	{% csrf_token %}
 	    <input type="hidden" name="next" value="{% url 'home' %}">
-	    <input type="hidden" name="chat_with" value="{{ object.username }}">
+	    <input type="hidden" name="chat_with" value="{{ object.user.username }}">
 	    <button class="btn btn-dark	 btn-block" type="submit" style="width: 100%;">{{ btn_title }}</button>
 	</form>
 	{% endif %}
@@ -16,7 +16,7 @@
 	<form method="POST">
 	{% csrf_token %}
 	    <input type="hidden" name="next" value="{% url 'home' %}">
-	    <input type="hidden" name="chat_with" value="{{ object.username }}">
+	    <input type="hidden" name="chat_with" value="{{ object.user.username }}">
 	    <button class="btn btn-dark	 btn-block" type="submit" style="width: 100%;">{{ btn_title }}</button>
 	</form>
 	{% endif %}

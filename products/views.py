@@ -134,7 +134,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	def post(self, request, *args, **kwargs):
 		next_ = request.POST.get('next', '/')
 		username = request.POST.get('chat_with', '/')
-		redirect_url = next_ + 'dialogs/' + username
+		redirect_url = next_ + 'messages/' + username
 		return redirect(redirect_url)
 
 	def get_object(self, *args, **kwargs):
