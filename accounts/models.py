@@ -90,11 +90,7 @@ class UserManager(BaseUserManager):
 				is_staff = True,
 				is_active = True,
 				is_admin = True,
-				
 			)
-		activation_admin = EmailActivation.objects.filter(user=user).first()
-		activation_admin.activated=True
-		activation_admin.save()
 		return user
 
 
@@ -295,9 +291,13 @@ pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 def post_save_language_pref(sender, instance, created, *args, **kwargs):
 	if created:
 		is_social = instance.user.social_auth.exists()
+		is_admin = instance.user.admin
 		if not is_social:
-			obj = EmailActivation.objects.create(user=instance.user, email=instance.user.email)
-			obj.send_activation(instance.language)
+			if not is_admin:		
+				obj = EmailActivation.objects.create(user=instance.user, email=instance.user.email)
+				obj.send_activation(instance.language)
+			else:
+				EmailActivation.objects.create(user=instance.user, email=instance.user.email, activated=True)
 
 
 post_save.connect(post_save_language_pref, sender=LanguagePreference)

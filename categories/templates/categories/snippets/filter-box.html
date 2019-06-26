@@ -93,12 +93,12 @@ Category
   {% for category in fields_category %}
   <div class="btn-group dropright customDropRight">
       <div class=" ml-3 mt-2 custom-control custom-checkbox">
-        <input type="checkbox" {% if category in request.POST %} checked {% endif %} class="custom-control-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
+        <input type="checkbox"{% if size_posted %}{% if category not in request.POST %} disabled {% endif %}{% endif %}{% if category in request.POST %} checked {% endif %} class="custom-control-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
         <label class="custom-control-label" for="customCheckcategory{{ forloop.counter|add:'1' }}">
           {{ category|capfirst }}
         </label>
       </div>
-      <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split customDropright {{ category }}-btn" style='display: none; background-color: white; border: none;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split customDropright {{ category }}-btn" {% if category in request.POST %} style='display: block; background-color: white; border: none;' {% else %} style='display: none; background-color: white; border: none;' {% endif %} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="sr-only">Toggle Dropright</span>
       </button>
       <div class="dropdown-menu customDropRightMenu filter-boxes">
@@ -106,7 +106,7 @@ Category
           {% for size in category_sizes %}
             {% if size.size_for == category|capfirst %}
               <div class=" ml-3 mt-2 custom-control custom-checkbox jquery-box-{{ category }}" >
-              <input type="checkbox" {% if size.size in request.POST %} checked {% endif %}  class="custom-control-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
+              <input type="checkbox" {% if category in request.POST %}{% if size.size in request.POST %} checked {% endif %} {% endif %} class="custom-control-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
               <label class="custom-control-label" for="customCheck{{ category }}{{ forloop.counter|add:'1' }}">
               {{ size }}
               </label>
