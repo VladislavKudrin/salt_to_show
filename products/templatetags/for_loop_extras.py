@@ -35,7 +35,7 @@ def to_rus(value):
 	for idx, gender in enumerate(gender_eng):
 		if gender == value:
 			return gender_rus[idx]
-	category_eng = ['footwear', 'outwear', 'tops', 'bottoms', 'accessories']
+	category_eng = ['footwear', 'outerwear', 'tops', 'bottoms', 'accessories']
 	category_rus = ['обувь', 'верхняя одежда', 'верх', 'низ', 'аксессуары']
 	for idx, category in enumerate(category_eng):
 		if category == value:

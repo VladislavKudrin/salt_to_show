@@ -32,7 +32,7 @@ $(document).ready(
 
 //filterboxeslogic
 var foot = $(".footwear")
-var out = $(".outwear")
+var out = $(".outerwear")
 var top = $(".tops")
 var bot = $(".bottoms")
 var acc = $(".accessories")
@@ -43,19 +43,19 @@ function footwear() {
     else{
         $(".footwear-btn").css('display', 'none')
         $('.customCheckboxfootwear').prop('checked', false)
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
         $(".accessories").prop("disabled", false)
     }
 }
-function outwear() {   
+function outerwear() {   
     if(out[0].checked) {
-        $(".outwear-btn").css('display', 'block')
+        $(".outerwear-btn").css('display', 'block')
     }
     else{
-        $(".outwear-btn").css('display', 'none')
-        $('.customCheckboxoutwear').prop('checked', false)
+        $(".outerwear-btn").css('display', 'none')
+        $('.customCheckboxouterwear').prop('checked', false)
         $(".footwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
@@ -69,7 +69,7 @@ function tops() {
     else{
         $(".tops-btn").css('display', 'none')
         $('.customCheckboxtops').prop('checked', false)
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".footwear").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
         $(".accessories").prop("disabled", false)
@@ -82,7 +82,7 @@ function bottoms() {
     else{
         $(".bottoms-btn").css('display', 'none')
         $('.customCheckboxbottoms').prop('checked', false)
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".footwear").prop("disabled", false)
         $(".accessories").prop("disabled", false)
@@ -95,7 +95,7 @@ function accessories() {
     else{
         $(".accessories-btn").css('display', 'none')
         $('.customCheckboxaccessories').prop('checked', false)
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
         $(".footwear").prop("disabled", false)
@@ -106,8 +106,8 @@ function accessories() {
 $(".footwear").change(function(){
 
   footwear()});
-$(".outwear").change(function() {
-  outwear()
+$(".outerwear").change(function() {
+  outerwear()
 });
 $(".tops").change(function() {
   tops()
@@ -123,28 +123,28 @@ $(".accessories").change(function () {
 $(".customCheckboxfootwear").change(
   function(){
     if(this.checked){
-        $('.outwear').prop('checked', false)
+        $('.outerwear').prop('checked', false)
         $('.tops').prop('checked', false)
         $('.bottoms').prop('checked', false)
         $('.accessories').prop('checked', false)
         tops()
-        outwear()
+        outerwear()
         bottoms()
         accessories()
-        $(".outwear").prop("disabled", true)
+        $(".outerwear").prop("disabled", true)
         $(".tops").prop("disabled", true)
         $(".bottoms").prop("disabled", true)
         $(".accessories").prop("disabled", true)
         }
     if ($('.customCheckboxfootwear:checked').length==0){
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
         $(".accessories").prop("disabled", false)
 
     }
   })//change
-$(".customCheckboxoutwear").change(
+$(".customCheckboxouterwear").change(
   function(){
     if(this.checked){
         $('.footwear').prop('checked', false)
@@ -160,7 +160,7 @@ $(".customCheckboxoutwear").change(
         $(".bottoms").prop("disabled", true)
         $(".accessories").prop("disabled", true)
         }
-    if ($('.customCheckboxoutwear:checked').length==0){
+    if ($('.customCheckboxouterwear:checked').length==0){
         $(".footwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
@@ -171,21 +171,21 @@ $(".customCheckboxoutwear").change(
 $(".customCheckboxtops").change(
   function(){
     if(this.checked){
-        $('.outwear').prop('checked', false)
+        $('.outerwear').prop('checked', false)
         $('.footwear').prop('checked', false)
         $('.bottoms').prop('checked', false)
         $('.accessories').prop('checked', false)
-        $(".outwear").prop("disabled", true)
+        $(".outerwear").prop("disabled", true)
         $(".footwear").prop("disabled", true)
         $(".bottoms").prop("disabled", true)
         $(".accessories").prop("disabled", true)
         footwear()
-        outwear()
+        outerwear()
         bottoms()
         accessories()
         }
     if ($('.customCheckboxtops:checked').length==0){
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".footwear").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
         $(".accessories").prop("disabled", false)
@@ -195,21 +195,21 @@ $(".customCheckboxtops").change(
 $(".customCheckboxbottoms").change(
   function(){
     if(this.checked){
-        $('.outwear').prop('checked', false)
+        $('.outerwear').prop('checked', false)
         $('.tops').prop('checked', false)
         $('.footwear').prop('checked', false)
         $('.accessories').prop('checked', false)
         footwear()
         tops()
-        outwear()
+        outerwear()
         accessories()
-        $(".outwear").prop("disabled", true)
+        $(".outerwear").prop("disabled", true)
         $(".tops").prop("disabled", true)
         $(".footwear").prop("disabled", true)
         $(".accessories").prop("disabled", true)
         }
     if ($('.customCheckboxbottoms:checked').length==0){
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".footwear").prop("disabled", false)
         $(".accessories").prop("disabled", false)
@@ -219,21 +219,21 @@ $(".customCheckboxbottoms").change(
 $(".customCheckboxaccessories").change(
   function(){
     if(this.checked){
-        $('.outwear').prop('checked', false)
+        $('.outerwear').prop('checked', false)
         $('.tops').prop('checked', false)
         $('.bottoms').prop('checked', false)
         $('.footwear').prop('checked', false)
         footwear()
         tops()
-        outwear()
+        outerwear()
         bottoms()
-        $(".outwear").prop("disabled", true)
+        $(".outerwear").prop("disabled", true)
         $(".tops").prop("disabled", true)
         $(".bottoms").prop("disabled", true)
         $(".footwear").prop("disabled", true)
         }
     if ($('.customCheckboxaccessories:checked').length==0){
-        $(".outwear").prop("disabled", false)
+        $(".outerwear").prop("disabled", false)
         $(".tops").prop("disabled", false)
         $(".bottoms").prop("disabled", false)
         $(".footwear").prop("disabled", false)

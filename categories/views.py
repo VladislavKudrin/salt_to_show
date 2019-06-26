@@ -12,7 +12,7 @@ class CategoryFilterView(ListView):
 	template_name = "products/list.html"
 	fields_category = [
 					'footwear',
-					'outwear',
+					'outerwear',
 					'tops',
 					'bottoms',
 					'accessories'
@@ -26,7 +26,7 @@ class CategoryFilterView(ListView):
 	def post(self, request, *args, **kwargs):
 		sizes = [
 		Size.objects.filter(size_for='Footwear'),
-		Size.objects.filter(size_for='Outwear'),
+		Size.objects.filter(size_for='Outerwear'),
 		Size.objects.filter(size_for='Tops'),
 		Size.objects.filter(size_for='Bottoms'),
 		Size.objects.filter(size_for='Accessories')
@@ -86,7 +86,7 @@ class CategoryFilterView(ListView):
 	def get(self, request, *args, **kwargs):
 		sizes = [
 		Size.objects.filter(size_for='Footwear'),
-		Size.objects.filter(size_for='Outwear'),
+		Size.objects.filter(size_for='Outerwear'),
 		Size.objects.filter(size_for='Tops'),
 		Size.objects.filter(size_for='Bottoms'),
 		Size.objects.filter(size_for='Accessories')

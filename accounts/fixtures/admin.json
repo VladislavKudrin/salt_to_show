@@ -1,0 +1,1 @@
+[{"model": "accounts.user", "pk": 18, "fields": {"password": "pbkdf2_sha256$36000$Smdzt9yFdaix$TaQOh0g9aGAet1HvZBQc+/SAM4ObHriL/MHUc9zf744=", "last_login": "2019-06-26T09:03:45.372Z", "username": null, "email": "admin@salt.com", "full_name": null, "is_active": true, "staff": true, "admin": true, "timestamp": "2019-06-26T09:03:36.034Z", "profile_foto": "", "wishes": []}}]
