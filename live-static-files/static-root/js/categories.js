@@ -36,6 +36,119 @@ var out = $(".outwear")
 var top = $(".tops")
 var bot = $(".bottoms")
 var acc = $(".accessories")
+if(".customCheckboxfootwear:checked"){
+    $('.outwear').prop('checked', false)
+    $('.tops').prop('checked', false)
+    $('.bottoms').prop('checked', false)
+    $('.footwear').prop('checked', false)
+    footwear()
+    tops()
+    outwear()
+    bottoms()
+    $(".outwear").prop("disabled", true)
+    $(".tops").prop("disabled", true)
+    $(".bottoms").prop("disabled", true)
+    $(".footwear").prop("disabled", true)
+    }
+
+
+$(".customCheckboxoutwear").change(
+  function(){
+
+    if(this.checked){
+        $('.footwear').prop('checked', false)
+        $('.tops').prop('checked', false)
+        $('.bottoms').prop('checked', false)
+        $('.accessories').prop('checked', false)
+        footwear()
+        tops()
+        bottoms()
+        accessories()
+        $(".footwear").prop("disabled", true)
+        $(".tops").prop("disabled", true)
+        $(".bottoms").prop("disabled", true)
+        $(".accessories").prop("disabled", true)
+        }
+    if ($('.customCheckboxoutwear:checked').length==0){
+        $(".footwear").prop("disabled", false)
+        $(".tops").prop("disabled", false)
+        $(".bottoms").prop("disabled", false)
+        $(".accessories").prop("disabled", false)
+
+    }
+  })//change
+$(".customCheckboxtops").change(
+  function(){
+    if(this.checked){
+        $('.outwear').prop('checked', false)
+        $('.footwear').prop('checked', false)
+        $('.bottoms').prop('checked', false)
+        $('.accessories').prop('checked', false)
+        footwear()
+        outwear()
+        bottoms()
+        accessories()
+        $(".outwear").prop("disabled", true)
+        $(".footwear").prop("disabled", true)
+        $(".bottoms").prop("disabled", true)
+        $(".accessories").prop("disabled", true)
+        }
+    if ($('.customCheckboxtops:checked').length==0){
+        $(".outwear").prop("disabled", false)
+        $(".footwear").prop("disabled", false)
+        $(".bottoms").prop("disabled", false)
+        $(".accessories").prop("disabled", false)
+
+    }
+  })//change
+$(".customCheckboxbottoms").change(
+  function(){
+    if(this.checked){
+        $('.outwear').prop('checked', false)
+        $('.tops').prop('checked', false)
+        $('.footwear').prop('checked', false)
+        $('.accessories').prop('checked', false)
+        footwear()
+        tops()
+        outwear()
+        accessories()
+        $(".outwear").prop("disabled", true)
+        $(".tops").prop("disabled", true)
+        $(".footwear").prop("disabled", true)
+        $(".accessories").prop("disabled", true)
+        }
+    if ($('.customCheckboxbottoms:checked').length==0){
+        $(".outwear").prop("disabled", false)
+        $(".tops").prop("disabled", false)
+        $(".footwear").prop("disabled", false)
+        $(".accessories").prop("disabled", false)
+
+    }
+  })//change
+
+    if(".customCheckboxaccessories:checked"){
+        $('.outwear').prop('checked', false)
+        $('.tops').prop('checked', false)
+        $('.bottoms').prop('checked', false)
+        $('.footwear').prop('checked', false)
+        footwear()
+        tops()
+        outwear()
+        bottoms()
+        $(".outwear").prop("disabled", true)
+        $(".tops").prop("disabled", true)
+        $(".bottoms").prop("disabled", true)
+        $(".footwear").prop("disabled", true)
+        }
+    if ($('.customCheckboxaccessories:checked').length==0){
+        $(".outwear").prop("disabled", false)
+        $(".tops").prop("disabled", false)
+        $(".bottoms").prop("disabled", false)
+        $(".footwear").prop("disabled", false)
+
+    }
+
+
 function footwear() {
     if($(".footwear")[0].checked) {
         $(".footwear-btn").css('display', 'block')
@@ -146,6 +259,7 @@ $(".customCheckboxfootwear").change(
   })//change
 $(".customCheckboxoutwear").change(
   function(){
+
     if(this.checked){
         $('.footwear').prop('checked', false)
         $('.tops').prop('checked', false)
@@ -175,14 +289,14 @@ $(".customCheckboxtops").change(
         $('.footwear').prop('checked', false)
         $('.bottoms').prop('checked', false)
         $('.accessories').prop('checked', false)
-        $(".outwear").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
         footwear()
         outwear()
         bottoms()
         accessories()
+        $(".outwear").prop("disabled", true)
+        $(".footwear").prop("disabled", true)
+        $(".bottoms").prop("disabled", true)
+        $(".accessories").prop("disabled", true)
         }
     if ($('.customCheckboxtops:checked').length==0){
         $(".outwear").prop("disabled", false)
@@ -266,78 +380,6 @@ $('.customDropRight').on('hide.bs.dropdown', function() {
 $('.customDropRightMenu').click(function(e) {
   e.stopPropagation();
 });
-
-
-
-//brand and image sort
-
-var formSubmitBrand = $('#example-form-1')
-var actionBrand = formSubmitBrand.attr("action_url_create")
-$.ajax({
-    url: actionBrand,
-    method:'GET',
-    success: function(data){
-    var availableTags = data.brand 
-    $( ".brandautofill" ).autocomplete({
-      source: availableTags
-    });
-    },//success
-    error: function(errorData){
-    $.alert({
-    title: 'OOps!',
-    content: 'Simple alert!',
-    theme: "modern"
-    });
-    }//error
-    })//ajax
-
- 
-var formCreate = $('#customSort')
-//update
-   var galleryUpdate = $('#gallery')
-   var formSubmit = $('#example-form-1')
-   var action = formSubmit.attr("action_url")
-   formSubmit.submit(
-    function(event){
-  var currentPath = window.location.href
-  var elements = $('#example-form-1 ul li')
-if (currentPath.indexOf("update") != -1){
-    var keyArray = []
-    console.log(action)
-    $.each(elements,
-    function(index, value){
-        var val = ($(value)).find("[name = 'image-id']")
-        keyArray.push(val.val())
-    })//each
-    console.log(keyArray)
-    $.ajax({
-    url: action,
-    method:'POST',
-    data: {'data[]':keyArray},
-    success: function(data){
-    console.log('hi')
-    },//success
-    error: function(errorData){
-    $.alert({
-    title: 'OOps!',
-    content: 'Simple alert!',
-    theme: "modern"
-    });
-    }//error
-    })//ajax
-    }//if_current_path_update
-   })//submit_update_create
- 
-    // There's the gallery and the trash
-    $("#customSort").sortable();
-    $("#customSort").disableSelection();
-
-
-
-
-
-
-
 
 
 

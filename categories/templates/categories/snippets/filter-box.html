@@ -30,7 +30,7 @@
   {% for category in fields_category %}
   <div class="btn-group dropright customDropRight">
       <div class=" ml-3 mt-2 custom-control custom-checkbox">
-        <input type="checkbox"{% if category in request.POST %} checked {% endif %} class="custom-control-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
+        <input type="checkbox"{% if size_posted %}{% if category not in request.POST %} disabled {% endif %}{% endif %}{% if category in request.POST %} checked {% endif %} class="custom-control-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
         <label class="custom-control-label" for="customCheckcategory{{ forloop.counter|add:'1' }}"> 
           {{ category|to_rus|capfirst }}
         </label>
@@ -44,7 +44,7 @@
           {% for size in category_sizes %}
             {% if size.size_for == category|capfirst %}
               <div class=" ml-3 mt-2 custom-control custom-checkbox jquery-box-{{ category }}" >
-              <input type="checkbox" {% if size.size in request.POST %} checked {% endif %} class="custom-control-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
+              <input type="checkbox"{% if category in request.POST %}{% if size.size in request.POST %} checked {% endif %} {% endif %}class="custom-control-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
               <label class="custom-control-label" for="customCheck{{ category }}{{ forloop.counter|add:'1' }}">
               {{ size }}
               </label>
