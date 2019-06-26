@@ -82,6 +82,8 @@ class UserManager(BaseUserManager):
 		return user
 
 	def create_superuser(self, email, username=None, full_name=None, password = None, is_admin=None, is_active=None):
+		username_unchecked = email.split("@")[0]
+		username = User.objects.check_username(username_unchecked)
 		user = self.create_user(
 				email,
 				username,
