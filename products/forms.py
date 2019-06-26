@@ -55,7 +55,7 @@ class ProductCreateForm(forms.ModelForm):
 			('tops', 'Верх'),
 			('bottoms', 'Низ'),
 			('accessories', 'Аксессуары'),
-			('outwear', 'Верхняя одежда'),
+			('outerwear', 'Верхняя одежда'),
 			('footwear', 'Обувь'),
 			)
 			self.fields['size'].label = "Размер"

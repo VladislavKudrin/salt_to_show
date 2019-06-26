@@ -114,7 +114,7 @@ CATEGORY_CHOICES = (
 	('tops', 'Tops'),
 	('bottoms', 'Bottoms'),
 	('accessories', 'Accessories'),
-	('outwear', 'Outwear'),
+	('outerwear', 'Outerwear'),
 	('footwear', 'Footwear'),
 	)
 SEX_CHOICES = (
