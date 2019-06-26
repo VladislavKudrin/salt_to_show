@@ -234,7 +234,7 @@ button:focus {
 
 
 
-.chat-border:after{
+/*.chat-border:after{
 	content:'';
 	position: absolute;
 	width: 75%;
@@ -242,7 +242,7 @@ button:focus {
 	height:20%;
 	border-bottom: 0.75px solid #e1e6e6 !important;
 
-}
+}*/
 .backgroundy{
 	background-color: black;
 }
@@ -326,7 +326,6 @@ button:focus {
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
 							
 								<div class='row row-dialog my-auto mx-auto'>
-									<p class='chat-border'>
 									<div class='col-3 my-auto'>
 										{% if obj.first.profile_foto %}
 											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="...">
@@ -349,14 +348,12 @@ button:focus {
 										<span class='obj_id_s' id="{{ obj.id }}"></span>
 
 									</div>
-								</p>
 								</div>
 							
 							</a></li>
 						{% else %}
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
 								<div class='row row-dialog my-auto mx-auto'>
-									<p class='chat-border'>
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}
 											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="..." >
@@ -375,7 +372,6 @@ button:focus {
 										{% endif %}
 											<span class='obj_id_s' id="{{ obj.id }}"></span>
 									</div>
-								</p>
 								</div>
 							</a></li>
 						{% endif %}
