@@ -36,6 +36,57 @@ var out = $(".outwear")
 var top = $(".tops")
 var bot = $(".bottoms")
 var acc = $(".accessories")
+// if(".customCheckboxfootwear:checked"){
+//         $('.outwear').prop('checked', false)
+//         $('.tops').prop('checked', false)
+//         $('.bottoms').prop('checked', false)
+//         $('.accessories').prop('checked', false)
+//         tops()
+//         outwear()
+//         bottoms()
+//         accessories()
+//         $(".outwear").prop("disabled", true)
+//         $(".tops").prop("disabled", true)
+//         $(".bottoms").prop("disabled", true)
+//         $(".accessories").prop("disabled", true)
+//     }
+
+// if(".customCheckboxoutwear:checked"){
+//         $('.footwear').prop('checked', false)
+//         $('.tops').prop('checked', false)
+//         $('.bottoms').prop('checked', false)
+//         $('.accessories').prop('checked', false)
+//         tops()
+//         footwear()
+//         bottoms()
+//         accessories()
+//         $(".footwear").prop("disabled", true)
+//         $(".tops").prop("disabled", true)
+//         $(".bottoms").prop("disabled", true)
+//         $(".accessories").prop("disabled", true)
+//     }
+
+
+// if(".customCheckboxtops:checked"){
+//         $('.footwear').prop('checked', false)
+//         $('.outwear').prop('checked', false)
+//         $('.bottoms').prop('checked', false)
+//         $('.accessories').prop('checked', false)
+//         outwear()
+//         footwear()
+//         bottoms()
+//         accessories()
+//         $(".footwear").prop("disabled", true)
+//         $(".outwear").prop("disabled", true)
+//         $(".bottoms").prop("disabled", true)
+//         $(".accessories").prop("disabled", true)
+//     }
+
+
+
+
+
+
 function footwear() {
     if($(".footwear")[0].checked) {
         $(".footwear-btn").css('display', 'block')
@@ -146,6 +197,7 @@ $(".customCheckboxfootwear").change(
   })//change
 $(".customCheckboxoutwear").change(
   function(){
+
     if(this.checked){
         $('.footwear').prop('checked', false)
         $('.tops').prop('checked', false)
@@ -175,14 +227,14 @@ $(".customCheckboxtops").change(
         $('.footwear').prop('checked', false)
         $('.bottoms').prop('checked', false)
         $('.accessories').prop('checked', false)
-        $(".outwear").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
         footwear()
         outwear()
         bottoms()
         accessories()
+        $(".outwear").prop("disabled", true)
+        $(".footwear").prop("disabled", true)
+        $(".bottoms").prop("disabled", true)
+        $(".accessories").prop("disabled", true)
         }
     if ($('.customCheckboxtops:checked').length==0){
         $(".outwear").prop("disabled", false)

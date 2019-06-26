@@ -188,7 +188,6 @@ function deleteItem(item){
     event.preventDefault()
     var createFormSubmitBtn = formSubmit.find("[type='submit']")
     var createFormSubmitBtnTxt = createFormSubmitBtn.text()
-    console.log(createFormSubmitBtn)
     var formData = formSubmit.serialize()
     var elements = $('#example-form-1 ul li')
     var keyArray = []
@@ -234,6 +233,7 @@ function deleteItem(item){
             },//success
     error:function(errorData){
         console.log('error')
+        console.log(errorData)
         }//error_1
     })//ajax
     })//submit

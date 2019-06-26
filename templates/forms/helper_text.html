@@ -1,0 +1,11 @@
+{% if request.session.language == 'RU' %}
+<small class='text-muted'>
+* Отмечены обязательные к заполнению поля
+</small>
+<br/>
+{% else %}
+<small class='text-muted'>
+* marked fields that are required
+</small>
+<br/>
+{% endif %}
