@@ -79,10 +79,10 @@ class UserDetailChangeForm(forms.ModelForm):
         self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
         self.lan = request.session.get('language')
         if self.lan == 'RU':
-
             self.fields['subscribed'].label = "Получать рассылку?"
             self.fields['full_name'].label = "Имя и фамилия"
             self.fields['username'].label = "Имя пользователя"
+            self.fields['username'].widget.attrs['placeholder'] = "Имя пользователя"
             self.fields['full_name'].widget.attrs['placeholder'] = "Имя и фамилия"
             self.fields['profile_foto'].label = "Фото профиля"
             self.fields['email'].help_text='Нельзя поменять Email'
