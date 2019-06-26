@@ -286,7 +286,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
-# from ecommerce.aws.conf import *
+from ecommerce.aws.conf import *
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 50000000 # value in bytes
