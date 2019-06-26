@@ -43,6 +43,7 @@
 
 
 
+{% include "forms/helper_text.html" %}
 
   </form>
             
@@ -92,6 +93,7 @@
             <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger btn-lg btn-block" role="button" aria-pressed="true">Logout</a>
 
 
+{% include "forms/helper_text.html" %}
   </form>
             
 
@@ -101,7 +103,6 @@
 
   </div>
 {% endif %}
-
 
 
 {% endblock %}

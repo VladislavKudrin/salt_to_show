@@ -24,6 +24,7 @@ class CategoryFilterView(ListView):
 	
 
 	def post(self, request, *args, **kwargs):
+		print(request.POST)
 		sizes = [
 		Size.objects.filter(size_for='Footwear'),
 		Size.objects.filter(size_for='Outerwear'),
@@ -79,7 +80,11 @@ class CategoryFilterView(ListView):
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
 		context['sizes']=sizes
+		if len(qs_size) != 0 :
+			size_for_cont = next(iter(qs_size)).size_for
+			context['size_posted'] = size_for_cont
 		context['brands']=brands
+
 		return render(self.request, "products/list.html", context)
 
 
