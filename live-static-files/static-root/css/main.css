@@ -292,6 +292,12 @@ background-color: black;
   color: black;
 }
 
+.ui-menu-item-wrapper .ui-state-active {
+  color: black !important;
+}
+
+
+
 
 #searchAutoComplete::focus-within {
   background: black;
@@ -318,6 +324,7 @@ background-color: black;
 /*      background: rgba(1, 1, 1, 0.1) !important;*/
       background: none !important;
       border: 1px black !important;
+      color: black!important;
 
 }
 

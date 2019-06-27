@@ -24,7 +24,9 @@ def to_first(value):
 	for img in value:
 		if img.image_order == 1:
 			final_img = img
-			return img
+			return final_img
+
+
 
 
 
