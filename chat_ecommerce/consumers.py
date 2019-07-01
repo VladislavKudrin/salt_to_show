@@ -64,7 +64,7 @@ class ChatConsumer(AsyncConsumer):
 		if front_text is not None:
 			loaded_data = json.loads(front_text) # gets json data as dictionary
 			req = self.scope['user'].username #self.request.user.username (for testing)
-			msg = loaded_data.get('message')
+			# msg = loaded_data.get('message')
 			user = self.scope['user']
 			# print('CURRENT USER', user)
 			username = 'default'
@@ -76,13 +76,17 @@ class ChatConsumer(AsyncConsumer):
 			other_user = self.scope['url_route']['kwargs']['username']
 			thread_obj = self.thread_obj
 			threads_with_unred = await self.get_thread_with_unread(user)
-			print(loaded_data.get('message'))
+			print('MESSAGE')
+
+			# print(loaded_data.get('message'))
 			msg = loaded_data.get('message')
+			# print(len(msg))
 			#returns arrray with ID's of my threads where I have unread notifications
 			# thread_obj_id = thread_obj.id
 			# print(thread_obj_id)
 			# thread_obj_id_dict = model_to_dict(thread_obj_id)
 			# thread_obj_dict = model_to_dict(thread_obj)
+
 			await self.create_chat_message(user, msg) #create message instance AND notifications
 			await self.update_notification_status(user, thread_obj) #check notifcations status
 			myResponse = {
