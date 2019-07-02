@@ -53,6 +53,7 @@ if (currentPath.indexOf("create") != -1){
      
     var uploadUrl = formSubmit.attr('image_upload_url')
     var deleteImageUrl = formSubmit.attr('image_delete_url')
+    var rotateImageUrl = formSubmit.attr('image_rotate_url')
     var imageContainer = $('.temp-images')
     var imageContainerParent = $('.custom-upload-file-ajax-temp') 
     var imageContainerCol = $('#wow') 
@@ -71,7 +72,7 @@ if (currentPath.indexOf("create") != -1){
                 }//error
      })//ajaxbeforereload
     })//beforereload
-function deleteItem(item){
+function deleteRotateItem(item){
     item.on("click", 
     function(event){
         var $item = $(this),
@@ -79,7 +80,6 @@ function deleteItem(item){
         if ($target.is("a.ui-icon-trash")) {
             event.preventDefault()
             var deleteData = $item.find("[name='qq-file-id']").val()
-            // deleteData.push('formId')
             $.ajax({
                 url: deleteImageUrl,
                 method:'POST',
@@ -95,8 +95,33 @@ function deleteItem(item){
                 }//error
             })//ajax for delete
     }//if trash
+    if ($target.is("i.rotateItem")) {
+            event.preventDefault()
+            var rotatedTimes = $item.find("[name='rotateTimes']").val()
+            rotatedTimes = parseInt(rotatedTimes) + 1
+            $item.find("[name='rotateTimes']").val(rotatedTimes)
+            var grad = 90 * rotatedTimes
+            $item.children('img').css('transform', 'rotate('+grad+'deg)')
+            // var deleteData = $item.find("[name='qq-file-id']").val()
+            // $.ajax({
+            //     url: rotateImageUrl,
+            //     method:'POST',
+            //     data: {'data':deleteData, 'form_id':formId.val()},
+            //     success:function(data){
+            //         
+            //         console.log('1')
+            //        // $item.remove()
+            //        // if (data.count<=8){
+            //        //  buttonImageUpload.attr('disabled', false)
+            //        // } //enabelbtniflessthan8
+            //     },//success
+            //     error:function(errorData){
+
+            //     }//error
+            // })//ajax for rotate
+    }//if rotate
     })//onclicktrash
-}
+}//deleteItem
     function displayUploading(files, doUpload){
         if(doUpload){
         $.each(files, 
@@ -144,16 +169,15 @@ function deleteItem(item){
             processData: false,
             contentType: false,
             success:function(data){
-                 console.log(i)
                 displayUploading(myFiles, false)
                 $.each(data.image,
                   function(index, value){
-                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a></li>')
+                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce mt-1" href="#"></a><a class="mt-1 mr-5 ui-icon-rotate rotateItem" href="#"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
                   i++
                   })//eachfoto
-            var trash = $("ul.gallery > li")
-            deleteItem(trash)
-            console.log(data.count)
+            var elementList = $("ul.gallery > li")
+            elementList.unbind()
+            deleteRotateItem(elementList)
             if (data.count>8){
                 buttonImageUpload.attr('disabled', true)
             }//if more than 8 already uploaded
@@ -191,14 +215,17 @@ function deleteItem(item){
     var formData = formSubmit.serialize()
     var elements = $('#example-form-1 ul li')
     var keyArray = []
+    var rotateArray = []
     displayCreating(createFormSubmitBtn, "",true)
     $.each(elements,
     function(index, value){
         var attr = $(value).find("[name='qq-file-id']").val()
-        console.log(attr)
+        var rotatedImageTimes = $(value).find("[name='rotateTimes']").val()
         keyArray.push(attr)  
+        rotateArray.push(rotatedImageTimes)
     })//eacharray
     console.log(keyArray)
+    console.log(rotateArray)
     $.ajax({
     url: action,
     method:'POST',
@@ -209,7 +236,6 @@ function deleteItem(item){
         if(data['error']) {
         $.each(data['error'],
             function(index, value){
-                console.log(index,value)
                 displayCreating(createFormSubmitBtn, "Create",false)
                 if ($('.'+index).length==0){
                     $('#id_' + index).addClass('is-invalid')
@@ -221,7 +247,7 @@ function deleteItem(item){
           $.ajax({
             url: action_order,
             method:'POST',
-            data: {'data[]':keyArray, 'slug':data.slug},
+            data: {'data[]':keyArray, 'slug':data.slug, 'rotate[]':rotateArray},
             success:function(data){
               console.log('successsssss')
                 },//success second ajax
@@ -248,7 +274,24 @@ function deleteItem(item){
 var currentPath = window.location.href
 
 if (currentPath.indexOf("update") != -1){
+    function rotateItem(item){
+    item.on("click", 
+    function(event){
+        var $item = $(this),
+        $target = $(event.target);
+        if ($target.is("i.rotateItem")) {
+            event.preventDefault()
+            var rotatedTimes = $item.find("[name='rotateTimes']").val()
+            rotatedTimes = parseInt(rotatedTimes) + 1
+            $item.find("[name='rotateTimes']").val(rotatedTimes)
+            var grad = 90 * rotatedTimes
+            $item.children('img').css('transform', 'rotate('+grad+'deg)')
+    }//if rotate
+    })//onclicktrash
+}//deleteItem
     var formSubmit = $('#example-form-1')
+    var elementList = $("ul.gallery > li")
+    rotateItem(elementList)
     formSubmit.submit(
     function(event){
     var formCreate = $('#customSort')
@@ -256,19 +299,16 @@ if (currentPath.indexOf("update") != -1){
     var action = formSubmit.attr("action_url")
     var elements = $('#example-form-1 ul li')
     var keyArray = []
-    console.log(action)
     $.each(elements,
     function(index, value){
         var val = ($(value)).find("[name = 'image-id']")
         keyArray.push(val.val())
     })//each
-    console.log(keyArray)
     $.ajax({
     url: action,
     method:'POST',
     data: {'data[]':keyArray},
     success: function(data){
-    console.log('hi')
     },//success
     error: function(errorData){
     $.alert({

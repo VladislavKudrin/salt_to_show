@@ -112,36 +112,14 @@
   <li class="ui-widget-content ui-corner-tr" id="update-img-{{ forloop.counter }}">
     <input type="hidden" name='image-id' value='{{ image.unique_image_id }}'>
     <img src="{{ image.image.url }}" width="96" height="72">
-    <a href="{{ image.image.url }}" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+<!--     <a class="ui-icon-rotate rotateItem" style='margin-right: 43%' href="#"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a> -->
   </li>
    {% endfor %}
 </ul>
  </div>
 
  
-<!-- {% if object.images.all %}
 
-<div class="ui-widget ui-helper-clearfix">
- 
-<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
-  {% for image in object.images.all %}
-  <li class="ui-widget-content ui-corner-tr">
-    <h5 class="ui-widget-header">{{ forloop.counter }}</h5>
-    <img src="{{ image.image.url }}" alt="The peaks of High Tatras" width="96" height="72">
-    <a href="{{ image.image.url }}" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-    <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
-  </li>
-   {% endfor %}
-</ul>
- </div>
- {% endif %} -->
-<!-- <div id="trash" class="ui-widget-content ui-state-default">
-  <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
-</div>
- 
-</div>
- <div class="ui-widget ui-helper-clearfix"> -->
- 
 
 
   <style>

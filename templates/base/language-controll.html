@@ -1,0 +1,11 @@
+
+
+
+ <form method='GET' action="{% url 'accounts:language-pref'%}">
+         <input type="hidden" name="next" value='{{ request.path }}'>
+		<select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
+          <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
+          <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
+          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
+ </select>
+ </form>

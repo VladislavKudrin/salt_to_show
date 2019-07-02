@@ -101,6 +101,7 @@ class ImageForm(ProductCreateForm):
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		print(self.request.POST)
 		if len(cleaned_images)==0:
 			if self.lan == 'RU':
 				raise forms.ValidationError("Загрузите фото")
@@ -121,10 +122,17 @@ class ImageForm(ProductCreateForm):
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']
+			array_rotate = self.request.POST.getlist('rotateTimes')
+			array_qq_id = self.request.POST.getlist('qq-file-id')
+			qs_rotate = {} 
+			for idx, i in enumerate(array_qq_id):
+				qs_rotate[i] = array_rotate[idx]
 			for idx, file in enumerate(images):
+				this_rotate = qs_rotate.get(str(idx))
+				file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
 				ProductImage.objects.create(
 					product=product,
-					image=file.uploaded_file.file,
+					image=file,
 					slug=product.slug,
 					image_order=idx+1
 									)

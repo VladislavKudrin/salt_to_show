@@ -218,6 +218,7 @@ def image_create_order(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
 		slug = request.POST.get('slug')
+		rotated = request.POST.get('rotate[]')
 		images = ProductImage.objects.filter(slug=slug)
 		array = numpy.array(data)
 		array = array.astype(numpy.int)
@@ -229,6 +230,7 @@ def image_create_order(request):
 			img.image_order=number
 			array[index_of_min]=max(array)+1
 			img.save()
+
 
 		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
 	return redirect('home')
