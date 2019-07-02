@@ -1,6 +1,6 @@
 <form action='{% url "search:query" %}' class="search-form form my-2 my-lg-0 ">
 	<div class='input-group'>
-		<input class="form-control border-right-0 pt-0 mr-n1 pb-0" id='searchAutoComplete' type="text" style="height:30px;" placeholder=
+		<input class="form-control border-right-0 pt-0 mr-n1 pb-0" id='searchAutoComplete' type="text" style="height:30px; margin-top: 1px;" placeholder=
 		{% if request.session.language == 'RU' %}
 			"Поиск" name='q' value='{{ request.GET.q }}' aria-label="Search"
 		{% else %}
@@ -8,7 +8,7 @@
 		{% endif %}
 		>
 		<div class="input-group-append">
-			<button class="btn btn-dark" style="margin-left: 5px; height: 30px;" type='submit'><i class="fa fa-search align-top"></i></button>
+			<button class="btn btn-dark" style="margin-left: 5px; margin-top: 1px; height: 30px;" type='submit'><i class="fa fa-search fa-1x align-top"></i></button>
 		</div>
 	</div>
 </form>
