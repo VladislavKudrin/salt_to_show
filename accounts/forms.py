@@ -11,6 +11,7 @@ User = get_user_model()
 from marketing.models import MarketingPreference
 from .models import EmailActivation, GuestEmail, LanguagePreference
 from .signals import user_logged_in_signal
+from django.core.validators import RegexValidator
 
 class ReactivateEmailForm(forms.Form):
     error_css_class = 'error'
@@ -60,10 +61,12 @@ class UserAdminCreationForm(forms.ModelForm):
 
 
 class UserDetailChangeForm(forms.ModelForm):
-    username  = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your Fullname'}))
-    full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control'}))
+    alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Only alphanumeric characters are allowed')
+    username  = forms.CharField(label='Username', required=True, validators=[alphanumeric], widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your username'}))
+    full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your full name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), help_text='Cannot change email', required=False)
     subscribed = forms.BooleanField(label = 'Recieve marketing email?', required=False)
+    profile_foto = forms.FileField(label= 'Profile photo', required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
     class Meta:
         model = User
         fields = [
@@ -72,6 +75,7 @@ class UserDetailChangeForm(forms.ModelForm):
                 'profile_foto'
                     ]
     def __init__(self, request, *args, **kwargs):
+        alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Имя пользователя должно содержать только латинские символы или цифры')
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
         self.request = request
         self.fields['email'].initial=request.user.email
@@ -83,9 +87,12 @@ class UserDetailChangeForm(forms.ModelForm):
             self.fields['full_name'].label = "Имя и фамилия"
             self.fields['username'].label = "Имя пользователя"
             self.fields['username'].widget.attrs['placeholder'] = "Имя пользователя"
+            self.fields['username'].validators = [alphanumeric_rus]
             self.fields['full_name'].widget.attrs['placeholder'] = "Имя и фамилия"
             self.fields['profile_foto'].label = "Фото профиля"
-            self.fields['email'].help_text='Нельзя поменять Email'
+            self.fields['email'].help_text='Нельзя изменить Email'
+
+
     def clean_username(self):
         data = self.cleaned_data['username']
         contains_rus = bool(re.search('[а-яА-Я]', data))
