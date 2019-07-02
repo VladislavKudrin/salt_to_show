@@ -440,7 +440,7 @@ background-color: black;
     max-height: 275px;
     min-height: 275px;
 
-    object-fit: cover;
+    object-fit: none;
     align-items: top;
     margin-bottom: 10px;
 /*    margin-left: 10px;*/
