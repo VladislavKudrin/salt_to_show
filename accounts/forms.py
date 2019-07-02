@@ -61,7 +61,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
 
 class UserDetailChangeForm(forms.ModelForm):
-    alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed')
+    alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Only alphanumeric characters are allowed')
     username  = forms.CharField(label='Username', required=True, validators=[alphanumeric], widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your username'}))
     full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your full name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), help_text='Cannot change email', required=False)
@@ -75,7 +75,7 @@ class UserDetailChangeForm(forms.ModelForm):
                 'profile_foto'
                     ]
     def __init__(self, request, *args, **kwargs):
-        alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z]*$', 'Имя пользователя должно содержать только латинские символы или цифры')
+        alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Имя пользователя должно содержать только латинские символы или цифры')
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
         self.request = request
         self.fields['email'].initial=request.user.email
