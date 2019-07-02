@@ -66,14 +66,7 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto align-items-center">
         <li class="nav-item mr-2 m-0 pb-0">
-        <form method='GET' action="{% url 'accounts:language-pref'%}">
-         <input type="hidden" name="next" value='{{ request.path }}'>
-         <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-          <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
-          <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
-        </select>
-        </form>
+         {% include 'base/language-controll.html' %}
         </li>        
          
    
@@ -262,14 +255,7 @@
         <ul class="navbar-nav ml-auto align-items-center">
 
           <li class="nav-item mr-2 pb-0">
-        <form method='GET' action="{% url 'accounts:language-pref'%}">
-         <input type="hidden" name="next" value='{{ request.path }}'>
-         <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-           <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
-          <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
-        </select>
-        </form>
+         {% include 'base/language-controll.html' %}
         </li> 
             
       

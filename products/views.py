@@ -21,7 +21,7 @@ from carts.models import Cart
 from categories.models import Size, Brand
 
 from accounts.models import User
-from .models import Product, ProductImage, ImageOrderUtil
+from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 from image_uploader.models import unique_form_id_generator
 
@@ -217,21 +217,22 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 def image_create_order(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
-		print(request.POST)
 		slug = request.POST.get('slug')
+		rotated = request.POST.get('rotate[]')
 		images = ProductImage.objects.filter(slug=slug)
 		array = numpy.array(data)
 		array = array.astype(numpy.int)
 		array = array + 1
 		for img in images:
-			print('hii')
 			min_ = min(array)
 			index_of_min = numpy.where(array==min(array))[0][0].item()
 			number = index_of_min + 1
 			img.image_order=number
-			print(img.image_order)
 			array[index_of_min]=max(array)+1
 			img.save()
+
+
+		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
 	return redirect('home')
 
 
@@ -239,7 +240,9 @@ def image_update_view(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
 		for idx, image_key in enumerate(data):
-			ProductImage.objects.filter(unique_image_id=image_key).update(image_order=idx+1)
+			image = ProductImage.objects.filter(unique_image_id=image_key)
+			image.update(image_order=idx+1)
+		ProductThumbnail.objects.create_update_thumbnail(product=image.first().product)
 	return redirect('home')
 
 
@@ -314,8 +317,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		return redirect(url)
 
 	def form_invalid(self, form):
-		print(form.errors)
-		print('wtfwindows')
 		if self.request.is_ajax():
 			# json_data={
 			# 	'errors':json.dumps(form.errors)

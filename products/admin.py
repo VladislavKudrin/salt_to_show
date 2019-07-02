@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, ProductImage, ImageOrderUtil
+from .models import Product, ProductImage, ProductThumbnail
 
 class ProductAdmin(admin.ModelAdmin):
 	list_display = ['__str__', 'slug']
@@ -11,4 +11,4 @@ admin.site.register(Product, ProductAdmin)
 
 admin.site.register(ProductImage)
 
-admin.site.register(ImageOrderUtil)
+admin.site.register(ProductThumbnail)

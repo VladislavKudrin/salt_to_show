@@ -1,3 +1,7 @@
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
+
 from django.conf import settings
 from django.db.models import Q
 import random
@@ -23,11 +27,12 @@ def get_filename_ext(filepath):
 
 
 def upload_image_path(instance, filename):
+	product_slug = instance.product.slug
 	new_filename = random.randint(1,31231231)
 	name, ext = get_filename_ext(filename)
 	final_filename = '{new_filename}{ext}'.format(new_filename=new_filename,ext=ext)
 	return "products/{new_filename}/{final_filename}".format(
-		new_filename=new_filename,
+		new_filename=product_slug,
 		final_filename=final_filename)
 
 class ProductQuerySet(models.query.QuerySet):#создание отсеяных списков, дополняют метод "геткверисет"
@@ -161,7 +166,6 @@ def product_pre_save_reciever(sender, instance, *args, **kwargs):
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
 
-
 class ProductImage(models.Model):
 	product 		= models.ForeignKey(Product, default=None, related_name='images')
 	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
@@ -179,11 +183,35 @@ def image_pre_save_reciever(sender, instance, *args, **kwargs):
 
 pre_save.connect(image_pre_save_reciever,sender=ProductImage)
 
+class ProductThumbnailManager(models.Manager):
+	def create_update_thumbnail(self, product):
+		first_image_model = ProductImage.objects.filter(slug=product.slug, image_order=1).first()
+		first_image = first_image_model.image
+		first_image_pil = Image.open(first_image)
+		im_io = BytesIO() 
+		size = 275, 275
+		first_image_pil.thumbnail(size)
+		first_image_pil.save(im_io, first_image_pil.format , quality=70) 
+		new_image = File(im_io, name=product.slug+'.'+first_image_pil.format)
+		thumb_exists = ProductThumbnail.objects.filter(product=product)
+		if thumb_exists.exists():
+			existing_thumb = thumb_exists.first()
+			existing_thumb.thumbnail.delete()
+			existing_thumb.thumbnail = new_image
+			existing_thumb.save()
+		else:
+			ProductThumbnail.objects.create(
+						product=product,
+						thumbnail=new_image,
+										)
 
+class ProductThumbnail(models.Model):
+	product = models.ForeignKey(Product, default=None, related_name='thumbnail')
+	thumbnail = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	objects = ProductThumbnailManager()
 
-
-
-
+	def __str__(self):
+		return self.product.slug + ' thumbnail'
 
 
 # def product_create_post_save_reciever(sender, request, instance, *args, **kwargs):

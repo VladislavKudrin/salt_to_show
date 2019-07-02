@@ -14,7 +14,7 @@ templates/test2.html
 templates/template.html
 templates/test1.html
 
-
+live-static-files/
 ecommerce/settings/local.py 
 # Virtualenv related
 bin/

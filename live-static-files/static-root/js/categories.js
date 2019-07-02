@@ -36,117 +36,55 @@ var out = $(".outerwear")
 var top = $(".tops")
 var bot = $(".bottoms")
 var acc = $(".accessories")
-if(".customCheckboxfootwear:checked"){
-    $('.outwear').prop('checked', false)
-    $('.tops').prop('checked', false)
-    $('.bottoms').prop('checked', false)
-    $('.footwear').prop('checked', false)
-    footwear()
-    tops()
-    outwear()
-    bottoms()
-    $(".outwear").prop("disabled", true)
-    $(".tops").prop("disabled", true)
-    $(".bottoms").prop("disabled", true)
-    $(".footwear").prop("disabled", true)
-    }
+// if(".customCheckboxfootwear:checked"){
+//         $('.outwear').prop('checked', false)
+//         $('.tops').prop('checked', false)
+//         $('.bottoms').prop('checked', false)
+//         $('.accessories').prop('checked', false)
+//         tops()
+//         outwear()
+//         bottoms()
+//         accessories()
+//         $(".outwear").prop("disabled", true)
+//         $(".tops").prop("disabled", true)
+//         $(".bottoms").prop("disabled", true)
+//         $(".accessories").prop("disabled", true)
+//     }
+
+// if(".customCheckboxoutwear:checked"){
+//         $('.footwear').prop('checked', false)
+//         $('.tops').prop('checked', false)
+//         $('.bottoms').prop('checked', false)
+//         $('.accessories').prop('checked', false)
+//         tops()
+//         footwear()
+//         bottoms()
+//         accessories()
+//         $(".footwear").prop("disabled", true)
+//         $(".tops").prop("disabled", true)
+//         $(".bottoms").prop("disabled", true)
+//         $(".accessories").prop("disabled", true)
+//     }
 
 
-$(".customCheckboxoutwear").change(
-  function(){
+// if(".customCheckboxtops:checked"){
+//         $('.footwear').prop('checked', false)
+//         $('.outwear').prop('checked', false)
+//         $('.bottoms').prop('checked', false)
+//         $('.accessories').prop('checked', false)
+//         outwear()
+//         footwear()
+//         bottoms()
+//         accessories()
+//         $(".footwear").prop("disabled", true)
+//         $(".outwear").prop("disabled", true)
+//         $(".bottoms").prop("disabled", true)
+//         $(".accessories").prop("disabled", true)
+//     }
 
-    if(this.checked){
-        $('.footwear').prop('checked', false)
-        $('.tops').prop('checked', false)
-        $('.bottoms').prop('checked', false)
-        $('.accessories').prop('checked', false)
-        footwear()
-        tops()
-        bottoms()
-        accessories()
-        $(".footwear").prop("disabled", true)
-        $(".tops").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
-        }
-    if ($('.customCheckboxoutwear:checked').length==0){
-        $(".footwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
 
-    }
-  })//change
-$(".customCheckboxtops").change(
-  function(){
-    if(this.checked){
-        $('.outwear').prop('checked', false)
-        $('.footwear').prop('checked', false)
-        $('.bottoms').prop('checked', false)
-        $('.accessories').prop('checked', false)
-        footwear()
-        outwear()
-        bottoms()
-        accessories()
-        $(".outwear").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
-        }
-    if ($('.customCheckboxtops:checked').length==0){
-        $(".outwear").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
 
-    }
-  })//change
-$(".customCheckboxbottoms").change(
-  function(){
-    if(this.checked){
-        $('.outwear').prop('checked', false)
-        $('.tops').prop('checked', false)
-        $('.footwear').prop('checked', false)
-        $('.accessories').prop('checked', false)
-        footwear()
-        tops()
-        outwear()
-        accessories()
-        $(".outwear").prop("disabled", true)
-        $(".tops").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
-        }
-    if ($('.customCheckboxbottoms:checked').length==0){
-        $(".outwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
 
-    }
-  })//change
-
-    if(".customCheckboxaccessories:checked"){
-        $('.outwear').prop('checked', false)
-        $('.tops').prop('checked', false)
-        $('.bottoms').prop('checked', false)
-        $('.footwear').prop('checked', false)
-        footwear()
-        tops()
-        outwear()
-        bottoms()
-        $(".outwear").prop("disabled", true)
-        $(".tops").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        }
-    if ($('.customCheckboxaccessories:checked').length==0){
-        $(".outwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-
-    }
 
 
 function footwear() {
