@@ -190,7 +190,7 @@ class ProductThumbnailManager(models.Manager):
 		first_image_pil = Image.open(first_image)
 		im_io = BytesIO() 
 		size = 275, 275
-		first_image_pil.thumbnail(size)
+		first_image_pil.thumbnail(size, Image.ANTIALIAS)
 		first_image_pil.save(im_io, first_image_pil.format , quality=settings.IMAGES_QUALITY_THUMBNAIL_PRECENTAGE) 
 		new_image = File(im_io, name=product.slug+'.'+first_image_pil.format)
 		thumb_exists = ProductThumbnail.objects.filter(product=product)
