@@ -94,9 +94,6 @@ body {
 
 <div class='row contact-padding'>
 	<div class='col-12'>
-		{% if request.user.is_authenticated and request.user.is_admin == True %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-		{% endif %}
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
