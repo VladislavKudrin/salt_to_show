@@ -29,14 +29,15 @@
 
         <div class='col-12 text-left p-0'>
         <button class='btn btn-filter' id='trigger_2'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-    </div>
+        </div>
 
     <div class='container-fluid ajax-search'>
     {% include 'base/messages.html' %}
 
             <div class='col-5 col-md-2 custom-box' id='slider_2' style="background-color: rgb(255,255,255); overflow: scroll; ">
           {% include "sidebar.html" %}
-      </div>
+            </div>
+
 
 
     {% block content %}
@@ -92,6 +93,14 @@ $(document).ready(
   function(){
 
 })//document ready
+
+$("#slider_2").slideReveal({
+  trigger: $("#trigger_2"),
+  push: false,
+  overlay: true,
+  overlayColor:'rgba(0,0,0,0.5)',
+  width:'500px',
+});
 
 
 </script>
