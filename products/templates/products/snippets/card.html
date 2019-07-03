@@ -20,17 +20,17 @@
                 <div class="card-body position-relative">
                   <a href="{{ instance.get_absolute_url }}">
                     <div class="row position-relative poloska font-weight-bold" >
-                       <div class="col-3 position-static text-left one-line">
+                       <div class="col-3 position-static text-left one-line" style="font-size: 14px;">
                         {{ instance.size }}
                       </div>
-                      <div class="col-5 px-1 position-static text-center one-line">
+                      <div class="col-5 px-1 position-static text-center one-line" style="font-size: 14px;">
                         {{ instance.brand }}
                       </div>
-                      <div class="col-4 position-static text-right one-line">
-                        {{ instance.price }}
+                      <div class="col-4 position-static text-right one-line" style="font-size: 14px;">
+                        ${{ instance.price }}
                       </div>
                     </div>
-                    <div class="row position-relative">
+                    <div class="row position-relative" style="font-size: 13px;">
                       <div class="col position-static one-line">
                         {{ instance.title }}
                       </div>
