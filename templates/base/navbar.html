@@ -29,7 +29,18 @@
   } 
 }
 
+@media only screen and (min-width: 768px) { 
+   #buttons {
+    visibility: hidden; 
+    display: none; 
+  } 
+}
 
+
+/*ul li{
+  display: inline;
+}
+*/
 
 </style>
 {{ request.session|to_default_language }}
@@ -58,11 +69,24 @@
     </div>
 
 
-    <ul class="navbar-nav ml-auto align-items-center" id='lang-mobile'>
-        <li class="nav-item mr-2 m-0 pb-0">
+
+    <ul class="ml-auto mr-0 mt-2 pr-0" id='lang-mobile'>
+        <li class="" style='width:30px; position:relative; display: inline;'>
         {% include 'base/language-controll.html' %}
         </li>  
     </ul>
+
+    <ul class="pl-1 mt-2 pr-1" id='buttons'>
+                <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-light ml-0" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
+        </li>
+
+        <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px; ">Buy</a>
+        </li>
+
+    </ul>
+    
 
 
 
@@ -237,11 +261,23 @@
         </ul>
     </div>
 
-    <ul class="navbar-nav ml-auto align-items-center" id='lang-mobile'>
-        <li class="nav-item mr-2 m-0 pb-0">
+    <ul class="ml-auto mr-0 mt-2 pr-0" id='lang-mobile'>
+        <li class="" style='width:30px; position:relative; display: inline;'>
         {% include 'base/language-controll.html' %}
         </li>  
     </ul>
+
+    <ul class="pl-1 mt-2 pr-1" id='buttons'>
+                <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-light ml-0" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
+        </li>
+
+        <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px; ">Buy</a>
+        </li>
+
+    </ul>
+    
         <!-- ЦЕМ! -->
 
 
