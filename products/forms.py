@@ -15,7 +15,7 @@ from image_uploader.models import UploadedFile
 from image_uploader.validators import validate_file_extension
 
 class ProductCreateForm(forms.ModelForm):
-	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Enter a Brand'}))
+	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Specify a brand'}))
 	class Meta:
 		model = Product
 		fields = [
@@ -31,19 +31,19 @@ class ProductCreateForm(forms.ModelForm):
 		super(ProductCreateForm, self).__init__(*args, **kwargs)
 		self.request = request
 		self.lan = request.session.get('language')
-		self.fields['title'].widget.attrs['placeholder'] = 'Enter a Title'
-		self.fields['description'].widget.attrs['placeholder'] = 'Enter a description'
-		self.fields['price'].widget.attrs['placeholder'] = 'Enter a price'
+		self.fields['title'].widget.attrs['placeholder'] = 'Some keywords about your item'
+		self.fields['description'].widget.attrs['placeholder'] = 'Describe your item'
+		self.fields['price'].widget.attrs['placeholder'] = 'Enter a price in $'
 		self.fields['price'].initial = ''
 		if self.lan == 'RU':
 			self.fields['title'].label = "Название"
-			self.fields['title'].widget.attrs['placeholder'] = 'Введите название'
+			self.fields['title'].widget.attrs['placeholder'] = 'Пару слов про айтем'
 			self.fields['description'].label = "Описание"
-			self.fields['description'].widget.attrs['placeholder'] = 'Введите описание'
-			self.fields['price'].label = "Цена"
-			self.fields['price'].widget.attrs['placeholder'] = 'Введите цену'
+			self.fields['description'].widget.attrs['placeholder'] = 'Подробно опиши айтем'
+			self.fields['price'].label = "Цена (в $)"
+			self.fields['price'].widget.attrs['placeholder'] = 'Введи цену в $'
 			self.fields['brand'].label = "Бренд"
-			self.fields['brand'].widget.attrs['placeholder'] = 'Введите бренд'
+			self.fields['brand'].widget.attrs['placeholder'] = 'Укажи бренд'
 			self.fields['sex'].label = "Пол"
 			self.fields['sex'].choices = SEX_CHOICES = (
 			('man', 'Мужское'),
@@ -51,7 +51,7 @@ class ProductCreateForm(forms.ModelForm):
 			)
 			self.fields['category'].label = "Категория"
 			self.fields['category'].choices = CATEGORY_CHOICES = (
-			('select a category', 'Выберите категорию'),
+			('select a category', 'Выбери подходящую категорию'),
 			('tops', 'Верх'),
 			('bottoms', 'Низ'),
 			('accessories', 'Аксессуары'),

@@ -440,9 +440,9 @@ background-color: black;
     max-height: 275px;
     min-height: 275px;
 
-    object-fit: none;
+    object-fit: contain;
     align-items: top;
-    margin-bottom: 10px;
+/*    margin-bottom: 10px;*/
 /*    margin-left: 10px;*/
     padding-left:10px;
     padding-right:10px;
