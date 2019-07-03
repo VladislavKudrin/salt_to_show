@@ -20,12 +20,14 @@
     visibility: hidden; 
     display: none; 
   } 
+}
 
 @media only screen and (min-width: 768px) { 
-    #navbarToggleExternalContent {
+   #lang-mobile {
     visibility: hidden; 
     display: none; 
-  }
+  } 
+}
 
 
 
@@ -55,11 +57,20 @@
         </ul>
     </div>
 
+
+    <ul class="navbar-nav ml-auto align-items-center" id='lang-mobile'>
+        <li class="nav-item mr-2 m-0 pb-0">
+        {% include 'base/language-controll.html' %}
+        </li>  
+    </ul>
+
+
+
         <!-- ЦЕМ! -->
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
 
 
 
@@ -136,7 +147,7 @@
 </div>
 </nav>
 
-<div class="pos-f-t">
+<!-- <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
 
         <div class="row mr-1 ml-1">
@@ -145,18 +156,7 @@
             </div>
         </div>
 
-        <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
-
-            <!-- <div class="col p-0">
-                <form method='GET' action="{% url 'accounts:language-pref'%}">
-                     <input type="hidden" name="next" value='{{ request.path }}'>
-                     <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-                      <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
-                      <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-                      <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
-                    </select>
-                </form>
-            </div>  -->  
+        <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;"> 
 
             <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
                 <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
@@ -212,7 +212,8 @@
         </div>
 
     </div>
-</div>
+</div> -->
+
  {% else %}
  <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white pb-0">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -236,6 +237,11 @@
         </ul>
     </div>
 
+    <ul class="navbar-nav ml-auto align-items-center" id='lang-mobile'>
+        <li class="nav-item mr-2 m-0 pb-0">
+        {% include 'base/language-controll.html' %}
+        </li>  
+    </ul>
         <!-- ЦЕМ! -->
 
 
@@ -245,9 +251,9 @@
         </button> -->
 
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
 
 
 
@@ -322,7 +328,7 @@
 </div>
 </nav>
 
-<div class="pos-f-t">
+<!-- <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
 
         <div class="row mr-1 ml-1">
@@ -332,17 +338,6 @@
         </div>
 
         <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
-
-            <!-- <div class="col p-0">
-                <form method='GET' action="{% url 'accounts:language-pref'%}">
-                     <input type="hidden" name="next" value='{{ request.path }}'>
-                     <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-                      <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
-                      <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-                      <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
-                    </select>
-                </form>
-            </div>  -->  
 
             <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
                 <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
@@ -398,6 +393,6 @@
         </div>
 
     </div>
-</div>
+</div> -->
 
 {% endif %}
