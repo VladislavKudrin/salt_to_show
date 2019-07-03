@@ -306,13 +306,13 @@ $("#slider").slideReveal({
 //slider filter box
 
 $("#slider_2").slideReveal({
-    console.log('fdfd')
   trigger: $("#trigger_2"),
   push: false,
   overlay: true,
   overlayColor:'rgba(0,0,0,0.5)',
   width:'500px',
 });
+
 
 
 // Add slideDown animation to Bootstrap dropdown when expanding.
