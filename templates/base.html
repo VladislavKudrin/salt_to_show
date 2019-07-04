@@ -14,6 +14,7 @@
           display: none;
         }
       }
+
     </style>
 
     {% include 'base/css.html' %}
@@ -83,7 +84,25 @@
   display: none
 }
 
+#language-pref{
+  display: block
+}
+.language-pref-globe{
+  cursor: pointer
+}
 
+.dropdown-item-lang{
+  cursor: pointer
+}
+
+
+div.dropdown-menu button.activated{
+  color:white;
+  background-color: black;
+}
+div.dropdown-menu button{
+width: 100%
+}
 </style>
 
 
@@ -91,6 +110,17 @@
 <script type="text/javascript">
 $(document).ready(
   function(){
+
+var languageGlobe = $('#language-pref') 
+$('.language-preference-globe').click(
+      function(event){ 
+        languageGlobe.select()
+
+}
+)//onclick
+
+
+
 
 })//document ready
 

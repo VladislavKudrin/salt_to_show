@@ -1,11 +1,13 @@
-
-
-
- <form method='GET' action="{% url 'accounts:language-pref'%}">
-         <input type="hidden" name="next" value='{{ request.path }}'>
-		<select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-          <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
-          <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-          <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
- </select>
- </form>
+<div class="btn-group" >
+  <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-globe-americas"></i>
+  </button>
+  <div class="dropdown-menu m-0 p-0">
+  	<form method='GET' action="{% url 'accounts:language-pref'%}">
+  	  <input type="hidden" name="next" value='{{ request.path }}'>
+	    <button class="btn dropdown-item-lang {% if request.session.language == 'RU' %} activated {% elif request.session.language == None %}activated{% endif %}"type='submit' name="language" value="RU">RU</button><br/>
+	    <button class="btn dropdown-item-lang {% if request.session.language == 'UA' %} activated {% endif %}"type='submit' name="language" value="UA">UA</button><br/>
+	    <button class="btn dropdown-item-lang {% if request.session.language == 'EN' %} activated {% endif %}" type='submit' name="language" value="EN">EN</button>
+     </form>
+  </div>
+</div>

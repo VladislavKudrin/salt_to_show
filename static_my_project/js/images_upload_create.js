@@ -173,7 +173,7 @@ function deleteRotateItem(item){
                 displayUploading(myFiles, false)
                 $.each(data.image,
                   function(index, value){
-                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce mt-1" href="#"></a><a class="mt-1 mr-5 ui-icon-rotate rotateItem" href="#"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
+                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce mt-1" href="#"></a><a class="mt-1 mr-5 ui-icon-rotate rotateItem"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
                   i++
                   })//eachfoto
             var elementList = $("ul.gallery > li")
