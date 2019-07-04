@@ -36,6 +36,10 @@
   } 
 }
 
+.avatar-navbar{
+    width:30px !important;
+    height:30px !important;
+}
 
 /*ul li{
   display: inline;
@@ -132,7 +136,7 @@
         <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
             <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
             {% endif %}
@@ -203,7 +207,7 @@
             {% if request.user.is_authenticated %}
                 <div class="col p-0">
                     {% if request.user.profile_foto %}
-                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar" alt="..." style="width:40px; height: 40px"></a>
                     {% else %}
                     <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
                     {% endif %}              
@@ -325,7 +329,7 @@
         <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
             <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
             {% endif %}
@@ -396,7 +400,7 @@
             {% if request.user.is_authenticated %}
                 <div class="col p-0">
                     {% if request.user.profile_foto %}
-                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar" alt="..." style="width:40px; height: 40px"></a>
                     {% else %}
                     <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
                     {% endif %}              

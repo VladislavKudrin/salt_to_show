@@ -23,6 +23,12 @@ html, body {
 
 }
 
+.dialogs-username {
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}
+
 .my-custom-scrollbar {
   position: absolute;
   padding-right: 20px;
@@ -170,7 +176,7 @@ button:focus {
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
 					{% if request.user.profile_foto %}
-						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2 avatar-not-skipped" alt="...">
+						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2 avatar-not-skipped" alt="...">
 					{% else %}
 						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar avatar-not-skipped">
 					{% endif %}
@@ -188,13 +194,13 @@ button:focus {
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.first.profile_foto %}
-											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="...">
+											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
 
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto'>
+									<div class='col-9 text-left my-auto dialogs-username'>
 										{{ obj.first.username }}
 
 										{% if threads_with_unred %}
@@ -213,13 +219,13 @@ button:focus {
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}
 
-											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="..." >
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
 
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto'>
+									<div class='col-9 text-left my-auto dialogs-username'>
 
 
 										{{ obj.second.username }}

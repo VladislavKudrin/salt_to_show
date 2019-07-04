@@ -32,7 +32,7 @@
 
 			<div class='col-12 text-center'>
 				{% if object.profile_foto %}
-		        <img src="{{ object.profile_foto.url }}"  class=" avatar img-thumbnail ml-2" alt="..." style="width:80px; height: 80px">
+		        <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:80px; height: 80px">
 		        {% else %}
 		        <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:80px; height: 80px">
 		        {% endif %}
@@ -105,7 +105,7 @@
 
 		<div class='col-12 text-center'>
 			{% if object.profile_foto %}
-		    <img src="{{ object.profile_foto.url }}"  class=" avatar img-thumbnail ml-2" alt="..." style="width:80px; height: 80px">
+		    <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:80px; height: 80px">
 		    {% else %}
 		    <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:80px; height: 80px">
 		    {% endif %}

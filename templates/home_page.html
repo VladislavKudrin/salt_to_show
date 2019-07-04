@@ -196,7 +196,7 @@ body {
     <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
            
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px"></a>
 
             {% else %}
             <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
@@ -392,7 +392,7 @@ body {
     <p class="lead" style='font-size: 30px;'>Go to your profile</p>
            
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="img-thumbnail" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px"></a>
 
             {% else %}
             <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
