@@ -34,13 +34,13 @@ $(document).ready(
 })
 
       
-$("#slider_2").slideReveal({
-  trigger: $("#trigger_2"),
-  push: false,
-  overlay: true,
-  overlayColor:'rgba(0,0,0,0.5)',
-  width:'500px',
-});
+// $("#slider_2").slideReveal({
+//   trigger: $("#trigger_2"),
+//   push: false,
+//   overlay: true,
+//   overlayColor:'rgba(0,0,0,0.5)',
+//   width:'500px',
+// });
 
 
 
