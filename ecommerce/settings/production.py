@@ -289,13 +289,13 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATA_UPLOAD_MAX_MEMORY_SIZE = 500000000 # value in bytes
 IMAGES_UPLOAD_LIMIT = 8
 IMAGES_QUALITY_THUMBNAIL_PRECENTAGE = 100
-
+IMAGES_THUMBNAIL_SIZE = (600, 600)
 
 # CACHES = {
 #     "default": {
