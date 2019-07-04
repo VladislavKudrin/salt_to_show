@@ -52,7 +52,6 @@ class MarketingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
 	template_name = 'accounts/detail-update-view.html'
 	success_url = '/settings/email/'
 	success_message = 'Your email preferences had been updated!'
-
 	def dispatch(self, *args, **kwargs): #грубо говоря, рендер, последний метод, который выводит класс
 		user = self.request.user
 		if not user.is_authenticated():

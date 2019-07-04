@@ -15,11 +15,12 @@ $.ajax({
     });
     },//success
     error: function(errorData){
-    $.alert({
-    title: 'OOps!',
-    content: 'Simple alert!',
-    theme: "modern"
-    });
+    // $.alert({
+    // title: 'OOps!',
+    // content: 'Simple alert!',
+    // theme: "modern"
+    // });
+    console.log('some error');
     }//error
     })//ajax
 
@@ -311,11 +312,12 @@ if (currentPath.indexOf("update") != -1){
     success: function(data){
     },//success
     error: function(errorData){
-    $.alert({
-    title: 'OOps!',
-    content: 'Simple alert!',
-    theme: "modern"
-    });
+    // $.alert({
+    // title: 'OOps!',
+    // content: 'Simple alert!',
+    // theme: "modern"
+    // });
+    console.log('some error');
     }//error
     })//ajax
    })//submit_update_create

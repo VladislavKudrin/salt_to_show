@@ -22,18 +22,25 @@ $(document).ready(
                           };
               }, 
       error: function(errorData){
-          $.alert({
-              title: 'OOps!',
-              content: 'Simple alert!',
-              theme: "modern"
-            });
+          // $.alert({
+          //     title: 'OOps!',
+          //     content: 'Simple alert!',
+          //     theme: "modern"
+          //   });
+          console.log('some error');
             }
       })//ajax
       
 })
 
       
-
+// $("#slider_2").slideReveal({
+//   trigger: $("#trigger_2"),
+//   push: false,
+//   overlay: true,
+//   overlayColor:'rgba(0,0,0,0.5)',
+//   width:'500px',
+// });
 
 
 
@@ -108,11 +115,12 @@ $(document).ready(
             $.each(jsonData, function(key, value){
               msg += key + ": " + value[0].message + "</br>"
             })
-            $.alert({
-              title: 'OOps!',
-              content: msg,
-              theme: "modern"
-            })
+            // $.alert({
+            //   title: 'OOps!',
+            //   content: msg,
+            //   theme: "modern"
+            // })
+            console.log('some error');
             setTimeout(
             function()
             {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false, language)}, 1000)
@@ -259,11 +267,12 @@ $(document).ready(
             navbarCount.text(data.wishes_count)
         },
           error: function(errorData){
-            $.alert({
-              title: 'Oops!',
-              content: errorData,
-              theme: "modern",
-            });
+            // $.alert({
+            //   title: 'Oops!',
+            //   content: errorData,
+            //   theme: "modern",
+            // });
+            console.log('some error');
   }
 })
       }
@@ -301,11 +310,12 @@ $(document).ready(
             navbarCount.text(data.wishes_count)
         },
           error: function(errorData){
-            $.alert({
-              title: 'Oops!',
-              content: errorData,
-              theme: "modern",
-            });
+            // $.alert({
+            //   title: 'Oops!',
+            //   content: errorData,
+            //   theme: "modern",
+            // });
+            console.log('some error');
   }
 })
       }

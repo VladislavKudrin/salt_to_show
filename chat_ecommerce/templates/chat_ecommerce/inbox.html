@@ -10,6 +10,25 @@ html, body {
     overflow-x: hidden;
 }
 
+@media only screen and (max-width: 768px) { 
+  .avatar-skip { 
+    display: none; 
+  } 
+  .username-skip { 
+    display: none; 
+  }
+  .avatar-not-skipped {
+  	margin: 0 auto;
+  }
+
+}
+
+.dialogs-username {
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}
+
 .my-custom-scrollbar {
   position: absolute;
   padding-right: 20px;
@@ -152,14 +171,14 @@ button:focus {
 	<div class='row'>
 
 
-		<div class='col-3'>
+		<div class='col-5 col-md-3'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
 					{% if request.user.profile_foto %}
-						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="...">
+						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2 avatar-not-skipped" alt="...">
 					{% else %}
-						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
+						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar avatar-not-skipped">
 					{% endif %}
 					</a>
 				</div>
@@ -175,13 +194,13 @@ button:focus {
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.first.profile_foto %}
-											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="...">
+											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
 
 										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar"  >
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto'>
+									<div class='col-9 text-left my-auto dialogs-username'>
 										{{ obj.first.username }}
 
 										{% if threads_with_unred %}
@@ -200,13 +219,13 @@ button:focus {
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}
 
-											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail" alt="..." >
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
 
 										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar" >
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto'>
+									<div class='col-9 text-left my-auto dialogs-username'>
 
 
 										{{ obj.second.username }}
@@ -230,7 +249,7 @@ button:focus {
 
                   
                    
-<div class='col-9 lead' style="color:#aeacac; background-image: url('{% static 'img/white-waves.png' %}')">
+<div class='col-7 lead col-md-9' style="color:#aeacac; background-image: url('{% static 'img/white-waves.png' %}')">
 	<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
 	</div>
 	<div class='row text-center h-50 row align-items-center'>

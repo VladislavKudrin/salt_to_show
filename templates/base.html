@@ -7,6 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SALT</title>
 
+    <style type="text/css">
+      @media only screen and (min-width: 768px) {
+        #trigger_2, #slider_2 {
+          visibility: hidden;
+          display: none;
+        }
+      }
+    </style>
 
     {% include 'base/css.html' %}
     {% block base_head %}{% endblock %}
@@ -18,9 +26,22 @@
 <body>
 
     {% include 'base/navbar.html' with brand_name='eCommerce' %}
+
+        <div class='col-12 text-left p-0'>
+        <button class='btn btn-filter' id='trigger_2'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
+        </div>
+
     <div class='container-fluid ajax-search'>
     {% include 'base/messages.html' %}
-    {% block content %}{% endblock %}
+
+            <div class='col-5 col-md-2 custom-box' id='slider_2' style="background-color: rgb(255,255,255); overflow: scroll; ">
+          {% include "sidebar.html" %}
+            </div>
+
+
+
+    {% block content %}
+      {% endblock %}
     </div>
 
 
@@ -73,9 +94,19 @@ $(document).ready(
 
 })//document ready
 
+// $("#slider_2").slideReveal({
+//   trigger: $("#trigger_2"),
+//   push: false,
+//   overlay: true,
+//   overlayColor:'rgba(0,0,0,0.5)',
+//   width:'500px',
+// });
+
+
 </script>
     {% block extra_js %}{% endblock extra_js %}
-    {% block javascript %}{% endblock %}
+    {% block javascript %}
+    {% endblock %}
     {% block script %}{% endblock %}
     {% include 'base/js.html' %}
 </body>

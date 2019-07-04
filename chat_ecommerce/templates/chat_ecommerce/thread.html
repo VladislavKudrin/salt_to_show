@@ -8,6 +8,8 @@
 <head>
 <style type="text/css">
 
+/*html, body {margin: 0; height: 100%; overflow: hidden}*/
+
 @media only screen and (max-width: 768px) { 
   .avatar-skip { 
     display: none; 
@@ -17,6 +19,7 @@
   }
   .avatar-not-skipped {
   	margin: 0 auto;
+  	width:40px;
   }
 
 }
@@ -312,7 +315,7 @@ button:focus {
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
 					{% if request.user.profile_foto %}
-						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2" alt="...">
+						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2" alt="...">
 					{% else %}
 						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
 					{% endif %}
@@ -328,7 +331,7 @@ button:focus {
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.first.profile_foto %}
-											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="...">
+											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
 										{% endif %}
@@ -356,7 +359,7 @@ button:focus {
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}
-											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar img-thumbnail avatar-skip" alt="..." >
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
 										{% endif %}
@@ -394,7 +397,7 @@ button:focus {
 
 									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
 									{% if object.first.profile_foto %}
-										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2 " alt="...">
+										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
 									{% else %}
 										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 									{% endif %}
@@ -412,7 +415,7 @@ button:focus {
 								<div class='row'>
 									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
 									{% if object.second.profile_foto %}
-										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar img-thumbnail ml-2 " alt="..." >
+										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
 									{% else %}
 										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar " >
 									{% endif %}

@@ -20,14 +20,31 @@
     visibility: hidden; 
     display: none; 
   } 
+}
 
 @media only screen and (min-width: 768px) { 
-    #navbarToggleExternalContent {
+   #lang-mobile {
     visibility: hidden; 
     display: none; 
-  }
+  } 
+}
 
+@media only screen and (min-width: 768px) { 
+   #buttons {
+    visibility: hidden; 
+    display: none; 
+  } 
+}
 
+.avatar-navbar{
+    width:30px !important;
+    height:30px !important;
+}
+
+/*ul li{
+  display: inline;
+}
+*/
 
 </style>
 {{ request.session|to_default_language }}
@@ -55,11 +72,33 @@
         </ul>
     </div>
 
+
+
+    <ul class="ml-auto mr-0 mt-2 pr-0" id='lang-mobile'>
+        <li class="" style='width:30px; position:relative; display: inline;'>
+        {% include 'base/language-controll.html' %}
+        </li>  
+    </ul>
+
+    <ul class="pl-1 mt-2 pr-1" id='buttons'>
+                <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-light ml-0" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
+        </li>
+
+        <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px; ">Buy</a>
+        </li>
+
+    </ul>
+    
+
+
+
         <!-- ЦЕМ! -->
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
 
 
 
@@ -97,7 +136,7 @@
         <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
             <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
             {% endif %}
@@ -136,7 +175,7 @@
 </div>
 </nav>
 
-<div class="pos-f-t">
+<!-- <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
 
         <div class="row mr-1 ml-1">
@@ -145,18 +184,7 @@
             </div>
         </div>
 
-        <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
-
-            <!-- <div class="col p-0">
-                <form method='GET' action="{% url 'accounts:language-pref'%}">
-                     <input type="hidden" name="next" value='{{ request.path }}'>
-                     <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-                      <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
-                      <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-                      <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
-                    </select>
-                </form>
-            </div>  -->  
+        <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;"> 
 
             <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
                 <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
@@ -179,7 +207,7 @@
             {% if request.user.is_authenticated %}
                 <div class="col p-0">
                     {% if request.user.profile_foto %}
-                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar" alt="..." style="width:40px; height: 40px"></a>
                     {% else %}
                     <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
                     {% endif %}              
@@ -212,7 +240,8 @@
         </div>
 
     </div>
-</div>
+</div> -->
+
  {% else %}
  <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white pb-0">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -236,6 +265,23 @@
         </ul>
     </div>
 
+    <ul class="ml-auto mr-0 mt-2 pr-0" id='lang-mobile'>
+        <li class="" style='width:30px; position:relative; display: inline;'>
+        {% include 'base/language-controll.html' %}
+        </li>  
+    </ul>
+
+    <ul class="pl-1 mt-2 pr-1" id='buttons'>
+                <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-light ml-0" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
+        </li>
+
+        <li class="" style="height: 30px; display: inline;">
+          <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px; ">Buy</a>
+        </li>
+
+    </ul>
+    
         <!-- ЦЕМ! -->
 
 
@@ -245,9 +291,9 @@
         </button> -->
 
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
 
 
 
@@ -283,7 +329,7 @@
         <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
             <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
             {% endif %}
@@ -322,7 +368,7 @@
 </div>
 </nav>
 
-<div class="pos-f-t">
+<!-- <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
 
         <div class="row mr-1 ml-1">
@@ -332,17 +378,6 @@
         </div>
 
         <div class="row mr-1 ml-1" style="display: flex; justify-content: flex-start;">
-
-            <!-- <div class="col p-0">
-                <form method='GET' action="{% url 'accounts:language-pref'%}">
-                     <input type="hidden" name="next" value='{{ request.path }}'>
-                     <select name="language" class="form-control form-control-sm" id='language-pref' onchange="this.form.submit()">
-                      <option {% if request.session.language == 'RU' %} selected {% elif request.session.language == None %}selected{% endif %} value="RU">RU</option>
-                      <option {% if request.session.language == 'UA' %} selected {% endif %} value="UA">UA</option>
-                      <option {% if request.session.language == 'EN' %} selected {% endif %} value="EN">EN</option>
-                    </select>
-                </form>
-            </div>  -->  
 
             <div class="col p-0 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
                 <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>
@@ -365,7 +400,7 @@
             {% if request.user.is_authenticated %}
                 <div class="col p-0">
                     {% if request.user.profile_foto %}
-                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="img-thumbnail" alt="..." style="width:40px; height: 40px"></a>
+                    <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar" alt="..." style="width:40px; height: 40px"></a>
                     {% else %}
                     <a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
                     {% endif %}              
@@ -398,6 +433,6 @@
         </div>
 
     </div>
-</div>
+</div> -->
 
 {% endif %}

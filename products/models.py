@@ -131,7 +131,7 @@ class Product(models.Model):
 	title 			= models.CharField(max_length = 120)
 	slug			= models.SlugField(default=None, unique = True, blank=True)
 	description 	= models.TextField()
-	price 			= models.DecimalField(decimal_places=2, max_digits=20, default=0)
+	price 			= models.DecimalField(decimal_places=0, max_digits=10, default=0)
 	featured		= models.BooleanField(default=False)
 	active			= models.BooleanField(default=True)
 	timestamp		= models.DateTimeField(auto_now_add=True)
@@ -189,9 +189,9 @@ class ProductThumbnailManager(models.Manager):
 		first_image = first_image_model.image
 		first_image_pil = Image.open(first_image)
 		im_io = BytesIO() 
-		size = 275, 275
-		first_image_pil.thumbnail(size)
-		first_image_pil.save(im_io, first_image_pil.format , quality=70) 
+		size = 1000, 1000
+		first_image_pil.thumbnail((size), Image.ANTIALIAS)
+		first_image_pil.save(im_io, first_image_pil.format , quality=settings.IMAGES_QUALITY_THUMBNAIL_PRECENTAGE) 
 		new_image = File(im_io, name=product.slug+'.'+first_image_pil.format)
 		thumb_exists = ProductThumbnail.objects.filter(product=product)
 		if thumb_exists.exists():
