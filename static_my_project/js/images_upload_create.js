@@ -127,10 +127,12 @@ function deleteRotateItem(item){
         if(doUpload){
         $.each(files, 
             function(index, value){
+            buttonImageUpload.attr('disabled', true)
             imageContainer.append("<i class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner'></i>")
             })//each-displayfilesupload
         }//doUpload
         else{
+            buttonImageUpload.attr('disabled', false)
             $('.fa-spinner').hide()
         }//ifnotdoUpload
     }//displayUploading
@@ -176,6 +178,7 @@ function deleteRotateItem(item){
                   imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce mt-1" href="#"></a><a class="mt-1 mr-5 ui-icon-rotate rotateItem"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
                   i++
                   })//eachfoto
+
             var elementList = $("ul.gallery > li")
             elementList.unbind()
             deleteRotateItem(elementList)
