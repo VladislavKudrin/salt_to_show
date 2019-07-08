@@ -50,7 +50,11 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 
 				)
 		return self.filter(lookups).distinct()
-
+	def filter_categories(self, lookup):
+		if len(lookup) == 1:
+			return self
+		else:
+			return self.filter(lookup)
 	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
 		lookups_brand=(Q(category__iexact='nothing'))
 		for x in qs_brand:
@@ -67,29 +71,8 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		lookups_size=(Q(category__iexact='nothing'))
 		for x in query_size:
 			lookups_size=lookups_size|(Q(size=x))
-		if len(query_category)==0 and len(query_gender)==0 and len(qs_brand)==0:
-			return self.all()
-		elif len(query_category)==0 and len(query_gender)==0:
-			return self.filter(lookups_brand)
-		elif len(query_category)==0 and len(qs_brand)==0:
-			return self.filter(lookups_gender)
-		elif len(query_gender) == 0 and len(query_size)==0:
-			return self.filter(lookups_category)
-		elif len(query_gender) == 0 and len(qs_brand)==0:
-			return filtered_category.filter(lookups_size)
-		elif len(query_category)==0:
-			return filtered_brand.filter(lookups_gender)
-		elif len(query_gender)==0 and len(query_size)==0:
-			return filtered_brand.filter(lookups_category)
-		elif len(query_gender)==0:
-			return filtered_brand.filter(lookups_category).filter(lookups_size)
-		elif len(query_size)==0:
-			return filtered_brand.filter(lookups_gender).filter(lookups_category)
-		elif len(query_gender) == 0:
-			return filtered_category.filter(lookups_size)
-		elif len(query_size)==0:
-			return filtered_gender.filter(lookups_category)
-		return filtered_brand.filter(lookups_gender).filter(lookups_category).filter(lookups_size)
+		x_b = self.filter_categories(lookups_brand).filter_categories(lookups_gender).filter_categories(lookups_category).filter_categories(lookups_size)
+		return(x_b)	
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
