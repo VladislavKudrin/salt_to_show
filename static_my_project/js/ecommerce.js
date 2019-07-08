@@ -308,6 +308,10 @@ $(document).ready(
 
             var navbarCount = $(".navbar-wish-count")
             navbarCount.text(data.wishes_count)
+
+            var likesCount = $(".product-likes")
+            console.log('HUINA', data.product_likes)
+            likesCount.text(data.product_likes)
         },
           error: function(errorData){
             // $.alert({

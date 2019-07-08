@@ -35,7 +35,7 @@ def languge_pref_view(request):
 	language = request.GET.get('language')
 	request.session['language'] = language
 	if request.user.is_authenticated():
-		print(request.session['language'])
+		# print(request.session['language'])
 		user = request.user
 		qs_lang = LanguagePreference.objects.filter(user=user)
 		if qs_lang.exists():
@@ -338,9 +338,11 @@ def wishlistupdate(request):
 	product_id=request.POST.get('product_id')
 	user = request.user
 	user_wishes = Wishlist.objects.filter(user = user)
+
 	if product_id is not None:
 		try:
 			product_obj = Product.objects.get(id=product_id)
+			
 		except Product.DoesNotExist:
 			print("Show message to user!")
 			return redirect("accounts:wish-list")
@@ -356,11 +358,13 @@ def wishlistupdate(request):
 			Wishlist.objects.create(user=user, product=product_obj)
 			added = True
 			user_wishes_exist=user_wishes.count()
+		product_likes = Wishlist.objects.filter(product=product_obj).count()
 		if request.is_ajax():
 			json_data={
 				"added": added,
 				"removed": not added,
 				 "wishes_count": user_wishes_exist,
+				 'product_likes': product_likes,
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")

@@ -20,10 +20,11 @@ from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
 from categories.models import Size, Brand
 
-from accounts.models import User
+from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 from image_uploader.models import unique_form_id_generator
+
 
 
 
@@ -114,29 +115,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	queryset = Product.objects.all()
 	template_name = "products/detail.html"
 
-	def get_context_data(self, *args, **kwargs):
-		context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs) 
-		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-		context['cart']=cart_obj
-		new_all_=[]
-		request = self.request
-		user = request.user
-		# all_wishes = user.wishes_user.all()
-		# wished_products = [wish.product for wish in all_wishes]
-		slug = self.kwargs.get('slug')
-		all_ = ProductImage.objects.all().filter(slug=slug)
-		for idx, image in enumerate(all_):
-			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
-		context['images'] = new_all_
-		# context['wishes']= wished_products
-		return context
-
-	def post(self, request, *args, **kwargs):
-		next_ = request.POST.get('next', '/')
-		username = request.POST.get('chat_with', '/')
-		redirect_url = next_ + 'messages/' + username
-		return redirect(redirect_url)
-
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get("slug")
@@ -154,6 +132,36 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs) 
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context['cart']=cart_obj
+		new_all_=[]
+		request = self.request
+		user = request.user
+		product = self.get_object()
+		wishes = Wishlist.objects.filter(product=product).count() #counting all likes for a product
+		print('WISHES', wishes)
+		context['likes'] = wishes
+		# all_wishes = user.wishes_user.all()
+		# wished_products = [wish.product for wish in all_wishes]
+		slug = self.kwargs.get('slug')
+		all_ = ProductImage.objects.all().filter(slug=slug)
+		for idx, image in enumerate(all_):
+			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
+		context['images'] = new_all_
+		# context['wishes']= wished_products
+		print(context)
+		return context
+
+	def post(self, request, *args, **kwargs):
+		next_ = request.POST.get('next', '/')
+		username = request.POST.get('chat_with', '/')
+		redirect_url = next_ + 'messages/' + username
+		return redirect(redirect_url)
+
+
 
 
 # class ProductDetailView(ObjectViewedMixin, DetailView):
