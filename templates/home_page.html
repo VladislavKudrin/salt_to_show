@@ -16,32 +16,161 @@ body {
   padding-bottom: 25px;
 }
 
+
+
+            .fly-in-text {
+                list-style: none;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translateX(-50%) translateY(-50%);
+            }
+            .fly-in-text li {
+                display: inline-block;
+                margin-right: 5px;
+/*                font-family: Open Sans, Arial;*/
+                font-weight: 20;
+                font-size: 1.5em;
+                color: black;
+                opacity: 1;
+                transition: all 0.7s ease;
+            }
+            .fly-in-text li:last-child {
+                margin-right: 0;
+            }
+            .fly-in-text.hidden li {
+                opacity: 0;
+            }
+            .fly-in-text.hidden li:nth-child(1) { transform: translateX(-200px) translateY(-200px); }
+            .fly-in-text.hidden li:nth-child(2) { transform: translateX(20px) translateY(100px); }
+            .fly-in-text.hidden li:nth-child(3) { transform: translateX(-150px) translateY(-80px); }
+            .fly-in-text.hidden li:nth-child(4) { transform: translateX(10px) translateY(-200px); }
+            .fly-in-text.hidden li:nth-child(5) { transform: translateX(-300px) translateY(200px); }
+            .fly-in-text.hidden li:nth-child(6) { transform: translateX(20px) translateY(-20px); }
+            .fly-in-text.hidden li:nth-child(7) { transform: translateX(30px) translateY(200px); }
+            
+                        .fly-in-text.hidden li:nth-child(7) { transform: translateX(30px) translateY(200px); }
+
+            .fly-in-text.hidden li:nth-child(8) { transform: translateX(20px) translateY(100px); }
+
+            .fly-in-text.hidden li:nth-child(9) { transform: translateX(10px) translateY(-200px); }
+
+            .fly-in-text.hidden li:nth-child(10) { transform: translateX(20px) translateY(-20px); }
+
+            .fly-in-text.hidden li:nth-child(11) { transform: translateX(30px) translateY(200px); }
+
+
+
 @media only screen and (max-width: 768px){
   #sell-small, #buy-small {
     font-size: 18px;
   }
 }
+
+
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  }
+  .card {
+    display: inline-block;
+}
+
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  }
+  .card {
+    flex: 0 0 auto;
+    margin-right: 3px;
+  
+}
+
+
+.scrolling-wrapper, .scrolling-wrapper-flexbox {
+  height: 80px;
+  margin-bottom: 20px;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+
+
+.flip-card {
+  background-color: transparent;
+  width: 200px;
+  height: 100px;
+/*  perspective: 100px;  Remove this if you don't want the 3D effect */
+/*  -webkit-perspective: 1000px;*/
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  -webkit-transition: transform 0.6s;
+  -webkit-transform-style: preserve-3d;
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: white;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: white;
+  color: black;
+} 
+
+
+
 </style>
 </head>
 
 {% if request.session.language == 'RU' %}
 
 
-<div class="row fluid text-center">
+<div class="row fluid ">
 
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron ml-10 mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Базар</span> Маркетплейс</p>
-  </div>   
-</div>
 
-
-
-
-
+   <p class="lead my-auto text-center" style='font-size: 1.5em;'><span class='strike'>Базар</span> </p>
+            <ul class="fly-in-text hidden mt-4 pr-4">
+              <li> М</li>
+              <li> A</li>
+              <li> Р</li>
+              <li> K</li>
+              <li> E</li>
+              <li> T</li>
+              <li> П</li>
+              <li> Л</li>
+              <li> Е</li>
+              <li> Й</li>
+              <li> С</li>                                    
+        </ul>
+  </div>
 </div>
 </div>
 </div>
@@ -54,35 +183,34 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
-    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;height: 275px; overflow-x: hidden; overflow-y: hidden; ">
-  <div class="container">
-    <h1 class="display-4">SELL</h1>
-    <p class="lead" id="sell-small">Зарабатывай $ и поддерживай круговорот одежды в природе.</p>
+    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:none !important;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5 pr-2 pl-2" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden;">
+      <div class="container">
+        <h1 class="display-4">SELL</h1>
+        <p class="lead" id="sell-small">Зарабатывай $ и поддерживай круговорот одежды в природе.</p>
+      </div>
+    </div>
+    </a>
   </div>
-</div>
-</a>
-</div>
-</div>
-
-
-
-
-
-  <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
-    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;height: 275px; overflow-x: hidden; overflow-y: hidden;">
-  <div class="container">
-    <h1 class="display-4">BUY</h1>
-    <p class="lead" id="buy-small">Найди свой брендовый айтем быстро и без фейков.</p>
   </div>
-</div>
-</a>
+
+
+  <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
+    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:none;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
+      <div class="container">
+        <h1 class="display-4">BUY</h1>
+        <p class="lead" id="buy-small">Найди свой брендовый айтем быстро и без фейков.</p>
+      </div>
+    </div>
+    </a>
+  </div>
+
+
 </div>
 
 
 
-</div>
 
 
 
@@ -94,9 +222,8 @@ body {
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; padding-bottom: 120px; ">
   <div class="container"> 
-<!--     <h5 class="display-4">BLABLA</h5> -->
     <h3><p class="lead"></p></h3>
   </div>
 
@@ -109,13 +236,13 @@ body {
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
             <div class="flip-card-front">
-              <p class="lead my-auto text pt-5" style='font-size: 30px;'>Надежно</p>
+                <p class="lead my-auto text" style='font-size: 30px;'>Надежно</p>
                   <i class=" my-auto fas fa-user-shield fa-3x"></i>
                   </div>
                   <div class="flip-card-back">
                   <div class="row h-100">
                   <div class="col my-auto mr-2 ml-2 lead">
-                  <p style='font-size: 15px;'>Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.</p>
+                <p style='font-size: 15px;'>Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.</p>
               </div>
               </div>
             </div>
@@ -130,7 +257,7 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-            <p class="lead my-auto text pt-5" style='font-size: 30px;'>Современно</p>
+            <p class="lead my-auto text" style='font-size: 30px;'>Современно</p>
               <i class="fas fa-brain fa-3x"></i>
             </div>
               <div class="flip-card-back">
@@ -151,12 +278,12 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-            <p class="lead my-auto text pt-5" style='font-size: 30px;'>Просто</p>
+              <p class="lead my-auto text" style='font-size: 30px;'>Просто</p>
               <i class="fas fa-hand-holding-heart fa-3x"></i>
             </div>
             <div class="flip-card-back">
               <div class="row h-100">
-              <div class="col my-auto mr-1 ml-2 lead">
+              <div class="col my-auto mr-2 ml-2 lead">
               <p style='font-size: 15px;'>Наш интуитивный дизайн разработан с любовью к простоте и минимализму.</p>
             </div>
             </div>
@@ -178,28 +305,57 @@ body {
 
 <!-- Second row --> 
 
+<div class="row fluid text-center">
+
+   
+
+<div class="container">
+
+<div class='row' >
+  <p class="lead" style='font-size: 25px;'>Популярное:</p>
+<div class="scrolling-wrapper" style='height:inherit;'>
+  {% for obj in liked %}
+    <div class='card col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+      {% include 'products/snippets/card.html' with instance=obj %}
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+
+
 
 
 <!-- 3rd row -->
 
-<div class="row fluid text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+<div class="row fluid text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
 
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
 
 
 
 
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
-    <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+    
            
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button">
+              <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+              <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
+            </a>
 
             {% else %}
-            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
+            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
+              <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+              <i class="far fa-user fa-2x"></i></a>
             {% endif %}
 
 </div>
@@ -207,9 +363,9 @@ body {
           <div class="container mt-5"> 
     <p class="lead" style='font-size: 30px;'>Стань одним из первых</p>
 
-        <div class='col-xs-12 col-md-7 mx-auto'>
+        <div class='col-7 mx-auto'>
       <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">
-      <div class="lead display-6">Войти/Зарегистрироваться</div></a>
+      <div class="lead display-6">Логин/Регистрация</div></a>
     </div>
       {% endif %}
 
@@ -225,19 +381,36 @@ body {
 </div>
 
 
+
 {% else %}
 
-<div class="row fluid text-center">
+<div class="row fluid ">
 
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron ml-10 mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Bazar</span> Marketplace</p>
+
+   <p class="lead my-auto text-center" style='font-size: 1.5em;'><span class='strike'>Bazar</span> </p>
+            <ul class="fly-in-text hidden mt-4 pr-4">
+              <li> M</li>
+              <li> A</li>
+              <li> R</li>
+              <li> K</li>
+              <li> E</li>
+              <li> T</li>
+              <li> P</li>
+              <li> L</li>
+              <li> A</li>
+              <li> C</li>
+              <li> E</li>                                    
+        </ul>
+
+
+
+
   </div>
-
-
 
 
 
@@ -253,8 +426,8 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
-    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; height: 275px; overflow-x: hidden; overflow-y: hidden;">
+    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:none !important;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden;">
       <div class="container">
         <h1 class="display-4">SELL</h1>
         <p class="lead" id="sell-small">Earn $ and contribute to the sustainable clothes-circle.</p>
@@ -265,9 +438,9 @@ body {
   </div>
 
 
-  <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
-    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; height: 275px; overflow-x: hidden; ">
+  <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
+    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:none;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">BUY</h1>
         <p class="lead" id="buy-small">Find your designer piece fast and safe.</p>
@@ -277,8 +450,10 @@ body {
   </div>
 
 
-
 </div>
+
+
+
 
 
 
@@ -290,9 +465,8 @@ body {
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; padding-bottom: 120px; ">
   <div class="container"> 
-<!--     <h5 class="display-4">BLABLA</h5> -->
     <h3><p class="lead"></p></h3>
   </div>
 
@@ -305,7 +479,7 @@ body {
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
             <div class="flip-card-front">
-                <p class="lead my-auto text pt-5" style='font-size: 30px;'>Safe</p>
+                <p class="lead my-auto text" style='font-size: 30px;'>Safe</p>
                   <i class=" my-auto fas fa-user-shield fa-3x"></i>
                   </div>
                   <div class="flip-card-back">
@@ -326,12 +500,12 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-            <p class="lead my-auto text pt-5" style='font-size: 30px;'>AI-Powered</p>
+            <p class="lead my-auto text" style='font-size: 30px;'>AI-Powered</p>
               <i class="fas fa-brain fa-3x"></i>
             </div>
               <div class="flip-card-back">
                <div class="row h-100">
-                <div class="col my-auto mr-3 ml-3 lead">
+                <div class="col my-auto mr-2 ml-2 lead">
                 <p style='font-size: 15px;'>We use Machine Learning to detect fakes in our catalogue.</p>
               </div>
               </div>
@@ -347,12 +521,12 @@ body {
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <p class="lead my-auto text pt-5" style='font-size: 30px;'>Simple</p>
+              <p class="lead my-auto text" style='font-size: 30px;'>Simple</p>
               <i class="fas fa-hand-holding-heart fa-3x"></i>
             </div>
             <div class="flip-card-back">
               <div class="row h-100">
-              <div class="col my-auto mr-1 ml-2 lead">
+              <div class="col my-auto mr-2 ml-2 lead">
               <p style='font-size: 15px;'>Our intuitive design was made with love to simplicity and minimalism.</p>
             </div>
             </div>
@@ -374,28 +548,57 @@ body {
 
 <!-- Second row --> 
 
+<div class="row fluid text-center">
+
+   
+
+<div class="container">
+
+<div class='row' >
+  <p class="lead" style='font-size: 25px;'>Most liked:</p>
+<div class="scrolling-wrapper" style='height:inherit;'>
+  {% for obj in liked %}
+    <div class='card col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+      {% include 'products/snippets/card.html' with instance=obj %}
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+
+
 
 
 <!-- 3rd row -->
 
-<div class="row fluid text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+<div class="row fluid text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
 
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
 
 
 
 
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
-    <p class="lead" style='font-size: 30px;'>Go to your profile</p>
+    
            
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button">
+              <p class="lead" style='font-size: 30px;'>Go to your profile</p>
+              <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
+            </a>
 
             {% else %}
-            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
+            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
+              <p class="lead" style='font-size: 30px;'>Go to your profile</p>
+              <i class="far fa-user fa-2x"></i></a>
             {% endif %}
 
 </div>
@@ -421,6 +624,15 @@ body {
 </div>
 
 {% endif %}
+
+<script type="text/javascript">
+  $(function() {
+      setTimeout(function() {
+          $('.fly-in-text').removeClass('hidden');
+      }, 400);
+  })();
+</script>
+
 
 {% endblock %}
 
