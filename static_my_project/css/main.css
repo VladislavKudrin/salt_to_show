@@ -407,7 +407,7 @@ background-color: black;
     min-height: 275px;
 
     object-fit: contain;
-    align-items: top;
+    align-items: center;
 /*    margin-bottom: 10px;*/
 /*    margin-left: 10px;*/
     padding-left:10px;

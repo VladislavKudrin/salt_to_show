@@ -197,12 +197,12 @@ function deleteRotateItem(item){
       if (doSubmit){
         submitBtn.addClass("disabled")
         submitBtn.attr("disabled", true)
-        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check....")
         if(languageOption=='RU'){
-            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Заливка....")
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Проверка на оригинальность....")
         }//if rus
         else{
-            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Creating....")
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check....")
         }//if not rus
         } //if dosubmit 
       else {
