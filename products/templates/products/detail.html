@@ -73,6 +73,7 @@ small {
 </head>
 
 
+
 <div id="desktop" class="row" style="position: absolute; left: 26%; margin-top: 50px; margin-bottom: 20px;">
 	<div class="col">
 			{% for image in images %}
@@ -87,6 +88,9 @@ small {
 
 <div id="mobile" class='row'>
 	<div class='col-12'>
+
+    <a class="report ">{% include 'products/snippets/product-report.html' with product=object %} REPORT </a>
+
 
 
 

@@ -1,3 +1,5 @@
+
+
 /*.row-dialog {
   height: 70px;
 }
@@ -11,10 +13,25 @@
   border-bottom: 0.75px solid #e1e6e6;
 }
 */
+
+.icon{
+  background: url('{% static 'icons/upload.png' %}');
+}
+
 #list-col {
   min-width: 262.5px; 
   max-width: 262.5px;
 /*  margin: 0px 20px;*/
+}
+
+select{
+  border-radius: 0 !important;
+  -webkit-appearance: none;
+}
+
+a:hover{
+  text-decoration: none;
+  color:inherit;
 }
 
 
@@ -68,10 +85,10 @@
   position: relative;
 }
 .strike::after {
-  border-bottom: 0.125em solid black;
+  border-bottom: 0.1em solid black;
   content: "";
   left: 0;
-  margin-top: calc(0.125em / 2 * -1);
+  margin-top: calc(0.1em / 2 * -1);
   position: absolute;
   right: 0;
   top: 50%;
@@ -119,45 +136,6 @@
 
 
 
-
-.flip-card {
-  background-color: transparent;
-  width: 200px;
-  height: 200px;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  -webkit-perspective: 1000px;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  -webkit-transition: transform 0.6s;
-  -webkit-transform-style: preserve-3d;
-}
-
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border: 1px solid black;
-  border-radius: 50% !important;
-}
-
-.flip-card-front {
-  background-color: transparent;
-  color: black;
-}
-
-.flip-card-back {
-  background-color: black;
-  color: white;
-} 
 
 
 .bg {
@@ -375,7 +353,7 @@ background-color: black;
 
 
 .navbar-wish-count {
-    color: #cf6369;
+    color: black;
     margin-left: -5px;
     /*position: absolute;
     top: 28px;
@@ -387,6 +365,8 @@ background-color: black;
 .fa-heart {
   color:rgba(190, 45, 51, 0.74);
 }
+
+
 
 .fa-user {
   color: black;
@@ -441,7 +421,7 @@ background-color: black;
     min-height: 275px;
 
     object-fit: contain;
-    align-items: top;
+    align-items: center;
 /*    margin-bottom: 10px;*/
 /*    margin-left: 10px;*/
     padding-left:10px;

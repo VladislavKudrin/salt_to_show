@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_no_footer.html" %}
 {% load static %}
 {% url 'products:create' as products_create_url %}
 {% url 'products:list' as product_list_url %}
@@ -7,22 +7,104 @@
 <head>
 <style type="text/css">
 
+
 html, body {
-    max-width: 100%;
-    overflow-x: hidden;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding-bottom: 0px;
 }
 
-body {
+/*body {
   padding-bottom: 25px;
+}*/
+
+
+
+/*Perfect-scrollbar*/
+.my-custom-scrollbar {
+  position: absolute;
+  padding-right: 20px;
+  padding-left: 0px;
+  margin-bottom: 0px;
 }
 
-#cards-mobile {
-  padding-top: 3rem;
-}
 
+
+/*Flying text*/
+.fly-in-text {
+    list-style: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.fly-in-text li {
+    display: inline-block;
+/*    margin-right: 5px;*/
+    font-weight: 20;
+    font-size: 1.5em;
+    color: black;
+    opacity: 1;
+    transition: all 0.5s ease;
+}
+.fly-in-text li:last-child {
+    margin-right: 0;
+}
+.fly-in-text.hidden li {
+    opacity: 0;
+}
+.fly-in-text.hidden li:nth-child(1) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(2) { transform: translateX(-100px) translateY(100px); }
+.fly-in-text.hidden li:nth-child(3) { transform: translateX(100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(4) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(5) { transform: translateX(100px) translateY(100px); }
+.fly-in-text.hidden li:nth-child(6) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(7) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(7) { transform: translateX(-100px) translateY(100px); }
+.fly-in-text.hidden li:nth-child(8) { transform: translateX(100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(9) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(10) { transform: translateX(100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(11) { transform: translateX(100px) translateY(100px); }
+
+/*Mobile*/
 @media only screen and (max-width: 768px){
   #sell-small, #buy-small {
-    font-size: 18px;
+    font-size: 0.9em;
+  }
+
+  .banner{
+    font-size: 0.75em;
+  }
+
+  .fly-in-text{
+    padding-left: 70px;
+    width: 400px;
+  }
+
+  .most-liked{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .flip-card-front, .flip-card-back{
+    font-size: 10px;
+  }
+
+  .jumbotron-cards{
+    padding: 0px !important;
+  }
+
+  #cards-mobile {
+    padding-top: 1em;
+  }
+
+  .flip-card{
+    width: 100px;
+    height: 100px;
+  }
+
+  .card-font {
+    font-size: 20px !important;
   }
   .flip-card-front {
     font-size: 10px;
@@ -41,27 +123,204 @@ body {
     height: 100px;
   }
 }
+
+
+/*Most-liked*/
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  }
+  .card {
+    display: inline-block;
+}
+
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  }
+  .card {
+    flex: 0 0 auto;
+    margin-right: 3px;
+  
+}
+
+.scrolling-wrapper, .scrolling-wrapper-flexbox {
+  height: 80px;
+  margin-bottom: 20px;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+/*Flip-Cards */
+.flip-card {
+  width: 200px;
+  height: 100px;
+  backface-visibility:hidden;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  -webkit-transition: transform 0.6s;
+  -webkit-transform-style: preserve-3d;
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+
+  -moz-transition: 0.6s;
+  -moz-transform-style: preserve-3d;
+
+  -o-transition: 0.6s;
+  -o-transform-style: preserve-3d;
+
+  -ms-transition: 0.6s;
+  -ms-transform-style: preserve-3d;
+
+  transition: 0.6s;
+  transform-style: preserve-3d;
+
+}
+
+.flip-card-front {
+  background-color: white;
+  color: black;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+.flip-card-back {
+  background-color: white;
+  color: black;
+} 
+
+.account {
+
+  background: linear-gradient(-45deg, #ee775259, #e73c7e5c, #23a6d570, #23d5ab5c);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+
+
+
+@keyframes strike{
+  0%   { width : 0; }
+  100% { width: 100%; }
+}
+.strike {
+  position: relative;
+}
+.strike::after {
+  content: ' ';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  animation-name: strike;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards; 
+}
+
+
+#read-more{
+  opacity: 0.7;
+}
+
+#read-more:hover{
+  opacity: 1;
+}
+
+
 </style>
 </head>
 
 {% if request.session.language == 'RU' %}
 
 
-<div class="row fluid text-center">
+<div class="row fluid ">
 
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron ml-10 mb-3" style=" background:transparent; background-color:transparent; color:black; ">
   <div class="container">
-    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Базар</span> Маркетплейс</p>
-  </div>   
-</div>
 
-
-
-
-
+   <p class="lead my-auto text-center" style='font-size: 1.5em; opacity: 0.6;'><span class='strike'>Базар</span> </p>
+            <ul class="fly-in-text hidden mt-4 pr-4">
+              <li> М</li>
+              <li> A</li>
+              <li> Р</li>
+              <li> K</li>
+              <li> E</li>
+              <li> T</li>
+              <li> П</li>
+              <li> Л</li>
+              <li> Е</li>
+              <li> Й</li>
+              <li> С</li>                                    
+        </ul>
+  </div>
 </div>
 </div>
 </div>
@@ -74,32 +333,28 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
-    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;height: 275px; overflow-x: hidden; overflow-y: hidden; ">
-  <div class="container">
-    <h1 class="display-4">SELL</h1>
-    <p class="lead" id="sell-small">Зарабатывай $ и поддерживай круговорот одежды в природе.</p>
+    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:none !important;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden; ">
+      <div class="container">
+        <h1 class="display-4">SELL</h1>
+        <p class="lead" id="sell-small">Поддерживай круговорот одежды в природе.</p>
+      </div>
+    </div>
+    </a>
   </div>
-</div>
-</a>
-</div>
-</div>
-
-
-
-
-
-  <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
-    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-<div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;height: 275px; overflow-x: hidden; overflow-y: hidden;">
-  <div class="container">
-    <h1 class="display-4">BUY</h1>
-    <p class="lead" id="buy-small">Найди свой брендовый айтем быстро и без фейков.</p>
   </div>
-</div>
-</a>
-</div>
 
+
+  <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
+    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:none;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
+      <div class="container">
+        <h1 class="display-4">BUY</h1>
+        <p class="lead" id="buy-small">Найди свой брендовый айтем быстро и без фейков.</p>
+      </div>
+    </div>
+    </a>
+  </div>
 
 
 </div>
@@ -114,9 +369,8 @@ body {
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center m-0 jumbotron-cards" style=" background:transparent;  background-color:transparent; color:black; padding-bottom: 120px; ">
   <div class="container"> 
-<!--     <h5 class="display-4">BLABLA</h5> -->
     <h3><p class="lead"></p></h3>
   </div>
 
@@ -128,14 +382,18 @@ body {
           <a href="{% url 'about' %}#safe">
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
-            <div class="flip-card-front" id="cards-mobile">
-              <p class="lead my-auto text">Надежно</p>
+
+            <div class="flip-card-front" id='card-mobile'>
+                <p class="lead my-auto text card-font" style='font-size: 30px;'>Надежно</p>
+
                   <i class=" my-auto fas fa-user-shield fa-3x"></i>
                   </div>
                   <div class="flip-card-back">
                   <div class="row h-100">
-                  <div class="col my-auto mr-2 ml-2 lead"> 
-                  <p style='font-size: 15px;'>Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.</p>
+
+                  <div class="col my-auto mr-2 ml-2 lead">
+                <p style='font-size: 15px;'>Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.</p>
+
               </div>
               </div>
             </div>
@@ -149,8 +407,9 @@ body {
           <a href="{% url 'about' %}#ai">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
-            <div class="flip-card-front" id="cards-mobile">
-            <p class="lead my-auto text">Современно</p>
+
+            <div class="flip-card-front" id='card-mobile'>
+            <p class="lead my-auto text card-font" style='font-size: 30px;'>Современно</p>
               <i class="fas fa-brain fa-3x"></i>
             </div>
               <div class="flip-card-back">
@@ -170,13 +429,17 @@ body {
           <a href="{% url 'about' %}#simple">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
-            <div class="flip-card-front" id="cards-mobile">
-            <p class="lead my-auto text">Просто</p>
+
+            <div class="flip-card-front" id='card-mobile'>
+              <p class="lead my-auto text card-font" style='font-size: 30px;'>Просто</p>
+
               <i class="fas fa-hand-holding-heart fa-3x"></i>
             </div>
             <div class="flip-card-back">
               <div class="row h-100">
-              <div class="col my-auto mr-1 ml-2 lead"> 
+
+              <div class="col my-auto mr-2 ml-2 lead">
+
               <p style='font-size: 15px;'>Наш интуитивный дизайн разработан с любовью к простоте и минимализму.</p>
             </div>
             </div>
@@ -186,11 +449,16 @@ body {
         </a> 
         </div>
 
+      <div class="col-xs-12 col-md-12 text-right pt-2" style='border-style:none !important'>
+        <a href="{% url 'about' %}">
+          <spand class='m-0 p-1' id="read-more" style='border-style:none !important; font-size:13px' > 
+              Узнай больше
+            <i class="fas fa-arrow-right pl-1"></i>
+          </span>
+        </a>
+      </div>
 
-
-    </div>
-
-
+  </div>
 </div>
 </div>
 </div>
@@ -198,28 +466,54 @@ body {
 
 <!-- Second row --> 
 
+<div class="row fluid text-center most-liked">
+
+   
+
+<div class="container">
+
+<div class='row' >
+  <p class="lead" style='font-size: 25px;'>Популярное:</p>
+<div class="scrolling-wrapper" style='height:inherit;'>
+  {% for obj in liked %}
+    <div class='card col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+      {% include 'products/snippets/card.html' with instance=obj %}
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+
+
+</div>
 
 
 <!-- 3rd row -->
 
-<div class="row fluid text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+<div class="row fluid text-center account">
 
 
-  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
+
 
 
 
 
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
-    <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+    
            
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button">
+              <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+              <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
+            </a>
 
             {% else %}
-            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
+            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
+              <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+              <i class="far fa-user fa-2x"></i></a>
             {% endif %}
 
 </div>
@@ -227,38 +521,52 @@ body {
           <div class="container mt-5"> 
     <p class="lead" style='font-size: 30px;'>Стань одним из первых</p>
 
-        <div class='col-xs-12 col-md-7 mx-auto'>
+        <div class='col-7 mx-auto'>
       <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">
-      <div class="lead display-6">Войти/Зарегистрироваться</div></a>
+      <div class="lead display-6">Логин/Регистрация</div></a>
     </div>
       {% endif %}
 
 
   </div>
 </div>
-
-</div>
 </div>
 
 
+</div>
+
 
 </div>
+
 
 
 {% else %}
 
-<div class="row fluid text-center">
+<div class="row fluid ">
 
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center mb-3" style=" background:transparent; background-color:transparent; color:black; ">
-  <div class="container">
-    <p class="lead my-auto" style='font-size: 30px;'><span class='strike'>Bazar</span> Marketplace</p>
+<div class="jumbotron jumbotron ml-10 mb-3" style=" background:transparent; background-color:transparent; color:black; ">
+  <div class="container banner">
+
+   <p class="lead my-auto text-center" style='font-size: 1.5em;'><span class='strike'>Bazar</span> </p>
+  <ul class="fly-in-text hidden mt-4 pr-4">
+    <li> M</li>
+    <li> A</li>
+    <li> R</li>
+    <li> K</li>
+    <li> E</li>
+    <li> T</li>
+    <li> P</li>
+    <li> L</li>
+    <li> A</li>
+    <li> C</li>
+    <li> E</li>                                    
+  </ul>
+
+
   </div>
-
-
-
 
 
 </div>
@@ -273,11 +581,11 @@ body {
 
   <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
     <div class="bg">
-    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black; height: 275px; overflow-x: hidden; overflow-y: hidden;">
+    <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:none !important;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden;">
       <div class="container">
         <h1 class="display-4">SELL</h1>
-        <p class="lead" id="sell-small">Earn $ and contribute to the sustainable clothes-circle.</p>
+        <p class="lead" id="sell-small">Contribute to the sustainable clothes-circle.</p>
       </div>
     </div>
     </a>
@@ -285,9 +593,9 @@ body {
   </div>
 
 
-  <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
-    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:solid;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white; height: 275px; overflow-x: hidden; ">
+  <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
+    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:none;border-color: black;">
+    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">BUY</h1>
         <p class="lead" id="buy-small">Find your designer piece fast and safe.</p>
@@ -297,8 +605,10 @@ body {
   </div>
 
 
-
 </div>
+
+
+
 
 
 
@@ -310,9 +620,8 @@ body {
 
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
-<div class="jumbotron jumbotron text-center m-0" style=" background:transparent;  background-color:transparent; color:black; ">
+<div class="jumbotron jumbotron text-center m-0 jumbotron-cards" style=" background:transparent;  background-color:transparent; color:black; padding-bottom: 120px; ">
   <div class="container"> 
-<!--     <h5 class="display-4">BLABLA</h5> -->
     <h3><p class="lead"></p></h3>
   </div>
 
@@ -324,8 +633,10 @@ body {
           <a href="{% url 'about' %}#safe">
            <div class="flip-card mx-auto">
           <div class=" flip-card-inner">
-            <div class="flip-card-front" id="cards-mobile">
-                <p class="lead my-auto text">Safe</p>
+
+            <div class="flip-card-front" id='card-mobile'>
+                <p class="lead my-auto text card-font" style='font-size: 30px;'>Safe</p>
+
                   <i class=" my-auto fas fa-user-shield fa-3x"></i>
                   </div>
                   <div class="flip-card-back">
@@ -345,13 +656,15 @@ body {
           <a href="{% url 'about' %}#ai">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
-            <div class="flip-card-front" id="cards-mobile">
-            <p class="lead my-auto text">AI-Powered</p>
+
+            <div class="flip-card-front" id='card-mobile'>
+            <p class="lead my-auto text card-font" style='font-size: 30px;'>AI-Powered</p>
+
               <i class="fas fa-brain fa-3x"></i>
             </div>
               <div class="flip-card-back">
                <div class="row h-100">
-                <div class="col my-auto mr-3 ml-3 lead">
+                <div class="col my-auto mr-2 ml-2 lead">
                 <p style='font-size: 15px;'>We use Machine Learning to detect fakes in our catalogue.</p>
               </div>
               </div>
@@ -366,13 +679,15 @@ body {
           <a href="{% url 'about' %}#simple">
            <div class="flip-card mx-auto">
           <div class="flip-card-inner">
-            <div class="flip-card-front" id="cards-mobile">
-              <p class="lead my-auto text">Simple</p>
+
+            <div class="flip-card-front" id='card-mobile'>
+              <p class="lead my-auto text card-font" style='font-size: 30px;'>Simple</p>
+
               <i class="fas fa-hand-holding-heart fa-3x"></i>
             </div>
             <div class="flip-card-back">
               <div class="row h-100">
-              <div class="col my-auto mr-1 ml-2 lead">
+              <div class="col my-auto mr-2 ml-2 lead">
               <p style='font-size: 15px;'>Our intuitive design was made with love to simplicity and minimalism.</p>
             </div>
             </div>
@@ -384,9 +699,16 @@ body {
 
 
 
-    </div>
+      <div class="col-xs-12 col-md-12 text-right pt-2" style='border-style:none !important'>
+        <a href="{% url 'about' %}">
+          <spand class='m-0 p-1' id="read-more" style='border-style:none !important; font-size:13px' > 
+            Read more
+            <i class="fas fa-arrow-right pl-1"></i>
+          </span>
+        </a>
+      </div>
 
-
+  </div>
 </div>
 </div>
 </div>
@@ -394,28 +716,57 @@ body {
 
 <!-- Second row --> 
 
+<div class="row fluid text-center most-liked">
+
+   
+
+<div class="container">
+
+<div class='row ' >
+  <p class="lead" style='font-size: 25px;'>Most liked:</p>
+<div class="scrolling-wrapper" style='height:inherit;'>
+  {% for obj in liked %}
+    <div class='card col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+      {% include 'products/snippets/card.html' with instance=obj %}
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+
+
 
 
 <!-- 3rd row -->
 
-<div class="row fluid text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+<div class="row fluid text-center account">
 
 
-  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/white-waves.png' %}');">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
+
 
 
 
 
      {% if request.user.is_authenticated %}
                 <div class="container mt-5"> 
-    <p class="lead" style='font-size: 30px;'>Go to your profile</p>
+    
            
             {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button"><img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px"></a>
+            <a href="{{ request.user.get_absolute_url }}" role="button">
+              <p class="lead" style='font-size: 30px;'>Go to your profile</p>
+              <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
+            </a>
 
             {% else %}
-            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button"><i class="far fa-user fa-4x"></i></a>
+            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
+              <p class="lead" style='font-size: 30px;'>Go to your profile</p>
+              <i class="far fa-user fa-2x"></i></a>
             {% endif %}
 
 </div>
@@ -432,15 +783,50 @@ body {
 
   </div>
 </div>
-
-</div>
 </div>
 
 
+</div>
+
 
 </div>
+
+
 
 {% endif %}
+
+
+
+<script type="text/javascript">
+
+
+//flying text
+$(function() {
+    setTimeout(function() {
+        $('.fly-in-text').removeClass('hidden');
+    }, 800);
+});
+
+
+// perfect scrollbar
+const ps = new PerfectScrollbar('.my-custom-scrollbar-liked', {
+    wheelSpeed: 1,
+    wheelPropagation: true,
+    swipeEasing: true,
+    // suppressScrollY: true,
+    // minScrollbarLength: 2,
+    // maxScrollbarLength: 2,
+    // scrollingThreshold: 10,
+    // useBothWheelAxex: true,
+
+});
+
+$(document).ready(function () {
+$("#slider1").attr("hidden",false);
+});
+
+</script>
+
 
 {% endblock %}
 

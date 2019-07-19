@@ -50,7 +50,11 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 
 				)
 		return self.filter(lookups).distinct()
-
+	def filter_categories(self, lookup):
+		if len(lookup) == 1:
+			return self
+		else:
+			return self.filter(lookup)
 	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
 		lookups_brand=(Q(category__iexact='nothing'))
 		for x in qs_brand:
@@ -67,29 +71,8 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		lookups_size=(Q(category__iexact='nothing'))
 		for x in query_size:
 			lookups_size=lookups_size|(Q(size=x))
-		if len(query_category)==0 and len(query_gender)==0 and len(qs_brand)==0:
-			return self.all()
-		elif len(query_category)==0 and len(query_gender)==0:
-			return self.filter(lookups_brand)
-		elif len(query_category)==0 and len(qs_brand)==0:
-			return self.filter(lookups_gender)
-		elif len(query_gender) == 0 and len(query_size)==0:
-			return self.filter(lookups_category)
-		elif len(query_gender) == 0 and len(qs_brand)==0:
-			return filtered_category.filter(lookups_size)
-		elif len(query_category)==0:
-			return filtered_brand.filter(lookups_gender)
-		elif len(query_gender)==0 and len(query_size)==0:
-			return filtered_brand.filter(lookups_category)
-		elif len(query_gender)==0:
-			return filtered_brand.filter(lookups_category).filter(lookups_size)
-		elif len(query_size)==0:
-			return filtered_brand.filter(lookups_gender).filter(lookups_category)
-		elif len(query_gender) == 0:
-			return filtered_category.filter(lookups_size)
-		elif len(query_size)==0:
-			return filtered_gender.filter(lookups_category)
-		return filtered_brand.filter(lookups_gender).filter(lookups_category).filter(lookups_size)
+		x_b = self.filter_categories(lookups_brand).filter_categories(lookups_gender).filter_categories(lookups_category).filter_categories(lookups_size)
+		return(x_b)	
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -126,6 +109,13 @@ SEX_CHOICES = (
 	('man', 'Man'),
 	('woman', 'Woman'),
 	)
+CONDITION_CHOICES = (
+	('item condition', 'Select an item condition'),
+	('new with tags', 'New with tags'),
+	('gently used', 'Gently used'),
+	('used', 'Used'),
+	)
+
 class Product(models.Model):
 	user 			= models.ForeignKey(User, null=True, blank=True)
 	title 			= models.CharField(max_length = 120)
@@ -137,6 +127,7 @@ class Product(models.Model):
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	category 		= models.CharField(max_length=120, default='all', choices=CATEGORY_CHOICES)
 	sex 			= models.CharField(max_length=120, default='not picked', choices=SEX_CHOICES)
+	condition 		= models.CharField(max_length=120, default='not picked', choices=CONDITION_CHOICES, null=True)
 	size 			= models.ForeignKey(Size, blank=False, null=True)
 	brand 			= models.ForeignKey(Brand, blank=True, null=True)
 
@@ -226,6 +217,14 @@ class ProductThumbnail(models.Model):
 # post_save.connect(product_create_post_save_reciever, sender= Product)
 
 
+class ReportedProduct(models.Model):
+	user    	= models.ForeignKey(User, related_name='reporter')
+	product 	= models.ForeignKey(Product, related_name='reported_product')
+	reason	 	= models.CharField(max_length=240, default=None, null=True)
+	timestamp	= models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return self.product.title
 
 
 

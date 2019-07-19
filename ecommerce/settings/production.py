@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'sass_processor',
     'rest_framework',
+    'static_precompiler',
       
 
     #our apps
@@ -141,6 +142,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
+    'static_precompiler.finders.StaticPrecompilerFinder',
 )
 
 AUTHENTICATION_BACKENDS = [

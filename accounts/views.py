@@ -78,7 +78,7 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 				if activated_qs.exists():
 					reset_link = reverse("password_reset")
 					if request.session.get('language')=='RU':
-						msg = """Ты уже подтвердил_а ваш Email. 
+						msg = """Ты уже подтвердил_а Email. 
 						<a href="{link}">Сбросить пароль</a>?
 						""".format(link=reset_link)
 					else:
@@ -104,7 +104,7 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 	def form_valid(self, form):
 		msg = """Activation link send. Check your Email!"""
 		if self.request.session.get('language')=='RU':
-			msg = """Активация отправлена. Проверь Email!"""
+			msg = """Активация отправлена. Проверь почту!"""
 		request = self.request
 		messages.success(request, msg)
 		email=form.cleaned_data.get("email")
@@ -159,7 +159,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			LanguagePreference.objects.create(user=user_created, language=self.request.session.get('language'))
 			next_path = 'login'
 			if self.request.session.get('language') == 'RU':
-				msg1 = "Пожалуйста, проверьте свою почту, чтобы подтвердить свой аккаунт. " + form.cleaned_data.get('msg')
+				msg1 = "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. " + form.cleaned_data.get('msg')
 			else:
 				msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
@@ -173,7 +173,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		elif user is None:
 			next_path = 'login'
 			if self.request.session.get('language') == 'RU':
-				msg3 = "Неверный пароль. Попробуйте еще раз!"
+				msg3 = "Неверный пароль. Попробуй еще раз!"
 			else:
 				msg3 = "The password seems to be wrong. Try again!"
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg3))

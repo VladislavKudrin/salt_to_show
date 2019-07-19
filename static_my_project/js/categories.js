@@ -231,7 +231,7 @@ $(".customCheckboxtops").change(
         outerwear()
         bottoms()
         accessories()
-        $(".outwear").prop("disabled", true)
+        $(".outerwear").prop("disabled", true)
         $(".footwear").prop("disabled", true)
         $(".bottoms").prop("disabled", true)
         $(".accessories").prop("disabled", true)
