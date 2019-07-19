@@ -1,3 +1,5 @@
+
+
 /*.row-dialog {
   height: 70px;
 }
@@ -11,10 +13,20 @@
   border-bottom: 0.75px solid #e1e6e6;
 }
 */
+
+.icon{
+  background: url('{% static 'icons/upload.png' %}');
+}
+
 #list-col {
   min-width: 262.5px; 
   max-width: 262.5px;
 /*  margin: 0px 20px;*/
+}
+
+select{
+  border-radius: 0 !important;
+  -webkit-appearance: none;
 }
 
 a:hover{
@@ -341,7 +353,7 @@ background-color: black;
 
 
 .navbar-wish-count {
-    color: #cf6369;
+    color: black;
     margin-left: -5px;
     /*position: absolute;
     top: 28px;
@@ -353,6 +365,8 @@ background-color: black;
 .fa-heart {
   color:rgba(190, 45, 51, 0.74);
 }
+
+
 
 .fa-user {
   color: black;

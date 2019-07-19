@@ -54,7 +54,7 @@ a:hover {
 <div class="container-fluid ajax-search">
 
 <div class='row'>
-	<div class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+	<div hidden class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
 		{% include 'categories/snippets/filter-box.html' with instance=obj %}
 	</div>
 		{% if filter_gender or filter_category or filter_size %}
@@ -102,7 +102,7 @@ a:hover {
 <div class="container-fluid ajax-search">
 
 <div class='row'>
-	<div class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+	<div hidden class='col-7 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
 		{% include 'categories/snippets/filter-box.html' with instance=obj %}
 	</div>
 		{% if filter_gender or filter_category or filter_size %}
