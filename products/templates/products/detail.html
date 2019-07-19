@@ -122,11 +122,7 @@ small {
 <div id="mobile" class='row'>
 	<div class='col-12'>
 
-    <a class="report ">{% include 'products/snippets/product-report.html' with product=object %} REPORT </a>
-
-
-
-
+    
 			{% if object.images.all %}
 
 			<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
@@ -165,6 +161,7 @@ small {
 </div>
 
 <div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
+
 	<div class="col-12 lead pb-2" style='font-size: 14px;'>{{ object.title }}</div>
 	<div class="col-12  uppercase" style='font-size: 12px;'>СОСТОЯНИЕ: </div>
 	<div class="col-12 lead pb-2" style='font-size: 14px;'>{{ object.condition }}</div>
@@ -175,15 +172,18 @@ small {
 		<p class="prompt">
 			<a class="button" href="#" style='font-size: 12px'>Read More</a>
 		</p>
+
 	</div>
 </div>
 
 <div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
-	<div class="col-8" style="font-size: 16px;">{{ object.brand }}</div>
-	<div class="col-4" style="font-size: 14px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-3 pb-1 pr-0" style="font-size: 16px;">${{ object.price }}</div>
-	<div class="col-5 mx-auto pb-1 pl-0 pr-0" style="font-size: 16px;">Размер: OS</div>
-	<div class="col-4 pb-1" style="font-size: 14px; padding-left: 25px;">{{ likes }}</div>
+
+	<div class="col-9" style="font-size: 16px;">{{ object.brand }}</div>
+	<div class="col-3" style="font-size: 14px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-3 pb-1" style="font-size: 16px;">${{ object.price }}</div>
+	<div class="col-6 mx-auto pb-1" style="font-size: 16px;">Размер: {{ object.size }}</div>
+	<div class="col-3 pb-1" style="font-size: 14px; padding-left: 25px;">{{ likes }}</div>
+
 		<div class="col-12">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
@@ -219,18 +219,18 @@ small {
 	</div>
 </div>
 
-<div id="mobile" class="row">
+<div id="mobile" class="row" style="left: 50%; right: 50%;">
 	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
 	<div class="col-12 lead" style='font-size: 12px;'>СОСТОЯНИЕ:</div>
 	<div class="col-12 lead pb-2" style='font-size: 12px;'>Новое, с этикеткой</div>
 	<div class="col-12 lead" style='font-size: 12px;'>ОПИСАНИЕ:</div>
 	<div class="col-12 lead read-more" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
 
-	<div class="col-8" style="font-size: 16px;">{{ object.brand }}</div>
-	<div class="col-4" style="font-size: 14px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-3 pb-1 pr-0" style="font-size: 16px;">${{ object.price }}</div>
-	<div class="col-5 mx-auto pb-1 pl-0 pr-0" style="font-size: 16px;">Размер: {{ object.size }}</div>
-	<div class="col-4 pb-1" style="font-size: 14px; padding-left: 25px;">{{ likes }}</div>
+	<div class="col-10" style="font-size: 16px;">{{ object.brand }}</div>
+	<div class="col-2" style="font-size: 14px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-3 pb-1" style="font-size: 16px;">${{ object.price }}</div>
+	<div class="col-7 mx-auto pb-1" style="font-size: 16px;">Размер: {{ object.size }}</div>
+	<div class="col-2 pb-1" style="font-size: 14px; padding-left: 25px;">{{ likes }}</div>
 		<div class="col-12">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
@@ -252,7 +252,7 @@ small {
 	</div>
 	<div class="col-12 mt-3">
 		<div class="row">
-			<div class="col-8 pr-0 mt-2">
+			<div class="col-9 pr-0 mt-2">
 				<small class="text-muted">Опубликовано {{ object.timestamp|timesince|to_rus_times }} назад</small>
 			</div>
 			<div class="col-2 pl-0">
@@ -264,6 +264,10 @@ small {
 			</div>
 		</div>
 	</div>
+	<div class="col-12">
+		{% include 'products/snippets/product-report.html' with product=object %} REPORT 
+	</div>
+
 
 
 </div>
