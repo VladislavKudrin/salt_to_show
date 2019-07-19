@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_no_footer.html" %}
 {% load static %}
 {% url 'products:create' as products_create_url %}
 {% url 'products:list' as product_list_url %}
@@ -7,14 +7,17 @@
 <head>
 <style type="text/css">
 
+
 html, body {
-    max-width: 100%;
-    overflow-x: hidden;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding-bottom: 0px;
 }
 
-body {
+/*body {
   padding-bottom: 25px;
-}
+}*/
+
 
 
 /*Perfect-scrollbar*/
@@ -24,6 +27,7 @@ body {
   padding-left: 0px;
   margin-bottom: 0px;
 }
+
 
 /*Flying text*/
 .fly-in-text {
@@ -35,12 +39,12 @@ body {
 }
 .fly-in-text li {
     display: inline-block;
-    margin-right: 5px;
+/*    margin-right: 5px;*/
     font-weight: 20;
     font-size: 1.5em;
     color: black;
     opacity: 1;
-    transition: all 0.7s ease;
+    transition: all 0.5s ease;
 }
 .fly-in-text li:last-child {
     margin-right: 0;
@@ -48,19 +52,18 @@ body {
 .fly-in-text.hidden li {
     opacity: 0;
 }
-.fly-in-text.hidden li:nth-child(1) { transform: translateX(-200px) translateY(-200px); }
-.fly-in-text.hidden li:nth-child(2) { transform: translateX(20px) translateY(100px); }
-.fly-in-text.hidden li:nth-child(3) { transform: translateX(-150px) translateY(-80px); }
-.fly-in-text.hidden li:nth-child(4) { transform: translateX(10px) translateY(-200px); }
-.fly-in-text.hidden li:nth-child(5) { transform: translateX(-300px) translateY(200px); }
-.fly-in-text.hidden li:nth-child(6) { transform: translateX(20px) translateY(-20px); }
-.fly-in-text.hidden li:nth-child(7) { transform: translateX(30px) translateY(200px); }
-.fly-in-text.hidden li:nth-child(7) { transform: translateX(30px) translateY(200px); }
-.fly-in-text.hidden li:nth-child(8) { transform: translateX(20px) translateY(100px); }
-.fly-in-text.hidden li:nth-child(9) { transform: translateX(10px) translateY(-200px); }
-.fly-in-text.hidden li:nth-child(10) { transform: translateX(20px) translateY(-20px); }
-.fly-in-text.hidden li:nth-child(11) { transform: translateX(30px) translateY(200px); }
-
+.fly-in-text.hidden li:nth-child(1) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(2) { transform: translateX(-100px) translateY(100px); }
+.fly-in-text.hidden li:nth-child(3) { transform: translateX(100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(4) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(5) { transform: translateX(100px) translateY(100px); }
+.fly-in-text.hidden li:nth-child(6) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(7) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(7) { transform: translateX(-100px) translateY(100px); }
+.fly-in-text.hidden li:nth-child(8) { transform: translateX(100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(9) { transform: translateX(-100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(10) { transform: translateX(100px) translateY(-100px); }
+.fly-in-text.hidden li:nth-child(11) { transform: translateX(100px) translateY(100px); }
 
 /*Mobile*/
 @media only screen and (max-width: 768px){
@@ -73,8 +76,8 @@ body {
   }
 
   .fly-in-text{
-    padding-left: 50px;
-    width: 300px;
+    padding-left: 70px;
+    width: 400px;
   }
 
   .most-liked{
@@ -193,6 +196,85 @@ body {
   color: black;
 } 
 
+.account {
+
+  background: linear-gradient(-45deg, #ee775259, #e73c7e5c, #23a6d570, #23d5ab5c);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+
+
+
+@keyframes strike{
+  0%   { width : 0; }
+  100% { width: 100%; }
+}
+.strike {
+  position: relative;
+}
+.strike::after {
+  content: ' ';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  animation-name: strike;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards; 
+}
+
+
+#read-more{
+  opacity: 0.7;
+}
+
+#read-more:hover{
+  opacity: 1;
+}
+
+
 </style>
 </head>
 
@@ -205,9 +287,9 @@ body {
   <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
 <div class="bg">
 <div class="jumbotron jumbotron ml-10 mb-3" style=" background:transparent; background-color:transparent; color:black; ">
-  <div class="container banner">
+  <div class="container">
 
-   <p class="lead my-auto text-center" style='font-size: 1.5em;'><span class='strike'>Базар</span> </p>
+   <p class="lead my-auto text-center" style='font-size: 1.5em; opacity: 0.6;'><span class='strike'>Базар</span> </p>
             <ul class="fly-in-text hidden mt-4 pr-4">
               <li> М</li>
               <li> A</li>
@@ -341,11 +423,16 @@ body {
         </a> 
         </div>
 
+      <div class="col-xs-12 col-md-12 text-right pt-2" style='border-style:none !important'>
+        <a href="{% url 'about' %}">
+          <spand class='m-0 p-1' id="read-more" style='border-style:none !important; font-size:13px' > 
+              Узнай больше
+            <i class="fas fa-arrow-right pl-1"></i>
+          </span>
+        </a>
+      </div>
 
-
-    </div>
-
-
+  </div>
 </div>
 </div>
 </div>
@@ -378,11 +465,11 @@ body {
 
 <!-- 3rd row -->
 
-<div class="row fluid text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
+<div class="row fluid text-center account">
 
 
-  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
+
 
 
 
@@ -417,8 +504,9 @@ body {
 
   </div>
 </div>
-
 </div>
+
+
 </div>
 
 
@@ -579,9 +667,16 @@ body {
 
 
 
-    </div>
+      <div class="col-xs-12 col-md-12 text-right pt-2" style='border-style:none !important'>
+        <a href="{% url 'about' %}">
+          <spand class='m-0 p-1' id="read-more" style='border-style:none !important; font-size:13px' > 
+            Read more
+            <i class="fas fa-arrow-right pl-1"></i>
+          </span>
+        </a>
+      </div>
 
-
+  </div>
 </div>
 </div>
 </div>
@@ -617,11 +712,11 @@ body {
 
 <!-- 3rd row -->
 
-<div class="row fluid text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
+<div class="row fluid text-center account">
 
 
-  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="jumbotron jumbotron text-center" style="background-image: url('{% static 'img/roughcloth.png' %}');">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
+
 
 
 
@@ -656,24 +751,28 @@ body {
 
   </div>
 </div>
-
-</div>
 </div>
 
 
+</div>
+
 
 </div>
+
+
 
 {% endif %}
 
 
+
 <script type="text/javascript">
+
 
 //flying text
 $(function() {
     setTimeout(function() {
         $('.fly-in-text').removeClass('hidden');
-    }, 400);
+    }, 800);
 });
 
 
@@ -688,6 +787,10 @@ const ps = new PerfectScrollbar('.my-custom-scrollbar-liked', {
     // scrollingThreshold: 10,
     // useBothWheelAxex: true,
 
+});
+
+$(document).ready(function () {
+$("#slider1").attr("hidden",false);
 });
 
 </script>

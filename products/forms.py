@@ -15,7 +15,7 @@ from image_uploader.models import UploadedFile
 from image_uploader.validators import validate_file_extension
 
 class ProductCreateForm(forms.ModelForm):
-	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Specify a brand'}))
+	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Select a brand'}))
 	class Meta:
 		model = Product
 		fields = [
@@ -26,15 +26,18 @@ class ProductCreateForm(forms.ModelForm):
 		'sex',
 		'category',
 		'size',
+		'condition',
 			]
 	def __init__(self, request, *args, **kwargs):
 		super(ProductCreateForm, self).__init__(*args, **kwargs)
 		self.request = request
 		self.lan = request.session.get('language')
 		self.fields['title'].widget.attrs['placeholder'] = 'Some keywords about your item'
-		self.fields['description'].widget.attrs['placeholder'] = 'Describe your item'
+		self.fields['description'].widget.attrs['placeholder'] = 'Describe your item in details'
 		self.fields['price'].widget.attrs['placeholder'] = 'Enter a price in $'
+		self.fields['condition'].widget.attrs['placeholder'] = 'Enter a condition'
 		self.fields['price'].initial = ''
+		self.fields['sex'].label = 'Gender'
 		if self.lan == 'RU':
 			self.fields['title'].label = "Название"
 			self.fields['title'].widget.attrs['placeholder'] = 'Пару слов про айтем'
@@ -43,8 +46,8 @@ class ProductCreateForm(forms.ModelForm):
 			self.fields['price'].label = "Цена (в $)"
 			self.fields['price'].widget.attrs['placeholder'] = 'Введи цену в $'
 			self.fields['brand'].label = "Бренд"
-			self.fields['brand'].widget.attrs['placeholder'] = 'Укажи бренд'
-			self.fields['sex'].label = "Пол"
+			self.fields['brand'].widget.attrs['placeholder'] = 'Выбери бренд'
+			self.fields['sex'].label = "Гендер"
 			self.fields['sex'].choices = SEX_CHOICES = (
 			('man', 'Мужское'),
 			('woman', 'Женское'),
@@ -59,6 +62,13 @@ class ProductCreateForm(forms.ModelForm):
 			('footwear', 'Обувь'),
 			)
 			self.fields['size'].label = "Размер"
+			self.fields['condition'].label = "Состояние"
+			self.fields['condition'].choices = CONDITION_CHOICES = (
+			('item condition', 'Выбери состояние айтема'),
+			('new with tags', 'Новая вещь с бирками'),
+			('gently used', 'Отличное состояние'),
+			('used', 'Нормальное состояние'),
+			)
 
 
 		
@@ -69,10 +79,20 @@ class ProductCreateForm(forms.ModelForm):
 		data = self.cleaned_data
 		if data.get('category') == 'select a category':
 			if self.lan == 'RU':
-				self.add_error('category', 'Пожалуйста, выберите категорию')
+				self.add_error('category', 'Пожалуйста, выбери категорию')
 			else:
 				self.add_error('category', 'Please, select a category')
 		return data.get('category')
+
+	def clean_condition(self):
+		request = self.request
+		data = self.cleaned_data
+		if data.get('condition') == 'item condition':
+			if self.lan == 'RU':
+				self.add_error('condition', 'Пожалуйста, выбери состояние')
+			else:
+				self.add_error('condition', 'Select an item condition')
+		return data.get('condition')
 
 	def clean_brand(self):
 		data = self.cleaned_data
@@ -94,7 +114,7 @@ class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
 	def __init__(self, request, *args, **kwargs):
 		super(ImageForm, self).__init__(request, *args, **kwargs)
-		self.fields['image'].label = "Image*"
+		self.fields['image'].label = "Images*"
 		if request.session.get('language')=='RU':
 			self.fields['image'].label = "Фото*"
 	
@@ -104,14 +124,14 @@ class ImageForm(ProductCreateForm):
 		print(self.request.POST)
 		if len(cleaned_images)==0:
 			if self.lan == 'RU':
-				raise forms.ValidationError("Загрузите фото")
+				raise forms.ValidationError("Загрузи как минимум фото")
 			else:
-				raise forms.ValidationError("You should upload an image")	
+				raise forms.ValidationError("Upload at least one image")	
 		if len(cleaned_images)>settings.IMAGES_UPLOAD_LIMIT:
 			if self.lan == 'RU':
 				raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
 			else:
-				raise forms.ValidationError("Too many files, should be 8")	
+				raise forms.ValidationError("Too many files, max. amount 8")	
 		return cleaned_images
 		
 	def save(self, commit=True):
