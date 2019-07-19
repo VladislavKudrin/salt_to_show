@@ -1,8 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_no_footer.html" %}
 {% load static %}
 {% load sass_tags %}
 {% load for_loop_extras %}
-<!-- <link href="{% sass_src 'custom_scss/custom.scss' %}" rel="stylesheet" type="text/css"/> -->
 
 <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
 
@@ -10,27 +9,84 @@
 {% block content %}
 
 <head>
+
+<script src="dist/readmore.js"></script>
+<link rel="stylesheet" href="dist/readmore.css"></script>
+
+
 <input type="hidden" id='language_pref' name="language_pref" value="{{ request.session.language }}">
+
 <style type="text/css">
 
 html, body {
     max-width: 100%;
+}
+
+#onhover:hover {
+	text-decoration: underline;
+}
+
+.hidden {
+    display:none;
+}
+
+#more {
+	display: none;
+}
+
+small {
+	font-size: 11px;
+}
+
+@media only screen and (min-width: 768px) {
+	#mobile {
+		visibility: hidden;
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	html, body {
+    max-width: 100%;
     overflow-x: hidden;
+	}
+
+	#trigger_2 {
+		margin-top: 65px;
+		position: fixed;
+	}
+
+	img {
+		max-width: 300px !important;
+		max-height: 225px !important;
+	}
+
+	#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
+		visibility: hidden;
+		display: none;
+	}
+	
 }
 
-
-
-body {
-  padding-bottom: 25px;
-}
 </style>
+
 </head>
 
 
-<div class="container-fluid">
-<div class="container-fluid container-fluid-product">
-<div class='row'>
-	<div class='col-xs-12 col-md-8 align-top' style="max-height: 800px">
+<div id="desktop" class="row" style="position: absolute; left: 26%; margin-top: 50px; margin-bottom: 20px;">
+	<div class="col">
+			{% for image in images %}
+			<div class="row">
+				<div class="col mb-3" style="display: flex; justify-content: center;">
+					<img src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
+				</div>
+			</div>
+			{% endfor %}
+	</div>
+</div>
+
+<div id="mobile" class='row'>
+	<div class='col-12'>
 
 
 
@@ -44,7 +100,7 @@ body {
 			{% for image in images %}
 			 {% if image.image_order == 1 %}
 				<div class="carousel-item active" class="carousel slide" data-interval="false">
-				<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
+				<img src="{{ image.image.url }}" alt="...">
 				</div>
 			{% endif %}
 			{% endfor %}
@@ -52,7 +108,7 @@ body {
 			{% for image in images %}
 				{% if not image.image_order == 1 %}
 					<div class="carousel-item" data-interval="false">
-					<img src="{{ image.image.url }}" class="d-block w-100" alt="...">
+					<img src="{{ image.image.url }}" alt="...">
 					</div>
 				{% endif %}
 			{% endfor %}
@@ -69,162 +125,168 @@ body {
 			</div>
 			{% endif %}
 	</div>
+</div>
 
-{% if request.session.language == 'RU' %}
+<div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; max-width: 350px; left: 3%;">
+	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
+	<div class="col-12 lead" style='font-size: 12px;'>СОСТОЯНИЕ:</div>
+	<div class="col-12 lead pb-2" style='font-size: 12px;'>Новое, с этикеткой</div>
+	<div class="col-12 lead" style='font-size: 12px;'>ОПИСАНИЕ:</div>
+	<div class="col-12 lead read-more" style='font-size: 12px;'>
+		{{ object.description|linebreaks }}
+		<p class="prompt">
+			<a class="button" href="#">Read More</a>
+		</p>
+	</div>
+</div>
 
-<!--   описание  цена и лайк -->
-	<div class='col-xs-12 col-md-4'> 
-
-		<div class='row'>
-			<div class='col-xs-12 col-md-9'>
-				<p class="lead m-0" style='font-size: 17px;'>{{ object.title }}</p>
-				<b></b>
-			</div>
-
-
-			<div class='col-xs-12 col-md-3' style='display:flex; justify-content: flex-start'>
-				<div class='row' >
-					<div class='col-12' style='display:flex; align-items: flex-end'>
-						<div class='mx-auto' style="align-items: flex-end;"> {% include 'accounts/wish-list-update-detail.html' with product=object %} </div>
-					</div>
-						<div class='col-12' style='display:flex; align-items: flex-end'>
-						<b class='product-likes mx-auto' style="align-items: flex-end; font-size: 14px;"> {{ likes }} </b>
-					</div>
-				</div>
-			</div>
-
-		<div class='col' style='display:flex; align-items: flex-end'>
-			<b class='mr-auto  pt-2' style="align-items: flex-end; font-size: 17px;"> ${{ object.price }}</b>
-		</div>
-
-		</div>
-
-<!-- все кроме описания -->
-
-<div class='row contact-padding'>
-	<div class='col-12'>
+<div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 77%;">
+	<div class="col-8" style="font-size: 16px;">{{ object.brand }}</div>
+	<div class="col-4" style="font-size: 14px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-3 pb-1 pr-0" style="font-size: 16px;">${{ object.price }}</div>
+	<div class="col-5 mx-auto pb-1 pl-0 pr-0" style="font-size: 16px;">Размер: {{ object.size }}</div>
+	<div class="col-4 pb-1" style="font-size: 14px; padding-left: 25px;">{{ likes }}</div>
+		<div class="col-12">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
 		{% endif %}
-		<div class='row p-0 m-0 pt-2 pb-2 pr-0 mr-0 pl-0 pr-0'>			
-           	<div class="flip-card-2 m-0">
-	          	<div class=" flip-card-2-inner">
-					<div class="flip-card-2-front">
-						<i class="far fa-check-circle fa-1x"></i> Оригинал
-					</div>
+	</div>
+	<div class="col-12">
+		<div class="flip-card-2" style="width: 88%;">
+	        <div class=" flip-card-2-inner">
+				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Оригинал</div>
 	                <div class="flip-card-2-back">
-		                  <div class="row">
-			                <div class="col my-auto mr-2 ml-2">
-			                	<small>Проверено {{ object.timestamp|date|to_rus_times }}</small>
-			              	</div>
+		                <div class="row">
+			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp|date|to_rus_times }}</small></div>
 		              	</div>
 	            	</div>
-	          	</div>
-        	</div>
+	        </div>
+       	</div>
+	</div>
+	<div class="col-12 mt-3">
+		<div class="row">
+			<div class="col-8 pr-0 mt-2">
+				<small class="text-muted">Опубликовано {{ object.timestamp|timesince|to_rus_times }} назад</small>
+			</div>
+			<div class="col-2 pl-0">
+				{% if object.user.profile_foto %}
+					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
+				{% else %}
+					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:50px; height: 50px"></a>
+				{% endif %}
+			</div>
 		</div>
 	</div>
-	
-	<div class='col'>
-			<br/>
-		<div class='m-0' style='font-size: 14px;'>{{ object.description|linebreaks }}</div>
-		<small class="text-muted">
-			Опубликовано {{ object.timestamp|timesince|to_rus_times }} назад <a class='btn btn-sm btn-outline-dark' href='{{ object.user.get_absolute_url }}'>{{ object.user.username }}</a> <br/>
-		</small>
-	</div>
 </div>
 
+<div id="mobile" class="row">
+	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
+	<div class="col-12 lead" style='font-size: 12px;'>СОСТОЯНИЕ:</div>
+	<div class="col-12 lead pb-2" style='font-size: 12px;'>Новое, с этикеткой</div>
+	<div class="col-12 lead" style='font-size: 12px;'>ОПИСАНИЕ:</div>
+	<div class="col-12 lead read-more" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
 
-
-
-<!-- контейнеры и прочее -->
-
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-
-{% else %}
-
-<!--   описание  цена и лайк -->
-	<div class='col-xs-12 col-md-4'> 
-
-		<div class='row'>
-			<div class='col-xs-12 col-md-9'>
-				<p class="lead m-0" style='font-size: 17px;'>{{ object.title }}</p>
-				<b></b>
-			</div>
-
-
-			<div class='col-xs-12 col-md-3' style='display:flex; justify-content: flex-start'>
-				<div class='row' >
-					<div class='col-12' style='display:flex; align-items: flex-end'>
-						<div class='mx-auto' style="align-items: flex-end;"> {% include 'accounts/wish-list-update-detail.html' with product=object %} </div>
-					</div>
-						<div class='col-12' style='display:flex; align-items: flex-end'>
-						<b class='product-likes mx-auto' style="align-items: flex-end; font-size: 14px;"> {{ likes }} </b>
-					</div>
-				</div>
-			</div>
-
-		<div class='col' style='display:flex; align-items: flex-end'>
-			<b class='mr-auto  pt-2' style="align-items: flex-end; font-size: 17px;"> ${{ object.price }}</b>
-		</div>
-
-		</div>
-
-<!-- все кроме описания -->
-
-<div class='row contact-padding'>
-	<div class='col-12'>
+	<div class="col-8" style="font-size: 16px;">{{ object.brand }}</div>
+	<div class="col-4" style="font-size: 14px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-3 pb-1 pr-0" style="font-size: 16px;">${{ object.price }}</div>
+	<div class="col-5 mx-auto pb-1 pl-0 pr-0" style="font-size: 16px;">Размер: {{ object.size }}</div>
+	<div class="col-4 pb-1" style="font-size: 14px; padding-left: 25px;">{{ likes }}</div>
+		<div class="col-12">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
+			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
 		{% endif %}
-		<div class='row p-0 m-0 pt-2 pb-2 pr-0 mr-0 pl-0 pr-0'>			
-           	<div class="flip-card-2 m-0">
-	          	<div class=" flip-card-2-inner">
-					<div class="flip-card-2-front">
-						<i class="far fa-check-circle fa-1x"></i> Authentic
-					</div>
+	</div>
+	<div class="col-12">
+		<div class="flip-card-2" style="width: 88%;">
+	        <div class=" flip-card-2-inner">
+				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Оригинал</div>
 	                <div class="flip-card-2-back">
-		                  <div class="row">
-			                <div class="col my-auto mr-2 ml-2">
-			                	<small>Checked on {{ object.timestamp|date }}</small>
-			              	</div>
+		                <div class="row">
+			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp|date|to_rus_times }}</small></div>
 		              	</div>
 	            	</div>
-	          	</div>
-        	</div>
+	        </div>
+       	</div>
+	</div>
+	<div class="col-12 mt-3">
+		<div class="row">
+			<div class="col-8 pr-0 mt-2">
+				<small class="text-muted">Опубликовано {{ object.timestamp|timesince|to_rus_times }} назад</small>
+			</div>
+			<div class="col-2 pl-0">
+				{% if object.user.profile_foto %}
+					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
+				{% else %}
+					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:50px; height: 50px"></a>
+				{% endif %}
+			</div>
 		</div>
 	</div>
-	
-	<div class='col'>
-			<br/>
-		<div class='m-0' style='font-size: 14px;'>{{ object.description|linebreaks }}</div>
-		<small class="text-muted">
-			Published {{ object.timestamp|timesince }} ago by <a class='btn btn-sm btn-outline-dark' href='{{ object.user.get_absolute_url }}'> {{ object.user.username }}</a> <br/>
-		</small>
-	</div>
+
+
+</div>
+
 </div>
 
 
 
+<script type="text/javascript">
+	var currentPath = window.location.href
+	if (currentPath.indexOf("products/view") != -1) {
+		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');
+	}
 
-<!-- контейнеры и прочее -->
+	$(".read-more").readMore();
+	$(".read-more").readMore({
+		previewHeight: 20
+	});
+	$(".read-more").readMore({
+		expandTrigger: ".prompt"
+	});
+	$(".read-more").readMore({
+		fadeColor1: "rgba(255,255,255,0)",
+		fadeColor2: "rgba(255,255,255,1)"
+	});
 
-</div>
-</div>
-</div>
-</div>
-</div>
 
-{% endif %}
-	
+	// function toggler(divId) {
+	//     $("#" + divId).toggle();
+	// }
+
+	// $(document).ready(function () {
+ //      var maxheight=50;
+ //      var showText = "More";
+ //      var hideText = "Less";
+
+ //      $('#demo').each(function () {
+ //        var text = $(this);
+ //        if (text.height() > maxheight){
+ //            text.css({ 'overflow': 'hidden','height': maxheight + 'px' });
+
+ //            var link = $('<a href="#">' + showText + '</a>');
+ //            var linkDiv = $('<div></div>');
+ //            linkDiv.append(link);
+ //            $(this).after(linkDiv);
+
+ //            link.click(function (event) {
+ //              event.preventDefault();
+ //              if (text.height() > maxheight) {
+ //                  $(this).html(showText);
+ //                  text.css('height', maxheight + 'px');
+ //              } else {
+ //                  $(this).html(hideText);
+ //                  text.css('height', 'auto');
+ //              }
+ //            });
+ //        }       
+ //      });
+ //   });
+
+
+</script>	
 
 {% endblock %}

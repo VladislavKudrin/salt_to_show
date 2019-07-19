@@ -12,13 +12,14 @@
 
 {% if request.session.language == 'RU' %}
 
+
 <div class='row mx-auto'>
     <div class="col-xs-5 col-md-12 text-md-center">
     	{% if key %}
-      <h1>Ошибка.</h1>
-      <h1>Попробуй еще раз!</h1>
+      <p class="lead m-0 mt-5" style='font-size: 20px;'>Ошибка</p>
+      <p class="lead m-0 mt-5" style='font-size: 20px;'>Попробуй еще раз!</p>
     	{% else %}
-    		<h1>Повторная активация Email.</h1>
+    		<p class="lead m-0 mt-5" style='font-size: 20px;'>Повторная активация Email</p>
     	{% endif %}
     </div>
     <div class="col-4 mx-auto text-center">
@@ -35,10 +36,10 @@
 <div class='row mx-auto'>
     <div class="col-xs-5 col-md-12 text-md-center">
         {% if key %}
-        <h1>Activation Error.</h1>
-        <h1>Please try again!</h1>
+        <p class="lead m-0 mt-5" style='font-size: 20px;'>Activation Error</p>
+        <p class="lead m-0 mt-5" style='font-size: 20px;'>Please try again!</p>
         {% else %}
-            <h1 class='mt-5 pt-5'>Re-activate your Email below.</h1>
+            <p class="lead m-0 mt-5" style='font-size: 20px;'>Re-activate your Email below</p>
         {% endif %}
     </div>
     <div class="col-4 mx-auto text-center">

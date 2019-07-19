@@ -37,7 +37,7 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['price'].initial = ''
 		if self.lan == 'RU':
 			self.fields['title'].label = "Название"
-			self.fields['title'].widget.attrs['placeholder'] = 'Пару слов про айтем'
+			self.fields['title'].widget.attrs['placeholder'] = 'Пара слов про айтем'
 			self.fields['description'].label = "Описание"
 			self.fields['description'].widget.attrs['placeholder'] = 'Подробно опиши айтем'
 			self.fields['price'].label = "Цена (в $)"
