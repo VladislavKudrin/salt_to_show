@@ -41,6 +41,10 @@
     height:30px !important;
 }
 
+.black-heart{
+    color: black!important;
+}
+
 /*ul li{
   display: inline;
 }
@@ -125,7 +129,7 @@
         <li class="nav-item">
         <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
 
-        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart black-heart"></i>
         <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
         
         </a>
@@ -318,7 +322,7 @@
         <li class="nav-item">
         <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
 
-        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart black-heart"></i>
         <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
         
         </a>

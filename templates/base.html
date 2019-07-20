@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SALT</title>
-
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
     <style type="text/css">
       @media only screen and (min-width: 768px) {
         #trigger_2, #slider_2 {
@@ -35,18 +35,14 @@
     <div class='container-fluid ajax-search'>
     {% include 'base/messages.html' %}
 
-            <div class='col-5 col-md-2 custom-box' id='slider_2' style="background-color: rgb(255,255,255); overflow: scroll; ">
+            <div hidden class='col-5 col-md-2 custom-box' id='slider_2' style="background-color: rgb(255,255,255); overflow: scroll; ">
           {% include "sidebar.html" %}
             </div>
-
 
 
     {% block content %}
       {% endblock %}
     </div>
-
-
-
 
 
 
@@ -107,30 +103,24 @@ width: 100%
 
 
 
+
 <script type="text/javascript">
-$(document).ready(
-  function(){
+
+
+$(document).ready(function(){
 
 var languageGlobe = $('#language-pref') 
 $('.language-preference-globe').click(
       function(event){ 
         languageGlobe.select()
-
 }
 )//onclick
 
+$("#slider_2").attr("hidden",false); // make sidebar not popping up
 
-
+$("#slider").attr("hidden",false); // make sidebar not popping up
 
 })//document ready
-
-// $("#slider_2").slideReveal({
-//   trigger: $("#trigger_2"),
-//   push: false,
-//   overlay: true,
-//   overlayColor:'rgba(0,0,0,0.5)',
-//   width:'500px',
-// });
 
 
 </script>

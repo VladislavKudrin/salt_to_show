@@ -161,7 +161,7 @@ $(document).ready(
       var cancelText = 'Отмена'
     }//if ru
     else{
-      var placeholderText = 'Why you want to delete these product?'
+      var placeholderText = 'Why do you want to delete this product?'
       var titleConfirm = 'Delete Your Product?'
       var btnText = 'Delete'
       var titleConfirmSecond = 'Thanks!'

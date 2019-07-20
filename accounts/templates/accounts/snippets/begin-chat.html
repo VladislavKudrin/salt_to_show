@@ -6,7 +6,7 @@
 	{% csrf_token %}
 	    <input type="hidden" name="next" value="{% url 'home' %}">
 	    <input type="hidden" name="chat_with" value="{{ object.user.username }}">
-	    <button class="btn btn-dark	 btn-block" type="submit" style="width: 100%;">{{ btn_title }}</button>
+	    <button id="button-mobile" class="btn btn-dark	 btn-block mb-1" type="submit" style="width: 100%;">{{ btn_title }}</button>
 	</form>
 	{% endif %}
 {% else %}
@@ -17,7 +17,7 @@
 	{% csrf_token %}
 	    <input type="hidden" name="next" value="{% url 'home' %}">
 	    <input type="hidden" name="chat_with" value="{{ object.user.username }}">
-	    <button class="btn btn-dark	 btn-block" type="submit" style="width: 100%;">{{ btn_title }}</button>
+	    <button id="button-mobile" class="btn btn-dark	 btn-block mb-1" type="submit" style="width: 100%;">{{ btn_title }}</button>
 	</form>
 	{% endif %}
 {% endif %}

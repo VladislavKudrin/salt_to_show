@@ -1,3 +1,5 @@
+
+
 /*.row-dialog {
   height: 70px;
 }
@@ -11,10 +13,20 @@
   border-bottom: 0.75px solid #e1e6e6;
 }
 */
+
+.icon{
+  background: url('{% static 'icons/upload.png' %}');
+}
+
 #list-col {
   min-width: 262.5px; 
   max-width: 262.5px;
 /*  margin: 0px 20px;*/
+}
+
+select{
+  border-radius: 0 !important;
+  -webkit-appearance: none;
 }
 
 a:hover{
@@ -48,7 +60,7 @@ a:hover{
   } 
 
   #safe-card, #ai-card {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
   }
 
 }
@@ -205,17 +217,17 @@ a:hover{
 }
 
 
-.d-block{
+/*.d-block{
   position: absolute;
   object-fit: scale-down;
   max-width: : 550px !important;
   max-height: 600px !important;
-/*  min-width: 288px;
-  min-height: 288px;*/
+  min-width: 288px;
+  min-height: 288px;
   align-items: center;
   justify-content: center;
 }
-
+*/
 .carousel-inner{
   width:100%;
 /*  max-height: 400px !important;*/
@@ -341,7 +353,7 @@ background-color: black;
 
 
 .navbar-wish-count {
-    color: #cf6369;
+    color: black;
     margin-left: -5px;
     /*position: absolute;
     top: 28px;
@@ -353,6 +365,8 @@ background-color: black;
 .fa-heart {
   color:rgba(190, 45, 51, 0.74);
 }
+
+
 
 .fa-user {
   color: black;
@@ -407,7 +421,7 @@ background-color: black;
     min-height: 275px;
 
     object-fit: contain;
-    align-items: top;
+    align-items: center;
 /*    margin-bottom: 10px;*/
 /*    margin-left: 10px;*/
     padding-left:10px;
@@ -780,21 +794,21 @@ html,body{
 
 
 .carousel .carousel-inner {
-    height: 1000px;
+/*    height: 1000px;*/
     background: #ffffff;
 }
 
 .carousel-item{
     position: relative;
     transition: transform 0s;
-    height:100%;
+    /*height:100%;*/
     background: #ffffff;
 }
 
 .carousel-item-active{
     position: relative;
     transition: transform 0s;
-    height:100%;
+    /*height:100%;*/
     background: #ffffff;
 }
 

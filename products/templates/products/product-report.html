@@ -4,12 +4,6 @@
 <head>
 <style type="text/css">
 
-@media only screen and (max-width: 768px) { 
-   #trigger {
-    visibility: hidden; 
-    display: none; 
-  } 
-}
 
 </style>
 </head>
@@ -41,39 +35,18 @@
 
 
 
-<div class="container">
-<div class='row'>
-	{% if wishes|length > 0 %}
-	{% for obj in wishes %}
-		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-			{% include 'products/snippets/card.html' with instance=obj %}
-			{% if forloop.counter|divisibleby:4 %}
-				</div>
-				</div>
-				<div class='row'>
-				<div class='col-12'>
-				</div>
-			{% else %}
-				</div>
-			{% endif %}
-
-	{% endfor %}
-</div>
-</div>
-
-{% else %}
 
 {% if request.session.language == 'RU' %}
 <div class='col mx-auto'>
-	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>Пока что здесь пусто</div>
+	<div class="lead text-center" style='font-size: 30px;'>Спасибо. Мы проверим этот айтем.</div>
 </div>
 {% else %}
 <div class='col mx-auto'>
-	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>No items yet</div>
+	<div class="lead text-center" style='font-size: 30px;'>Thank you. We will check this item.</div>
 </div>
 {% endif %}
 
-{% endif %}
+
 
 
 

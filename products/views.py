@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 import json
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.decorators import login_required
@@ -21,7 +22,7 @@ from carts.models import Cart
 from categories.models import Size, Brand
 
 from accounts.models import User, Wishlist
-from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail
+from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 from image_uploader.models import unique_form_id_generator
 
@@ -308,7 +309,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			context={
 			'form': product_form,
 			'button': 'Create',
-			'title':'Add new product',
+			'title':'Add a new product',
 			'form_id': form_id
 			}
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
@@ -340,7 +341,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			context={
 			'form': form,
 			'button': 'Create',
-			'title':'Add new product'
+			'title':'Add a new product'
 			}
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(self.request, 'products/product-create.html', context)
@@ -524,5 +525,80 @@ def product_delete(request):
 # 			return JsonResponse(json_data, status=200)
 # 	return redirect("products:wish-list")
 
+# def product_reported(request):
+# 	return render(request, 'products/product-report.html', {})
 
+
+
+@login_required
+def product_report(request):
+	product_id=request.POST.get('product_id')
+	user = request.user
+	# print('SUCCESS REPORT WORKING')
+	# product_obj = Product.objects.get(id=product_id)
+	
+	previous = request.POST.get('previous', '/')
+	print(previous)
+		# return HttpResponseRedirect(next)
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			print("Show message to user!")
+			return HttpResponseRedirect(previous)
+	# 	user_wishes_exist = user_wishes.filter(product=product_obj)
+		reported_product = ReportedProduct.objects.filter(user = user, product = product_obj)
+		if reported_product.exists():
+			print('ALREADY EXISTS!')
+			if request.session.get('language')=='RU':
+				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы уже получили твою жалобу.')
+			else:
+				messages.add_message(request, messages.SUCCESS, "Thank you. We have already received your report.")
+	# 		user.wishes.remove(product_obj)
+	# 		user_wishes_exist.first().delete()
+	# 		added = False
+	# 		user_wishes_exist=user_wishes.count()
+		else: 
+			ReportedProduct.objects.create(user=user, product=product_obj)
+			if request.session.get('language')=='RU':
+				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы проверим этот айтем мануально.')
+			else:
+				messages.add_message(request, messages.SUCCESS, "Thank you. We will check this item manually.")
+	# 		added = True
+	# 	if request.is_ajax():
+	# 		json_data={
+	# 			"added": added,
+	# 			"removed": not added,
+	# 			 "wishes_count": user_wishes_exist,
+	# 			 'product_likes': product_likes,
+	# 		}
+	# 		return JsonResponse(json_data, status=200)
+	return HttpResponseRedirect(previous)
+
+
+
+# def product_delete(request):
+# 	if request.user.is_authenticated():
+# 		product_id=request.POST.get('product_id')
+# 		user = request.user
+# 		product_user = request.POST.get('user_product')
+# 		if product_id is not None and str(user)==str(product_user):
+# 			try:
+# 				product_obj = Product.objects.get(id=product_id, user = user)
+# 			except Product.DoesNotExist:
+# 				print("Show message to user!")
+# 				return redirect("accounts:home")
+# 			if product_obj.user == user:
+# 				product_obj.delete()
+# 				deleted = True
+# 			if request.is_ajax():
+# 				print("Ajax request")
+# 				json_data={
+# 					"deleted":deleted,
+# 				}
+# 				#return JsonResponse({"message":"Error 400"}, status_code=400)
+# 				return JsonResponse(json_data, status=200)
+# 		return redirect("products:user-list")
+# 	else:
+# 		return redirect('login')
 
