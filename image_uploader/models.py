@@ -74,18 +74,18 @@ class UploadedFile(models.Model):
     uploaded_file = models.FileField(max_length=255, upload_to=upload_to, blank=True, null=True)
     file_id = models.CharField(max_length=40, blank=True, null=True)
     form_id = models.CharField(max_length=40, blank=True, null=True)
-    thumbnail = models.FileField(max_length=255, upload_to=upload_to_thumb, blank=True, null=True)
+    # thumbnail = models.FileField(max_length=255, upload_to=upload_to_thumb, blank=True, null=True)
     objects = UploadManager()
 
-def uploaded_file_post_create_thumbnail(sender, created, instance, *args, **kwargs):
-    if created:
-        thumb = UploadedFile.objects.compress_for_thumbnail(instance.uploaded_file)
-        instance.thumbnail = thumb
-        instance.save()
+# def uploaded_file_post_create_thumbnail(sender, created, instance, *args, **kwargs):
+#     if created:
+#         thumb = UploadedFile.objects.compress_for_thumbnail(instance.uploaded_file)
+#         instance.thumbnail = thumb
+#         instance.save()
         
 
 
-post_save.connect(uploaded_file_post_create_thumbnail, sender= UploadedFile)
+# post_save.connect(uploaded_file_post_create_thumbnail, sender= UploadedFile)
 
 
 
