@@ -143,7 +143,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
-    'static_precompiler.finders.StaticPrecompilerFinder',
 )
 
 AUTHENTICATION_BACKENDS = [
