@@ -38,16 +38,16 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
-EMAIL_HOST_PASSWORD = 'Dkflbckfd1995'
+EMAIL_HOST_USER = 'info@saltish.co' 
+EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'SALT <ecommerce.envision@gmail.com>'
-BASE_URL = '127.0.0.1:8000'
+DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
+BASE_URL = 'https://www.saltish.co'
 
 MANAGERS = (
-    ('Vladislav Kudrin', "ecommerce.envision@gmail.com" ),
-        )
+    ('Vladislav Kudrin', "info@saltish.co" ),
+)
 
 ADMINS = MANAGERS
 
