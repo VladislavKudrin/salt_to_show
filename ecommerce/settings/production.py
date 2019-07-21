@@ -36,8 +36,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-ALLOWED_HOSTS = ['.saltysalt.co']
+    
+ALLOWED_HOSTS = ['.saltysalt.co', '.saltish.co']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
@@ -45,7 +45,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <ecommerce.envision@gmail.com>'
-BASE_URL = 'https://www.saltysalt.co'
+BASE_URL = 'https://www.saltish.co'
 
 MANAGERS = (
     ('Vladislav Kudrin', "ecommerce.envision@gmail.com" ),
