@@ -75,9 +75,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'sass_processor',
     'rest_framework',
-    'static_precompiler',
       
-
     #our apps
     'chat_ecommerce',
     'addresses',
