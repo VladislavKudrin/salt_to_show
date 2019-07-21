@@ -19,7 +19,7 @@ from django.conf import settings
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
-from categories.models import Size, Brand
+from categories.models import Size, Brand, Undercategory
 
 from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
@@ -283,10 +283,10 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			'brand':brand_arr,
 			}
 			selected = self.request.GET.get('selected', None)
-			if selected == "select a category":
-				selected = None
+			selected_obj = Undercategory.objects.get(id=selected)
+			print(selected_obj)
 			if selected is not None:
-				qs = Size.objects.filter(size_for__iexact=selected)
+				qs = Size.objects.filter(size_for=selected_obj)
 				sizes = [{
 						"size": data.size,
 						"id":data.id 

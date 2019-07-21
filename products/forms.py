@@ -16,6 +16,7 @@ from image_uploader.validators import validate_file_extension
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Select a brand'}))
+	undercategory = forms.CharField(label='Undercategory', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Select a brand'}))
 	class Meta:
 		model = Product
 		fields = [
@@ -24,7 +25,7 @@ class ProductCreateForm(forms.ModelForm):
 		'price',
 		'brand',
 		'sex',
-		'category',
+		'undercategory',
 		'size',
 		'condition',
 			]

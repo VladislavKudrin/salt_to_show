@@ -11,7 +11,7 @@ from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
-from categories.models import Size, Brand
+from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory
 
 class ImageOrderUtil(models.Model):
 	slug			= models.SlugField(default=None, unique = True, blank=True)
@@ -97,24 +97,14 @@ class ProductManager(models.Manager):
 
 User=settings.AUTH_USER_MODEL
 
-CATEGORY_CHOICES = (
-	('select a category', 'Select a category'),
-	('tops', 'Tops'),
-	('bottoms', 'Bottoms'),
-	('accessories', 'Accessories'),
-	('outerwear', 'Outerwear'),
-	('footwear', 'Footwear'),
-	)
-SEX_CHOICES = (
-	('man', 'Man'),
-	('woman', 'Woman'),
-	)
+
 CONDITION_CHOICES = (
 	('item condition', 'Select an item condition'),
 	('new with tags', 'New with tags'),
 	('gently used', 'Gently used'),
 	('used', 'Used'),
 	)
+
 
 class Product(models.Model):
 	user 			= models.ForeignKey(User, null=True, blank=True)
@@ -125,12 +115,13 @@ class Product(models.Model):
 	featured		= models.BooleanField(default=False)
 	active			= models.BooleanField(default=True)
 	timestamp		= models.DateTimeField(auto_now_add=True)
-	category 		= models.CharField(max_length=120, default='all', choices=CATEGORY_CHOICES)
-	sex 			= models.CharField(max_length=120, default='not picked', choices=SEX_CHOICES)
+	category 		= models.ForeignKey(Category, blank = True, null=True)
+	sex 			= models.ForeignKey(Gender, blank = True, null=True)
 	condition 		= models.CharField(max_length=120, default='not picked', choices=CONDITION_CHOICES, null=True)
 	size 			= models.ForeignKey(Size, blank=False, null=True)
-	brand 			= models.ForeignKey(Brand, blank=True, null=True)
-
+	brand 			= models.ForeignKey(Brand, blank=False, null=True)
+	undercategory 	= models.ForeignKey(Undercategory, blank = False, null=True)
+	overcategory	= models.ForeignKey(Overcategory, blank = True, null=True)
 
 	objects = ProductManager()
 

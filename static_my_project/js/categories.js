@@ -3,13 +3,13 @@
 
 $(document).ready(
   function(){
-    var categoryField = $('#id_category')
-    var selected_option_value_1=$("#id_category option:selected").val();
+    var categoryField = $('#id_undercategory')
+    var selected_option_value_1=$("#id_undercategory option:selected").val();
     console.log(selected_option_value_1)
     categoryField.change(
       function(){
         var actionEndpoint = '/products/create/'
-        var formData = $("#id_category option:selected").val()
+        var formData = $("#id_undercategory option:selected").val()
         console.log(formData)
         console.log(selected_option_value_1)
         $.ajax({
