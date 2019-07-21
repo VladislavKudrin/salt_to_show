@@ -631,6 +631,10 @@ table {
 	border-radius: 50% !important;
 }
 
+.avatar{
+  object-fit: cover;
+}
+
 .username {
   color: black;
 }

@@ -50,6 +50,11 @@ html,body{
       font-size: 12px;
 }
 
+.uppercase-btn{
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
 
 html, body {
     max-width: 100%;
@@ -100,6 +105,15 @@ small {
 	}
 	
 }
+
+.avatar-pdv{
+	width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100% !important;
+}
+
+
 
 </style>
 
@@ -163,8 +177,9 @@ small {
 <div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
 
 	<div class="col-12 lead pb-2" style='font-size: 14px;'>{{ object.title }}</div>
+	<div class="col-12 uppercase" style="font-size: 12px;">Размер: S</div>
 	<div class="col-12  uppercase" style='font-size: 12px;'>СОСТОЯНИЕ: </div>
-	<div class="col-12 lead pb-2" style='font-size: 14px;'>{{ object.condition }}</div>
+	<div class="col-12 lead" style='font-size: 14px;'>{{ object.condition }}</div>
 	<div class="col-12  uppercase" style='font-size: 12px;'>ОПИСАНИЕ:</div>
 	<div class="col-12 lead read-more" style='font-size: 14px;'>
 		{{ object.description|linebreaks }}
@@ -178,23 +193,23 @@ small {
 
 <div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
 
-	<div class="col-9" style="font-size: 16px;">{{ object.brand }}</div>
-	<div class="col-3" style="font-size: 14px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-3 pb-1" style="font-size: 16px;">${{ object.price }}</div>
-	<div class="col-6 mx-auto pb-1" style="font-size: 16px;">Размер: {{ object.size }}</div>
+	<div class="col-9 uppercase" style="font-size: 12px;">{{ object.brand }}</div>
+	<div class="col-3 " style="font-size: 12px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-9 pb-1" style="font-size: 16px;">${{ object.price }}</div>
+<!-- 	<div class="col-6 mx-auto pb-1" style="font-size: 16px;">Размер: OS</div> -->
 	<div class="col-3 pb-1" style="font-size: 14px; padding-left: 25px;">{{ likes }}</div>
 
-		<div class="col-12">
+		<div class="col-12 uppercase-btn">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
 		{% endif %}
 	</div>
-	<div class="col-12">
+	<div class="col-12 uppercase-btn my-auto">
 		<div class="flip-card-2" style="width: 100%;">
 	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Оригинал</div>
+				<div class="flip-card-2-front my-auto"><i class="far fa-check-circle fa-1x my-auto"></i><span>Оригинал</span></div>
 	                <div class="flip-card-2-back">
 		                <div class="row">
 			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp|date|to_rus_times }}</small></div>
@@ -210,9 +225,9 @@ small {
 			</div>
 			<div class="col-2 pl-0">
 				{% if object.user.profile_foto %}
-					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
+					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
 				{% else %}
-					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:50px; height: 50px"></a>
+					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv" ></a>
 				{% endif %}
 			</div>
 		</div>
@@ -238,10 +253,10 @@ small {
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
 		{% endif %}
 	</div>
-	<div class="col-12">
+	<div class="col-12 uppercase-btn">
 		<div class="flip-card-2" style="width: 100%;">
 	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Оригинал</div>
+				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i><div>Оригинал</div></div>
 	                <div class="flip-card-2-back">
 		                <div class="row">
 			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp|date|to_rus_times }}</small></div>
