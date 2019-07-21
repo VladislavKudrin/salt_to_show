@@ -37,7 +37,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
     
-ALLOWED_HOSTS = ['.saltysalt.co', '.saltish.co']
+ALLOWED_HOSTS = ['.saltish.co']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
