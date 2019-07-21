@@ -44,7 +44,7 @@ EMAIL_HOST_USER = 'info@saltish.co'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'SALT "info@saltish.co"'
+DEFAULT_FROM_EMAIL = 'SALT Admin'
 BASE_URL = 'https://www.saltish.co'
 
 MANAGERS = (
