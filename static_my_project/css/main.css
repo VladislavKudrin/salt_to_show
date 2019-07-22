@@ -816,15 +816,15 @@ html,body{
     background: #ffffff;
 }
 
-.carousel-control-prev{
+/*.carousel-control-prev{
 	position: absolute;
-    height: 500px;
+  height: 50px !important;
 }
 
 .carousel-control-next{
 	position: absolute;
-    height: 500px;
-}
+  height: 50px !important;
+}*/
 
 .error
     {
@@ -839,10 +839,6 @@ border: 2px red solid;
 .alert alert-block alert-danger{
     color: black;
 }
-
-
-
-
 
 
 

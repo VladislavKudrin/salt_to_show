@@ -24,9 +24,6 @@ from products.models import Product
 
 
 
-# @login_required
-# def account_home_view(request):
-# 	render(request, "accounts/home.html", {})
 def languge_pref_view(request):
 	default_next = "/"
 	next_ = request.GET.get('next')
@@ -35,7 +32,6 @@ def languge_pref_view(request):
 	language = request.GET.get('language')
 	request.session['language'] = language
 	if request.user.is_authenticated():
-		# print(request.session['language'])
 		user = request.user
 		qs_lang = LanguagePreference.objects.filter(user=user)
 		if qs_lang.exists():

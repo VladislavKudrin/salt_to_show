@@ -23,7 +23,7 @@ def handle_upload(request):
 			uploaded_qs = UploadedFile.objects.filter(form_id = form_id).filter(lookups_images)
 			all_files = (len(UploadedFile.objects.filter(form_id = form_id)))
 			images = [{
-					"image_url": uploaded_obj.thumbnail.url,
+					"image_url": uploaded_obj.uploaded_file.url,
 					} 
 			for uploaded_obj in uploaded_qs]
 			json_data = {
@@ -65,7 +65,7 @@ def handle_rotate(request):
 		file = UploadedFile.objects.get(file_id=id_,form_id=form_id)
 		UploadedFile.objects.rotate_image(image=file)
 		json_data = {
-					'image_url':file.thumbnail.url
+					'image_url':file.uploaded_file.url
 					}
 		return JsonResponse(json_data)
 	return HttpResponse('html')
