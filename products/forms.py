@@ -13,6 +13,7 @@ from categories.models import Size, Brand
 from ecommerce.utils import random_string_generator
 from image_uploader.models import UploadedFile
 from image_uploader.validators import validate_file_extension
+import re
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Select a brand'}))
@@ -108,6 +109,17 @@ class ProductCreateForm(forms.ModelForm):
 			else:
 				self.add_error('brand', 'Please, select existing brand')
 
+	def clean_description(self):
+		data = self.cleaned_data
+		description = data.get('description')
+		if description: 
+			description = re.sub(r'\n\s*\n','\n',description,re.MULTILINE)
+			length = len(description.splitlines())
+			if length > 18: 
+				lines = int(length) - int(18)
+				message = 'Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines)
+				self.add_error('description', message)
+		return description
 
 
 class ImageForm(ProductCreateForm):
@@ -172,6 +184,7 @@ class ProductUpdateForm(ProductCreateForm):
 		super(ProductUpdateForm, self).__init__(request, *args, **kwargs)
 		product = Product.objects.get(slug=slug)
 		category = product.category
+		description = product.description
 		size = Size.objects.filter(size_for__icontains=category)
 		self.fields['size'].queryset = size
 		brand = Brand.objects.get(id=self.initial['brand'])
