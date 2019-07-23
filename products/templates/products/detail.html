@@ -227,6 +227,44 @@ visibility:visible;
 
 
 
+
+
+.morecontent span {
+	display: none;
+}
+
+
+
+
+.b-description_readmore_ellipsis:after {    
+  content: '';
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 75%;
+  height: 20px;    
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 65%);
+} 
+
+.b-description_readmore_button {
+    font-size: 11px;
+    /* display: inline-block; */
+    /* width: 100px; */
+    /* border: 1px solid black; */
+    /* padding: 4px 0; */
+    cursor: pointer;
+    text-align: center;
+ }
+
+ .b-description_readmore_button:hover {
+ 	color: gray;
+ }
+
+p { 
+    margin-block-end: 0em !important;
+}
+
 </style>
 
 </head>
@@ -294,15 +332,18 @@ visibility:visible;
 
 {% if request.session.language == 'RU' %}
 
+
+
+
 <div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
 
 	<div class="col-12  pb-3 uppercase-title" >{{ object.title }}</div>
-	<div class="col-12 uppercase">Размер:</div>
-	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.size }}</div>
-	<div class="col-12 uppercase">Состояние:</div>
-	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
+	<div class="col-6 uppercase">Размер:</div>
+	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:1px'>{{ object.size }}</div>
+	<div class="col-6 uppercase">Состояние:</div>
+	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:4px'>{{ object.condition }}</div>
 	<div class="col-12 uppercase">Описание:</div>
-	<div class="col-12  minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
+	<div class="col-12  b-description_readmore js-description_readmore" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
 </div>
 
 <div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
@@ -426,12 +467,12 @@ visibility:visible;
 
 <div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
 	<div class="col-12  pb-3 uppercase-title" >{{ object.title }}</div>
-	<div class="col-12 uppercase">Size:</div>
-	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.size }}</div>
-	<div class="col-12 uppercase">Condition:</div>
-	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
-	<div class="col-12 uppercase">Description:</div>
-	<div class="col-12  minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
+	<div class="col-6 uppercase">Размер:</div>
+	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:1px'>{{ object.size }}</div>
+	<div class="col-6 uppercase">Состояние:</div>
+	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:4px'>{{ object.condition }}</div>
+	<div class="col-12 uppercase">Описание:</div>
+	<div class="col-12  comment more" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
 </div>
 
 <div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
@@ -552,8 +593,30 @@ visibility:visible;
 
 {% endif %}
 
+
+
+
+
+  	 <script src="{% static 'js/jquery.morelines.js' %}"></script>
+
 <script type="text/javascript">
 
+
+$('.js-description_readmore').moreLines({
+  linecount: 3,
+  // default CSS classes
+  baseclass: 'b-description', 
+  basejsclass: 'js-description',
+  classspecific: '_readmore',
+
+  // custom text
+  buttontxtmore: "+", 
+  buttontxtless: "-",
+
+  // animation speed in milliseconds
+  animationspeed: 250
+  
+});
 
 // $(document).ready(function(){
 // $('child').hover(function(){
@@ -599,33 +662,69 @@ visibility:visible;
 	}
 
 
-	$(function() {
+// $(document).ready(function() {
+// 	var showChar = 130;
+// 	var ellipsestext = "...";
+// 	var moretext = "more";
+// 	var lesstext = "less";
+// 	$('.more').each(function() {
+// 		var content = $(this).html();
 
-	  var minimized_elements = $('div.minimize');
+// 		if(content.length > showChar) {
 
-	  minimized_elements.each(function() {
-	    var t = $(this).text();
-	    if (t.length < 200) return;
+// 			var c = content.substr(0, showChar);
+// 			var h = content.substr(showChar-4, content.length - showChar);
+
+// 			var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+// 			$(this).html(html);
+// 		}
+
+// 	});
+
+// 	$(".morelink").click(function(){
+// 		if($(this).hasClass("less")) {
+// 			$(this).removeClass("less");
+// 			$(this).html(moretext);
+// 		} else {
+// 			$(this).addClass("less");
+// 			$(this).html(lesstext);
+// 		}
+// 		$(this).parent().prev().toggle();
+// 		$(this).prev().toggle();
+// 		return false;
+// 	});
+// });
+
+	// $(function() {
+
+	//   var minimized_elements = $('div.minimize');
+
+	//   minimized_elements.each(function() {
+	//     var t = $(this).html();
+	//     if (t.length < 200) return;
+
 
 	    $(this).html(
 	      t.slice(0, 200) + '<a href="#" class="more" style="font-weight:bold; text-decoration: underline;"> more</a>' +
 	      '<span style="display:none;">' + t.slice(200, t.length) + ' <a href="#" class="less" style="font-weight:bold; text-decoration: underline;"> less</a></span>'
 	    );
 
-	  });
 
-	  $('a.more', minimized_elements).click(function(event) {
-	    event.preventDefault();
-	    $(this).hide().prev().hide();
-	    $(this).next().show();
-	  });
+	//   });
 
-	  $('a.less', minimized_elements).click(function(event) {
-	    event.preventDefault();
-	    $(this).parent().hide().prev().show().prev().show();
-	  });
+	//   $('a.more', minimized_elements).click(function(event) {
+	//     event.preventDefault();
+	//     $(this).hide().prev().hide();
+	//     $(this).next().show();
+	//   });
 
-	});
+	//   $('a.less', minimized_elements).click(function(event) {
+	//     event.preventDefault();
+	//     $(this).parent().hide().prev().show().prev().show();
+	//   });
+
+	// });
 
 
 
