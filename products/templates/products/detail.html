@@ -371,7 +371,7 @@ visibility:visible;
 	<div class="col-12 lead" style='font-size: 12px;'>СОСТОЯНИЕ:</div>
 	<div class="col-12 lead pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
 	<div class="col-12 lead" style='font-size: 12px;'>ОПИСАНИЕ:</div>
-	<div class="col-12 lead read-more" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
+	<div class="col-12 lead minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
 
 	<div class="col-10" style="font-size: 16px;">{{ object.brand }}</div>
 	<div class="col-2" style="font-size: 14px; display: flex; justify-content: flex-end;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
@@ -398,7 +398,7 @@ visibility:visible;
 	        </div>
        	</div>
 	</div>
-	<div class="col-12 mt-3">		
+	<div class="col-12 my-3">		
 		<small class="text-muted">Опубликовано {{ object.timestamp|timesince|to_rus_times }} назад </small>		
 
 		{% if object.user.profile_foto %}
@@ -420,7 +420,6 @@ visibility:visible;
 {% else %}
 
 <div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
-
 	<div class="col-12  pb-3 uppercase-title" >{{ object.title }}</div>
 	<div class="col-12 uppercase">Size:</div>
 	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.size }}</div>
@@ -501,6 +500,7 @@ visibility:visible;
 	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
 	<div class="col-12 lead" style='font-size: 12px;'>Condition:</div>
 	<div class="col-12 lead pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
+
 	<div class="col-12 lead" style='font-size: 12px;'>Description:</div>
 	<div class="col-12 lead read-more" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
 
@@ -529,6 +529,7 @@ visibility:visible;
 	        </div>
        	</div>
 	</div>
+
 	<div class="col-12 mt-3">		
 		<small class="text-muted">Posted {{ object.timestamp|timesince|to_rus_times }} ago </small>		
 
@@ -590,8 +591,10 @@ visibility:visible;
 
 
 	var currentPath = window.location.href
-	if (currentPath.indexOf("products/view") != -1) {
-		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');
+	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 768)){
+		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
+	} else {
+		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');		
 	}
 
 
@@ -604,8 +607,8 @@ visibility:visible;
 	    if (t.length < 200) return;
 
 	    $(this).html(
-	      t.slice(0, 200) + '<a href="#" class="more" >more</a>' +
-	      '<span style="display:none;">' + t.slice(200, t.length) + ' <a href="#" class="less" >less</a></span>'
+	      t.slice(0, 200) + '<a href="#" class="more" style="font-weight:bold; text-decoration: underline;"> more</a>' +
+	      '<span style="display:none;">' + t.slice(200, t.length) + ' <a href="#" class="less" style="font-weight:bold; text-decoration: underline;"> less</a></span>'
 	    );
 
 	  });
