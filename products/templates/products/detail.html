@@ -2,6 +2,7 @@
 {% load static %}
 {% load sass_tags %}
 {% load for_loop_extras %}
+{% load checked_time %}
 
 <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
 
@@ -13,10 +14,61 @@
 
 <style type="text/css">
 
-.carousel-control-prev, .carousel-control-next{
-	/*position: fixed;
-  	height: 450px !important;*/
+
+html,body{
+/*    font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, "Segoe UI", Roboto, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
+/*    font-family: BlinkMacSystemFont;*/
+/*  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: grayscale;
+  -o-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  font-size: 16px; 
+  text-decoration: none;
+  letter-spacing: normal; 
+  text-align: inherit; */
+  /*  line-height: 25px;*/
+  /*   font-weight: 400; */ 
+  /*   text-transform: none; */
+  /*   color: inherit; */
+  /*  line-height: 25px; 
+  width: 100%;
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+}*/
 }
+
+.uppercase{
+	  text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-weight: bold;
+      line-height: 25px;
+       font-family: Helvetica; 
+      font-size: 11px;
+}
+
+.uppercase-title{
+/*	  text-transform: uppercase;*/
+      letter-spacing: 1.5px;
+      font-weight: bold;
+/*      line-height: 35px;*/
+       font-family: Helvetica; 
+      font-size: 13px;
+}
+
+.uppercase-brand{
+
+      letter-spacing: 1.5px;
+      font-weight: bold;
+/*      line-height: 35px;*/
+       font-family: Helvetica; 
+      font-size: 13px;
+}
+
+
+
+
+
 
 html, body {
     max-width: 100%;
@@ -67,6 +119,107 @@ small {
 	}
 	
 }
+
+.avatar-pdv{
+	width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100% !important;
+}
+
+
+
+/*Flip-Cards */
+.flip-card {
+  width: 200px;
+  height: 20px;
+  backface-visibility:hidden;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+/*  padding-left: 40px;*/
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  -webkit-transition: transform 0.6s;
+  -webkit-transform-style: preserve-3d;
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+
+  -moz-transition: 0.6s;
+  -moz-transform-style: preserve-3d;
+
+  -o-transition: 0.6s;
+  -o-transform-style: preserve-3d;
+
+  -ms-transition: 0.6s;
+  -ms-transform-style: preserve-3d;
+
+  transition: 0.6s;
+  transform-style: preserve-3d;
+
+}
+
+.flip-card-front {
+  background-color: white;
+  color: black;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+.flip-card-back {
+  background-color: white;
+  color: black;
+} 
+
+
+/*.flip-card-2-front, .flip-card-2-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid black;
+}
+
+.flip-card-2-front {
+  background-color: transparent;
+  color: black;
+}
+
+.flip-card-2-back {
+  background-color: white;
+  color: white;
+} */
+
+/*.fa-flag:hover{
+	text-decoration: 'report';
+}*/
+
+
+
+/*.wrapper:hover .text {
+visibility:visible;
+}
+
+*/
+
+
+
 
 </style>
 
@@ -136,55 +289,81 @@ small {
 {% if request.session.language == 'RU' %}
 
 <div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
-	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>СОСТОЯНИЕ:</div>
-	<div class="col-12 lead pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>ОПИСАНИЕ:</div>
-	<div class="col-12 lead minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
+
+	<div class="col-12  pb-3 uppercase-title" >{{ object.title }}</div>
+	<div class="col-12 uppercase">Размер:</div>
+	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.size }}</div>
+	<div class="col-12 uppercase">Состояние:</div>
+	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
+	<div class="col-12 uppercase">Описание:</div>
+	<div class="col-12  minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
 </div>
 
 <div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
-	<div class="col-9" style="font-size: 16px;">{{ object.brand }}</div>
-	<div class="col-3" style="font-size: 14px; display: flex; justify-content: flex-end;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-3 pb-1" style="font-size: 16px;">${{ object.price }}</div>
-	<div class="col-6 pb-1" style="font-size: 16px; display:flex; justify-content: center;">Размер: {{ object.size }}</div>
-	<div class="col-3 pb-1" style="font-size: 14px; padding-right: 25px; display: flex; justify-content: flex-end;">{{ likes }}</div>
-		<div class="col-12">
+	<div class="col-9  uppercase-brand">{{ object.brand }}</div>
+	<div class="col-3 text-center" style="font-size: 12px; ">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-9 pb-3 uppercase-brand">${{ object.price }}</div>
+<!-- 	<div class="col-6 pb-1 uppercase-btn" style="display:flex; justify-content: center;">Размер: OS</div> -->
+	<div class="col-3 pb-3 text-center my-auto" style="font-size: 12px; ">{{ likes }}</div>
+		<div class="col-12 uppercase-btn pb-2">
+
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
 		{% endif %}
 	</div>
-	<div class="col-12">
-		<div class="flip-card-2" style="width: 100%;">
-	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Оригинал</div>
-	                <div class="flip-card-2-back">
+	<div class="col-8 my-auto">
+		<div class="flip-card" style="width: 100%;">
+	        <div class=" flip-card-inner">
+				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Оригинал</span></div>
+	                <div class="flip-card-back">
 		                <div class="row">
-			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp|date|to_rus_times }}</small></div>
+			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp| print_timestamp }}</small></div>
+
 		              	</div>
 	            	</div>
 	        </div>
        	</div>
 	</div>
-	<div class="col-12 my-3">
-		<div class="row" style="line-height: 1;">
-			<div class="col-8 pr-0 mt-2">
-				<small class="text-muted">Опубликовано {{ object.timestamp|timesince|to_rus_times }} назад </small>
+
+
+		<div class="col-4 my-auto">
+		<div class="flip-card" style="width: 100%;">
+	        <div class=" flip-card-inner">
+				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-flag my-auto fa-1x"></i><span></span></div>
+	                <div class="flip-card-back pt-0">
+			            	{% include 'products/snippets/product-report.html' with product=object %}  
+		              	</div>
+	            	</div>
+	        </div>
+       	</div>
+
+
+
+
+
+
+	<div class="col-12 pt-4">
+		<div class="row">
+			<div class="col-8 my-auto">
+				<small class="text">Загружено {{ object.timestamp|timesince|to_rus_times }} назад 
+				</small>
+
 			</div>
-			<div class="col-2 pl-0">
+			<div class="col-4 pl-2">
 				{% if object.user.profile_foto %}
-					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
+					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
 				{% else %}
-					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:50px; height: 50px"></a>
+					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv" ></a>
 				{% endif %}
 			</div>
+
 		</div>
 	</div>
-	<div class="col-12" style="display: flex; justify-content: flex-start;">
-		{% include 'products/snippets/product-report.html' with product=object %}  
 	</div>
+
+
 </div>
 
 <div id="mobile" class="row mx-5 mt-3">
@@ -206,13 +385,14 @@ small {
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
 		{% endif %}
 	</div>
-	<div class="col-12">
+	<div class="col-12 uppercase-btn">
 		<div class="flip-card-2" style="width: 100%;">
 	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Оригинал</div>
+				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i><div>Оригинал</div></div>
 	                <div class="flip-card-2-back">
 		                <div class="row">
-			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp|date|to_rus_times }}</small></div>
+			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp| print_timestamp }}</small></div>
+
 		              	</div>
 	            	</div>
 	        </div>
@@ -240,63 +420,89 @@ small {
 {% else %}
 
 <div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
-	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>CONDITION:</div>
-	<div class="col-12 lead pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>DESCRIPTION:</div>
-	<div class="col-12 lead minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
+	<div class="col-12  pb-3 uppercase-title" >{{ object.title }}</div>
+	<div class="col-12 uppercase">Size:</div>
+	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.size }}</div>
+	<div class="col-12 uppercase">Condition:</div>
+	<div class="col-12  pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
+	<div class="col-12 uppercase">Description:</div>
+	<div class="col-12  minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
 </div>
 
 <div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
-	<div class="col-9" style="font-size: 16px;">{{ object.brand }}</div>
-	<div class="col-3" style="font-size: 14px; display: flex; justify-content: flex-end;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-3 pb-1" style="font-size: 16px;">${{ object.price }}</div>
-	<div class="col-6 pb-1" style="font-size: 16px; display:flex; justify-content: center;">Size: {{ object.size }}</div>
-	<div class="col-3 pb-1" style="font-size: 14px; padding-right: 25px; display: flex; justify-content: flex-end;">{{ likes }}</div>
-		<div class="col-12">
+	<div class="col-9  uppercase-brand">{{ object.brand }}</div>
+	<div class="col-3 text-center" style="font-size: 12px; ">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-9 pb-3 uppercase-brand">${{ object.price }}</div>
+<!-- 	<div class="col-6 pb-1 uppercase-btn" style="display:flex; justify-content: center;">Размер: OS</div> -->
+	<div class="col-3 pb-3 text-center my-auto" style="font-size: 12px; ">{{ likes }}</div>
+		<div class="col-12 uppercase-btn pb-2">
+
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
 		{% endif %}
 	</div>
-	<div class="col-12">
-		<div class="flip-card-2" style="width: 100%;">
-	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Authentic</div>
-	                <div class="flip-card-2-back">
+	<div class="col-8 my-auto">
+		<div class="flip-card" style="width: 100%;">
+	        <div class=" flip-card-inner">
+				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Authentic</span></div>
+	                <div class="flip-card-back">
 		                <div class="row">
-			            	<div class="col my-auto mr-2 ml-2"><small>Checked on {{ object.timestamp|date }}</small></div>
+			            	<div class="col my-auto mr-2 ml-2"><small>Checked on {{ object.timestamp| print_timestamp }}</small></div>
+
 		              	</div>
 	            	</div>
 	        </div>
        	</div>
 	</div>
-	<div class="col-12 my-3">
-		<div class="row" style="line-height: 1;">
-			<div class="col-8 pr-0 mt-2">
-				<small class="text-muted">Published {{ object.timestamp|timesince }} ago by </small>
+
+
+		<div class="col-4 my-auto">
+		<div class="flip-card" style="width: 100%;">
+	        <div class=" flip-card-inner">
+				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-flag my-auto fa-1x"></i><span></span></div>
+	                <div class="flip-card-back pt-0">
+			            	{% include 'products/snippets/product-report.html' with product=object %}  
+		              	</div>
+	            	</div>
+	        </div>
+       	</div>
+
+
+
+
+
+
+	<div class="col-12 pt-4">
+		<div class="row">
+			<div class="col-8 my-auto">
+				<small class="text">Posted {{ object.timestamp|timesince }} ago 
+				</small>
+
 			</div>
-			<div class="col-2 pl-0">
+			<div class="col-4 pl-2">
 				{% if object.user.profile_foto %}
-					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
+					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
 				{% else %}
-					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:50px; height: 50px"></a>
+					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv" ></a>
 				{% endif %}
 			</div>
+
 		</div>
 	</div>
-	<div class="col-12" style="display: flex; justify-content: flex-start;">
-		{% include 'products/snippets/product-report.html' with product=object %}  
 	</div>
+
+
 </div>
 
 <div id="mobile" class="row mx-5 mt-3">
 	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>CONDITION:</div>
+	<div class="col-12 lead" style='font-size: 12px;'>Condition:</div>
 	<div class="col-12 lead pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>DESCRIPTION:</div>
-	<div class="col-12 lead minimize" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
+
+	<div class="col-12 lead" style='font-size: 12px;'>Description:</div>
+	<div class="col-12 lead read-more" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>
 
 	<div class="col-10" style="font-size: 16px;">{{ object.brand }}</div>
 	<div class="col-2" style="font-size: 14px; display: flex; justify-content: flex-end;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
@@ -310,20 +516,22 @@ small {
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
 		{% endif %}
 	</div>
-	<div class="col-12">
+	<div class="col-12 uppercase-btn">
 		<div class="flip-card-2" style="width: 100%;">
 	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i>Authentic</div>
+				<div class="flip-card-2-front"><i class="far fa-check-circle fa-1x"></i><div>Authentic</div></div>
 	                <div class="flip-card-2-back">
 		                <div class="row">
-			            	<div class="col my-auto mr-2 ml-2"><small>Checked on {{ object.timestamp|date }}</small></div>
+			            	<div class="col my-auto mr-2 ml-2"><small>Checked on {{ object.timestamp| print_timestamp }}</small></div>
+
 		              	</div>
 	            	</div>
 	        </div>
        	</div>
 	</div>
-	<div class="col-12 my-3">		
-		<small class="text-muted">Published {{ object.timestamp|timesince }} ago by </small>		
+
+	<div class="col-12 mt-3">		
+		<small class="text-muted">Posted {{ object.timestamp|timesince|to_rus_times }} ago </small>		
 
 		{% if object.user.profile_foto %}
 			<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
@@ -344,6 +552,44 @@ small {
 {% endif %}
 
 <script type="text/javascript">
+
+
+// $(document).ready(function(){
+// $('child').hover(function(){
+// 	$(this).removeClass('fas fa-flag');
+// 	    // $(this).text("Report?");
+// }, function() {
+//         $(this).addClass('fas fa-flag');
+//         // $(this).text("HUI");
+// });
+// })
+
+// $(document).ready(function(){
+// 	$(".childik").hover(function(){
+// 		$(this).removeClass("fas fa-flag");
+// 		$(this).text("Report?");
+
+// 	}, function(){
+// 		$(this).addClass("fas fa-flag");
+// 		$(this).text("");
+// 	});
+// });
+
+
+// $('.wrapper').hover(
+//        function(){
+//         $(this).children('child').removeClass('fas fa-flag');
+//     },
+//        function(){
+//         $(this).children('child').addClass('fas fa-flag');
+//     }
+// );
+
+
+
+
+
+
 	var currentPath = window.location.href
 	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 768)){
 		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
@@ -379,6 +625,17 @@ small {
 	  });
 
 	});
+
+
+
+// 	$('.hover').mouseover(function() {
+//     $('.text').css("visibility","visible");
+// });
+
+// $('.hover').mouseout(function() {
+//   $('.text').css("visibility","hidden");
+// });
+
 
 
 </script>	
