@@ -4,24 +4,20 @@
 <head>
 <style type="text/css">
 
-@media only screen and (max-width: 768px) { 
    #trigger {
     visibility: hidden; 
     display: none; 
   } 
-}
+
 
 </style>
 </head>
 
 
 <div class='row'>
-	<div class='col-2 text-left p-0'>
-		<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-	</div>
-
-	<div class='col-10 text-center'>
-		{% if title %}<p class="lead" style='font-size: 30px; padding-right:230px'>{{ title }}</p>{% endif %}
+	
+	<div class='col text-center'>
+		{% if title %}<p class="lead" style='font-size: 30px;'>{{ title }}</p>{% endif %}
 	</div>
 </div>
 
