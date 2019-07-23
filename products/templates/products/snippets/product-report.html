@@ -1,33 +1,9 @@
-<!-- {% if request.user.is_authenticated %} -->
-
 <form class='form-product-ajax-report' method='POST' action='{% url "products:report" %}' data-endpoint='{% url "products:report" %}' class="form"> {% csrf_token %}
 	<input type='hidden' name='product_id' value='{{ product.id }}'>
 	<input type="hidden" name="previous" value="{{ request.path }}">
 	<span class='submit-span-report'>
-
-
-<!-- 		 {% if product in request.user.wishes.all %}
-					<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-5x'></i></button>
-
-		{% else %}
-
-					<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-5x'></i></button>
-		{% endif %} -->
-
-			<button type='submit' class='btn btn-light' style="font-size: 12px;">Report this item?</button>
-
+		<button type='submit' class='report btn my-auto p-0 m-0' style="font-size: 12px;">
+			{% if request.session.language == 'RU' %}Жалоба?{% else %}Report?{% endif %}
+		</button>
 	</span>
 </form>
-
-<!-- {% else %}
-
-<form class='form-product-ajax-wishlists' method='POST' action='{% url "accounts:wish-list-update" %}' data-endpoint='{% url "accounts:wish-list-update" %}' class="form"> {% csrf_token %}
-	<input type='hidden' name='product_id' value='{{ product.id }}' />
-	<span class='submit-span-wishlist'>
-
-
-					<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-5x'></i></button>
-
-
-
-{% endif %} -->

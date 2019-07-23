@@ -300,10 +300,10 @@ $(document).ready(
           success: function(data){
             var submitSpan = thisForm.find(".submit-span-wishlist")
             if (data.added){
-              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-2x'></i></button>")
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-2x black-heart'></i></button>")
             }
             else {
-              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-2x'></i></button>")
+              submitSpan.html("<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-2x black-heart'></i></button>")
             }
 
             var navbarCount = $(".navbar-wish-count")
