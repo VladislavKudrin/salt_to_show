@@ -160,6 +160,8 @@
                     </div>
             </a>
             <a class="dropdown-item" href='{% url "products:user-list" %}'>Мои айтемы</a>
+            <a class="dropdown-item" href='{% url "accounts:wish-list" %}'>Избранное</a>
+            <a class="dropdown-item" href='{% url "accounts:history-product" %}'>Просмотренное</a>
             <a class="dropdown-item" href='{% url "accounts:user-update" %}'>Настройки</a>
           </div>
         </li>
@@ -353,6 +355,8 @@
                     </div>
             </a>
             <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "products:user-list" %}'>My items</a>
+            <a class="dropdown-item" href='{% url "accounts:wish-list" %}'>Wishlist</a>
+            <a class="dropdown-item" href='{% url "accounts:history-product" %}'>History</a>
             <a class="dropdown-item {% if request.path == account_url %}active{% endif %}" href='{% url "accounts:user-update" %}'>Settings</a>
           </div>
         </li>

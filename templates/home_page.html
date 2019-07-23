@@ -799,6 +799,10 @@ html, body {
 
 <script type="text/javascript">
 
+var currentPath = window.location.href
+  if (currentPath.indexOf("products/view") != -1) {
+    $('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
+  }
 
 //flying text
 $(function() {

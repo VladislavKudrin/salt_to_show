@@ -11,14 +11,10 @@
 }
 
 
-
-@media only screen and (max-width: 768px) { 
-   #trigger {
+#trigger {
     visibility: hidden; 
     display: none; 
   } 
-}
-
 
 </style>
 </head>
@@ -27,11 +23,8 @@
 
 {% if request.session.language == 'RU' %}
  <input type="hidden" id='language' name="language" value='RU'>
-  <div class='col-12 text-left p-0'>
-      <button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-  </div>
-
-  <div class="container-fluid">
+  
+    <div class="container-fluid">
 
   <div class="row">
     
@@ -61,11 +54,6 @@
   </div>
 {% else %}
 <input type="hidden" id='language' name="language" value='EN'>
-
-
-  <div class='col-12 text-left p-0'>
-      <button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-  </div>
 
   <div class="container-fluid">
 

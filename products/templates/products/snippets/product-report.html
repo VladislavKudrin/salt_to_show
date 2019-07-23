@@ -1,9 +1,19 @@
+<style type="text/css">
+	@media only screen and (max-width: 768px) {
+		#report-mobile {
+			visibility: hidden;
+			display: none;
+		}
+	}
+
+</style>
+
 <form class='form-product-ajax-report' method='POST' action='{% url "products:report" %}' data-endpoint='{% url "products:report" %}' class="form"> {% csrf_token %}
 	<input type='hidden' name='product_id' value='{{ product.id }}'>
 	<input type="hidden" name="previous" value="{{ request.path }}">
 	<span class='submit-span-report'>
 		<button type='submit' class='report btn my-auto p-0 m-0' style="font-size: 12px;">
-			{% if request.session.language == 'RU' %}Жалоба?{% else %}Report?{% endif %}
+			<div id="report-mobile">{% if request.session.language == 'RU' %}Жалоба?{% else %}Report?{% endif %}</div>
 		</button>
 	</span>
 </form>
