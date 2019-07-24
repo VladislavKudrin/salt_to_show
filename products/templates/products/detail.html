@@ -15,28 +15,6 @@
 <style type="text/css">
 
 
-html,body{
-/*    font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, "Segoe UI", Roboto, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
-/*    font-family: BlinkMacSystemFont;*/
-/*  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: grayscale;
-  -o-font-smoothing: antialiased;
-  -ms-font-smoothing: antialiased;
-  font-size: 16px; 
-  text-decoration: none;
-  letter-spacing: normal; 
-  text-align: inherit; */
-  /*  line-height: 25px;*/
-  /*   font-weight: 400; */ 
-  /*   text-transform: none; */
-  /*   color: inherit; */
-  /*  line-height: 25px; 
-  width: 100%;
-  height: 100%; 
-  display: flex;
-  flex-direction: column;
-}*/
-}
 
 #published-line {
 	line-height: 1;
@@ -193,40 +171,6 @@ small {
 } 
 
 
-/*.flip-card-2-front, .flip-card-2-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border: 1px solid black;
-}
-
-.flip-card-2-front {
-  background-color: transparent;
-  color: black;
-}
-
-.flip-card-2-back {
-  background-color: white;
-  color: white;
-} */
-
-/*.fa-flag:hover{
-	text-decoration: 'report';
-}*/
-
-
-
-/*.wrapper:hover .text {
-visibility:visible;
-}
-
-*/
-
-
-
-
 
 
 .morecontent span {
@@ -273,25 +217,22 @@ p {
 
 <div id="desktop" class="row" style="position: absolute; left: 50%; right: 50%; margin-top: 50px; margin-bottom: 20px;">
 	<div class="col">
-			{% for image in images %}
-			<div class="row">
-				<div class="col mb-3" style="display: flex; justify-content: center;">
-					<img src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
-				</div>
+		{% for image in images %}
+		<div class="row">
+			<div class="col mb-3" style="display: flex; justify-content: center;">
+				<img src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
 			</div>
-			{% endfor %}
+		</div>
+		{% endfor %}
 	</div>
 </div>
 
 <div id="mobile" class='row'>
 	<div class='col-12' style="display: flex; justify-content: center; margin-top: 120px;">
-
-
 		{% if object.images.all %}
 		<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
 			<ol class="carousel-indicators"></ol>
 			<div class="carousel-inner">
-
 			{% for image in images %}
 				{% if image.image_order == 1 %}
 					<div class="carousel-item active" class="carousel slide" data-interval="false">
@@ -309,287 +250,31 @@ p {
 			{% endfor %}
 			</div>
 		</div>
-
 			<div class="arrows">
-
 				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="position: absolute; height: 50px; top: 35%;">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				<span class="sr-only">Previous</span>
 				</a>
-
 				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" style="position: absolute; height: 50px; top: 35%;">
 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				<span class="sr-only">Next</span>
 				</a>
-
 			</div>
-
-
 		{% endif %}
-
 	</div>
 </div>
 
 {% if request.session.language == 'RU' %}
 
+{% include 'products/languages/detail-ru.html' %}  
 
+{% elif request.session.language == 'UA' %}
 
-
-<div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
-
-	<div class="col-12  pb-3 uppercase-title" >{{ object.title }}</div>
-	<div class="col-6 uppercase">Размер:</div>
-	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:1px'>{{ object.size }}</div>
-	<div class="col-6 uppercase">Состояние:</div>
-	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:4px'>{{ object.condition }}</div>
-	<div class="col-12 uppercase">Описание:</div>
-	<div class="col-12  b-description_readmore js-description_readmore" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
-</div>
-
-<div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
-	<div class="col-9  uppercase-brand">{{ object.brand }}</div>
-	<div class="col-3 text-center" style="font-size: 12px; ">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-9 pb-3 uppercase-brand">${{ object.price }}</div>
-<!-- 	<div class="col-6 pb-1 uppercase-btn" style="display:flex; justify-content: center;">Размер: OS</div> -->
-	<div class="col-3 pb-3 text-center my-auto" style="font-size: 12px; ">{{ likes }}</div>
-		<div class="col-12 uppercase-btn pb-2">
-
-		{% if request.user.is_authenticated and request.user == object.user %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
-		{% endif %}
-	</div>
-	<div class="col-8 my-auto">
-		<div class="flip-card" style="width: 100%;">
-	        <div class=" flip-card-inner">
-				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Оригинал</span></div>
-	                <div class="flip-card-back">
-		                <div class="row">
-			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp| print_timestamp }}</small></div>
-
-		              	</div>
-	            	</div>
-	        </div>
-       	</div>
-	</div>
-
-
-		<div class="col-4 my-auto">
-		<div class="flip-card" style="width: 100%;">
-	        <div class=" flip-card-inner">
-				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-flag my-auto fa-1x"></i><span></span></div>
-	                <div class="flip-card-back pt-0">
-			            	{% include 'products/snippets/product-report.html' with product=object %}  
-		              	</div>
-	            	</div>
-	        </div>
-       	</div>
-
-
-
-
-
-
-	<div class="col-12 pt-4">
-		<div class="row">
-			<div id="published-line" class="col-8 my-auto">
-				<small class="text">Загружено {{ object.timestamp|timesince|to_rus_times }} назад 
-				</small>
-
-			</div>
-			<div class="col-4 pl-2">
-				{% if object.user.profile_foto %}
-					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
-				{% else %}
-					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv" ></a>
-				{% endif %}
-			</div>
-
-		</div>
-	</div>
-	</div>
-
-
-</div>
-
-<div id="mobile" class="row mx-5 mt-3">
-	<div class="col-10" style="font-size: 16px;">{{ object.brand }}</div>
-	<div class="col-2" style="font-size: 14px; display: flex; justify-content: flex-end;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-9 pb-1" style="font-size: 16px;">${{ object.price }}</div>
-	<div class="col-3 pb-1" style="font-size: 14px; display:flex; justify-content: flex-end; padding-right: 25px;">{{ likes }}</div>
-		<div class="col-12">
-		{% if request.user.is_authenticated and request.user == object.user %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Связаться с продавцом' %} 
-		{% endif %}
-	</div>
-	<div class="col-8 uppercase-btn">
-		<div class="flip-card-2" style="width: 100%;">
-	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Оригинал</span></div>
-	                
-	        </div>
-       	</div>
-	</div>
-	<div class="col-4 uppercase-btn" style="display: flex; justify-content: flex-end;">
-		<i class="fas fa-flag mt-1 fa-1x"></i>
-		   	{% include 'products/snippets/product-report.html' with product=object %}
-    </div>
-
-	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
-	<div class="col-6 lead pb-1" style="font-size: 12px;">Размер: {{ object.size }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>Состояние:</div>
-	<div class="col-12 lead pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>Описание:</div>
-	<div class="col-12 lead read-more" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>	
-
-	
-	<div class="row m-0">
-		<div id="published-line" class="col-8 mt-3">		
-			<p style="font-size: 11px">Загружено {{ object.timestamp|timesince|to_rus_times }}  </p>		
-		</div>
-		<div class="col-4">
-			{% if object.user.profile_foto %}
-				<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
-			{% else %}
-				<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:50px; height: 50px"></a>
-			{% endif %}
-		</div>
-	</div>
-
-</div>
-
-</div>
+{% include 'products/languages/detail-ua.html' %}  
 
 {% else %}
 
-<div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
-	<div class="col-12  pb-3 uppercase-title" >{{ object.title }}</div>
-	<div class="col-6 uppercase">Размер:</div>
-	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:1px'>{{ object.size }}</div>
-	<div class="col-6 uppercase">Состояние:</div>
-	<div class="col-6  my-auto" style='font-size: 12px; padding-bottom:4px'>{{ object.condition }}</div>
-	<div class="col-12 uppercase">Описание:</div>
-	<div class="col-12  comment more" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
-</div>
-
-<div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
-	<div class="col-9  uppercase-brand">{{ object.brand }}</div>
-	<div class="col-3 text-center" style="font-size: 12px; ">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-9 pb-3 uppercase-brand">${{ object.price }}</div>
-<!-- 	<div class="col-6 pb-1 uppercase-btn" style="display:flex; justify-content: center;">Размер: OS</div> -->
-	<div class="col-3 pb-3 text-center my-auto" style="font-size: 12px; ">{{ likes }}</div>
-		<div class="col-12 uppercase-btn pb-2">
-		{% if request.user.is_authenticated and request.user == object.user %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
-		{% endif %}
-	</div>
-	<div class="col-8 my-auto">
-		<div class="flip-card" style="width: 100%;">
-	        <div class=" flip-card-inner">
-				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Authentic</span></div>
-	                <div class="flip-card-back">
-		                <div class="row">
-			            	<div class="col my-auto mr-2 ml-2"><small>Checked on {{ object.timestamp| print_timestamp }}</small></div>
-
-		              	</div>
-	            	</div>
-	        </div>
-       	</div>
-	</div>
-
-
-		<div class="col-4 my-auto">
-		<div class="flip-card" style="width: 100%;">
-	        <div class=" flip-card-inner">
-				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-flag my-auto fa-1x"></i><span></span></div>
-	                <div class="flip-card-back pt-0">
-			            	{% include 'products/snippets/product-report.html' with product=object %}  
-		              	</div>
-	            	</div>
-	        </div>
-       	</div>
-
-
-
-
-
-
-	<div class="col-12 pt-4">
-		<div class="row">
-			<div id="published-line" class="col-8 my-auto">
-				<p class="text" style="font-size: 11px">Posted {{ object.timestamp|timesince }} ago 
-				</p>
-
-			</div>
-			<div class="col-4 pl-2">
-				{% if object.user.profile_foto %}
-					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
-				{% else %}
-					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv" ></a>
-				{% endif %}
-			</div>
-
-		</div>
-	</div>
-	</div>
-
-
-</div>
-
-<div id="mobile" class="row mx-5 mt-3">
-	<div class="col-10" style="font-size: 16px;">{{ object.brand }}</div>
-	<div class="col-2" style="font-size: 14px; display: flex; justify-content: flex-end;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
-	<div class="col-9 pb-1" style="font-size: 16px;">${{ object.price }}</div>
-	<div class="col-3 pb-1" style="font-size: 14px; display:flex; justify-content: flex-end; padding-right: 25px;">{{ likes }}</div>
-		<div class="col-12">
-		{% if request.user.is_authenticated and request.user == object.user %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
-		{% endif %}
-	</div>
-	<div class="col-8 uppercase-btn">
-		<div class="flip-card-2" style="width: 100%;">
-	        <div class=" flip-card-2-inner">
-				<div class="flip-card-2-front"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Authentic</span></div>
-	                
-	        </div>
-       	</div>
-	</div>
-	<div class="col-4 uppercase-btn" style="display: flex; justify-content: flex-end;">
-		<i class="fas fa-flag mt-1 fa-1x"></i>
-		   	{% include 'products/snippets/product-report.html' with product=object %}
-    </div>
-
-	<div class="col-12 lead pb-2" style='font-size: 14px; font-weight: bold;'>{{ object.title }}</div>
-	<div class="col-6 lead pb-1" style="font-size: 12px;">Size: {{ object.size }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>Condition:</div>
-	<div class="col-12 lead pb-2" style='font-size: 12px;'>{{ object.condition }}</div>
-	<div class="col-12 lead" style='font-size: 12px;'>Description:</div>
-	<div class="col-12 lead read-more" style='font-size: 12px;'>{{ object.description|linebreaks }}</div>	
-
-	
-	<div class="row m-0">
-		<div id="published-line" class="col-8 mt-3">		
-			<p style="font-size: 11px">Posted {{ object.timestamp|timesince }} ago </p>		
-		</div>
-		<div class="col-4">
-			{% if object.user.profile_foto %}
-				<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:50px; height: 50px"></a>
-			{% else %}
-				<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:50px; height: 50px"></a>
-			{% endif %}
-		</div>
-	</div>
-
-</div>
-
-</div>
+{% include 'products/languages/detail-en.html' %}  
 
 {% endif %}
 

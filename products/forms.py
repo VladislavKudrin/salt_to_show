@@ -115,10 +115,15 @@ class ProductCreateForm(forms.ModelForm):
 		if description: 
 			description = re.sub(r'\n\s*\n','\n',description,re.MULTILINE)
 			length = len(description.splitlines())
+			chars = len(description)
 			if length > 18: 
 				lines = int(length) - int(18)
 				message = 'Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines)
 				self.add_error('description', message)
+			if chars > 600:
+				charss = int(chars) - int(600)
+				message = 'Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss)
+				self.add_error('description', message)	
 		return description
 
 

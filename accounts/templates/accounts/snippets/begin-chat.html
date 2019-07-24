@@ -1,23 +1,23 @@
 {% if request.session.language == 'RU' %}
 	{% if request.user.username == object.username %}
-		<a href="{% url 'accounts:user-update' %}" class="btn btn-dark btn-lg btn-block">Обновить аккаунт</a>
+		<a href="{% url 'accounts:user-update' %}" class="btn btn-dark uppbercase-btn btn-lg btn-block">Обновить аккаунт</a>
 	{% else %}
 	<form method="POST">
 	{% csrf_token %}
 	    <input type="hidden" name="next" value="{% url 'home' %}">
 	    <input type="hidden" name="chat_with" value="{{ object.user.username }}">
-	    <button id="button-mobile" class="btn btn-dark	 btn-block mb-1" type="submit" style="width: 100%;">{{ btn_title }}</button>
+	    <button id="button-mobile" class="btn btn-dark	uppercase-btn btn-block mb-1" type="submit" style="width: 100%;">{{ btn_title }}</button>
 	</form>
 	{% endif %}
 {% else %}
 	{% if request.user.username == object.username %}
-		<a href="{% url 'accounts:user-update' %}" class="btn btn-dark btn-lg btn-block">Update your profile</a>
+		<a href="{% url 'accounts:user-update' %}" class="btn btn-dark uppercase-btn btn-lg btn-block">Update your profile</a>
 	{% else %}
 	<form method="POST">
 	{% csrf_token %}
 	    <input type="hidden" name="next" value="{% url 'home' %}">
 	    <input type="hidden" name="chat_with" value="{{ object.user.username }}">
-	    <button id="button-mobile" class="btn btn-dark	 btn-block mb-1" type="submit" style="width: 100%;">{{ btn_title }}</button>
+	    <button id="button-mobile" class="btn btn-dark	 btn-block mb-1 uppercase-btn" type="submit" style="width: 100%;">{{ btn_title }}</button>
 	</form>
 	{% endif %}
 {% endif %}
