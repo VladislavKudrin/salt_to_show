@@ -1,10 +1,19 @@
 <style type="text/css">
 	@media only screen and (max-width: 768px) {
+		#report-desktop {
+			visibility: hidden;
+			display: none;
+		}
+	}
+
+	@media only screen and (min-width: 768px) {
 		#report-mobile {
 			visibility: hidden;
 			display: none;
 		}
 	}
+
+
 
 </style>
 
@@ -12,8 +21,10 @@
 	<input type='hidden' name='product_id' value='{{ product.id }}'>
 	<input type="hidden" name="previous" value="{{ request.path }}">
 	<span class='submit-span-report'>
+
 		<button type='submit' class='report btn my-auto p-0 m-0' style="font-size: 12px;">
-			<div id="report-mobile">{% if request.session.language == 'RU' %}Жалоба?{% else %}Report?{% endif %}</div>
+			<div id="report-desktop">{% if request.session.language == 'RU' %}Жалоба?{% else %}Report?{% endif %}</div>
+			<div id="report-mobile" ><i class="fas fa-flag my-auto fa-1x"></i></div>
 		</button>
 	</span>
 </form>
