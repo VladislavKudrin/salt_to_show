@@ -180,6 +180,12 @@ class RegisterLoginForm(forms.ModelForm):
         return self.cleaned_data.get('password')
 
 
+    # def clean_subscribed(self):
+    #     marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
+    #     subscribed_user = self.cleaned_data.get('subscribed')
+    #     marketing_pref.update(subscribed=subscribed_user)
+
+
 
     def save(self, commit=True):
         request = self.request

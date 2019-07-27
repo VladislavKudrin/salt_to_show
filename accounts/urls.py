@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.views.generic import RedirectView
 
 
 from products.views import UserProductHistoryView
@@ -15,7 +16,7 @@ from .views import (
 
 
 urlpatterns = [
-    url(r'^$',AccountHomeView.as_view(), name='home'),
+    url(r'^$',RedirectView.as_view(url='/products'), name='home'),
     url(r'^language/$',languge_pref_view, name='language-pref'),
     url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),
     url(r'^wishlist-update/$', wishlistupdate, name='wish-list-update'),
