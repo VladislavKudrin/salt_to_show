@@ -16,24 +16,44 @@
 <style type="text/css">
 
 @media only screen and (max-width: 768px) { 
-   .dual-collapse2 {
+
+   .dual-collapse2, #navbar-desktop {
+    visibility: hidden; 
+    display: none; 
+  } 
+
+  #navbar-mobile {
+    display: inline-block;
+    width: 30%;
+  }
+}
+
+@media only screen and (min-width: 768px) { 
+   #lang-mobile, #navbar-mobile {
     visibility: hidden; 
     display: none; 
   } 
 }
 
 @media only screen and (min-width: 768px) { 
-   #lang-mobile {
-    visibility: hidden; 
-    display: none; 
-  } 
-}
 
-@media only screen and (min-width: 768px) { 
    #buttons {
     visibility: hidden; 
     display: none; 
   } 
+}
+
+
+#lang-button {
+    opacity: 0.85;
+}
+
+#wishlist-button, #user-button {
+    opacity: 0.8;
+}
+
+#lang-button:hover, #wishlist-button:hover, #user-button:hover {
+    opacity: 1;
 }
 
 .avatar-navbar{
@@ -42,13 +62,14 @@
 }
 
 
-
 /*ul li{
   display: inline;
 }
 */
 
 </style>
+
+
 {{ request.session|to_default_language }}
 {% if request.session.language == 'RU' %}
 <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white pb-0">
@@ -61,7 +82,7 @@
     </div>
 
 
-    <div class="align-bottom"> 
+    <div id="navbar-desktop" class="align-bottom"> 
         <ul class="navbar-nav mx-auto" style="align-self: end;">
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
@@ -75,6 +96,26 @@
     </div>
 
 
+    <ul id="navbar-mobile" class="navbar-nav mb-2">
+            <li class="nav-item list-unstyled" style="display: inline-block;">
+                 <a href="{% url 'home' %}">
+                    <div class="row"> 
+                         <div class="col"><span>S A L T</span></div>
+                    </div>
+                </a>
+            </li>
+
+
+            <li class="nav-item" style="display: inline-block;">                
+            <button class='btn btn-filter pr-0' id='trigger_2'><i class="fas fa-grip-horizontal">
+              
+             <div class='col-5 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+                {% include "sidebar.html" %}               
+            </div>
+            </i></button>
+        
+            </li>
+        </ul>
 
     <ul class="ml-auto mr-0 mt-2 pr-0" id='lang-mobile'>
         <li class="" style='width:30px; position:relative; display: inline;'>
@@ -102,23 +143,28 @@
             <span class="navbar-toggler-icon"></span>
         </button> -->
 
-
-
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto align-items-center">
-        <li class="nav-item mr-2 m-0 pb-0">
+
+        <li class="nav-item">
          {% include 'base/language-controll.html' %}
-        </li>        
+        </li>  
+
+        <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" ">
+              <a id="button-sell-buy" class="hover-button button-white uppercase-btn" role="button" href="{{ products_create_url }}">Sell</a>
+        </li>      
          
-   
-      
-        <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
-          <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
+        <li class="nav-item ml-0  {% if request.path == product_list_url %}active{% endif %}"">
+              <a id="button-sell-buy" class="hover-button button-black uppercase-btn" role="button" href="{{ product_list_url }}" >Buy</a>
+        </li>
+
+        <!-- <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+          <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>         
         </li>
 
         <li class="nav-item ml-0  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
           <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
-        </li>
+        </li> -->
 
         
 
@@ -127,7 +173,7 @@
         <li class="nav-item">
         <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
 
-        <i class="fas fa-heart black-heart"></i>
+        <i id="wishlist-button" class="fas fa-heart black-heart"></i>
         <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
         
         </a>
@@ -140,7 +186,7 @@
             {% if request.user.profile_foto %}
             <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
-            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i id="user-button" class="fas fa-user"></i></a>
             {% endif %}
           
           
@@ -168,7 +214,7 @@
 
         {% else %}
         <li class="nav-item {% if request.path == login_url %}active{% endif %}">
-        <a class="nav-link" href="{{ login_url }}"><i class="fas fa-user"></i></a>
+        <a class="nav-link" href="{{ login_url }}"><i id="user-button" class="fas fa-user"></i></a>
         </li>
   
       {% endif %}
@@ -256,11 +302,11 @@
         </ul>
     </div>
 
-    <div class="align-bottom">
+    <div id="navbar-desktop" class="align-bottom"> 
         <ul class="navbar-nav mx-auto" style="align-self: end;">
             <li class="nav-item list-unstyled">
                  <a href="{% url 'home' %}">
-                    <div class="row" style=" width: 100px" > 
+                    <div class="row" style=" width:100px" > 
                          <div class="col"><span class=''>S A L T</span>
                          </div>
                     </div>
@@ -268,6 +314,31 @@
             </li>
         </ul>
     </div>
+
+    
+        <ul id="navbar-mobile" class="navbar-nav mb-2">
+            <li class="nav-item list-unstyled" style="display: inline-block;">
+                 <a href="{% url 'home' %}">
+                    <div class="row"> 
+                         <div class="col"><span>S A L T</span></div>
+                    </div>
+                </a>
+            </li>
+
+
+            <li class="nav-item" style="display: inline-block;">                
+            <button class='btn btn-filter pr-0' id='trigger_2'><i class="fas fa-grip-horizontal">
+              
+             <div class='col-5 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+                {% include "sidebar.html" %}               
+            </div>
+            </i></button>
+        
+            </li>
+        </ul>
+   
+
+
 
     <ul class="ml-auto mr-0 mt-2 pr-0" id='lang-mobile'>
         <li class="" style='width:30px; position:relative; display: inline;'>
@@ -304,25 +375,33 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto align-items-center">
 
-          <li class="nav-item mr-2 pb-0">
+        <li class="nav-item">
          {% include 'base/language-controll.html' %}
+        </li>  
+
+        <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" ">
+              <a id="button-sell-buy" class="hover-button button-white uppercase-btn" role="button" href="{{ products_create_url }}">Sell</a>
+        </li>      
+         
+        <li class="nav-item ml-0  {% if request.path == product_list_url %}active{% endif %}"">
+              <a id="button-sell-buy" class="hover-button button-black uppercase-btn" role="button" href="{{ product_list_url }}" >Buy</a>
         </li> 
             
       
-        <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
+        <!-- <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}" style="height: 30px;">
           <a class="btn btn-light" role="button" href="{{ products_create_url }}" style="height: 30px;padding-top: 2px;">Sell</a>          
         </li>
 
         <li class="nav-item ml-0  {% if request.path == product_list_url %}active{% endif %}" style="height: 30px;">
           <a class="btn btn-dark" role="button" href="{{ product_list_url }}" style="height: 30px;padding-top: 2px;">Buy</a>
-        </li>
+        </li> -->
 
         
         {% if request.user.is_authenticated %}                                
         <li class="nav-item">
         <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
 
-        <i class="fas fa-heart black-heart"></i>
+        <i id="wishlist-button" class="fas fa-heart black-heart"></i>
         <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
         
         </a>
@@ -335,7 +414,7 @@
             {% if request.user.profile_foto %}
             <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
             {% else %}
-            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i id="user-button" class="fas fa-user"></i></a>
             {% endif %}
           
           
@@ -363,7 +442,7 @@
 
         {% else %}
         <li class="nav-item {% if request.path == login_url %}active{% endif %}">
-        <a class="nav-link" href="{{ login_url }}"><i class="fas fa-user"></i></a>
+        <a class="nav-link" href="{{ login_url }}"><i id="user-button" class="fas fa-user"></i></a>
         </li>
   
       {% endif %}
