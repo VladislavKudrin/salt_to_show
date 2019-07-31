@@ -5,28 +5,144 @@
       #font {
         font-size: 14px;
       }
+
+.soc-seti {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.soc-seti .soc-set {
+  list-style: none;
+}
+
+.soc-seti .soc-set .a-soc {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  text-align: center;
+  line-height: 25px;
+  font-size: 15px;
+  margin: 0 5px;
+  display: block;
+  border-radius: 50% !important;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff;
+  z-index: 1;
+}
+
+.soc-seti .soc-set .a-soc .icon {
+  position: relative;
+  color: #262626;
+  transition: .5s;
+  z-index: 3;
+}
+
+.soc-seti .soc-set .a-soc:hover .icon {
+  color: #fff;
+  transform: rotateY(360deg);
+}
+
+.soc-seti .soc-set .a-soc:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f00;
+  transition: .5s;
+  z-index: 2;
+}
+
+.soc-seti .soc-set .a-soc:hover:before {
+  top: 0;
+}
+
+.soc-seti .soc-set:nth-child(2) {
+  font-weight: bold;
+}
+
+.soc-seti .soc-set:nth-child(1) .a-soc:before{
+  background: #3b5999;
+}
+
+.soc-seti .soc-set:nth-child(2) .a-soc:before{
+  background: linear-gradient(#e66465, #9198e5);
+  font-weight: bold;
+}
+
+.soc-seti .soc-set:nth-child(3) .a-soc:before {
+  background: #0077b5;
+}
+
+}
   </style>
 </head>
 
 {% if request.session.language == 'RU' %}
-  <footer class="page-footer font-small my-4">
+  <footer class="page-footer font-small">
       <div class="container-fluid">
         <div class="row">
-          <div class="col my-4 text-center">
-            <a href="{% url 'about' %}" class="text-body mr-3" id="font">О нас</a>
+          <div class="col-4 my-2">
+            <a href="{% url 'about' %}" class="text-body mx-3" id="font">О нас</a>
             <a href='{% url "contact" %}' class="text-body mx-3" id="font">Контакт</a>
           </div>
+
+
+          <div class="col-4 my-2">
+            <ul class="soc-seti pl-0">
+              <li class="soc-set">
+                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-4 my-2 text-right">
+            <a class="text-body mx-3" id="font">SALT © 2019</a>
+          </div>
+
         </div>
       </div>
   </footer>
 {% else %}
-  <footer class="page-footer font-small my-4">
+  <footer class="page-footer font-small">
       <div class="container-fluid">
         <div class="row">
-          <div class="col my-4 text-center">
-            <a href="{% url 'about' %}" class="text-body mr-3" id="font">About</a>
+          <div class="col-4 my-2">
+            <a href="{% url 'about' %}" class="text-body mx-3" id="font">About</a>
             <a href='{% url "contact" %}' class="text-body mx-3" id="font">Contact</a>
           </div>
+
+
+          <div class="col-4 my-2">
+            <ul class="soc-seti pl-0">
+              <li class="soc-set">
+                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-4 my-2 text-right">
+            <a class="text-body mx-3" id="font">SALT © 2019</a>
+          </div>
+
         </div>
       </div>
   </footer>
