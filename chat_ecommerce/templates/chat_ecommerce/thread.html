@@ -13,6 +13,11 @@
 
 
 @media only screen and (max-width: 768px) { 
+
+.btn {
+	padding-left: 6px !important;
+}
+
   .avatar-skip { 
     display: none; 
   } 
@@ -325,7 +330,7 @@ button:focus {
 				</div>
 			</div>
 			<div class='row alldialogs'>
-				<ul id='dialogs' class='my-custom-scrollbar'>
+				<ul id='dialogs' class='my-custom-scrollbar' style="width: 100%">
 					{% for obj in chats %}
 						{% if request.user != obj.first %}
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
@@ -481,7 +486,7 @@ button:focus {
 								<div class='col-7 col-md-11 my-auto pr-0'>
 									{{form }}
 									</div>
-								<div class='col-1 my-auto pl-0' >
+								<div class='col-5 col-md-1 my-auto pl-0' >
 									<button type='submit' class='btn'>
 									<i class="fas fa-paper-plane fa-2x"></i>
 									</button>

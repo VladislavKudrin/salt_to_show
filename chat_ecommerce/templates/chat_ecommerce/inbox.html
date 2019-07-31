@@ -10,7 +10,15 @@ html, body {
     overflow-x: hidden;
 }
 
+#inbox-text {
+	height: 50%;
+}
+
 @media only screen and (max-width: 768px) { 
+
+#inbox-text {
+	height: 35%;
+}
   .avatar-skip { 
     display: none; 
   } 
@@ -167,8 +175,8 @@ button:focus {
 </head>
 
 
-<div class='container-fluid m-0 p-0'>
-	<div class='row'>
+<div class='container-fluid m-0 p-0' style="height: 100% !important;">
+	<div class='row' style="height: 100% !important;">
 
 
 		<div class='col-5 col-md-3'>
@@ -184,7 +192,7 @@ button:focus {
 				</div>
 			</div>
 			<div class='row'>
-				<ul id='dialogs-inbox' class='my-custom-scrollbar'>
+				<ul id='dialogs-inbox' class='my-custom-scrollbar' style="width: 100%">
 
 
 					{% for obj in chats %}
@@ -252,7 +260,7 @@ button:focus {
 <div class='col-7 lead col-md-9' style="color:#aeacac; background-image: url('{% static 'img/worn_dots.png' %}')">
 	<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
 	</div>
-	<div class='row text-center h-50 row align-items-center'>
+	<div id="inbox-text" class='row text-center row align-items-center'>
 		<div class='col'>
 		{% if request.session.language == 'RU' %}
 		Выберите собеседника, чтобы начать диалог

@@ -72,14 +72,14 @@ small {
 	font-size: 11px;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1200px) {
 	#mobile {
 		visibility: hidden;
 		display: none;
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1200px) {
 	
 
 	html, body {
@@ -340,7 +340,7 @@ $('.js-description_readmore').moreLines({
 
 
 	var currentPath = window.location.href
-	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 768)){
+	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 1200)){
 		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
 	} else {
 		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');		

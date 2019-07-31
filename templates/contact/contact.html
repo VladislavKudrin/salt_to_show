@@ -18,7 +18,7 @@
             <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
             <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
              {{ form|crispy }}
-             <button type="submit" class="btn btn-dark btn-lg btn-block">Отправить</button>
+             <button type="submit" class="btn btn-block button-black hover-button large-button">Отправить</button>
           </form>
           <br>
         </div>  
@@ -39,7 +39,7 @@
             <input type="hidden" name="popchik" value="{{ user_email }}">
             <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
              {{ form|crispy }}
-             <button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button>
+             <button type="submit" class="btn btn-block button-black hover-button large-button">Submit</button>
           </form>
           <br>
         </div>  

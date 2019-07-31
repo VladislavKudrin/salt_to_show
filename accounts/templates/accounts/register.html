@@ -21,6 +21,7 @@
 	<div class='row'>
         <div class="mx-auto col-xs-12 col-md-7">
             <div class="text-center">
+
 				<p class="lead" style='font-size: 30px;'>Войти | Зарегистрироваться</p>
 				<form method = 'POST'> {% csrf_token %}
 					<div class="col-12 col-md-12 pl-0 pr-0">
@@ -44,6 +45,7 @@
 		        </button>
 		        </a>
         		<br><small><a href='{% url "password_reset" %}'>Забыл_а пароль?</a></small>
+
 			</div>
 		</div>
 	</div>

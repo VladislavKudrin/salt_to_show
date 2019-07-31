@@ -5,31 +5,35 @@
 <head>
 <style type="text/css">
 
-  #trigger {
-    visibility: hidden; 
-    display: none; 
-  } 
+	html, body {
+	    max-width: 100%;
+	    overflow-x: hidden;
+	}
+
+	#trigger {
+		visibility: hidden; 
+		display: none; 
+	} 
 
 </style>
 </head>
 
-<div class='row'>
-
-	<div class='col mx-auto text-center'>
-		{% if title %}<p class="lead" style='font-size: 30px;'>{{ title }}:</p>{% endif %}
-	</div>
-</div>
-
-<div class="container-fluid">
 
 
-<div class='row'>
+	
+
+<div class="container">
 
 	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
 	  		{% include "sidebar.html" %}
 	</div> 
 
-<div class="container">
+	<div class='row'>
+		<div class='col-12'>
+			{% if title %} <p class="lead" id="products-by-user" style='font-size: 30px;'>{{ title }}:</p>{% endif %}
+		</div>
+	</div>
+
 <div class='row'>
 	{% if object_list|length > 0 %}
 	{% for obj in object_list %}
