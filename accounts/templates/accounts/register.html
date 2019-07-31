@@ -8,9 +8,6 @@
 <style type="text/css">
 
 
-
-
-
   
 
 
@@ -25,64 +22,101 @@
         <div class="mx-auto col-xs-12 col-md-7">
             <div class="text-center">
 
-					<p class="lead" style='font-size: 30px;'>Войти | Зарегистрироваться</p>
-					<form method = 'POST'> {% csrf_token %}
-							{{ form|crispy }}
-							<button type="submit" class="btn btn-block button-black hover-button large-button">OK</button><br>
-					</form>
+				<p class="lead" style='font-size: 30px;'>Войти | Зарегистрироваться</p>
+				<form method = 'POST'> {% csrf_token %}
+					<div class="col-12 col-md-12 pl-0 pr-0">
+						{{form.email|as_crispy_field}}
+					</div>
+					<div class='row'> 
+						<div class="col-11 col-md-11 pr-0 " id='pw'>
+							{{form.password|as_crispy_field}}
+						</div> 
+						<div class="col-1 col-md-1 pl-1 pb-3 my-auto " id='pw'>
+							<div onclick="showpassword(this);" style="font-size:15px">
+								<i class="eye fa fa-eye"></i> 
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-dark btn-lg btn-block">ОК</button><br>
+				</form>
+				<p class="lead" style='font-size: 30px;'>Или</p>
+		        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-light btn-block">
+					 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
+		        </button>
+		        </a>
+        		<br><small><a href='{% url "password_reset" %}'>Забыл_а пароль?</a></small>
 
-						<p class="lead" style='font-size: 30px;'>Или</p>
-<!-- 			        <a href="{% url 'social:begin' 'vk-oauth2' %}">  <button class="btn btn-outline-dark btn-block">
-			             <i class="fab fa-vk ml-1 mr-1"></i>
-			            </button>
-			            </a>
-			        <br> -->
-
-			        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-light btn-block">
-						 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
-			        </button>
-			        </a>
-
-			        <br><small><a href='{% url "password_reset" %}'>Забыл_а пароль?</a></small>
 			</div>
 		</div>
 	</div>
 </div>
 {% else %}
+
 <div class="container-fluid">
 	<div class='row'>
         <div class="mx-auto col-xs-12 col-md-7">
             <div class="text-center">
-
-					<p class="lead" style='font-size: 30px;'>Login | Register</p>
-					<form method = 'POST'> {% csrf_token %}
-							{{ form|crispy }}
-
-							<button type="submit" class="btn btn-block button-black hover-button large-button">OK</button><br>
-					</form>
-
-
-						<p class="lead" style='font-size: 30px;'>Or</p>
-<!-- 			        <a href="{% url 'social:begin' 'vk-oauth2' %}">  <button class="btn btn-outline-dark btn-block">
-			             <i class="fab fa-vk ml-1 mr-1"></i>
-			            </button>
-			            </a>
-			        <br> -->
-
-			        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-light btn-block">
-						 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
-			        </button>
-			        </a>
-
-			        <br><small><a href='{% url "password_reset" %}'>Forgot Password?</a></small>
+				<p class="lead" style='font-size: 30px;'>Login | Register</p>
+				<form method = 'POST'> {% csrf_token %}
+					<div class="col-12 col-md-12 pl-0 pr-0">
+						{{form.email|as_crispy_field}}
+					</div>
+					<div class='row'> 
+						<div class="col-11 col-md-11 pr-0 " id='pw'>
+							{{form.password|as_crispy_field}}
+						</div> 
+						<div class="col-1 col-md-1 pl-1 pb-3 my-auto " id='pw'>
+							<div onclick="showpassword(this);" style="font-size:15px">
+								<i class="eye fa fa-eye"></i> 
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-dark btn-lg btn-block">ОК</button><br>
+				</form>
+				<p class="lead" style='font-size: 30px;'>Or</p>
+		        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-light btn-block">
+					 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
+		        </button>
+		        </a>
+        		<br><small><a href='{% url "password_reset" %}'>Forgot password?</a></small>
 			</div>
 		</div>
 	</div>
 </div>
 
+
+
+
+
 {% endif %}
 
 
+<script type="text/javascript">
 
+
+function showpassword(button) {
+	if ($('.eye').hasClass('fa-eye')) {
+		document.getElementById("id_password").type='text';
+		$('.eye').removeClass('fa-eye').addClass('fa-eye-slash');
+	}
+	else{
+		document.getElementById("id_password").type='password';
+		$('.eye').removeClass('fa-eye-slash').addClass('fa-eye');
+	}
+}
+
+
+// function reveal()
+// {
+// if(document.getElementById('box').checked)
+//    {document.getElementById("id_password").type='text';}
+// else
+// document.getElementById("id_password").type='password';
+// }
+
+
+
+
+</script>	
 
 {% endblock %}

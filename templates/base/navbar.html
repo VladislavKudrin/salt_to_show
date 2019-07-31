@@ -62,10 +62,16 @@
 }
 
 
-/*ul li{
-  display: inline;
-}
-*/
+
+
+.notifications{
+    height: 5px;
+    width: 5px;
+    position: absolute;
+    background-color: red;
+    text-align: right;
+    border-radius: 50% !important;
+
 
 </style>
 
@@ -184,9 +190,30 @@
         <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
+            <a class="nav-link dropdown-toggle m-0 p-0 test1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    {% if request.user|get_notif > 0 %}
+                        <div style='padding-left: 26px; padding-bottom: 0px'>
+                            <div class='notifications'></div>
+                        </div>
+                    {% else %}
+                    {% endif %}
+                <img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar test1" alt="..." style="width:40px; height: 40px">
+
+        </a>
+
             {% else %}
-            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i id="user-button" class="fas fa-user"></i></a>
+
+            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% if request.user|get_notif > 0 %}
+                        <div style='padding-left: 13px; padding-bottom: 0px'>
+                            <div class='notifications'></div>
+                        </div>
+                    {% else %}
+                    {% endif %}
+
+                    <i class="fas fa-user" ></i></a>
+
             {% endif %}
           
           
@@ -198,8 +225,8 @@
                             <div>Сообщения</div>
                         </div>
                         {% if request.user|get_notif > 0 %}
-                            <div class='col-3 my-auto p-1'>
-                                <div class='not-count'>{{ request.user|get_notif }}</div>
+                            <div class='col-3 my-auto text-right'>
+                                <span style='font-size: 13px; font-weight: bold'>{{ request.user|get_notif }}</span>
                              </div>
                         {% else %}
                         {% endif %}
@@ -412,9 +439,30 @@
         <li class="nav-item dropdown ml-2 mr-0">
            <!--  <a class="nav-link dropdown-toggle mb-0 pb-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user fa-2x"></i></a> -->
             {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar" alt="..." style="width:40px; height: 40px"></a>
+            <a class="nav-link dropdown-toggle m-0 p-0 test1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    {% if request.user|get_notif > 0 %}
+                        <div style='padding-left: 26px; padding-bottom: 0px'>
+                            <div class='notifications'></div>
+                        </div>
+                    {% else %}
+                    {% endif %}
+                <img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar test1" alt="..." style="width:40px; height: 40px">
+
+        </a>
+
             {% else %}
-            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i id="user-button" class="fas fa-user"></i></a>
+
+            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% if request.user|get_notif > 0 %}
+                        <div style='padding-left: 13px; padding-bottom: 0px'>
+                            <div class='notifications'></div>
+                        </div>
+                    {% else %}
+                    {% endif %}
+
+                    <i class="fas fa-user" ></i></a>
+
             {% endif %}
           
           
