@@ -13,27 +13,30 @@
 </style>
 </head>
 
-<div class='row'>
 
-	<div class='col text-center'>
-		{% if title %}<p class="lead" style='font-size: 30px;'>{{ title }}</p>{% endif %}
-	</div>
-</div>
 
 <div class="container-fluid">
 
 
 <div class='row'>
 
-	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
-	  		{% include "sidebar.html" %}
-	</div> 
+	
 
 
 
 
 
 <div class="container">
+	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+	  		{% include "sidebar.html" %}
+	</div> 
+
+	<div class='row'>
+		<div class='col-12'>
+			{% if title %}<p class="lead" id="products-by-user" style='font-size: 30px;'>{{ title }}:</p>{% endif %}
+		</div>
+	</div>
+
 <div class='row'>
 	{% for obj in object_list %}
 		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
