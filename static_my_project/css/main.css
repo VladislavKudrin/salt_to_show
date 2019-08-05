@@ -471,6 +471,14 @@ background-color: black;
   left:98px;
 }
 
+.badge-status {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  border: 1px solid white;
+  font-size: 11px !important;
+}
+
 .one-line{
     text-overflow: ellipsis;
     overflow: hidden;

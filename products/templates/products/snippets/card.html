@@ -6,8 +6,7 @@
 }*/
 </style>
 
- {% if instance.authentic == 'authentic' %}
-AUTHENTIC
+
   {% if instance.thumbnail %}
   {% with instance.thumbnail.all|first as thumbnail %}
       <div class='wish-div my-auto ' style='justify-content: flex-start; display: flex;'>
@@ -38,77 +37,3 @@ AUTHENTIC
                     </div>
                   </a>
                 </div>
-
-
-      {% elif instance.authentic == 'fake' %}
-      FAKE
-        {% if instance.thumbnail %}
-  {% with instance.thumbnail.all|first as thumbnail %}
-      <div class='wish-div my-auto ' style='justify-content: flex-start; display: flex;'>
-      <img class="card-img-top my-auto " src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
-
-    </div>
-
-  {% endwith %}
-  {% endif %}
-                <div class="card-body position-relative">
-
-                    <div class="row position-relative poloska font-weight-bold" >
-                       <div class="col-3 position-static text-left one-line" style="font-size: 14px;">
-                        {{ instance.size }}
-                      </div>
-                      <div class="col-5 px-1 position-static text-center one-line" style="font-size: 14px;">
-                        {{ instance.brand }}
-                      </div>
-                      <div class="col-4 position-static text-right one-line" style="font-size: 14px;">
-                        ${{ instance.price }}
-                      </div>
-                    </div>
-                    <div class="row position-relative" style="font-size: 13px;">
-                      <div class="col position-static one-line">
-                        {{ instance.title }}
-                      </div>
-                    </div>
-      
-                </div>
-
-
-
-      {% else %}
-      PENDING
-        {% if instance.thumbnail %}
-        <span class="badge badge-pill badge-secondary">Secondary</span>
-  {% with instance.thumbnail.all|first as thumbnail %}
-  
-      <div class='wish-div my-auto ' style='justify-content: flex-start; display: flex;'>
-      <a class="like-center my-auto ">{% include 'accounts/wish-list-update.html' with product=instance %}</a>
-      <img class="card-img-top my-auto " src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
-      <a href="{{ instance.get_absolute_url }}">
-    </div>
-
-  {% endwith %}
-  {% endif %}
-                <div class="card-body position-relative">
-                  <a href="{{ instance.get_absolute_url }}">
-                    <div class="row position-relative poloska font-weight-bold" >
-                       <div class="col-3 position-static text-left one-line" style="font-size: 14px;">
-                        {{ instance.size }}
-                      </div>
-                      <div class="col-5 px-1 position-static text-center one-line" style="font-size: 14px;">
-                        {{ instance.brand }}
-                      </div>
-                      <div class="col-4 position-static text-right one-line" style="font-size: 14px;">
-                        ${{ instance.price }}
-                      </div>
-                    </div>
-                    <div class="row position-relative" style="font-size: 13px;">
-                      <div class="col position-static one-line">
-                        {{ instance.title }}
-                      </div>
-                    </div>
-                  </a>
-                </div>
-      {% endif %}
-
-
-

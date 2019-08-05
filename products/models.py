@@ -75,7 +75,10 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		return(x_b)
 
 	def authentic(self):
-		return self.filter(authentic='authentic')	
+		return self.filter(authentic='authentic')
+
+	def fake(self):
+		return self.filter(authentic='fake')	
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -100,6 +103,9 @@ class ProductManager(models.Manager):
 
 	def authentic(self):
 		return self.get_queryset().active().authentic()
+
+	def fake(self):
+		return self.get_queryset().active().fake()
 
 User=settings.AUTH_USER_MODEL
 
