@@ -3,12 +3,11 @@
 {% load sass_tags %}
 {% load for_loop_extras %}
 {% load checked_time %}
-
-<link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
-
 {% block content %}
 
 <head>
+<link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+
 
 <input type="hidden" id='language_pref' name="language_pref" value="{{ request.session.language }}">
 
@@ -70,38 +69,6 @@ html, body {
 
 small {
 	font-size: 11px;
-}
-
-@media only screen and (min-width: 1200px) {
-	#mobile {
-		visibility: hidden;
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1200px) {
-	
-
-	html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-	}
-
-	#trigger_2 {
-		margin-top: 65px;
-		position: fixed;
-	}
-
-	img {
-		max-width: 320px !important;
-		max-height: 240px !important;
-	}
-
-	#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
-		visibility: hidden;
-		display: none;
-	}
-	
 }
 
 .avatar-pdv{
@@ -209,6 +176,38 @@ p {
     margin-block-end: 0em !important;
 }
 
+@media only screen and (min-width: 1200px) {
+	#mobile {
+		visibility: hidden;
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+	
+
+	html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+	}
+
+	#trigger_2 {
+		margin-top: 65px;
+		position: fixed;
+	}
+
+	img {
+		max-width: 320px !important;
+		max-height: 240px !important;
+	}
+
+	#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
+		visibility: hidden;
+		display: none;
+	}
+	
+}
+
 </style>
 
 </head>
@@ -282,9 +281,7 @@ p {
 
 
 
-  	 <script src="{% static 'js/jquery.morelines.js' %}"></script>
-
-<script type="text/javascript">
+ <script type="text/javascript">
 
 
 $('.js-description_readmore').moreLines({
