@@ -1,0 +1,164 @@
+{% load crispy_forms_tags %}
+<input type="hidden" id='images-upload-limit' readonly name="images-upload-limit" value='{{ images_upload_limit }}'>
+<div class="container-fluid ajax-search">
+ <div class="row">
+
+  <div class='col-xs-12 col-md-7 mx-auto'>
+  {% if title %}<p class="lead text-center" style='font-size: 30px;'>{{ title }}</p>{% endif %}
+
+<form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create_order="{% url 'products:handle_image_create_sort' %}" action_url_create="{% url 'products:create' %}"action_url="{% url 'products:handle_image_sort' %}" image_upload_url="{% url 'image_uploader:image_upload_url' %}"image_delete_url="{% url 'image_uploader:image_delete_url' %}" image_rotate_url="{% url 'image_uploader:image_rotate_url' %}" > {% csrf_token %}
+      <input type="hidden" id='form_id' name="form_id" value='{{ form_id }}'>
+        <input type="hidden" id='language' name="language" value='UA'>
+<!-- 
+  <div style=' 
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-weight: bold;
+      line-height: 50px;
+       font-family: Helvetica; 
+      font-size: 14px;'>    
+ -->
+
+  {{form.title|as_crispy_field}}
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      {{form.brand|as_crispy_field}}
+  <div style="font-family: BlinkMacSystemFont; padding:0px; margin:0px; letter-spacing: normal; text-transform: none; font-size: 9px; line-height: normal; font-weight: normal;">
+        Напиши на help@saltysalt.co если твой желанный бренд отсутствует.
+    </div>
+  </div>
+    <div class="col-12 col-md-6 ">
+      {{form.sex|as_crispy_field}}
+      <input class='input-gender' type="hidden" readonly name="sex" value=''>
+      <div class="dropdown-custom">
+        <div class="dropdown-content" id='dropdown-box'>
+          <div class='row m-0'>
+            <div class='col-6 overcategories p-0'>
+              {% for overcategory in overcategories %}
+                <div class='col-12 overcategories-class' initial_update='{{ overcategory.overcategory }}' value='{{ overcategory.overcategory }}'>
+                  <p value='{{ overcategory.overcategory }}'>{{ overcategory.overcategory_ua }}</p>
+                </div>
+              {% endfor %}
+            </div>
+            <div class='col-6 active-gender p-0'>
+              {% for overcategory in overcategories %}
+                <div class='{{ overcategory.overcategory }} overcategory-gender'>
+                  {% for gender in genders %}
+                    {% if overcategory == gender.gender_for %}
+                      <div class='col-12 gender-class' gender-for-cat='{{ gender.gender_ua }}' value='{{ gender.id }}'>
+                        <p class='mb-0' value='{{ gender.id }}'>{{ gender.gender_ua }}</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-12 col-md-6">
+      {{form.undercategory|as_crispy_field}}
+      <input class='input-undercategory' type="hidden" readonly name="undercategory" value=''>
+      <div class="dropdown-custom">
+        <div class="dropdown-content" id='dropdown-box'>
+          <div class='row m-0'>
+            <div class='col-6 categories p-0'>
+
+            </div>
+            <div class='col-6 active-undercategory p-0'>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      {{form.size|as_crispy_field}}
+      <input class='input-size' type="hidden" readonly name="size" value=''>
+      <div class="dropdown-custom">
+        <div class="dropdown-content" id='dropdown-box'>
+          <div class='row m-0'>
+            <div class='col-12 active-size p-0'>
+              {% for category in categories_all %}
+                <div class='{{ category }}-size category-size'>
+                  {% for size in sizes %}
+                    {% if category.category == size.size_for %}
+                    <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}' for_black_size='{{ size }}-{{ category }}'>
+                      <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                    </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      {{form.condition|as_crispy_field}}
+      <input class='input-condition' type="hidden" readonly name="condition" value=''>
+      <div class="dropdown-custom">
+        <div class="dropdown-content" id='dropdown-box'>
+          <div class="row m-0">
+            <div class="col-12 active-condition p-0">
+              {% for condition in conditions %}
+                <div class='col-12 condition-class' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_ua }}'activated='{{ condition.condition }}'>
+                  <p class='mb-0 text-center' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_ua }}'>{{ condition.condition_ua }}</p>
+                </div>
+              {% endfor %}
+            </div>            
+          </div>    
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      {{form.price|as_crispy_field}}
+    </div>
+  </div> 
+
+
+
+
+        фото*
+
+  <div class="row">
+    <div class="col-12 col-md-12">
+  {{form.image}}
+  {% include 'products/snippets/images-upload.html' with object=object %}
+  <div class='row ml-1'>
+    <div class="ui-widget ui-helper-clearfix custom-upload-file-ajax-temp">
+      <ul id='customSort' class="mb-1 gallery ui-helper-reset ui-helper-clearfix temp-images">
+      </ul>
+    </div>
+  </div>
+  <div class>
+    <input type="hidden" name='image' id='id_image' class='form-control'>
+  </div> 
+
+</div>
+</div>
+
+  {{form.description|as_crispy_field}} 
+ 
+  <button type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">{{ button }}</button>
+  {% include "forms/helper_text.html" %}
+  </div>   <!-- style   -->   
+
+
+
+</form>
+
+
+
+  </div>
+ </div>
+</div>

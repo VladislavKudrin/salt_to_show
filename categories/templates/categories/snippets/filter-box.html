@@ -7,7 +7,7 @@
 <div class='filter-boxes'>
   {% for brand in brands %}
   <div class=" ml-3 mt-2 custom-control custom-checkbox">
-    <input type="checkbox" {% if brand.brand_name in request.POST %} checked {% endif %} class="custom-control-input" id="customCheckbrand{{ forloop.counter|add:'1' }}" name='{{ brand }}' value='{{ brand }}'>
+    <input style="display: none" type="checkbox" {% if brand.brand_name in request.POST %} checked {% endif %} class="custom-control-input" id="customCheckbrand{{ forloop.counter|add:'1' }}" name='{{ brand }}' value='{{ brand }}'>
     <label class="custom-control-label" for="customCheckbrand{{ forloop.counter|add:'1' }}">{{ brand|capfirst }}</label>
   </div>
 {% endfor %}

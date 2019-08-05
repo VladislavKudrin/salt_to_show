@@ -11,7 +11,7 @@ from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
-from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory
+from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
 class ImageOrderUtil(models.Model):
 	slug			= models.SlugField(default=None, unique = True, blank=True)
@@ -98,12 +98,12 @@ class ProductManager(models.Manager):
 User=settings.AUTH_USER_MODEL
 
 
-CONDITION_CHOICES = (
-	('item condition', 'Select an item condition'),
-	('new with tags', 'New with tags'),
-	('gently used', 'Gently used'),
-	('used', 'Used'),
-	)
+# CONDITION_CHOICES = (
+# 	('item condition', 'Select an item condition'),
+# 	('new with tags', 'New with tags'),
+# 	('gently used', 'Gently used'),
+# 	('used', 'Used'),
+# 	)
 
 
 class Product(models.Model):
@@ -117,7 +117,7 @@ class Product(models.Model):
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	category 		= models.ForeignKey(Category, blank = True, null=True)
 	sex 			= models.ForeignKey(Gender, blank = True, null=True)
-	condition 		= models.CharField(max_length=120, default='not picked', choices=CONDITION_CHOICES, null=True)
+	condition 		= models.ForeignKey(Condition, blank = True, null=True)
 	size 			= models.ForeignKey(Size, blank=False, null=True)
 	brand 			= models.ForeignKey(Brand, blank=False, null=True)
 	undercategory 	= models.ForeignKey(Undercategory, blank = False, null=True)

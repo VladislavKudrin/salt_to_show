@@ -49,7 +49,6 @@ def handle_delete(request):
 			form_id = request.POST.get('form_id')
 			file = UploadedFile.objects.get(file_id=id_,form_id=form_id)
 			file.uploaded_file.delete()
-			file.thumbnail.delete()
 			file.delete()
 			all_files = len(UploadedFile.objects.filter(form_id = form_id))
 			json_data = {

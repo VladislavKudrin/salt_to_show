@@ -13,6 +13,7 @@ from .views import (
     image_update_view,
     image_create_order,
     product_report,
+
     # product_reported,
 
     )
@@ -31,6 +32,8 @@ urlpatterns = [
     url(r'^view/(?P<slug>[\w.@+-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
     url(r'^existing/(?P<id>\d+)$', ProductUpdateView.as_view(), name='existing_file_example'),
     url(r'^report/$', product_report, name='report'),
+
+
     # url(r'^reported/$', product_reported, name='reported'),
     # url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Size, Brand, Undercategory, Category, Gender, Overcategory
+from .models import Size, Brand, Undercategory, Category, Gender, Overcategory, Condition
 
 class Undercategory_tab(admin.TabularInline):
 	model = Undercategory
@@ -14,7 +14,7 @@ class Gender_tab(admin.TabularInline):
 
 
 class SizeAdmin(admin.ModelAdmin):
-	list_display = ['size_admin', 'size_for']
+	list_display = ['size', 'size_for']
 	class Meta:
 		model=Size
 
@@ -44,7 +44,16 @@ admin.site.register(Size, SizeAdmin)
 admin.site.register(Undercategory, UndercategoryAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Gender, GenderAdmin)
-
-
 admin.site.register(Overcategory, OvercategoryAdmin)
+
+
 admin.site.register(Brand)
+admin.site.register(Condition)
+
+
+
+
+
+
+
+
