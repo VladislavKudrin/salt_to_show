@@ -622,3 +622,16 @@ def product_report(request):
 # 	else:
 # 		return redirect('login')
 
+class FakeProductsListView(LoginRequiredMixin, ListView):
+	template_name = 'products/fake-list.html'
+
+	def get_queryset(self, *args, **kwargs):
+		return Product.objects.fake()
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Обнаруженные фейки:'
+		else:
+			context['title'] = 'Detected fakes:'
+		return context
