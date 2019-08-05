@@ -1,3 +1,62 @@
+/*Checkbox black*/
+
+.form-check-input {
+    position: absolute;
+    margin-top: .25rem;
+    margin-right: -2rem;
+}
+
+input[type="checkbox"] {
+  cursor: pointer !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  outline: 0 !important;
+  background: lightgray !important;
+  height: 16px !important;
+  width: 16px !important;
+  border: 1px solid white !important;
+
+}
+
+input[type="checkbox"]:checked {
+  background: black !important;
+}
+
+input[type="checkbox"]:hover {
+  filter: brightness(90%) !important;
+}
+
+input[type="checkbox"]:disabled {
+  background: #e6e6e6 !important; 
+  opacity: 0.6 !important;
+  pointer-events: none !important;
+}
+
+input[type="checkbox"]:after {
+  content: '' !important;
+  position: relative !important;
+  left: 40% !important;
+  top: 20% !important;
+  width: 30% !important;
+  height: 50% !important;
+  border: solid #fff !important;
+  border-width: 0 2px 2px 0 !important;
+  transform: rotate(45deg) !important;
+  display: none !important;
+}
+
+input[type="checkbox"]:checked:after {
+  display: block !important;
+}
+
+input[type="checkbox"]:disabled:after {
+  border-color: #7b7b7b !important;
+}
+
+
+
+
 @font-face {
   font-family: FuturaMedium;
   src: url('fonts/FuturaPT-Medium/FuturaPT-Medium.woff') format('woff'),

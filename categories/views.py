@@ -70,9 +70,9 @@ class CategoryFilterView(ListView):
 			sort = relevant or high_low or low_high
 			filtred_qs = Product.objects.filter(lookups_products).order_by(sort)
 		if filtred_qs is not None:
-			context['object_list'] = filtred_qs
+			context['object_list'] = filtred_qs.authentic()
 		else:
-			context['object_list'] = Product.objects.all()
+			context['object_list'] = Product.objects.authentic()
 		
 		context['filter_gender'] = qs_gender
 		context['filter_size'] = qs_size
@@ -98,7 +98,7 @@ class CategoryFilterView(ListView):
 			]
 		brands = Brand.objects.all()
 		context={}
-		context['object_list']=Product.objects.all().order_by('-timestamp')
+		context['object_list']=Product.objects.all().order_by('-timestamp').authentic()
 		context['fields_category']=self.fields_category
 		context['fields_gender']=self.fields_gender
 		context['sizes']=sizes

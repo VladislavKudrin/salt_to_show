@@ -81,6 +81,9 @@ small {
 
 @media only screen and (max-width: 1200px) {
 	
+	.alert-success {
+    top: 100px;
+}
 
 	html, body {
     max-width: 100%;
@@ -100,6 +103,10 @@ small {
 	#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
 		visibility: hidden;
 		display: none;
+	}
+
+	.alert-success {
+    top: 70px !important;
 	}
 	
 }
@@ -209,6 +216,17 @@ p {
     margin-block-end: 0em !important;
 }
 
+/*For not popping up...*/
+.fixed-top, .sticky-top{
+    padding-bottom: 0!important;
+    margin-bottom: :0!important;
+}
+
+/* for django messages be not on top */
+.alert-success {
+    top: 50px;
+}
+
 </style>
 
 </head>
@@ -264,6 +282,7 @@ p {
 	</div>
 </div>
 
+
 {% if request.session.language == 'RU' %}
 
 {% include 'products/languages/detail-ru.html' %}  
@@ -280,9 +299,7 @@ p {
 
 
 
-
-
-  	 <script src="{% static 'js/jquery.morelines.js' %}"></script>
+<script src="{% static 'js/jquery.morelines.js' %}"></script>
 
 <script type="text/javascript">
 
@@ -345,6 +362,48 @@ $('.js-description_readmore').moreLines({
 	} else {
 		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');		
 	}
+
+
+
+// var currentPath = window.location.href
+
+
+// // 	if ((currentPath.indexOf("products/view") != -1)){
+// // 		console.log('IF FIRS')
+// // 	$('.navbar').addClass('fixed-top').removeClass('sticky-top');
+// // }
+
+// $(document).ready(function() {
+
+// var win = $(window);
+
+
+
+// 	// } else if (($(document).scrollTop() >= 60) )  { // desktop
+// 	// 	console.log('ELIIF')
+// 	// 	$('.navbar').addClass('fixed-top').removeClass('sticky-top bg-white');	
+// 	// } else {
+// 	// 	console.log('ELSE')
+// 	// 	$('.navbar').addClass('fixed-top').removeClass('sticky-top');	
+// 	// }
+
+
+// win.scroll(function() {
+// 	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 1200)){
+// 		console.log('IF')
+// 	$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
+// 	} else if (($(document).scrollTop() >= 60) )  { // desktop
+// 		console.log('ELIIF')
+// 		$('.navbar').addClass('fixed-top').removeClass('sticky-top bg-white');	
+// 	} else {
+// 		console.log('ELSE')
+// 		$('.navbar').addClass('fixed-top').removeClass('sticky-top');	
+// 	}
+// })
+
+
+
+// });
 
 
 // $(document).ready(function() {

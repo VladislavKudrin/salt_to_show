@@ -45,5 +45,5 @@ class SearchProductView(ListView):
 		method_dict=request.GET
 		query=method_dict.get('q', None)
 		if query is not None:
-			return Product.objects.search(query).order_by('-timestamp')
-		return Product.objects.featured()
+			return Product.objects.search(query).order_by('-timestamp').authentic()
+		return Product.objects.authentic()

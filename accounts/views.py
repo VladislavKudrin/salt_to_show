@@ -264,7 +264,7 @@ class ProfileView(DetailView):
 		username = self.kwargs.get('username')
 		user  = User.objects.filter_by_username(username=username)
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
-		context['products'] = Product.objects.filter(user=user)
+		context['products'] = Product.objects.filter(user=user).authentic()
 		if self.request.session.get('language')=='RU':
 			context['btn_title'] = 'Написать '
 		else:
