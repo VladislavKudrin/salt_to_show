@@ -25,6 +25,7 @@ from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 from image_uploader.models import unique_form_id_generator
+from django.core.mail import send_mail
 
 
 
@@ -81,26 +82,26 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		# context['wishes'] = wished_products
 		return context
 
+# class ProductListView(ListView):
+# 	#queryset = Product.objects.all()
+# 	template_name = "products/list.html"
 
+# 	def get_queryset(self, *args, **kwargs):
+# 		qs = Product.objects.authentic()
+# 		return qs
 
-class ProductListView(ListView):
-	#queryset = Product.objects.all()
-	template_name = "products/list.html"
+# 	# def get_context_data(self, *args, **kwargs):
+# 	# 	context = super(ProductListView, self).get_context_data(*args, **kwargs)
+# 	##super обращается к классу-родителю, вызывает родитель-метод get_context_data
+# 	# 	print(context)
+# 	# 	return contex
 
-	# def get_context_data(self, *args, **kwargs):
-	# 	context = super(ProductListView, self).get_context_data(*args, **kwargs)
-	##super обращается к классу-родителю, вызывает родитель-метод get_context_data
-	# 	print(context)
-	# 	return contex
-	def get_queryset(self, *args, **kwargs):
-		qs = Product.objects.all()
-		return qs
 		
-	def get_context_data(self, *args, **kwargs):
-		context = super(ProductListView, self).get_context_data(*args, **kwargs) 
-		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-		context['cart']=cart_obj
-		return context
+# 	def get_context_data(self, *args, **kwargs):
+# 		context = super(ProductListView, self).get_context_data(*args, **kwargs) 
+# 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+# 		context['cart']=cart_obj
+# 		return context
 
 
 
@@ -315,8 +316,27 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
+		request = self.request
 		product = form.save()
 		url = product.get_absolute_url()
+
+		base_url = getattr(settings, 'BASE_URL', 'https://www.saltysalt.co')
+		path = "{base}{path}".format(base=base_url, path=url)
+
+		#Message after upload
+		subject = 'New item upload'
+		message = 'New product was uploaded. Please verify authenticity: \n {} \n Product Title: {} \n Product Description: \n {}'.format(path, product.title, product.description)
+		from_email = settings.DEFAULT_FROM_EMAIL
+		to_email = settings.DEFAULT_FROM_EMAIL
+		send_mail(subject, message, from_email, [to_email], fail_silently=False)
+
+		if request.session.get('language')=='RU':
+			msg = 'Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку подтвердит модератор и айтем будет выставлен на продажу'
+		# elif request.session.get('language')=='UA':
+		else: 
+			msg = 'Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published'
+		messages.add_message(request, messages.SUCCESS, msg)
+
 		if self.request.is_ajax():	
 			json_data={
 						'url': url,

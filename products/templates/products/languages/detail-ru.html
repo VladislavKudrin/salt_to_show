@@ -26,16 +26,42 @@
 		{% endif %}
 	</div>
 	<div class="col-8 my-auto">
-		<div class="flip-card" style="width: 100%;">
-	        <div class=" flip-card-inner">
-				<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Оригинал</span></div>
-	                <div class="flip-card-back">
-		                <div class="row">
-			            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp| print_timestamp }}</small></div>
+		<div class="flip-card" style="width: 100%">
 
-		              	</div>
-	            	</div>
-	        </div>
+			{% if object.authentic == 'authentic' %}
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Оригинал</span></div>
+		                <div class="flip-card-back">
+			                <div class="row">
+				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>Двухфакторная проверка пройдена {{ object.timestamp| print_timestamp }}</small></div>
+
+			              	</div>
+		            	</div>
+		        </div>
+
+
+		    {% elif object.authentic == 'fake' %}
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Фейк</span></div>
+		                <div class="flip-card-back">
+			                <div class="row">
+				            	<div class="col my-auto mr-2 ml-2"><small>Проверено {{ object.timestamp| print_timestamp }}</small></div>
+
+			              	</div>
+		            	</div>
+		        </div>
+
+		    {% else %}
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> Проверено ИИ</span></div>
+		                <div class="flip-card-back">
+			                <div class="row">
+				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>После проверки экспертом айтем будет залит</small></div>
+			              	</div>
+		            	</div>
+		        </div>
+	        {% endif %}
+
        	</div>
 	</div>
 

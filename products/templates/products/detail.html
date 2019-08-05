@@ -71,6 +71,47 @@ small {
 	font-size: 11px;
 }
 
+
+@media only screen and (min-width: 1200px) {
+	#mobile {
+		visibility: hidden;
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+	
+	.alert-success {
+    top: 100px;
+}
+
+	html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+	}
+
+	#trigger_2 {
+		margin-top: 65px;
+		position: fixed;
+	}
+
+	img {
+		max-width: 320px !important;
+		max-height: 240px !important;
+	}
+
+	#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
+		visibility: hidden;
+		display: none;
+	}
+
+	.alert-success {
+    top: 70px !important;
+	}
+	
+}
+
+
 .avatar-pdv{
 	width: 50px;
     height: 50px;
@@ -176,36 +217,16 @@ p {
     margin-block-end: 0em !important;
 }
 
-@media only screen and (min-width: 1200px) {
-	#mobile {
-		visibility: hidden;
-		display: none;
-	}
+
+/*For not popping up...*/
+.fixed-top, .sticky-top{
+    padding-bottom: 0!important;
+    margin-bottom: :0!important;
 }
 
-@media only screen and (max-width: 1200px) {
-	
-
-	html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-	}
-
-	#trigger_2 {
-		margin-top: 65px;
-		position: fixed;
-	}
-
-	img {
-		max-width: 320px !important;
-		max-height: 240px !important;
-	}
-
-	#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
-		visibility: hidden;
-		display: none;
-	}
-	
+/* for django messages be not on top */
+.alert-success {
+    top: 50px;
 }
 
 </style>
@@ -263,6 +284,7 @@ p {
 	</div>
 </div>
 
+
 {% if request.session.language == 'RU' %}
 
 {% include 'products/languages/detail-ru.html' %}  
@@ -280,8 +302,13 @@ p {
 
 
 
+<script src="{% static 'js/jquery.morelines.js' %}"></script>
 
- <script type="text/javascript">
+<script type="text/javascript">
+
+
+
+
 
 
 $('.js-description_readmore').moreLines({
@@ -342,6 +369,48 @@ $('.js-description_readmore').moreLines({
 	} else {
 		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');		
 	}
+
+
+
+// var currentPath = window.location.href
+
+
+// // 	if ((currentPath.indexOf("products/view") != -1)){
+// // 		console.log('IF FIRS')
+// // 	$('.navbar').addClass('fixed-top').removeClass('sticky-top');
+// // }
+
+// $(document).ready(function() {
+
+// var win = $(window);
+
+
+
+// 	// } else if (($(document).scrollTop() >= 60) )  { // desktop
+// 	// 	console.log('ELIIF')
+// 	// 	$('.navbar').addClass('fixed-top').removeClass('sticky-top bg-white');	
+// 	// } else {
+// 	// 	console.log('ELSE')
+// 	// 	$('.navbar').addClass('fixed-top').removeClass('sticky-top');	
+// 	// }
+
+
+// win.scroll(function() {
+// 	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 1200)){
+// 		console.log('IF')
+// 	$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
+// 	} else if (($(document).scrollTop() >= 60) )  { // desktop
+// 		console.log('ELIIF')
+// 		$('.navbar').addClass('fixed-top').removeClass('sticky-top bg-white');	
+// 	} else {
+// 		console.log('ELSE')
+// 		$('.navbar').addClass('fixed-top').removeClass('sticky-top');	
+// 	}
+// })
+
+
+
+// });
 
 
 // $(document).ready(function() {

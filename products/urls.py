@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 
 from .views import (
-    ProductListView, 
+    # ProductListView, 
     ProductDetailSlugView,
     ProductCreateView,
     AccountProductListView,

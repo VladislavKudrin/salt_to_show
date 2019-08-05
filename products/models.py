@@ -72,7 +72,10 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		for x in query_size:
 			lookups_size=lookups_size|(Q(size=x))
 		x_b = self.filter_categories(lookups_brand).filter_categories(lookups_gender).filter_categories(lookups_category).filter_categories(lookups_size)
-		return(x_b)	
+		return(x_b)
+
+	def authentic(self):
+		return self.filter(authentic='authentic')	
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -95,6 +98,9 @@ class ProductManager(models.Manager):
 	def search(self, query):
 		return self.get_queryset().active().search(query)
 
+	def authentic(self):
+		return self.get_queryset().active().authentic()
+
 User=settings.AUTH_USER_MODEL
 
 CATEGORY_CHOICES = (
@@ -116,6 +122,12 @@ CONDITION_CHOICES = (
 	('used', 'Used'),
 	)
 
+AUTHENTICITY_CHOICES = (
+	('undefined', 'Undefined'),
+	('fake', 'Fake'),
+	('authentic', 'Authentic'),
+	)
+
 class Product(models.Model):
 	user 			= models.ForeignKey(User, null=True, blank=True)
 	title 			= models.CharField(max_length = 120)
@@ -130,6 +142,7 @@ class Product(models.Model):
 	condition 		= models.CharField(max_length=120, default='not picked', choices=CONDITION_CHOICES, null=True)
 	size 			= models.ForeignKey(Size, blank=False, null=True)
 	brand 			= models.ForeignKey(Brand, blank=True, null=True)
+	authentic 		= models.CharField(max_length=120, default='undefined', choices=AUTHENTICITY_CHOICES, null=True)
 
 
 	objects = ProductManager()
