@@ -1,0 +1,10 @@
+	{% if request.user.username == object.username %}
+		<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">Update your profile</a>
+	{% else %}
+	<form method="POST">
+	{% csrf_token %}
+	    <input type="hidden" name="next" value="{% url 'home' %}">
+	    <input type="hidden" name="chat_with" value="{{ object.user.username }}">
+	    <button id="button-mobile" class="btn hover-button button-black medium-button btn-block mb-1" type="submit" style="width: 100%;">{{ btn_title }}</button>
+	</form>
+	{% endif %}

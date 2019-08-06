@@ -247,8 +247,19 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
 		if self.request.session.get('language') == 'RU':
 			context['title'] = 'Обновить аккаунт'
+			context['password_btn'] = 'Изменить пароль'
+			context['save_btn'] = 'Сохранить'
+			context['logout_btn'] = 'Выйти'
+		elif self.request.session.get('language') == 'UA':
+			context['title'] = 'Оновити аккаунт'
+			context['password_btn'] = 'Змінити пароль'
+			context['save_btn'] = 'Зберегти'
+			context['logout_btn'] = 'Выйти'
 		else:
 			context['title'] = 'Update your details'
+			context['password_btn'] = 'Change password'
+			context['save_btn'] = 'Save'
+			context['logout_btn'] = 'Logout'
 		return context
 
 	def get_success_url(self):
