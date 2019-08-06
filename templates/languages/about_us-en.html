@@ -1,0 +1,91 @@
+
+{% load static %}
+{% url 'products:create' as products_create_url %}
+{% url 'products:list' as product_list_url %}
+
+
+<div class="row">
+  <div class="col">
+
+    <div class="row fluid hanger" style="height: 565px;">
+      <div class="col-12 pt-5" style="display: flex; justify-content: center;">
+        <div class="lead my-auto" style='font-size: 50px;'>
+          <span class='strike'>Bazar</span> Marketplace
+        </div>
+      </div>
+      <div class="col-12" style="display: flex; justify-content: center;">
+      </div>
+
+    <div class="col-12" id='back-elem' style="display: flex; justify-content: flex-end; position: fixed; top:74%;">
+      <p class="lead letter" style='font-size: 100px;'>S</p>
+    </div>
+    </div>
+
+      <div id="safe" class="row fluid text-center">
+        <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
+          <div class="bg">
+            <div class="jumbotron jumbotron p-0 m-0" style=" background:transparent;  background-color:transparent; color:black; ">
+
+
+              <div id="safe" class="row fluid pt-5 pb-5" style="background-image: url('{% static 'img/dark_stripes.png' %}'); height: 565px;">
+                <div class="col-xs-12 col-md-3 fluid my-auto">
+                        <i class=" my-auto fas fa-user-shield fa-5x" style='color:#c7c4c4'></i>
+                </div>
+                <div class="col-xs-12 col-md-9 my-auto">
+                  <p class="lead my-auto" style=' padding-right: 50px;'>
+                    <span style='font-size: 30px; color:#c7c4c4'>Authentic is better than fake.</span>
+                    <br/>
+                    <span class='text-left' style='color:#c7c4c4'>We provide the most valuable customer experience: we have zero-fake-policy on SALT. Every item is checked on authenticity right after the upload, so you can be 100% sure that you buy a nice authentic piece. </span>
+                  </p>
+                </div>
+              </div>
+
+              <br>
+               <br>
+              <br>
+              <br>
+
+              <div id="ai" class=" row fluid pt-5 pb-5" style="background-color: white; height: 565px;">
+                    <div class="col-xs-12 col-md-3 fluid my-auto">
+                       <i class="fas fa-brain fa-5x"></i>
+                    </div> 
+                     <div class="col-xs-12 col-md-9 my-auto">
+                  <p class="lead my-auto" style=' padding-right: 50px;'>
+                    <span style='font-size: 30px;'>AI thinks faster than human.</span>
+                    <br/>
+                    <span class='text-left'>We use state-of-the-art technology to enable rapid fake-detection. Our Machine Learning model was developed by Google and trained with our own data. It thinks fast and precise and becomes better with every uploaded item. </span>
+                  </p>
+                </div>
+              </div>
+
+              <br>
+               <br>
+              <br>
+              <br>
+
+              <div id="simple" class="row fluid pt-5 pb-5" style="background-image: url('{% static 'img/dark_stripes.png' %}'); height: 565px;">
+                <div class="col-xs-12 col-md-3 fluid my-auto">
+                        <i class="fas fa-hand-holding-heart fa-5x" style='color:#c7c4c4'></i>
+  
+                </div>
+                     <div class="col-xs-12 col-md-9 my-auto">
+                  <p class="lead my-auto" style=' padding-right: 50px;'>
+                    <span style='font-size: 30px; color:#c7c4c4'>Less is more.</span>
+                    <br/>
+                    <span class='text-left' style='color:#c7c4c4'>Simplicity is our core concept. Moreover, it's not only limited in minimalistic design. We want both sellers and buyers to feel respected. That's why there are no annoying ads / paid item or seller promotion on SALT. </span>
+                  </p>
+                </div>
+
+
+              </div>
+
+               <br>
+              <br>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>  
+
+  </div>
+</div>

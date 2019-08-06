@@ -3,12 +3,19 @@
 
 
 {% block content %}
-<div class='row'>
-	<div class='col text-center'>
-		<h1>Bad request</h1>
-		<p>400 Error</p>
-	</div>
-</div>
 
+{% if request.session.language == 'RU' %}
+
+{% include 'languages/400-ru.html' %}  
+
+{% elif request.session.language == 'UA' %}
+
+{% include 'languages/400-ua.html' %}  
+
+{% else %}
+
+{% include 'languages/400-en.html' %}  
+
+{% endif %}
 
 {% endblock %}

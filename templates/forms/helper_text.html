@@ -1,11 +1,13 @@
 {% if request.session.language == 'RU' %}
-<small class='text-muted'>
-* отмечены поля, обязательные к заполнению
-</small>
-<br/>
+
+{% include 'languages/helper_text-ru.html' %}  
+
+{% elif request.session.language == 'UA' %}
+
+{% include 'languages/helper_text-ua.html' %}  
+ 
 {% else %}
-<small class='text-muted'>
-* marked fields are required
-</small>
-<br/>
+
+{% include 'languages/helper_text-en.html' %}  
+
 {% endif %}

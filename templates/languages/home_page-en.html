@@ -3,6 +3,24 @@
 <head>
 <style type="text/css">
 
+
+.btn-dark-home{
+  height: 230px;
+}
+
+.btn-light-home{
+  height: 230px;
+}
+
+.btn-dark-home:hover{
+   border: 0.5px solid white !important;
+}
+
+.btn-light-home:hover{
+   border: 0.5px solid #80808087 !important;
+}
+
+
 </style>
 </head>
 
@@ -36,7 +54,7 @@
   </div>
 </div>
 
-<div class="row fluid display-4 banner-mobile" style='text-align:right; padding-bottom:15px; padding-top:0px;text-transform: uppercase;'>
+<div class="row fluid display-4 banner-mobile" style='text-align:right; padding-bottom:45px; padding-top:0px;text-transform: uppercase;'>
   <div class="col fluid" >
     Salt
   </div>
@@ -78,8 +96,8 @@
 <div class="row fluid text-center">
     <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
       <div class="bg">
-      <a class="btn btn-light m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-style:none !important;border-color: black;">
-      <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden; ">
+      <a class="btn btn-light-home m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-color: transparent;">
+      <div class="jumbotron jumbotron text-center mb-2 mt-2" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden; ">
         <div class="container">
           <h1 class="display-4">SELL</h1>
           <p class="lead" id="sell-small">Contribute to the sustainable clothes-circle.</p>
@@ -89,8 +107,8 @@
     </div>
     </div>
   <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
-    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block;border-style:none;border-color: black;">
-    <div class="jumbotron jumbotron text-center mb-5 mt-5" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
+    <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block; border-color: transparent;">
+    <div class="jumbotron jumbotron text-center mb-2 mt-2" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
       <div class="container">
         <h1 class="display-4">BUY</h1>
         <p class="lead" id="buy-small">Find your designer piece fast and safe.</p>

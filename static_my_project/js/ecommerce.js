@@ -61,6 +61,11 @@ $(document).ready(
         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Отправка....")
         submitBtn.attr("disabled", true)
         }//if rus
+        else if (languageOption == 'UA'){
+        submitBtn.addClass("disabled")
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Відправка....")
+        submitBtn.attr("disabled", true)
+        }//if not rus
         else {
         submitBtn.addClass("disabled")
         submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Sending....")
@@ -90,11 +95,18 @@ $(document).ready(
             thisForm[0].reset()
             if (language == 'RU'){
               $.alert({
-              title: 'Успешно отправлено',
+              title: 'Успех',
               content: data.message,
               theme: "modern"
               })//alert
             }//if rus
+            else if (language == 'UA')  {
+              $.alert({
+              title: 'Успіх',
+              content: data.message,
+              theme: "modern"
+              })//alert
+            }//if not rus
             else {
               $.alert({
               title: 'Success',
@@ -157,15 +169,23 @@ $(document).ready(
       var titleConfirm = 'Удалить Айтем?'
       var btnText = 'Удалить'
       var titleConfirmSecond = 'Спасибо'
-      var contentConfirmSecond = 'Айтем успешно удален.'
+      var contentConfirmSecond = 'Айтем успешно удален'
       var cancelText = 'Отмена'
     }//if ru
+    else if (languagePref.val() == 'UA'){
+      var placeholderText = 'Чому?'
+      var titleConfirm = 'Видалити айтем?'
+      var btnText = 'Видалити'
+      var titleConfirmSecond = 'Дякуємо'
+      var contentConfirmSecond = 'Айтем успішно видалений'
+      var cancelText = 'Скасувати'
+    }//if ru
     else{
-      var placeholderText = 'Why do you want to delete this product?'
+      var placeholderText = 'Why do you want delete this product?'
       var titleConfirm = 'Delete Your Product?'
       var btnText = 'Delete'
-      var titleConfirmSecond = 'Thanks!'
-      var contentConfirmSecond = 'Product has been deleted.'
+      var titleConfirmSecond = 'Thanks'
+      var contentConfirmSecond = 'Product has been deleted'
       var cancelText = 'Cancel'
     }//if not ru
     var deleteTemplateDataContext = {

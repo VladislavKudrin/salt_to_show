@@ -3,6 +3,8 @@
 		<input class="form-control border-right-0 pt-0 mr-n1 pb-0" id='searchAutoComplete' type="text" style="height:30px; margin-top: 1px;" placeholder=
 		{% if request.session.language == 'RU' %}
 			"Поиск" name='q' value='{{ request.GET.q }}' aria-label="Search"
+		{% elif request.session.language == 'UA' %}
+			"Пошук" name='q' value='{{ request.GET.q }}' aria-label="Search"
 		{% else %}
 			"Search" name='q' value='{{ request.GET.q }}' aria-label="Search"
 		{% endif %}
