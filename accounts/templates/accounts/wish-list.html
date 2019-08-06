@@ -46,15 +46,10 @@
 
 {% else %}
 
-{% if request.session.language == 'RU' %}
 <div class='col mx-auto'>
-	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>Пока что здесь пусто</div>
+	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>{{ emptiness }}</div>
 </div>
-{% else %}
-<div class='col mx-auto'>
-	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>No items yet</div>
-</div>
-{% endif %}
+
 
 {% endif %}
 

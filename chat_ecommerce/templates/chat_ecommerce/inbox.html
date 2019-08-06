@@ -262,11 +262,7 @@ button:focus {
 	</div>
 	<div id="inbox-text" class='row text-center row align-items-center'>
 		<div class='col'>
-		{% if request.session.language == 'RU' %}
-		Выберите собеседника, чтобы начать диалог
-		{% else %}
-		Please select a chat to start conversation
-		{% endif %}
+			{{ title }}
 		</div>
 	</div>
 </div>

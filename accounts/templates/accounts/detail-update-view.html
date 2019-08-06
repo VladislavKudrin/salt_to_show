@@ -21,7 +21,7 @@
 
 
 
-<input type="hidden" id='language' name="language" value='EN'>
+<input type="hidden" id='language' name="language" value='{{ request.session.language }}'>
   <div class="container-fluid">
   <div class="row">
     
@@ -55,12 +55,16 @@
 
       var languageOption = $('#language').val()
       var avatar = $('.avatar-upload-button')
+      console.log(languageOption)
       avatar.hide()
-      if (languageOption=='RU'){
+      if (languageOption =='RU'){
         avatar.parent().prepend('<label for="avatar_custom" class="bt  hover-button button-white medium-button m-0">Обновить</label>')
-        }//if rus
+        }//if rus'
+      else if (languageOption =='UA') {
+        avatar.parent().prepend('<label for="avatar_custom" class="btn  hover-button button-white medium-button m-0">Оновити</label>')
+        }//if not rus
       else {
-        avatar.parent().prepend('<label for="avatar_custom" class="btn  hover-button button-white medium-button m-0">Change picture</label>')
+        avatar.parent().prepend('<label for="avatar_custom" class="btn  hover-button button-white medium-button m-0">Update</label>')
         }//if not rus
 
       $(".avatar-upload-button").change(function (){

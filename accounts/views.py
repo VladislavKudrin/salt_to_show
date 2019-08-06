@@ -21,9 +21,6 @@ from .signals import user_logged_in_signal
 from products.models import Product
 
 
-
-
-
 def languge_pref_view(request):
 	default_next = "/"
 	next_ = request.GET.get('next')
@@ -63,6 +60,8 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 				obj.activate()
 				if request.session.get('language')=='RU':
 					messages.add_message(request, messages.SUCCESS, 'Ты на сайте')
+				elif request.session.get('language')=='UA':
+					messages.add_message(request, messages.SUCCESS, 'Ти на сайті')
 				else:
 					messages.add_message(request, messages.SUCCESS, "You're in")
 				email = qs.first().user.email
@@ -74,11 +73,15 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 				if activated_qs.exists():
 					reset_link = reverse("password_reset")
 					if request.session.get('language')=='RU':
-						msg = """Ты уже подтвердил_а Email. 
+						msg = """Ты уже подтвердил_а свой мейл. 
 						<a href="{link}">Сбросить пароль</a>?
 						""".format(link=reset_link)
+					elif request.session.get('language')=='UA':
+						msg = """Ти вже підтвердив/підтвердила свій мейл. 
+						<a href="{link}">Скинути пароль</a>?
+						""".format(link=reset_link)
 					else:
-						msg = """Your Email has already been confirmed
+						msg = """Your email has already been confirmed
 						Do you need to <a href="{link}">reset your password</a>?
 						""".format(link=reset_link)
 					messages.add_message(request, messages.SUCCESS, mark_safe(msg))
@@ -98,9 +101,11 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 			return self.form_invalid(form)
 
 	def form_valid(self, form):
-		msg = """Activation link send. Check your Email!"""
+		msg = """Activation link was sent. Check your Email!"""
 		if self.request.session.get('language')=='RU':
 			msg = """Активация отправлена. Проверь почту!"""
+		elif self.request.session.get('language')=='UA':
+			msg = """Активація відправлена. Перевір пошту!"""
 		request = self.request
 		messages.success(request, msg)
 		email=form.cleaned_data.get("email")
@@ -117,32 +122,28 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 		}
 		return render(self.request, 'registration/activation-error.html', context)
 
-
-
-class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
-	form_class = GuestForm
-	default_next = '/register/'
-
-	def get_success_url(self):
-		return self.get_next_url()
-
-	def form_invalid(self, form):
-		return redirect('/register/')
-
-	# def form_valid(self, form):
-	# 	request = self.request
-	# 	email = form.cleaned_data.get("email")
-	# 	new_guest_email = GuestEmail.objects.create(email=email)
-	# 	request.session['guest_email_id'] = new_guest_email.id
-	# 	return redirect(self.get_next_url())
-
-
 class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 	error_css_class = 'error'
 	form_class = RegisterLoginForm
 	success_url = '/'
 	template_name = 'accounts/register.html'
 	default_next='/'
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(RegisterLoginView, self).get_context_data(*args,**kwargs)
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Войти | Зарегистрироваться'
+			context['or_option'] = 'Или'
+			context['password_forgot'] = 'Забыл_а пароль?'
+		elif self.request.session.get('language') == 'UA':
+			context['title'] = 'Увійти | Зареєструватися'
+			context['or_option'] = 'Або'
+			context['password_forgot'] = 'Забув/забула пароль?'
+		else:
+			context['title'] = 'Login | Register'
+			context['or_option'] = 'Or'
+			context['password_forgot'] = 'Forgot password?'
+		return context
 
 	def form_valid(self, form):
 		next_path = self.get_next_url()
@@ -156,13 +157,17 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			next_path = 'login'
 			if self.request.session.get('language') == 'RU':
 				msg1 = "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. " + form.cleaned_data.get('msg')
+			elif self.request.session.get('language') == 'UA':
+				msg1 = "Будь ласка, перевір свою пошту, щоб підтвердити аккаунт. " + form.cleaned_data.get('msg')
 			else:
 				msg1 = "Please check your email to confirm your account. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
 			if self.request.session.get('language') == 'RU':
-				msg2 = "Email не подтвержден. " + form.cleaned_data.get('msg')
+				msg2 = "Мейл не подтвержден. " + form.cleaned_data.get('msg')
+			elif self.request.session.get('language') == 'UA':
+				msg2 = "Мейл не підтверджений. " + form.cleaned_data.get('msg')
 			else:
 				msg2 = "Email not confirmed. " + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
@@ -170,6 +175,8 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			next_path = 'login'
 			if self.request.session.get('language') == 'RU':
 				msg3 = "Неверный пароль. Попробуй еще раз!"
+			elif self.request.session.get('language') == 'UA':
+				msg3 = "Невірний пароль. Спробуй ще раз!"
 			else:
 				msg3 = "The password seems to be wrong. Try again!"
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg3))
@@ -185,6 +192,8 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 				LanguagePreference.objects.create(user=user, language=language_pref_login_page.lower())
 			if self.request.session.get('language') == 'RU':
 				messages.add_message(form.request, messages.SUCCESS, 'Ты на сайте')
+			elif self.request.session.get('language') == 'UA':
+				messages.add_message(form.request, messages.SUCCESS, 'Ти на сайті')
 			else:
 				messages.add_message(form.request, messages.SUCCESS, "You're in")				
 		return redirect(next_path)
@@ -192,50 +201,10 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 def add_message(backend, user, request, response, *args, **kwargs):
 	if request.session.get('language') == 'RU':
 		messages.add_message(request, messages.SUCCESS, 'Ты на сайте')
+	elif request.session.get('language') == 'UA':
+		messages.add_message(request, messages.SUCCESS, 'Ти на сайті')
 	else:
 		messages.add_message(request, messages.SUCCESS, "You're in")
-
-# def login_page(request):
-# 	form = LoginForm(request.POST or None)
-# 	context ={
-
-# 		'form':form
-
-# 	}
-# 	#print(request.user.is_authenticated())
-
-# 	next_ = request.GET.get('next')
-# 	next_post = request.POST.get('next')
-# 	redirect_path=next_ or next_post or None
-# 	if form.is_valid():
-# 		username = form.cleaned_data.get("username")
-# 		password = form.cleaned_data.get("password")		
-# 		user = authenticate(request, username=username, password=password)
-# 		if user is not None:
-# 			login(request, user)
-# 			try:
-# 				del request.session['guest_email_id']
-# 			except:
-# 				pass
-# 			if is_safe_url(redirect_path, request.get_host()):
-# 				return redirect(redirect_path)
-# 			else:
-# 				return redirect("/")
-# 		else:
-# 			print("Error")
-	        
-# 	return render(request, "accounts/login.html", context)
-
-# #User = get_user_model()
-
-
-
-
-
-
-
-
-
 
 class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 	form_class = UserDetailChangeForm
@@ -265,9 +234,6 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 	def get_success_url(self):
 		return reverse("accounts:user-update")
 
-
-
-
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
 
@@ -276,10 +242,18 @@ class ProfileView(DetailView):
 		user  = User.objects.filter_by_username(username=username)
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
 		context['products'] = Product.objects.filter(user=user).authentic()
-		if self.request.session.get('language')=='RU':
-			context['btn_title'] = 'Написать '
+		if self.request.session.get('language') == 'RU':
+			context['btn_title'] = 'Написать'
+			context['items_title'] = 'Айтемы:'
+			context['no_items'] = 'Пока что здесь пусто'
+		elif self.request.session.get('language') == 'UA':
+			context['btn_title'] = 'Написати'
+			context['items_title'] = 'Айтеми:'
+			context['no_items'] = 'Поки що тут пусто'
 		else:
 			context['btn_title'] = 'Message'
+			context['items_title'] = 'Items:'
+			context['no_items'] = 'No items yet'
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -296,8 +270,6 @@ class ProfileView(DetailView):
 			raise Http404("Not Found")
 		return User.objects.filter_by_username(username=username)
 
-
-		
 class WishListView(LoginRequiredMixin, ListView):
 	template_name = 'accounts/wish-list.html'
 	def get_queryset(self, *args, **kwargs):
@@ -324,11 +296,19 @@ class WishListView(LoginRequiredMixin, ListView):
 		if self.request.session.get('language') == 'RU':
 			context={
 			'title':'Избранное:',
+			'emptiness':'Пока что здесь пусто',
+			'wishes':wished_products
+			}
+		elif self.request.session.get('language') == 'UA':
+			context={
+			'title':'Улюблене:',
+			'emptiness':'Пока що тут пусто',
 			'wishes':wished_products
 			}
 		else: 
 			context={
 			'title':'Wishlist:',
+			'emptiness':'No items yet',
 			'wishes':wished_products
 			}
 		return context
@@ -337,8 +317,6 @@ class WishListView(LoginRequiredMixin, ListView):
 	# 	wished_products = [wish.product for wish in all_wishes]
 	# 	context['wishes'] = wished_products
 	# 	return context
-
-
 
 @login_required
 def wishlistupdate(request):
@@ -376,6 +354,56 @@ def wishlistupdate(request):
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
 
+class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
+	form_class = GuestForm
+	default_next = '/register/'
+
+	def get_success_url(self):
+		return self.get_next_url()
+
+	def form_invalid(self, form):
+		return redirect('/register/')
+
+	# def form_valid(self, form):
+	# 	request = self.request
+	# 	email = form.cleaned_data.get("email")
+	# 	new_guest_email = GuestEmail.objects.create(email=email)
+	# 	request.session['guest_email_id'] = new_guest_email.id
+	# 	return redirect(self.get_next_url())
+
+	
+# def login_page(request):
+# 	form = LoginForm(request.POST or None)
+# 	context ={
+
+# 		'form':form
+
+# 	}
+# 	#print(request.user.is_authenticated())
+
+# 	next_ = request.GET.get('next')
+# 	next_post = request.POST.get('next')
+# 	redirect_path=next_ or next_post or None
+# 	if form.is_valid():
+# 		username = form.cleaned_data.get("username")
+# 		password = form.cleaned_data.get("password")		
+# 		user = authenticate(request, username=username, password=password)
+# 		if user is not None:
+# 			login(request, user)
+# 			try:
+# 				del request.session['guest_email_id']
+# 			except:
+# 				pass
+# 			if is_safe_url(redirect_path, request.get_host()):
+# 				return redirect(redirect_path)
+# 			else:
+# 				return redirect("/")
+# 		else:
+# 			print("Error")
+	        
+# 	return render(request, "accounts/login.html", context)
+
+# #User = get_user_model()
 
 
 

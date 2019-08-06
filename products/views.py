@@ -77,33 +77,12 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		context['cart']=cart_obj
 		if self.request.session.get('language') == 'RU':
 			context['title']='Недавно просмотренное'
+		elif self.request.session.get('language') == 'UA':
+			context['title']='Нещодавно переглянуте'
 		else:
 			context['title']='Viewed items'		
 		# context['wishes'] = wished_products
 		return context
-
-# class ProductListView(ListView):
-# 	#queryset = Product.objects.all()
-# 	template_name = "products/list.html"
-
-# 	def get_queryset(self, *args, **kwargs):
-# 		qs = Product.objects.authentic()
-# 		return qs
-
-# 	# def get_context_data(self, *args, **kwargs):
-# 	# 	context = super(ProductListView, self).get_context_data(*args, **kwargs)
-# 	##super обращается к классу-родителю, вызывает родитель-метод get_context_data
-# 	# 	print(context)
-# 	# 	return contex
-
-		
-# 	def get_context_data(self, *args, **kwargs):
-# 		context = super(ProductListView, self).get_context_data(*args, **kwargs) 
-# 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-# 		context['cart']=cart_obj
-# 		return context
-
-
 
 def product_list_view(request):
 	queryset = Product.objects.all()
@@ -111,7 +90,6 @@ def product_list_view(request):
 		'object_list': queryset.order_by('-timestamp')
 	}
 	return render(request, "products/list.html", context)
-
 
 class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	queryset = Product.objects.all()
@@ -153,8 +131,12 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
-		# context['wishes']= wished_products
-		print(context)
+		if self.request.session.get('language') == 'RU':
+			context['report'] = 'Жалоба?'
+		elif self.request.session.get('language') == 'UA':
+			context['report'] = 'Скарга?'
+		else:
+			context['report'] = 'Report?'
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -162,67 +144,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		username = request.POST.get('chat_with', '/')
 		redirect_url = next_ + 'messages/' + username
 		return redirect(redirect_url)
-
-
-
-
-# class ProductDetailView(ObjectViewedMixin, DetailView):
-# 	#queryset = Product.objects.all()
-# 	template_name = "products/detail.html"
-
-# 	def get_context_data(self, *args, **kwargs):
-# 		user = self.request.user
-# 		all_wishes = user.wishes_user.all()
-# 		wished_products = []
-# 		for wish in all_wishes: 
-# 			wished_products.append(wish.product)
-# 		context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-# 		context['wishes']= wished_products
-# 		print(context)
-# 		return context
-
-# 	def get_object(self, *args, **kwargs):
-# 		request = self.request
-# 		pk = self.kwargs.get('pk')
-# 		instance = Product.objects.get_by_id(pk)
-# 		if instance is None:
-# 			raise Http404("Product doesnt Exist")
-# 		return instance
-
-# 	def get_queryset(self, *args, **kwargs):
-# 		request = self.request
-# 		pk = self.kwargs.get('pk')
-# 		return Product.objects.filter(pk=pk)
-
-
-
-# def product_detail_view(request, pk=None, *args, **kwargs):
-# 	user = self.request.user
-# 	all_wishes = user.wishes_user.all()
-# 	print(all_wishes)
-# 	print('fdfdfd')
-# 	wished_products = []
-# 	for wish in all_wishes: 
-# 		wished_products.append(wish.product)
-# 	# context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-# 	instance = Product.objects.get_by_id(pk)
-# 	if instance is None:
-# 		raise Http404("Product doesnt Exist")
-# 	print(instance)
-# 	# qs=Product.objects.filter(id=pk)
-# 	# #print(qs)
-# 	# if qs.exists() and qs.count()==1:
-# 	# 	instance = qs.first()
-# 	# else:
-# 	# 	raise Http404("Product doesnt Exist")
-
-
-# 	context = {
-# 		'object': instance,
-# 		'wishes': wished_products
-# 	}
-# 	# print(context)
-# 	return render(request, "products/detail.html", context)
 
 def image_create_order(request):
 	if request.POST:
@@ -245,7 +166,6 @@ def image_create_order(request):
 		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
 	return redirect('home')
 
-
 def image_update_view(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
@@ -254,7 +174,6 @@ def image_update_view(request):
 			image.update(image_order=idx+1)
 		ProductThumbnail.objects.create_update_thumbnail(product=image.first().product)
 	return redirect('home')
-
 
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
@@ -366,26 +285,25 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(self.request, 'products/product-create.html', context)
 
-
 class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.by_user(request.user)
+		return Product.objects.by_user(request.user).order_by('-timestamp')
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
 		user = self.request.user
 		if self.request.session.get('language') == 'RU':
 			context['title'] = 'Мои айтемы'
+			context['emptiness'] = 'Пока что здесь пусто'
+		elif self.request.session.get('language') == 'UA':
+			context['title'] = 'Мої айтеми'
+			context['emptiness'] = 'Пока що тут пусто'
 		else:
 			context['title'] = 'My items'
-		# all_wishes = user.wishes_user.all()
-		# wished_products = []
-		# wished_products = [wish.product for wish in all_wishes]
-		# context['wishes'] = wished_products
+			context['emptiness'] = 'No items yet'
 		return context
-
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = ProductUpdateForm
@@ -425,9 +343,12 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		if self.request.session.get('language') == 'RU':
 			context['title'] = 'Редактировать'
 			context['button']='Сохранить' 
+		elif self.request.session.get('language') == 'UA':
+			context['title'] = 'Редагувати'
+			context['button']='Зберегти' 
 		else:
 			context['title'] = 'Update'
-			context['button']='Update'
+			context['button']='Save'
 		
 		new_all_=[]
 		all_ = ProductImage.objects.all().filter(slug=slug)
@@ -435,7 +356,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
 		return context
-
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
 	form_class = ProductCreateForm
@@ -455,7 +375,6 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 		except:
 			raise Http404("Hmm")
 		return instance
-
 
 class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
 	template_name = 'products/product-delete.html'
@@ -478,8 +397,7 @@ class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
 
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
-
-		
+	
 @login_required
 def product_delete(request):
 	if request.user.is_authenticated():
@@ -505,6 +423,70 @@ def product_delete(request):
 		return redirect("products:user-list")
 	else:
 		return redirect('login')
+
+@login_required
+def product_report(request):
+	product_id=request.POST.get('product_id')
+	user = request.user
+	# print('SUCCESS REPORT WORKING')
+	# product_obj = Product.objects.get(id=product_id)
+	
+	previous = request.POST.get('previous', '/')
+		# return HttpResponseRedirect(next)
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			return HttpResponseRedirect(previous)
+	# 	user_wishes_exist = user_wishes.filter(product=product_obj)
+		reported_product = ReportedProduct.objects.filter(user = user, product = product_obj)
+		if reported_product.exists():
+			if request.session.get('language')=='RU':
+				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы уже получили твою жалобу.')
+			elif request.session.get('language')=='UA':
+				messages.add_message(request, messages.SUCCESS, 'Дякуємо. Ми вже отримали твою скаргу.')
+			else:
+				messages.add_message(request, messages.SUCCESS, "Thank you. We have already received your report.")
+	# 		user.wishes.remove(product_obj)
+	# 		user_wishes_exist.first().delete()
+	# 		added = False
+	# 		user_wishes_exist=user_wishes.count()
+		else: 
+			ReportedProduct.objects.create(user=user, product=product_obj)
+			if request.session.get('language')=='RU':
+				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы проверим этот айтем мануально.')
+			elif request.session.get('language')=='UA':
+				messages.add_message(request, messages.SUCCESS, 'Дякуємо. Ми перевіримо цей айтем мануально.')
+			else:
+				messages.add_message(request, messages.SUCCESS, "Thank you. We will check this item manually.")
+	# 		added = True
+	# 	if request.is_ajax():
+	# 		json_data={
+	# 			"added": added,
+	# 			"removed": not added,
+	# 			 "wishes_count": user_wishes_exist,
+	# 			 'product_likes': product_likes,
+	# 		}
+	# 		return JsonResponse(json_data, status=200)
+	return HttpResponseRedirect(previous)
+
+class FakeProductsListView(LoginRequiredMixin, ListView):
+	template_name = 'products/fake-list.html'
+
+	def get_queryset(self, *args, **kwargs):
+		return Product.objects.fake()
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Обнаруженные фейки:'
+		elif self.request.session.get('language') == 'UA':
+			context['title'] = 'Виявлені фейки:'
+		else:
+			context['title'] = 'Detected fakes:'
+		return context
+
+
 
 
 # class WishListView(LoginRequiredMixin, ListView):
@@ -550,53 +532,6 @@ def product_delete(request):
 
 
 
-@login_required
-def product_report(request):
-	product_id=request.POST.get('product_id')
-	user = request.user
-	# print('SUCCESS REPORT WORKING')
-	# product_obj = Product.objects.get(id=product_id)
-	
-	previous = request.POST.get('previous', '/')
-	print(previous)
-		# return HttpResponseRedirect(next)
-	if product_id is not None:
-		try:
-			product_obj = Product.objects.get(id=product_id)
-		except Product.DoesNotExist:
-			print("Show message to user!")
-			return HttpResponseRedirect(previous)
-	# 	user_wishes_exist = user_wishes.filter(product=product_obj)
-		reported_product = ReportedProduct.objects.filter(user = user, product = product_obj)
-		if reported_product.exists():
-			print('ALREADY EXISTS!')
-			if request.session.get('language')=='RU':
-				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы уже получили твою жалобу.')
-			else:
-				messages.add_message(request, messages.SUCCESS, "Thank you. We have already received your report.")
-	# 		user.wishes.remove(product_obj)
-	# 		user_wishes_exist.first().delete()
-	# 		added = False
-	# 		user_wishes_exist=user_wishes.count()
-		else: 
-			ReportedProduct.objects.create(user=user, product=product_obj)
-			if request.session.get('language')=='RU':
-				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы проверим этот айтем мануально.')
-			else:
-				messages.add_message(request, messages.SUCCESS, "Thank you. We will check this item manually.")
-	# 		added = True
-	# 	if request.is_ajax():
-	# 		json_data={
-	# 			"added": added,
-	# 			"removed": not added,
-	# 			 "wishes_count": user_wishes_exist,
-	# 			 'product_likes': product_likes,
-	# 		}
-	# 		return JsonResponse(json_data, status=200)
-	return HttpResponseRedirect(previous)
-
-
-
 # def product_delete(request):
 # 	if request.user.is_authenticated():
 # 		product_id=request.POST.get('product_id')
@@ -622,16 +557,84 @@ def product_report(request):
 # 	else:
 # 		return redirect('login')
 
-class FakeProductsListView(LoginRequiredMixin, ListView):
-	template_name = 'products/fake-list.html'
 
-	def get_queryset(self, *args, **kwargs):
-		return Product.objects.fake()
+# class ProductListView(ListView):
+# 	#queryset = Product.objects.all()
+# 	template_name = "products/list.html"
 
-	def get_context_data(self, *args, **kwargs):
-		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Обнаруженные фейки:'
-		else:
-			context['title'] = 'Detected fakes:'
-		return context
+# 	def get_queryset(self, *args, **kwargs):
+# 		qs = Product.objects.authentic()
+# 		return qs
+
+# 	# def get_context_data(self, *args, **kwargs):
+# 	# 	context = super(ProductListView, self).get_context_data(*args, **kwargs)
+# 	##super обращается к классу-родителю, вызывает родитель-метод get_context_data
+# 	# 	print(context)
+# 	# 	return contex
+
+		
+# 	def get_context_data(self, *args, **kwargs):
+# 		context = super(ProductListView, self).get_context_data(*args, **kwargs) 
+# 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+# 		context['cart']=cart_obj
+# 		return context
+
+
+
+# class ProductDetailView(ObjectViewedMixin, DetailView):
+# 	#queryset = Product.objects.all()
+# 	template_name = "products/detail.html"
+
+# 	def get_context_data(self, *args, **kwargs):
+# 		user = self.request.user
+# 		all_wishes = user.wishes_user.all()
+# 		wished_products = []
+# 		for wish in all_wishes: 
+# 			wished_products.append(wish.product)
+# 		context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+# 		context['wishes']= wished_products
+# 		print(context)
+# 		return context
+
+# 	def get_object(self, *args, **kwargs):
+# 		request = self.request
+# 		pk = self.kwargs.get('pk')
+# 		instance = Product.objects.get_by_id(pk)
+# 		if instance is None:
+# 			raise Http404("Product doesnt Exist")
+# 		return instance
+
+# 	def get_queryset(self, *args, **kwargs):
+# 		request = self.request
+# 		pk = self.kwargs.get('pk')
+# 		return Product.objects.filter(pk=pk)
+
+
+
+# def product_detail_view(request, pk=None, *args, **kwargs):
+# 	user = self.request.user
+# 	all_wishes = user.wishes_user.all()
+# 	print(all_wishes)
+# 	print('fdfdfd')
+# 	wished_products = []
+# 	for wish in all_wishes: 
+# 		wished_products.append(wish.product)
+# 	# context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+# 	instance = Product.objects.get_by_id(pk)
+# 	if instance is None:
+# 		raise Http404("Product doesnt Exist")
+# 	print(instance)
+# 	# qs=Product.objects.filter(id=pk)
+# 	# #print(qs)
+# 	# if qs.exists() and qs.count()==1:
+# 	# 	instance = qs.first()
+# 	# else:
+# 	# 	raise Http404("Product doesnt Exist")
+
+
+# 	context = {
+# 		'object': instance,
+# 		'wishes': wished_products
+# 	}
+# 	# print(context)
+# 	return render(request, "products/detail.html", context)
