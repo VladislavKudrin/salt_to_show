@@ -166,6 +166,11 @@ a:hover{
     color: black !important;
 }
 
+.dropdown-item:focus, .dropdown-item:hover{
+    background-color: black !important;
+    color: white !important;
+}
+
 .strike {
   font-size: 1em;
   line-height: 2em;

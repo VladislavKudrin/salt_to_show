@@ -47,10 +47,10 @@ html, body {*/
 						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
 					{% endfor %}
 					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<button id="sort" type='submit' name="relevant" value='-timestamp' class='btn'><small>Сначала новое</small></button><br/>
-					<button id="sort" type='submit' name="high_low" value='-price' class='btn'><small>По убыванию</small></button><br/>
+					<button id="sort" type='submit' name="relevant" value='-timestamp' class='btn dropdown-item'><small>Сначала новое</small></button><br/>
+					<button id="sort" type='submit' name="high_low" value='-price' class='btn dropdown-item'><small>По убыванию</small></button><br/>
 					<input type="hidden"  name="qs_for_sort" value='{{ object_list }}'>
-					<button id="sort" type='submit' name="low_high" value='price' class='btn'><small>По возрастанию</small></button>
+					<button id="sort" type='submit' name="low_high" value='price' class='btn dropdown-item'><small>По возрастанию</small></button>
 				</form>
 			</div>
 			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h"></i></button>
@@ -95,10 +95,10 @@ html, body {*/
 						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
 					{% endfor %}
 					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<button id="sort" type='submit' name="relevant" value='-timestamp' class='btn'><small>New</small></button><br/>
-					<button id="sort" type='submit' name="high_low" value='-price' class='btn'><small>High price</small></button><br/>
+					<button id="sort" type='submit' name="relevant" value='-timestamp' class='btn dropdown-item'><small>New</small></button><br/>
+					<button id="sort" type='submit' name="high_low" value='-price' class='btn dropdown-item'><small>High price</small></button><br/>
 					<input type="hidden"  name="qs_for_sort" value='{{ object_list }}'>
-					<button id="sort" type='submit' name="low_high" value='price'class='btn'><small>Low price</small></button>
+					<button id="sort" type='submit' name="low_high" value='price'class='btn dropdown-item'><small>Low price</small></button>
 				</form>
 			</div>
 			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h"></i></button>
