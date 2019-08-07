@@ -1,0 +1,18 @@
+<div class='row mx-auto'>
+    <div class="col-xs-5 col-md-12 text-md-center">
+      {% if key %}
+      <p class="lead m-0 mt-5" style='font-size: 20px;'>Помилка</p>
+      <p class="lead m-0 mt-5" style='font-size: 20px;'>Спробуй ще раз</p>
+      {% else %}
+        <p class="lead m-0 mt-5" style='font-size: 20px;'>Повторна активація мейла</p>
+      {% endif %}
+    </div>
+    <div class="col-4 mx-auto text-center">
+            <form method='POST' action=''>{% csrf_token %}
+              {{ form|crispy }}
+              <input class="btn btn-dark" type='submit' value='Надіслати'/>
+            </form>
+      </div>
+</div>
+
+</div>

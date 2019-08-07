@@ -127,7 +127,6 @@ CONDITION_CHOICES = (
 	('gently used', 'Gently used'),
 	('used', 'Used'),
 	)
-
 AUTHENTICITY_CHOICES = (
 	('undefined', 'Undefined'),
 	('fake', 'Fake'),
@@ -167,12 +166,9 @@ class Product(models.Model):
 	def __str__(self):
 		return self.title
 
-
-
 def product_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = unique_slug_generator(instance)
-
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
 
@@ -184,8 +180,6 @@ class ProductImage(models.Model):
 	unique_image_id = models.CharField(max_length = 120, default=None, unique = True, blank=False, null=True)
 	def __str__(self):
 		return self.product.title + str(self.image_order)
-
-
 
 def image_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.unique_image_id:
@@ -223,7 +217,15 @@ class ProductThumbnail(models.Model):
 	def __str__(self):
 		return self.product.slug + ' thumbnail'
 
+class ReportedProduct(models.Model):
+	user    	= models.ForeignKey(User, related_name='reporter')
+	product 	= models.ForeignKey(Product, related_name='reported_product')
+	reason	 	= models.CharField(max_length=240, default=None, null=True)
+	timestamp	= models.DateTimeField(auto_now_add=True)
 
+	def __str__(self):
+		return self.product.title
+		
 # def product_create_post_save_reciever(sender, request, instance, *args, **kwargs):
 # 	if request.user.is_authenticated():
 # 		user = request.user
@@ -234,17 +236,6 @@ class ProductThumbnail(models.Model):
 
 
 # post_save.connect(product_create_post_save_reciever, sender= Product)
-
-
-class ReportedProduct(models.Model):
-	user    	= models.ForeignKey(User, related_name='reporter')
-	product 	= models.ForeignKey(Product, related_name='reported_product')
-	reason	 	= models.CharField(max_length=240, default=None, null=True)
-	timestamp	= models.DateTimeField(auto_now_add=True)
-
-	def __str__(self):
-		return self.product.title
-
 
 
 

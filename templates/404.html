@@ -3,12 +3,19 @@
 
 
 {% block content %}
-<div class='row'>
-	<div class='col text-center'>
-		<h1>Page not Found</h1>
-		<p>404 Error</p>
-	</div>
-</div>
 
+{% if request.session.language == 'RU' %}
+
+{% include 'languages/404-ru.html' %}  
+
+{% elif request.session.language == 'UA' %}
+
+{% include 'languages/404-ua.html' %}  
+
+{% else %}
+
+{% include 'languages/404-en.html' %}  
+
+{% endif %}
 
 {% endblock %}

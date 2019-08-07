@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 
 
-
 {% block content %}
-<div class='row'>
-	<div class='col text-center'>
-		<h1>Permission denied</h1>
-		<p>403 Error</p>
-	</div>
-</div>
 
+{% if request.session.language == 'RU' %}
+
+{% include 'languages/403-ru.html' %}  
+
+{% elif request.session.language == 'UA' %}
+
+{% include 'languages/403-ua.html' %}  
+
+{% else %}
+
+{% include 'languages/403-en.html' %}  
+
+{% endif %}
 
 {% endblock %}

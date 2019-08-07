@@ -228,7 +228,7 @@ a:hover{
 }
 
 .btn-dark-home:hover{
-    background: rgba(1, 1, 1, 0.86);
+/*    background: rgba(1, 1, 1, 0.86);*/
 }
 .btn-dark-home:focus{
     background: rgba(1, 1, 1, 0.86);
@@ -251,7 +251,7 @@ a:hover{
 
 .btn-light:hover {
    border-color: black;
-   background: rgba(1, 1, 1, 0.1);
+   border: 1px solid black !important;
 }
 
 .btn.focus, .btn:focus {

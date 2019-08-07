@@ -68,6 +68,18 @@ def to_rus_times(value):
 
 @register.filter
 def to_ua_times(value):
+	month_eng = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+	month_ua = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень']
+	for idx, month in enumerate(month_eng):
+		if month == value.split(' ')[0]:
+			value = value.replace(value.split(' ')[0], month_ua[idx])
+			print(value)
+			return value
+	time_eng = ['minutes','minute','hours', 'hour', 'days','day', 'weeks','week']
+	time_ua = ['хв.','хвилину','годин', 'година', 'днів', 'день','тижнів', 'тиждень']
+	for idx, time in enumerate(time_eng):
+		if time in value:
+			value = value.replace(time, time_ua[idx])
 	return value
 
 

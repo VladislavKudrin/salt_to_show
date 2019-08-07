@@ -123,115 +123,15 @@
 </head>
 
 {% if request.session.language == 'RU' %}
-  <footer class="page-footer font-small">
-      <div class="container-fluid">
-        <div class="row">
-          <div id="footer-desktop" class="col-4 my-2">
-            <a href="{% url 'about' %}" class="footer-text mx-3">О нас</a>
-            <a href='{% url "contact" %}' class="footer-text mx-3">Контакт</a>
-          </div>
 
-          <div id="footer-mobile" class="col-5 mt-2" style="left: 5%;">
-            <a href="{% url 'about' %}" class="footer-text mr-3">О нас</a>
-            <a href='{% url "contact" %}' class="footer-text">Контакт</a>
-          </div>
+{% include 'languages/footer-ru.html' %}  
 
-          <div id="footer-mobile" class="col-7 mt-2" style="right: 5%;">
-            <ul class="soc-seti pl-0">
-              <li class="soc-set" >
-                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-vk icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
-              </li>
-            </ul>
-          </div>
+{% elif request.session.language == 'UA' %}
 
-
-          <div id="footer-desktop" class="col-xs-12 col-md-4 my-2">
-            <ul class="soc-seti pl-0">
-              <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-vk icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
-              </li>
-            </ul>
-          </div>
-
-          <div id="footer-desktop" class="col-md-4 my-2 text-right">
-            <a class="footer-copyright mx-3">SALT © 2019</a>
-          </div>
-
-        </div>
-      </div>
-  </footer>
+{% include 'languages/footer-ua.html' %}  
+ 
 {% else %}
-  <footer class="page-footer font-small">
-      <div class="container-fluid">
-        <div class="row">
-          <div id="footer-desktop" class="col-4 my-2">
-            <a href="{% url 'about' %}" class="footer-text mx-3">About</a>
-            <a href='{% url "contact" %}' class="footer-text mx-3">Contact</a>
-          </div>
 
-          <div id="footer-mobile" class="col-5 mt-2" style="left: 5%;">
-            <a href="{% url 'about' %}" class="footer-text mr-3">About</a>
-            <a href='{% url "contact" %}' class="footer-text">Contact</a>
-          </div>
+{% include 'languages/footer-en.html' %}  
 
-          <div id="footer-mobile" class="col-7 mt-2" style="right: 5%;">
-            <ul class="soc-seti pl-0">
-              <li class="soc-set" >
-                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-vk icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
-              </li>
-            </ul>
-          </div>
-
-
-          <div id="footer-desktop" class="col-xs-12 col-md-4 my-2">
-            <ul class="soc-seti pl-0">
-              <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-vk icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
-              </li>
-            </ul>
-          </div>
-
-          <div id="footer-desktop" class="col-md-4 my-2 text-right">
-            <a class="footer-copyright mx-3">SALT © 2019</a>
-          </div>
-
-        </div>
-      </div>
-  </footer>
-  {% endif %}
+{% endif %}

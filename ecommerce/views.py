@@ -16,25 +16,28 @@ from operator import itemgetter
 def test_page(request):
 	return render(request, "categories/slidebar.html", {})
 
-
 def about_page(request):
-	context = {
-		'title':'About Page',
-		'content':'Welcome to the about page'
-	}
-	return render(request, "base/about_us_3.html", context)
-
-
-
+	context = {}
+	return render(request, "base/about_us.html", context)
 
 class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	form_class = ContactForm
 	template_name = 'contact/contact.html'
+
 	def get_context_data(self, *args, **kwargs):
 		context=super(ContactPageView, self).get_context_data(*args, **kwargs)
 		context['user_email'] = self.request.user.email
-		context['title'] = 'Contact page'
+		if self.request.session.get('language') == 'RU':
+			context['title'] = 'Напиши нам'
+			context['button'] = 'Отправить'
+		elif self.request.session.get('language') == 'UA':
+			context['title'] = 'Напиши нам'
+			context['button'] = 'Надіслати'
+		else:
+			context['title'] = 'Contact us'
+			context['button'] = 'Submit'
 		return context
+
 	def form_valid(self, form):
 		context = {
 						
@@ -60,6 +63,8 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		if self.request.is_ajax():
 			if self.request.session.get('language') == 'RU':
 				return JsonResponse({"message":"Спасибо"})
+			elif self.request.session.get('language') == 'UA':
+				return JsonResponse({"message":"Дякуємо"})
 			else:
 				return JsonResponse({"message":"Thank you"})
 			
@@ -73,6 +78,20 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		errors = form.errors.as_json()
 		if request.is_ajax():
 			return HttpResponse(errors, status=400, content_type='application/json')
+
+def home_page(request):
+	qs = Product.objects.all()
+	mydict = {}
+	for obj in qs: 
+		mydict[obj] = Wishlist.objects.filter(product=obj).count()
+	sorted_ = sorted(mydict, key=mydict.get, reverse=True)
+	most_liked = sorted_[:50]
+	context = {
+		'qs': qs,
+		'liked': most_liked,
+	}
+	return render(request, "home_page.html", context)
+
 # def contact_page(request):
 # 	contact_form=ContactForm(request or None)
 # 	if request.POST:
@@ -117,18 +136,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 # 	return render(request, "contact/contact.html", context)
 
 
-def home_page(request):
-	qs = Product.objects.all()
-	mydict = {}
-	for obj in qs: 
-		mydict[obj] = Wishlist.objects.filter(product=obj).count()
-	sorted_ = sorted(mydict, key=mydict.get, reverse=True)
-	most_liked = sorted_[:50]
-	context = {
-		'qs': qs,
-		'liked': most_liked,
-	}
-	return render(request, "home_page.html", context)
+
 
 
 

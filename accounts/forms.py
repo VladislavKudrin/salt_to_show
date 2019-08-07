@@ -24,10 +24,14 @@ class ReactivateEmailForm(forms.Form):
         user_objects = EmailActivation.objects.email_exists(email)
         if not user_objects.exists():
             reset_link = reverse("login")
-            msg = """This Email does not exist. Would you like to <a href="{link}">register</a>?
-            """.format(link=reset_link)
             if self.request.session.get('language')=='RU':
-                msg = """Такого Email не существует. Хочешь <a href="{link}">зарегистрироваться</a>?
+                msg = """Такого мейла не существует. Хочешь <a href="{link}">зарегистрироваться</a>?
+                """.format(link=reset_link)
+            elif self.request.session.get('language')=='UA':
+                msg = """Такого мейлу не існує. Хочеш <a href="{link}">зареєструватися</a>?
+                """.format(link=reset_link)
+            else:
+                msg = """This email does not exist. Would you like to <a href="{link}">register</a>?
                 """.format(link=reset_link)
             raise forms.ValidationError(mark_safe(msg))
         return email
@@ -41,7 +45,6 @@ class UserAdminCreationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('full_name', 'email',)
-
     # def clean_password2(self):
     #     # Check that the two password entries match
     #     # password1 = self.cleaned_data.get("password1")
@@ -75,7 +78,8 @@ class UserDetailChangeForm(forms.ModelForm):
                 'profile_foto'
                     ]
     def __init__(self, request, *args, **kwargs):
-        alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Имя пользователя должно содержать только латинские символы или цифры')
+        alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм должен содержать только латинские символы или цифры')
+        alphanumeric_ua = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм повинен містити тільки латинські символи або цифри')
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
         self.request = request
         self.fields['email'].initial=request.user.email
@@ -85,20 +89,28 @@ class UserDetailChangeForm(forms.ModelForm):
         if self.lan == 'RU':
             self.fields['subscribed'].label = "Получать рассылку?"
             self.fields['full_name'].label = "Имя и фамилия"
-            self.fields['username'].label = "Имя пользователя"
-            self.fields['username'].widget.attrs['placeholder'] = "Имя пользователя"
+            self.fields['username'].label = "Юзернейм"
+            self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
             self.fields['username'].validators = [alphanumeric_rus]
             self.fields['full_name'].widget.attrs['placeholder'] = "Имя и фамилия"
             self.fields['profile_foto'].label = "Фото профиля"
-            self.fields['email'].help_text='Нельзя изменить Email'
+            self.fields['email'].help_text='Нельзя изменить мейл'
+        elif self.lan == 'UA':
+            self.fields['subscribed'].label = "Отримувати розсилку?"
+            self.fields['full_name'].label = "Ім'я та прізвище"
+            self.fields['username'].label = "Юзернейм"
+            self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
+            self.fields['username'].validators = [alphanumeric_ua]
+            self.fields['full_name'].widget.attrs['placeholder'] = "Ім'я та прізвище"
+            self.fields['profile_foto'].label = "Фото профілю"
+            self.fields['email'].help_text='Не можна змінити мейл'
 
-
-    def clean_username(self):
-        data = self.cleaned_data['username']
-        contains_rus = bool(re.search('[а-яА-Я]', data))
-        if contains_rus:
-            raise forms.ValidationError("Имя пользователя должно содержать только латинские символы")
-        return data
+    # def clean_username(self):
+    #     data = self.cleaned_data['username']
+    #     contains_rus = bool(re.search('[а-яА-Я]', data))
+    #     if contains_rus:
+    #         raise forms.ValidationError("Юзернейм должен содержать только латинские символы")
+    #     return data
 
     def clean_subscribed(self):
         marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
@@ -159,13 +171,18 @@ class RegisterLoginForm(forms.ModelForm):
         self.request = request
         super(RegisterLoginForm,self).__init__(*args,**kwargs)
         if request.session.get('language') == 'RU':
-            self.fields['password'].widget.attrs['placeholder'] = 'Минимум 8 символов + цифры'
-            self.fields['email'].widget.attrs['placeholder'] = 'Твой Email'
+            self.fields['password'].widget.attrs['placeholder'] = 'Минимум 8 символов и цифр'
+            self.fields['email'].widget.attrs['placeholder'] = 'Твой мейл'
+        elif request.session.get('language') == 'UA':
+            self.fields['password'].widget.attrs['placeholder'] = 'Мінімум 8 символів та цифр'
+            self.fields['email'].widget.attrs['placeholder'] = 'Твій мейл'
 
     def clean(self):
         link = reverse("accounts:resend-activation")
         if self.request.session.get('language') == 'RU':
             reconfirm_msg = """<a href='{resend_link}'> (Кликни, чтобы выслать подтверждение еще раз</a>.)""".format(resend_link=link)
+        elif self.request.session.get('language') == 'UA':
+            reconfirm_msg = """<a href='{resend_link}'> (Кликни, щоб вислати підтвердження ще раз</a>.)""".format(resend_link=link)
         else:
             reconfirm_msg = """Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
         self.cleaned_data['msg'] = reconfirm_msg                            
@@ -185,8 +202,6 @@ class RegisterLoginForm(forms.ModelForm):
     #     subscribed_user = self.cleaned_data.get('subscribed')
     #     marketing_pref.update(subscribed=subscribed_user)
 
-
-
     def save(self, commit=True):
         request = self.request
         data = self.cleaned_data
@@ -196,9 +211,6 @@ class RegisterLoginForm(forms.ModelForm):
         if not user_objects.exists(): 
             username = User.objects.check_username(username=email.split("@")[0])
             User.objects.create_user(email=email, username=username, password=password, is_active=False)
-
-
-
 
 
 #----Deleting guest mails if there are any-----------------
@@ -213,9 +225,6 @@ class RegisterLoginForm(forms.ModelForm):
     #     raise forms.ValidationError("Oops... something went wrong. Please contact us!")
 
 #-------------ACTIVE-FALSE-----------------
-
-
-
 
 
  
