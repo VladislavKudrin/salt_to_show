@@ -7,8 +7,13 @@
 <head>
 <style type="text/css">
 
+.forgot-psswrd {
+	opacity: 0.8;
+}
 
-  
+.forgot-psswrd:hover {
+	opacity: 1;
+} 
 
 
 </style>
@@ -44,7 +49,7 @@
 					 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
 		        </button>
 		        </a>
-        		<br><small><a href='{% url "password_reset" %}'>Забыл_а пароль?</a></small>
+        		<br><small><a href='{% url "password_reset" %}' class="forgot-psswrd">Забыл_а пароль?</a></small>
 
 			</div>
 		</div>
@@ -78,7 +83,7 @@
 					 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
 		        </button>
 		        </a>
-        		<br><small><a href='{% url "password_reset" %}'>Forgot password?</a></small>
+        		<br><small><a href='{% url "password_reset" %}' class="forgot-psswrd">Forgot password?</a></small>
 			</div>
 		</div>
 	</div>
