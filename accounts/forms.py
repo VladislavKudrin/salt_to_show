@@ -9,7 +9,7 @@ import re
 User = get_user_model()
 
 from marketing.models import MarketingPreference
-from .models import EmailActivation, GuestEmail, LanguagePreference
+from .models import EmailActivation, GuestEmail, LanguagePreference, Region
 from .signals import user_logged_in_signal
 from django.core.validators import RegexValidator
 
@@ -66,6 +66,7 @@ class UserAdminCreationForm(forms.ModelForm):
 class UserDetailChangeForm(forms.ModelForm):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Only alphanumeric characters are allowed')
     username  = forms.CharField(label='Username', required=True, validators=[alphanumeric], widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your username'}))
+    region = forms.ChoiceField(label='Region', widget=forms.Select(), required=False)
     full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your full name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), help_text='Cannot change email', required=False)
     subscribed = forms.BooleanField(label = 'Recieve marketing email?', required=False)
@@ -74,13 +75,23 @@ class UserDetailChangeForm(forms.ModelForm):
         model = User
         fields = [
                 'username',
+                'region',
                 'full_name',
-                'profile_foto'
+                'profile_foto',
                     ]
     def __init__(self, request, *args, **kwargs):
         alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм должен содержать только латинские символы или цифры')
         alphanumeric_ua = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм повинен містити тільки латинські символи або цифри')
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
+
+        #REGIONS
+        self.initial['region'] = request.user.region
+        if self.initial['region'] is None: 
+            self.initial['region'] = ('default', '-- Please select your region --')
+        region_choices = [(e.region, e.region) for e in Region.objects.all()] #currently available options
+        region_choices.append(tuple(('default', '-- Please select your region --'))) #append default value
+        self.fields['region'].choices = region_choices
+
         self.request = request
         self.fields['email'].initial=request.user.email
         self.fields['subscribed'].initial=request.user.marketing.subscribed
@@ -117,6 +128,22 @@ class UserDetailChangeForm(forms.ModelForm):
         subscribed_user = self.cleaned_data.get('subscribed')
         marketing_pref.update(subscribed=subscribed_user)
 
+    def clean_region(self):
+        data = self.cleaned_data['region']
+        if data == 'default':
+            raise forms.ValidationError("You must select a region")
+        clean_data = Region.objects.filter(region=data)[0]
+        return clean_data
+
+
+    # def save(self, commit=True):
+    #     request = self.request
+    #     data = self.cleaned_data
+    #     password = data.get("password")
+    #     user_objects = User.objects.filter(email=email)
+    #     if not user_objects.exists(): 
+    #         username = User.objects.check_username(username=email.split("@")[0])
+    #         User.objects.create_user(email=email, username=username, password=password, is_active=False)
 
 class UserAdminChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on

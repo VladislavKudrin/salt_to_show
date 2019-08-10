@@ -18,7 +18,7 @@ class MailChimpWebhookView(CsrfExemptMixin, View):
 	def get(self, request, *args, **kwargs):
 		return HttpResponse("Thank you", status=200)
 	def post(self, request, *args, **kwargs):
-		print(request.POST)
+		print('WEBHOOK POST REQUEST', request.POST)
 		data = request.POST
 		list_id = data.get('data[list_id]')
 		if str(list_id) == str(MAILCHIMP_EMAIL_LIST_ID):

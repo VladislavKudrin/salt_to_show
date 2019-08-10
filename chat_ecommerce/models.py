@@ -2,13 +2,34 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
+from datetime import datetime, date, timezone
+
 
 class ThreadManager(models.Manager):
-    def by_user(self, user):
+    # def by_user(self, user): 
+    #     qlookup = Q(first=user) | Q(second=user)
+    #     qlookup2 = Q(first=user) & Q(second=user)
+    #     qs = self.get_queryset().filter(qlookup).exclude(qlookup2).distinct()
+    #     return qs
+
+    def by_recent_message(self, user): #returns a query set by users + sorted by recent messages in the thread + not displaying empty threads
+        # ----- user part -----
         qlookup = Q(first=user) | Q(second=user)
         qlookup2 = Q(first=user) & Q(second=user)
         qs = self.get_queryset().filter(qlookup).exclude(qlookup2).distinct()
-        return qs
+        # ---- sorting by recent messages part ----
+        threads_and_recent = {} # {'1': 25 Aug 2018, '2': 4 Mai 1990}; 
+        for thread in qs: 
+            messages = ChatMessage.objects.filter(thread=thread).order_by('-timestamp')
+            # print('CHATMESSAGE FOR {thread}'.format(thread=thread), messages)
+            if messages:  # by that we don't display empty threads
+                recent_timestamp= messages.first().timestamp
+                # print('FIRST', recent_timestamp)
+                threads_and_recent[thread] = recent_timestamp
+        # print('threads_and_recent', threads_and_recent)
+        sorted_qs = sorted(threads_and_recent, key=threads_and_recent.get, reverse=True) #sorted queryset
+        # print(sorted_)
+        return sorted_qs
 
     def get_or_new(self, user, other_username): # get_or_create
         username = user.username

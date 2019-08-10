@@ -5,7 +5,7 @@ from .forms import UserAdminCreationForm, UserAdminChangeForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import GuestEmail, EmailActivation, Wishlist, LanguagePreference
+from .models import GuestEmail, EmailActivation, Wishlist, LanguagePreference, Region
 
 User = get_user_model()
 
@@ -23,7 +23,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('admin', 'staff', 'is_active')
     fieldsets = (
         (None, {'fields': ('email', 'password', 'username')}),
-        ('Personal info', {'fields': ('full_name', 'wishes')}),
+        ('Personal info', {'fields': ('full_name', 'wishes', 'region')}),
         ('Permissions', {'fields': ('admin', 'staff', 'is_active', )}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -68,4 +68,8 @@ class LanguagePreferenceAdmin(admin.ModelAdmin):
 
 admin.site.register(LanguagePreference, LanguagePreferenceAdmin)
 
+admin.site.register(Region)
+
 # admin.site.register(Profile)
+
+# admin.site.register(Region)

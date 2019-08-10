@@ -271,7 +271,10 @@ class ProfileView(DetailView):
 		return User.objects.filter_by_username(username=username)
 
 class WishListView(LoginRequiredMixin, ListView):
+	paginate_by = 3
 	template_name = 'accounts/wish-list.html'
+
+
 	def get_queryset(self, *args, **kwargs):
 		user = self.request.user
 		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')

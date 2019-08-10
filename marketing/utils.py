@@ -3,6 +3,7 @@ import re
 import json
 import requests
 from django.conf import settings
+from accounts.models import User
 
 
 MAILCHIMP_API_KEY = getattr(settings, "MAILCHIMP_API_KEY", None)
@@ -55,12 +56,21 @@ class Mailchimp(object):
 	def change_subscription_status(self, email, status='unsubscribed'):
 		hashed_email = get_subscriber_hash(email)
 		endpoint = self.get_members_endpoint() + "/" + hashed_email
+		#user = User.objects.filter(email=email).first() # just for testing
+		#mail = user.email
 		data= {
 			"email_address":email,
 			"status": self.check_valid_status(status)
+			# 'merge_fields': { SENDING merge fields = custom fields is easy. Don't forget to create one in Mailchimp. (Region is already created)
+   #          	'REGION': mail
+   #      	}
 		}
+		print('DATA SENT', data)
 		r = requests.put(endpoint, auth=("", self.key), data=json.dumps(data))
 		return r.status_code, r.json()
+
+        
+
 
 	def check_valid_status(self, status):
 		choises = ['subscribed','unsubscribed','cleaned','pending']
