@@ -19,8 +19,9 @@
 }
 
 #websocket-form{
-	padding-top:65px;
+	padding-top:0px;
 }
+
 
 /*#table-scroll .my-custom-scrollbar {
   position: relative;
@@ -32,8 +33,13 @@
 #chat-items{
 	position: relative;
 /*	overflow:scroll;*/
-	max-height: 500px;
+/*	max-height: 80%;
+	min-height: 100%;*/
 	margin-bottom: 0px;
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 190px); 
 
 }
 
@@ -49,13 +55,19 @@ html {
 }
 
 #dialogs{
-	/*max-height: 500px;*/
-    overflow: auto;
+
+/*	max-height: 80%;
+	min-height: 100%;*/
+/*    overflow: auto;*/
 	width: 320px;
 	padding-right: 0px;
-	overflow: scroll;
+/*	overflow: scroll;*/
 	margin-bottom: 0;
 	position: relative;
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 130px); 
 
 }
 
@@ -416,9 +428,9 @@ button:focus {
 				<div class='col text-center my-auto'>
 						{% if request.user != object.first %}
 							<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
-								<div class='row'>
+								<div class='row justify-content-center'>
 
-									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
+									<div class='col-1 text-right p-2 my-auto avatar-not-skipped'>
 									{% if object.first.profile_foto %}
 										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
 									{% else %}
@@ -426,7 +438,7 @@ button:focus {
 									{% endif %}
 									</div>
 
-									<div class='col-1 mr-auto p-0 my-auto username-skip'>
+									<div class='col-2 text-left p-1 my-auto username-skip'>
 									{{ object.first.username }}
 									</div>
 								</div>
@@ -435,16 +447,16 @@ button:focus {
 
 							<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none;color: inherit;'> {{ object.user.get_absolute_url }}
 
-								<div class='row'>
-									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
+								<div class='row justify-content-center'>
+									<div class='col-1 text-right p-2 my-auto avatar-not-skipped'>
 									{% if object.second.profile_foto %}
 										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
 									{% else %}
-										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar " >
+										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 									{% endif %}
 									</div>
 
-									<div class='col-1 mr-auto p-0 my-auto username-skip'>
+									<div class='col-2 text-left p-1 my-auto username-skip'>
 									{{ object.second.username }}
 									</div>
 								</div>	
@@ -452,8 +464,8 @@ button:focus {
 						{% endif %}
 					</div>
 				</div>
-			<div class='row'>
-				<div class='col'>
+			<div class='row '>
+				<div class='col pr-0'>
 
 					<ul id='chat-items'>
 							{% for msg in object.chatmessage_set.all %}
