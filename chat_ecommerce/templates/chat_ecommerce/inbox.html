@@ -11,14 +11,12 @@ html, body {
 }
 
 #inbox-text {
-	height: 50%;
+	height: 80%;
 }
 
 @media only screen and (max-width: 768px) { 
 
-#inbox-text {
-	height: 35%;
-}
+
   .avatar-skip { 
     display: none; 
   } 
@@ -59,7 +57,14 @@ html, body {
 #chat-items{
 	position: relative;
 /*	overflow:scroll;*/
-	max-height: 550px;
+/*	max-height: 80%;
+	min-height: 100%;*/
+	margin-bottom: 0px;
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 190px); 
+
 }
 
 html, body {margin: 0; height: 100%; overflow: hidden}
@@ -76,13 +81,18 @@ html {
 }
 
 #dialogs{
-	height: 520px;
+/*	max-height: 80%;
+	min-height: 100%;*/
+/*    overflow: auto;*/
 	width: 320px;
 	padding-right: 0px;
-	overflow:scroll;
+/*	overflow: scroll;*/
 	margin-bottom: 0;
 	position: relative;
-	
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 130px); 
 
 }
 
@@ -176,35 +186,33 @@ button:focus {
 </head>
 
 
-<div class='container-fluid m-0 p-0' style="height: 100%;">
-	<div class='row' style="height: 100%;">
+<div class='container-fluid m-0 p-0'>
+
+	<div class='row'>
 
 
-		<div class='col-5 col-md-3'>
+		<div class='col-5 col-md-3' style='border-right: 0.75px solid #e1e6e6;'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
 					{% if request.user.profile_foto %}
-						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2 avatar-not-skipped" alt="...">
+						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2" alt="...">
 					{% else %}
-						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar avatar-not-skipped">
+						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
 					{% endif %}
 					</a>
 				</div>
 			</div>
-			<div class='row' style="height: 85%">
-				<ul id='dialogs-inbox' class='my-custom-scrollbar' style="width: 100%">
-
-
+			<div class='row alldialogs'>
+				<ul id='dialogs' class='my-custom-scrollbar' style="width: 100%">
 					{% for obj in chats %}
-
 						{% if request.user != obj.first %}
-							<li id='dialog'><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+							
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.first.profile_foto %}
 											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
-
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
 										{% endif %}
@@ -212,50 +220,49 @@ button:focus {
 									<div class='col-9 text-left my-auto dialogs-username'>
 										{{ obj.first.username }}
 
-										{% if threads_with_unred %}
-										{% if obj in threads_with_unred %}
-											<span class="dot"></span>
-										{% endif %}
-										{% endif %}
 
+										{% if threads_with_unred %}
+										{% for noti in threads_with_unred %}
+										{% if noti == obj %}
+										<span class="dot" id="{{ obj.id }}"></span>
+											
+										{% endif %}
+										{% endfor %}
+										{% endif %}
+										<span class='obj_id_s' id="{{ obj.id }}"></span>
 
 									</div>
 								</div>
+							
 							</a></li>
 						{% else %}
-							<li id='dialog'><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
+							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-3 my-auto'>
 										{% if obj.second.profile_foto %}
-
 											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
-
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
 										{% endif %}
 									</div>
 									<div class='col-9 text-left my-auto dialogs-username'>
-
-
 										{{ obj.second.username }}
-
 										{% if threads_with_unred %}
-										{% if obj in threads_with_unred %}
-											<span class="dot"></span>
+										{% for noti in threads_with_unred %}
+										{% if noti == obj %}
+											<span class="dot" id="{{ obj.id }}"></span>
 										{% endif %}
+										{% endfor %}
 										{% endif %}
-
-
+											<span class='obj_id_s' id="{{ obj.id }}"></span>
 									</div>
 								</div>
 							</a></li>
 						{% endif %}
 					{% endfor %}
 				</ul>
-
+			</div>
 		</div>
-		</div>
-
                   
                    
 <div class='col-7 lead col-md-9' style="color:#aeacac; background-image: url('{% static 'img/worn_dots.png' %}')">

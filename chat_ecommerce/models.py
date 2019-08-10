@@ -71,7 +71,7 @@ class Thread(models.Model):
     def get_absolute_url_second(self):
         return reverse('chat:chat-thread', kwargs={"username":self.second.username})
     def __str__(self):
-        return f'{self.id}'
+        return f'{self.first, self.second}'
 
 class ChatMessage(models.Model):
     thread      = models.ForeignKey(Thread, null=True, blank=True, on_delete=models.SET_NULL)
