@@ -40,11 +40,37 @@
 				</div>
 			{% endif %}
 
+
 	{% endfor %}
 </div>
 </div>
 
-{% else %}
+
+
+ {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                       <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+          <h4> pagination not working</h4>
+    {% endif %}
+
+
+
+
+
+	{% else %}
 
 <div class='col mx-auto'>
 	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>{{ emptiness }}</div>
@@ -52,8 +78,6 @@
 
 
 {% endif %}
-
-
 
 
 

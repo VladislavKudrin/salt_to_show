@@ -50,6 +50,7 @@ class ProductFeaturedDetailView(ObjectViewedMixin, DetailView):
 class UserProductHistoryView(LoginRequiredMixin, ListView):
 	#queryset = Product.objects.all()
 	template_name = "products/user-history.html"
+	paginate_by = 10
 	#template_name = "products/list.html"
 
 	# def get_context_data(self, *args, **kwargs):
@@ -287,6 +288,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 
 class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
+	paginate_by = 10
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
 		return Product.objects.by_user(request.user).order_by('-timestamp')
@@ -472,7 +474,7 @@ def product_report(request):
 
 class FakeProductsListView(LoginRequiredMixin, ListView):
 	template_name = 'products/fake-list.html'
-
+	paginate_by = 10
 	def get_queryset(self, *args, **kwargs):
 		return Product.objects.fake()
 
@@ -489,13 +491,6 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 
 
 
-# class WishListView(LoginRequiredMixin, ListView):
-# 	template_name = 'products/wish-list.html'
-# 	def get_queryset(self, *args, **kwargs):
-# 		user = self.request.user
-# 		wishes = user.wishes.all()
-# 		pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
-# 		return Product.objects.filter(pk__in=wishes)
 
 
 

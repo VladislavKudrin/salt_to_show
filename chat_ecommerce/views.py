@@ -14,7 +14,7 @@ from accounts.models import User
 class InboxView(LoginRequiredMixin, ListView):
     template_name = 'chat_ecommerce/inbox.html'
     def get_queryset(self):
-        return Thread.objects.by_user(self.request.user)
+        return Thread.objects.by_recent_message(self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,7 +26,7 @@ class InboxView(LoginRequiredMixin, ListView):
         #  И далее по атрибуту у этого нотификэйшн рид=Фолс. 
         # Причем указывыаем просто  названия моделей.
         context['threads_with_unred'] = threads_with_unred
-        context['chats'] = Thread.objects.by_user(me).order_by('-timestamp')
+        context['chats'] = Thread.objects.by_recent_message(me)
         if self.request.session.get('language') == 'RU':
             context['title'] = 'Выберите собеседника, чтобы начать диалог'
         elif self.request.session.get('language') == 'UA':
@@ -45,7 +45,7 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
     def get_success_url(self):
         return self.request.path
     def get_queryset(self):
-        return Thread.objects.by_user(self.request.user)
+        return Thread.objects.by_recent_message(self.request.user)
     def get_object(self):
         other_username  = self.kwargs.get("username")
         obj, created    = Thread.objects.get_or_new(self.request.user, other_username)
@@ -71,7 +71,7 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         context['threads_with_unred'] = threads_with_unred
         context['form'] = self.get_form()
 
-        context['chats'] = Thread.objects.by_user(self.request.user).order_by('-timestamp')
+        context['chats'] = Thread.objects.by_recent_message(self.request.user)
         # print(context['chats'])
          # = Thread.objects.filter(chatmessage__user__notification=1)
         # threads_with_unred_notifications = Thread.objects.filter(chatmessage__user=me)
