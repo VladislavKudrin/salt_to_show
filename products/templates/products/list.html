@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load for_loop_extras %}
+{% load pagination_tags %}
 
 
 
@@ -137,6 +138,7 @@ html, body {*/
 
 <div class="container">
 <div class='row'>
+	{% autopaginate object_list %}
 	{% for obj in object_list %}
 		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
 			{% include 'products/snippets/card.html' with instance=obj %}
@@ -153,6 +155,13 @@ html, body {*/
 	{% endfor %}
 </div>
 </div>
+
+<div class = "row pagination justify-content-center">
+	<div class = "col-auto">
+		{% paginate using "pagination_custom.html" %}
+	</div>
+</div>
+
 	
 {% endblock %}
 

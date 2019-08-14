@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load pagination_tags %}
 {% block content %}
 
 <head>
@@ -20,12 +21,13 @@
 
 	<div class='row'>
 		<div class='col-12'>
-			{% if title %}<p class="lead" id="products-by-user" style='font-size: 30px;'>{{ title }}</p>{% endif %}
+			{% if title %}<p class="heading" id="products-by-user">{{ title }}</p>{% endif %}
 		</div>
 	</div>
 
 
 <div class='row'>
+<!-- 	{% autopaginate wishes %} -->
 	{% if wishes|length > 0 %}
 	{% for obj in wishes %}
 		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
@@ -46,26 +48,11 @@
 </div>
 
 
-
- {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-
-                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                       <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                {% endif %}
-            </span>
-        </div>
-    {% else %}
-          <h4> pagination not working</h4>
-    {% endif %}
-
+<!-- <div class = "row pagination justify-content-center">
+	<div class = "col-auto">
+		{% paginate using "pagination_custom.html" %}
+	</div>
+</div> -->
 
 
 
@@ -73,7 +60,7 @@
 	{% else %}
 
 <div class='col mx-auto'>
-	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>{{ emptiness }}</div>
+	<div class="heading text-center" style='color:#aeacac;'>{{ emptiness }}</div>
 </div>
 
 

@@ -32,6 +32,7 @@ from django.core.mail import send_mail
 
 
 
+
 class ProductFeaturedListView(ListView):
 	#queryset = Product.objects.all()
 	template_name = "products/list.html"
@@ -134,10 +135,46 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		context['images'] = new_all_
 		if self.request.session.get('language') == 'RU':
 			context['report'] = 'Жалоба?'
+			context['size'] = 'Размер:'
+			context['condition'] = 'Состояние:'
+			context['description'] = 'Описание:'
+			context['btn_title'] = 'Написать продавцу'
+			context['authentic'] = 'Оригинал'
+			context['verified'] = 'Двухфакторная проверка пройдена'
+			context['fake'] = 'Фейк'
+			context['checked_on'] = 'Проверено'
+			context['ai_checked'] = 'Проверено ИИ'
+			context['to_be_approved'] = 'После проверки экспертом айтем будет залит'
+			context['posted'] = 'Загружено'
+			context['ago'] = 'назад'
 		elif self.request.session.get('language') == 'UA':
 			context['report'] = 'Скарга?'
+			context['size'] = 'Розмiр:'
+			context['condition'] = 'Стан:'
+			context['description'] = 'Опис:'
+			context['btn_title'] = 'Написати продавцю'
+			context['authentic'] = 'Оригiнал'
+			context['verified'] = 'Двухфакторна перевірка пройдена'
+			context['fake'] = 'Фейк'
+			context['checked_on'] = 'Перевірено'
+			context['ai_checked'] = 'Перевірено ШI'
+			context['to_be_approved'] = 'Пiсля перевірки экспертом айтем буде опублiкован'
+			context['posted'] = 'Завантажено'
+			context['ago'] = 'тому'
 		else:
 			context['report'] = 'Report?'
+			context['size'] = 'Size:'
+			context['condition'] = 'Condition:'
+			context['description'] = 'Description:'
+			context['btn_title'] = 'Contact seller'
+			context['authentic'] = 'Authentic'
+			context['verified'] = '2-step-verified on'
+			context['fake'] = 'Fake'
+			context['checked_on'] = 'Checked on'
+			context['ai_checked'] = 'AI-checked'
+			context['to_be_approved'] = 'Needs to be approved by our expert team'
+			context['posted'] = 'Posted'
+			context['ago'] = 'ago'
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -288,7 +325,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 
 class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
-	paginate_by = 10
+	# paginate_by = 1
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
 		return Product.objects.by_user(request.user).order_by('-timestamp')
