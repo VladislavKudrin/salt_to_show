@@ -1,0 +1,17 @@
+Searching 802 files for "favicon" (regex)
+
+/Users/roma/Dev/market/marketplace/templates/base.html:
+    7      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    8      <title>SALT</title>
+    9:     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+   10      <style type="text/css">
+   11        @media only screen and (min-width: 768px) {
+
+/Users/roma/Dev/market/marketplace/templates/base_no_footer.html:
+    7      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    8      <title>SALT</title>
+    9:     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+   10      <style type="text/css">
+   11        @media only screen and (min-width: 768px) {
+
+2 matches across 2 files

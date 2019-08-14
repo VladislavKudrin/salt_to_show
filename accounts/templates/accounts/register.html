@@ -15,6 +15,10 @@
 	opacity: 1;
 } 
 
+body{
+	
+}
+
 
 </style>
 </head>
@@ -26,7 +30,7 @@
         <div class="mx-auto col-xs-12 col-md-7">
             <div class="text-center">
 
-				<p class="lead" style='font-size: 30px;'>{{ title }}</p>
+				<p class='heading'>{{ title }}</p>
 				<form method = 'POST'> {% csrf_token %}
 					<div class="col-12 col-md-12 pl-0 pr-0">
 						{{form.email|as_crispy_field}}
@@ -43,7 +47,7 @@
 					</div>
 					<button type="submit" class="btn btn-dark btn-lg btn-block">OK</button><br>
 				</form>
-				<p class="lead" style='font-size: 30px;'>{{ or_option }}</p>
+				<p class="heading">{{ or_option }}</p>
 		        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-light btn-block">
 					 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
 		        </button>

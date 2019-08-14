@@ -86,10 +86,57 @@ def home_page(request):
 		mydict[obj] = Wishlist.objects.filter(product=obj).count()
 	sorted_ = sorted(mydict, key=mydict.get, reverse=True)
 	most_liked = sorted_[:50]
-	context = {
-		'qs': qs,
-		'liked': most_liked,
-	}
+	context = {}
+	context['qs'] = qs
+	context['liked'] = most_liked
+	if request.session.get('language') == 'RU':
+		context['why_sell'] = 'Поддерживай круговорот одежды в природе.'
+		context['why_buy'] = 'Найди свой брендовый айтем быстро и без фейков.'
+		context['safe'] = 'Надежно'
+		context['why_safe'] = 'Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.'
+		context['modern'] = 'Современно'
+		context['why_modern'] = 'Мы используем Искусственный Интеллект, чтобы исключать подделки из нашего каталога.'
+		context['simple'] = 'Просто'
+		context['why_simple'] = 'Наш интуитивный дизайн разработан с любовью к простоте и минимализму.'
+		context['read_more'] = 'Узнай больше'
+		context['go_to_account'] = 'Перейти в аккаунт'
+		context['become_customer'] = 'Присоединяйся'
+		context['login_registration'] = 'Логин | Регистрация'
+		context['trending'] = 'В тренде:'
+		context['see_all'] = 'Показать все'
+	elif request.session.get('language') == 'UA':
+		context['why_sell'] = 'Підтримуй круговорот одягу в природі.'
+		context['why_buy'] = 'Знайди свій брендовий айтем швидко та без фейків.'
+		context['safe'] = 'Надійно'
+		context['why_safe'] = 'Завантажені речі перевіряються 24/7/365. На SALT немає фейків і кидал.'
+		context['modern'] = 'Сучасно'
+		context['why_modern'] = 'Ми використовуємо Штучний Інтелект, щоб виключати підробки з нашого каталогу.'
+		context['simple'] = 'Просто'
+		context['why_simple'] = "Наш інтуїтивний дизайн розроблений з любов'ю до простоти i мінімалізму."
+		context['read_more'] = 'Дізнайся більше'
+		context['go_to_account'] = 'Перейти в акаунт'
+		context['become_customer'] = 'Приєднуйся'
+		context['login_registration'] = 'Логін | Реєстрація'
+		context['trending'] = 'У тренді:'
+		context['see_all'] = 'Показати всі'
+	else:
+		context['why_sell'] = 'Contribute to the sustainable clothes-circle.'
+		context['why_buy'] = 'Find your designer piece fast and safe.'
+		context['safe'] = 'Safe'
+		context['why_safe'] = 'Uploaded items are monitored 24/7/365. There are no fakes on SALT.'
+		context['modern'] = 'AI-Powered'
+		context['why_modern'] = 'We use Machine Learning to detect fakes in our catalogue.'
+		context['simple'] = 'Simple'
+		context['why_simple'] = 'Our intuitive design was made with love to simplicity and minimalism.'
+		context['read_more'] = 'Read more'
+		context['go_to_account'] = 'Go to your profile'
+		context['become_customer'] = 'Join our community'
+		context['login_registration'] = 'Login | Registration'
+		context['trending'] = 'Trending:'
+		context['see_all'] = 'See all'
+		
+
+
 	return render(request, "home_page.html", context)
 
 # def contact_page(request):

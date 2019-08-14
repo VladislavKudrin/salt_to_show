@@ -243,20 +243,20 @@
           
             {% if request.user.profile_foto %}
             <a href="{{ request.user.get_absolute_url }}" role="button">
-              <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+              <p class="heading">Перейти в аккаунт</p>
               <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
             </a>
 
             {% else %}
             <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
-              <p class="lead" style='font-size: 30px;'>Перейти в аккаунт</p>
+              <p class="heading">Перейти в аккаунт</p>
               <i class="far fa-user fa-2x"></i></a>
             {% endif %}
 
 </div>
         {% else %}
           <div class="container mt-5"> 
-    <p class="lead" style='font-size: 30px;'>Стань одним из первых</p>
+    <p class="heading">Стань одним из первых</p>
 
         <div class='col-7 mx-auto'>
       <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">
