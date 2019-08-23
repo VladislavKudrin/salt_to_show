@@ -4,6 +4,10 @@ from django.conf import settings
 
 register = template.Library()
 
+@register.filter
+def index(array, index):
+	print(array)
+	return ''
 
 @register.filter
 def to_default_language(value):

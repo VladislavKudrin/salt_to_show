@@ -5,6 +5,8 @@ $(document).ready(
 
 
   function(){
+      
+      
     var currentPath = window.location.href
     if ((currentPath.indexOf("update") != -1) || (currentPath.indexOf("create") != -1)){
     var actionEndpoint = '/products/create/'
@@ -237,6 +239,259 @@ $(document).ready(
     }//for gender
 }//if create or update
 
+
+
+//FILTERS
+    var h = screen.height; 
+    document.getElementById("container-filters-update").style.height = (h - 200) + 'px'
+    document.getElementById("slider").style.height = h - 250 + 'px'
+
+function setCheckboxRadio(klass){
+    $("input:checkbox." + klass).on('click', function() {
+  
+  var $box = $(this);
+  if ($box.is(":checked")) {
+    
+    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+    
+    $(group).prop("checked", false);
+    $box.prop("checked", true);
+  } else {
+    $box.prop("checked", false);
+  }
+})//click
+}//setCheckboxRadio
+ var hideFiltersBtn = $('#btn-filters')
+ var hideShowText = $('#text-for-hide-show')
+ var containerFilter = $('#container-filters-update')
+ var filterBox = $('#slider')
+ hideFiltersBtn.click(
+    function(e){
+        if (hideFiltersBtn.attr('hide') == 'true') {
+           hideFiltersBtn.attr('hide', 'false')
+           containerFilter.removeClass('col-9')
+           containerFilter.addClass('col-12')
+           filterBox.addClass('hide')
+           hideShowText.html('Show Filters')
+        }//if we hide filters
+        else if (hideFiltersBtn.attr('hide') == 'false') {
+           hideFiltersBtn.attr('hide', 'true')
+           containerFilter.removeClass('col-12')
+           containerFilter.addClass('col-9')
+           filterBox.removeClass('hide')
+           hideShowText.html('Hide Filters')
+        }//if we show filters
+ })//click on hide/show filter
+ var checkboxes = $('.input-for-filters')
+ var formCheckboxes = $('#form_checkboxes')
+ var formCheckboxesEndpoint = formCheckboxes.attr('action')
+ setCheckboxRadio('radioOvercategorie')
+ setCheckboxRadio('radioGender')
+ var categoriesCheckboxesInitial = $('.undercategory-for-check').find("[name='undercategory']:checked")
+ var sizesCheckboxInitial = $('.size_for_initial').find("[name='size']:checked")
+ $.each(sizesCheckboxInitial,
+    function(idx,data){
+        $target = $(data)
+    if ($target.parent().parent().parent().find("[name='size']:checked").length == $target.parent().parent().parent().find("[name='size']").length){
+        $target.parent().parent().parent().find("[name='category-size']").prop('checked',true)
+                }//if all checked
+ })//each checked checkbox 
+ $.each(categoriesCheckboxesInitial,
+    function(idx,data){
+        $target = $(data)
+    if ($target.parent().parent().parent().find("[name='undercategory']:checked").length == $target.parent().parent().parent().find("[name='undercategory']").length){
+        $target.parent().parent().parent().find("[name='category']").prop('checked',true)
+                }//if all checked
+ })//each checked checkbox 
+
+ if ($('.undercategory-for-check').find("[name='undercategory']:checked").length == $('.undercategory-for-check').find("[name='undercategory']").length){
+        $('.undercategory-for-check').find("[name='category']").prop('checked',true)
+    }//if all checked
+// checkboxes.click(
+//     function(e){
+//         console.log(e.target)
+//     })//click on disbled checkboxes
+$('.undercategory_for_disabled_checkbox_lable').click(
+    function(e){
+        $target = $(e.target)
+        if ($target.parent().find('input').prop('disabled') == true){
+            $target.parent().parent().find('input').prop('disabled', false)
+        }//if click on disabled checkbox
+})//click on lables in undercat checkboxes
+$('.size_for_disabled_checkbox_lable').click(
+    function(e){
+        $target = $(e.target)
+        if ($target.parent().find('input').prop('disabled') == true){
+            $target.parent().parent().find('input').prop('disabled', false)
+        }//if click on disabled checkbox
+})//click on lables in undercat checkboxes
+$('#brand-select').searchableOptionList({
+        texts: {
+            searchplaceholder: 'Please, select a brand'
+        },
+        showSelectAll: false,
+        maxHeight:'250px',
+        events: {            
+        onChange:function() {
+                var formCheckboxesData = formCheckboxes.serialize()
+        $.ajax({
+            url: formCheckboxesEndpoint,
+            method: 'get',
+            data: formCheckboxesData,
+            success: function(data){
+               $('#container-filters-update').html(data.html)
+               $('#items_count').html(data.count_items)
+                var productForm=$(".form-product-ajax-wishlist")
+                bind_ajax_heart(productForm)
+                window.history.replaceState( {} , 'title', data.link)
+                        }//success
+        })//ajax form submit
+            },
+            
+            // more events as you need
+        }
+    })
+
+ checkboxes.change(
+    function (e) {      
+        var $target = $(e.target)
+        console.log($target)
+        if ($target[0].name == 'overcategory'){
+            $('#title_gender').hide()
+            $('#gender-filter-box > div > div').hide()
+            $('#gender-filter-box > div > div > div > input').prop('checked', false)
+            //gender
+            $('#title_category').hide()
+            $('#category-filter-box > div > div').hide()
+            $('#category-filter-box > div > div > div > input').prop('checked', false)
+            //category
+            $('#title_size').hide()
+            $('#size-filter-box > div > div').hide()
+            $('#size-filter-box > div > div > div > input').prop('checked', false)
+            //size
+            $('.collapse div1').collapse('hide')
+            $('#category-filter-box > div > div > div > div > div > input').prop('checked', false)
+            $('#size-filter-box > div > div > div > div > div > input').prop('checked', false)
+            if ($target.prop('checked') == true){
+                $('#title_gender').show()
+                $('#'+$target.attr('data_for_gender')+'-gender-checkbox').show()
+            }//if true, zeigen
+        }//if overcategory
+        if ($target[0].name == 'gender'){
+            $('#title_category').hide()
+            $('#category-filter-box > div > div').hide()
+            $('#category-filter-box > div > div > div > input').prop('checked', false)
+            //category
+            $('#title_size').hide()
+            $('#size-filter-box > div > div').hide()
+            $('#size-filter-box > div > div > div > input').prop('checked', false)
+            //size
+            $('.collapse div1').collapse('hide')
+            $('#category-filter-box > div > div > div > div > div > input').prop('checked', false)
+            $('#size-filter-box > div > div > div > div > div > input').prop('checked', false)
+            if ($target.prop('checked') == true){
+                $('#title_category').show()
+                $('#'+$target.attr('data_for_category')+'-category-checkbox').show()
+                $('#title_size').show()
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').show()
+            }//if true, zeigen
+        }
+        if ($target[0].name == 'category'){
+            if ($target.prop('checked') == true){
+                $('#'+$target.attr('data_for_category')+'-size-checkbox > div').hide()
+                $('#'+$target.attr('data_for_size')).attr('active', 'true')
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='true']").show()
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('checked',false)
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('disabled',false)
+                $target.parent().find("[name='undercategory']").prop('checked', true)
+                $target.parent().find("[name='undercategory']").prop('disabled', true)
+            }//if all checked
+            else{
+                $('#'+$target.attr('data_for_category')+'-size-checkbox > div').hide()
+                $('#'+$target.attr('data_for_size')).attr('active', 'false')
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='true']").show()
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('checked',false)
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('disabled',false)
+                $target.parent().find("[name='undercategory']").prop('checked', false)
+                $target.parent().find("[name='undercategory']").prop('disabled', false)
+                if ($('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='true']").length == 0){
+                   $('#'+$target.attr('data_for_category')+'-size-checkbox > div').show()
+                }//if no category checked
+            }//if not checked
+        }//if category
+        if ($target[0].name == 'undercategory'){
+            if ($target.prop('checked') == false){
+                $('#'+$target.attr('data_for_category')+'-size-checkbox > div').hide()
+                $('#'+$target.attr('data_for_size')).attr('active', 'false')
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='true']").show()
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('checked',false)
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('disabled',false)
+                $target.parent().parent().parent().find("[name='category']").prop('checked',false)
+                if ($('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='true']").length == 0){
+                   $('#'+$target.attr('data_for_category')+'-size-checkbox > div').show()
+                }//if no category checked
+            }//if not all checked in category 
+            else if($target.prop('checked') == true){
+                $('#'+$target.attr('data_for_category')+'-size-checkbox > div').hide()
+                $('#'+$target.attr('data_for_size')).attr('active', 'true')
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='true']").show()
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('checked',false)
+                $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('disabled',false)
+                if ($target.parent().parent().parent().find("[name='undercategory']:checked").length == $target.parent().parent().parent().find("[name='undercategory']").length){
+                    $target.parent().parent().parent().find("[name='category']").prop('checked',true)
+                    $target.parent().parent().find('input').prop('disabled', true)
+                }//if all checked
+            }//if checked
+        }//if undercategory
+        if ($target[0].name == 'size'){
+            if ($target.prop('checked') == false){
+                $target.parent().parent().parent().find("[name='category-size']").prop('checked',false)
+            }//if not all checked in category 
+            else if($target.prop('checked') == true){
+                if ($target.parent().parent().parent().find("[name='size']:checked").length == $target.parent().parent().parent().find("[name='size']").length){
+                    $target.parent().parent().parent().find("[name='category-size']").prop('checked',true)
+                }//if all checked
+            }//if checked
+        }//if size
+        if ($target[0].name == 'category-size'){
+            if ($target.prop('checked') == true){
+                $target.parent().find("[name='size']").prop('checked', true)
+            }//if all checked
+            else{
+                $target.parent().find("[name='size']").prop('checked', false)
+            }//if not checked
+        }//if category
+        var formCheckboxesData = formCheckboxes.serialize()
+        $.ajax({
+            url: formCheckboxesEndpoint,
+            method: 'get',
+            data: formCheckboxesData,
+            success: function(data){
+               $('#container-filters-update').html(data.html)
+               $('#items_count').html(data.count_items)
+                var productForm=$(".form-product-ajax-wishlist")
+                bind_ajax_heart(productForm)
+                window.history.replaceState( {} , 'title', data.link)
+                        }//success
+        })//ajax form submit
+    })//change checkboxes
+
+
+
+
+
+
+
+    // var toggleOvercategory = $('.toggle-overcategory')
+    // toggleOvercategory.click(
+    //     function(event){
+    //         if (!($(event.target).hasClass('active'))){
+    //             $('.toggle-gender').hide()
+    //             $('.toggle-gender').children().removeClass('active')
+    //         }//if alreadyActive
+    //         var targetOvercategory = ($(event.target).children().attr('overcategory-chosen'))
+    //         $('#choise-overcategory-'+targetOvercategory).show()
+    //     })//on change toggle overcategory
     // var categoryField = $('#id_undercategory')
     // var selected_option_value_1=$("#id_undercategory option:selected").val();
     // console.log(selected_option_value_1)
@@ -264,269 +519,269 @@ $(document).ready(
 
 
 
-//filterboxeslogic
-var foot = $(".footwear")
-var out = $(".outerwear")
-var top = $(".tops")
-var bot = $(".bottoms")
-var acc = $(".accessories")
-// if(".customCheckboxfootwear:checked"){
-//         $('.outwear').prop('checked', false)
+// //filterboxeslogic
+// var foot = $(".footwear")
+// var out = $(".outerwear")
+// var top = $(".tops")
+// var bot = $(".bottoms")
+// var acc = $(".accessories")
+// // if(".customCheckboxfootwear:checked"){
+// //         $('.outwear').prop('checked', false)
+// //         $('.tops').prop('checked', false)
+// //         $('.bottoms').prop('checked', false)
+// //         $('.accessories').prop('checked', false)
+// //         tops()
+// //         outwear()
+// //         bottoms()
+// //         accessories()
+// //         $(".outwear").prop("disabled", true)
+// //         $(".tops").prop("disabled", true)
+// //         $(".bottoms").prop("disabled", true)
+// //         $(".accessories").prop("disabled", true)
+// //     }
+
+// // if(".customCheckboxoutwear:checked"){
+// //         $('.footwear').prop('checked', false)
+// //         $('.tops').prop('checked', false)
+// //         $('.bottoms').prop('checked', false)
+// //         $('.accessories').prop('checked', false)
+// //         tops()
+// //         footwear()
+// //         bottoms()
+// //         accessories()
+// //         $(".footwear").prop("disabled", true)
+// //         $(".tops").prop("disabled", true)
+// //         $(".bottoms").prop("disabled", true)
+// //         $(".accessories").prop("disabled", true)
+// //     }
+
+
+// // if(".customCheckboxtops:checked"){
+// //         $('.footwear').prop('checked', false)
+// //         $('.outwear').prop('checked', false)
+// //         $('.bottoms').prop('checked', false)
+// //         $('.accessories').prop('checked', false)
+// //         outwear()
+// //         footwear()
+// //         bottoms()
+// //         accessories()
+// //         $(".footwear").prop("disabled", true)
+// //         $(".outwear").prop("disabled", true)
+// //         $(".bottoms").prop("disabled", true)
+// //         $(".accessories").prop("disabled", true)
+// //     }
+
+
+
+
+
+
+// function footwear() {
+//     if($(".footwear")[0].checked) {
+//         $(".footwear-btn").css('display', 'block')
+//     }
+//     else{
+//         $(".footwear-btn").css('display', 'none')
+//         $('.customCheckboxfootwear').prop('checked', false)
+//         $(".outerwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
+//     }
+// }
+// function outerwear() {   
+//     if(out[0].checked) {
+//         $(".outerwear-btn").css('display', 'block')
+//     }
+//     else{
+//         $(".outerwear-btn").css('display', 'none')
+//         $('.customCheckboxouterwear').prop('checked', false)
+//         $(".footwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
+//     }
+// }
+// function tops() {   
+//     if(top[0].checked) {
+//         $(".tops-btn").css('display', 'block')
+//     }
+//     else{
+//         $(".tops-btn").css('display', 'none')
+//         $('.customCheckboxtops').prop('checked', false)
+//         $(".outerwear").prop("disabled", false)
+//         $(".footwear").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
+//     }
+// }
+// function bottoms() {   
+//     if(bot[0].checked) {
+//         $(".bottoms-btn").css('display', 'block')
+//     }
+//     else{
+//         $(".bottoms-btn").css('display', 'none')
+//         $('.customCheckboxbottoms').prop('checked', false)
+//         $(".outerwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".footwear").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
+//     }
+// }
+// function accessories() {   
+//     if(acc[0].checked) {
+//         $(".accessories-btn").css('display', 'block')
+//     }
+//     else{
+//         $(".accessories-btn").css('display', 'none')
+//         $('.customCheckboxaccessories').prop('checked', false)
+//         $(".outerwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".footwear").prop("disabled", false)
+
+//     }
+// }
+// //checkboxes
+// $(".footwear").change(function(){
+
+//   footwear()});
+// $(".outerwear").change(function() {
+//   outerwear()
+// });
+// $(".tops").change(function() {
+//   tops()
+// });
+// $(".bottoms").change(function() {
+//   bottoms()
+// });
+// $(".accessories").change(function () {
+//   accessories()
+// });
+// //checkboxes
+// // checkboxes - sizes
+// $(".customCheckboxfootwear").change(
+//   function(){
+//     if(this.checked){
+//         $('.outerwear').prop('checked', false)
 //         $('.tops').prop('checked', false)
 //         $('.bottoms').prop('checked', false)
 //         $('.accessories').prop('checked', false)
 //         tops()
-//         outwear()
+//         outerwear()
 //         bottoms()
 //         accessories()
-//         $(".outwear").prop("disabled", true)
+//         $(".outerwear").prop("disabled", true)
 //         $(".tops").prop("disabled", true)
 //         $(".bottoms").prop("disabled", true)
 //         $(".accessories").prop("disabled", true)
-//     }
+//         }
+//     if ($('.customCheckboxfootwear:checked').length==0){
+//         $(".outerwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
 
-// if(".customCheckboxoutwear:checked"){
+//     }
+//   })//change
+// $(".customCheckboxouterwear").change(
+//   function(){
+
+//     if(this.checked){
 //         $('.footwear').prop('checked', false)
 //         $('.tops').prop('checked', false)
 //         $('.bottoms').prop('checked', false)
 //         $('.accessories').prop('checked', false)
-//         tops()
 //         footwear()
+//         tops()
 //         bottoms()
 //         accessories()
 //         $(".footwear").prop("disabled", true)
 //         $(".tops").prop("disabled", true)
 //         $(".bottoms").prop("disabled", true)
 //         $(".accessories").prop("disabled", true)
+//         }
+//     if ($('.customCheckboxouterwear:checked').length==0){
+//         $(".footwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
+
 //     }
-
-
-// if(".customCheckboxtops:checked"){
+//   })//change
+// $(".customCheckboxtops").change(
+//   function(){
+//     if(this.checked){
+//         $('.outerwear').prop('checked', false)
 //         $('.footwear').prop('checked', false)
-//         $('.outwear').prop('checked', false)
 //         $('.bottoms').prop('checked', false)
 //         $('.accessories').prop('checked', false)
-//         outwear()
 //         footwear()
+//         outerwear()
 //         bottoms()
 //         accessories()
+//         $(".outerwear").prop("disabled", true)
 //         $(".footwear").prop("disabled", true)
-//         $(".outwear").prop("disabled", true)
 //         $(".bottoms").prop("disabled", true)
 //         $(".accessories").prop("disabled", true)
+//         }
+//     if ($('.customCheckboxtops:checked').length==0){
+//         $(".outerwear").prop("disabled", false)
+//         $(".footwear").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
+
 //     }
+//   })//change
+// $(".customCheckboxbottoms").change(
+//   function(){
+//     if(this.checked){
+//         $('.outerwear').prop('checked', false)
+//         $('.tops').prop('checked', false)
+//         $('.footwear').prop('checked', false)
+//         $('.accessories').prop('checked', false)
+//         footwear()
+//         tops()
+//         outerwear()
+//         accessories()
+//         $(".outerwear").prop("disabled", true)
+//         $(".tops").prop("disabled", true)
+//         $(".footwear").prop("disabled", true)
+//         $(".accessories").prop("disabled", true)
+//         }
+//     if ($('.customCheckboxbottoms:checked').length==0){
+//         $(".outerwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".footwear").prop("disabled", false)
+//         $(".accessories").prop("disabled", false)
 
+//     }
+//   })//change
+// $(".customCheckboxaccessories").change(
+//   function(){
+//     if(this.checked){
+//         $('.outerwear').prop('checked', false)
+//         $('.tops').prop('checked', false)
+//         $('.bottoms').prop('checked', false)
+//         $('.footwear').prop('checked', false)
+//         footwear()
+//         tops()
+//         outerwear()
+//         bottoms()
+//         $(".outerwear").prop("disabled", true)
+//         $(".tops").prop("disabled", true)
+//         $(".bottoms").prop("disabled", true)
+//         $(".footwear").prop("disabled", true)
+//         }
+//     if ($('.customCheckboxaccessories:checked').length==0){
+//         $(".outerwear").prop("disabled", false)
+//         $(".tops").prop("disabled", false)
+//         $(".bottoms").prop("disabled", false)
+//         $(".footwear").prop("disabled", false)
 
-
-
-
-
-function footwear() {
-    if($(".footwear")[0].checked) {
-        $(".footwear-btn").css('display', 'block')
-    }
-    else{
-        $(".footwear-btn").css('display', 'none')
-        $('.customCheckboxfootwear').prop('checked', false)
-        $(".outerwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-    }
-}
-function outerwear() {   
-    if(out[0].checked) {
-        $(".outerwear-btn").css('display', 'block')
-    }
-    else{
-        $(".outerwear-btn").css('display', 'none')
-        $('.customCheckboxouterwear').prop('checked', false)
-        $(".footwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-    }
-}
-function tops() {   
-    if(top[0].checked) {
-        $(".tops-btn").css('display', 'block')
-    }
-    else{
-        $(".tops-btn").css('display', 'none')
-        $('.customCheckboxtops').prop('checked', false)
-        $(".outerwear").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-    }
-}
-function bottoms() {   
-    if(bot[0].checked) {
-        $(".bottoms-btn").css('display', 'block')
-    }
-    else{
-        $(".bottoms-btn").css('display', 'none')
-        $('.customCheckboxbottoms').prop('checked', false)
-        $(".outerwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-    }
-}
-function accessories() {   
-    if(acc[0].checked) {
-        $(".accessories-btn").css('display', 'block')
-    }
-    else{
-        $(".accessories-btn").css('display', 'none')
-        $('.customCheckboxaccessories').prop('checked', false)
-        $(".outerwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-
-    }
-}
-//checkboxes
-$(".footwear").change(function(){
-
-  footwear()});
-$(".outerwear").change(function() {
-  outerwear()
-});
-$(".tops").change(function() {
-  tops()
-});
-$(".bottoms").change(function() {
-  bottoms()
-});
-$(".accessories").change(function () {
-  accessories()
-});
-//checkboxes
-// checkboxes - sizes
-$(".customCheckboxfootwear").change(
-  function(){
-    if(this.checked){
-        $('.outerwear').prop('checked', false)
-        $('.tops').prop('checked', false)
-        $('.bottoms').prop('checked', false)
-        $('.accessories').prop('checked', false)
-        tops()
-        outerwear()
-        bottoms()
-        accessories()
-        $(".outerwear").prop("disabled", true)
-        $(".tops").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
-        }
-    if ($('.customCheckboxfootwear:checked').length==0){
-        $(".outerwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-
-    }
-  })//change
-$(".customCheckboxouterwear").change(
-  function(){
-
-    if(this.checked){
-        $('.footwear').prop('checked', false)
-        $('.tops').prop('checked', false)
-        $('.bottoms').prop('checked', false)
-        $('.accessories').prop('checked', false)
-        footwear()
-        tops()
-        bottoms()
-        accessories()
-        $(".footwear").prop("disabled", true)
-        $(".tops").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
-        }
-    if ($('.customCheckboxouterwear:checked').length==0){
-        $(".footwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-
-    }
-  })//change
-$(".customCheckboxtops").change(
-  function(){
-    if(this.checked){
-        $('.outerwear').prop('checked', false)
-        $('.footwear').prop('checked', false)
-        $('.bottoms').prop('checked', false)
-        $('.accessories').prop('checked', false)
-        footwear()
-        outerwear()
-        bottoms()
-        accessories()
-        $(".outerwear").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
-        }
-    if ($('.customCheckboxtops:checked').length==0){
-        $(".outerwear").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-
-    }
-  })//change
-$(".customCheckboxbottoms").change(
-  function(){
-    if(this.checked){
-        $('.outerwear').prop('checked', false)
-        $('.tops').prop('checked', false)
-        $('.footwear').prop('checked', false)
-        $('.accessories').prop('checked', false)
-        footwear()
-        tops()
-        outerwear()
-        accessories()
-        $(".outerwear").prop("disabled", true)
-        $(".tops").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        $(".accessories").prop("disabled", true)
-        }
-    if ($('.customCheckboxbottoms:checked').length==0){
-        $(".outerwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-        $(".accessories").prop("disabled", false)
-
-    }
-  })//change
-$(".customCheckboxaccessories").change(
-  function(){
-    if(this.checked){
-        $('.outerwear').prop('checked', false)
-        $('.tops').prop('checked', false)
-        $('.bottoms').prop('checked', false)
-        $('.footwear').prop('checked', false)
-        footwear()
-        tops()
-        outerwear()
-        bottoms()
-        $(".outerwear").prop("disabled", true)
-        $(".tops").prop("disabled", true)
-        $(".bottoms").prop("disabled", true)
-        $(".footwear").prop("disabled", true)
-        }
-    if ($('.customCheckboxaccessories:checked').length==0){
-        $(".outerwear").prop("disabled", false)
-        $(".tops").prop("disabled", false)
-        $(".bottoms").prop("disabled", false)
-        $(".footwear").prop("disabled", false)
-
-    }
-  })//change
-//filterboxeslogic
+//     }
+//   })//change
+// //filterboxeslogic
 
 
 // //slider filter box

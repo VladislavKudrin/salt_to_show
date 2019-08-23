@@ -224,6 +224,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 # 	return render(request, "products/detail.html", context)
 
 def image_create_order(request):
+	print('im here but not there hmm')
 	if request.POST:
 		data = request.POST.getlist('data[]')
 		slug = request.POST.get('slug')
@@ -239,8 +240,7 @@ def image_create_order(request):
 			img.image_order=number
 			array[index_of_min]=max(array)+1
 			img.save()
-
-
+		print('im here')
 		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
 	return redirect('home')
 

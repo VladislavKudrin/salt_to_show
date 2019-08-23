@@ -1,47 +1,54 @@
 {% load for_loop_extras %}
-<div class='col-12 text-right p-0'>
-		<div class="btn-group dropleft customDropRight">
-			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i></button>
-			<div id="drop-cat" class="dropdown-menu customDropRightMenu" aria-labelledby="dropdownMenuButton">
-				<form class='form text-center' method='POST' action="">{% csrf_token %}
-					{% for item in object_list %}
-						<input type="hidden" name="qs_for_sort_slug" value='{{ item.slug }}'>
-					{% endfor %}
-					<input type="hidden" name="qs_for_sort" value='{{ object_list }}'>
-					<button id="sort" type='submit' name="relevant" value='-timestamp' class='btn'><small>New</small></button><br/>
-					<button id="sort" type='submit' name="high_low" value='-price' class='btn'><small>High price</small></button><br/>
-					<input type="hidden"  name="qs_for_sort" value='{{ object_list }}'>
-					<button id="sort" type='submit' name="low_high" value='price'class='btn'><small>Low price</small></button>
-				</form>
-			</div>
-			<button class='btn btn-filter' id='trigger'><i class="fas fa-sliders-h"></i></button>
-		</div>
-</div>
+<style type="text/css">
+.trenn{
+	margin: 0px;
+}
+.custom-select{
+	width: 40% !important;
 
-<div class="container-fluid ajax-search">
+}
+#btn-filters{
+	font-size: 9pt;
+	width: 35%
+}
+/*[hide='false']{
 
-<div class='row'>
-	<div class='col-3 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
-		{% include 'categories/snippets/filter-box.html' with instance=obj %}
+}*/
+#result-text{
+	font-size: 13pt;
+}
+.hide{
+	display: none
+}
+</style>
+<hr class="trenn mb-3">
+<div class="row">
+	<div class="col-3 text-center">
+		<button class="btn btn-light" hide='true' id='btn-filters'>
+			<i class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>Hide Filters</span>
+		</button>
 	</div>
-	<div class='col-9'>
-		<div class="container">
-			<div class='row'>
-			{% for obj in object_list %}
-				<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-					{% include 'products/snippets/card.html' with instance=obj %}
-					{% if forloop.counter|divisibleby:4 %}
-						</div>
-						</div>
-						<div class='row'>
-						<div class='col-12'>
-						</div>
-					{% else %}
-						</div>
-					{% endif %}
-
-			{% endfor %}
-			</div>
+	<div class="col-md-1"></div>
+	<div class="col-4 text-center my-auto p-0" id='result-text'>
+		<b>Result: <span id='items_count'>{{ object_list.count }}</span> Items</b>
+	</div>
+	<div class="col-md-1"></div>
+	<div class='col-3 text-center p-0'>
+	<select class='ml-3 input-for-filters custom-select custom-select-sm' name='sort' form='form_checkboxes'>
+		<option value='new'>New</option>
+		<option value='high'>Price to high</option>
+		<option value='low'>Price to low</option>
+	</select>
+	</div>	
+</div>
+<hr class="trenn mt-3">
+<div class="container-fluid ajax-search">
+	<div class='row'>
+		<div class='col-3 col-md-3 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+			{% include 'categories/snippets/filter-box.html' with instance=obj %}
+		</div>
+		<div class='col-9' id='container-filters-update' style="overflow: scroll">
+			{% include 'products/snippets/languages/product_lists_cont.html' %}
 		</div>
 	</div>
 </div>

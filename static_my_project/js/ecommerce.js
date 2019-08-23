@@ -238,10 +238,10 @@ $(document).ready(
 
 // Wishlist Product List View
 
-    var productForm=$(".form-product-ajax-wishlist")
-    productForm.submit(
-
-      function(event){
+var productForm=$(".form-product-ajax-wishlist")
+function bind_ajax_heart(form){
+  form.submit(
+      function (event){
 
         event.preventDefault()
         var thisForm = $(this)
@@ -277,6 +277,9 @@ $(document).ready(
 })
       }
     )
+  }
+  bind_ajax_heart(productForm)
+
       
 
 // Wishlist Product Detail View
