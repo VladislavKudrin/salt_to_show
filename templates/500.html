@@ -3,12 +3,19 @@
 
 
 {% block content %}
-<div class='row'>
-	<div class='col text-center'>
-		<h1>A Server Error occured</h1>
-		<p>500 Error | We have been noified and are working on a fix. </p>
-	</div>
-</div>
 
+{% if request.session.language == 'RU' %}
+
+{% include 'languages/500-ru.html' %}  
+
+{% elif request.session.language == 'UA' %}
+
+{% include 'languages/500-ua.html' %}  
+
+{% else %}
+
+{% include 'languages/500-en.html' %}  
+
+{% endif %}
 
 {% endblock %}

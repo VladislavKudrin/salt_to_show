@@ -10,7 +10,14 @@
 
 /*html, body {margin: 0; height: 100%; overflow: hidden}*/
 
+
+
 @media only screen and (max-width: 768px) { 
+
+.btn {
+	padding-left: 6px !important;
+}
+
   .avatar-skip { 
     display: none; 
   } 
@@ -32,8 +39,9 @@
 }
 
 #websocket-form{
-	padding-top:65px;
+	padding-top:0px;
 }
+
 
 /*#table-scroll .my-custom-scrollbar {
   position: relative;
@@ -45,8 +53,13 @@
 #chat-items{
 	position: relative;
 /*	overflow:scroll;*/
-	max-height: 500px;
+/*	max-height: 80%;
+	min-height: 100%;*/
 	margin-bottom: 0px;
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 190px); 
 
 }
 
@@ -62,13 +75,18 @@ html {
 }
 
 #dialogs{
-	max-height: 500px;
-    overflow: auto;
+/*	max-height: 80%;
+	min-height: 100%;*/
+/*    overflow: auto;*/
 	width: 320px;
 	padding-right: 0px;
-	overflow: scroll;
+/*	overflow: scroll;*/
 	margin-bottom: 0;
 	position: relative;
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 130px); 
 
 }
 
@@ -323,7 +341,7 @@ button:focus {
 				</div>
 			</div>
 			<div class='row alldialogs'>
-				<ul id='dialogs' class='my-custom-scrollbar'>
+				<ul id='dialogs' class='my-custom-scrollbar' style="width: 100%">
 					{% for obj in chats %}
 						{% if request.user != obj.first %}
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
@@ -392,45 +410,55 @@ button:focus {
 
 				<div class='col text-center my-auto'>
 						{% if request.user != object.first %}
-							<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
-								<div class='row'>
+							
+								<div class='row justify-content-center'>
 
-									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
+									<div class='col-5 text-right p-2 my-auto avatar-not-skipped'>
 									{% if object.first.profile_foto %}
-										<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
+										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+											<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
+										</a>
 									{% else %}
-										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
+										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
+										</a>
 									{% endif %}
 									</div>
 
-									<div class='col-1 mr-auto p-0 my-auto username-skip'>
+									<div class='col-7 text-left p-1 my-auto username-skip'>
+									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.first.username }}
+									</a>
 									</div>
 								</div>
-							</a>
+						
 						{% else %}
 
-							<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none;color: inherit;'> {{ object.user.get_absolute_url }}
-
-								<div class='row'>
-									<div class='col-1 ml-auto p-0 my-auto avatar-not-skipped'>
+								<div class='row justify-content-center'>
+									<div class='col-5 text-right p-2 my-auto avatar-not-skipped'>
 									{% if object.second.profile_foto %}
+									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
+									</a>
 									{% else %}
-										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar " >
+									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
+									</a>
 									{% endif %}
 									</div>
 
-									<div class='col-1 mr-auto p-0 my-auto username-skip'>
+									<div class='col-7 text-left p-1 my-auto username-skip'>
+									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.second.username }}
+								    </a>
 									</div>
 								</div>	
-							</a>
+						
 						{% endif %}
 					</div>
 				</div>
-			<div class='row'>
-				<div class='col'>
+			<div class='row '>
+				<div class='col pr-0'>
 
 					<ul id='chat-items' class='my-custom-scrollbar' >
 							{% for msg in object.chatmessage_set.all %}
@@ -479,7 +507,7 @@ button:focus {
 								<div class='col-7 col-md-11 my-auto pr-0'>
 									{{form }}
 									</div>
-								<div class='col-1 my-auto pl-0' >
+								<div class='col-5 col-md-1 my-auto pl-0' >
 									<button type='submit' class='btn'>
 									<i class="fas fa-paper-plane fa-2x"></i>
 									</button>

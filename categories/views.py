@@ -16,6 +16,7 @@ class CategoryFilterView(ListView):
 	def post(self, request, *args, **kwargs):
 		print(request.POST)
 
+
 		# brands = Brand.objects.all()
 		# request = self.request
 		# context={}
@@ -57,7 +58,6 @@ class CategoryFilterView(ListView):
 		# 	context['object_list'] = filtred_qs
 		# else:
 		# 	context['object_list'] = Product.objects.all()
-		
 		# context['filter_gender'] = qs_gender
 		# context['filter_size'] = qs_size
 		# context['filter_category'] = qs_category
@@ -128,7 +128,7 @@ class CategoryFilterView(ListView):
 				list_undercategory=data_undercategory_link, 
 				list_size=data_size_link
 				)
-		qs = Product.objects.all().order_by('-timestamp')
+		qs = Product.objects.all().order_by('-timestamp').authentic()
 		qs_cat={}
 		qs_undercat={}
 		if request.is_ajax():
@@ -177,14 +177,14 @@ class CategoryFilterView(ListView):
 				# 	if data =='size':
 				# 		qs, link_codiert = Product.objects.filter_undercategory_size(qs=qs, list_size=request.GET.getlist(data), link_codiert = link_codiert)
 				if data_sort == 'high':
-					context['object_list']=qs.order_by('price')
+					context['object_list']=qs.order_by('price').authentic()
 				elif data_sort == 'low':
-					context['object_list']=qs.order_by('-price')
+					context['object_list']=qs.order_by('-price').authentic()
 				else:
-					context['object_list']=qs.order_by('-timestamp')
+					context['object_list']=qs.order_by('-timestamp').authentic()
 			else:
 				link_codiert = 'givemetheloot'
-				context['object_list']=qs
+				context['object_list']=qs.authentic()
 
 			html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
 			json_data={
@@ -201,7 +201,7 @@ class CategoryFilterView(ListView):
 		fields_condition = Condition.objects.all()
 		fields_brand = Brand.objects.all()
 
-		context['object_list']=qs_for_link.order_by('-timestamp')
+		context['object_list']=qs_for_link.order_by('-timestamp').authentic()
 		context['fields_category']=fields_category
 		context['fields_gender']=fields_gender
 		context['fields_overcategory']=fields_overcategory

@@ -1,5 +1,6 @@
 from django import template
 import datetime
+import django.utils.timesince 
 
 register = template.Library()
 
@@ -7,6 +8,8 @@ register = template.Library()
 def print_timestamp(timestamp):
 	return timestamp.strftime("%a %H:%M").upper()
 
+
+	
 	
 	
 

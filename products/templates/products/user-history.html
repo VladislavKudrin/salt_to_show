@@ -1,45 +1,40 @@
 {% extends "base.html" %}
-
+{% load pagination_tags %}
 {% block content %}
 
 <head>
 <style type="text/css">
 
-@media only screen and (max-width: 768px) { 
-   #trigger {
-    visibility: hidden; 
-    display: none; 
-  } 
-}
+	#trigger {
+		visibility: hidden; 
+		display: none;
+	}
 
 </style>
 </head>
 
-<div class='row'>
-	<div class='col-2 text-left p-0'>
-		<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-	</div>
 
-	<div class='col-10 text-center'>
-		{% if title %}<p class="lead" style='font-size: 30px; padding-right:270px'>{{ title }}</p>{% endif %}
-	</div>
-</div>
 
 <div class="container-fluid">
 
 
-<div class='row'>
 
+	
+<div class="container">
 	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
 	  		{% include "sidebar.html" %}
 	</div> 
 
+	<div class='row'>
+		<div class='col-12'>
+			{% if title %}<p class="heading" id="products-by-user">{{ title }}:</p>{% endif %}
+		</div>
+	</div>
 
-
-
-
-<div class="container">
 <div class='row'>
+	{% autopaginate object_list %}
+{% if object_list|length > 0 %}
+
 	{% for obj in object_list %}
 		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
 			{% include 'products/snippets/card.html' with instance=obj.content_object %}
@@ -57,8 +52,22 @@
 </div>
 </div>
 
+<div class = "row pagination justify-content-center">
+	<div class = "col-auto">
+		{% paginate using "pagination_custom.html" %}
+	</div>
+</div>
 
+{% else %}
+
+<div class='col mx-auto'>
+	<div class="heading text-center" style='color:#aeacac;'>{{ emptiness }}</div>
+</div>
+
+
+	{% endif %}
 
 </div>
+
 
 {% endblock %}

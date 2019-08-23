@@ -1,48 +1,33 @@
 {% extends "base.html" %}
+{% load pagination_tags %}
 {% block content %}
 
 <head>
 <style type="text/css">
 
-@media only screen and (max-width: 768px) { 
    #trigger {
     visibility: hidden; 
     display: none; 
   } 
-}
+
 
 </style>
 </head>
 
-
-<div class='row'>
-	<div class='col-2 text-left p-0'>
-		<button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-	</div>
-
-	<div class='col-10 text-center'>
-		{% if title %}<p class="lead" style='font-size: 30px; padding-right:230px'>{{ title }}</p>{% endif %}
-	</div>
-</div>
-
-
-
-<div class="container-fluid ajax-search">
-
-<div class='row'>
-
-
-
+<div class="container">
 	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll;">
 	  		{% include "sidebar.html" %}
 	</div> 
 
+	<div class='row'>
+		<div class='col-12'>
+			{% if title %}<p class="heading" id="products-by-user">{{ title }}</p>{% endif %}
+		</div>
+	</div>
 
 
-
-
-<div class="container">
 <div class='row'>
+<!-- 	{% autopaginate wishes %} -->
 	{% if wishes|length > 0 %}
 	{% for obj in wishes %}
 		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
@@ -57,25 +42,29 @@
 				</div>
 			{% endif %}
 
+
 	{% endfor %}
 </div>
 </div>
 
-{% else %}
 
-{% if request.session.language == 'RU' %}
+<!-- <div class = "row pagination justify-content-center">
+	<div class = "col-auto">
+		{% paginate using "pagination_custom.html" %}
+	</div>
+</div> -->
+
+
+
+
+	{% else %}
+
 <div class='col mx-auto'>
-	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>Пока что здесь пусто</div>
+	<div class="heading text-center" style='color:#aeacac;'>{{ emptiness }}</div>
 </div>
-{% else %}
-<div class='col mx-auto'>
-	<div class="lead text-center" style='font-size: 30px;color:#aeacac;'>No items yet</div>
-</div>
-{% endif %}
+
 
 {% endif %}
-
-
 
 
 

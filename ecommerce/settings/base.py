@@ -38,16 +38,16 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
-EMAIL_HOST_PASSWORD = 'Dkflbckfd1995'
+EMAIL_HOST_USER = 'info@saltish.co' 
+EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'SALT <ecommerce.envision@gmail.com>'
-BASE_URL = '127.0.0.1:8000'
+DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
+BASE_URL = 'https://www.saltish.co'
 
 MANAGERS = (
-    ('Vladislav Kudrin', "ecommerce.envision@gmail.com" ),
-        )
+    ('Vladislav Kudrin', "info@saltish.co" ),
+)
 
 ADMINS = MANAGERS
 
@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'sass_processor',
     'rest_framework',
-    'static_precompiler',
+    'dj_pagination',
 
     #our apps
     'chat_ecommerce',
@@ -144,7 +144,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
-    'static_precompiler.finders.StaticPrecompilerFinder',
 )
 
 AUTHENTICATION_BACKENDS = [
@@ -166,6 +165,7 @@ MIDDLEWARE = [
 
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'dj_pagination.middleware.PaginationMiddleware',
 ]
 
 SOCIAL_AUTH_PIPELINE = (
@@ -204,12 +204,20 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',  # <- Here
                 'social_django.context_processors.login_redirect', # <- Here
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.request"
             ],
         },
     },
 ]
 
-
+# https://dj-pagination.readthedocs.io/en/latest/usage.html
+PAGINATION_DEFAULT_WINDOW = 2
+PAGINATION_DEFAULT_MARGIN = 1
+PAGINATION_DEFAULT_PAGINATION = 20 #number per page
+PAGINATION_DISPLAY_PAGE_LINKS = True
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -308,5 +316,11 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
 SECURE_FRAME_DENY               = False
 
 
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 3,
+    'MARGIN_PAGES_DISPLAYED': 1,
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
 
 

@@ -11,28 +11,18 @@
 }
 
 
-
-@media only screen and (max-width: 768px) { 
-   #trigger {
+#trigger {
     visibility: hidden; 
     display: none; 
   } 
-}
-
 
 </style>
 </head>
 
 
 
-{% if request.session.language == 'RU' %}
- <input type="hidden" id='language' name="language" value='RU'>
-  <div class='col-12 text-left p-0'>
-      <button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-  </div>
-
+<input type="hidden" id='language' name="language" value='{{ request.session.language }}'>
   <div class="container-fluid">
-
   <div class="row">
     
     <div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
@@ -40,63 +30,24 @@
     </div>
 
   <div class="col-xs-12 col-md-7 mx-auto">
-
   {% if title %}
-  <p class="lead" style='font-size: 30px;'>{{ title }}</p>
+  <p class="heading">{{ title }}</p>
   {% endif %}
 
 <form action="" method="POST" role="form" enctype='multipart/form-data'>
   {% csrf_token %}
   {{ form|crispy }}
-    <a href='{% url "password_change" %}' class="btn btn-outline-dark" role="button" aria-pressed="true">Изменить пароль</a>
-    <button type="submit" class="mt-3 btn btn-dark btn-lg btn-block">Сохранить</button>
-    <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger btn-lg btn-block" role="button" aria-pressed="true">Выйти</a>
-</form>
-            
-
-
-  </div>
-  </div>
-
-  </div>
-{% else %}
-<input type="hidden" id='language' name="language" value='EN'>
-
-
-  <div class='col-12 text-left p-0'>
-      <button class='btn btn-filter' id='trigger'><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-  </div>
-
-  <div class="container-fluid">
-
-  <div class="row">
-    
-    <div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
-      {% include "sidebar.html" %}
-    </div>
-
-  <div class="col-xs-12 col-md-7 mx-auto">
-
-  {% if title %}
-  <p class="lead" style='font-size: 30px;'>{{ title }}</p>
-  {% endif %}
-
-<form action="" method="POST" role="form" enctype='multipart/form-data'>
-  {% csrf_token %}
-  {{ form|crispy }}
-    <a href='{% url "password_change" %}' class="btn btn-outline-dark" role="button" aria-pressed="true">Change password</a>
-    <button type="submit" class="mt-3 btn btn-dark btn-lg btn-block">Save</button>
-    <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger btn-lg btn-block" role="button" aria-pressed="true">Logout</a>
+    <a href='{% url "password_change" %}' class="btn  hover-button button-white medium-button" role="button" aria-pressed="true">{{ password_btn }}</a>
+    <button type="submit" class="mt-3 btn button-black hover-button large-button btn-block">{{ save_btn }}</button>
+    <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger hover-button large-button btn-block" role="button" aria-pressed="true">{{ logout_btn }}</a>
   
 </form>
             
-
-
   </div>
   </div>
-
   </div>
-{% endif %}
+
+
 
 <script>
   var currentPath = window.location.href
@@ -104,12 +55,16 @@
 
       var languageOption = $('#language').val()
       var avatar = $('.avatar-upload-button')
+      console.log(languageOption)
       avatar.hide()
-      if (languageOption=='RU'){
-        avatar.parent().prepend('<label for="avatar_custom" class="btn btn-outline-dark m-0 change-ava">Обновить</label>')
-        }//if rus
+      if (languageOption =='RU'){
+        avatar.parent().prepend('<label for="avatar_custom" class="bt  hover-button button-white medium-button m-0">Обновить</label>')
+        }//if rus'
+      else if (languageOption =='UA') {
+        avatar.parent().prepend('<label for="avatar_custom" class="btn  hover-button button-white medium-button m-0">Оновити</label>')
+        }//if not rus
       else {
-        avatar.parent().prepend('<label for="avatar_custom" class="btn btn-outline-dark m-0 change-ava">Change picture</label>')
+        avatar.parent().prepend('<label for="avatar_custom" class="btn  hover-button button-white medium-button m-0">Update</label>')
         }//if not rus
 
       $(".avatar-upload-button").change(function (){

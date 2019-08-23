@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 
 from .views import (
-    ProductListView, 
+    # ProductListView, 
     ProductDetailSlugView,
     ProductCreateView,
     AccountProductListView,
@@ -13,7 +13,7 @@ from .views import (
     image_update_view,
     image_create_order,
     product_report,
-
+    FakeProductsListView,
     # product_reported,
 
     )
@@ -33,16 +33,10 @@ urlpatterns = [
     url(r'^view/(?P<slug>[\w.@+-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
     url(r'^existing/(?P<id>\d+)$', ProductUpdateView.as_view(), name='existing_file_example'),
     url(r'^(?P<filter>[\w.@+-=&]+)$', CategoryFilterView.as_view(), name='list-filter'),
-    
-
-
-
-
+    url(r'^report/$', product_report, name='report'),
+    url(r'^fakelist/$', FakeProductsListView.as_view(), name='fake-list'),
     # url(r'^reported/$', product_reported, name='reported'),
     # url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),
-
-
-
 ]
 
 

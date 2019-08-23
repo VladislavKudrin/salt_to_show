@@ -36,19 +36,19 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-ALLOWED_HOSTS = ['.saltysalt.co']
+    
+ALLOWED_HOSTS = ['.saltish.co']
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ecommerce.envision@gmail.com' 
+EMAIL_HOST_USER = 'info@saltish.co' 
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'SALT <ecommerce.envision@gmail.com>'
-BASE_URL = 'https://www.saltysalt.co'
+DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
+BASE_URL = 'https://www.saltish.co'
 
 MANAGERS = (
-    ('Vladislav Kudrin', "ecommerce.envision@gmail.com" ),
+    ('Vladislav Kudrin', "info@saltish.co" ),
 )
 
 ADMINS = MANAGERS
@@ -75,9 +75,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'sass_processor',
     'rest_framework',
-    'static_precompiler',
+    'dj_pagination',
       
-
     #our apps
     'chat_ecommerce',
     'addresses',
@@ -142,7 +141,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
-    'static_precompiler.finders.StaticPrecompilerFinder',
 )
 
 AUTHENTICATION_BACKENDS = [
@@ -166,6 +164,7 @@ MIDDLEWARE = [
 
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'dj_pagination.middleware.PaginationMiddleware',
 ]
 
 SOCIAL_AUTH_PIPELINE = (
@@ -190,7 +189,6 @@ ROOT_URLCONF = 'ecommerce.urls'
 
 
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -204,11 +202,19 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',  # <- Here
                 'social_django.context_processors.login_redirect', # <- Here
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.request"
             ],
         },
     },
 ]
 
+PAGINATION_DEFAULT_WINDOW = 2
+PAGINATION_DEFAULT_MARGIN = 1
+PAGINATION_DEFAULT_PAGINATION = 20 #number per page
+PAGINATION_DISPLAY_PAGE_LINKS = True
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -320,6 +326,12 @@ SECURE_HSTS_SECONDS             = 1000000
 SECURE_FRAME_DENY               = True
 
 
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 10,
+    'MARGIN_PAGES_DISPLAYED': 2,
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
 
 
 

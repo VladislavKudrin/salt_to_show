@@ -1,0 +1,207 @@
+/* button hover effects */
+
+.hover-button {
+  text-align: center;
+  /*color: #000;*/
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Archivo', 'Roboto', sans-serif !important;
+
+}
+
+.button-black {
+  color: white;
+  border: 1px solid black;
+  background-image: -webkit-linear-gradient(45deg, black 50%, transparent 50%);
+  background-image: linear-gradient(45deg, black 50%, transparent 50%);
+  background-position: 0%;
+}
+
+.button-black:hover {
+  background-position: 100%;
+  color: black;
+  background-color: white;
+
+}
+
+.button-white {
+  color: black;
+  border: 1px solid black;
+  background-image: -webkit-linear-gradient(45deg, white 50%, transparent 50%);
+  background-image: linear-gradient(45deg, white 50%, transparent 50%);
+  background-position: 0%;
+  transition: background 250ms ease-out;*/
+}
+
+.button-white:hover {
+  background-position: 100%;
+  color: white !important;
+  background-color: black;
+
+}
+
+#button-sell-buy {
+  font-size: 12px;
+  height: 25px;
+  width: 45px;
+  padding-top: 2px;
+  background-size: 500px;
+  -webkit-transition: background 250ms ease-out;
+  -moz-transition: background 250ms ease-out;
+  -ms-transition: background 250ms ease-out;
+  -o-transition: background 250ms ease-out;
+  transition: background 250ms ease-out;
+
+}
+
+.large-button {
+  font-size: 14px;
+  padding: 8px 16px;
+  background-size: 2000px;
+  -webkit-transition: background 250ms ease-out;
+  -moz-transition: background 250ms ease-out;
+  -ms-transition: background 250ms ease-out;
+  -o-transition: background 250ms ease-out;
+  transition: background 250ms ease-out;
+}
+
+.prod-create-browse {
+  font-size: 12px;
+  letter-spacing: normal !important;
+  padding: 6px 12px;
+}
+
+.search-button {
+  font-size: 14px;
+  padding: 6px 12px;
+  background-size: 1000px;
+  -webkit-transition: background 350ms ease-out;
+  -moz-transition: background 350ms ease-out;
+  -ms-transition: background 350ms ease-out;
+  -o-transition: background 350ms ease-out;
+  transition: background 350ms ease-out;
+}
+
+.medium-button {
+  font-size: 12px;
+  padding: 6px 12px;
+  background-size: 1000px;
+  -webkit-transition: background 250ms ease-out;
+  -moz-transition: background 250ms ease-out;
+  -ms-transition: background 250ms ease-out;
+  -o-transition: background 250ms ease-out;
+  transition: background 250ms ease-out;
+}
+
+.btn-dark {
+  background-color:#000;
+  color: #FFF; 
+/*  border-style:solid;
+  border-color: black; */
+}
+
+/*.btn-dark:hover{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+.btn-dark:focus{
+    background-color:rgba(58, 59, 66, 0.96);
+}
+.btn-dark:active{
+    background-color:rgba(58, 59, 66, 0.96);
+}*/
+
+/**/
+
+.btn-dark-home {
+  background-color:#000;
+  color: #FFF; 
+  height: 230px;
+/*  border-style:solid;
+  border-color: black; */
+}
+
+.btn-dark-home:hover{
+/*    background: rgba(1, 1, 1, 0.86);*/
+  border: 0.5px solid white !important;
+
+}
+
+.btn-dark-home:focus{
+    background: rgba(1, 1, 1, 0.86);
+}
+
+.btn-dark-home:active{
+    background: rgba(1, 1, 1, 0.86);
+}
+
+.btn-light-home{
+  height: 230px;
+}
+
+.btn-light-home:hover{
+   border: 0.5px solid #80808087 !important;
+}
+
+.btn-outline-dark:hover{
+    background-color:#000;
+}
+.btn-outline-dark:focus{
+    background-color:#000;
+}
+.btn-outline-dark:active{
+    background-color:#000;
+}
+
+.btn.focus, .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.hidden-button {
+  background: none;
+  padding: 0px;
+  border: none;
+}
+
+.hidden-button-outline:focus {
+   outline: none; 
+}
+
+/*.btn-filter:hover{
+    color:rgba(58, 59, 66, 0.96);
+}
+.btn-filter:focus{
+    color:rgba(58, 59, 66, 0.96);
+}
+.btn-filter:active{
+    color:rgba(58, 59, 66, 0.96);
+}*/
+
+
+/*.btn-outline-dark:hover {
+  color: rgba(1, 1, 1, 0.86) !important;
+  background-color: rgba(1, 1, 1, 0.86);
+}*/
+
+/*.btn-outline-dark {
+  background-color:#000;
+  color: #FFF;  
+}*/
+
+/*.btn-light{
+  background-color: white;
+  border: 1px solid black;
+}
+
+.btn-light:hover {
+  border: 1px solid black !important;
+  background-color: transparent;
+}*/
+
+/*.uppercase-btn{
+    text-transform: uppercase;
+    font-size: 12px;
+}*/
+
+/* end button hover effects */

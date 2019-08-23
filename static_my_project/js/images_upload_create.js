@@ -45,10 +45,10 @@ if (currentPath.indexOf("create") != -1){
     var imagesUploadLimit = $('#images-upload-limit')
     buttonImageUpload.hide()
     if (languageOption=='RU'){
-        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-light btn-block " style="font-family: BlinkMacSystemFont;letter-spacing: normal; text-transform: none;">Выбрать</label>')
+        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Выбрать</label>')
     }//if rus
     else {
-        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-light btn-block" style="font-family: BlinkMacSystemFont;letter-spacing: normal; text-transform: none;">Browse</label>')
+        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Browse</label>')
     }//if not rus
 
      
@@ -197,12 +197,15 @@ function deleteRotateItem(item){
       if (doSubmit){
         submitBtn.addClass("disabled")
         submitBtn.attr("disabled", true)
-        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check....")
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check...")
         if(languageOption=='RU'){
-            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Проверка на оригинальность....")
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Проверка на оригинальность...")
+        }//if rus
+        else if (languageOption=='UA'){
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Перевірка на оригінальність...")
         }//if rus
         else{
-            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check....")
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check...")
         }//if not rus
         } //if dosubmit 
       else {

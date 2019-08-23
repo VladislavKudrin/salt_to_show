@@ -9,7 +9,6 @@ class ContactForm(forms.Form):
 		'class':'form-control',
 		'placeholder':'Your Email'
 
-
 		}))
 	content = forms.CharField(widget=forms.Textarea(attrs={
 		'class':'form-control',
@@ -23,7 +22,10 @@ class ContactForm(forms.Form):
 		self.fields['email'].widget.attrs['readonly'] = True
 		if self.lan == 'RU':
 			self.fields['content'].label = "Содержание"
-			self.fields['content'].widget.attrs['placeholder'] = 'Ваше сообщение'
+			self.fields['content'].widget.attrs['placeholder'] = 'Твой месседж'
+		elif self.lan == 'UA':
+			self.fields['content'].label = "Зміст"
+			self.fields['content'].widget.attrs['placeholder'] = 'Твій месседж'
 
 	# def clean_email(self):
 	# 	email = self.cleaned_data.get('email')

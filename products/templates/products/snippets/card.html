@@ -7,12 +7,12 @@
 </style>
 
 
-
   {% if instance.thumbnail %}
   {% with instance.thumbnail.all|first as thumbnail %}
       <div class='wish-div my-auto ' style='justify-content: flex-start; display: flex;'>
       <a class="like-center my-auto ">{% include 'accounts/wish-list-update.html' with product=instance %}</a>
       <img class="card-img-top my-auto " src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
+      <a href="{{ instance.get_absolute_url }}">
     </div>
 
   {% endwith %}
@@ -37,8 +37,3 @@
                     </div>
                   </a>
                 </div>
-
-
-
-
-

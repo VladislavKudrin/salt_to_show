@@ -1,4 +1,63 @@
 
+/*Checkbox black*/
+
+.form-check-input {
+    position: absolute;
+    margin-top: .25rem;
+    margin-right: -2rem;
+}
+
+input[type="checkbox"] {
+  cursor: pointer !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  outline: 0 !important;
+  background: lightgray !important;
+  height: 16px !important;
+  width: 16px !important;
+  border: 1px solid white !important;
+
+}
+
+input[type="checkbox"]:checked {
+  background: black !important;
+}
+
+input[type="checkbox"]:hover {
+  filter: brightness(90%) !important;
+}
+
+input[type="checkbox"]:disabled {
+  background: #e6e6e6 !important; 
+  opacity: 0.6 !important;
+  pointer-events: none !important;
+}
+
+input[type="checkbox"]:after {
+  content: '' !important;
+  position: relative !important;
+  left: 40% !important;
+  top: 20% !important;
+  width: 30% !important;
+  height: 50% !important;
+  border: solid #fff !important;
+  border-width: 0 2px 2px 0 !important;
+  transform: rotate(45deg) !important;
+  display: none !important;
+}
+
+input[type="checkbox"]:checked:after {
+  display: block !important;
+}
+
+input[type="checkbox"]:disabled:after {
+  border-color: #7b7b7b !important;
+}
+
+
+
+
 
 /*.row-dialog {
   height: 70px;
@@ -13,6 +72,16 @@
   border-bottom: 0.75px solid #e1e6e6;
 }
 */
+.black-heart{
+    color: black!important;
+}
+
+.black-heart:hover{
+    color: black !important;
+}
+
+
+
 
 .icon{
   background: url('{% static 'icons/upload.png' %}');
@@ -79,6 +148,11 @@ a:hover{
     color: black !important;
 }
 
+.dropdown-item:focus, .dropdown-item:hover{
+    background-color: black !important;
+    color: white !important;
+}
+
 .strike {
   font-size: 1em;
   line-height: 2em;
@@ -114,75 +188,11 @@ a:hover{
   -webkit-transform-style: preserve-3d;
 }
 
-
-.flip-card-2-front, .flip-card-2-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border: 1px solid black;
-}
-
-.flip-card-2-front {
-  background-color: transparent;
-  color: black;
-}
-
-.flip-card-2-back {
-  background-color: black;
-  color: white;
-} 
-
-
-
-
-
 .bg {
 /*  background-image: url("../img/white_wall.png");*/
   height: 100%;
   background-position: center;
   background-repeat: repeat;
-}
-
-
-.btn-dark-home {
-  background-color:#000;
-  color: #FFF; 
-/*  border-style:solid;
-  border-color: black; */
-}
-
-.btn-dark-home:hover{
-    background: rgba(1, 1, 1, 0.86);
-}
-.btn-dark-home:focus{
-    background: rgba(1, 1, 1, 0.86);
-}
-.btn-dark-home:active{
-    background: rgba(1, 1, 1, 0.86);
-}
-
-/*.btn-outline-dark:hover {
-  color: rgba(1, 1, 1, 0.86) !important;
-  background-color: rgba(1, 1, 1, 0.86);
-}*/
-
-
-.btn-light{
-  background-color: white;
-  border-style:solid;
-  border-color: black;
-}
-
-.btn-light:hover {
-   border-color: black;
-   background: rgba(1, 1, 1, 0.1);
-}
-
-.btn.focus, .btn:focus {
-    outline: none !important;
-    box-shadow: none !important;
 }
 
 #drop-cat {
@@ -346,7 +356,7 @@ background-color: black;
   transition: all 0s linear;
 }
 
-.sticky-top{
+.navbar-mb{
   margin-bottom: 30px;
 }
 
@@ -400,6 +410,14 @@ background-color: black;
   margin-top: 30px;*/
   top:105px;
   left:98px;
+}
+
+.badge-status {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  border: 1px solid white;
+  font-size: 11px !important;
 }
 
 .one-line{
@@ -463,90 +481,6 @@ ol {
 
 #mssg-text {
   overflow-wrap: break-word;
-}
-
-/*@font-face {
-  font-family: 'Cuprum';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Cuprum Italic'), local('Cuprum-Italic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4m_pLmvrkcOkBNI9tEr7kVSg.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: 'Cuprum';
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Cuprum Bold Italic'), local('Cuprum-BoldItalic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4h_pLmvrkcOkBNI9P7iqwuawcegg.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: 'Cuprum';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Cuprum Regular'), local('Cuprum-Regular'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4k_pLmvrkcOkBNIutCt70.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: 'Cuprum';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Cuprum Bold'), local('Cuprum-Bold'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4n_pLmvrkcOkBFnc5XjJwocwM.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: 'Cuprum';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Cuprum Italic'), local('Cuprum-Italic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4m_pLmvrkcOkBNI9tAr7k.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'Cuprum';
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Cuprum Bold Italic'), local('Cuprum-BoldItalic'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4h_pLmvrkcOkBNI9P7iqwqawc.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'Cuprum';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Cuprum Regular'), local('Cuprum-Regular'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4k_pLmvrkcOkBNJutC.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'Cuprum';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Cuprum Bold'), local('Cuprum-Bold'), url(https://fonts.gstatic.com/s/cuprum/v10/dg4n_pLmvrkcOkBFnc5XiJwo.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}*/
-
-
-
-.hidden-button {
-  background: none;
-  padding: 0px;
-  border: none;
-}
-
-.hidden-button-outline:focus {
-   outline: none; 
 }
 
 .dropdown-menu {
@@ -631,6 +565,10 @@ table {
 	border-radius: 50% !important;
 }
 
+.avatar{
+  object-fit: cover;
+}
+
 .username {
   color: black;
 }
@@ -680,7 +618,6 @@ html{
 html,body{
   margin:0;
   padding-bottom: 50px;
-  font-family: "Cuprum", sans-serif;
 }
 
 .page-footer{
@@ -723,8 +660,8 @@ html,body{
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  height: 50px;
-  width: 50px;
+  height: 25px;
+  width: 25px;
   outline: black;
   background-size: 100%, 100%;
   border-radius: 0%;
@@ -736,60 +673,18 @@ html,body{
 .carousel-control-next-icon:after
 {
   content: '>';
-  font-size: 30px;
+  font-size: 15px;
   color: black;
 }
 
 .carousel-control-prev-icon:after {
   content: '<';
-  font-size: 30px;
+  font-size: 15px;
   color: black;
 }
 
 * {
   border-radius: 0 !important;
-}
-
-.btn-dark {
-	background-color:#000;
-	color: #FFF; 
-/*  border-style:solid;
-  border-color: black; */
-}
-
-/*.btn-outline-dark {
-  background-color:#000;
-  color: #FFF;  
-}*/
-
-.btn-outline-dark:hover{
-    background-color:#000;
-}
-.btn-outline-dark:focus{
-    background-color:#000;
-}
-.btn-outline-dark:active{
-    background-color:#000;
-}
-
-.btn-dark:hover{
-    background-color:rgba(58, 59, 66, 0.96);
-}
-.btn-dark:focus{
-    background-color:rgba(58, 59, 66, 0.96);
-}
-.btn-dark:active{
-    background-color:rgba(58, 59, 66, 0.96);
-}
-
-.btn-filter:hover{
-    color:rgba(58, 59, 66, 0.96);
-}
-.btn-filter:focus{
-    color:rgba(58, 59, 66, 0.96);
-}
-.btn-filter:active{
-    color:rgba(58, 59, 66, 0.96);
 }
 
 
@@ -812,15 +707,15 @@ html,body{
     background: #ffffff;
 }
 
-.carousel-control-prev{
+/*.carousel-control-prev{
 	position: absolute;
-    height: 500px;
+  height: 50px !important;
 }
 
 .carousel-control-next{
 	position: absolute;
-    height: 500px;
-}
+  height: 50px !important;
+}*/
 
 .error
     {
@@ -835,10 +730,6 @@ border: 2px red solid;
 .alert alert-block alert-danger{
     color: black;
 }
-
-
-
-
 
 
 

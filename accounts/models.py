@@ -96,6 +96,14 @@ class UserManager(BaseUserManager):
 		return user
 
 
+
+class Region(models.Model):
+	region = models.CharField(max_length=120, blank=True, null=True)
+	currency = models.CharField(max_length=120, default='USD', blank=True, null=True)
+
+	def __str__(self):
+		return str(self.region)
+
 class User(AbstractBaseUser):
 	username 		= models.CharField(max_length=255, blank=False, null=True, unique=True)
 	email 			= models.EmailField(max_length=255, unique=True)
@@ -106,6 +114,7 @@ class User(AbstractBaseUser):
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	profile_foto	= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	wishes 			= models.ManyToManyField(Product, related_name='users', blank=True)
+	region 			= models.ForeignKey(Region, related_name='users', blank=True, null=True)
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default
@@ -165,6 +174,10 @@ class LanguagePreference(models.Model):
 		return str(self.user)
 
 
+
+
+
+
 class Wishlist(models.Model):
 	user    	= models.ForeignKey(User, related_name='wishes_user')
 	product 	= models.ForeignKey(Product, related_name='wishes_products')
@@ -172,13 +185,7 @@ class Wishlist(models.Model):
 
 
 
-# class Profile(models.Model):
-# 	user 					= models.OneToOneField(User)
-# 	full_name 				= models.CharField(max_length=255, blank=True, null=True)
-# 	profile_foto			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-	
-# 	def __str__(self):
-# 		return self.user.username
+
 
 
 class EmailActivationQuerySet(models.query.QuerySet):
@@ -263,11 +270,15 @@ class EmailActivation(models.Model):
 				}
 				txt_ = get_template("registration/emails/verify.txt").render(context)
 				html_ = get_template("registration/emails/verify.html").render(context)
-				subject = '1-Click Email Verification'
+				subject = '1-Click Account Verification'
 				if language=='RU':
 					txt_ = get_template("registration/emails/verify_rus.txt").render(context)
 					html_ = get_template("registration/emails/verify_rus.html").render(context)
-					subject = 'Активация Email'
+					subject = 'Активация аккаунта одним кликом'
+				elif language=='UA':
+					txt_ = get_template("registration/emails/verify_ua.txt").render(context)
+					html_ = get_template("registration/emails/verify_ua.html").render(context)
+					subject = 'Активація аккаунту одним кліком'
 				from_email = settings.DEFAULT_FROM_EMAIL
 				recipient_list = [self.email]
 				sent_mail=send_mail(
@@ -321,6 +332,13 @@ class GuestEmail(models.Model):
 	def __str__(self):
 		return self.email
 
+# class Profile(models.Model):
+# 	user 					= models.OneToOneField(User)
+# 	full_name 				= models.CharField(max_length=255, blank=True, null=True)
+# 	profile_foto			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	
+# 	def __str__(self):
+# 		return self.user.username
 
 
 		

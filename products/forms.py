@@ -13,6 +13,7 @@ from categories.models import Size, Brand, Undercategory, Overcategory, Gender, 
 from ecommerce.utils import random_string_generator
 from image_uploader.models import UploadedFile
 from image_uploader.validators import validate_file_extension
+import re
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Select a brand'}))
@@ -133,6 +134,22 @@ class ProductCreateForm(forms.ModelForm):
 			else:
 				self.add_error('brand', 'Please, select existing brand')
 
+	def clean_description(self):
+		data = self.cleaned_data
+		description = data.get('description')
+		if description: 
+			description = re.sub(r'\n\s*\n','\n',description,re.MULTILINE)
+			length = len(description.splitlines())
+			chars = len(description)
+			if length > 18: 
+				lines = int(length) - int(18)
+				message = 'Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines)
+				self.add_error('description', message)
+			if chars > 400:
+				charss = int(chars) - int(400)
+				message = 'Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss)
+				self.add_error('description', message)	
+		return description
 
 
 class ImageForm(ProductCreateForm):
@@ -203,6 +220,7 @@ class ProductUpdateForm(ProductCreateForm):
 		gender = Gender.objects.get(id=product.sex.id)
 		size = Size.objects.get(id=product.size.id)
 		condition = Condition.objects.get(id=product.condition.id)
+		description = product.description
 		self.initial['brand']=brand.brand_name
 		self.initial['undercategory']=undercategory.undercategory
 		self.initial['sex']=gender.gender

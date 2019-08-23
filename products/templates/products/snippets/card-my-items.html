@@ -1,0 +1,29 @@
+{% load static %}
+{% load for_loop_extras %}
+<style type="text/css">
+/*.span {
+  color: red;
+}*/
+
+.badge-secondary {
+  background-color: #808080a8 !important;
+}
+</style>
+
+
+ {% if request.session.language == 'RU' %}
+
+{% include 'products/snippets/languages/card-my-items-ru.html' %}  
+
+{% elif request.session.language == 'UA' %}
+
+{% include 'products/snippets/languages/card-my-items-ua.html' %}  
+
+{% else %}
+
+{% include 'products/snippets/languages/card-my-items-en.html' %}  
+
+{% endif %}
+
+
+
