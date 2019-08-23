@@ -431,24 +431,6 @@ html, body {
 
 }
 
-
-
-.btn-dark-home{
-  height: 230px;
-}
-
-.btn-light-home{
-  height: 230px;
-}
-
-.btn-dark-home:hover{
-   border: 0.5px solid white !important;
-}
-
-.btn-light-home:hover{
-   border: 0.5px solid #80808087 !important;
-}
-
 .tricolor {
   background: linear-gradient(-10deg, #0FADF4 35%,
     #FF3333 35%, #FF3333 65%, 
@@ -708,7 +690,7 @@ html, body {
 
             {% else %}
             <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
-              <p class="heading">{{ got_to_account }}</p>
+              <p class="heading">{{ go_to_account }}</p>
               <i class="far fa-user fa-2x"></i></a>
             {% endif %}
 
