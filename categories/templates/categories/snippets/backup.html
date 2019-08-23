@@ -1,80 +1,131 @@
-</form>
-<form method ='POST' action='{% url "categories:filter" %}'>{% csrf_token %}
-  <a href="{% url 'categories:filter' %}" class='btn btn-dark mt-3'>All Categories</a>
-  <hr/>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Gender
-    </button>
-    <div class="dropdown-menu customdrop"aria-labelledby="dropdownMenuButton">
-          {% for gender in fields_gender %}
-            <div class=" ml-3 mt-2 custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheckgender{{ forloop.counter|add:'1' }}" name='{{ gender }}' value='{{ gender }}'>
-              <label class="custom-control-label" for="customCheckgender{{ forloop.counter|add:'1' }}">{{ gender|capfirst }}</label>
-            </div>
-          {% endfor %}
-    </div>
-  </div>
-  <hr/>
-  <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Category
-  </button>
-  <div class="dropdown-menu customdrop" aria-labelledby="dropdownMenuButton">
-        {% for category in fields_category %}
-          <div class="btn-group dropright">
-            <div class=" ml-3 mt-2 custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
-              <label class="custom-control-label" for="customCheckcategory{{ forloop.counter|add:'1' }}">{{ category|capfirst }}</label>
-            </div>
-            <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropright</span>
-            </button>
-            <div class="dropdown-menu">
-              {% for category in sizes %}
-                {{ category }}
-              {% endfor %}
-            </div>
-          </div>
-          <br/>
-        {% endfor %}
-  </div>
-  </div>
-  <hr/>
-  <div class="dropdown" id='sizeCheckBox'  style="display: none">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Size
-  </button>
-  <div class="dropdown-menu customdrop"style="height: 300px;
-  overflow: scroll"; aria-labelledby="dropdownMenuButton">
-        {% for size in sizes %}
-          <div class=" ml-3 mt-2 custom-control custom-checkbox" id='sizebox'>
-            <input type="checkbox" class="custom-control-input" id="customChecksize{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
-            <label class="custom-control-label" for="customChecksize{{ forloop.counter|add:'1' }}">{{ size|capfirst }}</label>
-          </div>
-        {% endfor %}
-  </div>
-  </div>
-  <div class="btn-group dropright">
-daw
-  <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropright</span>
-  </button>
-  <div class="dropdown-menu">
-     <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
-<hr/>
-  <button type="submit" class="mt-3 btn btn-dark" value="submit">Filter</button>
+{% load for_loop_extras %}
+<form method ='POST' action='{% url "products:list" %}'>{% csrf_token %}
+{% if request.session.language == 'RU' %}
 
-</form>
-{% for category in sizes %}
- {% for size in category %}
-  {{ size.size_for }} {{ size }}
+  <hr/>
+Бренд
+<div class='filter-boxes'>
+  {% for brand in brands %}
+  <div class=" ml-3 mt-2 custom-control custom-checkbox">
+    <input style="display: none" type="checkbox" {% if brand.brand_name in request.POST %} checked {% endif %} class="custom-control-input" id="customCheckbrand{{ forloop.counter|add:'1' }}" name='{{ brand }}' value='{{ brand }}'>
+    <label class="custom-control-label" for="customCheckbrand{{ forloop.counter|add:'1' }}">{{ brand|capfirst }}</label>
+  </div>
+{% endfor %}
+</div>  
+  <hr/>
+Гендер
+<div>
+  {% for gender in fields_gender %}
+    <div class=" ml-3 mt-2 custom-control custom-checkbox">
+      <input type="checkbox" {% if gender in request.POST %}checked {% endif %}class="custom-control-input" id="customCheckgender{{ forloop.counter|add:'1' }}" name='{{ gender }}' value='{{ gender }}'>
+      <label class="custom-control-label" for="customCheckgender{{ forloop.counter|add:'1' }}">
+        {{ gender|to_rus|capfirst }}
+      </label>
+    </div>
   {% endfor %}
- {% endfor %}
+</div>
+  <hr/>
+Категория
+<div>
+  {% for category in fields_category %}
+  <div class="btn-group dropright customDropRight">
+      <div class=" ml-3 mt-2 custom-control custom-checkbox">
+        <input type="checkbox"{% if size_posted %}{% if category not in request.POST %} disabled {% endif %}{% endif %}{% if category in request.POST %} checked {% endif %} class="custom-control-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
+        <label class="custom-control-label" for="customCheckcategory{{ forloop.counter|add:'1' }}"> 
+          {{ category|to_rus|capfirst }}
+        </label>
+      </div>
+
+      <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split customDropright {{ category }}-btn" {% if category in request.POST %} style='display: block; background-color: white; border: none;' {% else %} style='display: none; background-color: white; border: none;' {% endif %} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropright</span>
+      </button>
+      <div class="dropdown-menu customDropRightMenu filter-boxes">
+        {% for category_sizes in sizes %}
+          {% for size in category_sizes %}
+            {% if size.size_for == category|capfirst %}
+              <div class=" ml-3 mt-2 custom-control custom-checkbox jquery-box-{{ category }}" >
+              <input type="checkbox"{% if category in request.POST %}{% if size.size in request.POST %} checked {% endif %} {% endif %}class="custom-control-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
+              <label class="custom-control-label" for="customCheck{{ category }}{{ forloop.counter|add:'1' }}">
+              {{ size }}
+              </label>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+  </div>
+  <br/>
+  {% endfor %}
+  <hr/>
+</div>
+
+<div class='col mx-auto' style='display:flex; justify-content: center;'>
+  <button type="submit" class="mb-3 mr-1 btn btn-dark" value="submit">ОК</button>
+  <a href="{% url 'products:list' %}" class='btn btn-dark mb-3 ml-1'>Сбросить</a>
+</div>
+
+{% else %}
+  <hr/>
+Brand
+<div class='filter-boxes'>
+  {% for brand in brands %}
+  <div class=" ml-3 mt-2 custom-control custom-checkbox">
+    <input type="checkbox" {% if brand.brand_name in request.POST %} checked {% endif %} class="custom-control-input" id="customCheckbrand{{ forloop.counter|add:'1' }}" name='{{ brand }}' value='{{ brand }}'>
+    <label class="custom-control-label" for="customCheckbrand{{ forloop.counter|add:'1' }}">{{ brand|capfirst }}</label>
+  </div>
+{% endfor %}
+</div>  
+  <hr/>
+Gender
+<div>
+  {% for gender in fields_gender %}
+    <div class=" ml-3 mt-2 custom-control custom-checkbox">
+      <input type="checkbox" {% if gender in request.POST %}checked {% endif %} class="custom-control-input" id="customCheckgender{{ forloop.counter|add:'1' }}" name='{{ gender }}' value='{{ gender }}'>
+      <label class="custom-control-label" for="customCheckgender{{ forloop.counter|add:'1' }}">
+        {{ gender|capfirst }}
+      </label>
+    </div>
+  {% endfor %}
+</div>
+  <hr/>
+Category
+<div>
+  {% for category in fields_category %}
+  <div class="btn-group dropright customDropRight">
+      <div class=" ml-3 mt-2 custom-control custom-checkbox">
+        <input type="checkbox"{% if size_posted %}{% if category not in request.POST %} disabled {% endif %}{% endif %}{% if category in request.POST %} checked {% endif %} class="custom-control-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
+        <label class="custom-control-label" for="customCheckcategory{{ forloop.counter|add:'1' }}">
+          {{ category|capfirst }}
+        </label>
+      </div>
+      <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split customDropright {{ category }}-btn" {% if category in request.POST %} style='display: block; background-color: white; border: none;' {% else %} style='display: none; background-color: white; border: none;' {% endif %} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropright</span>
+      </button>
+      <div class="dropdown-menu customDropRightMenu filter-boxes">
+        {% for category_sizes in sizes %}
+          {% for size in category_sizes %}
+            {% if size.size_for == category|capfirst %}
+              <div class=" ml-3 mt-2 custom-control custom-checkbox jquery-box-{{ category }}" >
+              <input type="checkbox" {% if category in request.POST %}{% if size.size in request.POST %} checked {% endif %} {% endif %} class="custom-control-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
+              <label class="custom-control-label" for="customCheck{{ category }}{{ forloop.counter|add:'1' }}">
+              {{ size }}
+              </label>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+  </div>
+  <br/>
+  {% endfor %}
+  <hr/>
+</div>
+<div class='col mx-auto' style='display:flex; justify-content: center;'>
+  <button type="submit" class="mb-3 mr-1 btn btn-dark" value="submit">ОК</button>
+  <a href="{% url 'products:list' %}" class='btn btn-dark mb-3 ml-1'>Reset</a>
+</div>
+{% endif %}
+</form>
 
 
 

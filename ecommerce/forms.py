@@ -18,6 +18,8 @@ class ContactForm(forms.Form):
 		super(ContactForm, self).__init__(*args, **kwargs)
 		self.request = request
 		self.lan = request.session.get('language')
+		self.fields['email'].initial = request.user.email
+		self.fields['email'].widget.attrs['readonly'] = True
 		if self.lan == 'RU':
 			self.fields['content'].label = "Содержание"
 			self.fields['content'].widget.attrs['placeholder'] = 'Твой месседж'

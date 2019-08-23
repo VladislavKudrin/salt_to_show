@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+
 {% load for_loop_extras %}
 {% load pagination_tags %}
+
 
 
 
@@ -37,8 +39,16 @@ html, body {*/
 </style>
 
 {% if request.session.language == 'RU' %}
+  {% include 'products/languages/list/list_ru.html' %}
+{% elif request.session.language == 'UA' %}
+  {% include 'products/languages/list/list_ua.html' %}
+{% elif request.session.language == 'EN' %}
+  {% include 'products/languages/list/list_en.html' %}
+{% else %}
+  {% include 'products/languages/product_create/product_create_en.html' %}
+{% endif %}
 
-
+<!--
 <div class='col-12 text-right p-0'>
 		<div class="btn-group dropleft customDropRight">
 			<button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i></button>
@@ -161,7 +171,7 @@ html, body {*/
 		{% paginate using "pagination_custom.html" %}
 	</div>
 </div>
-
+-->
 	
 {% endblock %}
 

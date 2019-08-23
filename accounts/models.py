@@ -288,7 +288,6 @@ class EmailActivation(models.Model):
 					recipient_list,
 					html_message=html_,
 					fail_silently=False, 
-
 					)
 				return sent_mail
 			return False

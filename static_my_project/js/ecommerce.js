@@ -48,8 +48,8 @@ $(document).ready(
 
     //contactFormHandler
     var contact=$('.contact-form')
-    var userEmail = contact.find("[name='popchik']").val()
-    var input = contact.find("[name='email']").val(userEmail)
+    // var userEmail = contact.find("[name='popchik']")
+    // var input = contact.find("[name='email']").val(userEmail.val())
     var language = $('#language').val()
     var contactForm = $('.contact-form')
     var contactFormMethod = contactForm.attr("method")
@@ -258,10 +258,10 @@ $(document).ready(
 
 // Wishlist Product List View
 
-    var productForm=$(".form-product-ajax-wishlist")
-    productForm.submit(
-
-      function(event){
+var productForm=$(".form-product-ajax-wishlist")
+function bind_ajax_heart(form){
+  form.submit(
+      function (event){
 
         event.preventDefault()
         var thisForm = $(this)
@@ -297,6 +297,9 @@ $(document).ready(
 })
       }
     )
+  }
+  bind_ajax_heart(productForm)
+
       
 
 // Wishlist Product Detail View

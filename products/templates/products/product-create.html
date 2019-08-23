@@ -6,12 +6,114 @@
 
 <head>
 <style type="text/css">
+  .background-black{
+    background-color: black;
+    color:white;
+  }
+  .overcategory-gender{
+    display: none
+  }
+  .overcategories > div:hover{
+    background-color: black;
+  }
+  .overcategories > div > p{
+    margin: 0px;
+  }
+  .overcategories > div:hover p{
+    color: white;
+  }
+  .active-gender{
+    background-color: white;
+    border-width: 1px !important;
+    border-left: solid;
+  }
+  .active-gender > div > div:hover p{
+    color: white;
+  }
+  .active-gender > div > div:hover{
+    background-color: black;
+  }
+  .categories > div:hover{
+    background-color: black;
+  }
+  .categories > div > p{
+    margin: 0px;
+  }
+  .categories > div:hover p{
+    color: white;
+  }
+  .category-undercategory{
+    display: none;
+  }
+  .active-undercategory{
+    background-color: white;
+    border-width: 1px !important;
+    border-left: solid;
+  }
+  .active-undercategory > div > div:hover p{
+    color: white;
+  }
+  .active-undercategory > div > div:hover{
+    background-color: black;
+  }
+  .active-size > div > div:hover p{
+    color: white;
+  }
+  .active-size > div > div:hover{
+    background-color: black;
+  }
+  .category-size{
+    display: none;
+  }
+  .active-condition > div:hover p{
+    color: white;
+  }
+  .active-condition > div:hover{
+    background-color: black;
+  }
 
+
+  .dropdown-custom {
+  float: left;
+  overflow: hidden;
+  }
+  #div_id_sex{
+    margin-bottom: 0px
+  }
+  #div_id_undercategory{
+    margin-bottom: 0px
+  }
+  #div_id_size{
+    margin-bottom: 0px
+  }
+   #div_id_condition{
+    margin-bottom: 0px
+  }
+  .dropdown-content {
+  cursor: pointer;
+  font-size: 15pt;
+  display: none;
+  position: absolute;
+  background-color: white;
+  border-width: 1px !important;
+  border-top: 0px !important;
+  border: solid;
+  border-color: black;
+  width: 315px;
+  z-index: 1;
+}
+  .show{
+    display: block
+  }
+  input:read-only{
+    background-color: white !important;
+    cursor:pointer;
+  }
 select{
   border-radius: 0 !important;
   -webkit-appearance: none;
 }
-
+input:
 html,body{
 /*    font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, "Segoe UI", Roboto, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
 /*    font-family: BlinkMacSystemFont;*/
@@ -38,6 +140,18 @@ html,body{
 </style>
 </head>
 
+{% if request.session.language == 'RU' %}
+  {% include 'products/languages/product_create/product_create_ru.html' %}
+{% elif request.session.language == 'UA' %}
+  {% include 'products/languages/product_create/product_create_ua.html' %}
+{% elif request.session.language == 'EN' %}
+  {% include 'products/languages/product_create/product_create_en.html' %}
+{% else %}
+  {% include 'products/languages/product_create/product_create_en.html' %}
+{% endif %}
+
+<!--
+
 <input type="hidden" id='images-upload-limit' name="images-upload-limit" value='{{ images_upload_limit }}'>
 <div class="container-fluid ajax-search">
  <div class="row">
@@ -59,7 +173,7 @@ html,body{
       font-weight: bold;
       line-height: 50px;
        font-family: Helvetica; 
-      font-size: 14px;'> <!-- for styling uppercase   --> 
+      font-size: 14px;'> 
 
 
   {{form.title|as_crispy_field}}
@@ -126,7 +240,7 @@ html,body{
  
   <button type="submit" value="Submit" class="btn btn-block hover-button button-black large-button">{{ button }}</button>
 
-  </div>   <!-- style   -->   
+  </div>   
 
   {% include "forms/helper_text.html" %}
 
@@ -138,4 +252,7 @@ html,body{
  </div>
 </div>
 
+->
+
 {% endblock %}
+

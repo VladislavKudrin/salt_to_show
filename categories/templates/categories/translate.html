@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<form method = 'POST'> {% csrf_token %}
+	<div class="col-12 text-center">
+		<h2>Overcatgories</h2>
+		{% for overcategory in overcategories %}
+			<div class="row">
+				<div class='col-12'>
+					<h4>{{ overcategory }}</h4>
+					<input type="text" name="{{ overcategory }}_main" value="{{ overcategory.overcategory }}" >
+				</div>
+				{% for language in languages %}
+				<div class='col-12'>
+					<h5>{{ language }}</h5>
+					<input type="text" name="{{ overcategory }}_{{ language }}" 
+					value="{% if language == 'ru' %}{{ overcategory.overcategory_ru }}{% elif language == 'en' %}{{ overcategory.overcategory_eng }}{% elif language == 'ua' %}{{ overcategory.overcategory_ua }}{% endif %}">
+				</div>
+				{% endfor %}
+			</div>
+			<br>
+		{% endfor %}
+		<hr/>
+		<h2>Gender</h2>
+		{% for gender in genders %}
+			<div class="row">
+				<div class='col-12'>
+					<h4>{{ gender }}</h4>
+					<input type="text" name="{{ gender }}_main" value="{{ gender.gender }}" >
+				</div>
+				{% for language in languages %}
+				<div class='col-12'>
+					<h5>{{ language }}</h5>
+					<input type="text" name="{{ gender }}_{{ language }}" 
+					value="{% if language == 'ru' %}{{ gender.gender_ru }}{% elif language == 'en' %}{{ gender.gender_eng }}{% elif language == 'ua' %}{{ gender.gender_ua }}{% endif %}">
+				</div>
+				{% endfor %}
+			</div>
+			<br>
+		{% endfor %}
+		<hr/>
+		<h2>Categories</h2>
+		{% for category in categories %}
+			<div class="row">
+				<div class='col-12'>
+					<h4>{{ category }}</h4>
+					<input type="text" name="{{ category }}_main" value="{{ category.category }}" >
+				</div>
+				{% for language in languages %}
+				<div class='col-12'>
+					<h5>{{ language }}</h5>
+					<input type="text" name="{{ category }}_{{ language }}" 
+					value="{% if language == 'ru' %}{{ category.category_ru }}{% elif language == 'en' %}{{ category.category_eng }}{% elif language == 'ua' %}{{ category.category_ua }}{% endif %}">
+				</div>
+				{% endfor %}
+			</div>
+			<br>
+		{% endfor %}
+		<hr/>
+		<h2>Undercategories</h2>
+		{% for undercategory in undercategories %}
+			<div class="row">
+				<div class='col-12'>
+					<h4>{{ undercategory }}</h4>
+					<input type="text" name="{{ undercategory }}_main" value="{{ undercategory.undercategory }}" >
+				</div>
+				{% for language in languages %}
+				<div class='col-12'>
+					<h5>{{ language }}</h5>
+					<input type="text" name="{{ undercategory }}_{{ language }}" 
+					value="{% if language == 'ru' %}{{ undercategory.undercategory_ru }}{% elif language == 'en' %}{{ undercategory.undercategory_eng }}{% elif language == 'ua' %}{{ undercategory.undercategory_ua }}{% endif %}">
+				</div>
+				{% endfor %}
+			</div>
+			<br>
+		{% endfor %}
+		<hr/>
+	</div>
+		<div class='col-12'>
+			<button type="submit" class="btn btn-dark btn-lg btn-block mt-3">ОК</button><br>
+		</div>
+</form>
+
+
+{% endblock %}

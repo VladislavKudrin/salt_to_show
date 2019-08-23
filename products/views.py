@@ -19,7 +19,7 @@ from django.conf import settings
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
-from categories.models import Size, Brand
+from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 
 from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
@@ -184,6 +184,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		return redirect(redirect_url)
 
 def image_create_order(request):
+	print('im here but not there hmm')
 	if request.POST:
 		data = request.POST.getlist('data[]')
 		slug = request.POST.get('slug')
@@ -199,8 +200,7 @@ def image_create_order(request):
 			img.image_order=number
 			array[index_of_min]=max(array)+1
 			img.save()
-
-
+		print('im here')
 		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
 	return redirect('home')
 
@@ -237,22 +237,44 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():
+			language = request.session.get('language')
 			json_data={
 			'brand':brand_arr,
 			}
-			selected = self.request.GET.get('selected', None)
-			if selected == "select a category":
-				selected = None
-			if selected is not None:
-				qs = Size.objects.filter(size_for__iexact=selected)
-				sizes = [{
-						"size": data.size,
-						"id":data.id 
-						} 
-						for data in qs]
-				json_data={
-						'sizes': sizes
-							}
+			selected = self.request.GET.get('obj_id_gender', None)
+			if selected is not None and selected is not '':
+				selected_gender = Gender.objects.get(id=selected)
+				category_list = Category.objects.filter(category_for = selected_gender)
+				lookup_cat = (Q(undercategory_for=category_list.first()))
+				for data_cat in category_list:
+					lookup_cat = lookup_cat|Q(undercategory_for=data_cat)
+				undercategory_list = Undercategory.objects.filter(lookup_cat)
+				categories = [{
+					"category":data.category,
+					"id":data.id,
+					"category_language":data.return_language(language)
+						}
+						for data in category_list]
+				undercategories = [{
+					"undercategory_for":data.undercategory_for.category,
+					"undercategory":data.undercategory,
+					"id":data.id,
+					'undercategory_language':data.return_language(language)
+						}
+						for data in undercategory_list] 
+				json_data = {
+						'categories':categories,
+						'undercategories':undercategories
+						}
+				# qs = Size.objects.filter(size_for=selected_obj)
+				# sizes = [{
+				# 		"size": data.size,
+				# 		"id":data.id 
+				# 		} 
+				# 		for data in qs]
+				# json_data={
+				# 		'sizes': sizes
+				# 			}
 				return JsonResponse(json_data)
 			return JsonResponse(json_data)
 		product_form = ImageForm(request)
@@ -270,6 +292,13 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			'title':'Add a new product',
 			'form_id': form_id
 			}
+		context['overcategories'] = Overcategory.objects.all()
+		context['genders'] = Gender.objects.all()
+		context['categories'] = Category.objects.all()
+		context['undercategories'] = Undercategory.objects.all()
+		context['categories_all'] = Category.objects.filter(category_for = Gender.objects.get(gender = 'Women'))
+		context['conditions'] = Condition.objects.all()
+		context['sizes'] = Size.objects.all()
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):
@@ -347,7 +376,6 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = ProductUpdateForm
 	template_name = 'products/product-create.html'
-
 	def get_form_kwargs(self):
 		kwargs = super(ProductUpdateView, self).get_form_kwargs()
 		kwargs['request'] = self.request
@@ -379,6 +407,13 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
 		request = self.request
 		slug = self.kwargs.get('slug')
+		context['overcategories'] = Overcategory.objects.all()
+		context['genders'] = Gender.objects.all()
+		context['categories'] = Category.objects.all()
+		context['undercategories'] = Undercategory.objects.all()
+		context['categories_all'] = Category.objects.filter(category_for = Gender.objects.get(gender = 'Women'))
+		context['conditions'] = Condition.objects.all()
+		context['sizes'] = Size.objects.all()
 		if self.request.session.get('language') == 'RU':
 			context['title'] = 'Редактировать'
 			context['button']='Сохранить' 
@@ -590,6 +625,7 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 # 		return redirect('login')
 
 
+
 # class ProductListView(ListView):
 # 	#queryset = Product.objects.all()
 # 	template_name = "products/list.html"
@@ -654,7 +690,7 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 # 	# context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
 # 	instance = Product.objects.get_by_id(pk)
 # 	if instance is None:
-# 		raise Http404("Product doesnt Exist")
+# 		raise doesnt Exist")
 # 	print(instance)
 # 	# qs=Product.objects.filter(id=pk)
 # 	# #print(qs)

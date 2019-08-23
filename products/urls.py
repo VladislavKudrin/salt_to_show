@@ -27,17 +27,16 @@ urlpatterns = [
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
     url(r'^list/$', AccountProductListView.as_view(), name='user-list'),
     url(r'^delete/$', product_delete, name='delete'),
+    url(r'^report/$', product_report, name='report'),
     url(r'^update/(?P<slug>[\w.@+-]+)/$', ProductUpdateView.as_view(), name='update'),
     url(r'^delete/(?P<slug>[\w.@+-]+)/$', ProductDeleteView.as_view(), name='delete'),
     url(r'^view/(?P<slug>[\w.@+-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
     url(r'^existing/(?P<id>\d+)$', ProductUpdateView.as_view(), name='existing_file_example'),
+    url(r'^(?P<filter>[\w.@+-=&]+)$', CategoryFilterView.as_view(), name='list-filter'),
     url(r'^report/$', product_report, name='report'),
     url(r'^fakelist/$', FakeProductsListView.as_view(), name='fake-list'),
     # url(r'^reported/$', product_reported, name='reported'),
     # url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),
-
-
-
 ]
 
 

@@ -11,7 +11,7 @@ from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
-from categories.models import Size, Brand
+from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
 class ImageOrderUtil(models.Model):
 	slug			= models.SlugField(default=None, unique = True, blank=True)
@@ -55,6 +55,82 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 			return self
 		else:
 			return self.filter(lookup)
+	def filter_undercategory_size(self, qs, list_brand=None, list_condition=None, list_category = None, list_undercategory = None, list_size=None, link_codiert=None):
+		arr=[]
+		if list_brand is not None:
+			lookups_brand=(Q(title__iexact='qwerty123'))
+			if link_codiert is not None:
+				link_codiert = link_codiert+"brand="
+			for i, id_ in enumerate(list_brand):
+				brand = Brand.objects.get(id=int(id_))
+				arr.append(brand)
+				lookups_brand = lookups_brand|(Q(brand=brand))
+				if link_codiert:
+					if i+1 == len(list_brand):
+						link_codiert = link_codiert+"{id_brand}".format(id_brand=int(id_))+'&'
+					else: 
+						link_codiert = link_codiert+"{id_brand}".format(id_brand=int(id_))+'+'
+			qs = qs.filter(lookups_brand)
+		if list_condition is not None:
+			lookups_condition=(Q(title__iexact='qwerty123'))
+			if link_codiert is not None:
+				link_codiert = link_codiert+"condition="
+			for i, id_ in enumerate(list_condition):
+				condition = Condition.objects.get(id=int(id_))
+				arr.append(condition)
+				lookups_condition = lookups_condition|(Q(condition=condition))
+				if link_codiert:
+					if i+1 == len(list_condition):
+						link_codiert = link_codiert+"{id_condition}".format(id_condition=int(id_))+'&'
+					else: 
+						link_codiert = link_codiert+"{id_condition}".format(id_condition=int(id_))+'+'
+			qs = qs.filter(lookups_condition)
+		if list_category is not None:
+			lookups_category=(Q(title__iexact='qwerty123'))
+			if link_codiert:
+				link_codiert = link_codiert+"category="
+			for i, id_ in enumerate(list_category):
+				category = Category.objects.get(id=int(id_))
+				arr.append(category)
+				lookups_category = lookups_category|(Q(category=category))
+				if link_codiert:
+					if i+1 == len(list_category):
+						link_codiert = link_codiert+"{id_category}".format(id_category=int(id_))+'&'
+					else: 
+						link_codiert = link_codiert+"{id_category}".format(id_category=int(id_))+'+'
+			qs = Product.objects.filter(lookups_category)
+		if list_undercategory is not None:
+			lookups_undercategory=(Q(title__iexact='qwerty123'))
+			if link_codiert:
+				link_codiert = link_codiert+"undercategory="
+			for i, id_ in enumerate(list_undercategory):
+				undercategory = Undercategory.objects.get(id=int(id_))
+				arr.append(undercategory)
+				lookups_undercategory = lookups_undercategory|(Q(undercategory=undercategory))
+				if link_codiert:
+					if i+1 == len(list_undercategory):
+						link_codiert = link_codiert+"{id_undercategory}".format(id_undercategory=int(id_))+'&'
+					else: 
+						link_codiert = link_codiert+"{id_undercategory}".format(id_undercategory=int(id_))+'+'
+			qs = Product.objects.filter(lookups_undercategory)
+		if list_size is not None:
+			print(list_size)
+			lookups_size=(Q(title__iexact='qwerty123'))
+			if link_codiert:
+				link_codiert = link_codiert+"size="
+			for i, id_ in enumerate(list_size):
+				size = Size.objects.get(id=int(id_))
+				arr.append(size)
+				lookups_size = lookups_size|(Q(size=size))
+				if link_codiert:
+					if i+1 == len(list_size):
+						link_codiert = link_codiert+"{id_size}".format(id_size=int(id_))
+					else: 
+						link_codiert = link_codiert+"{id_size}".format(id_size=int(id_))+'+'
+			qs = qs.filter(lookups_size)
+		return qs, link_codiert, arr
+
+
 	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
 		lookups_brand=(Q(category__iexact='nothing'))
 		for x in qs_brand:
@@ -96,10 +172,70 @@ class ProductManager(models.Manager):
 		if qs.count() == 1:
 			return qs.first()
 		return None
+	def filter_undercategory_size(self, qs, list_brand=None, list_condition=None, list_category = None, list_undercategory = None, list_size=None, link_codiert=None):
+		return self.get_queryset().filter_undercategory_size(qs, list_brand, list_condition, list_category, list_undercategory, list_size, link_codiert)
 	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
 		return self.get_queryset().by_category_gender(query_category, query_gender, query_size, qs_brand)
 	def search(self, query):
 		return self.get_queryset().active().search(query)
+	def filter_from_link_or_ajax(self, qs, linked=False, list_brand=None, list_condition=None, list_price=None,list_overcategory=None,list_gender = None, list_category = None, list_undercategory=None, list_size=None):
+		context={}
+		link_codiert=''
+		data_brand = list_brand
+		if data_brand:
+			qs, link_codiert, instance_brand = Product.objects.filter_undercategory_size(qs=qs, list_brand=data_brand, link_codiert=link_codiert)
+			context['brand_instance']=instance_brand
+		data_condition = list_condition
+		if data_condition:
+			qs, link_codiert, instance_condition = Product.objects.filter_undercategory_size(qs=qs, list_condition=data_condition, link_codiert=link_codiert)
+			context['condition_instance']=instance_condition
+		data_price = list_price
+		if data_price:
+			price_min = data_price[0]
+			context['price_min']=price_min
+			price_max = data_price[1]
+			context['price_max']=price_max
+			if not price_min and price_max:
+				qs = qs.filter(price__lte=price_max)
+				link_codiert = link_codiert + "price=+{price}".format(price=price_max)+'&'
+			elif not price_max and price_min:
+				qs = qs.filter(price__gte=price_min)
+				link_codiert = link_codiert + "price={price}+".format(price=price_min)+'&'
+			elif price_max and price_min:
+				lookups_price = Q(price__gte=price_min)&Q(price__lte=price_max)
+				qs = qs.filter(lookups_price)
+				link_codiert = link_codiert + "price={price_min}+{price_max}".format(price_min=price_min, price_max=price_max)+'&'
+		data_overcategory = list_overcategory
+		if data_overcategory:
+			overcategory_instance = Overcategory.objects.get(id=int(data_overcategory))
+			context['overcategory_instance']=overcategory_instance
+			qs = qs.filter(overcategory=overcategory_instance)
+			link_codiert = link_codiert + "overcategory={id_overcategory}".format(id_overcategory=int(data_overcategory)) + '&'
+		data_gender = list_gender
+		if data_gender:
+			gender_instance = Gender.objects.get(id=int(data_gender))
+			context['gender_instance']=gender_instance
+			qs = qs.filter(sex=gender_instance)
+			link_codiert = link_codiert + "gender={id_gender}".format(id_gender=int(data_gender)) + '&'
+		data_category = list_category
+		if data_category:
+			qs_cat, link_codiert, instance_category = Product.objects.filter_undercategory_size(qs=qs, list_category=data_category, link_codiert = link_codiert)
+			context['category_instance']=instance_category
+		data_undercategory = list_undercategory
+		if data_undercategory:
+			qs_undercat, link_codiert, instance_undercategory = Product.objects.filter_undercategory_size(qs=qs, list_undercategory=data_undercategory, link_codiert = link_codiert)
+			context['undercategory_instance']=instance_undercategory
+		if data_undercategory and data_category:
+			qs = qs_cat.union(qs_undercat)
+		elif data_category and not data_undercategory:
+			qs=qs_cat
+		elif data_undercategory and not data_category:
+			qs=qs_undercat
+		data_size = list_size
+		if data_size:
+			qs, link_codiert, instance_size = Product.objects.filter_undercategory_size(qs=qs, list_size=data_size, link_codiert=link_codiert)
+			context['size_instance']=instance_size
+		return qs, link_codiert, context
 
 	def authentic(self):
 		return self.get_queryset().active().authentic()
@@ -109,29 +245,22 @@ class ProductManager(models.Manager):
 
 User=settings.AUTH_USER_MODEL
 
-CATEGORY_CHOICES = (
-	('select a category', 'Select a category'),
-	('tops', 'Tops'),
-	('bottoms', 'Bottoms'),
-	('accessories', 'Accessories'),
-	('outerwear', 'Outerwear'),
-	('footwear', 'Footwear'),
-	)
-SEX_CHOICES = (
-	('man', 'Man'),
-	('woman', 'Woman'),
-	)
-CONDITION_CHOICES = (
-	('item condition', 'Select an item condition'),
-	('new with tags', 'New with tags'),
-	('gently used', 'Gently used'),
-	('used', 'Used'),
-	)
+
+
+# CONDITION_CHOICES = (
+# 	('item condition', 'Select an item condition'),
+# 	('new with tags', 'New with tags'),
+# 	('gently used', 'Gently used'),
+# 	('used', 'Used'),
+# 	)
+
+
 AUTHENTICITY_CHOICES = (
 	('undefined', 'Undefined'),
 	('fake', 'Fake'),
 	('authentic', 'Authentic'),
 	)
+
 
 class Product(models.Model):
 	user 			= models.ForeignKey(User, null=True, blank=True)
@@ -142,12 +271,15 @@ class Product(models.Model):
 	featured		= models.BooleanField(default=False)
 	active			= models.BooleanField(default=True)
 	timestamp		= models.DateTimeField(auto_now_add=True)
-	category 		= models.CharField(max_length=120, default='all', choices=CATEGORY_CHOICES)
-	sex 			= models.CharField(max_length=120, default='not picked', choices=SEX_CHOICES)
-	condition 		= models.CharField(max_length=120, default='not picked', choices=CONDITION_CHOICES, null=True)
+	category 		= models.ForeignKey(Category, blank = True, null=True)
+	sex 			= models.ForeignKey(Gender, blank = True, null=True)
+	condition 		= models.ForeignKey(Condition, blank = True, null=True)
 	size 			= models.ForeignKey(Size, blank=False, null=True)
-	brand 			= models.ForeignKey(Brand, blank=True, null=True)
+	brand 			= models.ForeignKey(Brand, blank=False, null=True)
+	undercategory 	= models.ForeignKey(Undercategory, blank = False, null=True)
+	overcategory	= models.ForeignKey(Overcategory, blank = True, null=True)
 	authentic 		= models.CharField(max_length=120, default='undefined', choices=AUTHENTICITY_CHOICES, null=True)
+
 
 
 	objects = ProductManager()
@@ -213,7 +345,6 @@ class ProductThumbnail(models.Model):
 	product = models.ForeignKey(Product, default=None, related_name='thumbnail')
 	thumbnail = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	objects = ProductThumbnailManager()
-
 	def __str__(self):
 		return self.product.slug + ' thumbnail'
 
