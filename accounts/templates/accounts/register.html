@@ -45,11 +45,11 @@ body{
 							</div>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-dark btn-lg btn-block">OK</button><br>
+					<button type="submit" class="btn button-black hover-button large-button btn-block">OK</button><br>
 				</form>
 				<p class="heading">{{ or_option }}</p>
-		        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn btn-light btn-block">
-					 <img src="{% static 'icons/google.png' %}" class="avatar"  style="width:25px; height: 25px">
+		        <a href="{% url 'social:begin' 'google-oauth2' %}"> <button class="btn button-white large-button hover-button btn-block">
+					 <img src="{% static 'icons/google.png' %}" class="avatar" style="width:20px; height: 20px">
 		        </button>
 		        </a>
         		<br><small><a href='{% url "password_reset" %}'>{{ password_forgot }}</a></small>

@@ -38,8 +38,8 @@
   {% csrf_token %}
   {{ form|crispy }}
     <a href='{% url "password_change" %}' class="btn  hover-button button-white medium-button" role="button" aria-pressed="true">{{ password_btn }}</a>
-    <button type="submit" class="mt-3 btn button-black hover-button  large-button btn-block">{{ save_btn }}</button>
-    <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger hover-button  btn-block" role="button" aria-pressed="true">{{ logout_btn }}</a>
+    <button type="submit" class="mt-3 btn button-black hover-button large-button btn-block">{{ save_btn }}</button>
+    <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger hover-button large-button btn-block" role="button" aria-pressed="true">{{ logout_btn }}</a>
   
 </form>
             
