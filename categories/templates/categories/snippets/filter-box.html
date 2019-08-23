@@ -212,7 +212,7 @@ hr{
         </div>
       </div>
       </button>
-      <div class="collapse {% if condition_instance %} show {% endif %}" id="brand_collapse">
+      <div class="collapse {% if brand_instance %} show {% endif %}" id="brand_collapse">
         <select class='ml-5 mt-3 mb-3' id="brand-select" name="brand" multiple="multiple">
           {% for brand in fields_brand %}
             <option {% if brand in brand_instance %} selected {% endif %} value="{{ brand.id }}">{{ brand.brand_name }}</option>
