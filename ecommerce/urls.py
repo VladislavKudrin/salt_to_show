@@ -39,7 +39,7 @@ from addresses.views import (
     checkout_address_reuse_view
     )
 from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, wishlistupdate
-from .views import home_page, about_page, test_page, ContactPageView
+from .views import home_page, test_page, ContactPageView, AboutPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 
@@ -54,7 +54,7 @@ urlpatterns = [
     url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^contact/$', ContactPageView.as_view(), name='contact'),
-    url(r'^about/$', about_page, name='about'),
+    url(r'^about/$', AboutPageView.as_view(), name='about'),
 	url(r'^admin/', admin.site.urls,),
     url(r'^address/$', RedirectView.as_view(url='/addresses')),
     url(r'^addresses/$', AddressListView.as_view(), name='addresses'),
