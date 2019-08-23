@@ -114,9 +114,19 @@
 	</div>
 	<div class="col-10 uppercase-btn">
 		<div class="flip-card-2" style="width: 100%;">
-	        <div class=" flip-card-2-inner">
-			<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
-	        </div>
+			{% if object.authentic == 'authentic' %}
+	        	<div class=" flip-card-2-inner">
+					<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
+				</div>
+			{% elif object.authentic == 'fake' %}
+	        	<div class=" flip-card-2-inner">
+			    	<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
+			    </div>
+			{% else %}
+	        	<div class=" flip-card-2-inner">
+			    	<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
+			    </div>
+			{% endif %}
        	</div>
 	</div>
 

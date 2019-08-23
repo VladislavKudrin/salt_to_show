@@ -289,7 +289,7 @@ p {
 	<div class="col-3 text-center" style="font-size: 12px; ">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
 	<div class="col-9 pb-3 archivo">${{ object.price }}</div>
 	<div class="col-3 pb-3 text-center my-auto archivo" style="font-size: 12px; ">{{ likes }}</div>
-	<div class="col-12 uppercase-btn pb-2">
+	<div class="col-12 pb-2">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
@@ -300,7 +300,7 @@ p {
 		<div class="flip-card" style="width: 100%">
 			{% if object.authentic == 'authentic' %}
 		        <div class=" flip-card-inner">
-					<div class="flip-card-front my-auto uppercase-btn archivo pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{authentic}}</span></div>
+					<div class="flip-card-front my-auto uppercase-font archivo pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{authentic}}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
 				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>{{ verified }} {{ object.timestamp| print_timestamp }}</small></div>
@@ -312,7 +312,7 @@ p {
 
 		    {% elif object.authentic == 'fake' %}
 		        <div class=" flip-card-inner">
-					<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
+					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
 				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>{{ checked_on }} {{ object.timestamp| print_timestamp }}</small></div>
@@ -323,7 +323,7 @@ p {
 
 		    {% else %}
 		        <div class=" flip-card-inner">
-					<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
+					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
 				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>{{ to_be_approved }}</small></div>
@@ -339,7 +339,7 @@ p {
 	<div class="col-4 my-auto">
 		<div class="flip-card" style="width: 100%;">
         <div class=" flip-card-inner">
-			<div class="flip-card-front my-auto uppercase-btn pt-1"><i class="fas fa-flag my-auto fa-1x"></i><span></span>
+			<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-flag my-auto fa-1x"></i><span></span>
 			</div>
             <div class="flip-card-back pt-0">
 		        {% include 'products/snippets/product-report.html' with product=object report=report %}  
@@ -375,36 +375,46 @@ p {
 	<div class="col-2  text-center pl-1" style="font-size: 12px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
 	<div class="col-10 pb-3 brand">${{ object.price }}</div>
 	<div class="col-2 pb-3 pl-1  text-center my-auto" style="font-size: 12px; ">{{ likes }}</div>
-	<div class="col-12 uppercase-btn pb-2">
+	<div class="col-12 pb-2">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
 		{% endif %}
 	</div>
-	<div class="col-10 uppercase-btn">
+	<div class="col-8 uppercase-font">
 		<div class="flip-card-2" style="width: 100%;">
-	        <div class=" flip-card-2-inner">
-			<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
-	        </div>
+			{% if object.authentic == 'authentic' %}
+		        <div class=" flip-card-2-inner">
+					<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
+		        </div>
+		    {% elif object.authentic == 'fake' %}
+		        <div class=" flip-card-2-inner">
+					<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
+		        </div>
+		    {% else %}
+		        <div class=" flip-card-2-inner">
+					<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
+		        </div>
+		    {% endif %}
        	</div>
 	</div>
 
-	<div class="col-2">
+	<div class="col-4">
 		<div class="flip-card" style="width: 100%;">
 	        <div class=" flip-card-inner">
-				<div class="flip-card-front my-auto uppercase-btn">{% include 'products/snippets/product-report.html' with product=object %} 
+				<div class="flip-card-front my-auto uppercase-font text-right">{% include 'products/snippets/product-report.html' with product=object %} 
 				</div>
 	        </div>
 	    </div>
     </div>
 
 		<div class="col-12 pt-3 pb-3 uppercase-title" >{{ object.title }}</div>
-	<div class="col-3 uppercase">{{size}}</div>
+	<div class="col-3 field-name uppercase">{{size}}</div>
 	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:1px'>{{ object.size }}</div>
-	<div class="col-3 uppercase">{{ condition }}</div>
+	<div class="col-3 field-name uppercase">{{ condition }}</div>
 	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:4px'>{{ object.condition }}</div>
-	<div class="col-12 uppercase">{{ description }}</div>
+	<div class="col-12 field-name uppercase">{{ description }}</div>
 	<div class="col-12  b-description_readmore js-description_readmore" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
 
 	<div class="col-12 pt-3">

@@ -1,9 +1,4 @@
 
-.uppercase-btn{
-    text-transform: uppercase;
-    font-size: 12px;
-}
-
 /*Checkbox black*/
 
 .form-check-input {
@@ -193,57 +188,11 @@ a:hover{
   -webkit-transform-style: preserve-3d;
 }
 
-
-
-
-
-
-
 .bg {
 /*  background-image: url("../img/white_wall.png");*/
   height: 100%;
   background-position: center;
   background-repeat: repeat;
-}
-
-
-.btn-dark-home {
-  background-color:#000;
-  color: #FFF; 
-/*  border-style:solid;
-  border-color: black; */
-}
-
-.btn-dark-home:hover{
-/*    background: rgba(1, 1, 1, 0.86);*/
-}
-.btn-dark-home:focus{
-    background: rgba(1, 1, 1, 0.86);
-}
-.btn-dark-home:active{
-    background: rgba(1, 1, 1, 0.86);
-}
-
-/*.btn-outline-dark:hover {
-  color: rgba(1, 1, 1, 0.86) !important;
-  background-color: rgba(1, 1, 1, 0.86);
-}*/
-
-
-.btn-light{
-  background-color: white;
-  border-style:solid;
-  border-color: black;
-}
-
-.btn-light:hover {
-   border-color: black;
-   border: 1px solid black !important;
-}
-
-.btn.focus, .btn:focus {
-    outline: none !important;
-    box-shadow: none !important;
 }
 
 #drop-cat {
@@ -534,18 +483,6 @@ ol {
   overflow-wrap: break-word;
 }
 
-
-
-.hidden-button {
-  background: none;
-  padding: 0px;
-  border: none;
-}
-
-.hidden-button-outline:focus {
-   outline: none; 
-}
-
 .dropdown-menu {
   width: 100px; 
 }
@@ -748,48 +685,6 @@ html,body{
 
 * {
   border-radius: 0 !important;
-}
-
-.btn-dark {
-	background-color:#000;
-	color: #FFF; 
-/*  border-style:solid;
-  border-color: black; */
-}
-
-/*.btn-outline-dark {
-  background-color:#000;
-  color: #FFF;  
-}*/
-
-.btn-outline-dark:hover{
-    background-color:#000;
-}
-.btn-outline-dark:focus{
-    background-color:#000;
-}
-.btn-outline-dark:active{
-    background-color:#000;
-}
-
-.btn-dark:hover{
-    background-color:rgba(58, 59, 66, 0.96);
-}
-.btn-dark:focus{
-    background-color:rgba(58, 59, 66, 0.96);
-}
-.btn-dark:active{
-    background-color:rgba(58, 59, 66, 0.96);
-}
-
-.btn-filter:hover{
-    color:rgba(58, 59, 66, 0.96);
-}
-.btn-filter:focus{
-    color:rgba(58, 59, 66, 0.96);
-}
-.btn-filter:active{
-    color:rgba(58, 59, 66, 0.96);
 }
 
 
