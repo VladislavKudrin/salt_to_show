@@ -115,7 +115,7 @@ class CategoryFilterView(ListView):
 				if type_[0] == 'condition':
 					data_condition_link = type_[1].split('+')
 				if type_[0] == 'brand':
-					data_brand_link = type_[1]
+					data_brand_link = type_[1].split('+')
 			qs_for_link, trash, context = Product.objects.filter_from_link_or_ajax(
 				qs=qs_for_link, 
 				linked=True, 

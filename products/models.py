@@ -62,6 +62,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 			if link_codiert is not None:
 				link_codiert = link_codiert+"brand="
 			for i, id_ in enumerate(list_brand):
+				print(id_)
 				brand = Brand.objects.get(id=int(id_))
 				arr.append(brand)
 				lookups_brand = lookups_brand|(Q(brand=brand))

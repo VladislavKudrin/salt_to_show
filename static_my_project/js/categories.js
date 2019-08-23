@@ -264,21 +264,21 @@ function setCheckboxRadio(klass){
  var hideFiltersBtn = $('#btn-filters')
  var hideShowText = $('#text-for-hide-show')
  var containerFilter = $('#container-filters-update')
- var filterBox = $('#slider')
+ var filterBox = $('#slider_filters')
  hideFiltersBtn.click(
     function(e){
         if (hideFiltersBtn.attr('hide') == 'true') {
+           filterBox.addClass('hide')
            hideFiltersBtn.attr('hide', 'false')
            containerFilter.removeClass('col-9')
            containerFilter.addClass('col-12')
-           filterBox.addClass('hide')
            hideShowText.html('Show Filters')
         }//if we hide filters
         else if (hideFiltersBtn.attr('hide') == 'false') {
+           filterBox.removeClass('hide')
            hideFiltersBtn.attr('hide', 'true')
            containerFilter.removeClass('col-12')
            containerFilter.addClass('col-9')
-           filterBox.removeClass('hide')
            hideShowText.html('Hide Filters')
         }//if we show filters
  })//click on hide/show filter
