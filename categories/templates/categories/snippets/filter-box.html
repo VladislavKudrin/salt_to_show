@@ -112,7 +112,7 @@ hr{
       </div>
       </button>
     </div>
-    <div class="collapse {% if undercategory_instance %} show {% endif %}" id="category_collaplse">
+    <div class="collapse {% if undercategory_instance or category_instance %} show {% endif %}" id="category_collaplse">
       {% for gender in fields_gender %}
         <div class='row' id='{{ gender.gender_for}}-{{ gender }}-category-checkbox' {% if gender.id == gender_instance.id %} style="display: block" {% endif %}>
           {% for category in fields_category %}

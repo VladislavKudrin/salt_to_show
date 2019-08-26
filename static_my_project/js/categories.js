@@ -272,6 +272,11 @@ function setCheckboxRadio(klass){
            hideFiltersBtn.attr('hide', 'false')
            containerFilter.removeClass('col-9')
            containerFilter.addClass('col-12')
+           //card
+           $('.card-img-top-hidden').removeClass('card-img-top-hidden').addClass('card-img-top')
+           $('.card-body-hidden').removeClass('card-body-hidden').addClass('card-body')
+           $('.like-center-hidden').removeClass('like-center-hidden').addClass('like-center')
+           //card
            hideShowText.html('Show Filters')
         }//if we hide filters
         else if (hideFiltersBtn.attr('hide') == 'false') {
@@ -279,6 +284,11 @@ function setCheckboxRadio(klass){
            hideFiltersBtn.attr('hide', 'true')
            containerFilter.removeClass('col-12')
            containerFilter.addClass('col-9')
+           //card
+           $('.card-img-top').removeClass('card-img-top').addClass('card-img-top-hidden')
+           $('.card-body').removeClass('card-body').addClass('card-body-hidden')
+           $('.like-center').removeClass('like-center').addClass('like-center-hidden')
+           //card
            hideShowText.html('Hide Filters')
         }//if we show filters
  })//click on hide/show filter
