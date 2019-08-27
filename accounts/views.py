@@ -20,7 +20,10 @@ from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetail
 from .signals import user_logged_in_signal
 from products.models import Product
 
-
+def region_init(request):
+	# return redirect("accounts:wish-list")
+	return redirect("region-init")
+	 
 def languge_pref_view(request):
 	default_next = "/"
 	next_ = request.GET.get('next')
@@ -56,6 +59,7 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 			qs = EmailActivation.objects.filter(key__iexact=key)
 			confirm_qs = qs.confirmable()
 			if confirm_qs.count()==1:
+
 				obj = confirm_qs.first()
 				obj.activate()
 				if request.session.get('language')=='RU':
@@ -185,6 +189,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		else:
 			language_pref_login_page = self.request.session.get('language')
 			login(form.request, user)
+			print('TUTO4KI')
 			language_pref = LanguagePreference.objects.filter(user=user)
 			if language_pref.exists():
 				self.request.session['language'] = language_pref.first().language.upper()
