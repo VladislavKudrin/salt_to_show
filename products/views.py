@@ -181,6 +181,10 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		next_ = request.POST.get('next', '/')
 		username = request.POST.get('chat_with', '/')
 		redirect_url = next_ + 'messages/' + username
+		print(redirect_url)
+		if not request.user.is_authenticated():
+			print('awdawdawdwa',request.path)
+			
 		return redirect(redirect_url)
 
 def image_create_order(request):

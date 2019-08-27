@@ -147,6 +147,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 
 	def form_valid(self, form):
 		next_path = self.get_next_url()
+		print(next_path)
 		user = authenticate(form.request, username=form.cleaned_data.get('email'), password=form.cleaned_data.get('password'))
 		user_objects = User.objects.filter(email=form.cleaned_data.get('email')).exists()
 		link_sent2 = EmailActivation.objects.email_exists(form.cleaned_data.get('email')).exists()
