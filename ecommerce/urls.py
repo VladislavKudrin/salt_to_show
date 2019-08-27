@@ -38,7 +38,7 @@ from addresses.views import (
     checkout_address_create_view, 
     checkout_address_reuse_view
     )
-from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, wishlistupdate
+from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, wishlistupdate, reg_rog
 from .views import home_page, test_page, ContactPageView, AboutPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
@@ -80,7 +80,7 @@ urlpatterns = [
     url(r'^orders/', include("orders.urls", namespace='orders')),
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
-
+    url(r'^region-init/$', reg_rog, name = 'region-init'),
 
 
 

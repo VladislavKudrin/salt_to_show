@@ -1,6 +1,20 @@
 $(document).ready(
   
   function(){
+    //region Assign
+
+    if (window.location.href.indexOf('region-init')!=-1){
+      console.log('JOPPA')
+    }//if its on region init site
+
+
+
+
+
+
+
+
+    //search
       var searchForm = $(".search-form")
       var searchInput = searchForm.find("[name='q']") //input name = 'q'
       var actionEndpoint = searchForm.attr("action");
