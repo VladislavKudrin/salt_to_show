@@ -20,13 +20,9 @@ from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetail
 from .signals import user_logged_in_signal
 from products.models import Product
 
-def reg_rog(request):
-	print('regog')
-	return redirect('login')
-def region_init(request, response, user, *args, **kwargs):
-	print('popka')
-	reg_rog(request)
-
+def region_init(request):
+	# return redirect("accounts:wish-list")
+	return redirect("region-init")
 	 
 def languge_pref_view(request):
 	default_next = "/"
