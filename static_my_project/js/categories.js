@@ -240,12 +240,20 @@ $(document).ready(
 }//if create or update
 
 
-
 //FILTERS
     var h = screen.height; 
-    document.getElementById("container-filters-update").style.height = (h - 250) + 'px'
+    document.getElementById("container-filters-update").style.height = (h - 220) + 'px'
     document.getElementById("slider").style.height = h - 250 + 'px'
-
+function displayRefreshingItems(container, display){
+    if (display==true){
+        if ($('.loadingPaginating').length==0){
+            container.append('<div class="col-12 mt-2 mb-2 loadingPaginating text-center p-0"><i class="fas fa-spin fa-4x fa-spinner"></i></div>')
+        }//if one icon only
+    }//if display
+    else{
+        container.find('.loadingPaginating').remove()
+    }//if not display
+}//displayRefreshing
 function setCheckboxRadio(klass){
     $("input:checkbox." + klass).on('click', function() {
   
@@ -348,7 +356,6 @@ containerWithItems.scroll(
             else {
                 var arr_link = window.location.href.split('/')
                 var numFromLink = parseInt(arr_link.slice(-1)[0].split('?').slice(-1)[0].split('=').slice(-1)[0])
-                console.log(numFromLink)
                 pageNum = numFromLink + 1
             }
             var formCheckboxesData = formCheckboxes.serialize()
@@ -359,12 +366,17 @@ containerWithItems.scroll(
                     data: formCheckboxesData,
                     success: function(data){
                         if (data.count_pages == true){
+                            // displayRefreshingItems($('#filtersTestRefresh'),true)
+                            // setTimeout(function(){
+                            // displayRefreshingItems($('#filtersTestRefresh'),false)
                             $('#container-filters-update').append(data.html)
                             $('#items_count').html(data.count_items)
                             var productForm=$(".form-product-ajax-wishlist")
                             bind_ajax_heart(productForm)
                             data.link = data.link + '?page='+pageNum
                             window.history.replaceState( {} , 'title', data.link)
+                            // },2000)
+                            
                         }//if continue
                                 }//success
                     })//ajax form submit

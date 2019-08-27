@@ -147,7 +147,6 @@ class CategoryFilterView(ListView):
 			page_continue = True
 			context={}
 			if request.GET:
-				print(request.GET)
 				data_brand = request.GET.getlist('brand')
 				data_sort = request.GET.get('sort')
 				data_price = request.GET.getlist('price')
