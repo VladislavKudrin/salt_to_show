@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load pagination_tags %}
 {% block content %}
 
 <style type="text/css">
@@ -29,7 +28,6 @@ a:hover {
 <div class="container">
 
 <div class='row'>
-{% autopaginate object_list %}
 {% if object_list|length > 0 %}
 	{% for obj in object_list %}
 		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
@@ -50,7 +48,6 @@ a:hover {
 
 <div class = "row pagination justify-content-center">
 	<div class = "col-auto">
-		{% paginate using "pagination_custom.html" %}
 	</div>
 </div>
 

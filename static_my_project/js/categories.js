@@ -6,7 +6,7 @@ $(document).ready(
 
   function(){
       
-      
+
     var currentPath = window.location.href
     if ((currentPath.indexOf("update") != -1) || (currentPath.indexOf("create") != -1)){
     var actionEndpoint = '/products/create/'
@@ -243,7 +243,7 @@ $(document).ready(
 
 //FILTERS
     var h = screen.height; 
-    document.getElementById("container-filters-update").style.height = (h - 200) + 'px'
+    document.getElementById("container-filters-update").style.height = (h - 250) + 'px'
     document.getElementById("slider").style.height = h - 250 + 'px'
 
 function setCheckboxRadio(klass){
@@ -295,6 +295,7 @@ function setCheckboxRadio(klass){
  var checkboxes = $('.input-for-filters')
  var formCheckboxes = $('#form_checkboxes')
  var formCheckboxesEndpoint = formCheckboxes.attr('action')
+ var containerWithItems = $('#container-filters-update')
  setCheckboxRadio('radioOvercategorie')
  setCheckboxRadio('radioGender')
  var categoriesCheckboxesInitial = $('.undercategory-for-check').find("[name='undercategory']:checked")
@@ -335,6 +336,41 @@ $('.size_for_disabled_checkbox_lable').click(
             $target.parent().parent().find('input').prop('disabled', false)
         }//if click on disabled checkbox
 })//click on lables in undercat checkboxes
+
+containerWithItems.scroll(
+    function(e){
+        if(e.target.offsetHeight + e.target.scrollTop == e.target.scrollHeight)
+            {   
+            var pageNum = 0
+            if (window.location.href.indexOf('?page=') == -1){
+                pageNum = 2
+            }
+            else {
+                var arr_link = window.location.href.split('/')
+                var numFromLink = parseInt(arr_link.slice(-1)[0].split('?').slice(-1)[0].split('=').slice(-1)[0])
+                console.log(numFromLink)
+                pageNum = numFromLink + 1
+            }
+            var formCheckboxesData = formCheckboxes.serialize()
+            formCheckboxesData = formCheckboxesData + '&page=' + pageNum
+                $.ajax({
+                    url: formCheckboxesEndpoint,
+                    method: 'get',
+                    data: formCheckboxesData,
+                    success: function(data){
+                        if (data.count_pages == true){
+                            $('#container-filters-update').append(data.html)
+                            $('#items_count').html(data.count_items)
+                            var productForm=$(".form-product-ajax-wishlist")
+                            bind_ajax_heart(productForm)
+                            data.link = data.link + '?page='+pageNum
+                            window.history.replaceState( {} , 'title', data.link)
+                        }//if continue
+                                }//success
+                    })//ajax form submit
+        }//if end of scroll
+    })//scroll
+
 $('#brand-select').searchableOptionList({
         texts: {
             searchplaceholder: 'Please, select a brand'
@@ -343,7 +379,8 @@ $('#brand-select').searchableOptionList({
         maxHeight:'250px',
         events: {            
         onChange:function() {
-                var formCheckboxesData = formCheckboxes.serialize()
+        containerWithItems.scrollTop(0)
+        var formCheckboxesData = formCheckboxes.serialize()
         $.ajax({
             url: formCheckboxesEndpoint,
             method: 'get',
@@ -363,7 +400,8 @@ $('#brand-select').searchableOptionList({
     })
 
  checkboxes.change(
-    function (e) {      
+    function (e) {
+        containerWithItems.scrollTop(0)      
         var $target = $(e.target)
         console.log($target)
         if ($target[0].name == 'overcategory'){

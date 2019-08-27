@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.db.models import Q
 from django.template.loader import get_template
 from django.http import Http404, JsonResponse
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 from .models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
@@ -81,6 +81,7 @@ class CategoryFilterView(ListView):
 		# words_for_category_reverse = {'tasty': 'Tops', 'delicious': 'Bottoms', 'palatable': 'Shoes', 'luscious': 'Accessories', 'vkusno': 'Outerwear', 'succulent': 'DressesAndOveralls'}
 		# words_for_undercategory_reverse = {'salt': 'T-ShirtsAndPolos', 'pepper': 'TopsAndBody', 'cardamom': 'Shirts', 'anise': 'Sweaters', 'cinnamon': 'SweatshirtsAndHoodies', 'coriander': 'Jeans', 'cumin': 'Shorts', 'marinade': 'Sweatpants', 'curry': 'Pants', 'fennel': 'Rocks', 'garam': 'Sneakers', 'ginger': 'CasualShoes', 'nutmeg': 'Boots', 'paprika': 'Sandals', 'turmeric': 'HighHeels', 'spice': 'BugsAndLuggage', 'mace': 'Belts', 'chili': 'Scarves', 'cloves': 'Hats', 'garlic': 'JewerlyAndWatches', 'oregano': 'Wallets', 'rosemary': 'SocksAndUnderwear', 'thyme': 'Sunglasses', 'vanilla': 'Miscellaneous', 'basil': 'HeavyJacketsAndParkas', 'chives': 'LeatherJackets', 'dill': 'Coats', 'mint': 'JeansJackets', 'sage': 'LightJackets', 'fenugreek': 'Dresses', 'parsley': 'Overalls'}
 		# words_for_undercategory = {'T-ShirtsAndPolos': 'salt', 'TopsAndBody': 'pepper', 'Shirts': 'cardamom', 'Sweaters': 'anise', 'SweatshirtsAndHoodies': 'cinnamon', 'Jeans': 'coriander', 'Shorts': 'cumin', 'Sweatpants': 'marinade', 'Pants': 'curry', 'Rocks': 'fennel', 'Sneakers': 'garam', 'CasualShoes': 'ginger', 'Boots': 'nutmeg', 'Sandals': 'paprika', 'HighHeels': 'turmeric', 'BugsAndLuggage': 'spice', 'Belts': 'mace', 'Scarves': 'chili', 'Hats': 'cloves', 'JewerlyAndWatches': 'garlic', 'Wallets': 'oregano', 'SocksAndUnderwear': 'rosemary', 'Sunglasses': 'thyme', 'Miscellaneous': 'vanilla', 'HeavyJacketsAndParkas': 'basil', 'LeatherJackets': 'chives', 'Coats': 'dill', 'JeansJackets': 'mint', 'LightJackets': 'sage', 'Dresses': 'fenugreek', 'Overalls': 'parsley'}
+		items_per_page = 12
 		link_codiert = ''
 		link = self.kwargs.get('filter')
 		splitword_overcategory = 'please'
@@ -128,16 +129,25 @@ class CategoryFilterView(ListView):
 				list_undercategory=data_undercategory_link, 
 				list_size=data_size_link
 				)
-		qs = Product.objects.all().order_by('-timestamp').authentic()
+		qs_for_link = qs_for_link.order_by('-timestamp')
+		paginator = Paginator(qs_for_link, items_per_page) # Show 25 contacts per page
+		page = request.GET.get('page')
+		try:
+			qs_for_link = paginator.page(page)
+		except PageNotAnInteger:
+			# If page is not an integer, deliver first page.
+			qs_for_link = paginator.page(1)
+		except EmptyPage:
+				# If page is out of range (e.g. 9999), deliver last page of results.
+			qs_for_link = paginator.page(paginator.num_pages)
+		qs = Product.objects.all().order_by('-timestamp')#.authentic()
 		qs_cat={}
 		qs_undercat={}
 		if request.is_ajax():
-			# if raw_link:
-			# 	request.GET['overcategory']
-			# 	request.GET['gender']
-			# 	request.GET['category']
+			page_continue = True
 			context={}
 			if request.GET:
+				print(request.GET)
 				data_brand = request.GET.getlist('brand')
 				data_sort = request.GET.get('sort')
 				data_price = request.GET.getlist('price')
@@ -158,7 +168,6 @@ class CategoryFilterView(ListView):
 					list_undercategory=data_undercategory, 
 					list_size=data_size
 					)
-				
 				# 	qs = Product.objects.filter(overcategory=Overcategory.objects.get(id=int(request.GET.get(data))))
 				# 	link_codiert = link_codiert + words_for_overcategory[int(request.GET.get(data))-1] + splitword_overcategory
 				# data_undercategory = request.GET.getlist('undercategory')
@@ -177,20 +186,36 @@ class CategoryFilterView(ListView):
 				# 	if data =='size':
 				# 		qs, link_codiert = Product.objects.filter_undercategory_size(qs=qs, list_size=request.GET.getlist(data), link_codiert = link_codiert)
 				if data_sort == 'high':
-					context['object_list']=qs.order_by('price').authentic()
+					qs=qs.order_by('price')#.authentic()
 				elif data_sort == 'low':
-					context['object_list']=qs.order_by('-price').authentic()
+					qs=qs.order_by('-price')#.authentic()
 				else:
-					context['object_list']=qs.order_by('-timestamp').authentic()
+					qs=qs.order_by('-timestamp')#.authentic()
+				object_list = qs
+				paginator = Paginator(object_list, items_per_page) 
+				page = request.GET.get('page')
+				try:
+					object_list = paginator.page(page)
+				except PageNotAnInteger:
+					# If page is not an integer, deliver first page.
+					object_list = paginator.page(1)
+				except EmptyPage:
+						# If page is out of range (e.g. 9999), deliver last page of results.
+					object_list = paginator.page(paginator.num_pages)
+				if len(request.GET)==2:
+					link_codiert = 'givemetheloot'
+				if page:
+					if int(page) > paginator.num_pages:
+						page_continue = False
+				context['object_list']=object_list
 			else:
-				link_codiert = 'givemetheloot'
-				context['object_list']=qs.authentic()
-
+				context['object_list']=qs
 			html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
 			json_data={
 			'html':html_,
 			'link':link_codiert,
-			'count_items':qs.count()
+			'count_items':qs.count(),
+			'count_pages': page_continue
 			}
 			return JsonResponse(json_data)
 		fields_gender = Gender.objects.all()
@@ -201,7 +226,7 @@ class CategoryFilterView(ListView):
 		fields_condition = Condition.objects.all()
 		fields_brand = Brand.objects.all()
 
-		context['object_list']=qs_for_link.order_by('-timestamp').authentic()
+		context['object_list']=qs_for_link
 		context['fields_category']=fields_category
 		context['fields_gender']=fields_gender
 		context['fields_overcategory']=fields_overcategory

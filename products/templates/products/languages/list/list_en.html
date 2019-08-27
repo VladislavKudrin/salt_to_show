@@ -9,7 +9,12 @@
 }
 #btn-filters{
 	font-size: 9pt;
-	width: 35%
+	width: 40%;
+	border: 1px solid #ced4da;
+	background-color: white;
+}
+#btn-filters:hover{
+	background-color: #f5f5f5;
 }
 /*[hide='false']{
 
@@ -21,16 +26,19 @@
 	display: none
 }
 </style>
+<script type="text/javascript">
+	
+</script>
 <hr class="trenn mb-3">
 <div class="row">
-	<div class="col-3 text-center">
-		<button class="btn btn-light" hide='true' id='btn-filters'>
+	<div class="col-3 text-center p-0">
+		<button class="mr-3 btn btn-light" hide='true' id='btn-filters'>
 			<i class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>Hide Filters</span>
 		</button>
 	</div>
 	<div class="col-md-1"></div>
 	<div class="col-4 text-center my-auto p-0" id='result-text'>
-		<b>Result: <span id='items_count'>{{ object_list.count }}</span> Items</b>
+		<b>Result: <span id='items_count'>{{ object_list.paginator.count }}</span> Items</b>
 	</div>
 	<div class="col-md-1"></div>
 	<div class='col-3 text-center p-0'>
@@ -52,3 +60,10 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
+
+

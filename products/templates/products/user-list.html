@@ -24,7 +24,6 @@
 	</div>
 
 <div class='row'>
-	{% autopaginate object_list %}
 	{% if object_list|length > 0 %}
 
 	{% for obj in object_list %}
@@ -46,7 +45,6 @@
 
 <div class = "row pagination justify-content-center">
 	<div class = "col-auto">
-		{% paginate using "pagination_custom.html" %}
 	</div>
 </div>
 
