@@ -240,6 +240,28 @@ class RegisterLoginForm(forms.ModelForm):
             User.objects.create_user(email=email, username=username, password=password, is_active=False)
 
 
+class RegionModalForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('region',)
+    location = forms.CharField(required=False, widget=forms.HiddenInput())
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super(RegionModalForm, self).__init__(*args, **kwargs)
+        self.fields['location'].widget.attrs['readonly'] = True
+        self.fields['location'].widget.attrs['value'] = self.request.GET.get('location')
+        print(self.request.POST)
+    def save(self):
+        user = self.request.user
+        region = self.cleaned_data.get('region')
+        user.region = region
+        user.save()
+
+        
+
+
+
+
 #----Deleting guest mails if there are any-----------------
     # user_logged_in_signal.send(user.__class__, instance = user, request = request)
     # try:

@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.conf import settings
 from django.shortcuts import render
+from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
@@ -16,13 +17,35 @@ from django.utils.safestring import mark_safe
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePreference
-from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
+from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm, RegionModalForm
 from .signals import user_logged_in_signal
 from products.models import Product
 
+
 def region_init(request):
-	# return redirect("accounts:wish-list")
-	return redirect("region-init")
+	if request.is_ajax():
+		user = request.user
+		if user.is_authenticated() and not user.region:
+			form = RegionModalForm(request.POST, request=request)
+			context = {
+				'form': form,
+				'path':request.GET.get('location')
+			}
+			html_ = get_template("accounts/snippets/region-modal/region-modal.html").render(request = request, context=context)
+			json_data={
+			'html':html_
+			}
+			return JsonResponse(json_data)
+	if request.POST:
+		form = RegionModalForm(request.POST, request = request)
+		print(request.path)
+		if form.is_valid():
+			form.save()
+			return redirect(form.cleaned_data.get('location'))
+	return HttpResponse('html')
+			
+
+
 	 
 def languge_pref_view(request):
 	default_next = "/"

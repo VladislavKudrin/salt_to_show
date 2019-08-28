@@ -371,7 +371,9 @@ containerWithItems.scroll(
                             // displayRefreshingItems($('#filtersTestRefresh'),false)
                             $('#container-filters-update').append(data.html)
                             $('#items_count').html(data.count_items)
+
                             var productForm=$(".form-product-ajax-wishlist")
+                            productForm.unbind()
                             bind_ajax_heart(productForm)
                             data.link = data.link + '?page='+pageNum
                             window.history.replaceState( {} , 'title', data.link)

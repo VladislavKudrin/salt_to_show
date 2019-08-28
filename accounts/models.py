@@ -114,7 +114,7 @@ class User(AbstractBaseUser):
 	timestamp		= models.DateTimeField(auto_now_add=True)
 	profile_foto	= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	wishes 			= models.ManyToManyField(Product, related_name='users', blank=True)
-	region 			= models.ForeignKey(Region, related_name='users', blank=True, null=True)
+	region 			= models.ForeignKey(Region, related_name='users_region', blank=True, null=True)
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default

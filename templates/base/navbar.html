@@ -9,7 +9,7 @@
 {% url 'products:create' as products_create_url %}
 {% url 'accounts:wish-list' as wish_list %}
 {% url 'categories:filter' as filter_url %}
-{% load for_loop_extras %}
+
 {% load notifications %}
 {% load static %}
 
@@ -88,7 +88,7 @@
 </style>
 
 
-{{ request.session|to_default_language }}
+
 
 {% if request.session.language == 'RU' %}
 
