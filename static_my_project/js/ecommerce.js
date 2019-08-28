@@ -1,12 +1,7 @@
 $(document).ready(
   
   function(){
-    //region Assign
-
-    if (window.location.href.indexOf('region-init')!=-1){
-      console.log('JOPPA')
-    }//if its on region init site
-
+    
 
 
 
