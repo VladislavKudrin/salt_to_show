@@ -45,6 +45,7 @@ def region_init(request):
 	return HttpResponse('html')
 			
 
+
 	 
 def languge_pref_view(request):
 	default_next = "/"
