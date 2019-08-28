@@ -20,6 +20,8 @@ from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePrefere
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm, RegionModalForm
 from .signals import user_logged_in_signal
 from products.models import Product
+from marketing.utils import Mailchimp
+from marketing.models import MarketingPreference
 
 
 def region_init(request):
@@ -37,10 +39,17 @@ def region_init(request):
 			}
 			return JsonResponse(json_data)
 	if request.POST:
+		user = request.user
 		form = RegionModalForm(request.POST, request = request)
 		print(request.path)
 		if form.is_valid():
 			form.save()
+			# for updating language in mailchimp ------------
+			mark_pref, created = MarketingPreference.objects.get_or_create(user=user)
+			if mark_pref.subscribed == True: 
+				response_status, response = Mailchimp().change_subscription_status(user.email, 'subscribed')
+			elif mark_pref.subscribed == False:	
+				response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
 			return redirect(form.cleaned_data.get('location'))
 	return HttpResponse('html')
 			

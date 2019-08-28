@@ -47,7 +47,6 @@ class Mailchimp(object):
 
 	def check_subscription_status(self, email):
 		hashed_email = get_subscriber_hash(email)
-		print(hashed_email)
 		endpoint = self.get_members_endpoint() + "/" + hashed_email
 		r = requests.get(endpoint, auth=("", self.key))
 		return r.status_code, r.json()
@@ -56,16 +55,18 @@ class Mailchimp(object):
 	def change_subscription_status(self, email, status='unsubscribed'):
 		hashed_email = get_subscriber_hash(email)
 		endpoint = self.get_members_endpoint() + "/" + hashed_email
-		#user = User.objects.filter(email=email).first() # just for testing
-		#mail = user.email
+		user = User.objects.filter(email=email).first() 
+		region = str(user.region)
 		data= {
-			"email_address":email,
-			"status": self.check_valid_status(status)
-			# 'merge_fields': { SENDING merge fields = custom fields is easy. Don't forget to create one in Mailchimp. (Region is already created)
-   #          	'REGION': mail
-   #      	}
+			"email_address": email,
+			"status": self.check_valid_status(status),
+			#SENDING merge fields = custom fields is easy. Don't forget to create one in Mailchimp. (Region is already created)
+			'merge_fields': { 
+            	# 'REGION': 'Afganistan'	
+            	'REGION': region
+        	}
 		}
-		print('DATA SENT', data)
+		print('DATA SENT MAILCHIMP', data)
 		r = requests.put(endpoint, auth=("", self.key), data=json.dumps(data))
 		return r.status_code, r.json()
 

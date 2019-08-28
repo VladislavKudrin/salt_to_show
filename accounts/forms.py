@@ -12,6 +12,7 @@ from marketing.models import MarketingPreference
 from .models import EmailActivation, GuestEmail, LanguagePreference, Region
 from .signals import user_logged_in_signal
 from django.core.validators import RegexValidator
+from marketing.utils import Mailchimp
 
 class ReactivateEmailForm(forms.Form):
     error_css_class = 'error'
@@ -127,6 +128,7 @@ class UserDetailChangeForm(forms.ModelForm):
         marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
         subscribed_user = self.cleaned_data.get('subscribed')
         marketing_pref.update(subscribed=subscribed_user)
+        marketing_pref.first().save()
 
     def clean_region(self):
         data = self.cleaned_data['region']
@@ -256,6 +258,8 @@ class RegionModalForm(forms.ModelForm):
         region = self.cleaned_data.get('region')
         user.region = region
         user.save()
+
+
 
         
 

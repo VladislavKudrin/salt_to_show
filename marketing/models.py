@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models.signals import post_save, pre_save
 
 from .utils import Mailchimp
+from accounts.models import Region, User
 
 class MarketingPreference(models.Model):
 	user 						= models.OneToOneField(settings.AUTH_USER_MODEL, related_name='marketing')
@@ -20,7 +21,6 @@ class MarketingPreference(models.Model):
 def marketing_pref_create_reciever(sender, instance, created, *args, **kwargs):
 	if created:
 		status_code, response_data = Mailchimp().subscribe(instance.user.email)
-		print(status_code, response_data)
 
 
 post_save.connect(marketing_pref_create_reciever, sender=MarketingPreference)
@@ -44,13 +44,18 @@ def marketing_pref_update_reciever(sender, instance, *args, **kwargs):
 pre_save.connect(marketing_pref_update_reciever, sender=MarketingPreference)
 
 def make_marketing_pref_reciever(sender, instance, created, *args, **kwargs):
-	if created:
-		MarketingPreference.objects.get_or_create(user=instance)
-
+	#print(MarketingPreference.objects.filter(user=instance).first().subscribed) #model and forms work just fine
+	user = User.objects.filter(email=instance).first() 
+	mark_pref, created = MarketingPreference.objects.get_or_create(user=user)
+	if mark_pref.subscribed == True: 
+		response_status, response = Mailchimp().change_subscription_status(user.email, 'subscribed')
+	elif mark_pref.subscribed == False:	
+		print('HUIIII')
+		print(mark_pref.subscribed)
+		response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
 
 
 post_save.connect(make_marketing_pref_reciever, sender=settings.AUTH_USER_MODEL)
-
 
 
 
