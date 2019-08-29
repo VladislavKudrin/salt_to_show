@@ -62,8 +62,6 @@ class UserAdminCreationForm(forms.ModelForm):
             user.save()
         return user
 
-
-
 class UserDetailChangeForm(forms.ModelForm):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Only alphanumeric characters are allowed')
     username  = forms.CharField(label='Username', required=True, validators=[alphanumeric], widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your username'}))
@@ -135,6 +133,14 @@ class UserDetailChangeForm(forms.ModelForm):
         if data == 'default':
             raise forms.ValidationError("You must select a region")
         clean_data = Region.objects.filter(region=data)[0]
+        # user = self.request.user
+        # mark_pref = MarketingPreference.objects.filter(user=user).first()
+        # if mark_pref.subscribed == True: 
+        #     print('Forms Acc, if True')
+        #     response_status, response = Mailchimp().change_subscription_status(user.email, 'subscribed')
+        # elif mark_pref.subscribed == False:
+        #     print('Forms acc, if True') 
+        #     response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
         return clean_data
 
 

@@ -19,19 +19,23 @@ class MarketingPreference(models.Model):
 
 
 def marketing_pref_create_reciever(sender, instance, created, *args, **kwargs):
-	if created:
+	# print('marketing_pref_create_reciever')
+	user = instance.user
+	region = user.region
+	if created and region is not None:
 		status_code, response_data = Mailchimp().subscribe(instance.user.email)
-
+	# elif region is not None: 
+	# 	print('I just prevented it LALAALLAL')
 
 post_save.connect(marketing_pref_create_reciever, sender=MarketingPreference)
 
 def marketing_pref_update_reciever(sender, instance, *args, **kwargs):
+	# print('marketing_pref_update_reciever')
 	if instance.subscribed != instance.mailchimp_subscribed:
 		if instance.subscribed:
 			status_code, response_data = Mailchimp().subscribe(instance.user.email)
 		else:
 			status_code, response_data = Mailchimp().unsubscribe(instance.user.email)
-
 		if response_data['status'] == 'subscribed':
 			instance.subscribed = True
 			instance.mailchimp_subscribed = True
@@ -43,17 +47,18 @@ def marketing_pref_update_reciever(sender, instance, *args, **kwargs):
 
 pre_save.connect(marketing_pref_update_reciever, sender=MarketingPreference)
 
-def make_marketing_pref_reciever(sender, instance, created, *args, **kwargs):
-	#print(MarketingPreference.objects.filter(user=instance).first().subscribed) #model and forms work just fine
-	user = User.objects.filter(email=instance).first() 
-	mark_pref, created = MarketingPreference.objects.get_or_create(user=user)
-	if mark_pref.subscribed == True: 
-		response_status, response = Mailchimp().change_subscription_status(user.email, 'subscribed')
-	elif mark_pref.subscribed == False:	
-		print('HUIIII')
-		print(mark_pref.subscribed)
-		response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
 
+def make_marketing_pref_reciever(sender, instance, created, *args, **kwargs):
+	# print('make_marketing_pref_reciever')
+	# user = User.objects.filter(email=instance).first() 
+	mark_pref, created = MarketingPreference.objects.get_or_create(user=instance)
+	if instance.region is not None:
+		if mark_pref.subscribed == True: 
+			# print('Forms Acc, if True')
+			response_status, response = Mailchimp().change_subscription_status(instance.email, 'subscribed')
+		elif mark_pref.subscribed == False:
+			# print('Forms acc, if True') 
+			response_status, response = Mailchimp().change_subscription_status(instance.email, 'unsubscribed')
 
 post_save.connect(make_marketing_pref_reciever, sender=settings.AUTH_USER_MODEL)
 
