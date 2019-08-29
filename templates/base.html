@@ -27,12 +27,7 @@ html,body{
 }
 
 
-      @media only screen and (min-width: 768px) {
-        #trigger_2, #slider_2 {
-          visibility: hidden;
-          display: none;
-        }
-      }
+
 
 
 
@@ -58,10 +53,6 @@ html,body{
 
     <div class='container-fluid ajax-search' style="height: 100%;">
     {% include 'base/messages.html' %}
-
-            <div hidden class='col-5 col-md-2 custom-box' id='slider_2' style="background-color: rgb(255,255,255); overflow: scroll; ">
-          {% include "sidebar.html" %}
-            </div>
 
 
     {% block content %}
@@ -135,6 +126,8 @@ width: 100%
 
 $(document).ready(function(){
 
+
+
 var regionInput = $('#region_input')
 var urlRegion = '/region-init/'
 if (regionInput.val() == 'None'){
@@ -159,10 +152,6 @@ $('.language-preference-globe').click(
 }
 )//onclick
 
-
-$("#slider_2").attr("hidden",false); // make sidebar not popping up
-
-$("#slider").attr("hidden",false); // make sidebar not popping up (sidebar needs attr hiddens)
 
 
 })//document ready

@@ -41,14 +41,16 @@
     visibility: hidden; 
     display: none; 
   } 
-}
-
-@media only screen and (min-width: 768px) { 
 
    #buttons {
     visibility: hidden; 
     display: none; 
-  } 
+  }
+
+    #sidebar-trigger, #sidebar-slider {
+      visibility: hidden;
+      display: none;
+    } 
 }
 
 
@@ -88,7 +90,9 @@
 </style>
 
 
-
+<div hidden class='col-5 col-md-2 custom-box' id='sidebar-slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+  {% include "sidebar.html" %}
+</div>
 
 {% if request.session.language == 'RU' %}
 
@@ -103,3 +107,22 @@
 {% include 'languages/navbar-en.html' %}  
 
 {% endif %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+//sidebar the only one js 
+$("#sidebar-slider").slideReveal({
+  trigger: $("#sidebar-trigger"),
+  push: false,
+  overlay: true,
+  overlayColor:'rgba(0,0,0,0.5)',
+  width:'500px',
+});
+
+$("#sidebar-slider").attr("hidden",false); // make sidebar not popping up
+
+})//document ready
+
+</script>

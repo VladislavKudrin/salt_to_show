@@ -8,12 +8,7 @@
     <title>SALT</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
     <style type="text/css">
-      @media only screen and (min-width: 768px) {
-        #trigger_2, #slider_2 {
-          visibility: hidden;
-          display: none;
-        }
-      }
+      
       
 html,body{
   font-family: 'Noto Sans', sans-serif !important;
@@ -49,9 +44,7 @@ html,body{
     <div class='container-fluid ajax-search' style="height: 100%;">
     {% include 'base/messages.html' %}
 
-            <div hidden class='col-5 col-md-2 custom-box' id='slider_2' style="background-color: rgb(255,255,255); overflow: scroll; ">
-          {% include "sidebar.html" %}
-            </div>
+            
 
 
     {% block content %}
@@ -129,10 +122,7 @@ $('.language-preference-globe').click(
         languageGlobe.select()
 }
 )//onclick
-
-$("#slider_2").attr("hidden",false); // make sidebar not popping up
-
-$("#slider").attr("hidden",false); // make sidebar not popping up
+ 
 
 })//document ready
 
