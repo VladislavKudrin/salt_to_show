@@ -11,7 +11,7 @@ html, body {
 }
 
 #inbox-text {
-	height: 80%;
+	height: 85vh;
 }
 
 @media only screen and (max-width: 768px) { 
@@ -268,7 +268,7 @@ button:focus {
 <div class='col-7 heading col-md-9' style="color:#aeacac; background-image: url('{% static 'img/worn_dots.png' %}')">
 	<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
 	</div>
-	<div id="inbox-text" class='row text-center row align-items-center'>
+	<div id="inbox-text" class='row text-center align-items-center'>
 		<div class='col'>
 			{{ title }}
 		</div>

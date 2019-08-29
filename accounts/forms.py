@@ -12,6 +12,7 @@ from marketing.models import MarketingPreference
 from .models import EmailActivation, GuestEmail, LanguagePreference, Region
 from .signals import user_logged_in_signal
 from django.core.validators import RegexValidator
+from marketing.utils import Mailchimp
 
 class ReactivateEmailForm(forms.Form):
     error_css_class = 'error'
@@ -60,8 +61,6 @@ class UserAdminCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-
 
 class UserDetailChangeForm(forms.ModelForm):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Only alphanumeric characters are allowed')
@@ -127,12 +126,21 @@ class UserDetailChangeForm(forms.ModelForm):
         marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
         subscribed_user = self.cleaned_data.get('subscribed')
         marketing_pref.update(subscribed=subscribed_user)
+        marketing_pref.first().save()
 
     def clean_region(self):
         data = self.cleaned_data['region']
         if data == 'default':
             raise forms.ValidationError("You must select a region")
         clean_data = Region.objects.filter(region=data)[0]
+        # user = self.request.user
+        # mark_pref = MarketingPreference.objects.filter(user=user).first()
+        # if mark_pref.subscribed == True: 
+        #     print('Forms Acc, if True')
+        #     response_status, response = Mailchimp().change_subscription_status(user.email, 'subscribed')
+        # elif mark_pref.subscribed == False:
+        #     print('Forms acc, if True') 
+        #     response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
         return clean_data
 
 
@@ -256,6 +264,8 @@ class RegionModalForm(forms.ModelForm):
         region = self.cleaned_data.get('region')
         user.region = region
         user.save()
+
+
 
         
 

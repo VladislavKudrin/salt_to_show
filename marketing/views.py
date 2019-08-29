@@ -11,6 +11,7 @@ from .forms import MarketingPreferenceForm
 from .models import MarketingPreference
 
 
+
 MAILCHIMP_EMAIL_LIST_ID = getattr(settings, "MAILCHIMP_EMAIL_LIST_ID", None)
 
 

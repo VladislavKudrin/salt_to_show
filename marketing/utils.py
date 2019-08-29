@@ -5,16 +5,9 @@ import requests
 from django.conf import settings
 from accounts.models import User
 
-
 MAILCHIMP_API_KEY = getattr(settings, "MAILCHIMP_API_KEY", None)
-
-
 MAILCHIMP_DATA_CENTER = getattr(settings, "MAILCHIMP_DATA_CENTER", None)
-
-
-
 MAILCHIMP_EMAIL_LIST_ID = getattr(settings, "MAILCHIMP_EMAIL_LIST_ID", None)
-
 
 
 
@@ -47,7 +40,6 @@ class Mailchimp(object):
 
 	def check_subscription_status(self, email):
 		hashed_email = get_subscriber_hash(email)
-		print(hashed_email)
 		endpoint = self.get_members_endpoint() + "/" + hashed_email
 		r = requests.get(endpoint, auth=("", self.key))
 		return r.status_code, r.json()
@@ -56,29 +48,25 @@ class Mailchimp(object):
 	def change_subscription_status(self, email, status='unsubscribed'):
 		hashed_email = get_subscriber_hash(email)
 		endpoint = self.get_members_endpoint() + "/" + hashed_email
-		#user = User.objects.filter(email=email).first() # just for testing
-		#mail = user.email
+		user = User.objects.filter(email=email).first() 
+		region = str(user.region)
 		data= {
-			"email_address":email,
-			"status": self.check_valid_status(status)
-			# 'merge_fields': { SENDING merge fields = custom fields is easy. Don't forget to create one in Mailchimp. (Region is already created)
-   #          	'REGION': mail
-   #      	}
+			"email_address": email,
+			"status": self.check_valid_status(status),
+			'merge_fields': { 	
+            	'REGION': region
+        	}
 		}
-		print('DATA SENT', data)
+		print('DATA SENT MAILCHIMP FROM UTILS', data)
 		r = requests.put(endpoint, auth=("", self.key), data=json.dumps(data))
 		return r.status_code, r.json()
-
         
-
 
 	def check_valid_status(self, status):
 		choises = ['subscribed','unsubscribed','cleaned','pending']
 		if status not in choises:
 			raise ValidError("Not a valid choice for a status!")
 		return status
-
-
 
 	def add_email(self, email):
 		# #endpoint
@@ -96,12 +84,15 @@ class Mailchimp(object):
 		return self.change_subscription_status(email, status='subscribed')
 
 	def subscribe(self, email):
+		print('utils, subscribe')
 		return self.change_subscription_status(email, status='subscribed')
 
 	def unsubscribe(self, email):
+		print('utils, unsubscribe')
 		return self.change_subscription_status(email, status='unsubscribed')
 
 	def pending(self, email):
+		print('utils, pending')
 		return self.change_subscription_status(email, status='pending')
 
 

@@ -20,6 +20,8 @@ from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePrefere
 from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm, RegionModalForm
 from .signals import user_logged_in_signal
 from products.models import Product
+from marketing.utils import Mailchimp
+from marketing.models import MarketingPreference
 
 
 def region_init(request):
@@ -37,10 +39,19 @@ def region_init(request):
 			}
 			return JsonResponse(json_data)
 	if request.POST:
+		user = request.user
 		form = RegionModalForm(request.POST, request = request)
 		print(request.path)
 		if form.is_valid():
 			form.save()
+			# for updating language in mailchimp ------------
+			# mark_pref, created = MarketingPreference.objects.get_or_create(user=user)
+			# if mark_pref.subscribed == True: 
+			# 	print('Views, if True')
+			# 	response_status, response = Mailchimp().change_subscription_status(user.email, 'subscribed')
+			# elif mark_pref.subscribed == False:
+			# 	print('Views, if True')	
+			# 	response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
 			return redirect(form.cleaned_data.get('location'))
 	return HttpResponse('html')
 			
@@ -262,6 +273,19 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 
 	def get_success_url(self):
 		return reverse("accounts:user-update")
+
+	# def form_valid(self, form):
+	# 	print('Form valid')
+	# 	user = self.request.user
+	# 	print(user.region)
+	# 	mark_pref = MarketingPreference.objects.filter(user=user).first()
+	# 	if mark_pref.subscribed == True: 
+	# 		print('Forms Acc, if True')
+	# 		response_status, response = Mailchimp().subscribe(user.email)
+	# 	elif mark_pref.subscribed == False:
+	# 		print('Forms acc, if True') 
+	# 		response_status, response = Mailchimp().unsubscribe(user.email)
+	# 	return super(UserDetailUpdateView, self).form_valid(form)
 
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
