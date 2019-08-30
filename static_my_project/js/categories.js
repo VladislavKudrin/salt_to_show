@@ -275,6 +275,7 @@ function setCheckboxRadio(klass){
  var filterBox = $('#slider_filters')
  hideFiltersBtn.click(
     function(e){
+        console.log('bkbkbjkb')
         if (hideFiltersBtn.attr('hide') == 'true') {
            filterBox.addClass('hide')
            hideFiltersBtn.attr('hide', 'false')
