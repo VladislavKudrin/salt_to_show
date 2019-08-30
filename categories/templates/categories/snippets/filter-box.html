@@ -48,6 +48,11 @@ hr{
   margin: 5px;
 }
 </style>
+
+<!-- show/hide filters & sort by -->
+<div hidden class='custom-box' id='slider'>
+</div>
+
 <form method ='GET'  id='form_checkboxes' action='{% url "products:list" %}'>
 <div id='filter-boxes'>
   <div class="col-12 p-0 mt-2" id='overcategory-filter-box'>  

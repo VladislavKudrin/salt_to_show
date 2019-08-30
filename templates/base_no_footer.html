@@ -24,6 +24,9 @@ html,body{
   /*   text-transform: none; */
   /*   color: inherit; */
 }
+
+
+
     </style>
 
     {% include 'base/css.html' %}
@@ -42,9 +45,7 @@ html,body{
         </div> -->
 
     <div class='container-fluid ajax-search' style="height: 100%;">
-    {% include 'base/messages.html' %}
-
-            
+    {% include 'base/messages.html' %}           
 
 
     {% block content %}
@@ -115,6 +116,8 @@ width: 100%
 
 
 $(document).ready(function(){
+
+ 
 
 var languageGlobe = $('#language-pref') 
 $('.language-preference-globe').click(
