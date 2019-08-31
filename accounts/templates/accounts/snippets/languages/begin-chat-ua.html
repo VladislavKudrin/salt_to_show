@@ -1,5 +1,10 @@
-	{% if request.user.username == object.username %}
-		<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">Оновити аккаунт</a>
+{% if request.user.username == object.username %}
+	<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">Оновити аккаунт</a>
+{% else %}
+	{% if object.user %}
+	<a href="/messages/{{ object.user.username }}" class="btn hover-button button-black medium-button btn-block">Зв'язатися с продавцем</a>
 	{% else %}
-		<a href="/messages/{{ object.user.username }}" class="btn hover-button button-black medium-button btn-block">Звязатися з продавцем</a>
+	<a href="/messages/{{ object.username }}" class="btn hover-button button-black medium-button btn-block">Зв'язатися с продавцем</a>
 	{% endif %}
+
+{% endif %}
