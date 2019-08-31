@@ -243,7 +243,7 @@ $(document).ready(
 //FILTERS
     var h = screen.height; 
     document.getElementById("container-filters-update").style.height = (h - 220) + 'px'
-    document.getElementById("slider").style.height = h - 250 + 'px'
+    document.getElementById("slider_filters").style.height = h - 250 + 'px'
 function displayRefreshingItems(container, display){
     if (display==true){
         if ($('.loadingPaginating').length==0){
@@ -275,7 +275,6 @@ function setCheckboxRadio(klass){
  var filterBox = $('#slider_filters')
  hideFiltersBtn.click(
     function(e){
-        console.log('bkbkbjkb')
         if (hideFiltersBtn.attr('hide') == 'true') {
            filterBox.addClass('hide')
            hideFiltersBtn.attr('hide', 'false')
@@ -301,6 +300,15 @@ function setCheckboxRadio(klass){
            hideShowText.html('Hide Filters')
         }//if we show filters
  })//click on hide/show filter
+
+ //filters hide by default for mobile
+ // var currentPath = window.location.href
+ //    if ((currentPath.indexOf("products/givemetheloot") != -1) && ($(window).width() < 768)){
+ //        $(hideFiltersBtn.attr('hide') = 'true');
+ //    } else {
+ //        $(hideFiltersBtn.attr('hide') = 'false');      
+ //    }
+
  var checkboxes = $('.input-for-filters')
  var formCheckboxes = $('#form_checkboxes')
  var formCheckboxesEndpoint = formCheckboxes.attr('action')
