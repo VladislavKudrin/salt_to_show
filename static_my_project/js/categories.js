@@ -2,10 +2,9 @@
 
 
 $(document).ready(
-
+ 
 
   function(){
-      
 
     var currentPath = window.location.href
     if ((currentPath.indexOf("update") != -1) || (currentPath.indexOf("create") != -1)){
@@ -275,7 +274,7 @@ function setCheckboxRadio(klass){
  var filterBox = $('#slider_filters')
  hideFiltersBtn.click(
     function(e){
-        if (hideFiltersBtn.attr('hide') == 'true') {
+        if ((hideFiltersBtn.attr('hide') == 'true') && ($(window).width() > 768)) {
            filterBox.addClass('hide')
            hideFiltersBtn.attr('hide', 'false')
            containerFilter.removeClass('col-9')
@@ -286,8 +285,9 @@ function setCheckboxRadio(klass){
            $('.like-center-hidden').removeClass('like-center-hidden').addClass('like-center')
            //card
            hideShowText.html('Show Filters')
-        }//if we hide filters
-        else if (hideFiltersBtn.attr('hide') == 'false') {
+        }//if we hide filters desktop
+       
+        else if ((hideFiltersBtn.attr('hide') == 'false') && ($(window).width() > 768)) {
            filterBox.removeClass('hide')
            hideFiltersBtn.attr('hide', 'true')
            containerFilter.removeClass('col-12')
@@ -298,7 +298,19 @@ function setCheckboxRadio(klass){
            $('.like-center').removeClass('like-center').addClass('like-center-hidden')
            //card
            hideShowText.html('Hide Filters')
-        }//if we show filters
+        }//if we show filters desktop
+        
+         else if ($(window).width() < 768) {
+           $("#slider_filters").slideReveal({
+              trigger: $("#btn-filters"),
+              push: false,
+              overlay: true,
+              overlayColor:'rgba(0,0,0,0.5)',
+              width:'768px',
+            });
+           //card
+           hideShowText.html('Show Filters')
+        }//if we hide filters mobile
  })//click on hide/show filter
 
  //filters hide by default for mobile
