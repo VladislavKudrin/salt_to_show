@@ -300,17 +300,7 @@ function setCheckboxRadio(klass){
            hideShowText.html('Hide Filters')
         }//if we show filters desktop
         
-         else if ($(window).width() < 768) {
-           $("#slider_filters").slideReveal({
-              trigger: $("#btn-filters"),
-              push: false,
-              overlay: true,
-              overlayColor:'rgba(0,0,0,0.5)',
-              width:'768px',
-            });
-           //card
-           hideShowText.html('Show Filters')
-        }//if we hide filters mobile
+
  })//click on hide/show filter
 
  //filters hide by default for mobile
