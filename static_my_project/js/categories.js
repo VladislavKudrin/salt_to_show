@@ -331,6 +331,7 @@ function setCheckboxRadio(klass){
         $target = $(data)
     if ($target.parent().parent().parent().find("[name='undercategory']:checked").length == $target.parent().parent().parent().find("[name='undercategory']").length){
         $target.parent().parent().parent().find("[name='category']").prop('checked',true)
+        $target.prop('disabled', true)
                 }//if all checked
  })//each checked checkbox 
 
@@ -354,7 +355,7 @@ $('.size_for_disabled_checkbox_lable').click(
         if ($target.parent().find('input').prop('disabled') == true){
             $target.parent().parent().find('input').prop('disabled', false)
         }//if click on disabled checkbox
-})//click on lables in undercat checkboxes
+})//click on lables in size checkboxes
 
 containerWithItems.scroll(
     function(e){
