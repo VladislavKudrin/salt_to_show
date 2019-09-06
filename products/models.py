@@ -268,7 +268,7 @@ class Product(models.Model):
 	title 			= models.CharField(max_length = 120)
 	slug			= models.SlugField(default=None, unique = True, blank=True)
 	description 	= models.TextField()
-	price 			= models.DecimalField(decimal_places=0, max_digits=10, default=0)
+	price 			= models.DecimalField(decimal_places=6, max_digits=16, default=0)
 	featured		= models.BooleanField(default=False)
 	active			= models.BooleanField(default=True)
 	timestamp		= models.DateTimeField(auto_now_add=True)

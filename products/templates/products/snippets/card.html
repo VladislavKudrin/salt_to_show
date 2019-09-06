@@ -61,7 +61,7 @@
                         {{ instance.brand }}
                       </div>
                       <div class="col-4 position-static text-right one-line" style="font-size: 14px;">
-                        ${{ instance.price }}
+                        {{ instance|to_user_currency:request }}
                       </div>
                     </div>
                     <div class="row position-relative" style="font-size: 13px;">

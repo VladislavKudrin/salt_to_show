@@ -160,7 +160,7 @@ class ProductCreateForm(forms.ModelForm):
 		price = data.get('price')
 		region_user = self.request.user.region
 		if region_user:
-			price = round((int(price)/region_user.currency_mult))
+			price = round((int(price)/region_user.currency_mult),6)
 		return price
 
 class ImageForm(ProductCreateForm):
@@ -248,6 +248,10 @@ class ProductUpdateForm(ProductCreateForm):
 		self.fields['condition'].widget.attrs['category'] = undercategory.undercategory_for.category
 		self.fields['condition'].widget.attrs['id_for_upd'] = condition.id
 		self.fields['condition'].widget.attrs['condition'] = condition.condition
+		if self.request.user.region:
+			currency_mult = self.request.user.region.currency_mult
+			price = round(product.price * currency_mult)
+			self.initial['price']=price
 		if request.session.get('language') == 'RU':
 			self.initial['undercategory']=undercategory.undercategory_ru
 			self.initial['sex']=gender.gender_ru
@@ -260,7 +264,6 @@ class ProductUpdateForm(ProductCreateForm):
 			self.initial['undercategory']=undercategory.undercategory_ua
 			self.initial['sex']=gender.gender_ua
 			self.initial['condition']=condition.condition_ua
-
 
 
 

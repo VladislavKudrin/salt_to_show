@@ -71,7 +71,7 @@ class Size(models.Model):
 	size 			= models.CharField(max_length=120, blank=True)
 	size_kids 		= models.CharField(max_length=120, blank=True)
 	def __str__(self):
-		return (self.size + '_' + self.size_kids)
+		return (self.size)
 
 class Brand(models.Model):
 	brand_name = models.CharField(max_length=120, blank=True)
