@@ -36,6 +36,11 @@ class ProductCreateForm(forms.ModelForm):
 	def __init__(self, request, *args, **kwargs):
 		super(ProductCreateForm, self).__init__(*args, **kwargs)
 		self.request = request
+		region_user = request.user.region
+		if region_user:
+			currency_placeholder = region_user.currency
+		else:
+			currency_placeholder = 'USD'
 		self.lan = request.session.get('language')
 		self.fields['sex'].widget.attrs['readonly'] = True
 		self.fields['undercategory'].widget.attrs['readonly'] = True
@@ -43,7 +48,7 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['condition'].widget.attrs['readonly'] = True
 		self.fields['title'].widget.attrs['placeholder'] = 'Some keywords about your item'
 		self.fields['description'].widget.attrs['placeholder'] = 'Describe your item in details'
-		self.fields['price'].widget.attrs['placeholder'] = 'Enter a price in $'
+		self.fields['price'].widget.attrs['placeholder'] = 'Enter a price in {currency}'.format(currency=currency_placeholder)
 		self.fields['price'].initial = ''
 		self.fields['sex'].label = 'Gender'
 		if self.lan == 'RU':
@@ -52,7 +57,7 @@ class ProductCreateForm(forms.ModelForm):
 			self.fields['description'].label = "Описание"
 			self.fields['description'].widget.attrs['placeholder'] = 'Подробно опиши айтем'
 			self.fields['price'].label = "Цена (в $)"
-			self.fields['price'].widget.attrs['placeholder'] = 'Введи цену в $'
+			self.fields['price'].widget.attrs['placeholder'] = 'Введи цену в {currency}'.format(currency=currency_placeholder)
 			self.fields['brand'].label = "Бренд"
 			self.fields['brand'].widget.attrs['placeholder'] = 'Выбери бренд'
 			self.fields['sex'].label = "Гендер"
@@ -150,7 +155,13 @@ class ProductCreateForm(forms.ModelForm):
 				message = 'Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss)
 				self.add_error('description', message)	
 		return description
-
+	def clean_price(self):
+		data = self.cleaned_data
+		price = data.get('price')
+		region_user = self.request.user.region
+		if region_user:
+			price = round((int(price)/region_user.currency_mult))
+		return price
 
 class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
