@@ -1,5 +1,41 @@
 {% load for_loop_extras %}
 <style type="text/css">
+  .custom-control-label:before{
+      background-color:white;
+
+  } 
+
+  .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+      background-color:black;
+      border-color: black;
+
+  }
+  .custom-checkbox .custom-control-input:disabled:checked~.custom-control-label::before{
+      background-color:black;
+      border-color: white;
+
+  }
+  .custom-checkbox .custom-control-input:disabled:checked~.custom-control-label{
+      color: black
+
+  }
+  .custom-checkbox .custom-control-input:disabled:checked~.custom-control-label::after{
+      background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='white' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+  }
+  .custom-checkbox .custom-control-input:checked~.custom-control-label::after{
+      background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='white' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+  }
+  .custom-control-input:active~.custom-control-label::before{
+      background-color:green;
+  }
+
+  /** focus shadow pinkish **/
+  .custom-checkbox .custom-control-input:focus~.custom-control-label::before{
+      box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem white; 
+  }
+
+
+
   #brand-select{
     width: 70%
   }
@@ -21,17 +57,18 @@
   #size-filter-box > div > div{
     display: none
   }
-}
-[data-toggle="collapse"] .fa:before {  
+
+[data-toggle="collapse"] .unterhaupt:before {  
   content: "\f078";
   font-size: 10px;
   color: black
 }
 
-[data-toggle="collapse"].collapsed .fa:before {
+[data-toggle="collapse"].collapsed .unterhaupt:before {
   content: "\f054";
   color: black
 }
+
 [data-toggle="collapse"] .haupt:before {  
   content: "\f077";
   font-size: 10px;
@@ -47,8 +84,8 @@
 hr{
   margin: 5px;
 }
-</style>
 
+</style>
 <form method ='GET'  id='form_checkboxes' action='{% url "products:list" %}'>
 <div id='filter-boxes'>
   <div class="col-12 p-0 mt-2" id='overcategory-filter-box'>  
@@ -65,8 +102,8 @@ hr{
     <div class="collapse {% if overcategory_instance %} show {% endif %}" id="overcategory_collaplse">
       {% for overcategory in fields_overcategory %}
       <div class=" ml-3 custom-control custom-checkbox">
-        <input type="checkbox" {% if overcategory.id == overcategory_instance.id %} checked {% endif %}class="custom-checkbox checkboxinput form-check-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
-        <label class="form-check-label" name='overcategory' for="customCheckOvercategory{{ forloop.counter|add:'1' }}"><small>{{ overcategory.overcategory_eng|capfirst }}</small></label>
+        <input type="checkbox" {% if overcategory.id == overcategory_instance.id %} checked {% endif %}class="custom-control-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
+        <label class="custom-control-label" name='overcategory' for="customCheckOvercategory{{ forloop.counter|add:'1' }}"><small>{{ overcategory.overcategory_eng|capfirst }}</small></label>
       </div>
       {% endfor %}
     </div>
@@ -91,8 +128,8 @@ hr{
           {% for gender in fields_gender %}
             {% if overcategory == gender.gender_for %}
               <div class=" ml-3 custom-control custom-checkbox">
-                <input type="checkbox" {% if gender.id == gender_instance.id %} checked {% endif %} class="custom-checkbox checkboxinput form-check-input input-for-filters radioGender" data_for_category="{{ gender.gender_for}}-{{ gender }}" id="customCheckGender{{ forloop.counter|add:'1' }}" name='gender' value='{{ gender.id }}'>
-                <label class="form-check-label" for="customCheckGender{{ forloop.counter|add:'1' }}"><small>{{ gender.gender_eng|capfirst }}</small></label>
+                <input type="checkbox" {% if gender.id == gender_instance.id %} checked {% endif %} class="custom-control-input input-for-filters radioGender" data_for_category="{{ gender.gender_for}}-{{ gender }}" id="customCheckGender{{ forloop.counter|add:'1' }}" name='gender' value='{{ gender.id }}'>
+                <label class="custom-control-label" for="customCheckGender{{ forloop.counter|add:'1' }}"><small>{{ gender.gender_eng|capfirst }}</small></label>
               </div>
             {% endif %}
           {% endfor %}
@@ -100,8 +137,6 @@ hr{
       {% endfor %}
     </div>
   </div>
-
-
   <div class="col-12 p-0" id='category-filter-box'>
     <div id='title_category'{% if gender_instance %} style="display: block" {% endif %}>
       <hr/>
@@ -118,49 +153,31 @@ hr{
     </div>
     <div class="collapse {% if undercategory_instance or category_instance %} show {% endif %}" id="category_collaplse">
       {% for gender in fields_gender %}
-        <div class='col p-0' id='{{ gender.gender_for}}-{{ gender }}-category-checkbox' {% if gender.id == gender_instance.id %} style="display: block" {% endif %}>
+        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-category-checkbox' {% if gender.id == gender_instance.id %} style="display: block" {% endif %}>
           {% for category in fields_category %}
             {% if gender == category.category_for %}
-
-
-              <div class="row">
-                <div class="col-6">
-                <div class=" ml-3 pl-0 custom-control custom-checkbox undercategory-for-check">
-                  <small>{{ category.category_eng }}</small><button type='button' class="btn btn-link {% if not category in category_arr %} collapsed {% endif %}" data-toggle="collapse" data-target="#collapse{{ category.id }}" aria-expanded="true" aria-controls="collapse{{ category.id }}"><i class="fa" aria-hidden="false"></i></button>
-                  <input type="checkbox" class="text-right ccustom-checkbox checkboxinput form-check-input input-for-filters" id="customCheckCategory{{ forloop.counter|add:'1' }}" name='category' {% if category in category_instance %} checked {% endif %} value='{{ category.id }}'data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size">
-                </div>
-                </div>
-
-                <div class="col-6">
-                  <label class="text-right form-check-label ml-5" for="customCheckCategory{{ forloop.counter|add:'1' }}"><small>All</small></label>
-
+              <div class="ml-3 pl-0 custom-control custom-checkbox undercategory-for-check">
+                <small class="ml-2">{{ category.category_eng }}</small><button type='button' class="btn btn-link {% if not category in category_arr %} collapsed {% endif %}" data-toggle="collapse" data-target="#collapse{{ category.id }}" aria-expanded="true" aria-controls="collapse{{ category.id }}"><i class="fa mb-2 unterhaupt" aria-hidden="false"></i></button>
+                <input type="checkbox" class="pl-5 text-right custom-control-input input-for-filters" id="customCheckCategory{{ forloop.counter|add:'1' }}"  name='category' {% if category in category_instance %} checked {% endif %} value='{{ category.id }}'data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size">
+                <label class="mt-2 text-right custom-control-label mr-4" style="float: right; " for="customCheckCategory{{ forloop.counter|add:'1' }}"><small>All</small></label>
+                <div id='collapse{{ category.id }}' class='collapse div1 {% if category in category_instance %} show {% endif %}{% for undercategory in undercategory_instance %}
+                {% if undercategory.undercategory_for == category %} show {% endif %} {% endfor %}'>
+                  {% for undercategory in fields_undercategory %}
+                    {% if category == undercategory.undercategory_for %}
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" {% if undercategory in undercategory_instance %} checked {% endif %} {% if undercategory.undercategory_for in category_instance %} checked {% endif %} class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}'>
+                        <label class="custom-control-label undercategory_for_disabled_checkbox_lable ml-3" for="customCheckUndercategory{{ forloop.counter|add:'1' }}"><small>{{ undercategory.undercategory_eng|capfirst }}</small></label>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col" style="padding-left: 2.5vw;">
-                  <div id='collapse{{ category.id }}' class='collapse div1 {% if category in category_instance %} show {% endif %}{% for undercategory in undercategory_instance %}
-                  {% if undercategory.undercategory_for == category %} show {% endif %} {% endfor %}'>
-                    {% for undercategory in fields_undercategory %}
-                      {% if category == undercategory.undercategory_for %}
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" {% if undercategory in undercategory_instance %} checked {% endif %} {% if undercategory.undercategory_for in category_instance %} checked {% endif %} class="custom-checkbox checkboxinput form-check-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}'>
-                        <label class="form-check-label undercategory_for_disabled_checkbox_lable" for="customCheckUndercategory{{ forloop.counter|add:'1' }}"><small>{{ undercategory.undercategory_eng|capfirst }}</small></label>
-                        </div>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
-                </div>
-              </div> <!--row-->
-
             {% endif %}
           {% endfor %}
         </div>
       {% endfor %}
     </div>
   </div>
-
-
   <div class="col-12 p-0" id='size-filter-box'>
     <div id='title_size'{% if gender_instance %} style="display: block" {% endif %}>
       <hr/>
@@ -175,50 +192,32 @@ hr{
       </div>
       </button>
     </div>
-
     <div class="collapse {% if size_instance %} show {% endif %}" id="size_collaplse">
       {% for gender in fields_gender %}
-        <div class='col p-0' id='{{ gender.gender_for}}-{{ gender }}-size-checkbox'{% if gender.id == gender_instance.id %} style="display: block"{% endif %}>
+        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-size-checkbox'{% if gender.id == gender_instance.id %} style="display: block"{% endif %}>
           {% for category in fields_category %}
             {% if gender == category.category_for %}
-
-            <div class="row">
-              <div class="col-6">
               <div class="ml-3 pl-0 custom-control custom-checkbox size_for_initial"  active='false' id='{{ gender.gender_for }}-{{ gender }}-{{ category }}-size' activated=''>
-                <small>{{ category.category_eng }}</small><button type='button' class="btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class="fa" aria-hidden="true"></i></button>
-                <input type="checkbox" class="text-right custom-checkbox checkboxinput form-check-input input-for-filters" id="customCheckCategorySize{{ forloop.counter|add:'1' }}" name='category-size' value="{{ category.category }}">
-
-              </div>
-              </div>
-
-              <div class="col-6">
-                <label class="text-right form-check-label ml-5" for="customCheckCategorySize{{ forloop.counter|add:'1' }}"><small>All</small></label>
-              </div>
-              </div>
-
-                <div class="row">
-                <div class="col" style="padding-left: 2.5vw;">
+                <small class="ml-2">{{ category.category_eng }}</small><button type='button' class="{% if not category in category_arr %} collapsed {% endif %} btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class="fa mb-2 unterhaupt" aria-hidden="false"></i></button>
+                <input type="checkbox" class="text-right custom-control-input input-for-filters" id="customCheckCategorySize{{ forloop.counter|add:'1' }}" name='category-size' value="{{ category.category }}">
+                <label class="mt-2 text-right custom-control-label mr-4" style="float: right;" for="customCheckCategorySize{{ forloop.counter|add:'1' }}"><small>All</small></label>
                 <div id='collapse-size-{{ category.id }}' class='collapse {% if category.category_for == gender_instance %}{% for size in size_instance %}{% if size.size_for == category.category %} show {% endif %} {% endfor %} {% endif %} div1'>
                   {% for size in fields_size %}
                     {% if category.category == size.size_for %}
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-checkbox checkboxinput form-check-input input-for-filters" id="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}" {% if category.category_for == gender_instance %}{% if size in size_instance %} checked {% endif %} {% endif %} name='size' value='{{ size.id }}'>
-                          <label class="form-check-label size_for_disabled_checkbox_lable" for="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}"><small>{{ size.size }}</small></label>
-
+                        <div class=" ml-3 custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input input-for-filters" id="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}" {% if category.category_for == gender_instance %}{% if size in size_instance %} checked {% endif %} {% endif %} name='size' value='{{ size.id }}'>
+                          <label class="custom-control-label size_for_disabled_checkbox_lable" for="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}"><small>{{ size.size }}</small></label>
                         </div>
                     {% endif %}
                   {% endfor %}
                 </div>
               </div>
-              </div> <!--row-->
-
             {% endif %}
           {% endfor %}
         </div>
       {% endfor %}
     </div>
   </div>
-
   <div class="col-12 p-0" id='condition-filter-box'>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#condition_collapse" aria-expanded="true" aria-controls="condition_collapse">
@@ -234,8 +233,8 @@ hr{
       <div class="collapse {% if condition_instance %} show {% endif %}" id="condition_collapse">
         {% for condition in fields_condition %}
           <div class=" ml-3 custom-control custom-checkbox">
-            <input type="checkbox" {% if condition in condition_instance %} checked {% endif %} class="custom-checkbox checkboxinput form-check-input input-for-filters" id="customCheckCondition{{ forloop.counter|add:'1' }}" name='condition' value='{{ condition.id }}'>
-            <label class="form-check-label" for="customCheckCondition{{ forloop.counter|add:'1' }}"><small>{{ condition.condition_eng }}</small></label>
+            <input type="checkbox" {% if condition in condition_instance %} checked {% endif %} class="custom-control-input input-for-filters" id="customCheckCondition{{ forloop.counter|add:'1' }}" name='condition' value='{{ condition.id }}'>
+            <label class="custom-control-label" for="customCheckCondition{{ forloop.counter|add:'1' }}"><small>{{ condition.condition_eng }}</small></label>
           </div>
         {% endfor %}
       </div>
@@ -303,8 +302,8 @@ Gender
 <div>
   {% for gender in fields_gender %}
     <div class=" ml-3 mt-2 custom-control custom-checkbox">
-      <input type="checkbox" {% if gender in request.POST %}checked {% endif %} class="custom-checkbox checkboxinput form-check-input input-for-filters" id="customCheckgender{{ forloop.counter|add:'1' }}" name='{{ gender }}' value='{{ gender }}'>
-      <label class="form-check-label" for="customCheckgender{{ forloop.counter|add:'1' }}">
+      <input type="checkbox" {% if gender in request.POST %}checked {% endif %} class="custom-control-input input-for-filters" id="customCheckgender{{ forloop.counter|add:'1' }}" name='{{ gender }}' value='{{ gender }}'>
+      <label class="custom-control-label" for="customCheckgender{{ forloop.counter|add:'1' }}">
         {{ gender|capfirst }}
       </label>
     </div>
@@ -316,8 +315,8 @@ Category
   {% for category in fields_category %}
   <div class="btn-group dropright customDropRight">
       <div class=" ml-3 mt-2 custom-control custom-checkbox">
-        <input type="checkbox"{% if size_posted %}{% if category not in request.POST %} disabled {% endif %}{% endif %}{% if category in request.POST %} checked {% endif %} class="custom-checkbox checkboxinput form-check-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
-        <label class="form-check-label" for="customCheckcategory{{ forloop.counter|add:'1' }}">
+        <input type="checkbox"{% if size_posted %}{% if category not in request.POST %} disabled {% endif %}{% endif %}{% if category in request.POST %} checked {% endif %} class="custom-control-input {{ category }}" id="customCheckcategory{{ forloop.counter|add:'1' }}" name='{{ category }}' value='{{ category }}'>
+        <label class="custom-control-label" for="customCheckcategory{{ forloop.counter|add:'1' }}">
           {{ category|capfirst }}
         </label>
       </div>
@@ -329,8 +328,8 @@ Category
           {% for size in category_sizes %}
             {% if size.size_for == category|capfirst %}
               <div class=" ml-3 mt-2 custom-control custom-checkbox jquery-box-{{ category }}" >
-              <input type="checkbox" {% if category in request.POST %}{% if size.size in request.POST %} checked {% endif %} {% endif %} class="custom-checkbox checkboxinput form-check-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
-              <label class="form-check-label" for="customCheck{{ category }}{{ forloop.counter|add:'1' }}">
+              <input type="checkbox" {% if category in request.POST %}{% if size.size in request.POST %} checked {% endif %} {% endif %} class="custom-control-input customCheckbox{{ category }}" id="customCheck{{ category }}{{ forloop.counter|add:'1' }}" name='{{ size }}' value='{{ size }}'>
+              <label class="custom-control-label" for="customCheck{{ category }}{{ forloop.counter|add:'1' }}">
               {{ size }}
               </label>
               </div>

@@ -66,9 +66,10 @@ class Undercategory(models.Model):
 		return self
 
 class Size(models.Model):
-	size_for 	= models.CharField(max_length=120, blank=True)
-	size_admin 	= models.CharField(max_length=120, blank=True)
-	size 		= models.CharField(max_length=120, blank=True)
+	size_for 		= models.CharField(max_length=120, blank=True)
+	size_admin 		= models.CharField(max_length=120, blank=True)
+	size 			= models.CharField(max_length=120, blank=True)
+	size_kids 		= models.CharField(max_length=120, blank=True)
 	def __str__(self):
 		return (self.size)
 
