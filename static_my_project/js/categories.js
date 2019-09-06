@@ -191,6 +191,8 @@ $(document).ready(
         dropBoxGender[i].onclick = function(e){
             var elementGender = e.target
             var $elementGender = $(elementGender)
+            $('.sizes_kids_adult').hide()
+            $('#'+$elementGender.attr('overcategory_for_size')+'_sizes').show()
             if ($elementGender.is('div')){
                 $(".active-gender div div").removeClass("background-black");
                 var genderChosen = $elementGender.attr('gender-for-cat')
