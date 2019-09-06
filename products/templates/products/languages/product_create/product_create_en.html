@@ -46,8 +46,8 @@
                 <div class='{{ overcategory.overcategory }} overcategory-gender'>
                   {% for gender in genders %}
                     {% if overcategory == gender.gender_for %}
-                      <div class='col-12 gender-class' gender-for-cat='{{ gender.gender_eng }}' value='{{ gender.id }}'>
-                        <p class='mb-0' value='{{ gender.id }}'>{{ gender.gender_eng }}</p>
+                      <div class='col-12 gender-class' overcategory_for_size='{{ overcategory.overcategory }}' gender-for-cat='{{ gender.gender_eng }}' value='{{ gender.id }}'>
+                        <p overcategory_for_size='{{ overcategory.overcategory }}' class='mb-0' value='{{ gender.id }}'>{{ gender.gender_eng }}</p>
                       </div>
                     {% endif %}
                   {% endfor %}
@@ -83,18 +83,49 @@
       <div class="dropdown-custom">
         <div class="dropdown-content" id='dropdown-box'>
           <div class='row m-0'>
-            <div class='col-12 active-size p-0'>
-              {% for category in categories_all %}
+            <div id='Kids_sizes' class="col-12 m-0 p-0 sizes_kids_adult" style="display: none" >
+              <div class='col-12 active-size p-0'>
+                {% for category in categories_kids %}
+                {% if category.category == 'All' %}
+                {% for category_size in categories_kids_size %}
+                  <div class='{{ category_size }}-size category-size'>
+                    {% for size in sizes_kids %}
+                      {% if category.category == size.size_for %}
+                      <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'  for_black_size='{{ size }}-{{ category }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+                {% else %}
                 <div class='{{ category }}-size category-size'>
-                  {% for size in sizes %}
-                    {% if category.category == size.size_for %}
-                    <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'  for_black_size='{{ size }}-{{ category }}'>
-                      <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
-                    </div>
-                    {% endif %}
-                  {% endfor %}
+                    {% for size in sizes_kids %}
+                      {% if category.category == size.size_for %}
+                      <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'  for_black_size='{{ size }}-{{ category }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% endfor %}
                 </div>
-              {% endfor %}
+              </div>
+            <div id='Adults_sizes' class="col-12 m-0 p-0 sizes_kids_adult" style="display: none">
+              <div class='col-12 active-size p-0'>
+                {% for category in categories_all %}
+                  <div class='{{ category }}-size category-size'>
+                    {% for size in sizes %}
+                      {% if category.category == size.size_for %}
+                      <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'  for_black_size='{{ size }}-{{ category }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>
