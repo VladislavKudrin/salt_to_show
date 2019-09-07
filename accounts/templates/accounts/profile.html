@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% load static %}	
+{% load static %}
+{% load pagination_tags %}	
 {% block content %}
 
 <head>
@@ -53,6 +54,7 @@
 
 <div class="container">
 <div class='row'>
+	{% autopaginate products %}
 	{% if products|length > 0 %}
 	{% for obj in products %}
 		<div class='col-xs-12 bla  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
@@ -72,6 +74,7 @@
 
 <div class = "row pagination justify-content-center">
 	<div class = "col-auto">
+		{% paginate using "pagination_custom.html" %}
 	</div>
 </div>
 

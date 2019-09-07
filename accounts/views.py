@@ -54,10 +54,7 @@ def region_init(request):
 			# 	response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
 			return redirect(form.cleaned_data.get('location'))
 	return HttpResponse('html')
-			
-
-
-	 
+				 
 def languge_pref_view(request):
 	default_next = "/"
 	next_ = request.GET.get('next')
@@ -324,7 +321,6 @@ class ProfileView(DetailView):
 		return User.objects.filter_by_username(username=username)
 
 class WishListView(LoginRequiredMixin, ListView):
-	paginate_by = 3
 	template_name = 'accounts/wish-list.html'
 
 
