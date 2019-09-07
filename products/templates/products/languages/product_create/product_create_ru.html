@@ -8,8 +8,7 @@
 
 <form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create_order="{% url 'products:handle_image_create_sort' %}" action_url_create="{% url 'products:create' %}"action_url="{% url 'products:handle_image_sort' %}" image_upload_url="{% url 'image_uploader:image_upload_url' %}"image_delete_url="{% url 'image_uploader:image_delete_url' %}" image_rotate_url="{% url 'image_uploader:image_rotate_url' %}" > {% csrf_token %}
       <input type="hidden" id='form_id' name="form_id" value='{{ form_id }}'>
-        <input type="hidden" id='language' name="language" value='RU'>
-
+        <input type="hidden" id='language' name="language" value='EN'>
 <!-- 
   <div style=' 
       text-transform: uppercase;
@@ -26,9 +25,7 @@
     <div class="col-12 col-md-6">
       {{form.brand|as_crispy_field}}
   <div style="font-family: BlinkMacSystemFont; padding:0px; margin:0px; letter-spacing: normal; text-transform: none; font-size: 9px; line-height: normal; font-weight: normal;">
-
         Напиши на help@saltysalt.co если твой желанный бренд отсутствует.
-
     </div>
   </div>
     <div class="col-12 col-md-6 ">
@@ -49,8 +46,8 @@
                 <div class='{{ overcategory.overcategory }} overcategory-gender'>
                   {% for gender in genders %}
                     {% if overcategory == gender.gender_for %}
-                      <div class='col-12 gender-class' gender-for-cat='{{ gender.gender_ru }}' value='{{ gender.id }}'>
-                        <p class='mb-0' value='{{ gender.id }}'>{{ gender.gender_ru }}</p>
+                      <div class='col-12 gender-class' overcategory_for_size='{{ overcategory.overcategory }}' gender-for-cat='{{ gender.gender_eng }}' value='{{ gender.id }}'>
+                        <p overcategory_for_size='{{ overcategory.overcategory }}' class='mb-0' value='{{ gender.id }}'>{{ gender.gender_ru }}</p>
                       </div>
                     {% endif %}
                   {% endfor %}
@@ -86,18 +83,49 @@
       <div class="dropdown-custom">
         <div class="dropdown-content" id='dropdown-box'>
           <div class='row m-0'>
-            <div class='col-12 active-size p-0'>
-              {% for category in categories_all %}
+            <div id='Kids_sizes' class="col-12 m-0 p-0 sizes_kids_adult" style="display: none" >
+              <div class='col-12 active-size p-0'>
+                {% for category in categories_kids %}
+                {% if category.category == 'All' %}
+                {% for category_size in categories_kids_size %}
+                  <div class='{{ category_size }}-size category-size'>
+                    {% for size in sizes_kids %}
+                      {% if category.category == size.size_for %}
+                      <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'  for_black_size='{{ size }}-{{ category }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+                {% else %}
                 <div class='{{ category }}-size category-size'>
-                  {% for size in sizes %}
-                    {% if category.category == size.size_for %}
-                    <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'for_black_size='{{ size }}-{{ category }}'>
-                      <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
-                    </div>
-                    {% endif %}
-                  {% endfor %}
+                    {% for size in sizes_kids %}
+                      {% if category.category == size.size_for %}
+                      <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'  for_black_size='{{ size }}-{{ category }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% endfor %}
                 </div>
-              {% endfor %}
+              </div>
+            <div id='Adults_sizes' class="col-12 m-0 p-0 sizes_kids_adult" style="display: none">
+              <div class='col-12 active-size p-0'>
+                {% for category in categories_all %}
+                  <div class='{{ category }}-size category-size'>
+                    {% for size in sizes %}
+                      {% if category.category == size.size_for %}
+                      <div class='col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}'  for_black_size='{{ size }}-{{ category }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>
@@ -114,8 +142,8 @@
           <div class="row m-0">
             <div class="col-12 active-condition p-0">
               {% for condition in conditions %}
-                <div class='col-12 condition-class' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_ru }}'activated='{{ condition.condition }}'>
-                  <p class='mb-0 text-center' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_ru }}'>{{ condition.condition_ru }}</p>
+                <div class='col-12 condition-class' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_eng }}' activated='{{ condition.condition }}'>
+                  <p class='mb-0 text-center' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_eng }}'>{{ condition.condition_ru }}</p>
                 </div>
               {% endfor %}
             </div>            
@@ -130,8 +158,7 @@
 
 
 
-
-        фото*
+        Фото*
 
   <div class="row">
     <div class="col-12 col-md-12">
@@ -159,7 +186,6 @@
 
 
 </form>
-
 
 
   </div>
