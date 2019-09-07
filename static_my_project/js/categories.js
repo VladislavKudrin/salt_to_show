@@ -274,6 +274,7 @@ function setCheckboxRadio(klass){
  var hideShowText = $('#text-for-hide-show')
  var containerFilter = $('#container-filters-update')
  var filterBox = $('#slider_filters')
+ var language = $('#language').val()
  hideFiltersBtn.click(
     function(e){
         if ((hideFiltersBtn.attr('hide') == 'true') && ($(window).width() > 768)) {
@@ -286,7 +287,15 @@ function setCheckboxRadio(klass){
            $('.card-body-hidden').removeClass('card-body-hidden').addClass('card-body')
            $('.like-center-hidden').removeClass('like-center-hidden').addClass('like-center')
            //card
-           hideShowText.html('Show Filters')
+           if (language == 'RU'){
+                hideShowText.html('Показать фильтры')
+                 }//if ru
+            else if (languagePref.val() == 'UA'){
+                hideShowText.html('Показати фільтри')
+                }//if ru
+            else{
+                hideShowText.html('Show Filters')
+                 }//if not ru
         }//if we hide filters desktop
        
         else if ((hideFiltersBtn.attr('hide') == 'false') && ($(window).width() > 768)) {
@@ -299,7 +308,15 @@ function setCheckboxRadio(klass){
            $('.card-body').removeClass('card-body').addClass('card-body-hidden')
            $('.like-center').removeClass('like-center').addClass('like-center-hidden')
            //card
-           hideShowText.html('Hide Filters')
+           if (language == 'RU'){
+                hideShowText.html('Спрятать фильтры')
+                 }//if ru
+            else if (languagePref.val() == 'UA'){
+                hideShowText.html('Сховати фільтри')
+                }//if ru
+            else{
+                hideShowText.html('Hide Filters')
+                 }//if not ru
         }//if we show filters desktop
         
 

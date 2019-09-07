@@ -234,6 +234,30 @@ class CategoryFilterView(ListView):
 		context['fields_condition']=fields_condition  
 		# context['sizes']=sizes
 		context['fields_brand']=fields_brand
+		if self.request.session.get('language') == 'RU':
+			context['hide_filters'] = 'Спрятать фильтры'
+			context['found'] = 'Найдено'
+			context['items'] = 'айтемов'
+			context['sort_by'] = 'Сортировать по'
+			context['new'] = 'Сначала новые'
+			context['price_to_high'] = 'Сначала дешевые'
+			context['price_to_low'] = 'Сначала дорогие'
+		elif self.request.session.get('language') == 'UA':
+			context['hide_filters'] = 'Сховати фільтри'
+			context['found'] = 'Знайдено'
+			context['items'] = 'айтемов'
+			context['sort_by'] = 'Сортувати по'
+			context['new'] = 'Спочатку новi'
+			context['price_to_high'] = 'Спочатку дешеві'
+			context['price_to_low'] = 'Спочатку дорогі'
+		else:
+			context['hide_filters'] = 'Hide Filters'
+			context['found'] = 'Found'
+			context['items'] = 'Items'
+			context['sort_by'] = 'Sort by'
+			context['new'] = 'New first'
+			context['price_to_high'] = 'Low price first'
+			context['price_to_low'] = 'High price first'
 		return render(request, "products/list.html", context)
 
 

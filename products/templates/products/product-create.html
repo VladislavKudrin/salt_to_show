@@ -140,6 +140,7 @@ html,body{
 </style>
 </head>
 
+<input type="hidden" id='language' name="language_pref" value="{{ request.session.language }}">
 {% if request.session.language == 'RU' %}
   {% include 'products/languages/product_create/product_create_ru.html' %}
 {% elif request.session.language == 'UA' %}

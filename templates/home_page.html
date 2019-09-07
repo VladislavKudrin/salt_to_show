@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% url 'products:create' as products_create_url %}
-{% url 'products:list' as product_list_url %}
 {% block content %}
 
 <head>
@@ -729,8 +728,9 @@ html, body {
     <div class="col-6 text-left trending-name">
     <p class="heading ml-md-4">{{ trending }}</p>
   </div>
+
   <div class="col-6 mt-3 text-right trending-col">
-    <a href="{{ product_list_url }}">
+    <a href="{% url 'products:list' %}">
       <span class="mr-auto small" id="read-more"> 
           {{ see_all }}
         <i class="fas fa-arrow-right pl-1"></i>

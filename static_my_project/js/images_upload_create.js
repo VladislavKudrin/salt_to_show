@@ -47,6 +47,9 @@ if (currentPath.indexOf("create") != -1){
     if (languageOption=='RU'){
         buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Выбрать</label>')
     }//if rus
+    else if (languageOption=='UA'){
+        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Вибрати</label>')
+    }//if rus
     else {
         buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Browse</label>')
     }//if not rus

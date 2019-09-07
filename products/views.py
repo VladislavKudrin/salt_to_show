@@ -289,13 +289,21 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			'title':'Добавить новый айтем',
 			'form_id': form_id
 			}
+		elif self.request.session.get('language') == 'UA':
+			context={
+			'form': product_form,
+			'button': 'Залити',
+			'title':'Додати новий айтем',
+			'form_id': form_id
+			}
 		else:
 			context={
 			'form': product_form,
 			'button': 'Create',
-			'title':'Add a new product',
+			'title':'Add a new item',
 			'form_id': form_id
 			}
+
 		context['overcategories'] = Overcategory.objects.all()
 		context['genders'] = Gender.objects.all()
 		context['categories'] = Category.objects.all()
