@@ -242,6 +242,14 @@ class CategoryFilterView(ListView):
 			context['new'] = 'Сначала новые'
 			context['price_to_high'] = 'Сначала дешевые'
 			context['price_to_low'] = 'Сначала дорогие'
+			context['gender'] = 'Гендер'
+			context['overcategory'] = 'Тип'
+			context['category'] = 'Категория'
+			context['all'] = 'Все'
+			context['size'] = 'Размер'
+			context['condition'] = 'Состояние'
+			context['brand'] = 'Бренд'
+			context['price'] = 'Цена'
 		elif self.request.session.get('language') == 'UA':
 			context['hide_filters'] = 'Сховати фільтри'
 			context['found'] = 'Знайдено'
@@ -250,6 +258,14 @@ class CategoryFilterView(ListView):
 			context['new'] = 'Спочатку новi'
 			context['price_to_high'] = 'Спочатку дешеві'
 			context['price_to_low'] = 'Спочатку дорогі'
+			context['gender'] = 'Гендер'
+			context['overcategory'] = 'Тип'
+			context['category'] = 'Категорiя'
+			context['all'] = 'Усi'
+			context['size'] = 'Рoзмiр'
+			context['condition'] = 'Стан'
+			context['brand'] = 'Бренд'
+			context['price'] = 'Цiна'
 		else:
 			context['hide_filters'] = 'Hide Filters'
 			context['found'] = 'Found'
@@ -258,6 +274,15 @@ class CategoryFilterView(ListView):
 			context['new'] = 'New first'
 			context['price_to_high'] = 'Low price first'
 			context['price_to_low'] = 'High price first'
+			context['gender'] = 'Gender'
+			context['overcategory'] = 'Type'
+			context['category'] = 'Category'
+			context['all'] = 'All'
+			context['size'] = 'Size'
+			context['condition'] = 'Condition'
+			context['brand'] = 'Brand'
+			context['price'] = 'Price'
+
 		return render(request, "products/list.html", context)
 
 

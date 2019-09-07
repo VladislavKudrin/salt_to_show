@@ -290,7 +290,7 @@ function setCheckboxRadio(klass){
            if (language == 'RU'){
                 hideShowText.html('Показать фильтры')
                  }//if ru
-            else if (languagePref.val() == 'UA'){
+            else if (language == 'UA'){
                 hideShowText.html('Показати фільтри')
                 }//if ru
             else{
@@ -311,7 +311,7 @@ function setCheckboxRadio(klass){
            if (language == 'RU'){
                 hideShowText.html('Спрятать фильтры')
                  }//if ru
-            else if (languagePref.val() == 'UA'){
+            else if (language == 'UA'){
                 hideShowText.html('Сховати фільтри')
                 }//if ru
             else{
@@ -338,6 +338,7 @@ function setCheckboxRadio(klass){
  setCheckboxRadio('radioGender')
  var categoriesCheckboxesInitial = $('.undercategory-for-check').find("[name='undercategory']:checked")
  var sizesCheckboxInitial = $('.size_for_initial').find("[name='size']:checked")
+ var language = $('#language').val()
  $.each(sizesCheckboxInitial,
     function(idx,data){
         $target = $(data)
@@ -416,9 +417,19 @@ containerWithItems.scroll(
         }//if end of scroll
     })//scroll
 
+if (language == 'RU'){
+    brand_placeholder = 'Выбери бренд'
+     }//if ru
+else if (language == 'UA'){
+    brand_placeholder = 'Обери бренд'
+    }//if ru
+else{
+    brand_placeholder = 'Select a brand'
+     }//if not ru
+
 $('#brand-select').searchableOptionList({
         texts: {
-            searchplaceholder: 'Please, select a brand'
+            searchplaceholder: brand_placeholder
         },
         showSelectAll: false,
         maxHeight:'250px',
