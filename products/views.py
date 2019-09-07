@@ -124,8 +124,8 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		user = request.user
 		product = self.get_object()
 		wishes = Wishlist.objects.filter(product=product).count() #counting all likes for a product
-		print('WISHES', wishes)
 		context['likes'] = wishes
+		context['region'] = product.user.region
 		# all_wishes = user.wishes_user.all()
 		# wished_products = [wish.product for wish in all_wishes]
 		slug = self.kwargs.get('slug')

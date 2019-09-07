@@ -720,7 +720,7 @@ html, body {
 
 
 
-<div class="row fluid text-center most-liked" style='padding-top:100px; padding-bottom:150px'>
+<div class="row fluid text-center most-liked m-0" style='padding-top:100px; padding-bottom:150px'>
 
 <div class="container" style="max-width: 100%;">
 
@@ -728,7 +728,8 @@ html, body {
     <div class="col-6 text-left trending-name">
     <p class="heading ml-md-4">{{ trending }}</p>
   </div>
-  <div class="col-6 mt-3 text-right trending-col" style='padding-right: 32px;'>
+
+  <div class="col-6 mt-3 text-right trending-col">
     <a href="{% url 'products:list' %}">
       <span class="mr-auto small" id="read-more"> 
           {{ see_all }}
@@ -736,7 +737,7 @@ html, body {
       </span>
     </a>
   </div>  
-<div class="scrolling-wrapper mx-4" style='height:inherit;'>
+<div class="scrolling-wrapper" style='height:inherit;'>
   {% for obj in liked %}
     <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
       {% include 'products/snippets/card.html' with instance=obj %}
