@@ -54,13 +54,13 @@
                 <div class="{% if '/products/' in request.path %} card-body-hidden {% else %} card-body {% endif %} position-relative">
                   <a href="{{ instance.get_absolute_url }}">
                     <div class="row position-relative poloska font-weight-bold" >
-                       <div class="col-3 position-static text-left one-line" style="font-size: 14px;">
+                       <div class="col-3 pr-0 position-static text-left one-line" style="font-size: 14px;">
                         {{ instance.size }}
                       </div>
                       <div class="col-5 px-1 position-static text-center one-line" style="font-size: 14px;">
                         {{ instance.brand }}
                       </div>
-                      <div class="col-4 position-static text-right one-line" style="font-size: 14px;">
+                      <div class="col-4 pl-0 position-static text-right one-line" style="font-size: 14px;">
                         {{ instance|to_user_currency:request }}
                       </div>
                     </div>
