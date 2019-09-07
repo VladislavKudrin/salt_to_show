@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load pagination_tags %}
+
 {% block content %}
 
 <head>
@@ -32,7 +32,7 @@
 	</div>
 
 <div class='row'>
-	{% autopaginate object_list %}
+
 {% if object_list|length > 0 %}
 
 	{% for obj in object_list %}
@@ -52,11 +52,6 @@
 </div>
 </div>
 
-<div class = "row pagination justify-content-center">
-	<div class = "col-auto">
-		{% paginate using "pagination_custom.html" %}
-	</div>
-</div>
 
 {% else %}
 
