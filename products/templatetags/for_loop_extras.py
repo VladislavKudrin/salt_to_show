@@ -20,12 +20,13 @@ def index(array, index):
 
 @register.filter
 def to_default_language(value):
-	language = value.get('language')
-	if language is None:
-		pref = settings.DEFAULT_LANGUAGE_PREF
-		value['language'] = pref
-	else:
-		return ''
+	if type(value) != str
+		language = value.get('language')
+		if language is None:
+			pref = settings.DEFAULT_LANGUAGE_PREF
+			value['language'] = pref
+		else:
+			return ''
 	return ''
 
 @register.filter
