@@ -191,8 +191,8 @@ $(document).ready(
         dropBoxGender[i].onclick = function(e){
             var elementGender = e.target
             var $elementGender = $(elementGender)
-            $('.sizes_kids_adult').hide()
-            $('#'+$elementGender.attr('overcategory_for_size')+'_sizes').show()
+            $('.size-class').attr('hidden', true)
+            $('.'+$elementGender.attr('overcategory_for_size')+'_sizes').attr('hidden', false)
             if ($elementGender.is('div')){
                 $(".active-gender div div").removeClass("background-black");
                 var genderChosen = $elementGender.attr('gender-for-cat')
@@ -459,7 +459,6 @@ $('#brand-select').searchableOptionList({
     function (e) {
         containerWithItems.scrollTop(0)      
         var $target = $(e.target)
-        console.log($target)
         if ($target[0].name == 'overcategory'){
             $('#title_gender').hide()
             $('#gender-filter-box > div > div').hide()
@@ -473,6 +472,8 @@ $('#brand-select').searchableOptionList({
             $('#size-filter-box > div > div').hide()
             $('#size-filter-box > div > div > div > input').prop('checked', false)
             //size
+            $('.size_adults_kids').css('display', 'none')
+            $('.'+$target.attr('data_for_gender')+'_size_input').css('display', 'block')
             $('.collapse div1').collapse('hide')
             $('#category-filter-box > div > div > div > div > div > input').prop('checked', false)
             $('#size-filter-box > div > div > div > div > div > input').prop('checked', false)

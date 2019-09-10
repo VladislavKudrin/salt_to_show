@@ -70,6 +70,7 @@ class Size(models.Model):
 	size_admin 		= models.CharField(max_length=120, blank=True)
 	size 			= models.CharField(max_length=120, blank=True)
 	size_kids 		= models.CharField(max_length=120, blank=True)
+	size_type 		= models.ForeignKey(Overcategory, blank = True, null=True)
 	def __str__(self):
 		return (self.size)
 
