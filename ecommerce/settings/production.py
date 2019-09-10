@@ -151,10 +151,8 @@ AUTHENTICATION_BACKENDS = [
         'social_core.backends.google.GoogleOAuth2',
         ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -164,7 +162,6 @@ MIDDLEWARE = [
 
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
-    'dj_pagination.middleware.PaginationMiddleware',
 ]
 
 SOCIAL_AUTH_PIPELINE = (
@@ -181,6 +178,7 @@ SOCIAL_AUTH_PIPELINE = (
     # 'social_core.pipeline.user.make_active',
 
 )
+
 
 
 

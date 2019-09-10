@@ -20,7 +20,7 @@ def index(array, index):
 
 @register.filter
 def to_default_language(value):
-	if type(value) != str
+	if type(value) != str:
 		language = value.get('language')
 		if language is None:
 			pref = settings.DEFAULT_LANGUAGE_PREF
