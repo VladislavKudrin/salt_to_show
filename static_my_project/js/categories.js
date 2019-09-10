@@ -5,7 +5,9 @@ $(document).ready(
  
 
   function(){
-
+    $('#container-filters-update').attr('hidden',false)
+    $('#slider_filters').attr('hidden',false)
+    $('#btn-filters').attr('hidden',false)
     var currentPath = window.location.href
     if ((currentPath.indexOf("update") != -1) || (currentPath.indexOf("create") != -1)){
     var actionEndpoint = '/products/create/'
@@ -270,18 +272,48 @@ function setCheckboxRadio(klass){
   }
 })//click
 }//setCheckboxRadio
+
  var hideFiltersBtn = $('#btn-filters')
  var hideShowText = $('#text-for-hide-show')
  var containerFilter = $('#container-filters-update')
  var filterBox = $('#slider_filters')
  var language = $('#language').val()
+ if (($(window).width() < 768)){
+       filterBox.addClass('hide')
+       filterBox.removeClass('col-12')
+       hideFiltersBtn.attr('hide', 'false')
+       containerFilter.removeClass('hide')
+       containerFilter.removeClass('col-9')
+       containerFilter.addClass('col-12')
+       $('.card-img-top-hidden').removeClass('card-img-top-hidden').addClass('card-img-top')
+       $('.card-body-hidden').removeClass('card-body-hidden').addClass('card-body')
+       $('.like-center-hidden').removeClass('like-center-hidden').addClass('like-center')
+       if (language == 'RU'){
+            hideShowText.html('Показать фильтры')
+             }//if ru
+        else if (language == 'UA'){
+            hideShowText.html('Показати фільтри')
+            }//if ru
+        else{
+            hideShowText.html('Show Filters')
+             }//if not ru
+}//init mobile filters
  hideFiltersBtn.click(
     function(e){
-        if ((hideFiltersBtn.attr('hide') == 'true') && ($(window).width() > 768)) {
-           filterBox.addClass('hide')
-           hideFiltersBtn.attr('hide', 'false')
-           containerFilter.removeClass('col-9')
-           containerFilter.addClass('col-12')
+        if ((hideFiltersBtn.attr('hide') == 'true')) {
+            if (($(window).width() < 768)){
+               filterBox.addClass('hide')
+               filterBox.removeClass('col-12')
+               hideFiltersBtn.attr('hide', 'false')
+               containerFilter.removeClass('hide')
+               containerFilter.addClass('col-12')
+            }//if mobile
+            else{
+               filterBox.addClass('hide')
+               hideFiltersBtn.attr('hide', 'false')
+               containerFilter.removeClass('col-9')
+               containerFilter.addClass('col-12')
+            }//if not mobile
            //card
            $('.card-img-top-hidden').removeClass('card-img-top-hidden').addClass('card-img-top')
            $('.card-body-hidden').removeClass('card-body-hidden').addClass('card-body')
@@ -298,11 +330,20 @@ function setCheckboxRadio(klass){
                  }//if not ru
         }//if we hide filters desktop
        
-        else if ((hideFiltersBtn.attr('hide') == 'false') && ($(window).width() > 768)) {
-           filterBox.removeClass('hide')
-           hideFiltersBtn.attr('hide', 'true')
-           containerFilter.removeClass('col-12')
-           containerFilter.addClass('col-9')
+        else if ((hideFiltersBtn.attr('hide') == 'false') ) {
+            if (($(window).width() < 768)){
+                filterBox.removeClass('hide')
+                filterBox.addClass('col-12')
+                hideFiltersBtn.attr('hide', 'true')
+                containerFilter.addClass('hide')
+            }//if mobile
+            else{
+                filterBox.removeClass('hide')
+                hideFiltersBtn.attr('hide', 'true')
+                containerFilter.removeClass('col-12')
+                containerFilter.addClass('col-9')
+            }//if not mobile
+           
            //card
            $('.card-img-top').removeClass('card-img-top').addClass('card-img-top-hidden')
            $('.card-body').removeClass('card-body').addClass('card-body-hidden')
@@ -472,7 +513,7 @@ $('#brand-select').searchableOptionList({
             $('#size-filter-box > div > div').hide()
             $('#size-filter-box > div > div > div > input').prop('checked', false)
             //size
-            $('.size_adults_kids').css('display', 'none')
+            $('.size_adults_kids').css('display', 'block')
             $('.'+$target.attr('data_for_gender')+'_size_input').css('display', 'block')
             $('.collapse div1').collapse('hide')
             $('#category-filter-box > div > div > div > div > div > input').prop('checked', false)
