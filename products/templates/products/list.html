@@ -43,7 +43,8 @@
 	}
 
 	#btn-filters, .custom-select {
-		width: 70% !important;
+		width: 85% !important;
+		padding: 4px;
 	}
 }
 @media only screen and (min-width: 768px) {
@@ -65,7 +66,7 @@
 	</div>
 
 	<div class="col-4 text-center my-auto p-0 filters-desktop heading" id='result-text'>
-		<b>{{ found }} <span id='items_count'>{{ object_list.paginator.count }}</span> {{ items }}</b>
+		<b>{{ found }} <span class='items_count'>{{ object_list.paginator.count }}</span> {{ items }}</b>
 	</div>
 
 	<div class='col-6 col-md-4 text-right p-0'>
@@ -78,8 +79,8 @@
 	</div>	
 
 
-	<div class="col-12 text-left mt-2 p-0 filters-mobile heading" id='result-text'>
-		<b>{{ found }} <span id='items_count'>{{ object_list.paginator.count }}</span> {{ items }}</b>
+	<div class="col-12 text-left mt-2 p-0 text-center filters-mobile heading" id='result-text'>
+		<b>{{ found }} <span class='items_count'>{{ object_list.paginator.count }}</span> {{ items }}</b>
 	</div>
 
 </div>
