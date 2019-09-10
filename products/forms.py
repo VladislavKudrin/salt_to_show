@@ -138,7 +138,7 @@ class ProductCreateForm(forms.ModelForm):
 			if data_under.undercategory_for.category != size.first().size_for:
 				raise forms.ValidationError(msg_size_invalid)
 		if data_overcategory is not None:
-			if data_under.undercategory_for.category_for != size.first().size_type:
+			if data_under.undercategory_for.category_for.gender_for != size.first().size_type:
 				raise forms.ValidationError(msg_size_invalid)
 		return size.first()
 

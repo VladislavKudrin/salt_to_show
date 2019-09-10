@@ -614,7 +614,7 @@ $('#brand-select').searchableOptionList({
             data: formCheckboxesData,
             success: function(data){
                $('#container-filters-update').html(data.html)
-               $('#items_count').html(data.count_items)
+               $('.items_count').html(data.count_items)
                 var productForm=$(".form-product-ajax-wishlist")
                 bind_ajax_heart(productForm)
                 window.history.replaceState( {} , 'title', data.link)
