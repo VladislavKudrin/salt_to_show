@@ -306,14 +306,11 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 
 		context['overcategories'] = Overcategory.objects.all()
 		context['genders'] = Gender.objects.all()
-		context['categories'] = Category.objects.all()
+		context['categories'] = Category.objects.all().exclude(category_admin='KidsSize')
 		context['undercategories'] = Undercategory.objects.all()
-		context['sizes_kids'] = Size.objects.filter(size_admin = 'Kids')
-		context['categories_kids'] = Category.objects.filter(category_admin='KidsSize')
-		context['categories_kids_size'] = ['Outerwear', 'Tops', 'Bottoms']
 		context['categories_all'] = Category.objects.filter(category_for = Gender.objects.get(gender = 'Women'))
 		context['conditions'] = Condition.objects.all()
-		context['sizes'] = Size.objects.all().exclude(size_admin='Kids')
+		context['sizes'] = Size.objects.all()
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(request, 'products/product-create.html', context)
 	def form_valid(self, form):

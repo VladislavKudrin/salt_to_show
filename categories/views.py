@@ -304,6 +304,15 @@ def translation_view(request):
 		context['languages'] = {'ru':'ru',
 								'ua':'ua',
 								'en':'en'}
+		# sizes_all = Size.objects.filter(size_admin='Kids')
+		# for size in sizes_all:
+		# 	size.size_type = Overcategory.objects.get(overcategory='Kids')
+		# 	size.save()
+			# Size.objects.create(size_for = 'Outerwear', size_admin = size.size_admin, size = size.size, size_type = Overcategory.objects.get(overcategory='Kids'))
+			# Size.objects.create(size_for = 'DressesAndOveralls', size_admin = size.size_admin, size = size.size, size_type = Overcategory.objects.get(overcategory='Kids'))
+			# Size.objects.create(size_for = 'Tops', size_admin = size.size_admin, size = size.size, size_type = Overcategory.objects.get(overcategory='Kids'))
+			# Size.objects.create(size_for = 'Bottoms', size_admin = size.size_admin, size = size.size, size_type = Overcategory.objects.get(overcategory='Kids'))
+			# size.delete()
 		if request.POST:
 			#overcategories
 			for data in request.POST:
@@ -369,6 +378,7 @@ def translation_view(request):
 						elif data.split('_')[1] == 'main':
 							undercategory.undercategory = request.POST.get(data)
 							undercategory.save()
+
 	else:
 		return redirect('home')
 	return render(request, "categories/translate.html", context)

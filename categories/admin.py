@@ -14,7 +14,7 @@ class Gender_tab(admin.TabularInline):
 
 
 class SizeAdmin(admin.ModelAdmin):
-	list_display = ['size', 'size_for']
+	list_display = ['size', 'size_for', 'size_type']
 	class Meta:
 		model=Size
 
