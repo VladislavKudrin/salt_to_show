@@ -127,11 +127,20 @@ class ProductCreateForm(forms.ModelForm):
 		data_size = self.cleaned_data.get('size')
 		size = Size.objects.filter(id=int(data_size))
 		data_under = data.get('undercategory')
+		data_overcategory = data.get('sex').gender_for.overcategory
+		all_kids_categorys = ['Outerwear', 'Tops', 'Bottoms']
+		if self.lan == 'RU':
+			msg_size_invalid = 'Пожалуйста, выбери подходящий размер'
+		else:
+			msg_size_invalid = "Please, select a valid size"
 		if size is '' or size.exists()==False:
-			raise forms.ValidationError("Please, select a size")
+			raise forms.ValidationError(msg_size_invalid)
+		data_size = [size.first().size_for]
+		if size.first().size_for == 'All' and data_overcategory == 'Kids':
+			data_size = all_kids_categorys
 		if data_under is not None:
-			if data_under.undercategory_for.category != size.first().size_for:
-				raise forms.ValidationError("Please, select a valid size")
+			if data_under.undercategory_for.category not in data_size:
+				raise forms.ValidationError(msg_size_invalid)
 		return size.first()
 
 	def clean_condition(self):
