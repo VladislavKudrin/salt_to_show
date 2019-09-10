@@ -147,6 +147,9 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 			context['to_be_approved'] = 'После проверки экспертом айтем будет залит'
 			context['posted'] = 'Загружено'
 			context['ago'] = 'назад'
+			context['sex'] = product.sex.gender_ru
+			context['category'] = product.category.category_ru
+			context['undercategory'] = product.undercategory.undercategory_ru
 		elif self.request.session.get('language') == 'UA':
 			context['report'] = 'Скарга?'
 			context['size'] = 'Розмiр:'
@@ -161,6 +164,9 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 			context['to_be_approved'] = 'Пiсля перевірки экспертом айтем буде опублiкован'
 			context['posted'] = 'Завантажено'
 			context['ago'] = 'тому'
+			context['sex'] = product.sex.gender_ua
+			context['category'] = product.category.category_ua
+			context['undercategory'] = product.undercategory.undercategory_ua
 		else:
 			context['report'] = 'Report?'
 			context['size'] = 'Size:'
@@ -175,6 +181,9 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 			context['to_be_approved'] = 'Needs to be approved by our expert team'
 			context['posted'] = 'Posted'
 			context['ago'] = 'ago'
+			context['sex'] = product.sex.gender_eng
+			context['category'] = product.category.category_eng
+			context['undercategory'] = product.undercategory.undercategory_eng
 		return context
 
 	def post(self, request, *args, **kwargs):
