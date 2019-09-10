@@ -100,14 +100,17 @@ def to_ua_times(value):
 def to_user_currency(value, arg):
 	request = arg
 	product = value
-	region = request.user.region
 	product_price = product.price
 	currency = ' $'
-	if region: 
-		currency = region.currency
-		currency_mult = region.currency_mult
-		product_price = product.price * currency_mult
 	product_price = str(round(product_price)) + ' ' + currency
+	if request.user.is_authenticated():
+		region = request.user.region	
+		
+		if region: 
+			currency = region.currency
+			currency_mult = region.currency_mult
+			product_price = product.price * currency_mult
+		product_price = str(round(product_price)) + ' ' + currency
 	return product_price
 
 
