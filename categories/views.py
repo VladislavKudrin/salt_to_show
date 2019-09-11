@@ -127,7 +127,8 @@ class CategoryFilterView(ListView):
 				list_gender = data_gender_link, 
 				list_category = data_category_link, 
 				list_undercategory=data_undercategory_link, 
-				list_size=data_size_link
+				list_size=data_size_link,
+				user=request.user
 				)
 		qs_for_link = qs_for_link.order_by('-timestamp')
 		paginator = Paginator(qs_for_link, items_per_page) # Show 25 contacts per page
@@ -143,6 +144,7 @@ class CategoryFilterView(ListView):
 		qs = Product.objects.all().order_by('-timestamp')#.authentic()
 		qs_cat={}
 		qs_undercat={}
+		print(request.user)
 		if request.is_ajax():
 			page_continue = True
 			context={}
@@ -165,7 +167,8 @@ class CategoryFilterView(ListView):
 					list_gender = data_gender, 
 					list_category = data_category, 
 					list_undercategory=data_undercategory, 
-					list_size=data_size
+					list_size=data_size,
+					user = request.user
 					)
 				# 	qs = Product.objects.filter(overcategory=Overcategory.objects.get(id=int(request.GET.get(data))))
 				# 	link_codiert = link_codiert + words_for_overcategory[int(request.GET.get(data))-1] + splitword_overcategory
