@@ -1,0 +1,86 @@
+.like-center {
+  position: absolute;
+  z-index: 1;
+  top: 28%;
+  left: 36%;
+}
+
+.card-img-top {
+    min-width: 250px;
+    max-height: 250px;
+    min-height: 250px;
+    object-fit: contain;
+    align-items: center;
+    padding-left:10px;
+    padding-right:10px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin-top: 10px !important;
+/*    margin-bottom: 10px;*/
+/*    margin-left: 10px;*/
+/*    max-width: 275px;*/
+}
+
+.card-text{
+  word-wrap: break-word;
+}
+
+.card{
+  overflow: hidden;
+  display: flex;
+  border: none;
+}
+
+.card-body {
+  height: 80px;
+  object-fit: cover;
+  border-top: 1px solid #e8eaef;
+  margin-left: 10px;
+  margin-right:10px;
+/*  width: 270px;*/
+/*  padding-right: 10px;
+  padding-left: 10px;*/
+}
+
+
+
+.card-body-hidden {
+  height: 80px;
+  object-fit: cover;
+  border-top: 1px solid #e8eaef;
+  margin-left: 10px;
+  margin-right:10px;
+  padding-bottom: 7px;
+  padding-top: 10px;
+  margin-top: 10px !important;
+/*  width: 270px;*/
+/*  padding-right: 10px;
+  padding-left: 10px;*/
+
+}
+.like-center-hidden {
+  position: absolute;
+  z-index: 1;
+/*  height: 292.5px;
+  width: 292.5px;*/
+/*  margin-left: 30px;
+  margin-top: 30px;*/
+    top: 21%;
+    left: 32.5%;
+}
+.card-img-top-hidden {
+    min-width: 180px;
+    max-height: 150px;
+    min-height: 180px;
+    object-fit: contain;
+    align-items: center;
+    padding-left:10px;
+    padding-right:10px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+/*    margin-bottom: 10px;*/
+/*    margin-left: 10px;*/
+    max-width: 100%;
+}

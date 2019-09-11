@@ -398,16 +398,7 @@ background-color: black;
     color: black !important;
 }*/
 
-.like-center {
-  position: absolute;
-  z-index: 1;
-/*  height: 292.5px;
-  width: 292.5px;*/
-/*  margin-left: 30px;
-  margin-top: 30px;*/
-  top:105px;
-  left:98px;
-}
+
 
 .badge-status {
   position: absolute;
@@ -427,54 +418,6 @@ background-color: black;
 .poloska{
   /*border-top: 1px solid #e8eaef;*/
   margin-top: 5px;
-}
-
-.card-full{
-  margin-left: 0vw;
-  margin-right: 0vw;
-}
-
-.card-img-top {
-    max-width: 18.9vw;
-    min-width: 18.9vw;
-    max-height: 18.9vw;
-    min-height: 18.9vw;
-
-    object-fit: contain;
-    align-items: center;
-/*    margin-bottom: 10px;*/
-/*    margin-left: 10px;*/
-/*   padding-left:20px;
-    padding-right:20px; */
-    padding-top:3%;
-
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-}
-
-.card-text{
-  word-wrap: break-word;
-}
-
-.card{
-  overflow: hidden;
-  display: flex;
-  border: none;
-
-}
-
-
-.card-body {
-  height: 70px;
-  width: 19vw;
-  object-fit: cover;
-  border-top: 1px solid #e8eaef;
-  padding-right: 0px;
-  padding-left: 0px;
-  padding-top:0px;
-  padding-bottom: 7px;
-
 }
 
 
