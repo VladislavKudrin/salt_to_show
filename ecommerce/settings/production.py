@@ -76,7 +76,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'rest_framework',
     'dj_pagination',
-      
+
     #our apps
     'chat_ecommerce',
     'addresses',
@@ -162,6 +162,7 @@ MIDDLEWARE = [
 
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'dj_pagination.middleware.PaginationMiddleware',
 ]
 
 SOCIAL_AUTH_PIPELINE = (
