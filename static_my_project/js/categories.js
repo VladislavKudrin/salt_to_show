@@ -513,7 +513,7 @@ $('#brand-select').searchableOptionList({
             $('#size-filter-box > div > div').hide()
             $('#size-filter-box > div > div > div > input').prop('checked', false)
             //size
-            $('.size_adults_kids').css('display', 'block')
+            $('.size_adults_kids').css('display', 'none')
             $('.'+$target.attr('data_for_gender')+'_size_input').css('display', 'block')
             $('.collapse div1').collapse('hide')
             $('#category-filter-box > div > div > div > div > div > input').prop('checked', false)
