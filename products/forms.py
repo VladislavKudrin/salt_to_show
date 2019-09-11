@@ -183,9 +183,10 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_price(self):
 		data = self.cleaned_data
 		price = data.get('price')
-		region_user = self.request.user.region
-		if region_user:
-			price = round((int(price)/region_user.currency_mult),6)
+		user = self.request.user
+		price = Product.objects.price_to_region_price(price = price, user = user)
+		# if region_user:
+		# 	price = round((int(price)/region_user.currency_mult),6)
 		return price
 
 class ImageForm(ProductCreateForm):

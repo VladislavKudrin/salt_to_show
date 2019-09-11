@@ -179,7 +179,7 @@ class ProductManager(models.Manager):
 		return self.get_queryset().by_category_gender(query_category, query_gender, query_size, qs_brand)
 	def search(self, query):
 		return self.get_queryset().active().search(query)
-	def filter_from_link_or_ajax(self, qs, linked=False, list_brand=None, list_condition=None, list_price=None,list_overcategory=None,list_gender = None, list_category = None, list_undercategory=None, list_size=None):
+	def filter_from_link_or_ajax(self, qs, linked=False, list_brand=None, list_condition=None, list_price=None,list_overcategory=None,list_gender = None, list_category = None, list_undercategory=None, list_size=None, user=None):
 		context={}
 		link_codiert=''
 		data_brand = list_brand
@@ -193,19 +193,25 @@ class ProductManager(models.Manager):
 		data_price = list_price
 		if data_price:
 			price_min = data_price[0]
-			context['price_min']=price_min
 			price_max = data_price[1]
+			context['price_min']=price_min
 			context['price_max']=price_max
+			if user:
+				if user.is_authenticated():
+					if price_min:
+						price_min = Product.objects.price_to_region_price(user=user, price = price_min)
+					if price_max:
+						price_max = Product.objects.price_to_region_price(user=user, price = price_max)
 			if not price_min and price_max:
 				qs = qs.filter(price__lte=price_max)
-				link_codiert = link_codiert + "price=+{price}".format(price=price_max)+'&'
+				link_codiert = link_codiert + "price=+{price}".format(price=data_price[1])+'&'
 			elif not price_max and price_min:
 				qs = qs.filter(price__gte=price_min)
-				link_codiert = link_codiert + "price={price}+".format(price=price_min)+'&'
+				link_codiert = link_codiert + "price={price}+".format(price=data_price[0])+'&'
 			elif price_max and price_min:
 				lookups_price = Q(price__gte=price_min)&Q(price__lte=price_max)
 				qs = qs.filter(lookups_price)
-				link_codiert = link_codiert + "price={price_min}+{price_max}".format(price_min=price_min, price_max=price_max)+'&'
+				link_codiert = link_codiert + "price={price_min}+{price_max}".format(price_min=data_price[0], price_max=data_price[1])+'&'
 		data_overcategory = list_overcategory
 		if data_overcategory:
 			overcategory_instance = Overcategory.objects.get(id=int(data_overcategory))
@@ -243,6 +249,12 @@ class ProductManager(models.Manager):
 
 	def fake(self):
 		return self.get_queryset().active().fake()
+	def price_to_region_price(self, user, price):
+		region_user = user.region
+		if region_user:
+			price = round((int(price)/region_user.currency_mult),6)
+		return price
+
 
 User=settings.AUTH_USER_MODEL
 
