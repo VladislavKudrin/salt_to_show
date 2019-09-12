@@ -442,14 +442,6 @@ p {
 	        </div>
 	    </div>
     </div>
-			<div class="col-12  pb-3 user-input" > 
-		<a class='underline' href="{% url 'products:list' %}overcategory={{ object.overcategory.id}}&gender={{ object.sex.id }}">{{ sex }}</a>
-		<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
-		<a class='underline' href="{% url 'products:list' %}overcategory={{ object.overcategory.id}}&gender={{ object.sex.id }}&category={{ object.category.id }}">{{category}}</a>
-		<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
-		<a class='underline' href="{% url 'products:list' %}overcategory={{ object.overcategory.id}}&gender={{ object.sex.id }}&undercategory={{ object.undercategory.id }}">{{undercategory}}
-	</a>
-	</div>
 		<div class="col-12 pt-3 pb-3 uppercase-title" >{{ object.title }}</div>
 	<div class="col-3 field-name uppercase">{{size}}</div>
 	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:1px'>{{ object.size }}</div>

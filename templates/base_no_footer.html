@@ -1,4 +1,5 @@
 {% load static %}
+{% load for_loop_extras %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,7 +38,10 @@ html,body{
 
 
 <body>
-
+{{ request.session|to_default_language }}
+{% if request.user.is_authenticated %}
+  <input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
+{% endif %}
     {% include 'base/navbar.html' with brand_name='eCommerce' %}
 
         <!-- <div class='col-12 text-left p-0'>
@@ -53,6 +57,7 @@ html,body{
     </div>
 
 
+<!-- <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script> -->
 
 <style type="text/css">
   .customDropright{
@@ -117,7 +122,21 @@ width: 100%
 
 $(document).ready(function(){
 
- 
+ var regionInput = $('#region_input')
+var urlRegion = '/region-init/'
+if (regionInput.val() == 'None'){
+  var location = window.location.href
+  $.ajax({
+            url: urlRegion,
+            data:{location: location},
+            success: function(data){
+                $(document.body).append(data.html)
+                $('.modal').modal('show')
+               
+                }//success_first
+
+            })//ajax
+}//if region none
 
 var languageGlobe = $('#language-pref') 
 $('.language-preference-globe').click(
