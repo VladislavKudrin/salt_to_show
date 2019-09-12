@@ -88,7 +88,7 @@ class CategoryFilterView(ListView):
 		splitword_gender = 'some'
 		splitword_category = 'and'
 		raw_link = False
-		qs_for_link = Product.objects.all()
+		qs_for_link = Product.objects.all().authentic()
 		if link is not None:
 			words = link.split('&')
 			data_brand_link=None
