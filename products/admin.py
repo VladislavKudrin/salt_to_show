@@ -7,9 +7,14 @@ class ProductAdmin(admin.ModelAdmin):
 	class Meta:
 		model=Product
 
+class ProductImageAdmin(admin.ModelAdmin):
+	list_display = ['__str__', 'slug', 'image_order']
+	class Meta:
+		model=ProductImage
+
 admin.site.register(Product, ProductAdmin)
 
-admin.site.register(ProductImage)
+admin.site.register(ProductImage, ProductImageAdmin)
 
 admin.site.register(ProductThumbnail)
 

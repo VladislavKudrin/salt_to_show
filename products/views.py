@@ -21,10 +21,11 @@ from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 
+
 from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
-from image_uploader.models import unique_form_id_generator
+from image_uploader.models import unique_form_id_generator, UploadedFile
 from django.core.mail import send_mail
 
 
@@ -190,18 +191,13 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		next_ = request.POST.get('next', '/')
 		username = request.POST.get('chat_with', '/')
 		redirect_url = next_ + 'messages/' + username
-		print(redirect_url)
-		if not request.user.is_authenticated():
-			print('awdawdawdwa',request.path)
-			
 		return redirect(redirect_url)
 
 def image_create_order(request):
-	print('im here but not there hmm')
 	if request.POST:
 		data = request.POST.getlist('data[]')
 		slug = request.POST.get('slug')
-		rotated = request.POST.get('rotate[]')
+		rotated = request.POST.getlist('rotate[]')
 		images = ProductImage.objects.filter(slug=slug)
 		array = numpy.array(data)
 		array = array.astype(numpy.int)
@@ -213,7 +209,6 @@ def image_create_order(request):
 			img.image_order=number
 			array[index_of_min]=max(array)+1
 			img.save()
-		print('im here')
 		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
 	return redirect('home')
 

@@ -326,6 +326,8 @@ class ProductImage(models.Model):
 	def __str__(self):
 		return self.product.title + str(self.image_order)
 
+
+
 def image_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.unique_image_id:
 		instance.unique_image_id = unique_image_id_generator(instance, 'product_image')
