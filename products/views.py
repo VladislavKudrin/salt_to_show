@@ -138,6 +138,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 			context['report'] = 'Жалоба?'
 			context['size'] = 'Размер:'
 			context['condition'] = 'Состояние:'
+			context['object_condition'] = product.condition.condition_ru
 			context['description'] = 'Описание:'
 			context['btn_title'] = 'Написать продавцу'
 			context['authentic'] = 'Оригинал'
@@ -155,6 +156,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 			context['report'] = 'Скарга?'
 			context['size'] = 'Розмiр:'
 			context['condition'] = 'Стан:'
+			context['object_condition'] = product.condition.condition_ua
 			context['description'] = 'Опис:'
 			context['btn_title'] = 'Написати продавцю'
 			context['authentic'] = 'Оригiнал'
@@ -172,6 +174,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 			context['report'] = 'Report?'
 			context['size'] = 'Size:'
 			context['condition'] = 'Condition:'
+			context['object_condition'] = product.condition.condition_eng
 			context['description'] = 'Description:'
 			context['btn_title'] = 'Contact seller'
 			context['authentic'] = 'Authentic'
