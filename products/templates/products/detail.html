@@ -257,7 +257,7 @@ p {
 	<div class="col-6 field-name">{{ size }}</div>
 	<div class="col-6  my-auto user-input" style=' padding-bottom:1px'>{{ object.size }}</div>
 	<div class="col-6 field-name">{{ condition }}</div>
-	<div class="col-6  my-auto user-input" style=' padding-bottom:4px'>{{ object.condition }}</div>
+	<div class="col-6  my-auto user-input" style=' padding-bottom:4px'>{{ object_condition }}</div>
 	<div class="col-12 field-name">{{ description }}</div>
 	<div class="col-12  b-description_readmore js-description_readmore user-input" style='overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
 </div>
@@ -329,7 +329,7 @@ p {
 	<div class="col-12 pt-4">
 		<div class="row">
 			<div id="published-line" class="col-8 my-auto">
-				<small class="text">{{ posted }} {{ object.timestamp|timesince }} {{ ago }} 
+				<small class="text">{{ posted }} {% if request.session.language == 'RU' %}{{ object.timestamp|timesince|to_rus_times }}{% elif request.session.language == 'UA' %}{{ object.timestamp|timesince|to_ua_times }}{% else %}{{ object.timestamp|timesince }}{% endif %} {{ ago }} 
 				</small>
 			</div>
 			<div class="col-4 pl-2 text-right">
@@ -446,14 +446,14 @@ p {
 	<div class="col-3 field-name uppercase">{{size}}</div>
 	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:1px'>{{ object.size }}</div>
 	<div class="col-3 field-name uppercase">{{ condition }}</div>
-	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:4px'>{{ object.condition }}</div>
+	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:4px'>{{ object_condition }}</div>
 	<div class="col-12 field-name uppercase">{{ description }}</div>
 	<div class="col-12  b-description_readmore js-description_readmore" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
 
 	<div class="col-12 pt-3">
 		<div class="row">
 			<div id="published-line" class="col-8 my-auto">
-				<small class="text">{{posted}} {{ object.timestamp|timesince }} {{ago}}
+				<small class="text">{{posted}} {{ object.timestamp|timesince|to_rus_times }} {{ago}}
 				</small>
 			</div>
 			<div class="col-4 text-right">
