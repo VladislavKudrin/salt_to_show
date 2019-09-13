@@ -29,14 +29,16 @@ class UploadManager(models.Manager):
 
 
     def rotate_image(self, image, rotated_x=0):
-        int_rotated = int(rotated_x)
-        if int_rotated != 0 or int_rotated%4 != 0:
-            im = Image.open(image)
-            image_rotated = im.rotate(-90*int_rotated, expand=True)
-            img_io = BytesIO()
-            image_rotated.save(img_io, im.format) 
-            new_image = File(img_io, name='baraban')
-            return new_image
+        print(rotated_x)
+        if rotated_x:
+            int_rotated = int(rotated_x)
+            if int_rotated != 0 or int_rotated%4 != 0:
+                im = Image.open(image)
+                image_rotated = im.rotate(-90*int_rotated, expand=True)
+                img_io = BytesIO()
+                image_rotated.save(img_io, im.format) 
+                new_image = File(img_io, name='baraban')
+                return new_image
         return image
         
 

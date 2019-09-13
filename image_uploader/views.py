@@ -43,7 +43,6 @@ def handle_delete(request):
 			files = UploadedFile.objects.filter(form_id=form_id)
 			for x in files:
 				x.uploaded_file.delete()
-				x.thumbnail.delete()
 				x.delete()
 		else:
 			form_id = request.POST.get('form_id')
