@@ -110,7 +110,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 			return HttpResponse(errors, status=400, content_type='application/json')
 
 def home_page(request):
-	qs = Product.objects.all()
+	qs = Product.objects.all().authentic()
 	mydict = {}
 	for obj in qs: 
 		mydict[obj] = Wishlist.objects.filter(product=obj).count()
