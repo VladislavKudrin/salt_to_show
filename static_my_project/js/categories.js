@@ -245,8 +245,8 @@ $(document).ready(
 
 //FILTERS
     var h = screen.height; 
-    document.getElementById("container-filters-update").style.height = (h - 220) + 'px'
-    document.getElementById("slider_filters").style.height = h - 250 + 'px'
+    document.getElementById("container-filters-update").style.height = 45 + 'vw'
+    document.getElementById("slider_filters").style.height = 45 + 'vw'
 function displayRefreshingItems(container, display){
     if (display==true){
         if ($('.loadingPaginating').length==0){
