@@ -130,7 +130,7 @@ class CategoryFilterView(ListView):
 				list_size=data_size_link,
 				user=request.user
 				)
-		qs_for_link = qs_for_link.order_by('-timestamp')
+		qs_for_link = qs_for_link.order_by('-timestamp').authentic()
 		paginator = Paginator(qs_for_link, items_per_page) # Show 25 contacts per page
 		page = request.GET.get('page')
 		try:
@@ -141,7 +141,7 @@ class CategoryFilterView(ListView):
 		except EmptyPage:
 				# If page is out of range (e.g. 9999), deliver last page of results.
 			qs_for_link = paginator.page(paginator.num_pages)
-		qs = Product.objects.all().order_by('-timestamp')
+		qs = Product.objects.all().authentic().order_by('-timestamp')
 		qs_cat={}
 		qs_undercat={}
 		if request.is_ajax():
@@ -208,9 +208,9 @@ class CategoryFilterView(ListView):
 				if page:
 					if int(page) > paginator.num_pages:
 						page_continue = False
-				context['object_list']=object_list.authentic()
+				context['object_list']=object_list
 			else:
-				context['object_list']=qs.authentic()
+				context['object_list']=qs
 			html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
 			json_data={
 			'html':html_,
@@ -227,7 +227,7 @@ class CategoryFilterView(ListView):
 		fields_condition = Condition.objects.all()
 		fields_brand = Brand.objects.all()
 
-		context['object_list']=qs_for_link.authentic()
+		context['object_list']=qs_for_link
 		context['fields_category']=fields_category
 		context['fields_gender']=fields_gender
 		context['fields_overcategory']=fields_overcategory
