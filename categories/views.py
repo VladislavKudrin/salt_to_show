@@ -144,7 +144,6 @@ class CategoryFilterView(ListView):
 		qs = Product.objects.all().order_by('-timestamp')#.authentic()
 		qs_cat={}
 		qs_undercat={}
-		print(request.user)
 		if request.is_ajax():
 			page_continue = True
 			context={}
