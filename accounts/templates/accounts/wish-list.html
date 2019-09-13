@@ -28,7 +28,7 @@
 <div class='row'>
 	{% if wishes|length > 0 %}
 	{% for obj in wishes %}
-		<div class='col-xs-12 card-full  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+		<div class='col-xs-12 card-full text-center  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
 			{% include 'products/snippets/card.html' with instance=obj %}
 			{% if forloop.counter|divisibleby:4 %}
 				</div>
