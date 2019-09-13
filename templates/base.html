@@ -37,7 +37,7 @@ html,body{
   </head>
 
 
-<body>
+<body class=''>
 {{ request.session|to_default_language }}
 {% if request.user.is_authenticated %}
   <input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
@@ -55,7 +55,6 @@ html,body{
     {% block content %}
       {% endblock %}
     </div>
-
 
 <!-- <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script> -->
 
@@ -112,6 +111,9 @@ div.dropdown-menu button.activated{
 div.dropdown-menu button{
 width: 100%
 }
+
+
+
 </style>
 
 
@@ -121,7 +123,19 @@ width: 100%
 
 
 $(document).ready(function(){
+//Scrolling
+const myCustomScrollbar = document.querySelector('.scroll-test');
+const ps = new PerfectScrollbar('.scroll-test', {
+    wheelSpeed: 1,
+    wheelPropagation: false,
+    swipeEasing: true,
+    suppressScrollX: true,
+    // minScrollbarLength: 10,
+    // maxScrollbarLength: 10
 
+});
+
+$('.scroll-test').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
 
 var regionInput = $('#region_input')
 var urlRegion = '/region-init/'
