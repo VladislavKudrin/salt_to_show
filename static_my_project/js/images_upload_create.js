@@ -234,7 +234,6 @@ function deleteRotateItem(item){
         keyArray.push(attr)  
         rotateArray.push(rotatedImageTimes)
     })//eacharray
-    console.log(keyArray)
     console.log(rotateArray)
     $.ajax({
     url: action,
