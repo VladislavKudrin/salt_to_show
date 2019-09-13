@@ -88,7 +88,7 @@ class CategoryFilterView(ListView):
 		splitword_gender = 'some'
 		splitword_category = 'and'
 		raw_link = False
-		qs_for_link = Product.objects.all().authentic()
+		qs_for_link = Product.objects.all()
 		if link is not None:
 			words = link.split('&')
 			data_brand_link=None
@@ -141,7 +141,7 @@ class CategoryFilterView(ListView):
 		except EmptyPage:
 				# If page is out of range (e.g. 9999), deliver last page of results.
 			qs_for_link = paginator.page(paginator.num_pages)
-		qs = Product.objects.all().order_by('-timestamp').authentic()
+		qs = Product.objects.all().order_by('-timestamp')
 		qs_cat={}
 		qs_undercat={}
 		if request.is_ajax():
@@ -187,11 +187,11 @@ class CategoryFilterView(ListView):
 				# 	if data =='size':
 				# 		qs, link_codiert = Product.objects.filter_undercategory_size(qs=qs, list_size=request.GET.getlist(data), link_codiert = link_codiert)
 				if data_sort == 'high':
-					qs=qs.order_by('price').authentic()
+					qs=qs.order_by('price')
 				elif data_sort == 'low':
-					qs=qs.order_by('-price').authentic()
+					qs=qs.order_by('-price')
 				else:
-					qs=qs.order_by('-timestamp').authentic()
+					qs=qs.order_by('-timestamp')
 				object_list = qs
 				paginator = Paginator(object_list, items_per_page) 
 				page = request.GET.get('page')
@@ -208,9 +208,9 @@ class CategoryFilterView(ListView):
 				if page:
 					if int(page) > paginator.num_pages:
 						page_continue = False
-				context['object_list']=object_list
+				context['object_list']=object_list.authentic()
 			else:
-				context['object_list']=qs
+				context['object_list']=qs.authentic()
 			html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
 			json_data={
 			'html':html_,
@@ -227,7 +227,7 @@ class CategoryFilterView(ListView):
 		fields_condition = Condition.objects.all()
 		fields_brand = Brand.objects.all()
 
-		context['object_list']=qs_for_link
+		context['object_list']=qs_for_link.authentic()
 		context['fields_category']=fields_category
 		context['fields_gender']=fields_gender
 		context['fields_overcategory']=fields_overcategory
