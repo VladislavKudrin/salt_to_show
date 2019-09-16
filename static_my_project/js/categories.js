@@ -245,8 +245,8 @@ $(document).ready(
 
 //FILTERS
     var h = screen.height; 
-    document.getElementById("container-filters-update").style.height = (h - 220) + 'px'
-    document.getElementById("slider_filters").style.height = h - 250 + 'px'
+    // document.getElementById("container-filters-update").style.height = (h - 220) + 'px'
+    // document.getElementById("slider_filters").style.height = h - 250 + 'px'
 function displayRefreshingItems(container, display){
     if (display==true){
         if ($('.loadingPaginating').length==0){
@@ -374,7 +374,7 @@ function setCheckboxRadio(klass){
  var checkboxes = $('.input-for-filters')
  var formCheckboxes = $('#form_checkboxes')
  var formCheckboxesEndpoint = formCheckboxes.attr('action')
- var containerWithItems = $('#container-filters-update')
+ var containerWithItems = $(document)
  setCheckboxRadio('radioOvercategorie')
  setCheckboxRadio('radioGender')
  var categoriesCheckboxesInitial = $('.undercategory-for-check').find("[name='undercategory']:checked")
@@ -417,10 +417,10 @@ $('.size_for_disabled_checkbox_lable').click(
             $target.parent().parent().find('input').prop('disabled', false)
         }//if click on disabled checkbox
 })//click on lables in size checkboxes
-
+toScroll = $(document).height() - $(window).height()
 containerWithItems.scroll(
     function(e){
-        if(e.target.offsetHeight + e.target.scrollTop == e.target.scrollHeight)
+       if ($(this).scrollTop() > toScroll - 50) 
             {   
             var pageNum = 0
             if (window.location.href.indexOf('?page=') == -1){
