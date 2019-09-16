@@ -103,20 +103,36 @@ class CategoryFilterView(ListView):
 				type_ = word.split('=')
 				if type_[0] == 'overcategory':
 					data_overcategory_link = type_[1]
+					if '/' in data_overcategory_link:
+						data_overcategory_link= data_overcategory_link.replace('/', '')
 				if type_[0] == 'gender':
 					data_gender_link = type_[1]
+					if '/' in data_gender_link:
+						data_gender_link= data_gender_link.replace('/', '')
 				if type_[0] == 'category':
 					data_category_link = type_[1].split('+')
+					if '/' in data_category_link:
+						data_category_link= data_category_link.replace('/', '')
 				if type_[0] == 'undercategory':
 					data_undercategory_link = type_[1].split('+')
+					if '/' in data_undercategory_link:
+						data_undercategory_link= data_undercategory_link.replace('/', '')
 				if type_[0] == 'size':
 					data_size_link = type_[1].split('+')
+					if '/' in data_size_link:
+						data_size_link= data_size_link.replace('/', '')
 				if type_[0] == 'price':
 					data_price_link = type_[1].split('+')
+					if '/' in data_price_link:
+						data_price_link= data_price_link.replace('/', '')
 				if type_[0] == 'condition':
 					data_condition_link = type_[1].split('+')
+					if '/' in data_condition_link:
+						data_condition_link= data_condition_link.replace('/', '')
 				if type_[0] == 'brand':
 					data_brand_link = type_[1].split('+')
+					if '/' in data_brand_link:
+						data_brand_link= data_brand_link.replace('/', '')
 			qs_for_link, trash, context = Product.objects.filter_from_link_or_ajax(
 				qs=qs_for_link, 
 				linked=True, 
@@ -203,7 +219,8 @@ class CategoryFilterView(ListView):
 				except EmptyPage:
 						# If page is out of range (e.g. 9999), deliver last page of results.
 					object_list = paginator.page(paginator.num_pages)
-				if len(request.GET)==2:
+				empty_price = all(minmax is '' for minmax in request.GET.getlist('price'))
+				if len(request.GET)==1 and empty_price:
 					link_codiert = 'givemetheloot'
 				if page:
 					if int(page) > paginator.num_pages:

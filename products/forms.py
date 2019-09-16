@@ -204,7 +204,12 @@ class ImageForm(ProductCreateForm):
 			if self.lan == 'RU':
 				raise forms.ValidationError("Загрузи как минимум фото")
 			else:
-				raise forms.ValidationError("Upload at least one image")	
+				raise forms.ValidationError("Upload at least one image")
+		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
+			if self.lan == 'RU':
+				raise forms.ValidationError("Недостаточное колличество фотографий. Минимальное колличество - 4")
+			else:
+				raise forms.ValidationError("Not enough fotos. Minimal amount - 4")	
 		if len(cleaned_images)>settings.IMAGES_UPLOAD_LIMIT:
 			if self.lan == 'RU':
 				raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")

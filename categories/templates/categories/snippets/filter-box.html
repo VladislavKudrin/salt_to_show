@@ -84,6 +84,12 @@
 hr{
   margin: 5px;
 }
+.input-price-styling{
+  background-color: black; 
+  color: white; 
+  font-weight: bold;
+  border-color: black
+}
 
 </style>
 <form method ='GET'  id='form_checkboxes' action='{% url "products:list" %}'>
@@ -321,19 +327,19 @@ hr{
       </button>
       <div class="collapse {% if price_min or price_max %} show {% endif %}" id="price_collapse">
         <div class="">
-          <div class="row">
-            <div class="col-6 text-center p-0 pt-3 pl-5 pr-1">
+          <div class="row ml-2 mr-2 mt-2">
+            <div class="col-6 text-center">
             <div class="input-group input-group-sm mb-3">
               <div class="input-group-prepend">
-                  <span class="input-group-text" name='price' id="inputGroup-sizing-sm">Min {% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}${% endif %}</span>
+                  <span class="input-group-text input-price-styling" name='price' id="inputGroup-sizing-sm">Min {% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}${% endif %}</span>
                 </div>
                 <input type="number"  {% if price_min %} value='{{ price_min }}'{% endif %} name='price' class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
-            <div class="col-6 text-center p-0 pt-3 pr-5 pl-1">
+            <div class="col-6 text-center">
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Max {% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}${% endif %}</span>
+                  <span class="input-group-text input-price-styling" id="inputGroup-sizing-sm">Max {% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}${% endif %}</span>
                 </div>
                 <input type="number" name='price' {% if price_max %} value='{{ price_max }}'{% endif %}class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
