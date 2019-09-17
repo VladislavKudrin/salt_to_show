@@ -5,6 +5,25 @@
   left: 36%;
 }
 
+.like-center-trending {
+  position: absolute;
+  z-index: 1;
+  top: 28%;
+  left: 36%;
+}
+
+@media only screen and (min-width: 1500px) {
+
+.like-center-trending {
+  position: absolute;
+  z-index: 1;
+  top: 28%;
+  left: 44% !important; /*The only difference is for large screens ... that's why new class*/
+}
+
+}
+
+
 .card-img-top {
     min-width: 250px;
     max-height: 250px;
