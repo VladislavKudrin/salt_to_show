@@ -296,6 +296,7 @@ function setCheckboxRadio(klass){
             }//if ru
         else{
             hideShowText.html('Show Filters')
+
              }//if not ru
 }//init mobile filters
  hideFiltersBtn.click(
@@ -425,7 +426,6 @@ containerWithItems.scroll(
        if ($(this).scrollTop() > toScroll - 10) 
         {   
             var pageNum = 0
-
             if (window.location.href.indexOf('?page=') == -1){
                 pageNum = 2
             }

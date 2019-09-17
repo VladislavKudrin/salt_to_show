@@ -54,6 +54,12 @@
 		width: 85% !important;
 		padding: 4px;
 	}
+	.sticky-offset{
+	top:58px;
+	background-color: white;
+
+}
+
 
 }
 @media only screen and (min-width: 768px) {
@@ -61,18 +67,23 @@
 		visibility: hidden;
 		display: none;
 	}
-}
-.sticky-offset{
+	.sticky-offset{
 	top:58px;
 	background-color: white;
 }
+#upArrow{
+	visibility: hidden;
+	display: none;
+}
+}
+
 nav{
 	margin-bottom: 0px!important; 
 }
 </style>
 
 <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
-<div class="sticky-top sticky-offset">
+<div class="sticky-top sticky-offset" id='sticky-offset'>
 <hr class="trenn mb-2">
 <div class="row m-0">
 	<div class="col-6 col-md-4 text-left p-0">
@@ -80,7 +91,6 @@ nav{
 			<i class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
 		</button>
 	</div>
-
 	<div class="col-4 text-center my-auto p-0 filters-desktop heading" id='result-text'>
 		<b>{{ found }} <span class='items_count'>{{ object_list.paginator.count }}</span> {{ items }}</b>
 	</div>
@@ -108,10 +118,10 @@ nav{
 		<div hidden class='col-3 custom-box position-fixed' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; ">
 			{% include 'categories/snippets/filter-box.html' with instance=obj %}
 		</div>
-
 		<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
 			{% include 'products/snippets/languages/product_lists_cont.html' %}
 		</div>
+		<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" style="z-index: 2000; top:90%; left: 85%; cursor: pointer"></i>
 	</div>
 </div>
 
@@ -119,6 +129,22 @@ nav{
 <script>
 	$(document).ready(
 		function(){
+			if (($(window).width() < 768)){
+				$('#upArrow').click(
+					function(e){
+						$("html, body").animate({ scrollTop: 0 }, "slow")  
+					})//click
+			}//if mobile
+
+		  $('.wish-div').click(
+		    function(e){
+		      $targetCard = $(e.target)
+		      if (e.target.tagName == 'IMG'){
+		      linkCard = $targetCard.attr('link_for_click')
+		      window.location.href = linkCard
+		      }
+
+		    })//click card
 			$('body').css('height',$(window).outerHeight(true) +50+ 'px')
 			$('.sticky-offset').css('top',$('.navbar-mb').outerHeight(true) + 'px')
 		}
