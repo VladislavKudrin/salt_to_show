@@ -245,8 +245,8 @@ $(document).ready(
 
 //FILTERS
     var h = screen.height; 
-    document.getElementById("container-filters-update").style.height = (h - 220) + 'px'
-    document.getElementById("slider_filters").style.height = h - 250 + 'px'
+    // document.getElementById("container-filters-update").style.height = (h - 220) + 'px'
+    // document.getElementById("slider_filters").style.height = h - 250 + 'px'
 function displayRefreshingItems(container, display){
     if (display==true){
         if ($('.loadingPaginating').length==0){
@@ -374,7 +374,7 @@ function setCheckboxRadio(klass){
  var checkboxes = $('.input-for-filters')
  var formCheckboxes = $('#form_checkboxes')
  var formCheckboxesEndpoint = formCheckboxes.attr('action')
- var containerWithItems = $('#container-filters-update')
+ var containerWithItems = $(document)
  setCheckboxRadio('radioOvercategorie')
  setCheckboxRadio('radioGender')
  var categoriesCheckboxesInitial = $('.undercategory-for-check').find("[name='undercategory']:checked")
@@ -417,12 +417,15 @@ $('.size_for_disabled_checkbox_lable').click(
             $target.parent().parent().find('input').prop('disabled', false)
         }//if click on disabled checkbox
 })//click on lables in size checkboxes
-
+toScroll = $(document).height() - $(window).height()
+var countAjax = 0
+var pageAndCount = [0,0]
 containerWithItems.scroll(
     function(e){
-        if(e.target.offsetHeight + e.target.scrollTop == e.target.scrollHeight)
-            {   
+       if ($(this).scrollTop() > toScroll - 10) 
+        {   
             var pageNum = 0
+
             if (window.location.href.indexOf('?page=') == -1){
                 pageNum = 2
             }
@@ -431,20 +434,20 @@ containerWithItems.scroll(
                 var numFromLink = parseInt(arr_link.slice(-1)[0].split('?').slice(-1)[0].split('=').slice(-1)[0])
                 pageNum = numFromLink + 1
             }
+            pageAndCount[0] = pageNum
             var formCheckboxesData = formCheckboxes.serialize()
             formCheckboxesData = formCheckboxesData + '&page=' + pageNum
+            if (pageAndCount[1] == 0){
+                pageAndCount[1] += 1
                 $.ajax({
                     url: formCheckboxesEndpoint,
                     method: 'get',
                     data: formCheckboxesData,
                     success: function(data){
                         if (data.count_pages == true){
-                            // displayRefreshingItems($('#filtersTestRefresh'),true)
-                            // setTimeout(function(){
-                            // displayRefreshingItems($('#filtersTestRefresh'),false)
                             $('#container-filters-update').append(data.html)
                             $('#items_count').html(data.count_items)
-
+                            console.log(countAjax)
                             var productForm=$(".form-product-ajax-wishlist")
                             productForm.unbind()
                             bind_ajax_heart(productForm)
@@ -453,8 +456,12 @@ containerWithItems.scroll(
                             // },2000)
                             
                         }//if continue
-                                }//success
+                                },//success
+                    complete:function(){
+                        pageAndCount[1] = 0
+                    }//complete
                     })//ajax form submit
+            }//isAjaxOnce
         }//if end of scroll
     })//scroll
 
