@@ -29,6 +29,7 @@ $(document).ready(
                           .append("<a href='/search/?q=" + item.value + "'>"+"<span class='suggestions'>" +item.value+ "</span></a>")
                           .appendTo(ul);
                           };
+              $('#ui-id-1').attr('style', 'z-index:2000')
               }, 
       error: function(errorData){
           // $.alert({
