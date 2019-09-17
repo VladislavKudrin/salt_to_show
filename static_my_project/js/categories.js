@@ -418,11 +418,14 @@ $('.size_for_disabled_checkbox_lable').click(
         }//if click on disabled checkbox
 })//click on lables in size checkboxes
 toScroll = $(document).height() - $(window).height()
+var countAjax = 0
+var pageAndCount = [0,0]
 containerWithItems.scroll(
     function(e){
-       if ($(this).scrollTop() > toScroll - 50) 
-            {   
+       if ($(this).scrollTop() > toScroll - 10) 
+        {   
             var pageNum = 0
+
             if (window.location.href.indexOf('?page=') == -1){
                 pageNum = 2
             }
@@ -431,20 +434,20 @@ containerWithItems.scroll(
                 var numFromLink = parseInt(arr_link.slice(-1)[0].split('?').slice(-1)[0].split('=').slice(-1)[0])
                 pageNum = numFromLink + 1
             }
+            pageAndCount[0] = pageNum
             var formCheckboxesData = formCheckboxes.serialize()
             formCheckboxesData = formCheckboxesData + '&page=' + pageNum
+            if (pageAndCount[1] == 0){
+                pageAndCount[1] += 1
                 $.ajax({
                     url: formCheckboxesEndpoint,
                     method: 'get',
                     data: formCheckboxesData,
                     success: function(data){
                         if (data.count_pages == true){
-                            // displayRefreshingItems($('#filtersTestRefresh'),true)
-                            // setTimeout(function(){
-                            // displayRefreshingItems($('#filtersTestRefresh'),false)
                             $('#container-filters-update').append(data.html)
                             $('#items_count').html(data.count_items)
-
+                            console.log(countAjax)
                             var productForm=$(".form-product-ajax-wishlist")
                             productForm.unbind()
                             bind_ajax_heart(productForm)
@@ -453,8 +456,12 @@ containerWithItems.scroll(
                             // },2000)
                             
                         }//if continue
-                                }//success
+                                },//success
+                    complete:function(){
+                        pageAndCount[1] = 0
+                    }//complete
                     })//ajax form submit
+            }//isAjaxOnce
         }//if end of scroll
     })//scroll
 
