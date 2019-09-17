@@ -30,6 +30,16 @@
        url('../fonts/archivo-v6-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
+/* istok-web-regular - cyrillic_latin */
+@font-face {
+  font-family: 'Istok Web';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Istok Web Regular'), local('IstokWeb-Regular'),
+       url('../fonts/istok-web-v14-cyrillic_latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/istok-web-v14-cyrillic_latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
 .heading{
   font-family: 'Open Sans', sans-serif;
   font-size: 30px;
@@ -45,14 +55,18 @@
   font-size: 14px;
 }
 
+.tiny{
+  font-size: 9px !important; 
+}
+
 .logo-font{
-  font-family: 'Archivo', sans-serif ;
+  font-family: 'Archivo', 'Istok Web', sans-serif ;
   font-size: 27px !important;
   letter-spacing: 2px;
 }
 
 .logo-font-small{
-  font-family: 'Archivo', sans-serif ;
+  font-family: 'Archivo', 'Istok Web', sans-serif ;
   font-size: 20px !important;
   letter-spacing: 1px;
 }
@@ -65,4 +79,22 @@
 .uppercase-font{
     text-transform: uppercase;
     font-size: 12px;
+}
+
+.field-name{
+    text-transform: uppercase;
+      font-weight: 600;
+      line-height: 25px;
+      font-family: 'Archivo', 'Istok Web', sans-serif; 
+      font-size: 12px;
+}
+
+.uppercase-title{
+    line-height: 1.2;
+       font-family: 'Archivo', 'Istok Web', sans-serif; 
+}
+
+.archivo{
+
+       font-family: 'Archivo', 'Istok Web', sans-serif;
 }

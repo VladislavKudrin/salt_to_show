@@ -450,6 +450,26 @@ html, body {
 ЖЕСТКАЯ
 */
 
+.card-brand {
+    min-width: 250px;
+    max-height: 200px;
+    min-height: 200px;
+    max-width: 250px;
+    object-fit: contain;
+    align-items: center;
+    padding: 60px;
+/*    padding-right: 40px;
+    padding-left: 40px;*/
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin-top: 10px !important;
+/*    margin-bottom: 10px;*/
+/*    margin-left: 10px;*/
+/*    max-width: 275px;*/
+}
+
+
 
 </style>
 </head>
@@ -714,13 +734,43 @@ html, body {
 
 
 
+<!-- 4th row -->
+
+
+
+<div class="row fluid text-center most-liked m-0" style='padding-top:100px; '>
+
+<div class="container" style="max-width: 100%;">
+
+<div class='row' >
+    <div class="col-12 text-left trending-name">
+    <p class="heading ml-md-4">{{ popular_brands }}</p>
+  </div>
+
+
+<div class="scrolling-wrapper" style='height:inherit;'>
+  {% for obj in brands %}
+    <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
+            <a href="{% url 'products:list' %}brand={{ obj.id }}">
+              <img src="{% static 'img/logos/'%}{{ obj }}.png" %}"  alt={{obj}} class='card-brand  my-auto'>
+            </a>
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+</div>
+
+
+<!-- END -->
 
 
 <!-- 3rd row -->
 
 
 
-<div class="row fluid text-center most-liked m-0" style='padding-top:100px; padding-bottom:150px'>
+<div class="row fluid text-center most-liked m-0" style='padding-top:20px; padding-bottom:150px'>
 
 <div class="container" style="max-width: 100%;">
 
@@ -740,7 +790,7 @@ html, body {
 <div class="scrolling-wrapper" style='height:inherit;'>
   {% for obj in liked %}
     <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-      {% include 'products/snippets/card.html' with instance=obj %}
+      {% include 'products/snippets/card-trending.html' with instance=obj %}
         </div>
   {% endfor %}
 </div>

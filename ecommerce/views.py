@@ -13,6 +13,7 @@ from .forms import ContactForm
 from products.models import Product
 from accounts.models import Wishlist
 from operator import itemgetter
+from categories.models import Brand
 
 def test_page(request):
 	return render(request, "categories/slidebar.html", {})
@@ -119,6 +120,11 @@ def home_page(request):
 	context = {}
 	context['qs'] = qs
 	context['liked'] = most_liked
+	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang']
+	to_send = []
+	for i in brands: 
+		to_send.append(Brand.objects.filter(brand_name=i).first())
+	context['brands'] = to_send
 	if request.session.get('language') == 'RU':
 		context['why_sell'] = 'Поддерживай круговорот одежды в природе.'
 		context['why_buy'] = 'Найди свой брендовый айтем быстро и без фейков.'
@@ -134,6 +140,7 @@ def home_page(request):
 		context['login_registration'] = 'Логин | Регистрация'
 		context['trending'] = 'В тренде:'
 		context['see_all'] = 'Показать все'
+		context['popular_brands'] = 'Популярные бренды:'
 	elif request.session.get('language') == 'UA':
 		context['why_sell'] = 'Підтримуй круговорот одягу в природі.'
 		context['why_buy'] = 'Знайди свій брендовий айтем швидко та без фейків.'
@@ -149,6 +156,7 @@ def home_page(request):
 		context['login_registration'] = 'Логін | Реєстрація'
 		context['trending'] = 'У тренді:'
 		context['see_all'] = 'Показати всі'
+		context['popular_brands'] = 'Популярні бренди:'
 	else:
 		context['why_sell'] = 'Contribute to the sustainable clothes-circle.'
 		context['why_buy'] = 'Find your designer piece fast and safe.'
@@ -164,6 +172,7 @@ def home_page(request):
 		context['login_registration'] = 'Login | Registration'
 		context['trending'] = 'Trending:'
 		context['see_all'] = 'See all'
+		context['popular_brands'] = 'Popular designers:'
 		
 
 
