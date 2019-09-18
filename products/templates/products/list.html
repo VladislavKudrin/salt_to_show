@@ -9,6 +9,26 @@
   padding-bottom: 7% !important;
 }*/
 
+.my-custom-scrollbar {
+  position: absolute;
+  padding-right: 20px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+
+	width: 320px;
+	padding-right: 0px;
+	margin-bottom: 0;
+	position: relative;
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 100px);
+	width: 100%;
+}
+
+.ps__rail-x { 
+	display: none !important; 
+}
+
  #trigger {
  	visibility: hidden;
  	display: none;
@@ -115,7 +135,7 @@ nav{
 <div class="container-fluid ajax-search">
 	<div class='row'>
 		<div class='col-md-3'></div>
-		<div hidden class='col-3 custom-box position-fixed' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; ">
+		<div hidden class='col-3 custom-box position-fixed  my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; ">
 			{% include 'categories/snippets/filter-box.html' with instance=obj %}
 		</div>
 		<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
@@ -124,7 +144,6 @@ nav{
 		<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" style="z-index: 2000; top:90%; left: 85%; cursor: pointer"></i>
 	</div>
 </div>
-
 
 <script>
 	$(document).ready(
@@ -149,6 +168,23 @@ nav{
 			$('.sticky-offset').css('top',$('.navbar-mb').outerHeight(true) + 'px')
 		}
 		)
+
+
+	//Scrolling
+const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
+const ps = new PerfectScrollbar('.my-custom-scrollbar', {
+    wheelSpeed: 1,
+    wheelPropagation: false,
+    swipeEasing: true,
+    suppressScrollX: true,
+    scrollXMarginOffset: 100,
+    // minScrollbarLength: 10,
+    // maxScrollbarLength: 10
+
+});
+
+$('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
 </script>
 {% endblock %}
 
