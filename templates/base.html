@@ -38,7 +38,9 @@ html,body{
 
 
 <body class=''>
-{{ request.session|to_default_language }}
+{% if not request.session.language %}
+  {{ request.session|to_default_language }}
+{% endif %}
 {% if request.user.is_authenticated %}
   <input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
 {% endif %}

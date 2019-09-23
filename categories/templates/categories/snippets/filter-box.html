@@ -195,7 +195,7 @@ hr{
                   {% for undercategory in fields_undercategory %}
                     {% if category == undercategory.undercategory_for %}
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" {% if undercategory in undercategory_instance %} checked {% endif %} {% if undercategory.undercategory_for in category_instance %} checked {% endif %} class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}'>
+                        <input hidden type="checkbox" {% if undercategory in undercategory_instance %} checked {% endif %} {% if undercategory.undercategory_for in category_instance %} checked {% endif %} class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}'>
                         <label class="custom-control-label undercategory_for_disabled_checkbox_lable ml-3" for="customCheckUndercategory{{ forloop.counter|add:'1' }}"><small>
                 {% if request.session.language == 'RU' %}
                 {{ undercategory.undercategory_ru|capfirst }}
@@ -251,7 +251,7 @@ hr{
                   {% for size in fields_size %}
                     {% if category.category == size.size_for %}
                         <div class=" ml-3 custom-control custom-checkbox {{ size.size_type }}_size_input size_adults_kids" {% if overcategory_instance %}{% if size.size_type != category.category_for.gender_for %} style="display: none" {% endif %}{% endif %}{% if not overcategory_instance %} style="display: none" {% endif %}>
-                          <input type="checkbox" class="custom-control-input input-for-filters" id="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}" {% if category.category_for == gender_instance %}{% if size in size_instance %} checked {% endif %} {% endif %} name='size' value='{{ size.id }}'>
+                          <input hidden type="checkbox" class="custom-control-input input-for-filters" id="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}" {% if category.category_for == gender_instance %}{% if size in size_instance %} checked {% endif %} {% endif %} name='size' value='{{ size.id }}'>
                           <label class="custom-control-label size_for_disabled_checkbox_lable" for="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}"><small>{{ size.size }}</small></label>
                         </div>
                     {% endif %}

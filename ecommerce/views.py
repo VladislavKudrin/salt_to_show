@@ -8,6 +8,9 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic import TemplateView
 
+
+from django.db.models import Q
+from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from .mixins import RequestFormAttachMixin
 from .forms import ContactForm
 from products.models import Product
@@ -120,12 +123,29 @@ def home_page(request):
 	context = {}
 	context['qs'] = qs
 	context['liked'] = most_liked
+
+	brands_navbar_init = ['Stone']
+	brand_navbar_lookups = (Q(brand_name__iexact='nothing'))
+	for brand in brands_navbar_init:
+		brand_navbar_lookups = brand_navbar_lookups|(Q(brand_name__iexact=brand))
+	context['showed_brands_navbar'] = Brand.objects.filter(brand_navbar_lookups)
+	context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
+	context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
+	context['fields_gender'] = Gender.objects.all()
+	context['fields_category'] = Category.objects.all()
+	context['fields_overcategory'] = Overcategory.objects.all()
+	context['fields_undercategory'] = Undercategory.objects.all()
+
 	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang']
 	to_send = []
 	for i in brands: 
 		to_send.append(Brand.objects.filter(brand_name=i).first())
 	context['brands'] = to_send
+
 	if request.session.get('language') == 'RU':
+		context['kids_navbar'] = 'Дети'
+		context['new_navbar'] = 'Свежее'
+		context['brand'] = 'Бренд'
 		context['why_sell'] = 'Поддерживай круговорот одежды в природе.'
 		context['why_buy'] = 'Найди свой брендовый айтем быстро и без фейков.'
 		context['safe'] = 'Надежно'
@@ -142,6 +162,9 @@ def home_page(request):
 		context['see_all'] = 'Показать все'
 		context['popular_brands'] = 'Популярные бренды:'
 	elif request.session.get('language') == 'UA':
+		context['kids_navbar'] = 'Дiтi'
+		context['new_navbar'] = 'Свiже'
+		context['brand'] = 'Бренд'
 		context['why_sell'] = 'Підтримуй круговорот одягу в природі.'
 		context['why_buy'] = 'Знайди свій брендовий айтем швидко та без фейків.'
 		context['safe'] = 'Надійно'
@@ -158,6 +181,9 @@ def home_page(request):
 		context['see_all'] = 'Показати всі'
 		context['popular_brands'] = 'Популярні бренди:'
 	else:
+		context['kids_navbar'] = 'Kids'
+		context['new_navbar'] = 'New'
+		context['brand'] = 'Brand'
 		context['why_sell'] = 'Contribute to the sustainable clothes-circle.'
 		context['why_buy'] = 'Find your designer piece fast and safe.'
 		context['safe'] = 'Safe'

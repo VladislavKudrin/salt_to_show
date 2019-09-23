@@ -243,7 +243,13 @@ class CategoryFilterView(ListView):
 		fields_size = Size.objects.all()
 		fields_condition = Condition.objects.all()
 		fields_brand = Brand.objects.all()
-
+		brands_navbar_init = ['Stone']
+		brand_navbar_lookups = (Q(brand_name__iexact='nothing'))
+		for brand in brands_navbar_init:
+			brand_navbar_lookups = brand_navbar_lookups|(Q(brand_name__iexact=brand))
+		context['showed_brands_navbar'] = Brand.objects.filter(brand_navbar_lookups)
+		context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
+		context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
 		context['object_list']=qs_for_link
 		context['fields_category']=fields_category
 		context['fields_gender']=fields_gender
@@ -254,6 +260,8 @@ class CategoryFilterView(ListView):
 		# context['sizes']=sizes
 		context['fields_brand']=fields_brand
 		if self.request.session.get('language') == 'RU':
+			context['kids_navbar'] = 'Дети'
+			context['new_navbar'] = 'Свежее'
 			context['hide_filters'] = 'Спрятать фильтры'
 			context['found'] = 'Найдено'
 			context['items'] = 'айтемов'
@@ -270,6 +278,8 @@ class CategoryFilterView(ListView):
 			context['brand'] = 'Бренд'
 			context['price'] = 'Цена'
 		elif self.request.session.get('language') == 'UA':
+			context['kids_navbar'] = 'Дiтi'
+			context['new_navbar'] = 'Свiже'
 			context['hide_filters'] = 'Сховати фільтри'
 			context['found'] = 'Знайдено'
 			context['items'] = 'айтемов'
@@ -286,6 +296,8 @@ class CategoryFilterView(ListView):
 			context['brand'] = 'Бренд'
 			context['price'] = 'Цiна'
 		else:
+			context['kids_navbar'] = 'Kids'
+			context['new_navbar'] = 'New'
 			context['hide_filters'] = 'Hide Filters'
 			context['found'] = 'Found'
 			context['items'] = 'Items'

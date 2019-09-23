@@ -79,10 +79,12 @@
 		padding: 4px;
 	}
 	.sticky-offset{
-	top:58px;
 	background-color: white;
 
 }
+	#slider_filters{
+		position: fixed!important;
+		z-index: 1500;
 
 #btn-filters{
 	font-size: 1rem;
@@ -91,6 +93,11 @@
 	background-color: white;
 }
 
+	}
+	#nav_categories{
+		display: none
+	}
+
 }
 @media only screen and (min-width: 768px) {
 	.filters-mobile {
@@ -98,7 +105,6 @@
 		display: none;
 	}
 	.sticky-offset{
-	top:58px;
 	background-color: white;
 }
 #upArrow{
@@ -109,8 +115,12 @@
 
 
 nav{
-	margin-bottom: 0px!important; 
+	margin-bottom: 0px!important;
 }
+
+#nav_categories{
+	
+
 
 .crossed {
      background: 
@@ -120,12 +130,14 @@ nav{
              rgba(0,0,0,1) 50%,
              rgba(0,0,0,0) calc(50% + 0.8px),
              rgba(0,0,0,0) 100%);
+
 }
 
 </style>
 
 <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
-<div class="sticky-top sticky-offset" id='sticky-offset'>
+{% include 'categories/snippets/navbar_categories.html' %}
+<div class="sticky-top sticky-offset" id='sticky-offset' style="z-index: 1000">
 <hr class="trenn mb-2">
 <div class="row m-0">
 	<div class="col-6 col-md-4 text-left p-0">
@@ -156,8 +168,12 @@ nav{
 </div>
 <div class="container-fluid ajax-search">
 	<div class='row'>
-		<div class='col-md-3'></div>
-		<div hidden class='col-3 custom-box position-fixed  my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; ">
+
+		<div hidden class='col-3 custom-box position-sticky' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: hidden; overflow-x: hidden; ">
+
+<!-- 		<div class='col-md-3'></div>
+		<div hidden class='col-3 custom-box position-fixed  my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; "> -->
+
 			{% include 'categories/snippets/filter-box.html' with instance=obj %}
 		</div>
 		<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
@@ -170,12 +186,20 @@ nav{
 <script>
 	$(document).ready(
 		function(){
+			$('body').css('height',$(window).outerHeight(true) +50+ 'px')
+			var topNavbar = $('.navbar-mb').outerHeight(true)
+			var topFilterbar = $('.sticky-offset').outerHeight(true) 
+			$('.sticky-offset').css('top', topNavbar + 'px')
+
 			if (($(window).width() < 768)){
 				$('#upArrow').click(
 					function(e){
 						$("html, body").animate({ scrollTop: 0 }, "slow")  
 					})//click
 			}//if mobile
+			else{
+				$('#slider_filters').css('top',topNavbar+topFilterbar+'px')
+			}//if not mobile
 
 		  $('.wish-div').click(
 		    function(e){
@@ -183,11 +207,9 @@ nav{
 		      if (e.target.tagName == 'IMG'){
 		      linkCard = $targetCard.attr('link_for_click')
 		      window.location.href = linkCard
-		      }
-
+		      }//if img
 		    })//click card
-			$('body').css('height',$(window).outerHeight(true) +50+ 'px')
-			$('.sticky-offset').css('top',$('.navbar-mb').outerHeight(true) + 'px')
+
 		}
 		)
 
@@ -206,6 +228,7 @@ const ps = new PerfectScrollbar('.my-custom-scrollbar', {
 });
 
 $('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
 
 </script>
 {% endblock %}
