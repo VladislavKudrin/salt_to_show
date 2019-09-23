@@ -24,10 +24,10 @@
 	max-height: calc(100vh - 100px);
 	width: 100%;
 }
-
-.ps__rail-x { 
+#slider_filters .ps__rail-x { 
 	display: none !important; 
 }
+
 
  #trigger {
  	visibility: hidden;
@@ -85,7 +85,7 @@
 	#slider_filters{
 		position: fixed!important;
 		z-index: 1500;
-
+}
 #btn-filters{
 	font-size: 1rem;
 /*	width: 40%;
@@ -93,7 +93,6 @@
 	background-color: white;
 }
 
-	}
 	#nav_categories{
 		display: none
 	}
@@ -117,7 +116,6 @@
 nav{
 	margin-bottom: 0px!important;
 }
-
 
 .crossed {
      background: 
@@ -177,7 +175,7 @@ nav{
 <script>
 	$(document).ready(
 		function(){
-			$('body').css('height',$(window).outerHeight(true) +50+ 'px')
+			$('body').css('min-height',$(window).outerHeight(true) +50+ 'px')
 			var topNavbar = $('.navbar-mb').outerHeight(true)
 			var topFilterbar = $('.sticky-offset').outerHeight(true) 
 			$('.sticky-offset').css('top', topNavbar + 'px')
@@ -211,8 +209,8 @@ const ps = new PerfectScrollbar('.my-custom-scrollbar', {
     wheelSpeed: 1,
     wheelPropagation: false,
     swipeEasing: true,
-    suppressScrollX: true,
-    scrollXMarginOffset: 100,
+
+
     // minScrollbarLength: 10,
     // maxScrollbarLength: 10
 

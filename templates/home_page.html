@@ -488,7 +488,7 @@ nav{
 
 
 
-{% include 'categories/snippets/navbar_categories.html' with home='true' %}
+{% include 'categories/snippets/navbar_categories.html' %}
 <!--First row - banner -->
 <div class="row fluid middle-heading banner-mobile marketplace" style='padding-top: 35px;padding-left:10px;text-align:left;text-transform: uppercase;'>
   <div class="col fluid" >
@@ -563,13 +563,13 @@ nav{
 
 <div class="container" style="max-width: 100%;">
 
-<div class='row' >
+<div class='row ' >
     <div class="col-12 text-left trending-name">
     <p class="heading ml-md-4">{{ popular_brands }}</p>
   </div>
 
 
-<div class="scrolling-wrapper" style='height:inherit;'>
+<div class="scrolling-wrapper my-custom-scrollbar" style='height:inherit;'>
   {% for obj in brands %}
     <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
             <a href="{% url 'products:list' %}brand={{ obj.id }}">
@@ -604,7 +604,7 @@ nav{
       </span>
     </a>
   </div>  
-<div class="scrolling-wrapper" style='height:inherit;'>
+<div class="scrolling-wrapper my-custom-scrollbar" style='height:inherit;'>
   {% for obj in liked %}
     <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
       {% include 'products/snippets/card-trending.html' with instance=obj %}
@@ -805,20 +805,22 @@ $(function() {
 
 
 // perfect scrollbar
-const ps = new PerfectScrollbar('.my-custom-scrollbar-liked', {
-    wheelSpeed: 1,
-    wheelPropagation: true,
-    swipeEasing: true,
-    // suppressScrollY: true,
-    // minScrollbarLength: 2,
-    // maxScrollbarLength: 2,
-    // scrollingThreshold: 10,
-    // useBothWheelAxex: true,
 
-});
 
 $(document).ready(function () {
 $("#slider1").attr("hidden",false);
+const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
+const ps = new PerfectScrollbar('.my-custom-scrollbar', {
+    wheelSpeed: 1,
+    wheelPropagation: false,
+    swipeEasing: true,
+
+
+    // minScrollbarLength: 10,
+    // maxScrollbarLength: 10
+
+});
+$('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
 });
 
 </script>
