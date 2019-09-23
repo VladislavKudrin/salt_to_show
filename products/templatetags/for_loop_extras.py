@@ -20,6 +20,7 @@ def index(array, index):
 
 @register.filter
 def to_default_language(value):
+	print(value.get('language'))
 	if type(value) != str:
 		language = value.get('language')
 		if language is None:
@@ -94,6 +95,16 @@ def to_ua_times(value):
 	for idx, time in enumerate(time_eng):
 		if time in value:
 			value = value.replace(time, time_ua[idx])
+	return value
+
+@register.filter
+def to_translate(value, arg):
+	request = arg
+	instance = value
+	language = request.session.get('language')
+	if language is not None:
+		if instance is not None:
+			return instance.return_language(language)
 	return value
 
 

@@ -1,29 +1,181 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+{% load for_loop_extras %}
+<style type="text/css">
+.edge{
+  right: 0!important;
+}
+  .dropdown-navcat {
+  overflow: hidden;
+}
+.dropdown-content-navcat {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1500;
+  max-width: 60%!important;
+}
+.dropdown-content-navcat a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content-navcat a:hover{
+  color:white;
+  background-color: black
+}
+.dropdown-click-btn{
+  cursor: pointer;
+
+}
+.dropdown-click-btn:hover{
+  color: black!important
+}
+.show-dropdown{
+  display: block
+}
+.row-dropdown-categories{
+  white-space: nowrap; 
+  flex-wrap: nowrap!important;
+}
+li a{
+  cursor: pointer;
+}
+.custom-li-dropdown{
+  width: calc(100% / 6)!important;
+  text-align: center!important;
+}
+.category-nav-ul {
+  margin: auto!important;
+  width: 70%!important;/* Вот здесь меняете процент и будет уже или шире, на широкие стоит 70 тоже*/
+}
+/*#new_navbar:hover{
+  color: red;
+}*/
+</style>
+
+<div id='nav_categories'>
+<hr class="mb-0 mt-2">
+<nav class="navbar navbar-expand-lg navbar-light bg-white" >
+  <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
+    <ul class="navbar-nav category-nav-ul">
+      <li class="nav-item dropdown custom-li-dropdown">
+        <div class="dropdown-navcat">
+          <a class="nav-link dropdown-toggle dropdown-click-btn">
+            {{ brand }}
+          </a>
+          <div class="dropdown-content-navcat m-0" style="max-width: none!important;">
+            <div class="row overflow-auto m-0 row-dropdown-categories" >
+              <div class="col text-center">
+              {% for brand in showed_brands_navbar %}
+                  <a class="text-center" href="{{ brand.get_absolute_url }}" class="col-12">{{ brand.brand_name }}</a>
+                  {% if forloop.counter|divisibleby:6 %}
+              </div>
+              <div class="col text-center">
+                  {% endif %}
+              {% endfor %}
+              </div>
+            </div>
+          </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+      {% for gender in gender_navbar_adults %}
+      <li class="nav-item custom-li-dropdown">
+        <div class="dropdown-navcat">
+          <a class="nav-link dropdown-toggle dropdown-click-btn">
+            {{ gender|to_translate:request }}
+          </a>
+          <div class="dropdown-content-navcat m-0">
+            <div class="row overflow-auto m-0 row-dropdown-categories" >
+              {% for category in fields_category %}
+                {% if category.category_for == gender %}
+                  <div class="col text-center">
+                    <a class="text-center" href="{{ category.get_absolute_url }}">{{ category|to_translate:request }}</a>
+                    <hr class="mt-0">
+                    {% for undercategory in fields_undercategory %}
+                      {% if undercategory.undercategory_for == category %}
+                        <a href="{{ undercategory.get_absolute_url }}" class="col-12">{{ undercategory|to_translate:request }}</a>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div> 
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+      {% endfor %}
+      <li class="nav-item custom-li-dropdown">
+        <div class="dropdown-navcat text-center">
+          <a class="nav-link dropdown-toggle dropdown-click-btn">
+            {{ kids_navbar }}
+          </a>
+          <div class="dropdown-content-navcat m-0">
+            <div class="row overflow-auto m-0 row-dropdown-categories" >
+              {% for gender in gender_navbar_kids %}
+                <div class="col text-center">
+                  <a class="text-center" href="{{ gender.get_absolute_url }}">{{ gender|to_translate:request }}</a>
+                  <hr class="mt-0">
+                  {% for category in fields_category %}
+                    {% if category.category_for == gender %}
+                        <a href="{{ category.get_absolute_url }}" class="col-12">{{ category|to_translate:request }}</a>
+                      {% endif %}
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div> 
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown link
+      <li class="nav-item custom-li-dropdown">
+        <a href="{% url 'products:list' %}" class="nav-link" id="new_navbar">
+            {{ new_navbar }}
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
       </li>
+      
     </ul>
   </div>
 </nav>
+{% if home == 'true' %}
+<hr class="m-0">
+{% endif %}
+</div>
+
+<script type="text/javascript">
+  var dropdownCategories = $('.dropdown-content-navcat')
+  var dropBtn = $('.dropdown-click-btn')
+  var liDropdwn = $('.custom-li-dropdown')
+  // marginLeftLi = liDropdwn.css('margin-left')
+  // liDropdwn.attr('style','margin-left:'+ parseInt(marginLeftLi, 10) * 2 + 'px!important')
+  dropBtn.click(
+    function(e){
+      var $target = $(e.target)
+      $target.toggleClass('active')
+      $($target[0].nextElementSibling).toggleClass("show-dropdown")
+      dropdownCategories.not($(this).parent().find('.dropdown-content-navcat')).removeClass('show-dropdown')
+      dropBtn.not(this).removeClass('active')
+      if ($('ul'), $(this).parent().parent().length) {
+            var l = $(this).parent().find('.dropdown-content-navcat').offset().left;
+            var w = $(this).parent().find('.dropdown-content-navcat').width();
+            var docH = $("#nav_categories").height();
+            var docW = $("#nav_categories").outerWidth(true);
+            var isEntirelyVisible = (l + w <= docW);
+            if (!isEntirelyVisible) {
+                $(this).parent().find('.dropdown-content-navcat').addClass('edge');
+            } else {
+                $(this).parent().find('.dropdown-content-navcat').removeClass('edge');
+            }
+        }//if len
+    })//click on dropdown
+  $(window).click(
+    function(e){
+      var $target = $(e.target)
+      if (!$target.is(dropBtn)){
+        dropdownCategories.removeClass('show-dropdown')
+      }//if target not btn
+      
+    })//window click
+</script>
+
