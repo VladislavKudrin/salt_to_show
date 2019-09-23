@@ -55,7 +55,24 @@ li a{
 /*#new_navbar:hover{
   color: red;
 }*/
+.my-custom-scrollbar {
+  position: absolute;
+  padding-right: 20px;
+  padding-left: 0px;
+  margin-bottom: 0px;
 
+  width: 320px;
+  padding-right: 0px;
+  margin-bottom: 0;
+  position: relative;
+    height:auto;
+    overflow:auto;
+  max-height: calc(100vh - 100px);
+  width: 100%;
+}
+#slider_filters .ps__rail-x { 
+  display: none !important; 
+}
 </style>
 
 <div id='nav_categories'>
@@ -69,7 +86,7 @@ li a{
             {{ brand }}
           </a>
           <div class="dropdown-content-navcat m-0" style="max-width: none!important;">
-            <div class="row overflow-auto m-0 row-dropdown-categories" >
+            <div class="row overflow-auto m-0 row-dropdown-categories my-custom-scrollbar" >
               <div class="col text-center">
               {% for brand in showed_brands_navbar %}
                   <a class="text-center" href="{{ brand.get_absolute_url }}" class="col-12">{{ brand.brand_name }}</a>
@@ -89,7 +106,7 @@ li a{
             {{ gender|to_translate:request }}
           </a>
           <div class="dropdown-content-navcat m-0">
-            <div class="row overflow-auto m-0 row-dropdown-categories" >
+            <div class="row overflow-auto m-0 row-dropdown-categories my-custom-scrollbar"  style="overflow-y: hidden; overflow-x: hidden;">
               {% for category in fields_category %}
                 {% if category.category_for == gender %}
                   <div class="col text-center">
@@ -114,7 +131,7 @@ li a{
             {{ kids_navbar }}
           </a>
           <div class="dropdown-content-navcat m-0">
-            <div class="row overflow-auto m-0 row-dropdown-categories" >
+            <div class="row overflow-auto m-0 row-dropdown-categories my-custom-scrollbar" >
               {% for gender in gender_navbar_kids %}
                 <div class="col text-center">
                   <a class="text-center" href="{{ gender.get_absolute_url }}">{{ gender|to_translate:request }}</a>

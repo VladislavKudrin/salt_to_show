@@ -125,19 +125,6 @@ width: 100%
 
 
 $(document).ready(function(){
-//Scrolling
-const myCustomScrollbar = document.querySelector('.scroll-test');
-const ps = new PerfectScrollbar('.scroll-test', {
-    wheelSpeed: 1,
-    wheelPropagation: false,
-    swipeEasing: true,
-    suppressScrollX: true,
-    // minScrollbarLength: 10,
-    // maxScrollbarLength: 10
-
-});
-
-$('.scroll-test').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
 
 var regionInput = $('#region_input')
 var urlRegion = '/region-init/'
