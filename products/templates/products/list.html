@@ -118,8 +118,9 @@ nav{
 	margin-bottom: 0px!important;
 }
 
-#nav_categories{
-	
+body{
+	height: 5000px!important
+}
 
 
 .crossed {
@@ -167,12 +168,7 @@ nav{
 </div>
 <div class="container-fluid ajax-search">
 	<div class='row'>
-
-		<div hidden class='col-3 custom-box position-sticky' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: hidden; overflow-x: hidden; ">
-
-<!-- 		<div class='col-md-3'></div>
-		<div hidden class='col-3 custom-box position-fixed  my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; "> -->
-
+		<div hidden class='col-3 custom-box position-sticky my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: hidden; overflow-x: hidden; ">
 			{% include 'categories/snippets/filter-box.html' with instance=obj %}
 		</div>
 		<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
