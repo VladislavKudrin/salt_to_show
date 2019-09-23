@@ -29,7 +29,7 @@
 	background-color: white;
 }
 #btn-filters:hover{
-	background-color: #f5f5f5;
+	background-color: none;
 }
 /*[hide='false']{
 
@@ -50,8 +50,12 @@
 		display: none;
 	}
 
-	#btn-filters, .custom-select {
+	.custom-select {
 		width: 85% !important;
+	}
+
+	#btn-filters {
+		width: 60% !important;
 		padding: 4px;
 	}
 	.sticky-offset{
@@ -60,6 +64,12 @@
 
 }
 
+#btn-filters{
+	font-size: 1rem;
+/*	width: 40%;
+*/	border: none!important;
+	background-color: white;
+}
 
 }
 @media only screen and (min-width: 768px) {
@@ -77,9 +87,21 @@
 }
 }
 
+
 nav{
 	margin-bottom: 0px!important; 
 }
+
+.crossed {
+     background: 
+         linear-gradient(to top right,
+             rgba(0,0,0,0) 0%,
+             rgba(0,0,0,0) calc(50% - 0.8px),
+             rgba(0,0,0,1) 50%,
+             rgba(0,0,0,0) calc(50% + 0.8px),
+             rgba(0,0,0,0) 100%);
+}
+
 </style>
 
 <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
@@ -88,7 +110,7 @@ nav{
 <div class="row m-0">
 	<div class="col-6 col-md-4 text-left p-0">
 		<button hidden class="btn" hide='true' id='btn-filters'>
-			<i class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
+			<i id="filter-icon" class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
 		</button>
 	</div>
 	<div class="col-4 text-center my-auto p-0 filters-desktop heading" id='result-text'>

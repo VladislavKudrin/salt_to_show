@@ -278,7 +278,14 @@ function setCheckboxRadio(klass){
  var containerFilter = $('#container-filters-update')
  var filterBox = $('#slider_filters')
  var language = $('#language').val()
+ var filterIcon = $('#filter-icon')
+
+  if (($(window).width() >= 768)){
+ filterIcon.addClass('crossed');
+}
+
  if (($(window).width() < 768)){
+        hideShowText.text('') // remove text from filter-icon
        filterBox.addClass('hide')
        filterBox.removeClass('col-12')
        hideFiltersBtn.attr('hide', 'false')
@@ -288,20 +295,12 @@ function setCheckboxRadio(klass){
        $('.card-img-top-hidden').removeClass('card-img-top-hidden').addClass('card-img-top')
        $('.card-body-hidden').removeClass('card-body-hidden').addClass('card-body')
        $('.like-center-hidden').removeClass('like-center-hidden').addClass('like-center')
-       if (language == 'RU'){
-            hideShowText.html('Показать фильтры')
-             }//if ru
-        else if (language == 'UA'){
-            hideShowText.html('Показати фільтри')
-            }//if ru
-        else{
-            hideShowText.html('Show Filters')
-
-             }//if not ru
 }//init mobile filters
+
  hideFiltersBtn.click(
     function(e){
         if ((hideFiltersBtn.attr('hide') == 'true')) {
+            filterIcon.removeClass('crossed');
             if (($(window).width() < 768)){
                filterBox.addClass('hide')
                filterBox.removeClass('col-12')
@@ -311,27 +310,30 @@ function setCheckboxRadio(klass){
             }//if mobile
             else{
                filterBox.addClass('hide')
+               //hideShowText.removeClass('crossed');
                hideFiltersBtn.attr('hide', 'false')
                containerFilter.removeClass('col-9')
                containerFilter.addClass('col-12')
+                    if (language == 'RU'){
+                        hideShowText.html('Показать фильтры')
+                         }//if ru
+                    else if (language == 'UA'){
+                        hideShowText.html('Показати фільтри')
+                        }//if ru
+                    else{
+                        hideShowText.html('Show Filters')
+                         }//if not ru
             }//if not mobile
            //card
            $('.card-img-top-hidden').removeClass('card-img-top-hidden').addClass('card-img-top')
            $('.card-body-hidden').removeClass('card-body-hidden').addClass('card-body')
            $('.like-center-hidden').removeClass('like-center-hidden').addClass('like-center')
            //card
-           if (language == 'RU'){
-                hideShowText.html('Показать фильтры')
-                 }//if ru
-            else if (language == 'UA'){
-                hideShowText.html('Показати фільтри')
-                }//if ru
-            else{
-                hideShowText.html('Show Filters')
-                 }//if not ru
+
         }//if we hide filters desktop
        
         else if ((hideFiltersBtn.attr('hide') == 'false') ) {
+            filterIcon.addClass('crossed');
             if (($(window).width() < 768)){
                 filterBox.removeClass('hide')
                 filterBox.addClass('col-12')
@@ -343,14 +345,7 @@ function setCheckboxRadio(klass){
                 hideFiltersBtn.attr('hide', 'true')
                 containerFilter.removeClass('col-12')
                 containerFilter.addClass('col-9')
-            }//if not mobile
-           
-           //card
-           $('.card-img-top').removeClass('card-img-top').addClass('card-img-top-hidden')
-           $('.card-body').removeClass('card-body').addClass('card-body-hidden')
-           $('.like-center').removeClass('like-center').addClass('like-center-hidden')
-           //card
-           if (language == 'RU'){
+            if (language == 'RU'){
                 hideShowText.html('Спрятать фильтры')
                  }//if ru
             else if (language == 'UA'){
@@ -359,6 +354,15 @@ function setCheckboxRadio(klass){
             else{
                 hideShowText.html('Hide Filters')
                  }//if not ru
+
+            }//if not mobile
+           
+           //card
+           $('.card-img-top').removeClass('card-img-top').addClass('card-img-top-hidden')
+           $('.card-body').removeClass('card-body').addClass('card-body-hidden')
+           $('.like-center').removeClass('like-center').addClass('like-center-hidden')
+           //card
+
         }//if we show filters desktop
         
 
