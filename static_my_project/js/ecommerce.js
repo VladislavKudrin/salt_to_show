@@ -6,7 +6,18 @@ $(document).ready(
 
 
 
-
+    //click image
+    function click_image(){
+      $('.wish-div').click(
+        function(e){
+          $targetCard = $(e.target)
+          if (e.target.tagName == 'IMG'){
+          linkCard = $targetCard.attr('link_for_click')
+          window.location.href = linkCard
+          }//if img
+        })//click card
+    }//click image
+          
 
 
     //search

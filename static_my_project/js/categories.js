@@ -5,6 +5,7 @@ $(document).ready(
  
 
   function(){
+
     $('#container-filters-update').attr('hidden',false)
     $('#slider_filters').attr('hidden',false)
     $('#btn-filters').attr('hidden',false)
@@ -71,7 +72,6 @@ $(document).ready(
                 }//success
 
             })//ajax
-
     }//if update initials
     function attachHoverDropdown(dropbox, underbox){
         for (i=0;i<dropbox.length;i++){
@@ -498,6 +498,15 @@ $('#brand-select').searchableOptionList({
                $('#items_count').html(data.count_items)
                 var productForm=$(".form-product-ajax-wishlist")
                 bind_ajax_heart(productForm)
+                $('.wish-div').unbind()
+                $('.wish-div').click(
+                    function(e){
+                      $targetCard = $(e.target)
+                      if (e.target.tagName == 'IMG'){
+                      linkCard = $targetCard.attr('link_for_click')
+                      window.location.href = linkCard
+                      }//if img
+                    })//click card
                 window.history.replaceState( {} , 'title', data.link)
                 $('#language-controll-input').attr('value',window.location.href)
                         }//success
@@ -629,6 +638,15 @@ $('#brand-select').searchableOptionList({
                $('.items_count').html(data.count_items)
                 var productForm=$(".form-product-ajax-wishlist")
                 bind_ajax_heart(productForm)
+                $('.wish-div').unbind()
+                $('.wish-div').click(
+                    function(e){
+                      $targetCard = $(e.target)
+                      if (e.target.tagName == 'IMG'){
+                      linkCard = $targetCard.attr('link_for_click')
+                      window.location.href = linkCard
+                      }//if img
+                    })//click card
                 window.history.replaceState( {} , 'title', data.link)
                 $('#language-controll-input').attr('value',window.location.href)
                         }//success
