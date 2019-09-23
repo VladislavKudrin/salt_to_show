@@ -1,5 +1,8 @@
 import random
 import string
+import os
+from .settings import BASE_DIR
+from categories.models import Brand
 
 from django.utils.text import slugify
 
@@ -72,8 +75,19 @@ def unique_slug_generator(instance, new_slug=None):
     return slug
 
 
+# def create_brands(f):
+# #     # print(f.read())
+#     brand_list = []
+#     for i in f:
+#         i = i.rstrip()
+#         brand_list.append(i)
+#         Brand.objects.create(brand_name=i)
+#         print(i)
+#     return brand_list
 
-
-
+# path = os.path.join(BASE_DIR, 'brandsS.txt')
+# f = open(path, "r")
+   
+# brand_list = create_brands(f)
 
 

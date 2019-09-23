@@ -3,23 +3,20 @@
   <footer class="page-footer font-small">
       <div class="container-fluid">
         <div class="row">
-          <div id="footer-desktop" class="col-4 my-2">
-            <a href="{% url 'about' %}" class="text-body mx-3" id="font">О нас</a>
-            <a href='{% url "contact" %}' class="text-body mx-3" id="font">Контакт</a>
+          <div class="col-4 my-2 footer-desktop">
+            <a href="{% url 'about' %}" class="text-body mx-3 font">О нас</a>
+            <a href='{% url "contact" %}' class="text-body mx-3 font">Контакт</a>
           </div>
 
-          <div id="footer-mobile" class="col-5 mt-2" style="left: 5%;">
-            <a href="{% url 'about' %}" class="text-body mr-3" id="font">О нас</a>
-            <a href='{% url "contact" %}' class="text-body" id="font">Контакт</a>
+          <div class="col-6 mt-2 footer-mobile">
+            <a href="{% url 'about' %}" class="text-body mr-3 font">О нас</a>
+            <a href='{% url "contact" %}' class="text-body font">Контакт</a>
           </div>
 
-          <div id="footer-mobile" class="col-7 mt-2" style="right: 5%;">
+          <div class="col-6 mt-2 footer-mobile">
             <ul class="soc-seti pl-0">
-              <li class="soc-set" >
-                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
-              </li>
               <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-vk icon"></i></a>
+                <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
               </li>
               <li class="soc-set">
                 <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
@@ -27,13 +24,16 @@
               <li class="soc-set">
                 <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
               </li>
+              <!-- <li class="soc-set" >
+                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
+              </li> -->
             </ul>
           </div>
 
 
-          <div id="footer-desktop" class="col-xs-12 col-md-4 my-2">
+          <div class="col-xs-12 col-md-4 my-2 footer-desktop">
             <ul class="soc-seti pl-0">
-              <li class="soc-set">
+              <li class="soc-set pl-1">
                 <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
               </li>
               <li class="soc-set">
@@ -48,8 +48,8 @@
             </ul>
           </div>
 
-          <div id="footer-desktop" class="col-md-4 my-2 text-right">
-            <a class="text-body mx-3" id="font">SALT © 2019</a>
+          <div class="col-md-4 my-2 text-right footer-desktop">
+            <a class="text-body mx-3 font">SALT © 2019</a>
           </div>
 
         </div>

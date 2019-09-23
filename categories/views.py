@@ -221,7 +221,7 @@ class CategoryFilterView(ListView):
 					object_list = paginator.page(paginator.num_pages)
 				empty_price = all(minmax is '' for minmax in request.GET.getlist('price'))
 				if len(request.GET)==1 and empty_price:
-					link_codiert = 'givemetheloot'
+					link_codiert = 'all'
 				if page:
 					if int(page) > paginator.num_pages:
 						page_continue = False

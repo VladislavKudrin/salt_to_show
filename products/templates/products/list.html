@@ -9,6 +9,26 @@
   padding-bottom: 7% !important;
 }*/
 
+.my-custom-scrollbar {
+  position: absolute;
+  padding-right: 20px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+
+	width: 320px;
+	padding-right: 0px;
+	margin-bottom: 0;
+	position: relative;
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 100px);
+	width: 100%;
+}
+
+.ps__rail-x { 
+	display: none !important; 
+}
+
  #trigger {
  	visibility: hidden;
  	display: none;
@@ -29,7 +49,7 @@
 	background-color: white;
 }
 #btn-filters:hover{
-	background-color: #f5f5f5;
+	background-color: none;
 }
 /*[hide='false']{
 
@@ -50,8 +70,12 @@
 		display: none;
 	}
 
-	#btn-filters, .custom-select {
+	.custom-select {
 		width: 85% !important;
+	}
+
+	#btn-filters {
+		width: 60% !important;
 		padding: 4px;
 	}
 	.sticky-offset{
@@ -62,6 +86,12 @@
 		position: fixed!important;
 		z-index: 1500;
 
+#btn-filters{
+	font-size: 1rem;
+/*	width: 40%;
+*/	border: none!important;
+	background-color: white;
+}
 
 	}
 	#nav_categories{
@@ -83,11 +113,24 @@
 }
 }
 
+
 nav{
 	margin-bottom: 0px!important;
 }
+
 #nav_categories{
 	
+
+
+.crossed {
+     background: 
+         linear-gradient(to top right,
+             rgba(0,0,0,0) 0%,
+             rgba(0,0,0,0) calc(50% - 0.8px),
+             rgba(0,0,0,1) 50%,
+             rgba(0,0,0,0) calc(50% + 0.8px),
+             rgba(0,0,0,0) 100%);
+
 }
 
 </style>
@@ -99,7 +142,7 @@ nav{
 <div class="row m-0">
 	<div class="col-6 col-md-4 text-left p-0">
 		<button hidden class="btn" hide='true' id='btn-filters'>
-			<i class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
+			<i id="filter-icon" class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
 		</button>
 	</div>
 	<div class="col-4 text-center my-auto p-0 filters-desktop heading" id='result-text'>
@@ -125,7 +168,12 @@ nav{
 </div>
 <div class="container-fluid ajax-search">
 	<div class='row'>
+
 		<div hidden class='col-3 custom-box position-sticky' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: hidden; overflow-x: hidden; ">
+
+<!-- 		<div class='col-md-3'></div>
+		<div hidden class='col-3 custom-box position-fixed  my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; "> -->
+
 			{% include 'categories/snippets/filter-box.html' with instance=obj %}
 		</div>
 		<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
@@ -134,7 +182,6 @@ nav{
 		<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" style="z-index: 2000; top:90%; left: 85%; cursor: pointer"></i>
 	</div>
 </div>
-
 
 <script>
 	$(document).ready(
@@ -164,7 +211,25 @@ nav{
 		    })//click card
 
 		}
-		)//doc ready
+		)
+
+
+	//Scrolling
+const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
+const ps = new PerfectScrollbar('.my-custom-scrollbar', {
+    wheelSpeed: 1,
+    wheelPropagation: false,
+    swipeEasing: true,
+    suppressScrollX: true,
+    scrollXMarginOffset: 100,
+    // minScrollbarLength: 10,
+    // maxScrollbarLength: 10
+
+});
+
+$('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
+
 </script>
 {% endblock %}
 

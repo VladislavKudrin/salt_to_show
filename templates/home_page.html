@@ -111,7 +111,6 @@ nav{
   }
   
  
-
   #cards-mobile {
     padding-top: 1rem;
   }
@@ -119,6 +118,10 @@ nav{
   .flip-card {
     width: 100px;
     height: 100px;
+  }
+
+  .spacer{
+    padding-bottom: 0px !important;
   }
 }
 
@@ -387,17 +390,20 @@ nav{
 }
 
 .most-liked{
-  padding-top: 60px !important;
-  padding-bottom: 80px !important;
+  padding-top: 20px !important;
+  padding-bottom: 10px !important;
 }
 
 .sell-buy{
   padding-bottom: 40px !important;
 
 }
+
 .info{
-  padding-bottom: 0px !important;
+  margin-bottom: 10px !important;
+  padding-top: 70px !important;
 }
+
 .read-more{
   padding-top: 0px !important;
 }
@@ -452,6 +458,29 @@ nav{
 ЖЕСТКАЯ
 */
 
+.card-brand {
+    min-width: 250px;
+    max-height: 200px;
+    min-height: 200px;
+    max-width: 250px;
+    object-fit: contain;
+    align-items: center;
+    padding: 60px;
+/*    padding-right: 40px;
+    padding-left: 40px;*/
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin-top: 10px !important;
+/*    margin-bottom: 10px;*/
+/*    margin-left: 10px;*/
+/*    max-width: 275px;*/
+}
+
+ .spacer {
+     padding-bottom: 100px
+ }
+
 
 </style>
 </head>
@@ -475,9 +504,6 @@ nav{
 
 <div id=banner-container class='middle-heading banner-mobile'>
   <span id=flip>
-<!--     <div class='selected'><div>Selected brands</div></div>
-    <div><div>Full Security</div></div>
-    <div><div>No fakes</div></div> -->
   </span>
 </div>
 
@@ -495,39 +521,12 @@ nav{
 </div>
 
 
-<!-- Flying text
-
-<div class="row fluid ">
 
 
-  <div class="col fluid" style="padding-left: 0px; padding-right: 0px;">
-<div class="bg">
-<div class="jumbotron jumbotron ml-10 mb-3" style=" background:transparent; background-color:transparent; color:black; ">
-  <div class="container">
-
-   <p class=" my-auto text-center" style='font-size: 1.5em; opacity: 0.6;'><span class='strike'>Базар</span> </p>
-            <ul class="fly-in-text hidden mt-4 pr-4">
-              <li> М</li>
-              <li> A</li>
-              <li> Р</li>
-              <li> K</li>
-              <li> E</li>
-              <li> T</li>
-              <li> П</li>
-              <li> Л</li>
-              <li> Е</li>
-              <li> Й</li>
-              <li> С</li>                                    
-        </ul>
-  </div>
-</div>
-</div>
-</div>
-</div> -->
 
 
-<!-- Second row --> 
-<div class="row fluid text-center sell-buy" style='padding-bottom: 100px'>
+<!--Second row - BUY SELL -->
+<div class="row fluid text-center sell-buy spacer">
     <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
       <div class="bg">
       <a class="btn btn-light-home m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-color: transparent;">
@@ -557,7 +556,109 @@ nav{
 
 
 
-    <div class="row fluid info" style='padding-bottom: 80px'>
+
+
+<!--Third row - Brands -->
+<div class="row fluid text-center most-liked m-0" style='padding-bottom: 40px'>
+
+<div class="container" style="max-width: 100%;">
+
+<div class='row' >
+    <div class="col-12 text-left trending-name">
+    <p class="heading ml-md-4">{{ popular_brands }}</p>
+  </div>
+
+
+<div class="scrolling-wrapper" style='height:inherit;'>
+  {% for obj in brands %}
+    <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
+            <a href="{% url 'products:list' %}brand={{ obj.id }}">
+              <img src="{% static 'img/logos/'%}{{ obj }}.png" %}"  alt={{obj}} class='card-brand  my-auto'>
+            </a>
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+<!--Fourth row - Liked -->
+<div class="row fluid text-center most-liked m-0" style='padding-bottom: 80px'>
+<div class="container" style="max-width: 100%;">
+<div class='row' >
+    <div class="col-6 text-left trending-name">
+    <p class="heading ml-md-4">{{ trending }}</p>
+  </div>
+  <div class="col-6 mt-3 text-right trending-col">
+    <a href="{% url 'products:list' %}">
+      <span class="mr-auto small" id="read-more"> 
+          {{ see_all }}
+        <i class="fas fa-arrow-right pl-1"></i>
+      </span>
+    </a>
+  </div>  
+<div class="scrolling-wrapper" style='height:inherit;'>
+  {% for obj in liked %}
+    <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+      {% include 'products/snippets/card-trending.html' with instance=obj %}
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<!--Fifth row - Account /Login -->
+<div class="row fluid text-center account">
+  <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
+      {% if request.user.is_authenticated %}
+          <div class="container mt-5"> 
+          {% if request.user.profile_foto %}
+          <a href="{{ request.user.get_absolute_url }}" role="button">
+          <p class="heading">{{ go_to_account }}</p>
+          <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
+          </a>
+          {% else %}
+          <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
+          <p class="heading">{{ go_to_account }}</p>
+          <i class="far fa-user fa-2x"></i>
+          </a>
+          {% endif %}
+          </div>
+      {% else %}
+            <div class="container mt-5"> 
+            <p class="heading">{{ become_customer }}</p>
+            <div class='row justify-content-center'>
+            <div class='col-auto' style='min-width: 40vw;'>
+            <a class="btn btn-outline-dark btn-block login" role="button" href="{% url 'login' %}">
+            <div>{{ login_registration }}</div></a>
+            </div>
+              </div>
+            </div>
+      {% endif %}
+  </div>
+</div>
+
+
+
+
+
+
+
+<!--Sixth row - Advantages -->
+ <div class="row fluid info" style='padding-top: 100px; padding-bottom:120px'>
 
         <div class="col-xs-12 col-md-4 fluid" id="safe-card">
           <a href="{% url 'about' %}#safe">
@@ -639,132 +740,18 @@ nav{
 
   </div>
 
+  
 
 
 
 
-<!-- Second row --> 
-
-
-<!--   <div class="row tricolor" style='width:100vw;'>
-  <div class="col text-center " style="padding-left: 0px; padding-right: 0px; height:200px">
-     {% if request.user.is_authenticated %}
-                <div class="container mt-5"> 
-            {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button">
-              <p class=" middle-heading" style='color:white !important; text-transform: uppercase;'>Go to your profile</p>
-              <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
-            </a>
-
-            {% else %}
-            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
-              <p class=" middle-heading" style='color:white !important; text-transform: uppercase;'>Go to your profile</p>
-              <i class="far fa-user fa-2x"></i></a>
-            {% endif %}
-</div>
-        {% else %}
-          <div class="container mt-5"> 
-    <p class="" style='font-size: 30px; color:white !important;'>Be one of the first</p>
-        <div class='col-7 mx-auto'>
-      <a class="btn btn-outline-dark btn-block" role="button" href="{% url 'login' %}">
-      <div class=" display-6" style='color:white !important'>Login/Sign Up</div></a>
-    </div>
-  </div>
-      {% endif %}
-  </div>
-</div> -->
-
-
-<div class="row fluid text-center account">
-
-  <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
-
-     {% if request.user.is_authenticated %}
-                <div class="container mt-5"> 
-    
-          
-            {% if request.user.profile_foto %}
-            <a href="{{ request.user.get_absolute_url }}" role="button">
-              <p class="heading">{{ go_to_account }}</p>
-              <img src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
-            </a>
-
-            {% else %}
-            <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
-              <p class="heading">{{ go_to_account }}</p>
-              <i class="far fa-user fa-2x"></i></a>
-            {% endif %}
-
-</div>
-        {% else %}
-          <div class="container mt-5"> 
-    <p class="heading">{{ become_customer }}</p>
- <div class='row justify-content-center'>
-        <div class='col-auto' style='min-width: 40vw;'>
-      <a class="btn btn-outline-dark btn-block login" role="button" href="{% url 'login' %}">
-      <div>{{ login_registration }}</div></a>
-    </div>
-      {% endif %}
-
-</div>
-
-  </div>
-</div>
-</div>
-
-
-
-
-
-
-
-<!-- 3rd row -->
-
-
-
-<div class="row fluid text-center most-liked m-0" style='padding-top:100px; padding-bottom:150px'>
-
-<div class="container" style="max-width: 100%;">
-
-<div class='row' >
-    <div class="col-6 text-left trending-name">
-    <p class="heading ml-md-4">{{ trending }}</p>
-  </div>
-
-  <div class="col-6 mt-3 text-right trending-col">
-    <a href="{% url 'products:list' %}">
-      <span class="mr-auto small" id="read-more"> 
-          {{ see_all }}
-        <i class="fas fa-arrow-right pl-1"></i>
-      </span>
-    </a>
-  </div>  
-<div class="scrolling-wrapper" style='height:inherit;'>
-  {% for obj in liked %}
-    <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-      {% include 'products/snippets/card.html' with instance=obj %}
-        </div>
-  {% endfor %}
-</div>
-</div>
-</div>
-
-</div>
-
-
-<!-- END -->
-
-
-
-
-
-
+<!--  if okay remove permanently...
 
 
 </div>
 </div>
 
-
+ -->
 
 
 
