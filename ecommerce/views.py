@@ -123,44 +123,42 @@ def home_page(request):
 	context = {}
 	context['qs'] = qs
 	context['liked'] = most_liked
-
-	brands_navbar_init = ['Stone']
-	brand_navbar_lookups = (Q(brand_name__iexact='nothing'))
-	for brand in brands_navbar_init:
-		brand_navbar_lookups = brand_navbar_lookups|(Q(brand_name__iexact=brand))
-	context['showed_brands_navbar'] = Brand.objects.filter(brand_navbar_lookups)
+	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang', 'Boss']
+	to_send = []
+	for i in brands: 
+		to_send.append(Brand.objects.filter(brand_name=i).first())
+	# brands_navbar_init = brands
+	# brand_navbar_lookups = (Q(brand_name__iexact='nothing'))
+	# for brand in brands_navbar_init:
+	# 	brand_navbar_lookups = brand_navbar_lookups|(Q(brand_name__iexact=brand))
+	context['showed_brands_navbar'] = to_send
 	context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
 	context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
 	context['fields_gender'] = Gender.objects.all()
 	context['fields_category'] = Category.objects.all()
 	context['fields_overcategory'] = Overcategory.objects.all()
 	context['fields_undercategory'] = Undercategory.objects.all()
-
-	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang']
-	to_send = []
-	for i in brands: 
-		to_send.append(Brand.objects.filter(brand_name=i).first())
 	context['brands'] = to_send
 
-	if request.session.get('language') == 'RU':
-		context['kids_navbar'] = 'Дети'
-		context['new_navbar'] = 'Свежее'
-		context['brand'] = 'Бренд'
-		context['why_sell'] = 'Поддерживай круговорот одежды в природе.'
-		context['why_buy'] = 'Найди свой брендовый айтем быстро и без фейков.'
-		context['safe'] = 'Надежно'
-		context['why_safe'] = 'Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.'
-		context['modern'] = 'Современно'
-		context['why_modern'] = 'Мы используем Искусственный Интеллект, чтобы исключать подделки из нашего каталога.'
-		context['simple'] = 'Просто'
-		context['why_simple'] = 'Наш интуитивный дизайн разработан с любовью к простоте и минимализму.'
-		context['read_more'] = 'Узнай больше'
-		context['go_to_account'] = 'Перейти в аккаунт'
-		context['become_customer'] = 'Присоединяйся'
-		context['login_registration'] = 'Логин | Регистрация'
-		context['trending'] = 'В тренде:'
-		context['see_all'] = 'Показать все'
-		context['popular_brands'] = 'Популярные бренды:'
+	if request.session.get('language') == 'EN':
+		context['kids_navbar'] = 'Kids'
+		context['new_navbar'] = 'New'
+		context['brand'] = 'Brand'
+		context['why_sell'] = 'Contribute to the sustainable clothes-circle.'
+		context['why_buy'] = 'Find your designer piece fast and safe.'
+		context['safe'] = 'Safe'
+		context['why_safe'] = 'Uploaded items are monitored 24/7/365. There are no fakes on SALT.'
+		context['modern'] = 'AI-Powered'
+		context['why_modern'] = 'We use Machine Learning to detect fakes in our catalogue.'
+		context['simple'] = 'Simple'
+		context['why_simple'] = 'Our intuitive design was made with love to simplicity and minimalism.'
+		context['read_more'] = 'Read more'
+		context['go_to_account'] = 'Go to your profile'
+		context['become_customer'] = 'Join our community'
+		context['login_registration'] = 'Login | Registration'
+		context['trending'] = 'Trending:'
+		context['see_all'] = 'See all'
+		context['popular_brands'] = 'Popular designers:'
 	elif request.session.get('language') == 'UA':
 		context['kids_navbar'] = 'Дiтi'
 		context['new_navbar'] = 'Свiже'
@@ -181,24 +179,24 @@ def home_page(request):
 		context['see_all'] = 'Показати всі'
 		context['popular_brands'] = 'Популярні бренди:'
 	else:
-		context['kids_navbar'] = 'Kids'
-		context['new_navbar'] = 'New'
-		context['brand'] = 'Brand'
-		context['why_sell'] = 'Contribute to the sustainable clothes-circle.'
-		context['why_buy'] = 'Find your designer piece fast and safe.'
-		context['safe'] = 'Safe'
-		context['why_safe'] = 'Uploaded items are monitored 24/7/365. There are no fakes on SALT.'
-		context['modern'] = 'AI-Powered'
-		context['why_modern'] = 'We use Machine Learning to detect fakes in our catalogue.'
-		context['simple'] = 'Simple'
-		context['why_simple'] = 'Our intuitive design was made with love to simplicity and minimalism.'
-		context['read_more'] = 'Read more'
-		context['go_to_account'] = 'Go to your profile'
-		context['become_customer'] = 'Join our community'
-		context['login_registration'] = 'Login | Registration'
-		context['trending'] = 'Trending:'
-		context['see_all'] = 'See all'
-		context['popular_brands'] = 'Popular designers:'
+		context['kids_navbar'] = 'Дети'
+		context['new_navbar'] = 'Свежее'
+		context['brand'] = 'Бренд'
+		context['why_sell'] = 'Поддерживай круговорот одежды в природе.'
+		context['why_buy'] = 'Найди свой брендовый айтем быстро и без фейков.'
+		context['safe'] = 'Надежно'
+		context['why_safe'] = 'Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал.'
+		context['modern'] = 'Современно'
+		context['why_modern'] = 'Мы используем Искусственный Интеллект, чтобы исключать подделки из нашего каталога.'
+		context['simple'] = 'Просто'
+		context['why_simple'] = 'Наш интуитивный дизайн разработан с любовью к простоте и минимализму.'
+		context['read_more'] = 'Узнай больше'
+		context['go_to_account'] = 'Перейти в аккаунт'
+		context['become_customer'] = 'Присоединяйся'
+		context['login_registration'] = 'Логин | Регистрация'
+		context['trending'] = 'В тренде:'
+		context['see_all'] = 'Показать все'
+		context['popular_brands'] = 'Популярные бренды:'
 		
 
 

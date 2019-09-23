@@ -243,7 +243,7 @@ class CategoryFilterView(ListView):
 		fields_size = Size.objects.all()
 		fields_condition = Condition.objects.all()
 		fields_brand = Brand.objects.all()
-		brands_navbar_init = ['Stone']
+		brands_navbar_init = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang', 'Boss']
 		brand_navbar_lookups = (Q(brand_name__iexact='nothing'))
 		for brand in brands_navbar_init:
 			brand_navbar_lookups = brand_navbar_lookups|(Q(brand_name__iexact=brand))

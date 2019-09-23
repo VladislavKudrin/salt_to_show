@@ -499,6 +499,7 @@ $('#brand-select').searchableOptionList({
                 var productForm=$(".form-product-ajax-wishlist")
                 bind_ajax_heart(productForm)
                 window.history.replaceState( {} , 'title', data.link)
+                $('#language-controll-input').attr('value',window.location.href)
                         }//success
         })//ajax form submit
             },
@@ -629,6 +630,7 @@ $('#brand-select').searchableOptionList({
                 var productForm=$(".form-product-ajax-wishlist")
                 bind_ajax_heart(productForm)
                 window.history.replaceState( {} , 'title', data.link)
+                $('#language-controll-input').attr('value',window.location.href)
                         }//success
         })//ajax form submit
     })//change checkboxes
