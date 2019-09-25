@@ -208,7 +208,7 @@ class CategoryFilterView(ListView):
 					qs=qs.order_by('-price')
 				else:
 					qs=qs.order_by('-timestamp')
-				object_list = qs
+				object_list = qs.authentic()
 				paginator = Paginator(object_list, items_per_page) 
 				page = request.GET.get('page')
 				try:
