@@ -451,7 +451,6 @@ containerWithItems.scroll(
                         if (data.count_pages == true){
                             $('#container-filters-update').append(data.html)
                             $('#items_count').html(data.count_items)
-                            console.log(countAjax)
                             var productForm=$(".form-product-ajax-wishlist")
                             productForm.unbind()
                             bind_ajax_heart(productForm)
@@ -498,15 +497,15 @@ $('#brand-select').searchableOptionList({
                $('#items_count').html(data.count_items)
                 var productForm=$(".form-product-ajax-wishlist")
                 bind_ajax_heart(productForm)
-                $('.wish-div').unbind()
-                $('.wish-div').click(
-                    function(e){
-                      $targetCard = $(e.target)
-                      if (e.target.tagName == 'IMG'){
-                      linkCard = $targetCard.attr('link_for_click')
-                      window.location.href = linkCard
-                      }//if img
-                    })//click card
+                // $('.wish-div').unbind()
+                // $('.wish-div').click(
+                //     function(e){
+                //       $targetCard = $(e.target)
+                //       if (e.target.tagName == 'IMG'){
+                //       linkCard = $targetCard.attr('link_for_click')
+                //       window.location.href = linkCard
+                //       }//if img
+                //     })//click card
                 window.history.replaceState( {} , 'title', data.link)
                 $('#language-controll-input').attr('value',window.location.href)
                         }//success
@@ -638,15 +637,15 @@ $('#brand-select').searchableOptionList({
                $('.items_count').html(data.count_items)
                 var productForm=$(".form-product-ajax-wishlist")
                 bind_ajax_heart(productForm)
-                $('.wish-div').unbind()
-                $('.wish-div').click(
-                    function(e){
-                      $targetCard = $(e.target)
-                      if (e.target.tagName == 'IMG'){
-                      linkCard = $targetCard.attr('link_for_click')
-                      window.location.href = linkCard
-                      }//if img
-                    })//click card
+                // $('.wish-div').unbind()
+                // $('.wish-div').click(
+                //     function(e){
+                //       $targetCard = $(e.target)
+                //       if (e.target.tagName == 'IMG'){
+                //       linkCard = $targetCard.attr('link_for_click')
+                //       window.location.href = linkCard
+                //       }//if img
+                //     })//click card
                 window.history.replaceState( {} , 'title', data.link)
                 $('#language-controll-input').attr('value',window.location.href)
                         }//success
