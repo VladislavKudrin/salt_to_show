@@ -88,8 +88,8 @@
                   <div class='{{ category }}-size category-size'>
                     {% for size in sizes %}
                       {% if category.category == size.size_for %}
-                      <div class='{{ size.size_type }}_sizes col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}' for_black_size='{{ size }}-{{ category }}'>
-                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size }}</p>
+                      <div class='{{ size.size_type }}_sizes col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}' for_black_size='{{ size.size }}-{{ category }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size.size }}</p>
                       </div>
                       {% endif %}
                     {% endfor %}
