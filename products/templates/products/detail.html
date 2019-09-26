@@ -468,10 +468,11 @@ p {
 
 
 <script src="{% static 'js/jquery.morelines.js' %}"></script>
-
+<script src="{% static 'js/jquery.zoom.js' %}"></script>
 <script type="text/javascript">
 
 
+  $('img').wrap('<span style="display:inline-block"></span>').css('display', 'block').parent().zoom({on:'click'});
 
 
 
