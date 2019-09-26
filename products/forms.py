@@ -96,12 +96,10 @@ class ProductCreateForm(forms.ModelForm):
 			self.fields['condition'].label = "Стан"
 
 
-
 		
 	def clean_sex(self):
 		request = self.request
 		data_sex = self.cleaned_data.get('sex')
-		print(self.cleaned_data, 'privet')
 		sex = Gender.objects.filter(id=int(data_sex))
 		self.cleaned_data['overcategory'] = sex.first().gender_for
 		if sex is '' or sex.exists()==False:
@@ -111,7 +109,6 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_undercategory(self):
 		request = self.request
 		data = self.cleaned_data
-		print(data)
 		data_undercat = self.cleaned_data.get('undercategory')
 		undercategory = Undercategory.objects.filter(id=int(data_undercat))
 		self.cleaned_data['category'] = undercategory.first().undercategory_for

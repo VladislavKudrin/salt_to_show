@@ -394,6 +394,13 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = ProductUpdateForm
 	template_name = 'products/product-create.html'
+	# def post(self, request, *args, **kwargs):
+	# 	form = self.get_form()
+	# 	if form.is_valid():
+	# 		return self.form_valid(form)
+	# 	else:
+	# 		return self.form_invalid(form)
+
 	def get_form_kwargs(self):
 		kwargs = super(ProductUpdateView, self).get_form_kwargs()
 		kwargs['request'] = self.request
@@ -420,7 +427,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
-
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
 		request = self.request
