@@ -10,7 +10,7 @@ class ProductAdmin(admin.ModelAdmin):
 	fieldsets = (
         ('User', {'fields': ('user',)}),
         ('Product info', {'fields': ('title', 'slug', 'description', 'price', 'active')}),
-        ('Product brand, category and size', {'fields': ('brand','overcategory', 'sex', 'category', 'undercategory')}),
+        ('Product brand, category and size', {'fields': ('brand','overcategory', 'sex', 'category', 'undercategory', 'size')}),
         ('Condition', {'fields': ('condition',)}),
         ('Authentity', {'fields': ('authentic','get_absolute_url_admin')}),
     )
