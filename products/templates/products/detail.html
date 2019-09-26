@@ -10,7 +10,9 @@
 <input type="hidden" id='language_pref' name="language_pref" value="{{ request.session.language }}">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400&display=swap&subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet"> 
 <style type="text/css">
-
+/*.zoomImg{
+	cursor: pointer!important;
+}*/
 .user-input{
 	font-size: 12px;
 }
@@ -216,7 +218,7 @@ p {
 		{% for image in images %}
 		<div class="row">
 			<div class="col mb-3" style="display: flex; justify-content: center;">
-				<img src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
+				<img class='for_zoom' src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
 			</div>
 		</div>
 		{% endfor %}
@@ -472,7 +474,7 @@ p {
 <script type="text/javascript">
 
 
-  $('img').wrap('<span style="display:inline-block"></span>').css('display', 'block').parent().zoom({on:'click'});
+  $('.for_zoom').wrap('<span style="display:inline-block"></span>').css('display', 'block').parent().zoom({on:'click'});
 
 
 
