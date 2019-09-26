@@ -98,7 +98,7 @@ class Size(models.Model):
 	size_kids 		= models.CharField(max_length=120, blank=True)
 	size_type 		= models.ForeignKey(Overcategory, blank = True, null=True)
 	def __str__(self):
-		return (self.size)
+		return (self.size + '_'+self.size_for+'_'+self.size_type.overcategory)
 
 class Brand(models.Model):
 	brand_name = models.CharField(max_length=120, blank=True)
