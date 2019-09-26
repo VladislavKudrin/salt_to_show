@@ -318,6 +318,7 @@ if (currentPath.indexOf("update") != -1){
     method:'POST',
     data: {'data[]':keyArray},
     success: function(data){
+        
     },//success
     error: function(errorData){
     // $.alert({
