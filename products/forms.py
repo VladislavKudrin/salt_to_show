@@ -131,7 +131,6 @@ class ProductCreateForm(forms.ModelForm):
 		return undercategory.first()
 	
 	def clean_size(self):
-
 		request = self.request
 		data = self.cleaned_data
 		data_size = self.cleaned_data.get('size')
@@ -146,14 +145,8 @@ class ProductCreateForm(forms.ModelForm):
 			error_message = "Please, select a valid size"
 		if size is '' or size.exists()==False:
 			self.add_error('size', error_message)
-		if data_under is not None:
-			if data_under.undercategory_for.category != size.first().size_for:
-				self.add_error('size', error_message)
-		elif data_overcategory is not None:
-			if data_under.undercategory_for.category_for.gender_for != size.first().size_type:
-				self.add_error('size', error_message)
-		elif data_overcategory is not None and data_under is not None:
-			if data_under.undercategory_for.category_for.gender_for != size.first().size_type and data_under.undercategory_for.category != size.first().size_for:
+		if data_overcategory is not None or data_under is not None:
+			if data_under.undercategory_for.category_for.gender_for != size.first().size_type or data_under.undercategory_for.category != size.first().size_for:
 				self.add_error('size', error_message)
 		return size.first()
 

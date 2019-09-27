@@ -20,7 +20,6 @@ def index(array, index):
 
 @register.filter
 def to_default_language(value):
-	print(value.get('language'))
 	if type(value) != str:
 		language = value.get('language')
 		if language is None:
