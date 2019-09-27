@@ -245,10 +245,20 @@ function deleteRotateItem(item){
         if(data['error']) {
         $.each(data['error'],
             function(index, value){
-                displayCreating(createFormSubmitBtn, "Create",false)
+                var btnText = 'Залить' 
+                if(languageOption=='RU'){
+                btnText = 'Залить'
+                }//if rus
+                else if (languageOption=='UA'){
+                btnText = 'Залити'
+                }//if rus
+                else{
+                btnText = 'Create'
+                }//if not rus
+                displayCreating(createFormSubmitBtn, btnText,false)
                 if ($('.'+index).length==0){
                     $('#id_' + index).addClass('is-invalid')
-                    $('#id_' + index).after("<p class='invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
+                    $('#id_' + index).after("<p class='m-0 invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
                 }//if  
             })//each
             }//if there are errors
@@ -283,6 +293,7 @@ function deleteRotateItem(item){
 var currentPath = window.location.href
 
 if (currentPath.indexOf("update") != -1){
+    var languageOption = $('#language').val()
     function rotateItem(item){
     item.on("click", 
     function(event){
@@ -298,14 +309,40 @@ if (currentPath.indexOf("update") != -1){
     }//if rotate
     })//onclicktrash
 }//deleteItem
+    function displayCreating(submitBtn, defaultText, doSubmit){
+      if (doSubmit){
+        submitBtn.addClass("disabled")
+        submitBtn.attr("disabled", true)
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check...")
+        if(languageOption=='RU'){
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Проверка на оригинальность...")
+        }//if rus
+        else if (languageOption=='UA'){
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Перевірка на оригінальність...")
+        }//if rus
+        else{
+            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check...")
+        }//if not rus
+        } //if dosubmit 
+      else {
+        submitBtn.removeClass("disabled")
+        submitBtn.attr("disabled", false)
+        submitBtn.html(defaultText)
+      }//elsedosubmit
+    }   
     var formSubmit = $('#example-form-1')
     var elementList = $("ul.gallery > li")
     rotateItem(elementList)
+    var createFormSubmitBtn = formSubmit.find("[type='submit']")
+    var createFormSubmitBtnTxt = createFormSubmitBtn.text()
     formSubmit.submit(
     function(event){
+    event.preventDefault()
+    var formData = formSubmit.serialize()
     var formCreate = $('#customSort')
     var galleryUpdate = $('#gallery')
     var action = formSubmit.attr("action_url")
+    var action_update = formSubmit.attr("action_url_update")
     var elements = $('#example-form-1 ul li')
     var keyArray = []
     $.each(elements,
@@ -314,20 +351,56 @@ if (currentPath.indexOf("update") != -1){
         keyArray.push(val.val())
     })//each
     $.ajax({
-    url: action,
+    url: action_update,
     method:'POST',
-    data: {'data[]':keyArray},
+    data: formData,
     success: function(data){
-        
-    },//success
-    error: function(errorData){
-    // $.alert({
-    // title: 'OOps!',
-    // content: 'Simple alert!',
-    // theme: "modern"
-    // });
-    console.log('some error');
-    }//error
+        $('.is-invalid').removeClass('is-invalid')
+        $('p').remove('.invalid-feedback')
+        if(data['error']) {
+        $.each(data['error'],
+                function(index, value){
+                    var btnText = 'Сохранить' 
+                    if(languageOption=='RU'){
+                    btnText = 'Сохранить'
+                    }//if rus
+                    else if (languageOption=='UA'){
+                    btnText = 'Зберегти'
+                    }//if rus
+                    else{
+                    btnText = 'Save'
+                    }//if not rus
+                displayCreating(createFormSubmitBtn, btnText,false)
+                if ($('.'+index).length==0){
+                    $('#id_' + index).addClass('is-invalid')
+                    $('#id_' + index).after("<p class='m-0 invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
+                }//if  
+            })//each
+            }//if there are errors
+        else {
+            $.ajax({
+            url: action,
+            method:'POST',
+            data: {'data[]':keyArray},
+            success: function(data){
+
+            },//success
+            error: function(errorData){
+            // $.alert({
+            // title: 'OOps!',
+            // content: 'Simple alert!',
+            // theme: "modern"
+            // });
+            console.log('some error');
+            }//error
+            })//ajax in ajax
+            window.location.href=data.url
+                }//else
+            },//success
+    error:function(errorData){
+        console.log('error')
+        console.log(errorData)
+        }//error_1
     })//ajax
    })//submit_update_create
 }//if_current_path_update
