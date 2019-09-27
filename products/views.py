@@ -394,12 +394,12 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = ProductUpdateForm
 	template_name = 'products/product-create.html'
-	# def post(self, request, *args, **kwargs):
-	# 	form = self.get_form()
-	# 	if form.is_valid():
-	# 		return self.form_valid(form)
-	# 	else:
-	# 		return self.form_invalid(form)
+	def post(self, request, *args, **kwargs):
+		form = self.get_form()
+		if form.is_valid():
+			return self.form_valid(form)
+		else:
+			return self.form_invalid(form)
 
 	def get_form_kwargs(self):
 		kwargs = super(ProductUpdateView, self).get_form_kwargs()
@@ -454,6 +454,38 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
 		return context
+	def form_valid(self, form):
+		request = self.request
+		product = form.save()
+		url = product.get_absolute_url()
+		if self.request.is_ajax():	
+			json_data={
+						'url': url,
+						'slug':product.slug
+							}
+			return JsonResponse(json_data)
+		return redirect(url)
+	def form_invalid(self, form):
+		if self.request.is_ajax():
+			# json_data={
+			# 	'errors':json.dumps(form.errors)
+			# 	}
+			return JsonResponse({'error':form.errors})
+		if self.request.session.get('language') == 'RU':
+			context={
+			'form': form,
+			'button': 'Залить',
+			'title':'Добавить новый айтем',
+			}
+		else:
+			context={
+			'form': form,
+			'button': 'Create',
+			'title':'Add a new product'
+			}
+		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
+		return render(self.request, 'products/product-create.html', context)
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
 	form_class = ProductCreateForm

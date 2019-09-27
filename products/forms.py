@@ -102,8 +102,14 @@ class ProductCreateForm(forms.ModelForm):
 		data_sex = self.cleaned_data.get('sex')
 		sex = Gender.objects.filter(id=int(data_sex))
 		self.cleaned_data['overcategory'] = sex.first().gender_for
+		if self.lan == 'RU':
+			error_message = 'Пожалуйста, выбери гендер'
+		elif self.lan == 'UA':
+			error_message = "Please, select a gender"
+		elif self.lan == 'EN':
+			error_message = "Please, select a gender"
 		if sex is '' or sex.exists()==False:
-			raise forms.ValidationError("Please, select a gender")
+			self.add_error('sex', error_message)
 		return sex.first()
 
 	def clean_undercategory(self):
@@ -112,13 +118,20 @@ class ProductCreateForm(forms.ModelForm):
 		data_undercat = self.cleaned_data.get('undercategory')
 		undercategory = Undercategory.objects.filter(id=int(data_undercat))
 		self.cleaned_data['category'] = undercategory.first().undercategory_for
+		if self.lan == 'RU':
+			error_message = 'Пожалуйста, выбери подходящую категорию'
+		elif self.lan == 'UA':
+			error_message = "Please, select a valid category"
+		elif self.lan == 'EN':
+			error_message = "Please, select a valid category"
 		if undercategory is '' or undercategory.exists()==False:
-			raise forms.ValidationError("Please, select a category")
+			self.add_error('undercategory', error_message)
 		if self.cleaned_data['category'].category_for != data.get('sex'):
-			raise forms.ValidationError("Please, select a valid category")
+			self.add_error('undercategory', error_message)
 		return undercategory.first()
 	
 	def clean_size(self):
+
 		request = self.request
 		data = self.cleaned_data
 		data_size = self.cleaned_data.get('size')
@@ -126,25 +139,36 @@ class ProductCreateForm(forms.ModelForm):
 		data_under = data.get('undercategory')
 		data_overcategory = data.get('sex').gender_for
 		if self.lan == 'RU':
-			msg_size_invalid = 'Пожалуйста, выбери подходящий размер'
-		else:
-			msg_size_invalid = "Please, select a valid size"
+			error_message = 'Пожалуйста, выбери подходящий размер'
+		elif self.lan == 'UA':
+			error_message = "Please, select a valid size"
+		elif self.lan == 'EN':
+			error_message = "Please, select a valid size"
 		if size is '' or size.exists()==False:
-			raise forms.ValidationError(msg_size_invalid)
+			self.add_error('size', error_message)
 		if data_under is not None:
 			if data_under.undercategory_for.category != size.first().size_for:
-				raise forms.ValidationError(msg_size_invalid)
-		if data_overcategory is not None:
+				self.add_error('size', error_message)
+		elif data_overcategory is not None:
 			if data_under.undercategory_for.category_for.gender_for != size.first().size_type:
-				raise forms.ValidationError(msg_size_invalid)
+				self.add_error('size', error_message)
+		elif data_overcategory is not None and data_under is not None:
+			if data_under.undercategory_for.category_for.gender_for != size.first().size_type and data_under.undercategory_for.category != size.first().size_for:
+				self.add_error('size', error_message)
 		return size.first()
 
 	def clean_condition(self):
 		request = self.request
 		data_condition = self.cleaned_data.get('condition')
 		condition = Condition.objects.filter(id=int(data_condition))
+		if self.lan == 'RU':
+			error_message = 'Пожалуйста, выбери состояние'
+		elif self.lan == 'UA':
+			error_message = "Please, select a condition"
+		elif self.lan == 'EN':
+			error_message = "Please, select a condition"
 		if condition is '' or condition.exists()==False:
-			raise forms.ValidationError("Please, select a condition")
+			self.add_error('condition', error_message)
 		return condition.first()
 
 	def clean_brand(self):
@@ -252,6 +276,7 @@ class UploadFileForm(forms.Form):
 class ProductUpdateForm(ProductCreateForm):
 	def __init__(self, request, slug=None, *args, **kwargs):
 		super(ProductUpdateForm, self).__init__(request, *args, **kwargs)
+		self.slug = slug
 		product = Product.objects.get(slug=slug)
 		brand = Brand.objects.get(id=product.brand.id)
 		undercategory = Undercategory.objects.get(id=product.undercategory.id)
@@ -291,7 +316,21 @@ class ProductUpdateForm(ProductCreateForm):
 			self.initial['undercategory']=undercategory.undercategory_ua
 			self.initial['sex']=gender.gender_ua
 			self.initial['condition']=condition.condition_ua
-
+	def save(self, commit=True):
+			product = Product.objects.get(slug=self.slug)
+			product.title = self.cleaned_data['title']
+			product.brand = self.cleaned_data['brand']
+			product.overcategory = self.cleaned_data['overcategory']
+			product.sex = self.cleaned_data['sex']
+			product.category = self.cleaned_data['category']
+			product.undercategory = self.cleaned_data['undercategory']
+			product.size = self.cleaned_data['size']
+			product.condition = self.cleaned_data['condition']
+			product.price = self.cleaned_data['price']
+			product.description = self.cleaned_data['description']
+			if commit:
+				product.save()
+			return product
 
 
 
