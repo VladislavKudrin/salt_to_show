@@ -13,6 +13,10 @@
 .zoomImg{
 	cursor: zoom-in!important;
 }
+.zoomedInCursor{
+	cursor: zoom-out!important;
+}
+
 .user-input{
 	font-size: 12px;
 }
@@ -472,10 +476,22 @@ p {
 <script src="{% static 'js/jquery.morelines.js' %}"></script>
 <script src="{% static 'js/jquery.zoom.js' %}"></script>
 <script type="text/javascript">
+  $('.for_zoom').wrap('<span style="display:inline-block"></span>').css('display', 'block').parent().
+  zoom({
+  	on:'click',
+  	onZoomIn:function(){
+  		$(this).addClass('zoomedInCursor')
+  	},//onZoomIn
+  	onZoomOut:function(){
+  		$(this).removeClass('zoomedInCursor')
+  	}//onZoomOut
+  });//zoom
 
 
-  $('.for_zoom').wrap('<span style="display:inline-block"></span>').css('display', 'block').parent().zoom({on:'click'});
-
+  // console.log($('.zoomImg').css('opacity'))
+  // if($('.zoomImg').css('opacity')==1){
+  // 	console.log('zoomed')
+  // }//if zoomed
 
 
 
