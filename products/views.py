@@ -201,12 +201,10 @@ def image_create_order(request):
 		data = request.POST.getlist('data[]')
 		slug = request.POST.get('slug')
 		rotated = request.POST.getlist('rotate[]')
-		images = ProductImage.objects.filter(slug=slug)
+		images = ProductImage.objects.filter(slug=slug).order_by('pk')
 		array = numpy.array(data)
 		array = array.astype(numpy.int)
 		array = array + 1
-		print(data, 'data_order')
-		print(images, 'images_order')
 		for img in images:
 			min_ = min(array)
 			index_of_min = numpy.where(array==min(array))[0][0].item()
@@ -214,7 +212,6 @@ def image_create_order(request):
 			img.image_order=number
 			array[index_of_min]=max(array)+1
 			img.save()
-			print(img.image_order, 'order_nr')
 		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
 	return redirect('home')
 

@@ -247,7 +247,6 @@ class ImageForm(ProductCreateForm):
 			for idx, i in enumerate(array_qq_id):
 				qs_rotate[i] = array_rotate[idx]
 			for idx, file in enumerate(images):
-				print(file.file_id)
 				this_rotate = qs_rotate.get(str(file.file_id))
 				file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
 				obj = ProductImage.objects.create(
@@ -256,8 +255,6 @@ class ImageForm(ProductCreateForm):
 					slug=product.slug,
 					image_order=idx+1
 									)
-				print(obj, 'file')
-				print(obj.image_order, 'file')
 			UploadedFile.objects.delete_uploaded_files(form_id)
 		return product
 		
