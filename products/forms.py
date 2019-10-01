@@ -250,12 +250,14 @@ class ImageForm(ProductCreateForm):
 				print(file.file_id)
 				this_rotate = qs_rotate.get(str(file.file_id))
 				file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
-				ProductImage.objects.create(
+				obj = ProductImage.objects.create(
 					product=product,
 					image=file,
 					slug=product.slug,
 					image_order=idx+1
 									)
+				print(obj, 'file')
+				print(obj.image_order, 'file')
 			UploadedFile.objects.delete_uploaded_files(form_id)
 		return product
 		
