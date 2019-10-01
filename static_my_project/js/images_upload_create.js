@@ -41,6 +41,7 @@ if (currentPath.indexOf("create") != -1){
     var formSubmit = $('#example-form-1')
     var action = formSubmit.attr("action_url_create")
     var action_order = formSubmit.attr("action_url_create_order")
+    console.log(action_order)
     var buttonImageUpload = $('.image-upload-button')
     var imagesUploadLimit = $('#images-upload-limit')
     buttonImageUpload.hide()
@@ -235,6 +236,8 @@ function deleteRotateItem(item){
         rotateArray.push(rotatedImageTimes)
     })//eacharray
     console.log(rotateArray)
+    console.log(keyArray)
+    console.log('wpwowowo')
     $.ajax({
     url: action,
     method:'POST',
@@ -263,6 +266,7 @@ function deleteRotateItem(item){
             })//each
             }//if there are errors
         else {
+            console.log('here')
           $.ajax({
             url: action_order,
             method:'POST',

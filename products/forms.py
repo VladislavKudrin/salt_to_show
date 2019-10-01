@@ -241,6 +241,7 @@ class ImageForm(ProductCreateForm):
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']
+			print(images, 'form_images')
 			array_rotate = self.request.POST.getlist('rotateTimes')
 			array_qq_id = self.request.POST.getlist('qq-file-id')
 			qs_rotate = {}
