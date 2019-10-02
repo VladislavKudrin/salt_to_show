@@ -10,6 +10,8 @@ from .forms import ComposeForm
 from .models import Thread, ChatMessage, Notification
 from accounts.models import User
 
+def set_chat_timezone(request):
+    print('wtf')
 
 class InboxView(LoginRequiredMixin, ListView):
     template_name = 'chat_ecommerce/inbox.html'
@@ -70,7 +72,7 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         threads_with_unred = Thread.objects.filter(chatmessage__notification__user=me, chatmessage__notification__read='False').distinct() # all threads with notifications where this specific request.user received notification! # filter by foreign key with multiple filters
         context['threads_with_unred'] = threads_with_unred
         context['form'] = self.get_form()
-
+        context['chat_messages_ordered'] = obj.chatmessage_set.all().order_by('pk')
         context['chats'] = Thread.objects.by_recent_message(self.request.user)
         # print(context['chats'])
          # = Thread.objects.filter(chatmessage__user__notification=1)

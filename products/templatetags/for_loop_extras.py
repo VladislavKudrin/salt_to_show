@@ -1,7 +1,7 @@
 from django import template
 from datetime import datetime
 from django.conf import settings
-
+from django.shortcuts import redirect
 register = template.Library()
 
 @register.filter
@@ -20,6 +20,8 @@ def index(array, index):
 
 @register.filter
 def to_default_language(value):
+	request = value
+	value = value.session
 	if type(value) != str:
 		language = value.get('language')
 		if language is None:
@@ -27,7 +29,7 @@ def to_default_language(value):
 			value['language'] = pref
 		else:
 			return ''
-	return ''
+	return request.build_absolute_uri()
 
 @register.filter
 def to_none(value):

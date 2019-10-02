@@ -1,5 +1,18 @@
 
 
+{% if request.session.language == 'RU' %}
+
+{% include 'accounts/snippets/region-modal/languages/region-modal-ru.html' %}  
+
+{% elif request.session.language == 'UA' %}
+
+{% include 'accounts/snippets/region-modal/languages/region-modal-ua.html' %}  
+
+{% else %}
+
+{% include 'accounts/snippets/region-modal/languages/region-modal-en.html' %}
+‚ 
+{% endif %}
 
 
-{% include 'accounts/snippets/region-modal/languages/region-modal-en.html' %}  
+

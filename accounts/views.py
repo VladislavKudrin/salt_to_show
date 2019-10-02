@@ -33,6 +33,18 @@ def region_init(request):
 				'form': form,
 				'path':request.GET.get('location')
 			}
+			if self.request.session.get('language') == 'RU':
+				context['title'] = 'Войти | Зарегистрироваться'
+				context['or_option'] = 'Или'
+				context['password_forgot'] = 'Забыл_а пароль?'
+			elif self.request.session.get('language') == 'UA':
+				context['title'] = 'Увійти | Зареєструватися'
+				context['or_option'] = 'Або'
+				context['password_forgot'] = 'Забув/забула пароль?'
+			else:
+				context['title'] = 'Login | Register'
+				context['or_option'] = 'Or'
+				context['password_forgot'] = 'Forgot password?'
 			html_ = get_template("accounts/snippets/region-modal/region-modal.html").render(request = request, context=context)
 			json_data={
 			'html':html_
