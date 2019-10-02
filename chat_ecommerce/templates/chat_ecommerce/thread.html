@@ -586,31 +586,17 @@ button:focus {
 
 // adds to the current li class 'active' and it becomes gray
 $(document).ready(function ($) {
-	if (!($(window).width() < 768)){
+
 		$.each($('.timestamp'), 
             function(index, value){
-            myDate = new Date(1000*parseInt($(value).html()));
-				var day = days[ myDate.getDay()];
-				var hour = (myDate.getHours()<10?'0':'') + myDate.getHours();
-				var min = (myDate.getMinutes()<10?'0':'') + myDate.getMinutes();
-				var date = day + ' '+ hour.toString() + ':' + min.toString()
-				console.log(myDate)
+            myDate = new Date(($(value).html()));
+			var day = days[ myDate.getDay()];
+			var hour = (myDate.getHours()<10?'0':'') + myDate.getHours();
+			var min = (myDate.getMinutes()<10?'0':'') + myDate.getMinutes();
+			var date = day + ' '+ hour.toString() + ':' + min.toString()
 			$(this).html(date)
             })//each-displayfilesupload
 		
-		}//if mobile
-		else{
-			$.each($('.timestamp'), 
-            function(index, value){
-           	var date = new Date(parseInt($(value).html())*1000);
-			var hours = date.getHours();
-			var minutes = "0" + date.getMinutes();
-			var seconds = "0" + date.getSeconds();
-			var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-			$(this).html(date)
-			})//each-displayfilesupload
-		}//else
-	
 	window.scrollTo(0,document.body.scrollHeight);
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
     var url = window.location.href;
