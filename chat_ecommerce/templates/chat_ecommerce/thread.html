@@ -461,7 +461,7 @@ button:focus {
 				<div class='col pr-0'>
 
 					<ul id='chat-items' class='my-custom-scrollbar' >
-							{% for msg in object.chatmessage_set.all %}
+							{% for msg in chat_messages_ordered %}
 								<li>
 									<div class='row'>
 									<div class="col {% if msg.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
