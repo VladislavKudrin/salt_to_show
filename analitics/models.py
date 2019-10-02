@@ -4,6 +4,8 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sessions.models import Session
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.template.loader import get_template
 
 from accounts.signals import user_logged_in_signal
 from .signals import object_viewed_signal
@@ -123,18 +125,33 @@ if FORCE_INACTIVE_USER_ENDSESSION:
 	post_save.connect(post_save_user_changed_reciever, sender=User)
 
 
-def user_logged_in_reciever(sender, instance, request, *args, **kwargs):
-	user = instance
+def user_logged_in_reciever(sender, user, request, *args, **kwargs):
+	user = user
 	session_key = request.session.session_key
 	ip_adress = get_client_ip(request)
+	timeZone = get_template("accounts/snippets/timezone_script.html").render(request = request)
+	print(timeZone)
 	UserSession.objects.create(
 			user=user,
 			ip_adress=ip_adress,
 			session_key=session_key
 		)
 
+user_logged_in.connect(user_logged_in_reciever)
 
-user_logged_in_signal.connect(user_logged_in_reciever)
+def user_logged_out_reciever(sender, user, request, *args, **kwargs):
+	session_key = request.session.session_key
+	ip_adress = get_client_ip(request)
+	object_ = UserSession.objects.filter(
+			user=user,
+			ip_adress=ip_adress,
+			session_key=session_key
+		)
+	if object_.exists():
+		object_.update(active=False)
+
+user_logged_out.connect(user_logged_out_reciever)
+# user_logged_in_signal.connect(user_logged_in_reciever)
 
 
 

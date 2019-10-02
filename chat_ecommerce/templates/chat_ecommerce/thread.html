@@ -541,6 +541,15 @@ button:focus {
 
 // adds to the current li class 'active' and it becomes gray
 $(document).ready(function ($) {
+	$.each($('.timestamp'), 
+            function(index, value){
+            myDate = new Date(1000*parseInt($(value).html()));
+				var day = days[ myDate.getDay()];
+				var hour = (myDate.getHours()<10?'0':'') + myDate.getHours();
+				var min = (myDate.getMinutes()<10?'0':'') + myDate.getMinutes();
+				var date = day + ' '+ hour.toString() + ':' + min.toString()
+			$(this).html(date)
+            })//each-displayfilesupload
 	window.scrollTo(0,document.body.scrollHeight);
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
     var url = window.location.href;
@@ -626,13 +635,12 @@ socket.onmessage = function(e) {
     }
 );
 	}
-
 	var now = new Date()
 	var day = days[ now.getDay()];
 	var hour = (now.getHours()<10?'0':'') + now.getHours();
 	var min = (now.getMinutes()<10?'0':'') + now.getMinutes();
 	var date = day + ' '+ hour.toString() + ':' + min.toString()
-
+	console.log(date)
 	var opponent_username = chatDataMsg.opponent_username
 	var req = chatDataMsg.req
 	var chatHolder = $('#chat-items')
