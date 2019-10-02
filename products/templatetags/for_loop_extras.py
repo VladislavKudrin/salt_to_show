@@ -20,16 +20,16 @@ def index(array, index):
 
 @register.filter
 def to_default_language(value):
-	request = value
-	value = value.session
 	if type(value) != str:
+		request = value
+		value = value.session
 		language = value.get('language')
 		if language is None:
 			pref = settings.DEFAULT_LANGUAGE_PREF
 			value['language'] = pref
 		else:
 			return ''
-	return request.build_absolute_uri()
+		return request.build_absolute_uri()
 
 @register.filter
 def to_none(value):
