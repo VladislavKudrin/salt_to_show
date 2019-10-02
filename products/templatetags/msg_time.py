@@ -9,6 +9,9 @@ register = template.Library()
 def print_timestamp(timestamp):
 	return timestamp.strftime("%s").upper()
 
+@register.filter
+def print_timestamp_mobile(timestamp):
+	return timestamp.strftime("%a %H:%M").upper()
 
 	
 	
