@@ -46,7 +46,7 @@
 	display: inline-block!important
 }
 #chat-items{
-	height: 86%!important
+	height: 82%!important
 }
 }
 
@@ -602,13 +602,12 @@ $(document).ready(function ($) {
 		else{
 			$.each($('.timestamp'), 
             function(index, value){
-            myDate = new Date(parseInt($(value).html()));
-				var day = days[ myDate.getDay()];
-				var hour = (myDate.getHours()<10?'0':'') + myDate.getHours();
-				var min = (myDate.getMinutes()<10?'0':'') + myDate.getMinutes();
-				var date = day + ' '+ hour.toString() + ':' + min.toString()
-				console.log(myDate)
-			$(this).html(date)
+           	var date = new Date(parseInt($(value).html())*1000);
+			var hours = date.getHours();
+			var minutes = "0" + date.getMinutes();
+			var seconds = "0" + date.getSeconds();
+			var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+			$(this).html(formattedTime)
 			})//each-displayfilesupload
 		}//else
 	
