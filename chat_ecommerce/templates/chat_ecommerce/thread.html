@@ -6,6 +6,7 @@
 {% block content %}
 
 <head>
+
 <style type="text/css">
 
 /*html, body {margin: 0; height: 100%; overflow: hidden}*/
@@ -322,7 +323,6 @@ button:focus {
 </style>
 </head>
 
-
 <div class='container-fluid m-0 p-0'>
 
 	<div class='row'>
@@ -473,7 +473,7 @@ button:focus {
 											<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>
 											{{ msg.message }}<br>
 
-											<span class="timestamp"> {{ msg.timestamp| print_timestamp }}</span>
+											<span class="timestamp"> {{ msg.timestamp|print_timestamp }}</span>
 
 											</div>
 
@@ -482,7 +482,7 @@ button:focus {
 											<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>
 											{{ msg.message }}<br>
 
-											<span class="timestamp"> {{ msg.timestamp| print_timestamp }}</span>
+											<span class="timestamp"> {{ msg.timestamp|print_timestamp }}</span>
 											</div>
 
 										{% endif %}
@@ -587,7 +587,6 @@ var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 
 socket.onmessage = function(e) {
 
-	console.log('MESSAGE')
 	// var dialogs = $('#dialogs')
 	// var size_dialogs = $('#dialogs li').length
 	// var dialogss = $('.obj_id_s')
@@ -597,7 +596,6 @@ socket.onmessage = function(e) {
 	storeid();
 	// console.log(arr) // ids of all threads / array 
 	var chatDataMsg = JSON.parse(e.data)
-	console.log(chatDataMsg)
 	var username = chatDataMsg.username
 	var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
 	found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append
@@ -629,7 +627,6 @@ socket.onmessage = function(e) {
 );
 	}
 
-
 	var now = new Date()
 	var day = days[ now.getDay()];
 	var hour = (now.getHours()<10?'0':'') + now.getHours();
@@ -638,11 +635,8 @@ socket.onmessage = function(e) {
 
 	var opponent_username = chatDataMsg.opponent_username
 	var req = chatDataMsg.req
-	console.log('ME', req)
-	console.log('OPPONENT', opponent_username)
 	var chatHolder = $('#chat-items')
 	var opponent = document.getElementsByClassName("opponent")[0].id
-	console.log('OPPONENT BY CLASS', opponent)
 	if (opponent === opponent_username){
 
 		// console.log('pulling right')
@@ -701,8 +695,6 @@ socket.onopen = function(e) {
 	formData.submit(function(event){
 		event.preventDefault()
 		var msgText = msgInput.val()
-		console.log("PISDA")
-		console.log('HUI', msgText)
 		var finalData = {
 			'message':msgText,
 			// 'current_url': url

@@ -10,6 +10,8 @@ from .forms import ComposeForm
 from .models import Thread, ChatMessage, Notification
 from accounts.models import User
 
+def set_chat_timezone(request):
+    print('wtf')
 
 class InboxView(LoginRequiredMixin, ListView):
     template_name = 'chat_ecommerce/inbox.html'

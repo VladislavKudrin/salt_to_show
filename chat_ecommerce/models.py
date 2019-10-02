@@ -17,7 +17,6 @@ class ThreadManager(models.Manager):
         qlookup = Q(first=user) | Q(second=user)
         qlookup2 = Q(first=user) & Q(second=user)
         qs = self.get_queryset().filter(qlookup).exclude(qlookup2).distinct()
-        print(qs)
         # ---- sorting by recent messages part ----
         threads_and_recent = {} # {'1': 25 Aug 2018, '2': 4 Mai 1990}; 
         for thread in qs: 
