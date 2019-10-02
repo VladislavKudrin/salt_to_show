@@ -46,7 +46,7 @@
 	display: inline-block!important
 }
 #chat-items{
-	height: 95%!important
+	height: 86%!important
 }
 }
 
@@ -609,7 +609,8 @@ $(document).ready(function ($) {
 				var date = day + ' '+ hour.toString() + ':' + min.toString()
 				console.log(myDate)
 			$(this).html(date)
-		}
+			})//each-displayfilesupload
+		}//else
 	
 	window.scrollTo(0,document.body.scrollHeight);
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
