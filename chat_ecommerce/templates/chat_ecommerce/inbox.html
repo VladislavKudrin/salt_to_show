@@ -16,16 +16,35 @@ html, body {
 
 @media only screen and (max-width: 768px) { 
 
-
-  .avatar-skip { 
-    display: none; 
-  } 
-  .username-skip { 
-    display: none; 
+  .heading{
+  	display: none
   }
+
+ 
   .avatar-not-skipped {
   	margin: 0 auto;
+  	width:40px;
   }
+  .username-skip{
+  	text-align: left!important;
+  }
+  #input-row{
+  	width: 100%!important;
+  }
+  .back-to-chatlist{
+  	text-align: left!important;
+  	display: inline-block!important;
+
+  }
+  .dialogs-username{
+  	text-align: left!important
+  }
+  .arrow-select-chat{
+	display: inline-block!important
+}
+#chat-items{
+	height: 95%!important
+}
 
 }
 
@@ -182,6 +201,19 @@ button:focus {
   display: inline-block;
 }
 
+.row-dialog {
+	height: 70px;
+}
+
+.back-to-chatlist{
+	display: none
+}
+.row-avatar-arrow{
+	text-align: right!important;
+}
+.arrow-select-chat{
+	display: none
+}
 </style>
 </head>
 
@@ -191,7 +223,7 @@ button:focus {
 	<div class='row'>
 
 
-		<div class='col-5 col-md-3' style='border-right: 0.75px solid #e1e6e6;'>
+		<div class='col-12 col-md-3' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
@@ -210,14 +242,14 @@ button:focus {
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
 							
 								<div class='row row-dialog my-auto mx-auto'>
-									<div class='col-3 my-auto'>
+									<div class='col-4 my-auto'>
 										{% if obj.first.profile_foto %}
 											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto dialogs-username'>
+									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
 										{{ obj.first.username }}
 
 
@@ -232,20 +264,23 @@ button:focus {
 										<span class='obj_id_s' id="{{ obj.id }}"></span>
 
 									</div>
+									<div class="col-4 my-auto text-right arrow-select-chat">
+										<i class="fas fa-lg fa-chevron-right"></i>
+									</div>
 								</div>
 							
 							</a></li>
 						{% else %}
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
 								<div class='row row-dialog my-auto mx-auto'>
-									<div class='col-3 my-auto'>
+									<div class='col-4 my-auto'>
 										{% if obj.second.profile_foto %}
 											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto dialogs-username'>
+									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
 										{{ obj.second.username }}
 										{% if threads_with_unred %}
 										{% for noti in threads_with_unred %}
@@ -255,6 +290,9 @@ button:focus {
 										{% endfor %}
 										{% endif %}
 											<span class='obj_id_s' id="{{ obj.id }}"></span>
+									</div>
+									<div class="col-4 my-auto text-right arrow-select-chat">
+										<i class="fas fa-lg fa-chevron-right"></i>
 									</div>
 								</div>
 							</a></li>
