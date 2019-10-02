@@ -129,8 +129,6 @@ def user_logged_in_reciever(sender, user, request, *args, **kwargs):
 	user = user
 	session_key = request.session.session_key
 	ip_adress = get_client_ip(request)
-	timeZone = get_template("accounts/snippets/timezone_script.html").render(request = request)
-	print(timeZone)
 	UserSession.objects.create(
 			user=user,
 			ip_adress=ip_adress,
