@@ -19,17 +19,32 @@
 	padding-left: 6px !important;
 }
 
-  .avatar-skip { 
-    display: none; 
-  } 
-  .username-skip { 
-    display: none; 
-  }
+
+
   .avatar-not-skipped {
   	margin: 0 auto;
   	width:40px;
   }
+  .username-skip{
+  	text-align: left!important;
+  }
+  #dialog_list{
+  	display: none
+  }
+  #input-row{
+  	width: 100%!important;
+  }
+  .back-to-chatlist{
+  	text-align: left!important;
+  	display: inline-block!important;
 
+  }
+  .dialogs-username{
+  	text-align: left!important
+  }
+  .arrow-select-chat{
+	display: inline-block!important
+}
 }
 
 .my-custom-scrollbar {
@@ -254,8 +269,15 @@ button:focus {
 	height: 70px;
 }
 
-
-
+.back-to-chatlist{
+	display: none
+}
+.row-avatar-arrow{
+	text-align: right!important;
+}
+.arrow-select-chat{
+	display: none
+}
 /*.chat-border:after{
 	content:'';
 	position: absolute;
@@ -328,7 +350,7 @@ button:focus {
 	<div class='row'>
 
 
-		<div class='col-5 col-md-3' style='border-right: 0.75px solid #e1e6e6;'>
+		<div class='col-12 col-md-3' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
@@ -347,14 +369,14 @@ button:focus {
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
 							
 								<div class='row row-dialog my-auto mx-auto'>
-									<div class='col-3 my-auto'>
+									<div class='col-4 my-auto'>
 										{% if obj.first.profile_foto %}
 											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto dialogs-username'>
+									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
 										{{ obj.first.username }}
 
 
@@ -369,20 +391,23 @@ button:focus {
 										<span class='obj_id_s' id="{{ obj.id }}"></span>
 
 									</div>
+									<div class="col-4 my-auto text-right arrow-select-chat">
+										<i class="fas fa-lg fa-chevron-right"></i>
+									</div>
 								</div>
 							
 							</a></li>
 						{% else %}
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
 								<div class='row row-dialog my-auto mx-auto'>
-									<div class='col-3 my-auto'>
+									<div class='col-4 my-auto'>
 										{% if obj.second.profile_foto %}
 											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
 										{% else %}
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
 										{% endif %}
 									</div>
-									<div class='col-9 text-left my-auto dialogs-username'>
+									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
 										{{ obj.second.username }}
 										{% if threads_with_unred %}
 										{% for noti in threads_with_unred %}
@@ -392,6 +417,9 @@ button:focus {
 										{% endfor %}
 										{% endif %}
 											<span class='obj_id_s' id="{{ obj.id }}"></span>
+									</div>
+									<div class="col-4 my-auto text-right arrow-select-chat">
+										<i class="fas fa-lg fa-chevron-right"></i>
 									</div>
 								</div>
 							</a></li>
@@ -405,7 +433,7 @@ button:focus {
 
 
 
-		<div class='col-7 col-md-9'>
+		<div class='col-12 col-md-9' id='chat_list_mobile'>
 			<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
 
 				<div class='col text-center my-auto'>
@@ -413,7 +441,12 @@ button:focus {
 							
 								<div class='row justify-content-center'>
 
-									<div class='col-5 text-right p-2 my-auto avatar-not-skipped'>
+									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
+									<div class="row row-avatar-arrow">
+									<div class="col-6 my-auto back-to-chatlist">
+									<button class="btn btn-back-to-list"><i class="fas fa-lg fa-chevron-left"></i></button>
+									</div>
+									<div class="col-6 col-md-12 foto-mobile">
 									{% if object.first.profile_foto %}
 										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 											<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
@@ -424,8 +457,10 @@ button:focus {
 										</a>
 									{% endif %}
 									</div>
+									</div>
+									</div>
 
-									<div class='col-7 text-left p-1 my-auto username-skip'>
+									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
 									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.first.username }}
 									</a>
@@ -435,7 +470,12 @@ button:focus {
 						{% else %}
 
 								<div class='row justify-content-center'>
-									<div class='col-5 text-right p-2 my-auto avatar-not-skipped'>
+									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
+									<div class="row row-avatar-arrow">
+									<div class="col-6 my-auto back-to-chatlist">
+									<button class="btn btn-back-to-list"><i class="fas fa-lg fa-chevron-left"></i></button>
+									</div>
+									<div class="col-6 col-md-12 foto-mobile">
 									{% if object.second.profile_foto %}
 									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
@@ -446,8 +486,10 @@ button:focus {
 									</a>
 									{% endif %}
 									</div>
+									</div>
+									</div>
 
-									<div class='col-7 text-left p-1 my-auto username-skip'>
+									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
 									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.second.username }}
 								    </a>
@@ -504,10 +546,10 @@ button:focus {
 
 						<form id='websocket-form' method='POST'> {% csrf_token %}
 							<div class='row' id='input-row' style='position: fixed;bottom: 0; width:77%; margin-left:0px;' >
-								<div class='col-7 col-md-11 my-auto pr-0'>
+								<div class='col-10 col-md-11 my-auto pr-0'>
 									{{form }}
 									</div>
-								<div class='col-5 col-md-1 my-auto pl-0' >
+								<div class='col-2 col-md-1 my-auto pl-0' >
 									<button type='submit' class='btn'>
 									<i class="fas fa-paper-plane fa-2x"></i>
 									</button>
@@ -738,6 +780,12 @@ $('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(thi
 
 // var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
 
+var btnBackListChat = $('.btn-back-to-list')
+btnBackListChat.click(
+	function(e){
+		$('#dialog_list').attr('style', 'display:block!important')
+		$('#chat_list_mobile').attr('style', 'display:none!important')
+	})//click btn
 
 </script>
 {% endblock %}
