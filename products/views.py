@@ -218,8 +218,10 @@ def image_create_order(request):
 def image_update_view(request):
 	if request.POST:
 		data = request.POST.getlist('data[]')
+		rotated = request.POST.getlist('rotate[]')
 		for idx, image_key in enumerate(data):
 			image = ProductImage.objects.filter(unique_image_id=image_key)
+			image.first().rotate_image(image = image.first().image, rotated_x = rotated[idx])
 			image.update(image_order=idx+1)
 		ProductThumbnail.objects.create_update_thumbnail(product=image.first().product)
 	return redirect('home')

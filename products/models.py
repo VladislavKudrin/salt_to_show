@@ -326,6 +326,19 @@ class ProductImage(models.Model):
 	unique_image_id = models.CharField(max_length = 120, default=None, unique = True, blank=False, null=True)
 	def __str__(self):
 		return self.product.title + str(self.image_order)
+	def rotate_image(self, image, rotated_x=0):
+		if rotated_x:
+			int_rotated = int(rotated_x)
+			if int_rotated != 0 or int_rotated%4 != 0:
+				im = Image.open(image)
+				image_rotated = im.rotate(-90*int_rotated, expand=True)
+				img_io = BytesIO()
+				image_rotated.save(img_io, im.format)
+				new_image = File(img_io, name=str(image))
+				self.image = new_image
+				self.save()
+		# 	return new_image
+		# return image
 
 
 

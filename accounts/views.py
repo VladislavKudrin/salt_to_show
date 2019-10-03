@@ -53,7 +53,6 @@ def region_init(request):
 	if request.POST:
 		user = request.user
 		form = RegionModalForm(request.POST, request = request)
-		print(request.path)
 		if form.is_valid():
 			form.save()
 			# for updating language in mailchimp ------------
