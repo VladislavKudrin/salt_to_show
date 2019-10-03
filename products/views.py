@@ -339,7 +339,8 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 
 		if request.session.get('language')=='RU':
 			msg = 'Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку подтвердит модератор и айтем будет выставлен на продажу'
-		# elif request.session.get('language')=='UA':
+		elif request.session.get('language')=='UA':
+			msg = 'Твій айтем перевірений Штучним Інтелектом. Протягом 24 годин перевірку підтвердить модератор, пiсля чого айтем буде виставлений на продаж'
 		else: 
 			msg = 'Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published'
 		messages.add_message(request, messages.SUCCESS, msg)
