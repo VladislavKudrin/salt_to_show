@@ -345,6 +345,7 @@ if (currentPath.indexOf("update") != -1){
     var formData = formSubmit.serialize()
     var formCreate = $('#customSort')
     var galleryUpdate = $('#gallery')
+    var rotateArray = []
     var action = formSubmit.attr("action_url")
     var action_update = formSubmit.attr("action_url_update")
     var elements = $('#example-form-1 ul li')
@@ -353,6 +354,8 @@ if (currentPath.indexOf("update") != -1){
     function(index, value){
         var val = ($(value)).find("[name = 'image-id']")
         keyArray.push(val.val())
+        var rotatedImageTimes = $(value).find("[name='rotateTimes']").val()
+        rotateArray.push(rotatedImageTimes)
     })//each
     $.ajax({
     url: action_update,
@@ -382,12 +385,13 @@ if (currentPath.indexOf("update") != -1){
             })//each
             }//if there are errors
         else {
+            var url = data.url
             $.ajax({
             url: action,
             method:'POST',
-            data: {'data[]':keyArray},
+            data: {'data[]':keyArray, 'rotate[]':rotateArray},
             success: function(data){
-
+                window.location.href=url
             },//success
             error: function(errorData){
             // $.alert({
@@ -398,7 +402,7 @@ if (currentPath.indexOf("update") != -1){
             console.log('some error');
             }//error
             })//ajax in ajax
-            window.location.href=data.url
+
                 }//else
             },//success
     error:function(errorData){
