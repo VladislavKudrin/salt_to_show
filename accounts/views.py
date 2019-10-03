@@ -33,11 +33,11 @@ def region_init(request):
 				'form': form,
 				'path':request.GET.get('location')
 			}
-			if self.request.session.get('language') == 'RU':
+			if request.session.get('language') == 'RU':
 				context['title'] = 'Войти | Зарегистрироваться'
 				context['or_option'] = 'Или'
 				context['password_forgot'] = 'Забыл_а пароль?'
-			elif self.request.session.get('language') == 'UA':
+			elif request.session.get('language') == 'UA':
 				context['title'] = 'Увійти | Зареєструватися'
 				context['or_option'] = 'Або'
 				context['password_forgot'] = 'Забув/забула пароль?'
