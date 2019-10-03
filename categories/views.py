@@ -278,7 +278,7 @@ class CategoryFilterView(ListView):
 			context['brand'] = 'Бренд'
 			context['price'] = 'Цена'
 		elif self.request.session.get('language') == 'UA':
-			context['kids_navbar'] = 'Дiтi'
+			context['kids_navbar'] = 'Дiти'
 			context['new_navbar'] = 'Свiже'
 			context['hide_filters'] = 'Сховати фільтри'
 			context['found'] = 'Знайдено'
