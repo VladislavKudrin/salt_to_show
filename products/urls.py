@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^update/(?P<slug>[\w.@+-]+)/$', ProductUpdateView.as_view(), name='update'),
     url(r'^delete/(?P<slug>[\w.@+-]+)/$', ProductDeleteView.as_view(), name='delete'),
     url(r'^view/(?P<slug>[\w.@+-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
-    url(r'^existing/(?P<id>\d+)$', ProductUpdateView.as_view(), name='existing_file_example')
+    url(r'^existing/(?P<id>\d+)$', ProductUpdateView.as_view(), name='existing_file_example'),
     url(r'^report/$', product_report, name='report'),
     url(r'^fakelist/$', FakeProductsListView.as_view(), name='fake-list'),
     url(r'^(?P<filter>[\w.@+-=&]+)$', CategoryFilterView.as_view(), name='list-filter'),
