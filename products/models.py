@@ -315,6 +315,9 @@ class Product(models.Model):
 def product_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = unique_slug_generator(instance)
+	product = ProductThumbnail.objects.filter(product=instance)
+	if not product.exists():
+		ProductThumbnail.objects.create_update_thumbnail(product=instance)
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
 
@@ -370,12 +373,19 @@ class ProductThumbnailManager(models.Manager):
 						thumbnail=new_image,
 										)
 
+
 class ProductThumbnail(models.Model):
 	product = models.ForeignKey(Product, default=None, related_name='thumbnail')
 	thumbnail = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	objects = ProductThumbnailManager()
 	def __str__(self):
 		return self.product.slug + ' thumbnail'
+
+# def thumbnail_post_save_reciever(sender, created, instance, *args, **kwargs):
+# 	if created:
+
+
+# post_save.connect(thumbnail_post_save_reciever,sender=ProductThumbnail)
 
 class ReportedProduct(models.Model):
 	user    	= models.ForeignKey(User, related_name='reporter')
