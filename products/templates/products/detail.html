@@ -259,6 +259,8 @@ p {
 	<div class="col-12 pb-2">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+		{% elif request.user.is_authenticated and request.user.is_admin %}
+			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' %} 
 		{% endif %}
