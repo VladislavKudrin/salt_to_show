@@ -25,7 +25,7 @@
     <div class="col-12 col-md-6">
       {{form.brand|as_crispy_field}}
   <div class="tiny">
-        Email help@saltysalt.co if the brand you are trying to add does not exist.
+        Email info@saltish.co if your brand doesn't exist here.
     </div>
   </div>
     <div class="col-12 col-md-6 ">
@@ -142,14 +142,18 @@
   <div class>
     <input type="hidden" name='image' id='id_image' class='form-control'>
   </div> 
-
+    <div class="tiny">
+        Upload detailed photos of tags for the authenticity check.
+    </div>
 </div>
 </div>
 
   {{form.description|as_crispy_field}} 
  
   <button type="submit" value="Submit" class="btn button-black hover-button large-button btn-block">{{ button }}</button>
-  {% include "forms/helper_text.html" %}
+     <div class="tiny pt-1">
+        * marked fields are required.
+    </div>
   </div>   <!-- style   -->   
 
 
