@@ -315,11 +315,17 @@ class Product(models.Model):
 def product_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = unique_slug_generator(instance)
-	product = ProductThumbnail.objects.filter(product=instance)
-	if not product.exists():
-		ProductThumbnail.objects.create_update_thumbnail(product=instance)
+
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
+
+def product_post_save_reciever(sender, created, instance, *args, **kwargs):
+	if not created:
+		product = ProductThumbnail.objects.filter(product=instance)
+		if not product.exists():
+			ProductThumbnail.objects.create_update_thumbnail(product=instance)
+
+post_save.connect(product_post_save_reciever, sender=Product)
 
 class ProductImage(models.Model):
 	product 		= models.ForeignKey(Product, default=None, related_name='images')
