@@ -27,7 +27,8 @@ $(document).ready(
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 }
-            }
+            },
+            cache: false
         });
 
 
