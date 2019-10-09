@@ -253,7 +253,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-DEFAULT_LANGUAGE_PREF = 'RU'
+DEFAULT_LANGUAGE_PREF = 'EN'
 
 
 TIME_ZONE = 'UTC'
