@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
@@ -42,8 +42,12 @@ from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, w
 from .views import home_page, test_page, ContactPageView, AboutPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
-
 urlpatterns = [
+    url(r'^admin/', admin.site.urls,)
+]
+
+urlpatterns += i18n_patterns(
+    url(r'^i18n/', include('language_pref.urls')),
     url(r'^$', home_page, name = 'home'),
     url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
     # url(r'^upload/', include('django_file_form.urls')),
@@ -55,7 +59,6 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^contact/$', ContactPageView.as_view(), name='contact'),
     url(r'^about/$', AboutPageView.as_view(), name='about'),
-	url(r'^admin/', admin.site.urls,),
     url(r'^address/$', RedirectView.as_view(url='/addresses')),
     url(r'^addresses/$', AddressListView.as_view(), name='addresses'),
     url(r'^addresses/create/$', AddressCreateView.as_view(), name='address-create'),
@@ -81,10 +84,12 @@ urlpatterns = [
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
     url(r'^region-init/$', region_init, name = 'region-init'),
+    prefix_default_language=False
 
 
 
-]
+)
+
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load i18n %}
 <input type="hidden" id='images-upload-limit' readonly name="images-upload-limit" value='{{ images_upload_limit }}'>
 <div class="container-fluid ajax-search">
  <div class="row">
@@ -25,7 +26,7 @@
     <div class="col-12 col-md-6">
       {{form.brand|as_crispy_field}}
     <div class="tiny">
-        Напиши на help@saltysalt.co если твой желанный бренд отсутствует.
+      {% trans "Email help@saltysalt.co if the brand you are trying to add does not exist." %}
     </div>
   </div>
     <div class="col-12 col-md-6 ">

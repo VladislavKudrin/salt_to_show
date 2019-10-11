@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-10 10:51+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: categories/templates/categories/snippets/navbar_categories.html:107
+#, python-format
+msgid "%(gender_eng)s"
+msgstr ""
+
+#: ecommerce/forms.py:11
+msgid "Your Email"
+msgstr ""
+
+#: ecommerce/forms.py:17
+msgid "Your message"
+msgstr ""
+
+#: ecommerce/forms.py:18
+msgid "Content"
+msgstr ""
+
+#: ecommerce/views.py:39
+msgid "Bazar"
+msgstr ""
+
+#: ecommerce/views.py:40
+msgid "Marketplace"
+msgstr ""
+
+#: ecommerce/views.py:41
+msgid "No counterfeit"
+msgstr ""
+
+#: ecommerce/views.py:42
+#, python-format
+msgid ""
+"What makes SALT different from others? Well, we have a zero-fake-policy "
+"here. Fakes make online shopping unbearable. The countterfeit industry in "
+"fashion is valued around $600 billion. While someone makes tons of money, "
+"the quality of shopping for the customer is deteriorating. But we love "
+"shopping. Probably even more than you. So we set up a very simple goal -  to "
+"make shopping as pleasant and safe as possible. Therefore, on SALT you can "
+"be 100% sure that you are buying a nice authentic piece."
+msgstr ""
+
+#: ecommerce/views.py:43
+msgid "2-step-verification"
+msgstr ""
+
+#: ecommerce/views.py:44
+msgid ""
+"SALT has two-factor product verification (sounds awesome, right?). In simple "
+"words, each item is checked exactly two times. The first one happens right "
+"after uploading. Just in a few seconds, our AI-model assigns a label to the "
+"product - fake or authentic. The model thinks fast and improves itself with "
+"each loaded item (neural networks and all that). And the second step is a "
+"thorough manual check performed by our experienced experts. Thanks to the "
+"two-factor verification of all items, no fake will get to SALT."
+msgstr ""
+
+#: ecommerce/views.py:45
+msgid "Less is more"
+msgstr ""
+
+#: ecommerce/views.py:46
+msgid ""
+"Simplicity is our core concept. And it's not only limited in minimalistic "
+"design and intuitive interface of SALT. We want both buyers and sellers to "
+"feel respected. Therefore, there is no and never will be annoying ads and "
+"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT "
+"is a community where designer and streetwear clothes take their second "
+"chance. The item finds its new owner without harming the environment. SALT "
+"acts as a modest mediator in this straightforward, but essential deal."
+msgstr ""
+
+#: ecommerce/views.py:63
+msgid "Contact us"
+msgstr ""
+
+#: ecommerce/views.py:64
+msgid "Submit"
+msgstr ""
+
+#: ecommerce/views.py:65
+msgid "Sending...."
+msgstr ""
+
+#: ecommerce/views.py:97
+msgid "Thank you"
+msgstr ""
+
+#: ecommerce/views.py:98
+msgid "Success"
+msgstr ""
+
+#: ecommerce/views.py:140
+msgid "Kids"
+msgstr ""
+
+#: ecommerce/views.py:141
+msgid "New"
+msgstr ""
+
+#: ecommerce/views.py:142
+msgid "Brand"
+msgstr ""
+
+#: ecommerce/views.py:143
+msgid "Contribute to the sustainable clothes-circle."
+msgstr ""
+
+#: ecommerce/views.py:144
+msgid "Find your designer piece fast and safe."
+msgstr ""
+
+#: ecommerce/views.py:145
+msgid "Safe"
+msgstr ""
+
+#: ecommerce/views.py:146
+msgid "Uploaded items are monitored 24/7/365. There are no fakes on SALT."
+msgstr ""
+
+#: ecommerce/views.py:147
+msgid "AI-Powered"
+msgstr ""
+
+#: ecommerce/views.py:148
+msgid "We use Machine Learning to detect fakes in our catalogue."
+msgstr ""
+
+#: ecommerce/views.py:149
+msgid "Simple"
+msgstr ""
+
+#: ecommerce/views.py:150
+msgid "Our intuitive design was made with love to simplicity and minimalism."
+msgstr ""
+
+#: ecommerce/views.py:151
+msgid "Read more"
+msgstr ""
+
+#: ecommerce/views.py:152
+msgid "Go to your profile"
+msgstr ""
+
+#: ecommerce/views.py:153
+msgid "Join our community"
+msgstr ""
+
+#: ecommerce/views.py:154
+msgid "Login | Registration"
+msgstr ""
+
+#: ecommerce/views.py:155
+msgid "Trending:"
+msgstr ""
+
+#: ecommerce/views.py:156
+msgid "See all"
+msgstr ""
+
+#: ecommerce/views.py:157
+msgid "Popular designers:"
+msgstr ""
+
+#: products/templates/products/languages/product_create/product_create_ru.html:29
+msgid ""
+"Email help@saltysalt.co if the brand you are trying to add does not exist."
+msgstr ""
+
+#: templates/registration/password_reset_email.html:2
+#: templates/registration/password_reset_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hello, \n"
+"\n"
+"Reset your password on %(domain)s for %(user)s:\n"
+msgstr ""

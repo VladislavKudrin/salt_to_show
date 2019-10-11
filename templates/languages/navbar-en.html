@@ -1,7 +1,7 @@
 {% load for_loop_extras %}
 {% load notifications %}
 {% load static %}
-
+{% load i18n %}
 <nav class="navbar navbar-mb sticky-top navbar-expand-md navbar-light bg-white pb-0">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav  mr-auto">
@@ -53,16 +53,19 @@
 
         </li> 
         <li class="" style='width:30px; position:relative; display: inline;'>
+            {% get_current_language as LANGUAGE_CODE %}
             <div class="btn-group" >
                 <button type="button" class="btn pl-1 pr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i id="lang-button" class="fas fa-globe-americas"></i>
                 </button>
                 <div class="dropdown-menu m-0 p-0">
-                <form method='GET' action="{% url 'accounts:language-pref'%}">
-                <input type="hidden" name="next" value='{{ request.path }}'>
-                <button class="btn dropdown-item-lang {% if request.session.language == 'RU' %} activated {% elif request.session.language == None %}activated{% endif %}"type='submit' name="language" value="RU"><small>RU</small></button><br/>
-                <button class="btn dropdown-item-lang {% if request.session.language == 'UA' %} activated {% endif %}"type='submit' name="language" value="UA"><small>UA</small></button><br/>
-                <button class="btn dropdown-item-lang {% if request.session.language == 'EN' %} activated {% endif %}" type='submit' name="language" value="EN"><small>EN</small></button>
+                <form method='POST' action="{% url 'set_language_custom' %}">{% csrf_token %}
+                    <input type="hidden" name="next" value='{{ request.path }}'>
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <button class="btn dropdown-item-lang {% if language.code == LANGUAGE_CODE %} activated {% endif %}"type='submit' name="language" value="{{ language.code }}"><small>{{ language.name_local }}</small></button><br/>
+                    {% endfor %}
                 </form>
                 </div>
             </div>

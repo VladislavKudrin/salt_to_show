@@ -98,23 +98,23 @@ class UserManager(BaseUserManager):
 
 
 class Region(models.Model):
-	region 				= models.CharField(max_length=120, blank=True, null=True)
-	currency 			= models.CharField(max_length=120, default='USD', blank=True, null=True)
-	currency_mult 		= models.DecimalField(decimal_places=6, max_digits=10, default=0, null=True)
+	region        = models.CharField(max_length=120, blank=True, null=True)
+	currency      = models.CharField(max_length=120, default='USD', blank=True, null=True)
+	currency_mult = models.DecimalField(decimal_places=6, max_digits=10, default=0, null=True)
 	def __str__(self):
 		return str(self.region)
 
 class User(AbstractBaseUser):
-	username 		= models.CharField(max_length=255, blank=False, null=True, unique=True)
-	email 			= models.EmailField(max_length=255, unique=True)
-	full_name 		= models.CharField(max_length=255, blank=True, null=True)
-	is_active 		= models.BooleanField(default=True)
-	staff 			= models.BooleanField(default=False)
-	admin 			= models.BooleanField(default=False)
-	timestamp		= models.DateTimeField(auto_now_add=True)
-	profile_foto	= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-	wishes 			= models.ManyToManyField(Product, related_name='users', blank=True)
-	region 			= models.ForeignKey(Region, related_name='users_region', blank=True, null=True)
+	username     = models.CharField(max_length=255, blank=False, null=True, unique=True)
+	email        = models.EmailField(max_length=255, unique=True)
+	full_name    = models.CharField(max_length=255, blank=True, null=True)
+	is_active    = models.BooleanField(default=True)
+	staff        = models.BooleanField(default=False)
+	admin        = models.BooleanField(default=False)
+	timestamp    = models.DateTimeField(auto_now_add=True)
+	profile_foto = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	wishes       = models.ManyToManyField(Product, related_name='users', blank=True)
+	region       = models.ForeignKey(Region, related_name='users_region', blank=True, null=True)
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default
@@ -168,7 +168,7 @@ LANGUAGE_CHOISES = (
 	('en', 'EN')
 	)
 class LanguagePreference(models.Model):
-	user = models.ForeignKey(User, related_name='language')
+	user     = models.ForeignKey(User, related_name='language')
 	language = models.CharField(max_length=120, default='en', choices=LANGUAGE_CHOISES)
 	def __str__(self):
 		return str(self.user)
@@ -179,9 +179,9 @@ class LanguagePreference(models.Model):
 
 
 class Wishlist(models.Model):
-	user    	= models.ForeignKey(User, related_name='wishes_user')
-	product 	= models.ForeignKey(Product, related_name='wishes_products')
-	timestamp	= models.DateTimeField(auto_now_add=True)
+	user      = models.ForeignKey(User, related_name='wishes_user')
+	product   = models.ForeignKey(Product, related_name='wishes_products')
+	timestamp = models.DateTimeField(auto_now_add=True)
 
 
 
@@ -220,14 +220,14 @@ class EmailActivationManager(models.Manager):
 			)
 
 class EmailActivation(models.Model):
-	user 			= models.ForeignKey(User)
-	email 			= models.EmailField()
-	key 			= models.CharField(max_length=120, blank=True,null=True)
-	activated 		= models.BooleanField(default=False)
-	forced_expired 	= models.BooleanField(default=False)
-	expires 		= models.IntegerField(default=7)#Days
-	timestamp 		= models.DateTimeField(auto_now_add = True)
-	update 			= models.DateTimeField(auto_now = True)
+	user            = models.ForeignKey(User)
+	email           = models.EmailField()
+	key             = models.CharField(max_length=120, blank=True,null=True)
+	activated       = models.BooleanField(default=False)
+	forced_expired  = models.BooleanField(default=False)
+	expires         = models.IntegerField(default=7)#Days
+	timestamp       = models.DateTimeField(auto_now_add = True)
+	update          = models.DateTimeField(auto_now = True)
 
 	error_css_class = 'error'
 	objects = EmailActivationManager()
@@ -324,10 +324,10 @@ post_save.connect(post_save_language_pref, sender=LanguagePreference)
 
 
 class GuestEmail(models.Model):
-	email = models.EmailField()
-	active = models.BooleanField(default=True)
+	email     = models.EmailField()
+	active    = models.BooleanField(default=True)
 	timestamp = models.DateTimeField(auto_now_add=True)
-	update = models.DateTimeField(auto_now=True)
+	update    = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return self.email

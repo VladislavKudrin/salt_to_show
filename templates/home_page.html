@@ -2,7 +2,7 @@
 {% load static %}
 {% url 'products:create' as products_create_url %}
 {% block content %}
-
+{% load i18n %}
 <head>
 <style type="text/css">
 
@@ -484,8 +484,7 @@ nav{
 
 </style>
 </head>
-
-
+{% trans barabek %}
 
 
 {% include 'categories/snippets/navbar_categories.html' %}
