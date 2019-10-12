@@ -9,10 +9,10 @@ class ProductAdmin(admin.ModelAdmin):
 	list_display = ['__str__', 'user', 'authentic', 'timestamp', 'slug']
 	fieldsets = (
         ('User', {'fields': ('user',)}),
+        ('Authentity', {'fields': ('authentic','get_absolute_url_admin')}),
         ('Product info', {'fields': ('title', 'slug', 'description', 'price', 'active')}),
         ('Product brand, category and size', {'fields': ('brand','overcategory', 'sex', 'category', 'undercategory', 'size')}),
         ('Condition', {'fields': ('condition',)}),
-        ('Authentity', {'fields': ('authentic','get_absolute_url_admin')}),
     )
 	readonly_fields = ['get_absolute_url_admin']
 	def get_absolute_url_admin(self, obj):
