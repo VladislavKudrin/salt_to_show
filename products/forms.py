@@ -183,15 +183,28 @@ class ProductCreateForm(forms.ModelForm):
 		description = data.get('description')
 		if description: 
 			description = re.sub(r'\n\s*\n','\n',description,re.MULTILINE)
+
+			# if in element more than 35 symbols > count it as a line
 			length = len(description.splitlines())
+
+			for i in description.splitlines():
+				length_of_line = int(len(i))
+				if length_of_line > 35: # check if line too large 
+
+					more_char = length_of_line - 35
+					if more_char <= 35:
+						length += 1
+					else: 
+						length += more_char // 35
+
 			chars = len(description)
-			if length > 18: 
-				lines = int(length) - int(18)
-				message = 'Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines)
+			if length > 14: 
+				lines = int(length) - int(14)
+				message = ' Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines)
 				self.add_error('description', message)
 			if chars > 400:
 				charss = int(chars) - int(400)
-				message = 'Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss)
+				message = ' Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss)
 				self.add_error('description', message)	
 		return description
 	def clean_price(self):

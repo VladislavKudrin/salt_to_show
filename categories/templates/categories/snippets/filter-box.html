@@ -1,5 +1,11 @@
 {% load for_loop_extras %}
 <style type="text/css">
+
+
+  html,body{
+  padding-bottom: 0px !important;
+  }
+
   .custom-control-label:before{
       background-color:white;
 
@@ -94,7 +100,7 @@ hr{
 </style>
 <form method ='GET'  id='form_checkboxes' action='{% url "products:list" %}'>
 <div id='filter-boxes'>
-  <div class="col-12 p-0 mt-2" id='overcategory-filter-box'>  
+  <div class="col-12 mt-2" id='overcategory-filter-box'>  
     <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#overcategory_collaplse" aria-expanded="true" aria-controls="overcategory_collaplse">
       <div class="row">
         <div class="col-6 text-left">
@@ -122,7 +128,7 @@ hr{
       {% endfor %}
     </div>
   </div>
-  <div class="col-12 p-0" id='gender-filter-box'>
+  <div class="col-12" id='gender-filter-box'>
     <div id='title_gender' {% if overcategory_instance %} style="display: block" {% endif %}>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#gender_collaplse" aria-expanded="true" aria-controls="gender_collaplse">
@@ -159,7 +165,7 @@ hr{
       {% endfor %}
     </div>
   </div>
-  <div class="col-12 p-0" id='category-filter-box'>
+  <div class="col-12" id='category-filter-box'>
     <div id='title_category'{% if gender_instance %} style="display: block" {% endif %}>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#category_collaplse" aria-expanded="true" aria-controls="category_collaplse">
@@ -216,7 +222,7 @@ hr{
       {% endfor %}
     </div>
   </div>
-  <div class="col-12 p-0" id='size-filter-box'>
+  <div class="col-12" id='size-filter-box'>
     <div id='title_size'{% if gender_instance %} style="display: block" {% endif %}>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#size_collaplse" aria-expanded="true" aria-controls="size_collaplse">
@@ -264,7 +270,7 @@ hr{
       {% endfor %}
     </div>
   </div>
-  <div class="col-12 p-0" id='condition-filter-box'>
+  <div class="col-12" id='condition-filter-box'>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#condition_collapse" aria-expanded="true" aria-controls="condition_collapse">
       <div class="row">
@@ -293,7 +299,7 @@ hr{
         {% endfor %}
       </div>
     </div>
-  <div class="col-12 p-0" id='condition-filter-box'>
+  <div class="col-12" id='condition-filter-box'>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#brand_collapse" aria-expanded="true" aria-controls="brand_collapse">
       <div class="row">
@@ -313,7 +319,7 @@ hr{
         </select>
       </div>
     </div>
-  <div class="col-12 p-0" id='price-filter-box'>
+  <div class="col-12" id='price-filter-box'>
       <hr/> 
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#price_collapse" aria-expanded="true" aria-controls="price_collapse">
       <div class="row">
