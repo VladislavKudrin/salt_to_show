@@ -6,7 +6,7 @@ from .models import Product, ProductImage, ProductThumbnail, ReportedProduct
 
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ['__str__', 'slug', 'authentic', 'timestamp']
+	list_display = ['__str__', 'user', 'authentic', 'timestamp', 'slug']
 	fieldsets = (
         ('User', {'fields': ('user',)}),
         ('Product info', {'fields': ('title', 'slug', 'description', 'price', 'active')}),
