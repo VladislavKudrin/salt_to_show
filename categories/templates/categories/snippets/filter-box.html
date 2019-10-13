@@ -3,7 +3,13 @@
 
 
   html,body{
-  padding-bottom: 0px !important;
+  padding-bottom: 0px;
+  }
+
+  @media only screen and (max-width: 768px) { 
+    .pd-bt {
+      padding-bottom: 20% !important;
+    }
   }
 
   .custom-control-label:before{
@@ -64,26 +70,57 @@
     display: none
   }
 
-[data-toggle="collapse"] .unterhaupt:before {  
+[data-toggle="collapse"] .fa-w:before {  
   content: "\f078";
+  font-family: "Font Awesome 5 Free"; /* This is the correct font-family*/
   font-size: 10px;
-  color: black
+  color: black;
+  font-weight: 900;
+  font-style: normal !important;
+  text-decoration: none !important;
 }
 
-[data-toggle="collapse"].collapsed .unterhaupt:before {
+[data-toggle="collapse"].collapsed .fa-w:before {
   content: "\f054";
-  color: black
+  font-family: "Font Awesome 5 Free"; /* This is the correct font-family*/
+  color: black;
+  font-weight: 900;
+  font-style: normal !important;
+  text-decoration: none !important;
 }
 
-[data-toggle="collapse"] .haupt:before {  
+[data-toggle="collapse"] .fa-fw:before {  
   content: "\f077";
+  font-family: "Font Awesome 5 Free"; /* This is the correct font-family*/
   font-size: 10px;
   color: black;
+  font-weight: 900;
+  font-style: normal !important;
+  text-decoration: none !important;
 }
-[data-toggle="collapse"].collapsed .haupt:before {
+
+[data-toggle="collapse"].collapsed .fa-fw:before {
   content: "\f078";
+  font-family: "Font Awesome 5 Free"; /* This is the correct font-family*/
   color: black;
+  font-weight: 900;
+  font-style: normal !important;
+  text-decoration: none !important;
 }
+
+.btn-link:hover {
+    color: black !important;
+    text-decoration: none !important;
+  }
+.btn-link {
+    color: black !important;
+    text-decoration: none !important;
+    padding-bottom: 10px !important;
+  }
+
+
+
+
 .mains-btn{
   width: 100%;
 }
@@ -107,7 +144,7 @@ hr{
           {{ overcategory }}
         </div>
         <div class="col-6 text-right">
-          <i class="fa haupt ml-5" aria-hidden="false"></i>
+          <i class="fa-fw ml-5" aria-hidden="false"></i>
         </div>
       </div>
     </button>
@@ -137,7 +174,7 @@ hr{
             {{ gender }}
           </div>
           <div class="col-6 text-right">
-            <i class="fa haupt ml-5" aria-hidden="false"></i>
+            <i class="fa-fw ml-5" aria-hidden="false"></i>
           </div>
         </div>
       </button>
@@ -174,7 +211,7 @@ hr{
           {{ category }}
         </div>
         <div class="col-6 text-right">
-          <i class="fa haupt ml-5" aria-hidden="false"></i>
+          <i class="fa-fw ml-5" aria-hidden="false"></i>
         </div>
       </div>
       </button>
@@ -193,7 +230,7 @@ hr{
                 {% else %}
                 {{ category.category_eng }}
                 {% endif %}
-                </small><button type='button' class="btn btn-link {% if not category in category_arr %} collapsed {% endif %}" data-toggle="collapse" data-target="#collapse{{ category.id }}" aria-expanded="true" aria-controls="collapse{{ category.id }}"><i class="fa mb-2 unterhaupt" aria-hidden="false"></i></button>
+                </small><button type='button' class="btn btn-link {% if not category in category_arr %} collapsed {% endif %}" data-toggle="collapse" data-target="#collapse{{ category.id }}" aria-expanded="true" aria-controls="collapse{{ category.id }}"><i class="mb-2 fa-w" aria-hidden="false"></i></button>
                 <input type="checkbox" class="pl-5 text-right custom-control-input input-for-filters" id="customCheckCategory{{ forloop.counter|add:'1' }}"  name='category' {% if category in category_instance %} checked {% endif %} value='{{ category.id }}'data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size">
                 <label class="mt-2 text-right custom-control-label mr-4" style="float: right; " for="customCheckCategory{{ forloop.counter|add:'1' }}"><small>{{ all }}</small></label>
                 <div id='collapse{{ category.id }}' class='collapse div1 {% if category in category_instance %} show {% endif %}{% for undercategory in undercategory_instance %}
@@ -231,7 +268,7 @@ hr{
           {{ size }}
         </div>
         <div class="col-6 text-right">
-          <i class="fa haupt ml-5" aria-hidden="false"></i>
+          <i class="fa-fw ml-5" aria-hidden="false"></i>
         </div>
       </div>
       </button>
@@ -250,7 +287,7 @@ hr{
                 {% else %}
                 {{ category.category_eng }}
                 {% endif %}
-                </small><button type='button' class="{% if not category in category_arr %} collapsed {% endif %} btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class="fa mb-2 unterhaupt" aria-hidden="false"></i></button>
+                </small><button type='button' class="{% if not category in category_arr %} collapsed {% endif %} btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class=" mb-2 fa-w" aria-hidden="false"></i></button>
                 <input type="checkbox" class="text-right custom-control-input input-for-filters" id="customCheckCategorySize{{ forloop.counter|add:'1' }}" name='category-size' value="{{ category.category }}">
                 <label class="mt-2 text-right custom-control-label mr-4" style="float: right;" for="customCheckCategorySize{{ forloop.counter|add:'1' }}"><small>{{ all }}</small></label>
                 <div id='collapse-size-{{ category.id }}' class='collapse {% if category.category_for == gender_instance %}{% for size in size_instance %}{% if size.size_for == category.category %} show {% endif %} {% endfor %} {% endif %} div1'>
@@ -278,7 +315,7 @@ hr{
           {{ condition }}
         </div>
         <div class="col-6 text-right">
-          <i class="fa haupt ml-5" aria-hidden="false"></i>
+          <i class="fa-fw ml-5" aria-hidden="false"></i>
         </div>
       </div>
       </button>
@@ -307,7 +344,7 @@ hr{
           {{ brand }}
         </div>
         <div class="col-6 text-right">
-          <i class="fa haupt ml-5" aria-hidden="false"></i>
+          <i class="fa-fw ml-5" aria-hidden="false"></i>
         </div>
       </div>
       </button>
@@ -319,7 +356,7 @@ hr{
         </select>
       </div>
     </div>
-  <div class="col-12" id='price-filter-box'>
+  <div class="col-12 pd-bt" id='price-filter-box'>
       <hr/> 
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#price_collapse" aria-expanded="true" aria-controls="price_collapse">
       <div class="row">
@@ -327,7 +364,7 @@ hr{
           {{ price }}
         </div>
         <div class="col-6 text-right">
-          <i class="fa haupt ml-5" aria-hidden="false"></i>
+          <i class="fa-fw ml-5" aria-hidden="false"></i>
         </div>
       </div>
       </button>
