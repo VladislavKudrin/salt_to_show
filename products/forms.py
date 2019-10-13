@@ -223,25 +223,33 @@ class ImageForm(ProductCreateForm):
 		self.fields['image'].label = "Images*"
 		if request.session.get('language')=='RU':
 			self.fields['image'].label = "Фото*"
+		if request.session.get('language')=='UA':
+			self.fields['image'].label = "Фото*"
 	
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
 		if len(cleaned_images)==0:
 			if self.lan == 'RU':
-				raise forms.ValidationError("Загрузи как минимум фото")
+				raise forms.ValidationError("А фото айтема?")
+			elif self.lan == 'UA':
+				raise forms.ValidationError("А фото айтема?")
 			else:
-				raise forms.ValidationError("Upload at least one image")
+				raise forms.ValidationError("What about item's photos?")
 		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
 			if self.lan == 'RU':
-				raise forms.ValidationError("Недостаточное колличество фотографий. Минимальное колличество - 4")
+				raise forms.ValidationError("Маловато фотографий. Попробуй 4 и больше!")
+			elif self.lan == 'UA':
+				raise forms.ValidationError("Маловато фотографій. Спробуй 4 і більше!")
 			else:
-				raise forms.ValidationError("Not enough fotos. Minimal amount - 4")	
+				raise forms.ValidationError("Not enough photos. Try 4 and more!")	
 		if len(cleaned_images)>settings.IMAGES_UPLOAD_LIMIT:
 			if self.lan == 'RU':
-				raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
+				raise forms.ValidationError("Слишком много фотографий. 8 будет вполне достаточно!")
+			elif self.lan == 'UA':
+				raise forms.ValidationError("Занадто багато фотографій. 8 буде цілком достатньо!")
 			else:
-				raise forms.ValidationError("Too many files, max. amount 8")	
+				raise forms.ValidationError("Too many photos, 8 would be enough!")	
 		return cleaned_images
 		
 	def save(self, commit=True):
