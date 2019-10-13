@@ -26,8 +26,6 @@
   display: flex;
   position: absolute;
   top: 50%;
-  right: 45%;
-  left: 45%;
   transform: translate(-50%, -50%);
 }
 
@@ -99,7 +97,15 @@
   background: #3b5999;
 }
 
-@media only screen and (max-width: 768px) {
+.footer-desktop {
+  margin: 15px auto;
+}
+
+.footer-mobile {
+  margin: 16px auto;
+}
+
+@media only screen and (max-width: 500px) {
   .footer-desktop {
     visibility: hidden;
     display: none;
@@ -110,11 +116,35 @@
   }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 500px) {
   .footer-mobile {
     visibility: hidden;
     display: none;
   }
+}
+
+@media only screen and (max-width: 1300px) {
+  .soc-seti {
+      right: 45%;
+      left: 45%;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  .soc-seti {
+      right: 40%;
+      left: 50%;
+  }
+}
+
+/*.all-devices {
+      right: 40%;
+      left: 50%;
+}*/
+
+.tablets {
+  margin: 14px 0px;
+  padding: 0 0;
 }
 
 
@@ -135,3 +165,12 @@
 {% include 'languages/footer-en.html' %}  
 
 {% endif %}
+
+<script type="text/javascript">
+  var currentPath = window.location.href
+  if (($(window).width() === 600)){
+    $('.footer-desktop').addClass('tablets');
+    console.log('success tablets')
+  }
+
+</script>
