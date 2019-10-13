@@ -421,7 +421,10 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		try:
 			instance = Product.objects.get(slug=slug, active=True, user=user)
 		except Product.DoesNotExist:
-			raise Http404("Not found!")
+			if self.request.user.is_admin == True: 
+				instance = Product.objects.get(slug=slug, active=True)
+			else:
+				raise Http404("Not found!")
 		except Product.MultipleObjectsReturned:
 			qs = Product.objects.filter(slug=slug, active=True, user=user)
 			instance = qs.first()

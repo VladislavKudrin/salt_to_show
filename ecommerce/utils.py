@@ -61,15 +61,16 @@ def unique_slug_generator(instance, new_slug=None):
     if new_slug is not None:
         slug = new_slug
     else:
-        slug = slugify(instance.title)
+        slug = slugify(instance.title)[:50] # takes only first 50 from what slugify returns
         if slug == '':
-            slug = random_string_generator(size=random.randint(3, 5))
+            slug = random_string_generator(size=random.randint(3, 5))[:50]
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(slug=slug).exists()
     if qs_exists:
+        slug = slug[:-5] # removes last 5 chars from existing slug
         new_slug = "{slug}-{randstr}".format(
                     slug=slug,
-                    randstr=random_string_generator(size=4)
+                    randstr=random_string_generator(size=4) #adds new random 5 chars
                 )
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug
