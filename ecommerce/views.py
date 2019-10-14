@@ -26,7 +26,7 @@ class AboutPageView(TemplateView):
 	def get_context_data(self, *args, **kwargs):
 		context=super(AboutPageView, self).get_context_data(*args, **kwargs)
 		if self.request.session.get('language') == 'RU':
-			context['bazar'] = 'Базар'
+			context['bazar'] = 'Базарр'
 			context['marketplace'] = 'Маркетплейс'
 			context['authentic_slogan'] = 'Без фейков'
 			context['authentic_text'] = "То, что отличает нас от других: на SALT нет и никогда не будет фейков. Фейки – это то, что делает онлайн-шопинг невыносимым. Индустрия подделок в сфере моды оценивается в 600 млрд долларов. В то время, как кто-то зарабатывает огромные деньги, качество шопинга для покупателя ухудшается. Но мы любим шопинг. Наверное, даже больше, чем Ты. Нами движет очень простая цель сделать шопинг максимально приятным и безопасным. Поэтому на SALT ты можешь быть на 100% уверен_а, что приобретаешь оригинальную вещь. "
