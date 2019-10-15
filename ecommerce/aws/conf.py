@@ -8,7 +8,7 @@ AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
 AWS_QUERYSTRING_AUTH = True
 
-AWS_S3_REGION_NAME = 'us-east-1'
+AWS_S3_REGION_NAME = 'us-east-2'
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'salt-staging-usa'
