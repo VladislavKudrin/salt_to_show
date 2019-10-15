@@ -1,1 +1,1 @@
-web: daphne salt-testserver.asgi:application --port $PORT --bind 0.0.0.0
+web: daphne ecommerce.asgi:application --port $PORT --bind 0.0.0.0
