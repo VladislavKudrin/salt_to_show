@@ -1,6 +1,6 @@
 import datetime
 
-AWS_GROUP_NAME = 'EnvisionGroup'
+AWS_GROUP_NAME = 'Salt-Staging'
 AWS_USERNAME = 'salt-staging'
 AWS_ACCESS_KEY_ID = "AKIA2R5PIZK6E4LQM5YX"
 AWS_SECRET_ACCESS_KEY = "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"
@@ -11,7 +11,7 @@ AWS_QUERYSTRING_AUTH = True
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'salt-staging'
-
+S3DIRECT_REGION = 'eu-central-1'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_ROOT = MEDIA_URL
