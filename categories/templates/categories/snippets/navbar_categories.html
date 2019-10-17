@@ -75,7 +75,6 @@ li a{
   display: none !important; 
 }
 </style>
-            {% trans barabek %}
 <div id='nav_categories'>
 <hr class="mb-0 mt-2 ml-0 mr-0" style="border-top-color: white">
 <nav class="navbar navbar-expand-lg navbar-light bg-white" >
@@ -104,8 +103,7 @@ li a{
       <li class="nav-item custom-li-dropdown">
         <div class="dropdown-navcat">
           <a class="nav-link dropdown-toggle dropdown-click-btn">
-            {% blocktrans with gender_eng='dwdw' %}{{ gender_eng }}{% endblocktrans %}
-
+            {% trans gender.gender_eng %}
           </a>
           <div class="dropdown-content-navcat m-0">
             <div class="row overflow-auto m-0 row-dropdown-categories my-custom-scrollbar"  style="overflow-y: hidden; overflow-x: hidden;">

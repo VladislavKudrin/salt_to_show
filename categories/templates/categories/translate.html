@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
+
+
+
+{% for category in categories %}
+<p>{% trans '{{ category.category_eng }}' 
+%}</p>
+{% endfor %}
+{% for undercategory in undercategories %}
+<p>{% trans '{{ undercategory.undercategory_eng }}' 
+%}</p>
+{% endfor %}
 <form method = 'POST'> {% csrf_token %}
 	<div class="col-12 text-center">
 		<h2>Overcatgories</h2>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 10:58+0200\n"
-"PO-Revision-Date: 2019-10-10 09:59+0200\n"
+"POT-Creation-Date: 2019-10-17 16:08+0200\n"
+"PO-Revision-Date: 2019-10-17 16:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -19,11 +19,6 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Poedit 2.2.4\n"
-
-#: categories/templates/categories/snippets/navbar_categories.html:107
-#, python-format
-msgid "%(gender_eng)s"
-msgstr ""
 
 #: ecommerce/forms.py:11
 msgid "Your Email"
@@ -213,6 +208,178 @@ msgid ""
 "Email help@saltysalt.co if the brand you are trying to add does not exist."
 msgstr "Йоуw."
 
+#: templates/languages/trans_custom/translation_custom.html:5
+msgid "Men"
+msgstr "Мужское"
+
+#: templates/languages/trans_custom/translation_custom.html:6
+msgid "Boys"
+msgstr "Мальчики"
+
+#: templates/languages/trans_custom/translation_custom.html:7
+msgid "Women"
+msgstr "Женское"
+
+#: templates/languages/trans_custom/translation_custom.html:8
+msgid "Girls"
+msgstr "Девочки"
+
+#: templates/languages/trans_custom/translation_custom.html:9
+msgid "Gender-Neutral"
+msgstr "Унисекс"
+
+#: templates/languages/trans_custom/translation_custom.html:11
+msgid "Tops"
+msgstr "Верх"
+
+#: templates/languages/trans_custom/translation_custom.html:13
+msgid "Bottoms"
+msgstr "Низ"
+
+#: templates/languages/trans_custom/translation_custom.html:15
+msgid "Shoes"
+msgstr "Обувь"
+
+#: templates/languages/trans_custom/translation_custom.html:17
+msgid "Accessories"
+msgstr "Аксессуары"
+
+#: templates/languages/trans_custom/translation_custom.html:19
+msgid "Outerwear"
+msgstr "Верхняя одежда"
+
+#: templates/languages/trans_custom/translation_custom.html:21
+msgid "Dresses & Overalls"
+msgstr "Платья и Комбинезоны"
+
+#: templates/languages/trans_custom/translation_custom.html:23
+msgid "T-Shirts & Polos"
+msgstr "Футболки и Поло"
+
+#: templates/languages/trans_custom/translation_custom.html:25
+msgid "Tops & Body"
+msgstr "Топы и Боди"
+
+#: templates/languages/trans_custom/translation_custom.html:27
+msgid "Shirts"
+msgstr "Рубашки"
+
+#: templates/languages/trans_custom/translation_custom.html:29
+msgid "Sweaters"
+msgstr "Свитера"
+
+#: templates/languages/trans_custom/translation_custom.html:31
+msgid "Sweatshirts/Hoodies"
+msgstr "Свитшоты и Худи"
+
+#: templates/languages/trans_custom/translation_custom.html:33
+msgid "Jeans"
+msgstr "Джинсы"
+
+#: templates/languages/trans_custom/translation_custom.html:35
+msgid "Shorts"
+msgstr "Шорты"
+
+#: templates/languages/trans_custom/translation_custom.html:37
+msgid "Sweatpants"
+msgstr "Спортивные штаны"
+
+#: templates/languages/trans_custom/translation_custom.html:39
+msgid "Pants"
+msgstr "Брюки"
+
+#: templates/languages/trans_custom/translation_custom.html:41
+msgid "Rocks"
+msgstr "Юбки"
+
+#: templates/languages/trans_custom/translation_custom.html:43
+msgid "Sneakers"
+msgstr "Сникерсы"
+
+#: templates/languages/trans_custom/translation_custom.html:45
+msgid "Classic Shoes"
+msgstr "Классическая обувь"
+
+#: templates/languages/trans_custom/translation_custom.html:47
+msgid "Boots"
+msgstr "Ботинки и Сапоги"
+
+#: templates/languages/trans_custom/translation_custom.html:49
+msgid "Sandals"
+msgstr "Сандали"
+
+#: templates/languages/trans_custom/translation_custom.html:51
+msgid "High Heels"
+msgstr "Каблуки"
+
+#: templates/languages/trans_custom/translation_custom.html:53
+msgid "Bags & Backpacks"
+msgstr "Сумки и Рюкзаки"
+
+#: templates/languages/trans_custom/translation_custom.html:55
+msgid "Bags & Luggage"
+msgstr "Сумки и Рюкзаки"
+
+#: templates/languages/trans_custom/translation_custom.html:57
+msgid "Belts"
+msgstr "Ремни"
+
+#: templates/languages/trans_custom/translation_custom.html:59
+msgid "Scarves"
+msgstr "Шарфы"
+
+#: templates/languages/trans_custom/translation_custom.html:61
+msgid "Hats"
+msgstr "Головные уборы"
+
+#: templates/languages/trans_custom/translation_custom.html:63
+msgid "Jewelry & Watches"
+msgstr "Украшения и Часы"
+
+#: templates/languages/trans_custom/translation_custom.html:65
+msgid "Wallets"
+msgstr "Кошельки"
+
+#: templates/languages/trans_custom/translation_custom.html:67
+msgid "Socks/Underwear"
+msgstr "Нижнее белье"
+
+#: templates/languages/trans_custom/translation_custom.html:69
+msgid "Sunglasses"
+msgstr "Очки"
+
+#: templates/languages/trans_custom/translation_custom.html:71
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: templates/languages/trans_custom/translation_custom.html:73
+msgid "Winter Jackets"
+msgstr "Зимние куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:75
+msgid "Leather Jackets"
+msgstr "Кожаные куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:77
+msgid "Coats"
+msgstr "Пальто"
+
+#: templates/languages/trans_custom/translation_custom.html:79
+msgid "Jeans Jackets"
+msgstr "Джинсовые куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:81
+msgid "Light Jackets"
+msgstr "Легкие куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:83
+msgid "Dresses"
+msgstr "Платья"
+
+#: templates/languages/trans_custom/translation_custom.html:85
+msgid "Overalls"
+msgstr "Комбинезоны"
+
 #: templates/registration/password_reset_email.html:2
 #: templates/registration/password_reset_email.txt:2
 #, python-format
@@ -227,8 +394,9 @@ msgstr ""
 "\n"
 "Reset your password on %(domain)s for %(user)s:\n"
 
-#~ msgid "Tops"
-#~ msgstr "Верх"
+#, python-format
+#~ msgid "%(gendero)s"
+#~ msgstr "awdaw"
 
 #~ msgid "Lolka"
 #~ msgstr "Шарага"
