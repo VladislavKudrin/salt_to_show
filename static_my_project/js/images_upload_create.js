@@ -80,6 +80,7 @@ if (currentPath.indexOf("create") != -1){
 function deleteRotateItem(item){
     item.on("click", 
     function(event){
+        console.log('rotate')
         var $item = $(this),
         $target = $(event.target);
         if ($target.is("a.ui-icon-trash")) {
@@ -100,7 +101,8 @@ function deleteRotateItem(item){
                 }//error
             })//ajax for delete
     }//if trash
-    if ($target.is("i.rotateItem")) {
+    if ($target.is("svg.rotateItem")) {
+        console.log('here')
             event.preventDefault()
             var rotatedTimes = $item.find("[name='rotateTimes']").val()
             rotatedTimes = parseInt(rotatedTimes) + 1
@@ -179,6 +181,7 @@ function deleteRotateItem(item){
                 displayUploading(myFiles, false)
                 $.each(data.image,
                   function(index, value){
+                    console.log('wdaw')
                   imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce mt-1" href="#"></a><a class="mt-1 mr-5 ui-icon-rotate rotateItem"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
                   i++
                   })//eachfoto
@@ -303,7 +306,7 @@ if (currentPath.indexOf("update") != -1){
     function(event){
         var $item = $(this),
         $target = $(event.target);
-        if ($target.is("i.rotateItem")) {
+        if ($target.is("svg.rotateItem")) {
             event.preventDefault()
             var rotatedTimes = $item.find("[name='rotateTimes']").val()
             rotatedTimes = parseInt(rotatedTimes) + 1
