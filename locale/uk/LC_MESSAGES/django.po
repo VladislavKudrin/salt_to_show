@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 12:46+0000\n"
+"POT-Creation-Date: 2019-10-18 12:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,87 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: accounts/forms.py:67
+msgid "Only alphanumeric characters are allowed"
+msgstr ""
+
+#: accounts/forms.py:68
+msgid "Username"
+msgstr ""
+
+#: accounts/forms.py:68
+msgid "Your username"
+msgstr ""
+
+#: accounts/forms.py:69
+msgid "Region"
+msgstr ""
+
+#: accounts/forms.py:70
+msgid "Name"
+msgstr ""
+
+#: accounts/forms.py:70
+msgid "Your full name"
+msgstr ""
+
+#: accounts/forms.py:71
+msgid "Cannot change email"
+msgstr ""
+
+#: accounts/forms.py:72
+msgid "Recieve marketing email?"
+msgstr ""
+
+#: accounts/forms.py:73
+msgid "Profile photo"
+msgstr ""
+
+#: accounts/forms.py:90 accounts/forms.py:92
+msgid "-- Please select your region --"
+msgstr ""
+
+#: accounts/templates/accounts/snippets/begin-chat.html:3
+msgid "Update profile"
+msgstr ""
+
+#: accounts/templates/accounts/snippets/begin-chat.html:6
+#: accounts/templates/accounts/snippets/begin-chat.html:8
+msgid "Contact seller"
+msgstr ""
+
+#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:64
+msgid "Submit"
+msgstr ""
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:7
+msgid "Choose your region"
+msgstr ""
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:22
+msgid "Save changes"
+msgstr ""
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:23
+msgid "Close"
+msgstr ""
+
+#: accounts/views.py:265
+msgid "Update your details"
+msgstr ""
+
+#: accounts/views.py:266
+msgid "Change password"
+msgstr ""
+
+#: accounts/views.py:267
+msgid "Save"
+msgstr ""
+
+#: accounts/views.py:268
+msgid "Logout"
+msgstr ""
 
 #: ecommerce/forms.py:11
 msgid "Your Email"
@@ -87,10 +168,6 @@ msgstr ""
 
 #: ecommerce/views.py:63
 msgid "Contact us"
-msgstr ""
-
-#: ecommerce/views.py:64
-msgid "Submit"
 msgstr ""
 
 #: ecommerce/views.py:65
@@ -180,6 +257,178 @@ msgstr ""
 #: products/templates/products/languages/product_create/product_create_ru.html:29
 msgid ""
 "Email help@saltysalt.co if the brand you are trying to add does not exist."
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:5
+msgid "Men"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:6
+msgid "Boys"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:7
+msgid "Women"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:8
+msgid "Girls"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:9
+msgid "Gender-Neutral"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:11
+msgid "Tops"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:13
+msgid "Bottoms"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:15
+msgid "Shoes"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:17
+msgid "Accessories"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:19
+msgid "Outerwear"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:21
+msgid "Dresses & Overalls"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:23
+msgid "T-Shirts & Polos"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:25
+msgid "Tops & Body"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:27
+msgid "Shirts"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:29
+msgid "Sweaters"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:31
+msgid "Sweatshirts/Hoodies"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:33
+msgid "Jeans"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:35
+msgid "Shorts"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:37
+msgid "Sweatpants"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:39
+msgid "Pants"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:41
+msgid "Rocks"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:43
+msgid "Sneakers"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:45
+msgid "Classic Shoes"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:47
+msgid "Boots"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:49
+msgid "Sandals"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:51
+msgid "High Heels"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:53
+msgid "Bags & Backpacks"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:55
+msgid "Bags & Luggage"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:57
+msgid "Belts"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:59
+msgid "Scarves"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:61
+msgid "Hats"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:63
+msgid "Jewelry & Watches"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:65
+msgid "Wallets"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:67
+msgid "Socks/Underwear"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:69
+msgid "Sunglasses"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:71
+msgid "Miscellaneous"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:73
+msgid "Winter Jackets"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:75
+msgid "Leather Jackets"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:77
+msgid "Coats"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:79
+msgid "Jeans Jackets"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:81
+msgid "Light Jackets"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:83
+msgid "Dresses"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:85
+msgid "Overalls"
 msgstr ""
 
 #: templates/registration/password_reset_email.html:2

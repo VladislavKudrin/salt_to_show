@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 16:08+0200\n"
-"PO-Revision-Date: 2019-10-17 16:08+0200\n"
+"POT-Creation-Date: 2019-10-18 13:15+0000\n"
+"PO-Revision-Date: 2019-10-18 15:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -19,6 +19,87 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Poedit 2.2.4\n"
+
+#: accounts/forms.py:67
+msgid "Only alphanumeric characters are allowed"
+msgstr "Юзернейм должен содержать только латинские символы или цифры"
+
+#: accounts/forms.py:68
+msgid "Username"
+msgstr "Юзернейм"
+
+#: accounts/forms.py:68
+msgid "Your username"
+msgstr "Твой юзернейм"
+
+#: accounts/forms.py:69
+msgid "Region"
+msgstr "Регион"
+
+#: accounts/forms.py:70
+msgid "Name"
+msgstr "Имя"
+
+#: accounts/forms.py:70
+msgid "Your full name"
+msgstr "Полное имя"
+
+#: accounts/forms.py:71
+msgid "Cannot change email"
+msgstr "Нельзя изменить Email"
+
+#: accounts/forms.py:72
+msgid "Recieve marketing email?"
+msgstr "Получать рассылку?"
+
+#: accounts/forms.py:73
+msgid "Profile photo"
+msgstr "Фото профиля"
+
+#: accounts/forms.py:90 accounts/forms.py:92
+msgid "-- Please select your region --"
+msgstr "— Выбери регион —"
+
+#: accounts/templates/accounts/snippets/begin-chat.html:3
+msgid "Update profile"
+msgstr "Обновить профиль"
+
+#: accounts/templates/accounts/snippets/begin-chat.html:6
+#: accounts/templates/accounts/snippets/begin-chat.html:8
+msgid "Contact seller"
+msgstr "Связаться с продавцом"
+
+#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:64
+msgid "Submit"
+msgstr "Отправить"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:7
+msgid "Choose your region"
+msgstr "Выбери свой регион"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:22
+msgid "Save changes"
+msgstr "Сохранить"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:23
+msgid "Close"
+msgstr "Закрыть"
+
+#: accounts/views.py:265
+msgid "Update your details"
+msgstr "Обновить аккаунт"
+
+#: accounts/views.py:266
+msgid "Change password"
+msgstr "Изменить пароль"
+
+#: accounts/views.py:267
+msgid "Save"
+msgstr "Сохранить"
+
+#: accounts/views.py:268
+msgid "Logout"
+msgstr "Выйти"
 
 #: ecommerce/forms.py:11
 msgid "Your Email"
@@ -113,10 +194,6 @@ msgstr ""
 msgid "Contact us"
 msgstr "Напиши нам"
 
-#: ecommerce/views.py:64
-msgid "Submit"
-msgstr "Отправить"
-
 #: ecommerce/views.py:65
 msgid "Sending...."
 msgstr "Отправка…."
@@ -137,7 +214,7 @@ msgstr "Дети"
 msgid "New"
 msgstr "Свежее"
 
-#: ecommerce/views.py:142
+#: ecommerce/views.py:142 products/forms.py:20
 msgid "Brand"
 msgstr "Бренд"
 
@@ -203,10 +280,142 @@ msgstr "Показать все"
 msgid "Popular designers:"
 msgstr "Популярные бренды:"
 
-#: products/templates/products/languages/product_create/product_create_ru.html:29
+#: products/forms.py:20
+msgid "Select a brand"
+msgstr ""
+
+#: products/forms.py:21 products/forms.py:54
+msgid "Gender"
+msgstr "Гендер"
+
+#: products/forms.py:21
+msgid "Select a gender"
+msgstr ""
+
+#: products/forms.py:22
+msgid "Category"
+msgstr ""
+
+#: products/forms.py:22
+msgid "Select a category"
+msgstr ""
+
+#: products/forms.py:23
+msgid "Size"
+msgstr ""
+
+#: products/forms.py:23
+msgid "Select a size"
+msgstr ""
+
+#: products/forms.py:24
+msgid "Condition"
+msgstr ""
+
+#: products/forms.py:24
+msgid "Select a condition"
+msgstr ""
+
+#: products/forms.py:50
+msgid "Some keywords about your item"
+msgstr ""
+
+#: products/forms.py:51
+msgid "Describe your item in details"
+msgstr ""
+
+#: products/forms.py:52
+#, python-brace-format
+msgid "Enter a price in {currency}"
+msgstr ""
+
+#: products/forms.py:106
+#, fuzzy
+#| msgid "-- Please select your region --"
+msgid "Please, select a gender"
+msgstr "— Выбери регион —"
+
+#: products/forms.py:117
+msgid "Please, select a valid category"
+msgstr ""
+
+#: products/forms.py:131
+msgid "Please, select a valid size"
+msgstr ""
+
+#: products/forms.py:143
+#, fuzzy
+#| msgid "-- Please select your region --"
+msgid "Please, select a condition"
+msgstr "— Выбери регион —"
+
+#: products/forms.py:157
+#, fuzzy
+#| msgid "-- Please select your region --"
+msgid "Please, select existing brand"
+msgstr "— Выбери регион —"
+
+#: products/forms.py:168
+#, python-brace-format
+msgid "Please, make it shorter. # of lines to be removed: {lines}"
+msgstr ""
+
+#: products/forms.py:172
+#, python-brace-format
+msgid "Please, make it shorter. # of characters to be removed: {charss}"
+msgstr ""
+
+#: products/forms.py:188
+msgid "Images*"
+msgstr ""
+
+#: products/forms.py:194
+msgid "Upload at least one image"
+msgstr ""
+
+#: products/forms.py:199
+msgid "Not enough photos. Minimal amount - 4"
+msgstr ""
+
+#: products/forms.py:204
+msgid "Too many files, max. amount 8"
+msgstr ""
+
+#: products/templates/products/product-create.html:150
 msgid ""
 "Email help@saltysalt.co if the brand you are trying to add does not exist."
 msgstr "Йоуw."
+
+#: products/views.py:312 products/views.py:371
+msgid "Create"
+msgstr ""
+
+#: products/views.py:313 products/views.py:372
+msgid "Add a new item"
+msgstr ""
+
+#: products/views.py:335
+msgid "New item upload"
+msgstr ""
+
+#: products/views.py:336
+msgid ""
+"New product was uploaded. Please verify authenticity: \n"
+" {} \n"
+" Product Title: {} \n"
+" Product Description: \n"
+" {}"
+msgstr ""
+
+#: products/views.py:345
+msgid ""
+"Your item was checked by AI. Within next 24 hours the check will be "
+"confirmed by our moderator team and your item will be published"
+msgstr ""
+
+#: templates/forms/helper_text.html:3 templates/languages/helper_text-en.html:3
+msgid "* marked fields are required"
+msgstr ""
 
 #: templates/languages/trans_custom/translation_custom.html:5
 msgid "Men"

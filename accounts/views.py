@@ -14,6 +14,7 @@ from django.views.generic import CreateView, FormView, DetailView, View, UpdateV
 from django.views.generic.edit import FormMixin
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePreference
@@ -33,18 +34,6 @@ def region_init(request):
 				'form': form,
 				'path':request.GET.get('location')
 			}
-			if request.session.get('language') == 'RU':
-				context['title'] = 'Войти | Зарегистрироваться'
-				context['or_option'] = 'Или'
-				context['password_forgot'] = 'Забыл_а пароль?'
-			elif request.session.get('language') == 'UA':
-				context['title'] = 'Увійти | Зареєструватися'
-				context['or_option'] = 'Або'
-				context['password_forgot'] = 'Забув/забула пароль?'
-			else:
-				context['title'] = 'Login | Register'
-				context['or_option'] = 'Or'
-				context['password_forgot'] = 'Forgot password?'
 			html_ = get_template("accounts/snippets/region-modal/region-modal.html").render(request = request, context=context)
 			json_data={
 			'html':html_
@@ -262,21 +251,21 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Обновить аккаунт'
-			context['password_btn'] = 'Изменить пароль'
-			context['save_btn'] = 'Сохранить'
-			context['logout_btn'] = 'Выйти'
-		elif self.request.session.get('language') == 'UA':
-			context['title'] = 'Оновити аккаунт'
-			context['password_btn'] = 'Змінити пароль'
-			context['save_btn'] = 'Зберегти'
-			context['logout_btn'] = 'Выйти'
-		else:
-			context['title'] = 'Update your details'
-			context['password_btn'] = 'Change password'
-			context['save_btn'] = 'Save'
-			context['logout_btn'] = 'Logout'
+		# if self.request.session.get('language') == 'RU':
+		# 	context['title'] = 'Обновить аккаунт'
+		# 	context['password_btn'] = 'Изменить пароль'
+		# 	context['save_btn'] = 'Сохранить'
+		# 	context['logout_btn'] = 'Выйти'
+		# elif self.request.session.get('language') == 'UA':
+		# 	context['title'] = 'Оновити аккаунт'
+		# 	context['password_btn'] = 'Змінити пароль'
+		# 	context['save_btn'] = 'Зберегти'
+		# 	context['logout_btn'] = 'Выйти'
+		# else:
+		context['title'] = _('Update your details')
+		context['password_btn'] = _('Change password')
+		context['save_btn'] = _('Save')
+		context['logout_btn'] = _('Logout')
 		return context
 
 	def get_success_url(self):

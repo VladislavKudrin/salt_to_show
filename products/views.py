@@ -15,6 +15,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.conf import settings
+from django.utils.translation import gettext as _
+
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -250,7 +252,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():
-			language = request.session.get('language')
 			json_data={
 			'brand':brand_arr,
 			}
@@ -265,14 +266,14 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				categories = [{
 					"category":data.category,
 					"id":data.id,
-					"category_language":data.return_language(language)
+					"category_language":_(data.category_eng)
 						}
 						for data in category_list]
 				undercategories = [{
 					"undercategory_for":data.undercategory_for.category,
 					"undercategory":data.undercategory,
 					"id":data.id,
-					'undercategory_language':data.return_language(language)
+					'undercategory_language':_(data.undercategory_eng)
 						}
 						for data in undercategory_list] 
 				json_data = {
@@ -291,27 +292,27 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				return JsonResponse(json_data)
 			return JsonResponse(json_data)
 		product_form = ImageForm(request)
-		if self.request.session.get('language') == 'RU':
-			context={
-			'form': product_form,
-			'button': 'Залить',
-			'title':'Добавить новый айтем',
-			'form_id': form_id
-			}
-		elif self.request.session.get('language') == 'UA':
-			context={
-			'form': product_form,
-			'button': 'Залити',
-			'title':'Додати новий айтем',
-			'form_id': form_id
-			}
-		else:
-			context={
-			'form': product_form,
-			'button': 'Create',
-			'title':'Add a new item',
-			'form_id': form_id
-			}
+		# if self.request.session.get('language') == 'RU':
+		# 	context={
+		# 	'form': product_form,
+		# 	'button': 'Залить',
+		# 	'title':'Добавить новый айтем',
+		# 	'form_id': form_id
+		# 	}
+		# elif self.request.session.get('language') == 'UA':
+		# 	context={
+		# 	'form': product_form,
+		# 	'button': 'Залити',
+		# 	'title':'Додати новий айтем',
+		# 	'form_id': form_id
+		# 	}
+		# else:
+		context={
+		'form': product_form,
+		'button': _('Create'),
+		'title': _('Add a new item'),
+		'form_id': form_id
+		}
 
 		context['overcategories'] = Overcategory.objects.all()
 		context['genders'] = Gender.objects.all()
@@ -331,17 +332,17 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		path = "{base}{path}".format(base=base_url, path=url)
 
 		#Message after upload
-		subject = 'New item upload'
-		message = 'New product was uploaded. Please verify authenticity: \n {} \n Product Title: {} \n Product Description: \n {}'.format(path, product.title, product.description)
+		subject = _('New item upload')
+		message = _('New product was uploaded. Please verify authenticity: \n {} \n Product Title: {} \n Product Description: \n {}'.format(path, product.title, product.description))
 		from_email = settings.DEFAULT_FROM_EMAIL
 		to_email = settings.DEFAULT_FROM_EMAIL
 		send_mail(subject, message, from_email, [to_email], fail_silently=False)
 
-		if request.session.get('language')=='RU':
-			msg = 'Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку подтвердит модератор и айтем будет выставлен на продажу'
-		# elif request.session.get('language')=='UA':
-		else: 
-			msg = 'Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published'
+		# if request.session.get('language')=='RU':
+		# 	msg = 'Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку подтвердит модератор и айтем будет выставлен на продажу'
+		# # elif request.session.get('language')=='UA':
+		# else: 
+		msg = _('Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published')
 		messages.add_message(request, messages.SUCCESS, msg)
 
 		if self.request.is_ajax():	
@@ -358,18 +359,18 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			# 	'errors':json.dumps(form.errors)
 			# 	}
 			return JsonResponse({'error':form.errors})
-		if self.request.session.get('language') == 'RU':
-			context={
-			'form': form,
-			'button': 'Залить',
-			'title':'Добавить новый айтем',
-			}
-		else:
-			context={
-			'form': form,
-			'button': 'Create',
-			'title':'Add a new product'
-			}
+		# if self.request.session.get('language') == 'RU':
+		# 	context={
+		# 	'form': form,
+		# 	'button': 'Залить',
+		# 	'title':'Добавить новый айтем',
+		# 	}
+		# else:
+		context={
+		'form': form,
+		'button': _('Create'),
+		'title':_('Add a new item')
+		}
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(self.request, 'products/product-create.html', context)
 

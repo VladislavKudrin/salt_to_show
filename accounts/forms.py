@@ -5,7 +5,8 @@ from django.utils.safestring import mark_safe
 from django.contrib import messages
 from django.contrib.auth.password_validation import validate_password
 from django.core.urlresolvers import reverse
-import re 
+import re
+from django.utils.translation import gettext as _ 
 User = get_user_model()
 
 from marketing.models import MarketingPreference
@@ -63,13 +64,13 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 class UserDetailChangeForm(forms.ModelForm):
-    alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Only alphanumeric characters are allowed')
-    username  = forms.CharField(label='Username', required=True, validators=[alphanumeric], widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your username'}))
-    region = forms.ChoiceField(label='Region', widget=forms.Select(), required=False)
-    full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':'Your full name'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), help_text='Cannot change email', required=False)
-    subscribed = forms.BooleanField(label = 'Recieve marketing email?', required=False)
-    profile_foto = forms.FileField(label= 'Profile photo', required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
+    alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
+    username  = forms.CharField(label=_('Username'), required=True, validators=[alphanumeric], widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':_('Your username')}))
+    region = forms.ChoiceField(label=_('Region'), widget=forms.Select(), required=False)
+    full_name = forms.CharField(label=_('Name'), required=False, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':_('Your full name')}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), help_text=_('Cannot change email'), required=False)
+    subscribed = forms.BooleanField(label = _('Recieve marketing email?'), required=False)
+    profile_foto = forms.FileField(label= _('Profile photo'), required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
     class Meta:
         model = User
         fields = [
@@ -79,41 +80,41 @@ class UserDetailChangeForm(forms.ModelForm):
                 'profile_foto',
                     ]
     def __init__(self, request, *args, **kwargs):
-        alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм должен содержать только латинские символы или цифры')
-        alphanumeric_ua = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм повинен містити тільки латинські символи або цифри')
+        # alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм должен содержать только латинские символы или цифры')
+        # alphanumeric_ua = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм повинен містити тільки латинські символи або цифри')
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
 
         #REGIONS
         self.initial['region'] = request.user.region
         if self.initial['region'] is None: 
-            self.initial['region'] = ('default', '-- Please select your region --')
+            self.initial['region'] = ('default', _('-- Please select your region --'))
         region_choices = [(e.region, e.region) for e in Region.objects.all()] #currently available options
-        region_choices.append(tuple(('default', '-- Please select your region --'))) #append default value
+        region_choices.append(tuple(('default', _('-- Please select your region --')))) #append default value
         self.fields['region'].choices = region_choices
 
         self.request = request
         self.fields['email'].initial=request.user.email
         self.fields['subscribed'].initial=request.user.marketing.subscribed
         self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
-        self.lan = request.session.get('language')
-        if self.lan == 'RU':
-            self.fields['subscribed'].label = "Получать рассылку?"
-            self.fields['full_name'].label = "Имя и фамилия"
-            self.fields['username'].label = "Юзернейм"
-            self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
-            self.fields['username'].validators = [alphanumeric_rus]
-            self.fields['full_name'].widget.attrs['placeholder'] = "Имя и фамилия"
-            self.fields['profile_foto'].label = "Фото профиля"
-            self.fields['email'].help_text='Нельзя изменить мейл'
-        elif self.lan == 'UA':
-            self.fields['subscribed'].label = "Отримувати розсилку?"
-            self.fields['full_name'].label = "Ім'я та прізвище"
-            self.fields['username'].label = "Юзернейм"
-            self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
-            self.fields['username'].validators = [alphanumeric_ua]
-            self.fields['full_name'].widget.attrs['placeholder'] = "Ім'я та прізвище"
-            self.fields['profile_foto'].label = "Фото профілю"
-            self.fields['email'].help_text='Не можна змінити мейл'
+
+        # if self.lan == 'RU':
+        #     self.fields['subscribed'].label = "Получать рассылку?"
+        #     self.fields['full_name'].label = "Имя и фамилия"
+        #     self.fields['username'].label = "Юзернейм"
+        #     self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
+        #     self.fields['username'].validators = [alphanumeric_rus]
+        #     self.fields['full_name'].widget.attrs['placeholder'] = "Имя и фамилия"
+        #     self.fields['profile_foto'].label = "Фото профиля"
+        #     self.fields['email'].help_text='Нельзя изменить мейл'
+        # elif self.lan == 'UA':
+        #     self.fields['subscribed'].label = "Отримувати розсилку?"
+        #     self.fields['full_name'].label = "Ім'я та прізвище"
+        #     self.fields['username'].label = "Юзернейм"
+        #     self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
+        #     self.fields['username'].validators = [alphanumeric_ua]
+        #     self.fields['full_name'].widget.attrs['placeholder'] = "Ім'я та прізвище"
+        #     self.fields['profile_foto'].label = "Фото профілю"
+        #     self.fields['email'].help_text='Не можна змінити мейл'
 
     # def clean_username(self):
     #     data = self.cleaned_data['username']

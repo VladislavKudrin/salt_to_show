@@ -6,6 +6,7 @@ from django.core.files.base import ContentFile
 from io import BytesIO
 from django.core.validators import validate_image_file_extension
 from django.conf import settings
+from django.utils.translation import gettext as _
 
 from .models import Product, ImageOrderUtil, ProductImage
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
@@ -16,11 +17,11 @@ from image_uploader.validators import validate_file_extension
 import re
 
 class ProductCreateForm(forms.ModelForm):
-	brand = forms.CharField(label='Brand', required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":'Select a brand'}))
-	sex = forms.CharField(label='Gender', required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":'Select a gender'}))
-	undercategory = forms.CharField(label='Category', required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":'Select a category'}))
-	size = forms.CharField(label='Size', required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":'Select a size'}))
-	condition = forms.CharField(label='Condition', required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":'Select a condition'}))
+	brand = forms.CharField(label=_('Brand'), required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":_('Select a brand')}))
+	sex = forms.CharField(label=_('Gender'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a gender')}))
+	undercategory = forms.CharField(label=_('Category'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a category')}))
+	size = forms.CharField(label=_('Size'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a size')}))
+	condition = forms.CharField(label=_('Condition'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a condition')}))
 	class Meta:
 		model = Product
 		fields = [
@@ -46,54 +47,54 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['undercategory'].widget.attrs['readonly'] = True
 		self.fields['size'].widget.attrs['readonly'] = True
 		self.fields['condition'].widget.attrs['readonly'] = True
-		self.fields['title'].widget.attrs['placeholder'] = 'Some keywords about your item'
-		self.fields['description'].widget.attrs['placeholder'] = 'Describe your item in details'
-		self.fields['price'].widget.attrs['placeholder'] = 'Enter a price in {currency}'.format(currency=currency_placeholder)
+		self.fields['title'].widget.attrs['placeholder'] = _('Some keywords about your item')
+		self.fields['description'].widget.attrs['placeholder'] = _('Describe your item in details')
+		self.fields['price'].widget.attrs['placeholder'] = _('Enter a price in {currency}'.format(currency=currency_placeholder))
 		self.fields['price'].initial = ''
-		self.fields['sex'].label = 'Gender'
-		if self.lan == 'RU':
-			self.fields['title'].label = "Название"
-			self.fields['title'].widget.attrs['placeholder'] = 'Пара слов про айтем'
-			self.fields['description'].label = "Описание"
-			self.fields['description'].widget.attrs['placeholder'] = 'Подробно опиши айтем'
-			self.fields['price'].label = "Цена"
-			self.fields['price'].widget.attrs['placeholder'] = 'Введи цену в {currency}'.format(currency=currency_placeholder)
-			self.fields['brand'].label = "Бренд"
-			self.fields['brand'].widget.attrs['placeholder'] = 'Выбери бренд'
-			self.fields['sex'].label = "Гендер"
-			self.fields['sex'].widget.attrs['placeholder'] = 'Выбери гендер'
-			self.fields['undercategory'].label = "Категория"
-			self.fields['undercategory'].widget.attrs['placeholder'] = 'Выбери категорию'
-			self.fields['condition'].widget.attrs['placeholder'] = 'Выбери состояние'
-			self.fields['size'].widget.attrs['placeholder'] = 'Выбери размер'
-			# self.fields['category'].label = "Категория"
-			# self.fields['category'].choices = CATEGORY_CHOICES = (
-			# ('select a category', 'Выбери подходящую категорию'),
-			# ('tops', 'Верх'),
-			# ('bottoms', 'Низ'),
-			# ('accessories', 'Аксессуары'),
-			# ('outerwear', 'Верхняя одежда'),
-			# ('footwear', 'Обувь'),
-			# )
-			self.fields['size'].label = "Размер"
-			self.fields['condition'].label = "Состояние"
-		elif self.lan == 'UA':
-			self.fields['title'].label = "Назва"
-			self.fields['title'].widget.attrs['placeholder'] = 'Пара слів про айтем'
-			self.fields['description'].label = "Опис"
-			self.fields['description'].widget.attrs['placeholder'] = 'Детально опиши айтем'
-			self.fields['price'].label = "Ціна"
-			self.fields['price'].widget.attrs['placeholder'] = 'Введи ціну в {currency}'.format(currency=currency_placeholder)
-			self.fields['brand'].label = "Бренд"
-			self.fields['brand'].widget.attrs['placeholder'] = 'Вибери бренд'
-			self.fields['sex'].label = "Гендер"
-			self.fields['sex'].widget.attrs['placeholder'] = 'Вибери гендер'
-			self.fields['undercategory'].label = "Категорія"
-			self.fields['undercategory'].widget.attrs['placeholder'] = 'Вибери категорію'
-			self.fields['condition'].widget.attrs['placeholder'] = 'Вибери стан'
-			self.fields['size'].widget.attrs['placeholder'] = 'Вибери розмір'
-			self.fields['size'].label = "розмір"
-			self.fields['condition'].label = "Стан"
+		self.fields['sex'].label = _('Gender')
+		# if self.lan == 'RU':
+		# 	self.fields['title'].label = "Название"
+		# 	self.fields['title'].widget.attrs['placeholder'] = 'Пара слов про айтем'
+		# 	self.fields['description'].label = "Описание"
+		# 	self.fields['description'].widget.attrs['placeholder'] = 'Подробно опиши айтем'
+		# 	self.fields['price'].label = "Цена"
+		# 	self.fields['price'].widget.attrs['placeholder'] = 'Введи цену в {currency}'.format(currency=currency_placeholder)
+		# 	self.fields['brand'].label = "Бренд"
+		# 	self.fields['brand'].widget.attrs['placeholder'] = 'Выбери бренд'
+		# 	self.fields['sex'].label = "Гендер"
+		# 	self.fields['sex'].widget.attrs['placeholder'] = 'Выбери гендер'
+		# 	self.fields['undercategory'].label = "Категория"
+		# 	self.fields['undercategory'].widget.attrs['placeholder'] = 'Выбери категорию'
+		# 	self.fields['condition'].widget.attrs['placeholder'] = 'Выбери состояние'
+		# 	self.fields['size'].widget.attrs['placeholder'] = 'Выбери размер'
+		# 	# self.fields['category'].label = "Категория"
+		# 	# self.fields['category'].choices = CATEGORY_CHOICES = (
+		# 	# ('select a category', 'Выбери подходящую категорию'),
+		# 	# ('tops', 'Верх'),
+		# 	# ('bottoms', 'Низ'),
+		# 	# ('accessories', 'Аксессуары'),
+		# 	# ('outerwear', 'Верхняя одежда'),
+		# 	# ('footwear', 'Обувь'),
+		# 	# )
+		# 	self.fields['size'].label = "Размер"
+		# 	self.fields['condition'].label = "Состояние"
+		# elif self.lan == 'UA':
+		# 	self.fields['title'].label = "Назва"
+		# 	self.fields['title'].widget.attrs['placeholder'] = 'Пара слів про айтем'
+		# 	self.fields['description'].label = "Опис"
+		# 	self.fields['description'].widget.attrs['placeholder'] = 'Детально опиши айтем'
+		# 	self.fields['price'].label = "Ціна"
+		# 	self.fields['price'].widget.attrs['placeholder'] = 'Введи ціну в {currency}'.format(currency=currency_placeholder)
+		# 	self.fields['brand'].label = "Бренд"
+		# 	self.fields['brand'].widget.attrs['placeholder'] = 'Вибери бренд'
+		# 	self.fields['sex'].label = "Гендер"
+		# 	self.fields['sex'].widget.attrs['placeholder'] = 'Вибери гендер'
+		# 	self.fields['undercategory'].label = "Категорія"
+		# 	self.fields['undercategory'].widget.attrs['placeholder'] = 'Вибери категорію'
+		# 	self.fields['condition'].widget.attrs['placeholder'] = 'Вибери стан'
+		# 	self.fields['size'].widget.attrs['placeholder'] = 'Вибери розмір'
+		# 	self.fields['size'].label = "розмір"
+		# 	self.fields['condition'].label = "Стан"
 
 
 		
@@ -102,12 +103,7 @@ class ProductCreateForm(forms.ModelForm):
 		data_sex = self.cleaned_data.get('sex')
 		sex = Gender.objects.filter(id=int(data_sex))
 		self.cleaned_data['overcategory'] = sex.first().gender_for
-		if self.lan == 'RU':
-			error_message = 'Пожалуйста, выбери гендер'
-		elif self.lan == 'UA':
-			error_message = "Please, select a gender"
-		elif self.lan == 'EN':
-			error_message = "Please, select a gender"
+		error_message = _("Please, select a gender")
 		if sex is '' or sex.exists()==False:
 			self.add_error('sex', error_message)
 		return sex.first()
@@ -118,12 +114,7 @@ class ProductCreateForm(forms.ModelForm):
 		data_undercat = self.cleaned_data.get('undercategory')
 		undercategory = Undercategory.objects.filter(id=int(data_undercat))
 		self.cleaned_data['category'] = undercategory.first().undercategory_for
-		if self.lan == 'RU':
-			error_message = 'Пожалуйста, выбери подходящую категорию'
-		elif self.lan == 'UA':
-			error_message = "Please, select a valid category"
-		elif self.lan == 'EN':
-			error_message = "Please, select a valid category"
+		error_message = _("Please, select a valid category")
 		if undercategory is '' or undercategory.exists()==False:
 			self.add_error('undercategory', error_message)
 		if self.cleaned_data['category'].category_for != data.get('sex'):
@@ -137,12 +128,7 @@ class ProductCreateForm(forms.ModelForm):
 		size = Size.objects.filter(id=int(data_size))
 		data_under = data.get('undercategory')
 		data_overcategory = data.get('sex').gender_for
-		if self.lan == 'RU':
-			error_message = 'Пожалуйста, выбери подходящий размер'
-		elif self.lan == 'UA':
-			error_message = "Please, select a valid size"
-		elif self.lan == 'EN':
-			error_message = "Please, select a valid size"
+		error_message = _("Please, select a valid size")
 		if size is '' or size.exists()==False:
 			self.add_error('size', error_message)
 		if data_overcategory is not None or data_under is not None:
@@ -154,12 +140,7 @@ class ProductCreateForm(forms.ModelForm):
 		request = self.request
 		data_condition = self.cleaned_data.get('condition')
 		condition = Condition.objects.filter(id=int(data_condition))
-		if self.lan == 'RU':
-			error_message = 'Пожалуйста, выбери состояние'
-		elif self.lan == 'UA':
-			error_message = "Please, select a condition"
-		elif self.lan == 'EN':
-			error_message = "Please, select a condition"
+		error_message = _("Please, select a condition")
 		if condition is '' or condition.exists()==False:
 			self.add_error('condition', error_message)
 		return condition.first()
@@ -173,10 +154,7 @@ class ProductCreateForm(forms.ModelForm):
 			instance=brand_instance.first()
 			return instance
 		else:
-			if self.lan == 'RU':
-				self.add_error('brand', 'Пожалуйста, выберите существующий бренд')
-			else:
-				self.add_error('brand', 'Please, select existing brand')
+			self.add_error('brand', _('Please, select existing brand'))
 
 	def clean_description(self):
 		data = self.cleaned_data
@@ -187,11 +165,11 @@ class ProductCreateForm(forms.ModelForm):
 			chars = len(description)
 			if length > 18: 
 				lines = int(length) - int(18)
-				message = 'Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines)
+				message = _('Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines))
 				self.add_error('description', message)
 			if chars > 400:
 				charss = int(chars) - int(400)
-				message = 'Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss)
+				message = _('Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss))
 				self.add_error('description', message)	
 		return description
 	def clean_price(self):
@@ -207,28 +185,23 @@ class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
 	def __init__(self, request, *args, **kwargs):
 		super(ImageForm, self).__init__(request, *args, **kwargs)
-		self.fields['image'].label = "Images*"
-		if request.session.get('language')=='RU':
-			self.fields['image'].label = "Фото*"
+		self.fields['image'].label = _("Images*")
 	
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
 		if len(cleaned_images)==0:
-			if self.lan == 'RU':
-				raise forms.ValidationError("Загрузи как минимум фото")
-			else:
-				raise forms.ValidationError("Upload at least one image")
+			raise forms.ValidationError(_("Upload at least one image"))
 		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
-			if self.lan == 'RU':
-				raise forms.ValidationError("Недостаточное колличество фотографий. Минимальное колличество - 4")
-			else:
-				raise forms.ValidationError("Not enough fotos. Minimal amount - 4")	
+			# if self.lan == 'RU':
+			# 	raise forms.ValidationError("Недостаточное колличество фотографий. Минимальное колличество - 4")
+			# else:
+			raise forms.ValidationError(_("Not enough photos. Minimal amount - 4"))
 		if len(cleaned_images)>settings.IMAGES_UPLOAD_LIMIT:
-			if self.lan == 'RU':
-				raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
-			else:
-				raise forms.ValidationError("Too many files, max. amount 8")	
+			# if self.lan == 'RU':
+			# 	raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
+			# else:
+			raise forms.ValidationError(_("Too many files, max. amount 8"))
 		return cleaned_images
 		
 	def save(self, commit=True):
