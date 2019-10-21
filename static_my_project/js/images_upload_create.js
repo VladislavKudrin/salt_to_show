@@ -154,18 +154,18 @@ function deleteRotateItem(item){
                 if ($('.image').length==0){
                     if(languageOption=='RU'){
                         $('#id_image').addClass('is-invalid')
-                        $('#id_image').after('<p class="invalid-feedback image"><strong>Многовато фотографий! Максимальное колличество - '+ imagesUploadLimit.val() +'</strong></p>')}//if more than 8 one time
+                        $('#id_image').after('<p class="invalid-feedback image"><strong>Многовато фотографий! Максимальное колличество - '+ imagesUploadLimit.val() +'</strong></p>')//if more than 8 one time
                     }//if ru
                     else if (languageOption=='UA'){
                         $('#id_image').addClass('is-invalid')
-                        $('#id_image').after('<p class="invalid-feedback image"><strong>Занадто багато фотографій! Максимальна кiлькiсть - '+ imagesUploadLimit.val() +'</strong></p>')}//if more than 8 one time
+                        $('#id_image').after('<p class="invalid-feedback image"><strong>Занадто багато фотографій! Максимальна кiлькiсть - '+ imagesUploadLimit.val() +'</strong></p>')//if more than 8 one time
                     }//if ua
                     else{
                         $('#id_image').addClass('is-invalid')
                         $('#id_image').after('<p class="invalid-feedback image"><strong>Too many images. Should be less than '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
                     }//if not ru
                 return console.log('hellow')
-            }//ifmorethan8
+            }}//ifmorethan8
             displayUploading(myFiles, true)
             $.each(myFiles, 
             function(index, value){
