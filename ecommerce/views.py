@@ -123,7 +123,7 @@ def home_page(request):
 	context = {}
 	context['qs'] = qs
 	context['liked'] = most_liked
-	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang', 'Boss']
+	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Armani', 'C.P. Company', 'Comme des Garcons', 'Calvin Klein', 'Balmain', 'Alexander Wang']
 	to_send = []
 	for i in brands: 
 		to_send.append(Brand.objects.filter(brand_name=i).first())
