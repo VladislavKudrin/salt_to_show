@@ -168,8 +168,8 @@ select{
                 <div class='{{ overcategory.overcategory }} overcategory-gender'>
                   {% for gender in genders %}
                     {% if overcategory == gender.gender_for %}
-                      <div class='col-12 gender-class' overcategory_for_size='{{ overcategory.overcategory }}' gender-for-cat='{{ gender.gender_eng }}' value='{{ gender.id }}'>
-                        <p overcategory_for_size='{{ overcategory.overcategory }}' class='mb-0' value='{{ gender.id }}'>{{ gender.gender_eng }}</p>
+                      <div class='col-12 gender-class' overcategory_for_size='{{ overcategory.overcategory }}' gender-for-cat='{% trans gender.gender_eng %}' value='{{ gender.id }}'>
+                        <p overcategory_for_size='{{ overcategory.overcategory }}' class='mb-0' value='{{ gender.id }}'>{% trans gender.gender_eng %}</p>
                       </div>
                     {% endif %}
                   {% endfor %}
@@ -233,8 +233,8 @@ select{
           <div class="row m-0">
             <div class="col-12 active-condition p-0">
               {% for condition in conditions %}
-                <div class='col-12 condition-class' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_eng }}' activated='{{ condition.condition }}'>
-                  <p class='mb-0 text-center' id_for_fk ='{{ condition.id }}' value='{{ condition.condition_eng }}'>{{ condition.condition_eng }}</p>
+                <div class='col-12 condition-class' id_for_fk ='{{ condition.id }}' value='{% trans condition.condition_eng %}' activated='{{ condition.condition }}'>
+                  <p class='mb-0 text-center' id_for_fk ='{{ condition.id }}' value='{% trans condition.condition_eng %}'>{% trans condition.condition_eng %}</p>
                 </div>
               {% endfor %}
             </div>            

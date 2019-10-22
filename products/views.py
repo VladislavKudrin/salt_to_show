@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.conf import settings
 from django.utils.translation import gettext as _
-
+from django.utils import translation
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
@@ -249,6 +249,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		brands = Brand.objects.all()
 		brand_arr = []
 		form_id = unique_form_id_generator()
+		request.session[translation.LANGUAGE_SESSION_KEY] = translation.get_language()
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():

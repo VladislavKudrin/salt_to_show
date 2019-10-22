@@ -6,6 +6,7 @@ from django.utils.translation import (
 )
 from django.urls import translate_url
 
+from accounts.models import LanguagePreference
 
 DEFAULT_PACKAGES = ['django.conf']
 LANGUAGE_QUERY_PARAMETER = 'language'
@@ -38,6 +39,13 @@ def set_language(request):
                     path=settings.LANGUAGE_COOKIE_PATH,
                     domain=settings.LANGUAGE_COOKIE_DOMAIN,
                 )
+            if request.user.is_authenticated():
+                user = request.user
+                qs_lang = LanguagePreference.objects.filter(user=user)
+                if qs_lang.exists():
+                    LanguagePreference.objects.update(user=user, language=lang_code)
+                else:
+                    LanguagePreference.objects.create(user=user, language=lang_code)
     return response
 
 

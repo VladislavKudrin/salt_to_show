@@ -42,11 +42,9 @@ from accounts.views import RegisterLoginView, GuestRegisterView, WishListView, w
 from .views import home_page, test_page, ContactPageView, AboutPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
-urlpatterns = [
-    url(r'^admin/', admin.site.urls,)
-]
 
-urlpatterns += i18n_patterns(
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('language_pref.urls')),
     url(r'^$', home_page, name = 'home'),
     url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
@@ -84,11 +82,58 @@ urlpatterns += i18n_patterns(
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
     url(r'^region-init/$', region_init, name = 'region-init'),
-    prefix_default_language=False
+]
 
 
 
-)
+
+# urlpatterns = [
+#     url(r'^admin/', admin.site.urls,)
+# ]
+
+# urlpatterns += i18n_patterns(
+#     url(r'^i18n/', include('language_pref.urls')),
+#     url(r'^$', home_page, name = 'home'),
+#     url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
+#     # url(r'^upload/', include('django_file_form.urls')),
+#     url(r'^upload/', include('image_uploader.urls', namespace="image_uploader")),
+#     url(r'^login/$', RegisterLoginView.as_view(), name='login'),
+#     url(r'^social-auth/', include('social_django.urls', namespace="social")),
+#     url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
+#     url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
+#     url(r'^logout/$', LogoutView.as_view(), name='logout'),
+#     url(r'^contact/$', ContactPageView.as_view(), name='contact'),
+#     url(r'^about/$', AboutPageView.as_view(), name='about'),
+#     url(r'^address/$', RedirectView.as_view(url='/addresses')),
+#     url(r'^addresses/$', AddressListView.as_view(), name='addresses'),
+#     url(r'^addresses/create/$', AddressCreateView.as_view(), name='address-create'),
+#     url(r'^addresses/(?P<pk>\d+)/$', AddressUpdateView.as_view(), name='address-update'),
+#     # url(r'^register/$', RegisterView.as_view(), name='register'),
+#     url(r'^register/guest/$', GuestRegisterView.as_view(), name='guest_register'),
+#     url(r'^search/', include("search.urls",namespace='search')),
+#     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
+#     url(r'^products/', include("products.urls",namespace='products')), #namespace классифицирует адрес, так как у одного имени может быть несколько адресов
+#     url(r'^filter/', include("categories.urls",namespace='categories')),
+#     url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(),name='marketing-pref'),
+#     url(r'^settings/$', RedirectView.as_view(url='/account')),
+#     url(r'^webhooks/mailchimp/$', MailChimpWebhookView.as_view(),name='webhook-mailchimp'),
+#     url(r'^api/cart/', cart_detail_api_view, name='api-cart'),
+#     url(r'^cart/', include("carts.urls",namespace='carts')),
+#    #url(r'^accounts/login/$', RedirectView.as_view(url='/login') ),
+#     url(r'^accounts/login/$', RedirectView.as_view(url='/account')),
+#     url(r'^accounts/$', RedirectView.as_view(url='/account')),
+#     url(r'^accounts/profile/$', RedirectView.as_view(url='/account')),
+#     url(r'^account/', include("accounts.urls",namespace='accounts')),
+#     url(r'^accounts/', include("accounts.passwords.urls")),
+#     url(r'^orders/', include("orders.urls", namespace='orders')),
+#     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
+#     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),
+#     url(r'^region-init/$', region_init, name = 'region-init'),
+#     prefix_default_language=False
+
+
+
+# )
 
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

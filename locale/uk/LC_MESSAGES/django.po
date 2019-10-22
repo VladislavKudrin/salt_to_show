@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-18 12:22+0000\n"
+"POT-Creation-Date: 2019-10-22 18:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -190,7 +190,7 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: ecommerce/views.py:142
+#: ecommerce/views.py:142 products/forms.py:20
 msgid "Brand"
 msgstr ""
 
@@ -254,9 +254,139 @@ msgstr ""
 msgid "Popular designers:"
 msgstr ""
 
-#: products/templates/products/languages/product_create/product_create_ru.html:29
+#: products/forms.py:20
+msgid "Select a brand"
+msgstr ""
+
+#: products/forms.py:21 products/forms.py:54
+msgid "Gender"
+msgstr ""
+
+#: products/forms.py:21
+msgid "Select a gender"
+msgstr ""
+
+#: products/forms.py:22
+msgid "Category"
+msgstr ""
+
+#: products/forms.py:22
+msgid "Select a category"
+msgstr ""
+
+#: products/forms.py:23
+msgid "Size"
+msgstr ""
+
+#: products/forms.py:23
+msgid "Select a size"
+msgstr ""
+
+#: products/forms.py:24
+msgid "Condition"
+msgstr ""
+
+#: products/forms.py:24
+msgid "Select a condition"
+msgstr ""
+
+#: products/forms.py:50
+msgid "Some keywords about your item"
+msgstr ""
+
+#: products/forms.py:51
+msgid "Describe your item in details"
+msgstr ""
+
+#: products/forms.py:52
+#, python-brace-format
+msgid "Enter a price in {currency}"
+msgstr ""
+
+#: products/forms.py:106
+msgid "Please, select a gender"
+msgstr ""
+
+#: products/forms.py:117
+msgid "Please, select a valid category"
+msgstr ""
+
+#: products/forms.py:131
+msgid "Please, select a valid size"
+msgstr ""
+
+#: products/forms.py:143
+msgid "Please, select a condition"
+msgstr ""
+
+#: products/forms.py:157
+msgid "Please, select existing brand"
+msgstr ""
+
+#: products/forms.py:168
+#, python-brace-format
+msgid "Please, make it shorter. # of lines to be removed: {lines}"
+msgstr ""
+
+#: products/forms.py:172
+#, python-brace-format
+msgid "Please, make it shorter. # of characters to be removed: {charss}"
+msgstr ""
+
+#: products/forms.py:188
+msgid "Images*"
+msgstr ""
+
+#: products/forms.py:194
+msgid "Upload at least one image"
+msgstr ""
+
+#: products/forms.py:199
+msgid "Not enough photos. Minimal amount - 4"
+msgstr ""
+
+#: products/forms.py:204
+msgid "Too many files, max. amount 8"
+msgstr ""
+
+#: products/templates/products/product-create.html:150
 msgid ""
 "Email help@saltysalt.co if the brand you are trying to add does not exist."
+msgstr ""
+
+#: products/views.py:312 products/views.py:371
+msgid "Create"
+msgstr ""
+
+#: products/views.py:313 products/views.py:372
+msgid "Add a new item"
+msgstr ""
+
+#: products/views.py:335
+msgid "New item upload"
+msgstr ""
+
+#: products/views.py:336
+msgid ""
+"New product was uploaded. Please verify authenticity: \n"
+" {} \n"
+" Product Title: {} \n"
+" Product Description: \n"
+" {}"
+msgstr ""
+
+#: products/views.py:345
+msgid ""
+"Your item was checked by AI. Within next 24 hours the check will be "
+"confirmed by our moderator team and your item will be published"
+msgstr ""
+
+#: templates/forms/helper_text.html:3 templates/languages/helper_text-en.html:3
+msgid "* marked fields are required"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:4
+msgid "Adults"
 msgstr ""
 
 #: templates/languages/trans_custom/translation_custom.html:5
