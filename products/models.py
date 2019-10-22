@@ -73,6 +73,8 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 						link_codiert = link_codiert+"{id_brand}".format(id_brand=int(id_))+'+'
 			qs = qs.filter(lookups_brand)
 		if list_condition is not None:
+			print(list_condition)
+			print(qs)
 			lookups_condition=(Q(title__iexact='qwerty123'))
 			if link_codiert is not None:
 				link_codiert = link_codiert+"condition="
@@ -86,6 +88,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 					else: 
 						link_codiert = link_codiert+"{id_condition}".format(id_condition=int(id_))+'+'
 			qs = qs.filter(lookups_condition)
+			print(qs)
 		if list_category is not None:
 			lookups_category=(Q(title__iexact='qwerty123'))
 			if link_codiert:
@@ -99,7 +102,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 						link_codiert = link_codiert+"{id_category}".format(id_category=int(id_))+'&'
 					else: 
 						link_codiert = link_codiert+"{id_category}".format(id_category=int(id_))+'+'
-			qs = Product.objects.filter(lookups_category)
+			qs = qs.filter(lookups_category)
 		if list_undercategory is not None:
 			lookups_undercategory=(Q(title__iexact='qwerty123'))
 			if link_codiert:
@@ -113,7 +116,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 						link_codiert = link_codiert+"{id_undercategory}".format(id_undercategory=int(id_))+'&'
 					else: 
 						link_codiert = link_codiert+"{id_undercategory}".format(id_undercategory=int(id_))+'+'
-			qs = Product.objects.filter(lookups_undercategory)
+			qs = qs.filter(lookups_undercategory)
 		if list_size is not None:
 			print(list_size)
 			lookups_size=(Q(title__iexact='qwerty123'))
