@@ -21,7 +21,6 @@ class LanguagePreferenceMiddleware:
                 request.session[translation.LANGUAGE_SESSION_KEY] = language_pref
         if not request.session.get(translation.LANGUAGE_SESSION_KEY):
             translation.activate(language_pref)
-        
 
         response = self.get_response(request)
 

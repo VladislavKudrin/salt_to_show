@@ -17,11 +17,11 @@ from image_uploader.validators import validate_file_extension
 import re
 
 class ProductCreateForm(forms.ModelForm):
-	brand = forms.CharField(label=_('Brand'), required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill',  "placeholder":_('Select a brand')}))
-	sex = forms.CharField(label=_('Gender'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a gender')}))
-	undercategory = forms.CharField(label=_('Category'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a category')}))
-	size = forms.CharField(label=_('Size'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a size')}))
-	condition = forms.CharField(label=_('Condition'), required=True, widget=forms.TextInput(attrs={"class":"custom-readonly", "placeholder":_('Select a condition')}))
+	brand = forms.CharField(label=_('Brand'), required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill'}))
+	sex = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"custom-readonly"}))
+	undercategory = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"custom-readonly"}))
+	size = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"custom-readonly"}))
+	condition = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"custom-readonly"}))
 	class Meta:
 		model = Product
 		fields = [
@@ -49,9 +49,19 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['condition'].widget.attrs['readonly'] = True
 		self.fields['title'].widget.attrs['placeholder'] = _('Some keywords about your item')
 		self.fields['description'].widget.attrs['placeholder'] = _('Describe your item in details')
-		self.fields['price'].widget.attrs['placeholder'] = _('Enter a price in {currency}'.format(currency=currency_placeholder))
+		self.fields['price'].widget.attrs['placeholder'] = _('Enter a price in ') + ('{currency}').format(currency=currency_placeholder)
+		self.fields['brand'].widget.attrs['placeholder'] = _('Select a brand')
+		self.fields['sex'].widget.attrs['placeholder'] = _('Select a gender')
+		self.fields['undercategory'].widget.attrs['placeholder'] = _('Select a category')
+		self.fields['size'].widget.attrs['placeholder'] = _('Select a size')
+		self.fields['condition'].widget.attrs['placeholder'] = _('Select a condition')
 		self.fields['price'].initial = ''
 		self.fields['sex'].label = _('Gender')
+		self.fields['undercategory'].label = _('Category')
+		self.fields['size'].label = _('Size')
+		self.fields['condition'].label = _('Condition')
+		self.fields['price'].label = _('Price')
+		self.fields['description'].label = _('Description')
 		# if self.lan == 'RU':
 		# 	self.fields['title'].label = "Название"
 		# 	self.fields['title'].widget.attrs['placeholder'] = 'Пара слов про айтем'
@@ -102,10 +112,11 @@ class ProductCreateForm(forms.ModelForm):
 		request = self.request
 		data_sex = self.cleaned_data.get('sex')
 		sex = Gender.objects.filter(id=int(data_sex))
-		self.cleaned_data['overcategory'] = sex.first().gender_for
 		error_message = _("Please, select a gender")
 		if sex is '' or sex.exists()==False:
 			self.add_error('sex', error_message)
+		else:
+			self.cleaned_data['overcategory'] = sex.first().gender_for
 		return sex.first()
 
 	def clean_undercategory(self):
@@ -123,11 +134,14 @@ class ProductCreateForm(forms.ModelForm):
 	
 	def clean_size(self):
 		request = self.request
-		data = self.cleaned_data
+		data_sex = self.cleaned_data.get('sex')
+		if data_sex is not None:
+			data_overcategory = self.cleaned_data.get('sex').gender_for
+		else:
+			data_overcategory = None
 		data_size = self.cleaned_data.get('size')
 		size = Size.objects.filter(id=int(data_size))
-		data_under = data.get('undercategory')
-		data_overcategory = data.get('sex').gender_for
+		data_under = self.cleaned_data.get('undercategory')
 		error_message = _("Please, select a valid size")
 		if size is '' or size.exists()==False:
 			self.add_error('size', error_message)
@@ -165,11 +179,11 @@ class ProductCreateForm(forms.ModelForm):
 			chars = len(description)
 			if length > 18: 
 				lines = int(length) - int(18)
-				message = _('Please, make it shorter. # of lines to be removed: {lines}'.format(lines=lines))
+				message = _('Please, make it shorter. # of lines to be removed:') + '{lines}'.format(lines=lines)
 				self.add_error('description', message)
 			if chars > 400:
 				charss = int(chars) - int(400)
-				message = _('Please, make it shorter. # of characters to be removed: {charss}'.format(charss=charss))
+				message = _('Please, make it shorter. # of characters to be removed:') + "{charss}".format(charss=charss)
 				self.add_error('description', message)	
 		return description
 	def clean_price(self):
@@ -191,7 +205,7 @@ class ImageForm(ProductCreateForm):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
 		if len(cleaned_images)==0:
-			raise forms.ValidationError(_("Upload at least one image"))
+			raise forms.ValidationError(_("Upload at least 4 images"))
 		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
 			# if self.lan == 'RU':
 			# 	raise forms.ValidationError("Недостаточное колличество фотографий. Минимальное колличество - 4")

@@ -93,6 +93,12 @@
    #div_id_condition{
     margin-bottom: 0px
   }
+  .image-upload-button{
+    display: none;
+  }
+  #div_id_description{
+    margin-top: 0px
+  }
   .dropdown-content {
   cursor: pointer;
   font-size: 11pt;
@@ -249,10 +255,11 @@ select{
 
 
 
-        Photos*
+        {% trans 'Photos*' %}
 
   <div class="row">
     <div class="col-12 col-md-12">
+      <label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse mt-3">{% trans 'Browse' %}</label>
   {{form.image}}
   {% include 'products/snippets/images-upload.html' with object=object %}
   <div class='row ml-1'>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-22 18:07+0000\n"
+"POT-Creation-Date: 2019-10-23 18:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,6 +100,74 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+#: categories/views.py:299 ecommerce/views.py:140
+msgid "Kids"
+msgstr ""
+
+#: categories/views.py:300 ecommerce/views.py:141
+msgid "New"
+msgstr ""
+
+#: categories/views.py:301
+msgid "Hide Filters"
+msgstr ""
+
+#: categories/views.py:302
+msgid "Found"
+msgstr ""
+
+#: categories/views.py:303
+msgid "Items"
+msgstr ""
+
+#: categories/views.py:304
+msgid "Sort by"
+msgstr ""
+
+#: categories/views.py:305
+msgid "New first"
+msgstr ""
+
+#: categories/views.py:306
+msgid "Low price first"
+msgstr ""
+
+#: categories/views.py:307
+msgid "High price first"
+msgstr ""
+
+#: categories/views.py:308 products/forms.py:21 products/forms.py:54
+msgid "Gender"
+msgstr ""
+
+#: categories/views.py:309
+msgid "Type"
+msgstr ""
+
+#: categories/views.py:310 products/forms.py:22
+msgid "Category"
+msgstr ""
+
+#: categories/views.py:311
+msgid "All"
+msgstr ""
+
+#: categories/views.py:312 products/forms.py:23
+msgid "Size"
+msgstr ""
+
+#: categories/views.py:313 products/forms.py:24
+msgid "Condition"
+msgstr ""
+
+#: categories/views.py:314 ecommerce/views.py:142 products/forms.py:20
+msgid "Brand"
+msgstr ""
+
+#: categories/views.py:315
+msgid "Price"
+msgstr ""
+
 #: ecommerce/forms.py:11
 msgid "Your Email"
 msgstr ""
@@ -182,18 +250,6 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-#: ecommerce/views.py:140
-msgid "Kids"
-msgstr ""
-
-#: ecommerce/views.py:141
-msgid "New"
-msgstr ""
-
-#: ecommerce/views.py:142 products/forms.py:20
-msgid "Brand"
-msgstr ""
-
 #: ecommerce/views.py:143
 msgid "Contribute to the sustainable clothes-circle."
 msgstr ""
@@ -258,16 +314,8 @@ msgstr ""
 msgid "Select a brand"
 msgstr ""
 
-#: products/forms.py:21 products/forms.py:54
-msgid "Gender"
-msgstr ""
-
 #: products/forms.py:21
 msgid "Select a gender"
-msgstr ""
-
-#: products/forms.py:22
-msgid "Category"
 msgstr ""
 
 #: products/forms.py:22
@@ -275,15 +323,7 @@ msgid "Select a category"
 msgstr ""
 
 #: products/forms.py:23
-msgid "Size"
-msgstr ""
-
-#: products/forms.py:23
 msgid "Select a size"
-msgstr ""
-
-#: products/forms.py:24
-msgid "Condition"
 msgstr ""
 
 #: products/forms.py:24
@@ -338,7 +378,7 @@ msgid "Images*"
 msgstr ""
 
 #: products/forms.py:194
-msgid "Upload at least one image"
+msgid "Upload at least 4 images"
 msgstr ""
 
 #: products/forms.py:199
@@ -354,19 +394,19 @@ msgid ""
 "Email help@saltysalt.co if the brand you are trying to add does not exist."
 msgstr ""
 
-#: products/views.py:312 products/views.py:371
+#: products/views.py:313 products/views.py:372
 msgid "Create"
 msgstr ""
 
-#: products/views.py:313 products/views.py:372
+#: products/views.py:314 products/views.py:373
 msgid "Add a new item"
 msgstr ""
 
-#: products/views.py:335
+#: products/views.py:336
 msgid "New item upload"
 msgstr ""
 
-#: products/views.py:336
+#: products/views.py:337
 msgid ""
 "New product was uploaded. Please verify authenticity: \n"
 " {} \n"
@@ -375,7 +415,7 @@ msgid ""
 " {}"
 msgstr ""
 
-#: products/views.py:345
+#: products/views.py:346
 msgid ""
 "Your item was checked by AI. Within next 24 hours the check will be "
 "confirmed by our moderator team and your item will be published"

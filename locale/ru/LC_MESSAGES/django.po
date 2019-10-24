@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-22 18:07+0000\n"
-"PO-Revision-Date: 2019-10-22 20:07+0200\n"
+"POT-Creation-Date: 2019-10-24 09:56+0000\n"
+"PO-Revision-Date: 2019-10-24 11:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -100,6 +100,74 @@ msgstr "Сохранить"
 #: accounts/views.py:268
 msgid "Logout"
 msgstr "Выйти"
+
+#: categories/views.py:300 ecommerce/views.py:140
+msgid "Kids"
+msgstr "Дети"
+
+#: categories/views.py:301 ecommerce/views.py:141
+msgid "New"
+msgstr "Свежее"
+
+#: categories/views.py:302
+msgid "Hide Filters"
+msgstr "Спрятать фильтры"
+
+#: categories/views.py:303
+msgid "Found"
+msgstr "Найдено"
+
+#: categories/views.py:304
+msgid "Items"
+msgstr "Айтемов"
+
+#: categories/views.py:305
+msgid "Sort by"
+msgstr "Сортировать по"
+
+#: categories/views.py:306
+msgid "New first"
+msgstr "Сначала новые"
+
+#: categories/views.py:307
+msgid "Low price first"
+msgstr "Сначала дешевые"
+
+#: categories/views.py:308
+msgid "High price first"
+msgstr "Сначала дорогие"
+
+#: categories/views.py:309 products/forms.py:59
+msgid "Gender"
+msgstr "Гендер"
+
+#: categories/views.py:310
+msgid "Type"
+msgstr "Тип"
+
+#: categories/views.py:311 products/forms.py:60
+msgid "Category"
+msgstr "Категория"
+
+#: categories/views.py:312
+msgid "All"
+msgstr "Все"
+
+#: categories/views.py:313 products/forms.py:61
+msgid "Size"
+msgstr "Размер"
+
+#: categories/views.py:314 products/forms.py:62
+msgid "Condition"
+msgstr "Состояние"
+
+#: categories/views.py:315 ecommerce/views.py:142 products/forms.py:20
+msgid "Brand"
+msgstr "Бренд"
+
+#: categories/views.py:316 products/forms.py:63
+msgid "Price"
+msgstr "Цена"
 
 #: ecommerce/forms.py:11
 msgid "Your Email"
@@ -206,18 +274,6 @@ msgstr "Спасибо"
 msgid "Success"
 msgstr "Успех"
 
-#: ecommerce/views.py:140
-msgid "Kids"
-msgstr "Дети"
-
-#: ecommerce/views.py:141
-msgid "New"
-msgstr "Свежее"
-
-#: ecommerce/views.py:142 products/forms.py:20
-msgid "Brand"
-msgstr "Бренд"
-
 #: ecommerce/views.py:143
 msgid "Contribute to the sustainable clothes-circle."
 msgstr "Поддерживай круговорот одежды в природе."
@@ -280,125 +336,112 @@ msgstr "Показать все"
 msgid "Popular designers:"
 msgstr "Популярные бренды:"
 
-#: products/forms.py:20
-msgid "Select a brand"
-msgstr ""
-
-#: products/forms.py:21 products/forms.py:54
-msgid "Gender"
-msgstr "Гендер"
-
-#: products/forms.py:21
-msgid "Select a gender"
-msgstr ""
-
-#: products/forms.py:22
-msgid "Category"
-msgstr ""
-
-#: products/forms.py:22
-msgid "Select a category"
-msgstr ""
-
-#: products/forms.py:23
-msgid "Size"
-msgstr ""
-
-#: products/forms.py:23
-msgid "Select a size"
-msgstr ""
-
-#: products/forms.py:24
-msgid "Condition"
-msgstr ""
-
-#: products/forms.py:24
-msgid "Select a condition"
-msgstr ""
-
 #: products/forms.py:50
 msgid "Some keywords about your item"
-msgstr ""
+msgstr "Пара слов про айтем"
 
 #: products/forms.py:51
 msgid "Describe your item in details"
-msgstr ""
+msgstr "Подробно опиши айтем"
 
 #: products/forms.py:52
-#, python-brace-format
-msgid "Enter a price in {currency}"
-msgstr ""
+msgid "Enter a price in "
+msgstr "Введи цену в "
 
-#: products/forms.py:106
-#, fuzzy
-#| msgid "-- Please select your region --"
+#: products/forms.py:53
+msgid "Select a brand"
+msgstr "Выбери бренд"
+
+#: products/forms.py:54
+msgid "Select a gender"
+msgstr "Выбери гендер"
+
+#: products/forms.py:55
+msgid "Select a category"
+msgstr "Выбери категорию"
+
+#: products/forms.py:56
+msgid "Select a size"
+msgstr "Выбери размер"
+
+#: products/forms.py:57
+msgid "Select a condition"
+msgstr "Выбери состояние"
+
+#: products/forms.py:64
+msgid "Description"
+msgstr "Описание"
+
+#: products/forms.py:116
 msgid "Please, select a gender"
-msgstr "— Выбери регион —"
+msgstr "— Выбери гендер —"
 
-#: products/forms.py:117
+#: products/forms.py:127
 msgid "Please, select a valid category"
-msgstr ""
+msgstr "Выбери подходящую категорию"
 
-#: products/forms.py:131
+#: products/forms.py:141
 msgid "Please, select a valid size"
-msgstr ""
+msgstr "Выбери подходящий размер"
 
-#: products/forms.py:143
-#, fuzzy
-#| msgid "-- Please select your region --"
+#: products/forms.py:153
 msgid "Please, select a condition"
-msgstr "— Выбери регион —"
+msgstr "— Выбери состояние —"
 
-#: products/forms.py:157
-#, fuzzy
-#| msgid "-- Please select your region --"
+#: products/forms.py:167
 msgid "Please, select existing brand"
-msgstr "— Выбери регион —"
+msgstr "— Выбери существующий бренд —"
 
-#: products/forms.py:168
-#, python-brace-format
-msgid "Please, make it shorter. # of lines to be removed: {lines}"
-msgstr ""
+#: products/forms.py:178
+msgid "Please, make it shorter. # of lines to be removed:"
+msgstr "Сделай короче. Убери # строк :"
 
-#: products/forms.py:172
-#, python-brace-format
-msgid "Please, make it shorter. # of characters to be removed: {charss}"
-msgstr ""
+#: products/forms.py:182
+msgid "Please, make it shorter. # of characters to be removed:"
+msgstr "Сделай короче. Убери # символов : "
 
-#: products/forms.py:188
+#: products/forms.py:198
 msgid "Images*"
-msgstr ""
-
-#: products/forms.py:194
-msgid "Upload at least one image"
-msgstr ""
-
-#: products/forms.py:199
-msgid "Not enough photos. Minimal amount - 4"
-msgstr ""
+msgstr "Фото*"
 
 #: products/forms.py:204
-msgid "Too many files, max. amount 8"
-msgstr ""
+msgid "Upload at least 4 images"
+msgstr "Загрузи как минимум 4 фото"
 
-#: products/templates/products/product-create.html:150
+#: products/forms.py:209
+msgid "Not enough photos. Minimal amount - 4"
+msgstr "Недостаточно фотографий. Минимальное колличество - 4"
+
+#: products/forms.py:214
+msgid "Too many files, max. amount 8"
+msgstr "Слишком много фотографий. Максимальное колличество - 8"
+
+#: products/templates/products/product-create.html:156
 msgid ""
 "Email help@saltysalt.co if the brand you are trying to add does not exist."
-msgstr "Йоуw."
+msgstr "Напиши на help@saltysalt.co если не нашел своего бренда."
 
-#: products/views.py:312 products/views.py:371
-msgid "Create"
-msgstr ""
+#: products/templates/products/product-create.html:258
+msgid "Photos*"
+msgstr "Фото*"
+
+#: products/templates/products/product-create.html:262
+msgid "Browse"
+msgstr "Выбрать"
 
 #: products/views.py:313 products/views.py:372
-msgid "Add a new item"
-msgstr ""
+msgid "Create"
+msgstr "Создать"
 
-#: products/views.py:335
+#: products/views.py:314 products/views.py:373
+msgid "Add a new item"
+msgstr "Залить новый айтем"
+
+#: products/views.py:336
 msgid "New item upload"
 msgstr ""
 
-#: products/views.py:336
+#: products/views.py:337
 msgid ""
 "New product was uploaded. Please verify authenticity: \n"
 " {} \n"
@@ -407,191 +450,205 @@ msgid ""
 " {}"
 msgstr ""
 
-#: products/views.py:345
+#: products/views.py:346
 msgid ""
 "Your item was checked by AI. Within next 24 hours the check will be "
 "confirmed by our moderator team and your item will be published"
 msgstr ""
+"Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку "
+"подтвердит модератор и айтем будет выставлен на продажу"
 
 #: templates/forms/helper_text.html:3 templates/languages/helper_text-en.html:3
 msgid "* marked fields are required"
-msgstr ""
+msgstr "* отмечены поля, обязательные к заполнению"
 
-#: templates/languages/trans_custom/translation_custom.html:4
+#: templates/languages/trans_custom/translation_custom.html:5
 msgid "Adults"
 msgstr "Взрослые"
 
-#: templates/languages/trans_custom/translation_custom.html:5
+#: templates/languages/trans_custom/translation_custom.html:11
 msgid "Men"
 msgstr "Мужское"
 
-#: templates/languages/trans_custom/translation_custom.html:6
+#: templates/languages/trans_custom/translation_custom.html:13
 msgid "Boys"
 msgstr "Мальчики"
 
-#: templates/languages/trans_custom/translation_custom.html:7
+#: templates/languages/trans_custom/translation_custom.html:15
 msgid "Women"
 msgstr "Женское"
 
-#: templates/languages/trans_custom/translation_custom.html:8
+#: templates/languages/trans_custom/translation_custom.html:17
 msgid "Girls"
 msgstr "Девочки"
 
-#: templates/languages/trans_custom/translation_custom.html:9
+#: templates/languages/trans_custom/translation_custom.html:19
 msgid "Gender-Neutral"
 msgstr "Унисекс"
 
-#: templates/languages/trans_custom/translation_custom.html:11
+#: templates/languages/trans_custom/translation_custom.html:25
 msgid "Tops"
 msgstr "Верх"
 
-#: templates/languages/trans_custom/translation_custom.html:13
+#: templates/languages/trans_custom/translation_custom.html:27
 msgid "Bottoms"
 msgstr "Низ"
 
-#: templates/languages/trans_custom/translation_custom.html:15
+#: templates/languages/trans_custom/translation_custom.html:29
 msgid "Shoes"
 msgstr "Обувь"
 
-#: templates/languages/trans_custom/translation_custom.html:17
+#: templates/languages/trans_custom/translation_custom.html:31
 msgid "Accessories"
 msgstr "Аксессуары"
 
-#: templates/languages/trans_custom/translation_custom.html:19
+#: templates/languages/trans_custom/translation_custom.html:33
 msgid "Outerwear"
 msgstr "Верхняя одежда"
 
-#: templates/languages/trans_custom/translation_custom.html:21
+#: templates/languages/trans_custom/translation_custom.html:35
 msgid "Dresses & Overalls"
 msgstr "Платья и Комбинезоны"
 
-#: templates/languages/trans_custom/translation_custom.html:23
+#: templates/languages/trans_custom/translation_custom.html:37
 msgid "T-Shirts & Polos"
 msgstr "Футболки и Поло"
 
-#: templates/languages/trans_custom/translation_custom.html:25
+#: templates/languages/trans_custom/translation_custom.html:39
 msgid "Tops & Body"
 msgstr "Топы и Боди"
 
-#: templates/languages/trans_custom/translation_custom.html:27
+#: templates/languages/trans_custom/translation_custom.html:41
 msgid "Shirts"
 msgstr "Рубашки"
 
-#: templates/languages/trans_custom/translation_custom.html:29
+#: templates/languages/trans_custom/translation_custom.html:43
 msgid "Sweaters"
 msgstr "Свитера"
 
-#: templates/languages/trans_custom/translation_custom.html:31
+#: templates/languages/trans_custom/translation_custom.html:45
 msgid "Sweatshirts/Hoodies"
 msgstr "Свитшоты и Худи"
 
-#: templates/languages/trans_custom/translation_custom.html:33
+#: templates/languages/trans_custom/translation_custom.html:47
 msgid "Jeans"
 msgstr "Джинсы"
 
-#: templates/languages/trans_custom/translation_custom.html:35
+#: templates/languages/trans_custom/translation_custom.html:49
 msgid "Shorts"
 msgstr "Шорты"
 
-#: templates/languages/trans_custom/translation_custom.html:37
+#: templates/languages/trans_custom/translation_custom.html:51
 msgid "Sweatpants"
 msgstr "Спортивные штаны"
 
-#: templates/languages/trans_custom/translation_custom.html:39
+#: templates/languages/trans_custom/translation_custom.html:53
 msgid "Pants"
 msgstr "Брюки"
 
-#: templates/languages/trans_custom/translation_custom.html:41
+#: templates/languages/trans_custom/translation_custom.html:55
 msgid "Rocks"
 msgstr "Юбки"
 
-#: templates/languages/trans_custom/translation_custom.html:43
+#: templates/languages/trans_custom/translation_custom.html:57
 msgid "Sneakers"
 msgstr "Сникерсы"
 
-#: templates/languages/trans_custom/translation_custom.html:45
+#: templates/languages/trans_custom/translation_custom.html:59
 msgid "Classic Shoes"
 msgstr "Классическая обувь"
 
-#: templates/languages/trans_custom/translation_custom.html:47
+#: templates/languages/trans_custom/translation_custom.html:61
 msgid "Boots"
 msgstr "Ботинки и Сапоги"
 
-#: templates/languages/trans_custom/translation_custom.html:49
+#: templates/languages/trans_custom/translation_custom.html:63
 msgid "Sandals"
 msgstr "Сандали"
 
-#: templates/languages/trans_custom/translation_custom.html:51
+#: templates/languages/trans_custom/translation_custom.html:65
 msgid "High Heels"
 msgstr "Каблуки"
 
-#: templates/languages/trans_custom/translation_custom.html:53
+#: templates/languages/trans_custom/translation_custom.html:67
 msgid "Bags & Backpacks"
 msgstr "Сумки и Рюкзаки"
 
-#: templates/languages/trans_custom/translation_custom.html:55
+#: templates/languages/trans_custom/translation_custom.html:69
 msgid "Bags & Luggage"
 msgstr "Сумки и Рюкзаки"
 
-#: templates/languages/trans_custom/translation_custom.html:57
+#: templates/languages/trans_custom/translation_custom.html:71
 msgid "Belts"
 msgstr "Ремни"
 
-#: templates/languages/trans_custom/translation_custom.html:59
+#: templates/languages/trans_custom/translation_custom.html:73
 msgid "Scarves"
 msgstr "Шарфы"
 
-#: templates/languages/trans_custom/translation_custom.html:61
+#: templates/languages/trans_custom/translation_custom.html:75
 msgid "Hats"
 msgstr "Головные уборы"
 
-#: templates/languages/trans_custom/translation_custom.html:63
+#: templates/languages/trans_custom/translation_custom.html:77
 msgid "Jewelry & Watches"
 msgstr "Украшения и Часы"
 
-#: templates/languages/trans_custom/translation_custom.html:65
+#: templates/languages/trans_custom/translation_custom.html:79
 msgid "Wallets"
 msgstr "Кошельки"
 
-#: templates/languages/trans_custom/translation_custom.html:67
+#: templates/languages/trans_custom/translation_custom.html:81
 msgid "Socks/Underwear"
 msgstr "Нижнее белье"
 
-#: templates/languages/trans_custom/translation_custom.html:69
+#: templates/languages/trans_custom/translation_custom.html:83
 msgid "Sunglasses"
 msgstr "Очки"
 
-#: templates/languages/trans_custom/translation_custom.html:71
+#: templates/languages/trans_custom/translation_custom.html:85
 msgid "Miscellaneous"
 msgstr "Разное"
 
-#: templates/languages/trans_custom/translation_custom.html:73
+#: templates/languages/trans_custom/translation_custom.html:87
 msgid "Winter Jackets"
 msgstr "Зимние куртки"
 
-#: templates/languages/trans_custom/translation_custom.html:75
+#: templates/languages/trans_custom/translation_custom.html:89
 msgid "Leather Jackets"
 msgstr "Кожаные куртки"
 
-#: templates/languages/trans_custom/translation_custom.html:77
+#: templates/languages/trans_custom/translation_custom.html:91
 msgid "Coats"
 msgstr "Пальто"
 
-#: templates/languages/trans_custom/translation_custom.html:79
+#: templates/languages/trans_custom/translation_custom.html:93
 msgid "Jeans Jackets"
 msgstr "Джинсовые куртки"
 
-#: templates/languages/trans_custom/translation_custom.html:81
+#: templates/languages/trans_custom/translation_custom.html:95
 msgid "Light Jackets"
 msgstr "Легкие куртки"
 
-#: templates/languages/trans_custom/translation_custom.html:83
+#: templates/languages/trans_custom/translation_custom.html:97
 msgid "Dresses"
 msgstr "Платья"
 
-#: templates/languages/trans_custom/translation_custom.html:85
+#: templates/languages/trans_custom/translation_custom.html:99
 msgid "Overalls"
 msgstr "Комбинезоны"
+
+#: templates/languages/trans_custom/translation_custom.html:105
+msgid "New with tags"
+msgstr "Новая вещь с бирками"
+
+#: templates/languages/trans_custom/translation_custom.html:107
+msgid "Gently used"
+msgstr "Отличное состояние"
+
+#: templates/languages/trans_custom/translation_custom.html:109
+msgid "Used"
+msgstr "Нормальное состояние"
 
 #: templates/registration/password_reset_email.html:2
 #: templates/registration/password_reset_email.txt:2
