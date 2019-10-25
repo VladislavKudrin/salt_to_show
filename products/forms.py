@@ -56,6 +56,7 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['size'].widget.attrs['placeholder'] = _('Select a size')
 		self.fields['condition'].widget.attrs['placeholder'] = _('Select a condition')
 		self.fields['price'].initial = ''
+		self.fields['title'].label = _('Title')
 		self.fields['sex'].label = _('Gender')
 		self.fields['undercategory'].label = _('Category')
 		self.fields['size'].label = _('Size')

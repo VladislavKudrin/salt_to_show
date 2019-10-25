@@ -314,15 +314,16 @@ function setCheckboxRadio(klass){
                hideFiltersBtn.attr('hide', 'false')
                containerFilter.removeClass('col-9')
                containerFilter.addClass('col-12')
-                    if (language == 'RU'){
-                        hideShowText.html('Показать фильтры')
-                         }//if ru
-                    else if (language == 'UA'){
-                        hideShowText.html('Показати фільтри')
-                        }//if ru
-                    else{
-                        hideShowText.html('Show Filters')
-                         }//if not ru
+               hideShowText.html(hideFiltersBtn.attr('show_text'))
+                    // if (language == 'RU'){
+                    //     hideShowText.html('Показать фильтры')
+                    //      }//if ru
+                    // else if (language == 'UA'){
+                    //     hideShowText.html('Показати фільтри')
+                    //     }//if ru
+                    // else{
+                    //     hideShowText.html('Show Filters')
+                    //      }//if not ru
             }//if not mobile
            //card
            $('.card-img-top-hidden').removeClass('card-img-top-hidden').addClass('card-img-top')
@@ -345,15 +346,16 @@ function setCheckboxRadio(klass){
                 hideFiltersBtn.attr('hide', 'true')
                 containerFilter.removeClass('col-12')
                 containerFilter.addClass('col-9')
-            if (language == 'RU'){
-                hideShowText.html('Спрятать фильтры')
-                 }//if ru
-            else if (language == 'UA'){
-                hideShowText.html('Сховати фільтри')
-                }//if ru
-            else{
-                hideShowText.html('Hide Filters')
-                 }//if not ru
+                hideShowText.html(hideFiltersBtn.attr('hide_text'))
+            // if (language == 'RU'){
+            //     hideShowText.html('Спрятать фильтры')
+            //      }//if ru
+            // else if (language == 'UA'){
+            //     hideShowText.html('Сховати фільтри')
+            //     }//if ru
+            // else{
+            //     hideShowText.html('Hide Filters')
+            //      }//if not ru
 
             }//if not mobile
            
@@ -468,16 +470,7 @@ containerWithItems.scroll(
         }//if end of scroll
     })//scroll
 
-if (language == 'RU'){
-    brand_placeholder = 'Выбери бренд'
-     }//if ru
-else if (language == 'UA'){
-    brand_placeholder = 'Обери бренд'
-    }//if ru
-else{
-    brand_placeholder = 'Select a brand'
-     }//if not ru
-
+var brand_placeholder = $('#brand-select').attr('brand_placeholder_trans')
 $('#brand-select').searchableOptionList({
         texts: {
             searchplaceholder: brand_placeholder

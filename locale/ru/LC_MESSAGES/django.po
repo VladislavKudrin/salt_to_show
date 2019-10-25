@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 09:56+0000\n"
-"PO-Revision-Date: 2019-10-24 11:56+0200\n"
+"POT-Creation-Date: 2019-10-24 10:44+0000\n"
+"PO-Revision-Date: 2019-10-24 12:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -101,6 +101,11 @@ msgstr "Сохранить"
 msgid "Logout"
 msgstr "Выйти"
 
+#: categories/templates/categories/snippets/filter-box.html:274
+#: products/forms.py:53
+msgid "Select a brand"
+msgstr "Выбери бренд"
+
 #: categories/views.py:300 ecommerce/views.py:140
 msgid "Kids"
 msgstr "Дети"
@@ -114,58 +119,62 @@ msgid "Hide Filters"
 msgstr "Спрятать фильтры"
 
 #: categories/views.py:303
+msgid "Show Filters"
+msgstr "Показать фильтры"
+
+#: categories/views.py:304
 msgid "Found"
 msgstr "Найдено"
 
-#: categories/views.py:304
+#: categories/views.py:305
 msgid "Items"
 msgstr "Айтемов"
 
-#: categories/views.py:305
+#: categories/views.py:306
 msgid "Sort by"
 msgstr "Сортировать по"
 
-#: categories/views.py:306
+#: categories/views.py:307
 msgid "New first"
 msgstr "Сначала новые"
 
-#: categories/views.py:307
+#: categories/views.py:308
 msgid "Low price first"
 msgstr "Сначала дешевые"
 
-#: categories/views.py:308
+#: categories/views.py:309
 msgid "High price first"
 msgstr "Сначала дорогие"
 
-#: categories/views.py:309 products/forms.py:59
+#: categories/views.py:310 products/forms.py:60
 msgid "Gender"
 msgstr "Гендер"
 
-#: categories/views.py:310
+#: categories/views.py:311
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:311 products/forms.py:60
+#: categories/views.py:312 products/forms.py:61
 msgid "Category"
 msgstr "Категория"
 
-#: categories/views.py:312
+#: categories/views.py:313
 msgid "All"
 msgstr "Все"
 
-#: categories/views.py:313 products/forms.py:61
+#: categories/views.py:314 products/forms.py:62
 msgid "Size"
 msgstr "Размер"
 
-#: categories/views.py:314 products/forms.py:62
+#: categories/views.py:315 products/forms.py:63
 msgid "Condition"
 msgstr "Состояние"
 
-#: categories/views.py:315 ecommerce/views.py:142 products/forms.py:20
+#: categories/views.py:316 ecommerce/views.py:142 products/forms.py:20
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:316 products/forms.py:63
+#: categories/views.py:317 products/forms.py:64
 msgid "Price"
 msgstr "Цена"
 
@@ -348,10 +357,6 @@ msgstr "Подробно опиши айтем"
 msgid "Enter a price in "
 msgstr "Введи цену в "
 
-#: products/forms.py:53
-msgid "Select a brand"
-msgstr "Выбери бренд"
-
 #: products/forms.py:54
 msgid "Select a gender"
 msgstr "Выбери гендер"
@@ -368,7 +373,11 @@ msgstr "Выбери размер"
 msgid "Select a condition"
 msgstr "Выбери состояние"
 
-#: products/forms.py:64
+#: products/forms.py:59
+msgid "Title"
+msgstr "Название"
+
+#: products/forms.py:65
 msgid "Description"
 msgstr "Описание"
 
@@ -376,43 +385,43 @@ msgstr "Описание"
 msgid "Please, select a gender"
 msgstr "— Выбери гендер —"
 
-#: products/forms.py:127
+#: products/forms.py:129
 msgid "Please, select a valid category"
 msgstr "Выбери подходящую категорию"
 
-#: products/forms.py:141
+#: products/forms.py:146
 msgid "Please, select a valid size"
 msgstr "Выбери подходящий размер"
 
-#: products/forms.py:153
+#: products/forms.py:158
 msgid "Please, select a condition"
 msgstr "— Выбери состояние —"
 
-#: products/forms.py:167
+#: products/forms.py:172
 msgid "Please, select existing brand"
 msgstr "— Выбери существующий бренд —"
 
-#: products/forms.py:178
+#: products/forms.py:183
 msgid "Please, make it shorter. # of lines to be removed:"
 msgstr "Сделай короче. Убери # строк :"
 
-#: products/forms.py:182
+#: products/forms.py:187
 msgid "Please, make it shorter. # of characters to be removed:"
 msgstr "Сделай короче. Убери # символов : "
 
-#: products/forms.py:198
+#: products/forms.py:203
 msgid "Images*"
 msgstr "Фото*"
 
-#: products/forms.py:204
+#: products/forms.py:209
 msgid "Upload at least 4 images"
 msgstr "Загрузи как минимум 4 фото"
 
-#: products/forms.py:209
+#: products/forms.py:214
 msgid "Not enough photos. Minimal amount - 4"
 msgstr "Недостаточно фотографий. Минимальное колличество - 4"
 
-#: products/forms.py:214
+#: products/forms.py:219
 msgid "Too many files, max. amount 8"
 msgstr "Слишком много фотографий. Максимальное колличество - 8"
 

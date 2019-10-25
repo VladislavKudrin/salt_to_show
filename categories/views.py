@@ -300,6 +300,7 @@ class CategoryFilterView(ListView):
 		context['kids_navbar'] = _('Kids')
 		context['new_navbar'] = _('New')
 		context['hide_filters'] = _('Hide Filters')
+		context['show_filters'] = _('Show Filters')
 		context['found'] = _('Found')
 		context['items'] = _('Items')
 		context['sort_by'] = _('Sort by')

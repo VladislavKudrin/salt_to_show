@@ -1,4 +1,5 @@
 {% load for_loop_extras %}
+{% load i18n %}
 <style type="text/css">
   .custom-control-label:before{
       background-color:white;
@@ -110,13 +111,7 @@ hr{
       <div class=" ml-3 custom-control custom-checkbox">
         <input type="checkbox" {% if overcategory.id == overcategory_instance.id %} checked {% endif %}class="custom-control-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
         <label class="custom-control-label" name='overcategory' for="customCheckOvercategory{{ forloop.counter|add:'1' }}"><small>
-           {% if request.session.language == 'RU' %}
-          {{ overcategory.overcategory_ru|capfirst }}
-          {% elif request.session.language == 'UA' %}
-          {{ overcategory.overcategory_ua|capfirst }}
-          {% else %}
-          {{ overcategory.overcategory_eng|capfirst }}
-          {% endif %}
+          {% trans overcategory.overcategory_eng|capfirst %}
         </small></label>
       </div>
       {% endfor %}
@@ -144,13 +139,7 @@ hr{
               <div class=" ml-3 custom-control custom-checkbox">
                 <input type="checkbox" {% if gender.id == gender_instance.id %} checked {% endif %} class="custom-control-input input-for-filters radioGender" data_for_category="{{ gender.gender_for}}-{{ gender }}" id="customCheckGender{{ forloop.counter|add:'1' }}" name='gender' value='{{ gender.id }}'>
                 <label class="custom-control-label" for="customCheckGender{{ forloop.counter|add:'1' }}"><small>
-                {% if request.session.language == 'RU' %}
-                {{ gender.gender_ru|capfirst }}
-                {% elif request.session.language == 'UA' %}
-                {{ gender.gender_ua|capfirst }}
-                {% else %}
-                {{ gender.gender_eng|capfirst }}
-                {% endif %}
+                {% trans gender.gender_eng|capfirst|capfirst %}
           </small></label>
               </div>
             {% endif %}
@@ -180,13 +169,7 @@ hr{
             {% if gender == category.category_for %}
               <div class="ml-3 pl-0 custom-control custom-checkbox undercategory-for-check">
                 <small class="ml-2">
-                 {% if request.session.language == 'RU' %}
-                {{ category.category_ru }}
-                {% elif request.session.language == 'UA' %}
-                {{ category.category_ua }}
-                {% else %}
-                {{ category.category_eng }}
-                {% endif %}
+                {% trans category.category_eng %}
                 </small><button type='button' class="btn btn-link {% if not category in category_arr %} collapsed {% endif %}" data-toggle="collapse" data-target="#collapse{{ category.id }}" aria-expanded="true" aria-controls="collapse{{ category.id }}"><i class="fa mb-2 unterhaupt" aria-hidden="false"></i></button>
                 <input type="checkbox" class="pl-5 text-right custom-control-input input-for-filters" id="customCheckCategory{{ forloop.counter|add:'1' }}"  name='category' {% if category in category_instance %} checked {% endif %} value='{{ category.id }}'data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size">
                 <label class="mt-2 text-right custom-control-label mr-4" style="float: right; " for="customCheckCategory{{ forloop.counter|add:'1' }}"><small>{{ all }}</small></label>
@@ -197,13 +180,7 @@ hr{
                       <div class="custom-control custom-checkbox">
                         <input hidden type="checkbox" {% if undercategory in undercategory_instance %} checked {% endif %} {% if undercategory.undercategory_for in category_instance %} checked {% endif %} class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}'>
                         <label class="custom-control-label undercategory_for_disabled_checkbox_lable ml-3" for="customCheckUndercategory{{ forloop.counter|add:'1' }}"><small>
-                {% if request.session.language == 'RU' %}
-                {{ undercategory.undercategory_ru|capfirst }}
-                {% elif request.session.language == 'UA' %}
-                {{ undercategory.undercategory_ua|capfirst }}
-                {% else %}
-                {{ undercategory.undercategory_eng|capfirst }}
-                {% endif %}
+                        {% trans undercategory.undercategory_eng|capfirst %}
               </small></label>
                       </div>
                     {% endif %}
@@ -237,13 +214,7 @@ hr{
             {% if gender == category.category_for %}
               <div class="ml-3 pl-0 custom-control custom-checkbox size_for_initial"  active='false' id='{{ gender.gender_for }}-{{ gender }}-{{ category }}-size' activated=''>
                 <small class="ml-2">
-                {% if request.session.language == 'RU' %}
-                {{ category.category_ru }}
-                {% elif request.session.language == 'UA' %}
-                {{ category.category_ua }}
-                {% else %}
-                {{ category.category_eng }}
-                {% endif %}
+                  {% trans category.category_eng %}
                 </small><button type='button' class="{% if not category in category_arr %} collapsed {% endif %} btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class="fa mb-2 unterhaupt" aria-hidden="false"></i></button>
                 <input type="checkbox" class="text-right custom-control-input input-for-filters" id="customCheckCategorySize{{ forloop.counter|add:'1' }}" name='category-size' value="{{ category.category }}">
                 <label class="mt-2 text-right custom-control-label mr-4" style="float: right;" for="customCheckCategorySize{{ forloop.counter|add:'1' }}"><small>{{ all }}</small></label>
@@ -281,13 +252,7 @@ hr{
           <div class=" ml-3 custom-control custom-checkbox">
             <input type="checkbox" {% if condition in condition_instance %} checked {% endif %} class="custom-control-input input-for-filters" id="customCheckCondition{{ forloop.counter|add:'1' }}" name='condition' value='{{ condition.id }}'>
             <label class="custom-control-label" for="customCheckCondition{{ forloop.counter|add:'1' }}"><small>
-                {% if request.session.language == 'RU' %}
-                {{ condition.condition_ru }}
-                {% elif request.session.language == 'UA' %}
-                {{ condition.condition_ua }}
-                {% else %}
-                {{ condition.condition_eng }}
-                {% endif %}
+              {% trans condition.condition_eng %}
               </small></label>
           </div>
         {% endfor %}
@@ -306,7 +271,7 @@ hr{
       </div>
       </button>
       <div class="collapse {% if brand_instance %} show {% endif %}" id="brand_collapse">
-        <select class='ml-5 mt-3 mb-3' id="brand-select" name="brand" multiple="multiple">
+        <select class='ml-5 mt-3 mb-3' id="brand-select" name="brand" multiple="multiple" brand_placeholder_trans="{% trans 'Select a brand' %}">
           {% for brand in fields_brand %}
             <option {% if brand in brand_instance %} selected {% endif %} value="{{ brand.id }}">{{ brand.brand_name }}</option>
           {% endfor %}
