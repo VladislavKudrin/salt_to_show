@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 10:44+0000\n"
-"PO-Revision-Date: 2019-10-24 12:35+0200\n"
+"POT-Creation-Date: 2019-10-25 18:17+0000\n"
+"PO-Revision-Date: 2019-10-25 20:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -437,6 +437,14 @@ msgstr "Фото*"
 #: products/templates/products/product-create.html:262
 msgid "Browse"
 msgstr "Выбрать"
+
+#: products/templates/products/product-create.html:265
+msgid "Too many images. Should be less than"
+msgstr "Залей меньше фото. Их должно быть не больше"
+
+#: products/templates/products/product-create.html:266
+msgid "Authenticity check..."
+msgstr "Проверка на оригинальность…"
 
 #: products/views.py:313 products/views.py:372
 msgid "Create"

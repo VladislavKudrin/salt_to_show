@@ -249,7 +249,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		brands = Brand.objects.all()
 		brand_arr = []
 		form_id = unique_form_id_generator()
-		request.session[translation.LANGUAGE_SESSION_KEY] = translation.get_language()
+		# request.session[translation.LANGUAGE_SESSION_KEY] = translation.get_language()
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():

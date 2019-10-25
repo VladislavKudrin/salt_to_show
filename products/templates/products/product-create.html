@@ -262,6 +262,8 @@ select{
       <label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse mt-3">{% trans 'Browse' %}</label>
   {{form.image}}
   {% include 'products/snippets/images-upload.html' with object=object %}
+  <div style='display: none' id='error_too_many_images'>{% trans 'Too many images. Should be less than'  %}</div>
+  <div style='display: none' id='btn_authenticity_check'>{% trans 'Authenticity check...'  %}</div>
   <div class='row ml-1'>
     <div class="ui-widget ui-helper-clearfix custom-upload-file-ajax-temp">
       <ul id='customSort' class="mb-1 gallery ui-helper-reset ui-helper-clearfix temp-images">
