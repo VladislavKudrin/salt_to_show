@@ -27,15 +27,14 @@ class ReactivateEmailForm(forms.Form):
         user_objects = EmailActivation.objects.email_exists(email)
         if not user_objects.exists():
             reset_link = reverse("login")
-            if self.request.session.get('language')=='RU':
-                msg = """Такого мейла не существует. Хочешь <a href="{link}">зарегистрироваться</a>?
-                """.format(link=reset_link)
-            elif self.request.session.get('language')=='UA':
-                msg = """Такого мейлу не існує. Хочеш <a href="{link}">зареєструватися</a>?
-                """.format(link=reset_link)
-            else:
-                msg = """This email does not exist. Would you like to <a href="{link}">register</a>?
-                """.format(link=reset_link)
+            # if self.request.session.get('language')=='RU':
+            #     msg = """Такого мейла не существует. Хочешь <a href="{link}">зарегистрироваться</a>?
+            #     """.format(link=reset_link)
+            # elif self.request.session.get('language')=='UA':
+            #     msg = """Такого мейлу не існує. Хочеш <a href="{link}">зареєструватися</a>?
+            #     """.format(link=reset_link)
+            # else:
+            msg = _("""This email does not exist or already acivated. Would you like to <a href="{link}">register</a>?""").format(link=reset_link)
             raise forms.ValidationError(mark_safe(msg))
         return email
 
@@ -208,29 +207,28 @@ class RegisterLoginForm(forms.ModelForm):
         model = User
         fields = ('email',)
     email = forms.CharField(
-        widget=forms.EmailInput(
-        attrs={'placeholder': 'Your Email'}), label=''
-        )
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Min 8 characters, digits + numbers'}))
+        widget=forms.EmailInput(), label='')
+    password = forms.CharField(label='', widget=forms.PasswordInput())
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(RegisterLoginForm,self).__init__(*args,**kwargs)
-        if request.session.get('language') == 'RU':
-            self.fields['password'].widget.attrs['placeholder'] = 'Минимум 8 символов и цифр'
-            self.fields['email'].widget.attrs['placeholder'] = 'Твой мейл'
-        elif request.session.get('language') == 'UA':
-            self.fields['password'].widget.attrs['placeholder'] = 'Мінімум 8 символів та цифр'
-            self.fields['email'].widget.attrs['placeholder'] = 'Твій мейл'
-
+        # if request.session.get('language') == 'RU':
+        #     self.fields['password'].widget.attrs['placeholder'] = 'Минимум 8 символов и цифр'
+        #     self.fields['email'].widget.attrs['placeholder'] = 'Твой мейл'
+        # elif request.session.get('language') == 'UA':
+        #     self.fields['password'].widget.attrs['placeholder'] = 'Мінімум 8 символів та цифр'
+        #     self.fields['email'].widget.attrs['placeholder'] = 'Твій мейл'
+        self.fields['password'].widget.attrs['placeholder'] = _('Min 8 characters, digits + numbers')
+        self.fields['email'].widget.attrs['placeholder'] = _('Your Email')
     def clean(self):
         link = reverse("accounts:resend-activation")
-        if self.request.session.get('language') == 'RU':
-            reconfirm_msg = """<a href='{resend_link}'> (Кликни, чтобы выслать подтверждение еще раз</a>.)""".format(resend_link=link)
-        elif self.request.session.get('language') == 'UA':
-            reconfirm_msg = """<a href='{resend_link}'> (Кликни, щоб вислати підтвердження ще раз</a>.)""".format(resend_link=link)
-        else:
-            reconfirm_msg = """Go to <a href='{resend_link}'>resend confirmation email</a>.""".format(resend_link=link)
+        # if self.request.session.get('language') == 'RU':
+        #     reconfirm_msg = """<a href='{resend_link}'> (Кликни, чтобы выслать подтверждение еще раз</a>.)""".format(resend_link=link)
+        # elif self.request.session.get('language') == 'UA':
+        #     reconfirm_msg = """<a href='{resend_link}'> (Кликни, щоб вислати підтвердження ще раз</a>.)""".format(resend_link=link)
+        # else:
+        reconfirm_msg = _("""Go to <a href='{resend_link}'>resend confirmation email</a>.""").format(resend_link=link)
         self.cleaned_data['msg'] = reconfirm_msg                            
 
     def clean_password(self):

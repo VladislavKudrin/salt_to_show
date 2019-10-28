@@ -1,21 +1,14 @@
 {% extends "base.html" %}
 
-
+{% load i18n %}
 
 {% block content %}
 
-{% if request.session.language == 'RU' %}
-
-{% include 'languages/400-ru.html' %}  
-
-{% elif request.session.language == 'UA' %}
-
-{% include 'languages/400-ua.html' %}  
-
-{% else %}
-
-{% include 'languages/400-en.html' %}  
-
-{% endif %}
+<div class='row'>
+	<div class='col text-center'>
+		<p class="heading">{% trans "Oops ... Something went wrong. We're notified and working on a fix!" %} </p>
+<!-- 		<p>400 Error</p> -->
+	</div>
+</div>
 
 {% endblock %}

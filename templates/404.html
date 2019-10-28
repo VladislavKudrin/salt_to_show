@@ -1,21 +1,13 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 
 
 {% block content %}
 
-{% if request.session.language == 'RU' %}
-
-{% include 'languages/404-ru.html' %}  
-
-{% elif request.session.language == 'UA' %}
-
-{% include 'languages/404-ua.html' %}  
-
-{% else %}
-
-{% include 'languages/404-en.html' %}  
-
-{% endif %}
-
+<div class='row'>
+	<div class='col text-center'>
+		<p class="heading">{% trans "Oops ... This page doesn't exist! :(" %}</p>
+<!-- 		<p>404 Error</p> -->
+	</div>
+</div>
 {% endblock %}

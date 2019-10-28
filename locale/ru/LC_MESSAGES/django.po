@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-28 13:33+0000\n"
-"PO-Revision-Date: 2019-10-28 14:33+0100\n"
+"POT-Creation-Date: 2019-10-28 18:37+0000\n"
+"PO-Revision-Date: 2019-10-28 19:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -20,54 +20,81 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Poedit 2.2.4\n"
 
-#: accounts/forms.py:86
+#: accounts/forms.py:37
+#, python-brace-format
+msgid ""
+"This email does not exist or already acivated. Would you like to <a href="
+"\"{link}\">register</a>?"
+msgstr ""
+"Такого мейла не существует или он уже активирован. Хочешь <a href={link}"
+">зарегистрироваться</a>?"
+
+#: accounts/forms.py:85
 msgid "Only alphanumeric characters are allowed"
 msgstr "Юзернейм должен содержать только латинские символы или цифры"
 
-#: accounts/forms.py:87
+#: accounts/forms.py:86
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:88
+#: accounts/forms.py:87
 msgid "Your username"
 msgstr "Твой юзернейм"
 
-#: accounts/forms.py:90
+#: accounts/forms.py:89
 msgid "Region"
 msgstr "Регион"
 
-#: accounts/forms.py:91
+#: accounts/forms.py:90
 msgid "Name"
 msgstr "Имя"
 
-#: accounts/forms.py:92
+#: accounts/forms.py:91
 msgid "Your full name"
 msgstr "Полное имя"
 
-#: accounts/forms.py:93
+#: accounts/forms.py:92
 msgid "Cannot change email"
 msgstr "Нельзя изменить Email"
 
-#: accounts/forms.py:94
+#: accounts/forms.py:93
 msgid "Recieve marketing email?"
 msgstr "Получать рассылку?"
 
-#: accounts/forms.py:95
+#: accounts/forms.py:94
 msgid "Profile photo"
 msgstr "Фото профиля"
 
-#: accounts/forms.py:96
+#: accounts/forms.py:95
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Обновить"
 
-#: accounts/forms.py:100 accounts/forms.py:102
+#: accounts/forms.py:99 accounts/forms.py:101
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
 
-#: accounts/forms.py:145
+#: accounts/forms.py:144
 msgid "You must select a region"
-msgstr "Ты должен выбрать регион"
+msgstr "Выбери регион"
+
+#: accounts/forms.py:222
+msgid "Min 8 characters, digits + numbers"
+msgstr "Минимум 8 символов и цифр"
+
+#: accounts/forms.py:223 ecommerce/forms.py:11
+msgid "Your Email"
+msgstr "Твой Email"
+
+#: accounts/forms.py:231
+#, python-brace-format
+msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
+msgstr ""
+"<a href={resend_link}> (Кликни, чтобы выслать подтверждение еще раз)</a>."
+
+#: accounts/models.py:274
+msgid "1-Click Account Verification"
+msgstr "Активация аккаунта одним кликом"
 
 #: accounts/templates/accounts/profile.html:52
 msgid "Items:"
@@ -109,19 +136,59 @@ msgstr "Закрыть"
 msgid "Wishlist:"
 msgstr "Избранное:"
 
-#: accounts/views.py:265
+#: accounts/views.py:101 accounts/views.py:231 accounts/views.py:235
+msgid "You're in"
+msgstr "Ты на сайте"
+
+#: accounts/views.py:119
+#, python-brace-format
+msgid ""
+"Your email has already been confirmed. Do you need to <a href="
+"\"{link}\">reset your password</a>?"
+msgstr "Твой Мейл уже активирован. Хочешь <a href={link}>сбросить пароль</a>?"
+
+#: accounts/views.py:137
+msgid "Activation link was sent. Check your Email!"
+msgstr "Активация отправлена. Проверь почту!"
+
+#: accounts/views.py:176
+msgid "Login | Register"
+msgstr "Войти | Зарегистрироваться"
+
+#: accounts/views.py:177
+msgid "Or"
+msgstr "Или"
+
+#: accounts/views.py:178
+msgid "Forgot password?"
+msgstr "Забыл_а пароль?"
+
+#: accounts/views.py:196
+msgid "Please check your email to confirm your account. "
+msgstr "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. "
+
+#: accounts/views.py:205
+msgid "Email not confirmed. "
+msgstr "Мейл не подтвержден. "
+
+#: accounts/views.py:214
+msgid "The password seems to be wrong. Try again!"
+msgstr "Неверный пароль. Попробуй еще раз!"
+
+#: accounts/views.py:256
 msgid "Update your details"
 msgstr "Обновить аккаунт"
 
-#: accounts/views.py:266
+#: accounts/views.py:257 templates/registration/password_change_form.html:24
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: accounts/views.py:267 products/views.py:433
+#: accounts/views.py:258 products/views.py:433
+#: templates/registration/password_change_form.html:32
 msgid "Save"
 msgstr "Сохранить"
 
-#: accounts/views.py:268
+#: accounts/views.py:259
 msgid "Logout"
 msgstr "Выйти"
 
@@ -205,10 +272,6 @@ msgstr "Цена"
 #: chat_ecommerce/templates/chat_ecommerce/inbox.html:312
 msgid "Please select a chat to start conversation"
 msgstr "Выберите собеседника, чтобы начать диалог"
-
-#: ecommerce/forms.py:11
-msgid "Your Email"
-msgstr "Твой Email"
 
 #: ecommerce/forms.py:17
 msgid "Your message"
@@ -435,7 +498,7 @@ msgstr "Сделай короче. Убери # строк :"
 
 #: products/forms.py:187
 msgid "Please, make it shorter. # of characters to be removed:"
-msgstr "Сделай короче. Убери # символов : "
+msgstr "Сделай короче. Убери # символов :"
 
 #: products/forms.py:203
 msgid "Images*"
@@ -583,6 +646,22 @@ msgstr ""
 #: templates/base/navbar.html:170
 msgid "Search"
 msgstr "Поиск"
+
+#: templates/400.html:9 templates/403.html:7 templates/500.html:9
+msgid "Oops ... Something went wrong. We're notified and working on a fix!"
+msgstr "Ой … Что-то пошло не так. Мы оповещены и уже работаем над решением!"
+
+#: templates/404.html:9
+msgid "Oops ... This page doesn't exist! :("
+msgstr "Ой … Tакой страницы не существует! :("
+
+#: templates/base/footer.html:129 templates/base/footer.html:134
+msgid "About"
+msgstr "О нас"
+
+#: templates/base/footer.html:130 templates/base/footer.html:135
+msgid "Contact"
+msgstr "Контакт"
 
 #: templates/base/navbar.html:239
 msgctxt "account_dropdown_home "
@@ -802,6 +881,113 @@ msgstr "Отличное состояние"
 msgid "Used"
 msgstr "Нормальное состояние"
 
+#: templates/registration/activation-error.html:17
+msgid "Activation Error"
+msgstr "Ошибка активации"
+
+#: templates/registration/activation-error.html:18
+msgid "Please try again"
+msgstr "Попробуй еще раз"
+
+#: templates/registration/activation-error.html:20
+msgid "Re-activate your Email below"
+msgstr "Повторная активация Мейла"
+
+#: templates/registration/activation-error.html:27
+msgid "Resend Activation"
+msgstr "Прислать активацию"
+
+#: templates/registration/emails/verify.html:2
+#, python-format
+msgid ""
+"\n"
+"<p>Hey,</p> \n"
+"\n"
+"\n"
+"<p>Please activate your account for %(email)s by clicking the link below:</"
+"p>\n"
+"\n"
+"<p><a href='%(path)s'>%(path)s</a></p>\n"
+"\n"
+"<p>Once you activate, you can login!</p>\n"
+"\n"
+"\n"
+"<p>Thank you,</p>\n"
+"\n"
+"<p>SALT</p>\n"
+"\n"
+msgstr ""
+"\n"
+"<p>Привет,</p> \n"
+"\n"
+"\n"
+"<p>Пожалуйста, активируй %(email)s, нажав на:</p>\n"
+"\n"
+"<a href=%(path)s>%(path)s</a></p>\n"
+"\n"
+"<p>После, можешь пользоваться аккаунтом.</p>\n"
+"\n"
+"\n"
+"<p>Спасибо,</p>\n"
+"\n"
+"<p>SALT</p>\n"
+
+#: templates/registration/emails/verify.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hey, \n"
+"\n"
+"Please activate your account for %(email)s by clicking the link below:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"Once you activate, you can login!\n"
+"\n"
+"\n"
+"Thank you,\n"
+"SALT\n"
+"\n"
+msgstr ""
+"Привет, \n"
+"\n"
+"\n"
+"Пожалуйста, активируй %(email)s , нажав на:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"После этого можешь пользоваться аккаунтом.\n"
+"\n"
+"\n"
+"Спасибо,\n"
+"\n"
+"SALT\n"
+
+#: templates/registration/password_change_done.html:27
+msgid "Password changed successfully"
+msgstr "Пароль успешно изменен"
+
+#: templates/registration/password_reset_complete.html:6
+msgid "Password reset complete"
+msgstr "Восстановление пароля прошло успешно"
+
+#: templates/registration/password_reset_complete.html:7
+msgid "Login now"
+msgstr "Войти сейчас"
+
+#: templates/registration/password_reset_confirm.html:9
+msgid "Set your new password"
+msgstr "Укажи свой новый пароль"
+
+#: templates/registration/password_reset_confirm.html:13
+msgctxt "save_new_password"
+msgid "Submit"
+msgstr "Подтвердить"
+
+#: templates/registration/password_reset_done.html:8
+msgid "Almost there... Check your email to reset password"
+msgstr "Осталось еще чуть-чуть… Проверь свой мейл, чтобы восстановить пароль"
+
 #: templates/registration/password_reset_email.html:2
 #: templates/registration/password_reset_email.txt:2
 #, python-format
@@ -812,9 +998,18 @@ msgid ""
 "Reset your password on %(domain)s for %(user)s:\n"
 msgstr ""
 "\n"
-"Hello, \n"
+"Привет, \n"
 "\n"
-"Reset your password on %(domain)s for %(user)s:\n"
+"Сброс пароля на %(domain)s для %(user)s:\n"
+
+#: templates/registration/password_reset_form.html:10
+msgid "Reset password"
+msgstr "Сбросить пароль"
+
+#: templates/registration/password_reset_form.html:14
+msgctxt "password_reset"
+msgid "Submit"
+msgstr "Сбросить"
 
 #~ msgid "Create"
 #~ msgstr "Создать"

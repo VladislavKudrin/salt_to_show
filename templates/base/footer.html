@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load i18n %}
 <head>
   <style type="text/css">
 
@@ -122,16 +122,58 @@
   </style>
 </head>
 
-{% if request.session.language == 'RU' %}
+<footer class="page-footer font-small">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-4 my-2 footer-desktop">
+            <a href="{% url 'about' %}" class="text-body mx-3 font">{% trans 'About' %}</a>
+            <a href='{% url "contact" %}' class="text-body mx-3 font">{% trans 'Contact' %}</a>
+          </div>
 
-{% include 'languages/footer-ru.html' %}  
+          <div class="col-6 mt-2 footer-mobile">
+            <a href="{% url 'about' %}" class="text-body mr-3 font">{% trans 'About' %}About</a>
+            <a href='{% url "contact" %}' class="text-body font">{% trans 'Contact' %}</a>
+          </div>
 
-{% elif request.session.language == 'UA' %}
+          <div class="col-6 mt-2 footer-mobile">
+            <ul class="soc-seti pl-0">
+              <li class="soc-set">
+                <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
+              </li>
+              <!-- <li class="soc-set" >
+                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
+              </li> -->
+            </ul>
+          </div>
 
-{% include 'languages/footer-ua.html' %}  
- 
-{% else %}
 
-{% include 'languages/footer-en.html' %}  
+          <div class="col-xs-12 col-md-4 my-2 footer-desktop">
+            <ul class="soc-seti pl-0">
+              <li class="soc-set pl-1">
+                <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
+              </li>
+              <!-- <li class="soc-set">
+                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
+              </li> -->
+            </ul>
+          </div>
 
-{% endif %}
+          <div class="col-md-4 my-2 text-right footer-desktop">
+            <a class="text-body mx-3 font">SALT © 2019</a>
+          </div>
+
+        </div>
+      </div>
+  </footer>

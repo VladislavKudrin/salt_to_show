@@ -1,3 +1,5 @@
+{% load i18n %}
+{% blocktrans %}
 Hey, 
 
 Please activate your account for {{ email }} by clicking the link below:
@@ -9,3 +11,7 @@ Once you activate, you can login!
 
 Thank you,
 SALT
+
+{% endblocktrans %}
+
+

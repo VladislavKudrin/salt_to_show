@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.utils.translation import gettext as _ 
 
 from ecommerce.utils import random_string_generator, unique_key_generator, random_string_generator_username
 from products.models import Product
@@ -257,7 +258,7 @@ class EmailActivation(models.Model):
 			return True
 		return False
 
-	def send_activation(self, language = None):
+	def send_activation(self):
 		if not self.activated and not self.forced_expired:
 			if self.key:
 				base_url = getattr(settings, 'BASE_URL', 'https://www.saltysalt.co')
@@ -270,15 +271,11 @@ class EmailActivation(models.Model):
 				}
 				txt_ = get_template("registration/emails/verify.txt").render(context)
 				html_ = get_template("registration/emails/verify.html").render(context)
-				subject = '1-Click Account Verification'
-				if language=='RU':
-					txt_ = get_template("registration/emails/verify_rus.txt").render(context)
-					html_ = get_template("registration/emails/verify_rus.html").render(context)
-					subject = 'Активация аккаунта одним кликом'
-				elif language=='UA':
-					txt_ = get_template("registration/emails/verify_ua.txt").render(context)
-					html_ = get_template("registration/emails/verify_ua.html").render(context)
-					subject = 'Активація аккаунту одним кліком'
+				subject = _('1-Click Account Verification')
+				
+					# txt_ = get_template("registration/emails/verify_ua.txt").render(context)
+					# html_ = get_template("registration/emails/verify_ua.html").render(context)
+					# subject = 'Активація аккаунту одним кліком'
 				from_email = settings.DEFAULT_FROM_EMAIL
 				recipient_list = [self.email]
 				sent_mail=send_mail(
@@ -307,7 +304,7 @@ def post_save_language_pref(sender, instance, created, *args, **kwargs):
 		if not is_social:
 			if not is_admin:		
 				obj = EmailActivation.objects.create(user=instance.user, email=instance.user.email)
-				obj.send_activation(instance.language)
+				obj.send_activation()
 			else:
 				EmailActivation.objects.create(user=instance.user, email=instance.user.email, activated=True)
 
