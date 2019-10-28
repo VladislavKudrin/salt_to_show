@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-28 12:30+0000\n"
-"PO-Revision-Date: 2019-10-28 13:30+0100\n"
+"POT-Creation-Date: 2019-10-28 13:33+0000\n"
+"PO-Revision-Date: 2019-10-28 14:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -20,51 +20,62 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Poedit 2.2.4\n"
 
-#: accounts/forms.py:67
+#: accounts/forms.py:86
 msgid "Only alphanumeric characters are allowed"
 msgstr "Юзернейм должен содержать только латинские символы или цифры"
 
-#: accounts/forms.py:68
+#: accounts/forms.py:87
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:68
+#: accounts/forms.py:88
 msgid "Your username"
 msgstr "Твой юзернейм"
 
-#: accounts/forms.py:69
+#: accounts/forms.py:90
 msgid "Region"
 msgstr "Регион"
 
-#: accounts/forms.py:70
+#: accounts/forms.py:91
 msgid "Name"
 msgstr "Имя"
 
-#: accounts/forms.py:70
+#: accounts/forms.py:92
 msgid "Your full name"
 msgstr "Полное имя"
 
-#: accounts/forms.py:71
+#: accounts/forms.py:93
 msgid "Cannot change email"
 msgstr "Нельзя изменить Email"
 
-#: accounts/forms.py:72
+#: accounts/forms.py:94
 msgid "Recieve marketing email?"
 msgstr "Получать рассылку?"
 
-#: accounts/forms.py:73
+#: accounts/forms.py:95
 msgid "Profile photo"
 msgstr "Фото профиля"
 
-#: accounts/forms.py:90 accounts/forms.py:92
+#: accounts/forms.py:96
+msgctxt "profile_update"
+msgid "Update"
+msgstr "Обновить"
+
+#: accounts/forms.py:100 accounts/forms.py:102
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
+
+#: accounts/forms.py:145
+msgid "You must select a region"
+msgstr "Ты должен выбрать регион"
 
 #: accounts/templates/accounts/profile.html:52
 msgid "Items:"
 msgstr "Айтемы:"
 
 #: accounts/templates/accounts/profile.html:89
+#: accounts/templates/accounts/wish-list.html:57
+#: products/templates/products/user-history.html:65
 #: products/templates/products/user-list.html:59
 msgid "No items yet"
 msgstr "Пока что здесь пусто"
@@ -93,6 +104,10 @@ msgstr "Сохранить"
 #: accounts/templates/accounts/snippets/region-modal/region-modal.html:23
 msgid "Close"
 msgstr "Закрыть"
+
+#: accounts/templates/accounts/wish-list.html:24
+msgid "Wishlist:"
+msgstr "Избранное:"
 
 #: accounts/views.py:265
 msgid "Update your details"
@@ -481,6 +496,10 @@ msgstr "Редактировать"
 #: products/templates/products/snippets/logged-user-update-card.html:17
 msgid "Delete"
 msgstr "Удалить"
+
+#: products/templates/products/user-history.html:31
+msgid "Viewed items:"
+msgstr "Недавно просмотренное:"
 
 #: products/templates/products/user-list.html:24
 msgid "My Items:"

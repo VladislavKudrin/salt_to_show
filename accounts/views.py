@@ -342,30 +342,26 @@ class WishListView(LoginRequiredMixin, ListView):
 		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		wished_products = [wish.product for wish in wishes]
 		context = super(WishListView, self).get_context_data(*args,**kwargs)
-		if self.request.session.get('language') == 'RU':
-			context={
-			'title':'Избранное:',
-			'emptiness':'Пока что здесь пусто',
-			'wishes':wished_products
-			}
-		elif self.request.session.get('language') == 'UA':
-			context={
-			'title':'Улюблене:',
-			'emptiness':'Пока що тут пусто',
-			'wishes':wished_products
-			}
-		else: 
-			context={
-			'title':'Wishlist:',
-			'emptiness':'No items yet',
-			'wishes':wished_products
-			}
-		return context
+		context['wishes'] = wished_products
+
+		# elif self.request.session.get('language') == 'UA':
+		# 	context={
+		# 	'title':'Улюблене:',
+		# 	'emptiness':'Пока що тут пусто',
+		# 	'wishes':wished_products
+		# 	}
+		# else: 
+		# 	context={
+		# 	'title':'Wishlist:',
+		# 	'emptiness':'No items yet',
+		# 	'wishes':wished_products
+		# 	}
+		# return context
 	# 	user = self.request.user
 	# 	all_wishes = user.wishes_user.all()
 	# 	wished_products = [wish.product for wish in all_wishes]
 	# 	context['wishes'] = wished_products
-	# 	return context
+		return context
 
 @login_required
 def wishlistupdate(request):

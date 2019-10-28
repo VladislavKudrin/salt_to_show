@@ -7,6 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.urlresolvers import reverse
 import re
 from django.utils.translation import gettext as _ 
+from django.utils.translation import pgettext
 User = get_user_model()
 
 from marketing.models import MarketingPreference
@@ -63,14 +64,13 @@ class UserAdminCreationForm(forms.ModelForm):
             user.save()
         return user
 
-class UserDetailChangeForm(forms.ModelForm):
-    alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
-    username  = forms.CharField(label=_('Username'), required=True, validators=[alphanumeric], widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':_('Your username')}))
-    region = forms.ChoiceField(label=_('Region'), widget=forms.Select(), required=False)
-    full_name = forms.CharField(label=_('Name'), required=False, widget=forms.TextInput(attrs={"class":'form-control', 'placeholder':_('Your full name')}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), help_text=_('Cannot change email'), required=False)
-    subscribed = forms.BooleanField(label = _('Recieve marketing email?'), required=False)
-    profile_foto = forms.FileField(label= _('Profile photo'), required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
+class UserDetailChangeForm(forms.ModelForm): 
+    username  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
+    region = forms.ChoiceField(widget=forms.Select(), required=False)
+    full_name = forms.CharField(required=False, widget=forms.TextInput(attrs={"class":'form-control'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), required=False)
+    subscribed = forms.BooleanField(required=False)
+    profile_foto = forms.FileField(required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
     class Meta:
         model = User
         fields = [
@@ -83,7 +83,17 @@ class UserDetailChangeForm(forms.ModelForm):
         # alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм должен содержать только латинские символы или цифры')
         # alphanumeric_ua = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм повинен містити тільки латинські символи або цифри')
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
-
+        alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
+        self.fields['username'].label = _('Username')
+        self.fields['username'].widget.attrs['placeholder'] = _('Your username')
+        self.fields['username'].validators = [alphanumeric]
+        self.fields['region'].label = _('Region')
+        self.fields['full_name'].label = _('Name')
+        self.fields['full_name'].widget.attrs['placeholder'] = _('Your full name')
+        self.fields['full_name'].widget.help_text = _('Cannot change email')
+        self.fields['subscribed'].label = _('Recieve marketing email?')
+        self.fields['profile_foto'].label = _('Profile photo')
+        self.fields['profile_foto'].widget.attrs['label_for_btn'] = pgettext('profile_update','Update')
         #REGIONS
         self.initial['region'] = request.user.region
         if self.initial['region'] is None: 
@@ -132,7 +142,7 @@ class UserDetailChangeForm(forms.ModelForm):
     def clean_region(self):
         data = self.cleaned_data['region']
         if data == 'default':
-            raise forms.ValidationError("You must select a region")
+            raise forms.ValidationError(_("You must select a region"))
         clean_data = Region.objects.filter(region=data)[0]
         # user = self.request.user
         # mark_pref = MarketingPreference.objects.filter(user=user).first()
