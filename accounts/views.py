@@ -161,7 +161,10 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 	success_url = '/'
 	template_name = 'accounts/register.html'
 	default_next='/'
-
+	def get(self, request, *args, **kwargs):
+		if request.user.is_authenticated():
+			return redirect('home')
+		return super(RegisterLoginView, self).get(request, *args,**kwargs)
 	def get_context_data(self, *args, **kwargs):
 		context = super(RegisterLoginView, self).get_context_data(*args,**kwargs)
 		# if self.request.session.get('language') == 'RU':
