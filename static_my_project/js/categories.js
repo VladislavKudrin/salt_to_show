@@ -27,7 +27,6 @@ $(document).ready(
         initialUndercategory = $('#id_undercategory').attr('undercategory')
         initialCategory = $('#id_undercategory').attr('category')
         initialSize = $('#id_size').attr('size')
-        console.log(initialSize)
         initialCondition = $('#id_condition').attr('condition')
         idGender = $('#id_sex').attr('id_for_upd')
         idUndercat = $('#id_undercategory').attr('id_for_upd')
@@ -36,6 +35,7 @@ $(document).ready(
         inputGender.val(idGender)
         inputUnder.val(idUndercat)
         inputSize.val(idSize)
+        
         inputCondition.val(idCondition)
         $('.overcategories').find("[initial_update='"+initialOvercategory+"']").addClass('background-black').siblings().removeClass('background-black')
         $('.'+initialOvercategory).find("[gender-for-cat='"+initialGender+"']").addClass('background-black').siblings().removeClass('background-black')

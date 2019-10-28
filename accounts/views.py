@@ -292,18 +292,15 @@ class ProfileView(DetailView):
 		user  = User.objects.filter_by_username(username=username)
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
 		context['products'] = Product.objects.filter(user=user).authentic()
-		if self.request.session.get('language') == 'RU':
-			context['btn_title'] = 'Написать'
-			context['items_title'] = 'Айтемы:'
-			context['no_items'] = 'Пока что здесь пусто'
-		elif self.request.session.get('language') == 'UA':
-			context['btn_title'] = 'Написати'
-			context['items_title'] = 'Айтеми:'
-			context['no_items'] = 'Поки що тут пусто'
-		else:
-			context['btn_title'] = 'Message'
-			context['items_title'] = 'Items:'
-			context['no_items'] = 'No items yet'
+		# if self.request.session.get('language') == 'RU':
+		# 	context['btn_title'] = 'Написать'
+		# 	context['items_title'] = 'Айтемы:'
+		# 	context['no_items'] = 'Пока что здесь пусто'
+		# elif self.request.session.get('language') == 'UA':
+		# 	context['btn_title'] = 'Написати'
+		# 	context['items_title'] = 'Айтеми:'
+		# 	context['no_items'] = 'Поки що тут пусто'
+		# else:
 		return context
 
 	def post(self, request, *args, **kwargs):

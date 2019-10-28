@@ -3,7 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-
+{% url 'products:create' as product_create_url %}
 <head>
 <style type="text/css">
   .form-group{
@@ -216,7 +216,7 @@ select{
                   <div class='{{ category }}-size category-size'>
                     {% for size in sizes %}
                       {% if category.category == size.size_for %}
-                      <div class='{{ size.size_type }}_sizes col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}' for_black_size='{{ size.size }}-{{ category }}'>
+                      <div class='{{ size.size_type }}_sizes col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}' {% if not request.path == product_create_url and not size.size_type == object.size.size_type %}hidden='hidden'{% endif %}  for_black_size='{{ size.size }}-{{ category }}'>
                         <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size.size }}</p>
                       </div>
                       {% endif %}
@@ -259,7 +259,11 @@ select{
 
   <div class="row">
     <div class="col-12 col-md-12">
+
+    {% if request.path == product_create_url %}
       <label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse mt-3">{% trans 'Browse' %}</label>
+    {% endif %} 
+      
   {{form.image}}
   {% include 'products/snippets/images-upload.html' with object=object %}
   <div style='display: none' id='error_too_many_images'>{% trans 'Too many images. Should be less than'  %}</div>

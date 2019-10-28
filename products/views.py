@@ -16,6 +16,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.conf import settings
 from django.utils.translation import gettext as _
+from django.utils.translation import pgettext
+
+
 from django.utils import translation
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
@@ -136,60 +139,36 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
-		if self.request.session.get('language') == 'RU':
-			context['report'] = 'Жалоба?'
-			context['size'] = 'Размер:'
-			context['condition'] = 'Состояние:'
-			context['object_condition'] = product.condition.condition_ru
-			context['description'] = 'Описание:'
-			context['btn_title'] = 'Написать продавцу'
-			context['authentic'] = 'Оригинал'
-			context['verified'] = 'Двухфакторная проверка пройдена'
-			context['fake'] = 'Фейк'
-			context['checked_on'] = 'Проверено'
-			context['ai_checked'] = 'Проверено ИИ'
-			context['to_be_approved'] = 'После проверки экспертом айтем будет залит'
-			context['posted'] = 'Загружено'
-			context['ago'] = 'назад'
-			context['sex'] = product.sex.gender_ru
-			context['category'] = product.category.category_ru
-			context['undercategory'] = product.undercategory.undercategory_ru
-		elif self.request.session.get('language') == 'UA':
-			context['report'] = 'Скарга?'
-			context['size'] = 'Розмiр:'
-			context['condition'] = 'Стан:'
-			context['object_condition'] = product.condition.condition_ua
-			context['description'] = 'Опис:'
-			context['btn_title'] = 'Написати продавцю'
-			context['authentic'] = 'Оригiнал'
-			context['verified'] = 'Двухфакторна перевірка пройдена'
-			context['fake'] = 'Фейк'
-			context['checked_on'] = 'Перевірено'
-			context['ai_checked'] = 'Перевірено ШI'
-			context['to_be_approved'] = 'Пiсля перевірки экспертом айтем буде опублiкован'
-			context['posted'] = 'Завантажено'
-			context['ago'] = 'тому'
-			context['sex'] = product.sex.gender_ua
-			context['category'] = product.category.category_ua
-			context['undercategory'] = product.undercategory.undercategory_ua
-		else:
-			context['report'] = 'Report?'
-			context['size'] = 'Size:'
-			context['condition'] = 'Condition:'
-			context['object_condition'] = product.condition.condition_eng
-			context['description'] = 'Description:'
-			context['btn_title'] = 'Contact seller'
-			context['authentic'] = 'Authentic'
-			context['verified'] = '2-step-verified on'
-			context['fake'] = 'Fake'
-			context['checked_on'] = 'Checked on'
-			context['ai_checked'] = 'AI-checked'
-			context['to_be_approved'] = 'Needs to be approved by our expert team'
-			context['posted'] = 'Posted'
-			context['ago'] = 'ago'
-			context['sex'] = product.sex.gender_eng
-			context['category'] = product.category.category_eng
-			context['undercategory'] = product.undercategory.undercategory_eng
+		# elif self.request.session.get('language') == 'UA':
+		# 	context['report'] = 'Скарга?'
+		# 	context['size'] = 'Розмiр:'
+		# 	context['condition'] = 'Стан:'
+		# 	context['object_condition'] = product.condition.condition_ua
+		# 	context['description'] = 'Опис:'
+		# 	context['btn_title'] = 'Написати продавцю'
+		# 	context['authentic'] = 'Оригiнал'
+		# 	context['verified'] = 'Двухфакторна перевірка пройдена'
+		# 	context['fake'] = 'Фейк'
+		# 	context['checked_on'] = 'Перевірено'
+		# 	context['ai_checked'] = 'Перевірено ШI'
+		# 	context['to_be_approved'] = 'Пiсля перевірки экспертом айтем буде опублiкован'
+		# 	context['posted'] = 'Завантажено'
+		# 	context['ago'] = 'тому'
+		# else:
+		context['report'] = _('Report?')
+		context['size'] = _('Size:')
+		context['condition'] = _('Condition:')
+		context['object_condition'] = product.condition.condition_eng
+		context['description'] = _('Description:')
+		context['btn_title'] = _('Contact seller')
+		context['authentic'] = _('Authentic')
+		context['verified'] = _('2-step-verified on')
+		context['fake'] = _('Fake')
+		context['checked_on'] = _('Checked on')
+		context['ai_checked'] = _('AI-checked')
+		context['to_be_approved'] = _('Needs to be approved by our expert team')
+		context['posted'] = _('Posted')
+		context['ago'] = _('ago')
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -310,7 +289,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		# else:
 		context={
 		'form': product_form,
-		'button': _('Create'),
+		'button': pgettext('Upload_Item_create', 'Create'),
 		'title': _('Add a new item'),
 		'form_id': form_id
 		}
@@ -369,7 +348,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		# else:
 		context={
 		'form': form,
-		'button': _('Create'),
+		'button': pgettext('Upload_Item_create', 'Create'),
 		'title':_('Add a new item')
 		}
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
@@ -384,15 +363,15 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
 		user = self.request.user
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Мои айтемы'
-			context['emptiness'] = 'Пока что здесь пусто'
-		elif self.request.session.get('language') == 'UA':
-			context['title'] = 'Мої айтеми'
-			context['emptiness'] = 'Пока що тут пусто'
-		else:
-			context['title'] = 'My items'
-			context['emptiness'] = 'No items yet'
+		# if self.request.session.get('language') == 'RU':
+		# 	context['title'] = 'Мои айтемы'
+		# 	context['emptiness'] = 'Пока что здесь пусто'
+		# elif self.request.session.get('language') == 'UA':
+		# 	context['title'] = 'Мої айтеми'
+		# 	context['emptiness'] = 'Пока що тут пусто'
+		# else:
+		# 	context['title'] = 'My items'
+		# 	context['emptiness'] = 'No items yet'
 		return context
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
@@ -442,15 +421,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		context['categories_all'] = Category.objects.filter(category_for = Gender.objects.get(gender = 'Women'))
 		context['conditions'] = Condition.objects.all()
 		context['sizes'] = Size.objects.all()
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Редактировать'
-			context['button']='Сохранить' 
-		elif self.request.session.get('language') == 'UA':
-			context['title'] = 'Редагувати'
-			context['button']='Зберегти' 
-		else:
-			context['title'] = 'Update'
-			context['button']='Save'
+		context['object_slug'] = slug 
+		# if self.request.session.get('language') == 'RU':
+		# 	context['title'] = 'Редактировать'
+		# 	context['button']='Сохранить' 
+		# elif self.request.session.get('language') == 'UA':
+		# 	context['title'] = 'Редагувати'
+		# 	context['button']='Зберегти' 
+		# else:
+		context['title'] = _('Update')
+		context['button']=_('Save')
 		
 		new_all_=[]
 		all_ = ProductImage.objects.all().filter(slug=slug)

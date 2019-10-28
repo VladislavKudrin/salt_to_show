@@ -29,12 +29,11 @@ class InboxView(LoginRequiredMixin, ListView):
         # Причем указывыаем просто  названия моделей.
         context['threads_with_unred'] = threads_with_unred
         context['chats'] = Thread.objects.by_recent_message(me)
-        if self.request.session.get('language') == 'RU':
-            context['title'] = 'Выберите собеседника, чтобы начать диалог'
-        elif self.request.session.get('language') == 'UA':
-            context['title'] = 'Виберіть співрозмовника, щоб почати діалог'
-        else:
-            context['title'] = 'Please select a chat to start conversation'
+        # if self.request.session.get('language') == 'RU':
+        #     context['title'] = 'Выберите собеседника, чтобы начать диалог'
+        # elif self.request.session.get('language') == 'UA':
+        #     context['title'] = 'Виберіть співрозмовника, щоб почати діалог'
+        # else:
         return context
 
 

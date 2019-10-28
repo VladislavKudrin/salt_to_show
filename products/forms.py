@@ -266,10 +266,10 @@ class ProductUpdateForm(ProductCreateForm):
 		condition = Condition.objects.get(id=product.condition.id)
 		description = product.description
 		self.initial['brand']=brand.brand_name
-		self.initial['undercategory']=undercategory.undercategory
-		self.initial['sex']=gender.gender
+		self.initial['sex']=_(gender.gender_eng)
+		self.initial['undercategory']=_(undercategory.undercategory_eng)
 		self.initial['size']=size.size
-		self.initial['condition']=condition.condition
+		self.initial['condition']=_(condition.condition_eng)
 		self.fields['sex'].widget.attrs['overcategory'] = gender.gender_for.overcategory
 		self.fields['sex'].widget.attrs['gender'] = gender.gender
 		self.fields['sex'].widget.attrs['id_for_upd'] = gender.id

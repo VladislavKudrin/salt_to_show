@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-25 18:17+0000\n"
-"PO-Revision-Date: 2019-10-25 20:18+0200\n"
+"POT-Creation-Date: 2019-10-28 12:30+0000\n"
+"PO-Revision-Date: 2019-10-28 13:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -60,12 +60,21 @@ msgstr "Фото профиля"
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
 
+#: accounts/templates/accounts/profile.html:52
+msgid "Items:"
+msgstr "Айтемы:"
+
+#: accounts/templates/accounts/profile.html:89
+#: products/templates/products/user-list.html:59
+msgid "No items yet"
+msgstr "Пока что здесь пусто"
+
 #: accounts/templates/accounts/snippets/begin-chat.html:3
 msgid "Update profile"
 msgstr "Обновить профиль"
 
 #: accounts/templates/accounts/snippets/begin-chat.html:6
-#: accounts/templates/accounts/snippets/begin-chat.html:8
+#: accounts/templates/accounts/snippets/begin-chat.html:8 products/views.py:163
 msgid "Contact seller"
 msgstr "Связаться с продавцом"
 
@@ -93,7 +102,7 @@ msgstr "Обновить аккаунт"
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: accounts/views.py:267
+#: accounts/views.py:267 products/views.py:433
 msgid "Save"
 msgstr "Сохранить"
 
@@ -177,6 +186,10 @@ msgstr "Бренд"
 #: categories/views.py:317 products/forms.py:64
 msgid "Price"
 msgstr "Цена"
+
+#: chat_ecommerce/templates/chat_ecommerce/inbox.html:312
+msgid "Please select a chat to start conversation"
+msgstr "Выберите собеседника, чтобы начать диалог"
 
 #: ecommerce/forms.py:11
 msgid "Your Email"
@@ -434,31 +447,103 @@ msgstr "Напиши на help@saltysalt.co если не нашел своег�
 msgid "Photos*"
 msgstr "Фото*"
 
-#: products/templates/products/product-create.html:262
+#: products/templates/products/product-create.html:264
 msgid "Browse"
 msgstr "Выбрать"
 
-#: products/templates/products/product-create.html:265
+#: products/templates/products/product-create.html:269
 msgid "Too many images. Should be less than"
 msgstr "Залей меньше фото. Их должно быть не больше"
 
-#: products/templates/products/product-create.html:266
+#: products/templates/products/product-create.html:270
 msgid "Authenticity check..."
 msgstr "Проверка на оригинальность…"
 
-#: products/views.py:313 products/views.py:372
-msgid "Create"
-msgstr "Создать"
+#: products/templates/products/snippets/card-my-items.html:19
+msgctxt "card_my_items_approved"
+msgid "Approved"
+msgstr "На сайте"
 
-#: products/views.py:314 products/views.py:373
+#: products/templates/products/snippets/card-my-items.html:52
+#: products/views.py:166
+msgid "Fake"
+msgstr "Фейк"
+
+#: products/templates/products/snippets/card-my-items.html:87
+msgid "Pending"
+msgstr "Проверяется"
+
+#: products/templates/products/snippets/logged-user-update-card.html:8
+#: products/views.py:432
+msgid "Update"
+msgstr "Редактировать"
+
+#: products/templates/products/snippets/logged-user-update-card.html:17
+msgid "Delete"
+msgstr "Удалить"
+
+#: products/templates/products/user-list.html:24
+msgid "My Items:"
+msgstr "Мои айтемы:"
+
+#: products/views.py:158
+msgid "Report?"
+msgstr "Пожаловаться?"
+
+#: products/views.py:159
+msgid "Size:"
+msgstr "Размер:"
+
+#: products/views.py:160
+msgid "Condition:"
+msgstr "Состояние:"
+
+#: products/views.py:162
+msgid "Description:"
+msgstr "Описание:"
+
+#: products/views.py:164
+msgid "Authentic"
+msgstr "Оригинал"
+
+#: products/views.py:165
+msgid "2-step-verified on"
+msgstr "Двухфакторная проверка пройдена"
+
+#: products/views.py:167
+msgid "Checked on"
+msgstr "Проверено"
+
+#: products/views.py:168
+msgid "AI-checked"
+msgstr "Проверено ИИ"
+
+#: products/views.py:169
+msgid "Needs to be approved by our expert team"
+msgstr "После проверки экспертом айтем будет залит"
+
+#: products/views.py:170
+msgid "Posted"
+msgstr "Загружено"
+
+#: products/views.py:171
+msgid "ago"
+msgstr "назад"
+
+#: products/views.py:292 products/views.py:351
+msgctxt "Upload_Item_create"
+msgid "Create"
+msgstr "Залить"
+
+#: products/views.py:293 products/views.py:352
 msgid "Add a new item"
 msgstr "Залить новый айтем"
 
-#: products/views.py:336
+#: products/views.py:315
 msgid "New item upload"
 msgstr ""
 
-#: products/views.py:337
+#: products/views.py:316
 msgid ""
 "New product was uploaded. Please verify authenticity: \n"
 " {} \n"
@@ -467,13 +552,44 @@ msgid ""
 " {}"
 msgstr ""
 
-#: products/views.py:346
+#: products/views.py:325
 msgid ""
 "Your item was checked by AI. Within next 24 hours the check will be "
 "confirmed by our moderator team and your item will be published"
 msgstr ""
 "Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку "
 "подтвердит модератор и айтем будет выставлен на продажу"
+
+#: search/templates/search/snippets/search-form.html:4
+#: templates/base/navbar.html:170
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/base/navbar.html:239
+msgctxt "account_dropdown_home "
+msgid "Home"
+msgstr "Аккаунт"
+
+#: templates/base/navbar.html:243
+msgid "Messages"
+msgstr "Сообщения"
+
+#: templates/base/navbar.html:253
+msgid "My items"
+msgstr "Мои айтемы"
+
+#: templates/base/navbar.html:254
+msgid "Wishlist"
+msgstr "Избранное"
+
+#: templates/base/navbar.html:255
+msgctxt "account_dropdown_history"
+msgid "History"
+msgstr "Просмотренное"
+
+#: templates/base/navbar.html:256
+msgid "Settings"
+msgstr "Настройки"
 
 #: templates/forms/helper_text.html:3 templates/languages/helper_text-en.html:3
 msgid "* marked fields are required"
@@ -680,6 +796,9 @@ msgstr ""
 "Hello, \n"
 "\n"
 "Reset your password on %(domain)s for %(user)s:\n"
+
+#~ msgid "Create"
+#~ msgstr "Создать"
 
 #, python-format
 #~ msgid "%(gendero)s"
