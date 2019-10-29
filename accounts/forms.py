@@ -27,13 +27,6 @@ class ReactivateEmailForm(forms.Form):
         user_objects = EmailActivation.objects.email_exists(email)
         if not user_objects.exists():
             reset_link = reverse("login")
-            # if self.request.session.get('language')=='RU':
-            #     msg = """Такого мейла не существует. Хочешь <a href="{link}">зарегистрироваться</a>?
-            #     """.format(link=reset_link)
-            # elif self.request.session.get('language')=='UA':
-            #     msg = """Такого мейлу не існує. Хочеш <a href="{link}">зареєструватися</a>?
-            #     """.format(link=reset_link)
-            # else:
             msg = _("""This email does not exist or already acivated. Would you like to <a href="{link}">register</a>?""").format(link=reset_link)
             raise forms.ValidationError(mark_safe(msg))
         return email
@@ -79,8 +72,6 @@ class UserDetailChangeForm(forms.ModelForm):
                 'profile_foto',
                     ]
     def __init__(self, request, *args, **kwargs):
-        # alphanumeric_rus = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм должен содержать только латинские символы или цифры')
-        # alphanumeric_ua = RegexValidator(r'^[0-9a-zA-Z_.-]+$', 'Юзернейм повинен містити тільки латинські символи або цифри')
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
         alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
         self.fields['username'].label = _('Username')
@@ -105,25 +96,6 @@ class UserDetailChangeForm(forms.ModelForm):
         self.fields['email'].initial=request.user.email
         self.fields['subscribed'].initial=request.user.marketing.subscribed
         self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
-
-        # if self.lan == 'RU':
-        #     self.fields['subscribed'].label = "Получать рассылку?"
-        #     self.fields['full_name'].label = "Имя и фамилия"
-        #     self.fields['username'].label = "Юзернейм"
-        #     self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
-        #     self.fields['username'].validators = [alphanumeric_rus]
-        #     self.fields['full_name'].widget.attrs['placeholder'] = "Имя и фамилия"
-        #     self.fields['profile_foto'].label = "Фото профиля"
-        #     self.fields['email'].help_text='Нельзя изменить мейл'
-        # elif self.lan == 'UA':
-        #     self.fields['subscribed'].label = "Отримувати розсилку?"
-        #     self.fields['full_name'].label = "Ім'я та прізвище"
-        #     self.fields['username'].label = "Юзернейм"
-        #     self.fields['username'].widget.attrs['placeholder'] = "Юзернейм"
-        #     self.fields['username'].validators = [alphanumeric_ua]
-        #     self.fields['full_name'].widget.attrs['placeholder'] = "Ім'я та прізвище"
-        #     self.fields['profile_foto'].label = "Фото профілю"
-        #     self.fields['email'].help_text='Не можна змінити мейл'
 
     # def clean_username(self):
     #     data = self.cleaned_data['username']
@@ -213,21 +185,10 @@ class RegisterLoginForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(RegisterLoginForm,self).__init__(*args,**kwargs)
-        # if request.session.get('language') == 'RU':
-        #     self.fields['password'].widget.attrs['placeholder'] = 'Минимум 8 символов и цифр'
-        #     self.fields['email'].widget.attrs['placeholder'] = 'Твой мейл'
-        # elif request.session.get('language') == 'UA':
-        #     self.fields['password'].widget.attrs['placeholder'] = 'Мінімум 8 символів та цифр'
-        #     self.fields['email'].widget.attrs['placeholder'] = 'Твій мейл'
         self.fields['password'].widget.attrs['placeholder'] = _('Min 8 characters, digits + numbers')
         self.fields['email'].widget.attrs['placeholder'] = _('Your Email')
     def clean(self):
         link = reverse("accounts:resend-activation")
-        # if self.request.session.get('language') == 'RU':
-        #     reconfirm_msg = """<a href='{resend_link}'> (Кликни, чтобы выслать подтверждение еще раз</a>.)""".format(resend_link=link)
-        # elif self.request.session.get('language') == 'UA':
-        #     reconfirm_msg = """<a href='{resend_link}'> (Кликни, щоб вислати підтвердження ще раз</a>.)""".format(resend_link=link)
-        # else:
         reconfirm_msg = _("""Go to <a href='{resend_link}'>resend confirmation email</a>.""").format(resend_link=link)
         self.cleaned_data['msg'] = reconfirm_msg                            
 

@@ -260,43 +260,6 @@ class CategoryFilterView(ListView):
 		context['fields_condition']=fields_condition  
 		# context['sizes']=sizes
 		context['fields_brand']=fields_brand
-		# if self.request.session.get('language') == 'RU':
-		# 	context['kids_navbar'] = 'Дети'
-		# 	context['new_navbar'] = 'Свежее'
-		# 	context['hide_filters'] = 'Спрятать фильтры'
-		# 	context['found'] = 'Найдено'
-		# 	context['items'] = 'айтемов'
-		# 	context['sort_by'] = 'Сортировать по'
-		# 	context['new'] = 'Сначала новые'
-		# 	context['price_to_high'] = 'Сначала дешевые'
-		# 	context['price_to_low'] = 'Сначала дорогие'
-		# 	context['gender'] = 'Гендер'
-		# 	context['overcategory'] = 'Тип'
-		# 	context['category'] = 'Категория'
-		# 	context['all'] = 'Все'
-		# 	context['size'] = 'Размер'
-		# 	context['condition'] = 'Состояние'
-		# 	context['brand'] = 'Бренд'
-		# 	context['price'] = 'Цена'
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['kids_navbar'] = 'Дiтi'
-		# 	context['new_navbar'] = 'Свiже'
-		# 	context['hide_filters'] = 'Сховати фільтри'
-		# 	context['found'] = 'Знайдено'
-		# 	context['items'] = 'айтемов'
-		# 	context['sort_by'] = 'Сортувати по'
-		# 	context['new'] = 'Спочатку новi'
-		# 	context['price_to_high'] = 'Спочатку дешеві'
-		# 	context['price_to_low'] = 'Спочатку дорогі'
-		# 	context['gender'] = 'Гендер'
-		# 	context['overcategory'] = 'Тип'
-		# 	context['category'] = 'Категорiя'
-		# 	context['all'] = 'Усi'
-		# 	context['size'] = 'Рoзмiр'
-		# 	context['condition'] = 'Стан'
-		# 	context['brand'] = 'Бренд'
-		# 	context['price'] = 'Цiна'
-		# else:
 		context['kids_navbar'] = _('Kids')
 		context['new_navbar'] = _('New')
 		context['hide_filters'] = _('Hide Filters')

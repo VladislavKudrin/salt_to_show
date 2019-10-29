@@ -25,17 +25,6 @@ class AboutPageView(TemplateView):
 	template_name = 'base/about_us.html'
 	def get_context_data(self, *args, **kwargs):
 		context=super(AboutPageView, self).get_context_data(*args, **kwargs)
-	
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['bazar'] = 'Базар'
-		# 	context['marketplace'] = 'Маркетплейс'
-		# 	context['authentic_slogan'] = 'Без фейків'
-		# 	context['authentic_text'] = "Те, що відрізняє нас від інших: на SALT немає і ніколи не буде фейків. Фейки - це те, що робить онлайн-шопінг нестерпним. Індустрія підробок у сфері моди оцінюється в 600 млрд доларів. У той час, коли хтось заробляє величезні гроші, якість шопінгу для покупця погіршується. Але ми любимо шопінг. Напевно, навіть більше, ніж Ти. Нами рухає дуже проста мета зробити шопінг максимально приємним і безпечним. Тому на SALT ти можеш бути на 100% впевнена_ий, що здобуваєш оригінальну річ."
-		# 	context['ai_slogan'] = 'Двухфакторна верифікація'
-		# 	context['ai_text'] = 'На SALT діє двухфакторна верифікація продукту (звучить круто, правда?). Простими словами, кожен айтем перевіряється рівно два рази. Перший - відразу після завантаження. За лічені секунди наша модель Штучного Інтелекту привласнює продукту лейбл - фейк або оригінал. Модель думає швидко і поліпшується з кожним завантаженим айтемом (нейронні сіточки і все таке). А другий крок - це ретельний мануальний чек, що виконується нашими досвідченими експертами. Завдяки двухфакторной верифікації продукту жоден фейк не потрапить на SALT.'
-		# 	context['minimalism_slogan'] = 'Краще менше, та краще'
-		# 	context['minimalism_text'] = "Простота - це наш основний концепт. І це стосується не тільки мінімалістичного дизайну та інтуїтивного інтерфейсу. Ми хочемо, щоб наших покупців і продавців поважали. Тому на SALT немає і ніколи не буде настирливої ​​реклами і платного просування. ніяких банерів, спливаючих вікон і преміум-акаунтів. SALT - це ком'юніті, де дизайнерська і вулична мода набуває другий шанс. Річ знаходить свого нового власника без шкоди навколишньому середовищу. SALT при цьому лише виконує скромну роль посередника в цій нехитрій угоді"
-		# else:
 		context['bazar'] = _('Bazar')
 		context['marketplace'] = _('Marketplace')
 		context['authentic_slogan'] = _('No counterfeit')
@@ -53,13 +42,6 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	def get_context_data(self, *args, **kwargs):
 		context=super(ContactPageView, self).get_context_data(*args, **kwargs)
 		context['user_email'] = self.request.user.email
-		# if self.request.session.get('language') == 'RU':
-		# 	context['title'] = 'Напиши нам'
-		# 	context['button'] = 'Отправить'
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['title'] = 'Напиши нам'
-		# 	context['button'] = 'Надіслати'
-		# else:
 		context['title'] = _('Contact us')
 		context['button'] = _('Submit')
 		context['submitted'] = _('Sending....')
@@ -88,11 +70,6 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 
 					)
 		if self.request.is_ajax():
-			# if self.request.session.get('language') == 'RU':
-			# 	return JsonResponse({"message":"Спасибо"})
-			# elif self.request.session.get('language') == 'UA':
-			# 	return JsonResponse({"message":"Дякуємо"})
-			# else:
 			return JsonResponse({
 				"message":_("Thank you"),
 				"success_message":_("Success")
@@ -123,10 +100,6 @@ def home_page(request):
 	to_send = []
 	for i in brands: 
 		to_send.append(Brand.objects.filter(brand_name=i).first())
-	# brands_navbar_init = brands
-	# brand_navbar_lookups = (Q(brand_name__iexact='nothing'))
-	# for brand in brands_navbar_init:
-	# 	brand_navbar_lookups = brand_navbar_lookups|(Q(brand_name__iexact=brand))
 	context['showed_brands_navbar'] = to_send
 	context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
 	context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
@@ -155,27 +128,6 @@ def home_page(request):
 	context['trending'] = _('Trending:')
 	context['see_all'] = _('See all')
 	context['popular_brands_'] = _('Popular designers:')
-
-	# context['kids_navbar'] = 'Дiтi'
-	# context['new_navbar'] = 'Свiже'
-	# context['brand'] = 'Бренд'
-	# context['why_sell'] = 'Підтримуй круговорот одягу в природі.'
-	# context['why_buy'] = 'Знайди свій брендовий айтем швидко та без фейків.'
-	# context['safe'] = 'Надійно'
-	# context['why_safe'] = 'Завантажені речі перевіряються 24/7/365. На SALT немає фейків і кидал.'
-	# context['modern'] = 'Сучасно'
-	# context['why_modern'] = 'Ми використовуємо Штучний Інтелект, щоб виключати підробки з нашого каталогу.'
-	# context['simple'] = 'Просто'
-	# context['why_simple'] = "Наш інтуїтивний дизайн розроблений з любов'ю до простоти i мінімалізму."
-	# context['read_more'] = 'Дізнайся більше'
-	# context['go_to_account'] = 'Перейти в акаунт'
-	# context['become_customer'] = 'Приєднуйся'
-	# context['login_registration'] = 'Логін | Реєстрація'
-	# context['trending'] = 'У тренді:'
-	# context['see_all'] = 'Показати всі'
-	# context['popular_brands'] = 'Популярні бренди:'
-
-
 	return render(request, "home_page.html", context)
 
 # def contact_page(request):

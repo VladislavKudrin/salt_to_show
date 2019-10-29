@@ -21,18 +21,3 @@ class ContactForm(forms.Form):
 		self.request = request
 		self.fields['email'].initial = request.user.email
 		self.fields['email'].widget.attrs['readonly'] = True
-		# if self.lan == 'RU':
-		# 	self.fields['content'].label = "Содержание"
-		# 	self.fields['content'].widget.attrs['placeholder'] = 'Твой месседж'
-		# elif self.lan == 'UA':
-		# 	self.fields['content'].label = "Зміст"
-		# 	self.fields['content'].widget.attrs['placeholder'] = 'Твій месседж'
-
-	# def clean_email(self):
-	# 	email = self.cleaned_data.get('email')
-	# 	if not "gmail.com" in email:
-	# 		raise forms.ValidationError("Email has to be gmail.com")
-	# 	return email
-
-	# def clean_content(self):
-	# 	raise forms.ValidationError("Content is wrong")

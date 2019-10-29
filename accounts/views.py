@@ -107,15 +107,6 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 				activated_qs = qs.filter(activated=True)
 				if activated_qs.exists():
 					reset_link = reverse("password_reset")
-					# if request.session.get('language')=='RU':
-					# 	msg = """Ты уже подтвердил_а свой мейл. 
-					# 	<a href="{link}">Сбросить пароль</a>?
-					# 	""".format(link=reset_link)
-					# elif request.session.get('language')=='UA':
-					# 	msg = """Ти вже підтвердив/підтвердила свій мейл. 
-					# 	<a href="{link}">Скинути пароль</a>?
-					# 	""".format(link=reset_link)
-					# else:
 					msg = _("""Your email has already been confirmed. Do you need to <a href="{link}">reset your password</a>?""").format(link=reset_link)
 					messages.add_message(request, messages.SUCCESS, mark_safe(msg))
 					return redirect("login")
@@ -135,10 +126,6 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 
 	def form_valid(self, form):
 		msg = _("""Activation link was sent. Check your Email!""")
-		# if self.request.session.get('language')=='RU':
-		# 	msg = """Активация отправлена. Проверь почту!"""
-		# elif self.request.session.get('language')=='UA':
-		# 	msg = """Активація відправлена. Перевір пошту!"""
 		request = self.request
 		messages.success(request, msg)
 		email=form.cleaned_data.get("email")
@@ -167,15 +154,6 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		return super(RegisterLoginView, self).get(request, *args,**kwargs)
 	def get_context_data(self, *args, **kwargs):
 		context = super(RegisterLoginView, self).get_context_data(*args,**kwargs)
-		# if self.request.session.get('language') == 'RU':
-		# 	context['title'] = 'Войти | Зарегистрироваться'
-		# 	context['or_option'] = 'Или'
-		# 	context['password_forgot'] = 'Забыл_а пароль?'
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['title'] = 'Увійти | Зареєструватися'
-		# 	context['or_option'] = 'Або'
-		# 	context['password_forgot'] = 'Забув/забула пароль?'
-		# else:
 		context['title'] = _('Login | Register')
 		context['or_option'] = _('Or')
 		context['password_forgot'] = _('Forgot password?')
@@ -191,29 +169,14 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			user_created = User.objects.filter(email=form.cleaned_data.get('email')).first()
 			LanguagePreference.objects.create(user=user_created, language=translation.get_language())
 			next_path = 'login'
-			# if self.request.session.get('language') == 'RU':
-			# 	msg1 = "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. " + form.cleaned_data.get('msg')
-			# elif self.request.session.get('language') == 'UA':
-			# 	msg1 = "Будь ласка, перевір свою пошту, щоб підтвердити аккаунт. " + form.cleaned_data.get('msg')
-			# else:
 			msg1 = _("Please check your email to confirm your account. ") + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
-			# if self.request.session.get('language') == 'RU':
-			# 	msg2 = "Мейл не подтвержден. " + form.cleaned_data.get('msg')
-			# elif self.request.session.get('language') == 'UA':
-			# 	msg2 = "Мейл не підтверджений. " + form.cleaned_data.get('msg')
-			# else:
 			msg2 = _("Email not confirmed. ") + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
 		elif user is None:
 			next_path = 'login'
-			# if self.request.session.get('language') == 'RU':
-			# 	msg3 = "Неверный пароль. Попробуй еще раз!"
-			# elif self.request.session.get('language') == 'UA':
-			# 	msg3 = "Невірний пароль. Спробуй ще раз!"
-			# else:
 			msg3 = _("The password seems to be wrong. Try again!")
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg3))
 			return redirect(next_path)
@@ -226,11 +189,6 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			else:
 				self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref_login_page
 				LanguagePreference.objects.create(user=user, language=language_pref_login_page)
-			# if self.request.session.get('language') == 'RU':
-			# 	messages.add_message(form.request, messages.SUCCESS, 'Ты на сайте')
-			# elif self.request.session.get('language') == 'UA':
-			# 	messages.add_message(form.request, messages.SUCCESS, 'Ти на сайті')
-			# else:
 			messages.add_message(form.request, messages.SUCCESS, _("You're in"))				
 		return redirect(next_path)
 
@@ -245,17 +203,6 @@ class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateVie
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
-		# if self.request.session.get('language') == 'RU':
-		# 	context['title'] = 'Обновить аккаунт'
-		# 	context['password_btn'] = 'Изменить пароль'
-		# 	context['save_btn'] = 'Сохранить'
-		# 	context['logout_btn'] = 'Выйти'
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['title'] = 'Оновити аккаунт'
-		# 	context['password_btn'] = 'Змінити пароль'
-		# 	context['save_btn'] = 'Зберегти'
-		# 	context['logout_btn'] = 'Выйти'
-		# else:
 		context['title'] = _('Update your details')
 		context['password_btn'] = _('Change password')
 		context['save_btn'] = _('Save')
@@ -286,15 +233,6 @@ class ProfileView(DetailView):
 		user  = User.objects.filter_by_username(username=username)
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
 		context['products'] = Product.objects.filter(user=user).authentic()
-		# if self.request.session.get('language') == 'RU':
-		# 	context['btn_title'] = 'Написать'
-		# 	context['items_title'] = 'Айтемы:'
-		# 	context['no_items'] = 'Пока что здесь пусто'
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['btn_title'] = 'Написати'
-		# 	context['items_title'] = 'Айтеми:'
-		# 	context['no_items'] = 'Поки що тут пусто'
-		# else:
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -337,24 +275,6 @@ class WishListView(LoginRequiredMixin, ListView):
 		wished_products = [wish.product for wish in wishes]
 		context = super(WishListView, self).get_context_data(*args,**kwargs)
 		context['wishes'] = wished_products
-
-		# elif self.request.session.get('language') == 'UA':
-		# 	context={
-		# 	'title':'Улюблене:',
-		# 	'emptiness':'Пока що тут пусто',
-		# 	'wishes':wished_products
-		# 	}
-		# else: 
-		# 	context={
-		# 	'title':'Wishlist:',
-		# 	'emptiness':'No items yet',
-		# 	'wishes':wished_products
-		# 	}
-		# return context
-	# 	user = self.request.user
-	# 	all_wishes = user.wishes_user.all()
-	# 	wished_products = [wish.product for wish in all_wishes]
-	# 	context['wishes'] = wished_products
 		return context
 
 @login_required

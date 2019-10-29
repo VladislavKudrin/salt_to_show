@@ -63,49 +63,6 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['condition'].label = _('Condition')
 		self.fields['price'].label = _('Price')
 		self.fields['description'].label = _('Description')
-		# if self.lan == 'RU':
-		# 	self.fields['title'].label = "Название"
-		# 	self.fields['title'].widget.attrs['placeholder'] = 'Пара слов про айтем'
-		# 	self.fields['description'].label = "Описание"
-		# 	self.fields['description'].widget.attrs['placeholder'] = 'Подробно опиши айтем'
-		# 	self.fields['price'].label = "Цена"
-		# 	self.fields['price'].widget.attrs['placeholder'] = 'Введи цену в {currency}'.format(currency=currency_placeholder)
-		# 	self.fields['brand'].label = "Бренд"
-		# 	self.fields['brand'].widget.attrs['placeholder'] = 'Выбери бренд'
-		# 	self.fields['sex'].label = "Гендер"
-		# 	self.fields['sex'].widget.attrs['placeholder'] = 'Выбери гендер'
-		# 	self.fields['undercategory'].label = "Категория"
-		# 	self.fields['undercategory'].widget.attrs['placeholder'] = 'Выбери категорию'
-		# 	self.fields['condition'].widget.attrs['placeholder'] = 'Выбери состояние'
-		# 	self.fields['size'].widget.attrs['placeholder'] = 'Выбери размер'
-		# 	# self.fields['category'].label = "Категория"
-		# 	# self.fields['category'].choices = CATEGORY_CHOICES = (
-		# 	# ('select a category', 'Выбери подходящую категорию'),
-		# 	# ('tops', 'Верх'),
-		# 	# ('bottoms', 'Низ'),
-		# 	# ('accessories', 'Аксессуары'),
-		# 	# ('outerwear', 'Верхняя одежда'),
-		# 	# ('footwear', 'Обувь'),
-		# 	# )
-		# 	self.fields['size'].label = "Размер"
-		# 	self.fields['condition'].label = "Состояние"
-		# elif self.lan == 'UA':
-		# 	self.fields['title'].label = "Назва"
-		# 	self.fields['title'].widget.attrs['placeholder'] = 'Пара слів про айтем'
-		# 	self.fields['description'].label = "Опис"
-		# 	self.fields['description'].widget.attrs['placeholder'] = 'Детально опиши айтем'
-		# 	self.fields['price'].label = "Ціна"
-		# 	self.fields['price'].widget.attrs['placeholder'] = 'Введи ціну в {currency}'.format(currency=currency_placeholder)
-		# 	self.fields['brand'].label = "Бренд"
-		# 	self.fields['brand'].widget.attrs['placeholder'] = 'Вибери бренд'
-		# 	self.fields['sex'].label = "Гендер"
-		# 	self.fields['sex'].widget.attrs['placeholder'] = 'Вибери гендер'
-		# 	self.fields['undercategory'].label = "Категорія"
-		# 	self.fields['undercategory'].widget.attrs['placeholder'] = 'Вибери категорію'
-		# 	self.fields['condition'].widget.attrs['placeholder'] = 'Вибери стан'
-		# 	self.fields['size'].widget.attrs['placeholder'] = 'Вибери розмір'
-		# 	self.fields['size'].label = "розмір"
-		# 	self.fields['condition'].label = "Стан"
 
 
 		

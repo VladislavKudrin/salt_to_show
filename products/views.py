@@ -139,22 +139,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['report'] = 'Скарга?'
-		# 	context['size'] = 'Розмiр:'
-		# 	context['condition'] = 'Стан:'
-		# 	context['object_condition'] = product.condition.condition_ua
-		# 	context['description'] = 'Опис:'
-		# 	context['btn_title'] = 'Написати продавцю'
-		# 	context['authentic'] = 'Оригiнал'
-		# 	context['verified'] = 'Двухфакторна перевірка пройдена'
-		# 	context['fake'] = 'Фейк'
-		# 	context['checked_on'] = 'Перевірено'
-		# 	context['ai_checked'] = 'Перевірено ШI'
-		# 	context['to_be_approved'] = 'Пiсля перевірки экспертом айтем буде опублiкован'
-		# 	context['posted'] = 'Завантажено'
-		# 	context['ago'] = 'тому'
-		# else:
 		context['report'] = _('Report?')
 		context['size'] = _('Size:')
 		context['condition'] = _('Condition:')
@@ -272,21 +256,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				return JsonResponse(json_data)
 			return JsonResponse(json_data)
 		product_form = ImageForm(request)
-		# if self.request.session.get('language') == 'RU':
-		# 	context={
-		# 	'form': product_form,
-		# 	'button': 'Залить',
-		# 	'title':'Добавить новый айтем',
-		# 	'form_id': form_id
-		# 	}
-		# elif self.request.session.get('language') == 'UA':
-		# 	context={
-		# 	'form': product_form,
-		# 	'button': 'Залити',
-		# 	'title':'Додати новий айтем',
-		# 	'form_id': form_id
-		# 	}
-		# else:
 		context={
 		'form': product_form,
 		'button': pgettext('Upload_Item_create', 'Create'),
@@ -317,11 +286,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		from_email = settings.DEFAULT_FROM_EMAIL
 		to_email = settings.DEFAULT_FROM_EMAIL
 		send_mail(subject, message, from_email, [to_email], fail_silently=False)
-
-		# if request.session.get('language')=='RU':
-		# 	msg = 'Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку подтвердит модератор и айтем будет выставлен на продажу'
-		# # elif request.session.get('language')=='UA':
-		# else: 
 		msg = _('Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published')
 		messages.add_message(request, messages.SUCCESS, msg)
 
@@ -422,11 +386,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		context['conditions'] = Condition.objects.all()
 		context['sizes'] = Size.objects.all()
 		context['object_slug'] = slug 
-		# if self.request.session.get('language') == 'RU':
-		# 	context['title'] = 'Редактировать'
-		# 	context['button']='Сохранить' 
-		# elif self.request.session.get('language') == 'UA':
-		# 	context['title'] = 'Редагувати'
 		# 	context['button']='Зберегти' 
 		# else:
 		context['title'] = _('Update')
@@ -455,18 +414,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 			# 	'errors':json.dumps(form.errors)
 			# 	}
 			return JsonResponse({'error':form.errors})
-		if self.request.session.get('language') == 'RU':
-			context={
-			'form': form,
-			'button': 'Залить',
-			'title':'Добавить новый айтем',
-			}
-		else:
-			context={
-			'form': form,
-			'button': 'Create',
-			'title':'Add a new product'
-			}
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(self.request, 'products/product-create.html', context)
 
@@ -522,7 +469,6 @@ def product_delete(request):
 			try:
 				product_obj = Product.objects.get(id=product_id, user = user)
 			except Product.DoesNotExist:
-				print("Show message to user!")
 				return redirect("accounts:home")
 			if product_obj.user == user:
 				product_obj.delete()
@@ -555,24 +501,14 @@ def product_report(request):
 	# 	user_wishes_exist = user_wishes.filter(product=product_obj)
 		reported_product = ReportedProduct.objects.filter(user = user, product = product_obj)
 		if reported_product.exists():
-			if request.session.get('language')=='RU':
-				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы уже получили твою жалобу.')
-			elif request.session.get('language')=='UA':
-				messages.add_message(request, messages.SUCCESS, 'Дякуємо. Ми вже отримали твою скаргу.')
-			else:
-				messages.add_message(request, messages.SUCCESS, "Thank you. We have already received your report.")
+			messages.add_message(request, messages.SUCCESS, _("Thank you. We have already received your report."))
 	# 		user.wishes.remove(product_obj)
 	# 		user_wishes_exist.first().delete()
 	# 		added = False
 	# 		user_wishes_exist=user_wishes.count()
 		else: 
 			ReportedProduct.objects.create(user=user, product=product_obj)
-			if request.session.get('language')=='RU':
-				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы проверим этот айтем мануально.')
-			elif request.session.get('language')=='UA':
-				messages.add_message(request, messages.SUCCESS, 'Дякуємо. Ми перевіримо цей айтем мануально.')
-			else:
-				messages.add_message(request, messages.SUCCESS, "Thank you. We will check this item manually.")
+			messages.add_message(request, messages.SUCCESS, _("Thank you. We will check this item manually."))
 	# 		added = True
 	# 	if request.is_ajax():
 	# 		json_data={
@@ -591,13 +527,7 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Обнаруженные фейки:'
-		elif self.request.session.get('language') == 'UA':
-			context['title'] = 'Виявлені фейки:'
-		else:
-			context['title'] = 'Detected fakes:'
-		return context
+		context['title'] = 'Detected fakes:'
 
 
 
