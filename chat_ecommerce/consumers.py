@@ -133,8 +133,11 @@ class ChatConsumer(AsyncConsumer):
 
 	@database_sync_to_async
 	def update_notification_status(self, user, thread):
+		print('UPDATENOTO')
+		print(user)
 		unread_notifications = Notification.objects.filter(user=user, read=False).filter(message__thread=thread)
 		if unread_notifications:
+			# print('HUILALLAA')
 			# print('There are some unread notifications')
 			# print(unread_notifications)
 			# print('yes')  # If am this I am getting this object (thread) and I am this opponent user - Notification.read = True 

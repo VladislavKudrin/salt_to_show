@@ -3,12 +3,16 @@ from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
+from datetime import datetime, timezone
+from django.core.mail import send_mail
 
 from django.views.generic import DetailView, ListView
 
 from .forms import ComposeForm
 from .models import Thread, ChatMessage, Notification
 from accounts.models import User
+from ecommerce import settings
+
 
 def set_chat_timezone(request):
     print('wtf')
@@ -31,10 +35,15 @@ class InboxView(LoginRequiredMixin, ListView):
         context['chats'] = Thread.objects.by_recent_message(me)
         if self.request.session.get('language') == 'RU':
             context['title'] = 'Выберите собеседника, чтобы начать диалог'
+            context['no_dialogs'] = 'Похоже, у тебя еще нет собеседников. Попробуй кому-то написать!'
         elif self.request.session.get('language') == 'UA':
             context['title'] = 'Виберіть співрозмовника, щоб почати діалог'
+            context['no_dialogs'] = 'У тебе поки що немає діалогів. Спробуй комусь написати!'
         else:
             context['title'] = 'Please select a chat to start conversation'
+            context['no_dialogs'] = 'You have no dialogs yet. Try to text someone!'
+        if not threads_with_unred:
+            context['title'] = ''
         return context
 
 
@@ -50,16 +59,16 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         return Thread.objects.by_recent_message(self.request.user)
     def get_object(self):
         other_username  = self.kwargs.get("username")
+        other_user = User.objects.filter(username=other_username)[0]
         obj, created    = Thread.objects.get_or_new(self.request.user, other_username)
+        if obj == None:
+            raise Http404
         me = self.request.user
         unread_notifications = Notification.objects.filter(user=me, read=False).filter(message__thread=obj) #unred notifications for this specific thread
-        # threads_with_unred_notifications = Thread.objects.by_user(me).filter(chatmessage__notification__read='False')
         if unread_notifications:  
             for i in range(len(unread_notifications)):
                 unread_notifications[i].read = True
                 unread_notifications[i].save()
-        if obj == None:
-            raise Http404
         return obj
 
     def get_context_data(self, **kwargs):
@@ -99,7 +108,13 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         message = form.cleaned_data.get("message")
         msg_created = ChatMessage.objects.create(user=user, thread=thread, message=message)
         notification_created = Notification.objects.create(message=msg_created, user=other_username, read=False)
+        # CHECK FOR UNREAD NOTIFICATIONS OF OTHER USER THAT OLDER THAN 10 min
+        # print('hui', Notification.objects.filter(user=other_username))
+        #email_sent = send_email_chat(recepient=other_username, message=msg_created)
         return super().form_valid(form)
+
+
+
 
 
 

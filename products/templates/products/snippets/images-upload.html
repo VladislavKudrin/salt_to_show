@@ -111,7 +111,7 @@
   <input type="hidden" name="counter" value="{{ forloop.counter }}">
   <li class="ui-widget-content ui-corner-tr" id="update-img-{{ forloop.counter }}">
     <input type="hidden" name='image-id' value='{{ image.unique_image_id }}'>
-    <img src="{{ image.image.url }}" width="96" height="72">
+    <img src="{{ image.image.url }}" style="object-fit: contain;height: 100px;width: 100px;align-items: center;">
     <a class="mt-1 ui-icon-rotate rotateItem"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a>
   </li>
    {% endfor %}
@@ -125,9 +125,10 @@
   <style>
 #gallery { float: left; width: 65%; min-height: 5em; }
   .gallery.custom-state-active { background: #eee; }
-  .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
-  .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
-  .gallery li a { float: right; }
+  .gallery li { float: left; width: 100px; height:125px; margin: .2em; text-align: center; }
+  .gallery li h5 { margin: 1em; cursor: move; }
+  .ui-icon-trash { float: right; }
+  .ui-icon-rotate{ float: left; }
   .gallery li a.ui-icon-zoomin { float: left; }
   .gallery li img { width: 100%; cursor: move; }
  

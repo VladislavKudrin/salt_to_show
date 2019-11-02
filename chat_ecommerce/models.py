@@ -83,9 +83,9 @@ class ChatMessage(models.Model):
         return f'{self.message}'
 
 class Notification(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    message = models.ForeignKey(ChatMessage, on_delete=models.CASCADE)
-    read = models.BooleanField(default=False)
+    user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    message     = models.ForeignKey(ChatMessage, on_delete=models.CASCADE)
+    read        = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.id}'

@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'rest_framework',
     'dj_pagination',
+    "django_cron",
 
     #our apps
     'chat_ecommerce',
@@ -324,4 +325,9 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
+CRON_CLASSES = [
+    "ecommerce.views.MyCronJob",
+    'django_cron.cron.FailedRunsNotificationCronJob',
+    # ...
+]
 

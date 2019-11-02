@@ -3,8 +3,8 @@ import string
 import os
 from .settings import BASE_DIR
 from categories.models import Brand
-
 from django.utils.text import slugify
+
 
 def random_string_generator_username():
     return str(random.randint(0, 99))
@@ -74,6 +74,11 @@ def unique_slug_generator(instance, new_slug=None):
                 )
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug
+
+
+
+
+
 
 
 # def create_brands(f):
