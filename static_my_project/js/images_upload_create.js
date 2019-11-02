@@ -134,7 +134,7 @@ function deleteRotateItem(item){
         $.each(files, 
             function(index, value){
             buttonImageUpload.attr('disabled', true)
-            imageContainer.append("<i class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner'></i>")
+            imageContainer.append("<i class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner' style='font-size: 1.5em;'></i>")
             })//each-displayfilesupload
         }//doUpload
         else{
@@ -186,7 +186,7 @@ function deleteRotateItem(item){
                 $.each(data.image,
                   function(index, value){
                     console.log('wdaw')
-                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce mt-1" href="#"></a><a class="mt-1 mr-5 ui-icon-rotate rotateItem"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
+                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
                   i++
                   })//eachfoto
 

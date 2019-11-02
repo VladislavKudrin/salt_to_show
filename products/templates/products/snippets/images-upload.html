@@ -1,4 +1,4 @@
-
+{% load static %}
 <script>
    $( function() {
  
@@ -123,9 +123,12 @@
 
 
   <style>
+  .ui-icon.ui-icon-trash.trash-custom-ecommerce{
+    margin: 0px !important;
+  }
 #gallery { float: left; width: 65%; min-height: 5em; }
   .gallery.custom-state-active { background: #eee; }
-  .gallery li { float: left; width: 100px; height:125px; margin: .2em; text-align: center; }
+  .gallery li { float: left; width: 100px; height:120px; margin: .2em; text-align: center; }
   .gallery li h5 { margin: 1em; cursor: move; }
   .ui-icon-trash { float: right; }
   .ui-icon-rotate{ float: left; }
@@ -136,6 +139,10 @@
   #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
   #trash h4 .ui-icon { float: left; }
   #trash .gallery h5 { display: none; }
+/*  .ui-icon{
+background-image: none !important;
+  }*/
+
  /* #sortable { list-style-type: none; padding: 0; width: 600px; }*/
 /*  #sortable-element{ margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center;border: 1px solid }*/
 

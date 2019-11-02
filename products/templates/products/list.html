@@ -39,7 +39,7 @@
 	margin: 0px;
 }
 .custom-select{
-	width: 40% !important;
+	width: 25% !important;
 
 }
 #btn-filters{
@@ -134,16 +134,16 @@ nav{
 <div class="sticky-top sticky-offset" id='sticky-offset' style="z-index: 1000">
 <hr class="trenn mb-2">
 <div class="row m-0">
-	<div class="col-6 col-md-4 text-left p-0">
+	<div class="col-6 col-md-6 text-left p-0">
 		<button hidden class="btn" hide='true' id='btn-filters'>
 			<i id="filter-icon" class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
 		</button>
 	</div>
-	<div class="col-4 text-center my-auto p-0 filters-desktop heading" id='result-text'>
+<!-- 	<div class="col-4 text-center my-auto p-0 filters-desktop heading" id='result-text'>
 		<b>{{ found }} <span class='items_count'>{{ object_list.paginator.count }}</span> {{ items }}</b>
-	</div>
+	</div> -->
 
-	<div class='col-6 col-md-4 text-right p-0'>
+	<div class='col-6 col-md-6 text-right p-0'>
 	<select class='input-for-filters custom-select custom-select-sm' name='sort' form='form_checkboxes'>
 	    <option value="" disabled selected>{{ sort_by }}</option>
 		<option value='new'>{{ new }}</option>
@@ -153,9 +153,9 @@ nav{
 	</div>	
 
 
-	<div class="col-12 text-left mt-2 p-0 text-center filters-mobile heading" id='result-text'>
+<!-- 	<div class="col-12 text-left mt-2 p-0 text-center filters-mobile heading" id='result-text'>
 		<b>{{ found }} <span class='items_count'>{{ object_list.paginator.count }}</span> {{ items }}</b>
-	</div>
+	</div> -->
 
 </div>
 <hr class="trenn mt-2">

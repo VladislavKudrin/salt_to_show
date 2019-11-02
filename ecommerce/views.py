@@ -247,7 +247,7 @@ class MyCronJob(CronJobBase):
 				subject,
 				txt_,
 				from_email,
-				[email, 'info@saltish.co'],
+				[email],
 				html_message=html_,
 				fail_silently=False, 
 				)
