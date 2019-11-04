@@ -38,7 +38,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
     
 
-ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com']
+ALLOWED_HOSTS = ['.saltish.co', 'salt-testserver.herokuapp.com']
 
 
 EMAIL_HOST = 'smtp.gmail.com'
