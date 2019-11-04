@@ -7,6 +7,8 @@ from addresses.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
 from ecommerce.utils import unique_order_id_generator
+from chat_ecommerce.models import Thread
+from products.models import Product
 
 
 ORDER_STATUS_CHOICES = (
@@ -47,21 +49,22 @@ class OrderManager(models.Manager):
 		return self.get_queryset().by_request(request)
 
 class Order(models.Model):
-	order_id 			= models.CharField(max_length=120, blank = True)
-	billing_profile 	= models.ForeignKey(BillingProfile, null=True, blank=True)
-	shipping_address	= models.ForeignKey(Address, related_name="shipping_address", null=True, blank=True)
-	billing_address		= models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
-	shipping_address_final    = models.TextField(blank=True, null=True)
-	billing_address_final     = models.TextField(blank=True, null=True)
-	cart 				= models.ForeignKey(Cart)
-	status 				= models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
-	shipping_total 		= models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
-	total 				= models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-	active				= models.BooleanField(default=True)
-	objects 			= OrderManager()
-	timestamp 			= models.DateTimeField(auto_now_add=True)
-	updated 			= models.DateTimeField(auto_now=True)
-
+	order_id               = models.CharField(max_length=120, blank = True)
+	billing_profile        = models.ForeignKey(BillingProfile, null=True, blank=True)
+	shipping_address       = models.ForeignKey(Address, related_name="shipping_address", null=True, blank=True)
+	billing_address        = models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
+	shipping_address_final = models.TextField(blank=True, null=True)
+	billing_address_final  = models.TextField(blank=True, null=True)
+	# cart                 = models.ForeignKey(Cart)
+	product                = models.OneToOneField(Product, blank=True, null=True)
+	status                 = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
+	shipping_total         = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
+	total                  = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+	active                 = models.BooleanField(default=True)
+	objects                = OrderManager()
+	timestamp              = models.DateTimeField(auto_now_add=True)
+	updated                = models.DateTimeField(auto_now=True)
+	thread                 = models.OneToOneField(Thread, null=True, blank=True)
 
 	def __str__(self):
 		return self.order_id

@@ -3,12 +3,17 @@ from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
+from django.conf import settings
 
 from django.views.generic import DetailView, ListView
 
 from .forms import ComposeForm
 from .models import Thread, ChatMessage, Notification
 from accounts.models import User
+from products.models import Product
+
+
+
 
 def set_chat_timezone(request):
     print('wtf')
@@ -44,7 +49,10 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         return Thread.objects.by_recent_message(self.request.user)
     def get_object(self):
         other_username  = self.kwargs.get("username")
-        obj, created    = Thread.objects.get_or_new(self.request.user, other_username)
+        product_slug  = self.kwargs.get("product_id")
+        # product = Product.objects.filter(slug=product_slug, active = True)#authentic = authentic
+        obj, created = Thread.objects.get_or_new(user = self.request.user, other_username = other_username, product_slug = product_slug)
+
         me = self.request.user
         unread_notifications = Notification.objects.filter(user=me, read=False).filter(message__thread=obj) #unred notifications for this specific thread
         # threads_with_unred_notifications = Thread.objects.by_user(me).filter(chatmessage__notification__read='False')
