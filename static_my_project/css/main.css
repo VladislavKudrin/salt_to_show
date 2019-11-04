@@ -688,6 +688,12 @@ border: 2px red solid;
 
 
 
+.ui-widget-content .ui-corner-tr{
+  height: 100px;
+  width: 100px;
+  border: 1px solid #efefef;
+}
+
 
 
 

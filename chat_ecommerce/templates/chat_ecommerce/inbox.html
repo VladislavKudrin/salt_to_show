@@ -16,9 +16,10 @@ html, body {
 
 @media only screen and (max-width: 768px) { 
 
-  .heading{
-  	display: none
-  }
+
+ .col-to-hide{
+ 	display: none
+ }
 
  
   .avatar-not-skipped {
@@ -219,7 +220,6 @@ button:focus {
 
 
 <div class='container-fluid m-0 p-0'>
-
 	<div class='row'>
 
 
@@ -297,13 +297,19 @@ button:focus {
 								</div>
 							</a></li>
 						{% endif %}
+					{% empty %}
+						<div class='row text-center align-items-center p-2' style='height: 70vh;'>
+							<div class='col ' style="color:#aeacac; font-size: 17px">
+							{{ no_dialogs }}
+							</div>
+						</div>
 					{% endfor %}
 				</ul>
 			</div>
 		</div>
                   
                    
-<div class='col-7 heading col-md-9' style="color:#aeacac; background-image: url('{% static 'img/worn_dots.png' %}')">
+<div class='col-7 heading col-to-hide col-md-9' style="color:#aeacac; background-image: url('{% static 'img/worn_dots.png' %}')">
 	<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
 	</div>
 	<div id="inbox-text" class='row text-center align-items-center'>

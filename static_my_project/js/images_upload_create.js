@@ -80,6 +80,7 @@ if (currentPath.indexOf("create") != -1){
 function deleteRotateItem(item){
     item.on("click", 
     function(event){
+        console.log('rotate')
         var $item = $(this),
         $target = $(event.target);
         if ($target.is("a.ui-icon-trash")) {
@@ -100,7 +101,8 @@ function deleteRotateItem(item){
                 }//error
             })//ajax for delete
     }//if trash
-    if ($target.is("i.rotateItem")) {
+    if ($target.is("svg.rotateItem")) {
+        console.log('here')
             event.preventDefault()
             var rotatedTimes = $item.find("[name='rotateTimes']").val()
             rotatedTimes = parseInt(rotatedTimes) + 1
@@ -132,7 +134,7 @@ function deleteRotateItem(item){
         $.each(files, 
             function(index, value){
             buttonImageUpload.attr('disabled', true)
-            imageContainer.append("<i class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner'></i>")
+            imageContainer.append("<i class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner' style='font-size: 1.5em;'></i>")
             })//each-displayfilesupload
         }//doUpload
         else{
@@ -152,14 +154,18 @@ function deleteRotateItem(item){
                 if ($('.image').length==0){
                     if(languageOption=='RU'){
                         $('#id_image').addClass('is-invalid')
-                        $('#id_image').after('<p class="invalid-feedback image"><strong>Слишком много фотографий. Максимальное колличество - '+ imagesUploadLimit.val() +'</strong></p>')}//if more than 8 one time
+                        $('#id_image').after('<p class="invalid-feedback image"><strong>Многовато фотографий! Максимальное колличество - '+ imagesUploadLimit.val() +'</strong></p>')//if more than 8 one time
                     }//if ru
+                    else if (languageOption=='UA'){
+                        $('#id_image').addClass('is-invalid')
+                        $('#id_image').after('<p class="invalid-feedback image"><strong>Занадто багато фотографій! Максимальна кiлькiсть - '+ imagesUploadLimit.val() +'</strong></p>')//if more than 8 one time
+                    }//if ua
                     else{
                         $('#id_image').addClass('is-invalid')
                         $('#id_image').after('<p class="invalid-feedback image"><strong>Too many images. Should be less than '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
                     }//if not ru
                 return console.log('hellow')
-            }//ifmorethan8
+            }}//ifmorethan8
             displayUploading(myFiles, true)
             $.each(myFiles, 
             function(index, value){
@@ -179,7 +185,8 @@ function deleteRotateItem(item){
                 displayUploading(myFiles, false)
                 $.each(data.image,
                   function(index, value){
-                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '" width="96" height="72"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce mt-1" href="#"></a><a class="mt-1 mr-5 ui-icon-rotate rotateItem"><i class="rotateItem fas fa-xs fa-sync-alt"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
+                    console.log('wdaw')
+                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
                   i++
                   })//eachfoto
 
@@ -303,7 +310,7 @@ if (currentPath.indexOf("update") != -1){
     function(event){
         var $item = $(this),
         $target = $(event.target);
-        if ($target.is("i.rotateItem")) {
+        if ($target.is("svg.rotateItem")) {
             event.preventDefault()
             var rotatedTimes = $item.find("[name='rotateTimes']").val()
             rotatedTimes = parseInt(rotatedTimes) + 1

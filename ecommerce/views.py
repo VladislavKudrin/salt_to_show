@@ -7,8 +7,10 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic import TemplateView
-
-
+from django_cron import CronJobBase, Schedule
+from chat_ecommerce.models import Notification
+from datetime import datetime, timezone, timedelta
+from accounts.models import User
 from django.db.models import Q
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from .mixins import RequestFormAttachMixin
@@ -123,7 +125,7 @@ def home_page(request):
 	context = {}
 	context['qs'] = qs
 	context['liked'] = most_liked
-	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang', 'Boss']
+	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Armani', 'C.P. Company', 'Comme des Garcons', 'Calvin Klein', 'Balmain', 'Alexander Wang']
 	to_send = []
 	for i in brands: 
 		to_send.append(Brand.objects.filter(brand_name=i).first())
@@ -202,50 +204,53 @@ def home_page(request):
 
 	return render(request, "home_page.html", context)
 
-# def contact_page(request):
-# 	contact_form=ContactForm(request or None)
-# 	if request.POST:
-# 		contact_form=ContactForm(request.POST or None)
-# 	context = { 
-# 		'user_email':request.user.email,
-# 		'title':'Contact page',
-# 		'form':contact_form
-# 	}
 
-# 	if contact_form.is_valid():
-# 		context = {
-						
-# 						'email':contact_form.cleaned_data.get('email'),
-# 						'content':contact_form.cleaned_data.get('content'),
-# 						'sender_email':request.user
+class MyCronJob(CronJobBase):
+	RUN_EVERY_MINS = 0.01 # every 2 hours
+	MIN_NUM_FAILURES = 3
+	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+	code = 'my_app.my_cron_job'    # a unique code
 
-# 				}
-# 		txt_ = get_template("contact/email/contact_message.txt").render(context)
-# 		html_ = get_template("contact/email/contact_message.html").render(context)
-# 		subject = str(contact_form.cleaned_data.get('email'))+' User Message'
-# 		from_email = settings.DEFAULT_FROM_EMAIL
-# 		recipient_list = [from_email]
-# 		sent_mail=send_mail(
-# 					subject,
-# 					txt_,
-# 					from_email,
-# 					recipient_list,
-# 					html_message=html_,
-# 					fail_silently=False, 
+	def do(self):
+		now = datetime.now(timezone.utc)
+		time_from = now - timedelta(hours=8)
+		# time_from = now # for testing 
+		unread_notif = Notification.objects.filter(read=False, message__timestamp__lte=time_from)
+		
 
-# 					)
-# 		if request.is_ajax():
-# 			return JsonResponse({"message":"Thank you"})
+		# ---- USER QUERYSET TO SEND EMAIL NOTIFICATIONS -----
+		list_of_ids = []
+		for i in unread_notif.values('user').distinct():
+			my_id = list(i.values())[0]
+			list_of_ids.append(my_id)
+		users = User.objects.filter(pk__in=list_of_ids)
 
-# 	if contact_form.errors:
-# 		errors = contact_form.errors.as_json()
-# 		if request.is_ajax():
-# 			return HttpResponse(errors, status=400, content_type='application/json')
-# 	# if request.method =="POST":
-# 	# 	print(request.POST)
-# 	return render(request, "contact/contact.html", context)
+		# ----  SEND EMAIL NOTIFICATIONS -----
+		subject = 'У тебя есть новые сообщения'
+		from_email = settings.DEFAULT_FROM_EMAIL
+		context = {}
 
-
+		for user in users:
+			email = user.email
+			notif = unread_notif.filter(user=user)
+			context['number_of_notif'] = notif.count()
+			last_message = notif.last().message
+			last_message_text = last_message.message
+			last_message_from = last_message.user.username
+			last_message_timestamp = last_message.user.timestamp
+			context['last_message_text'] = last_message_text
+			context['last_message_from'] = last_message_from
+			context['last_message_timestamp'] = last_message_timestamp
+			txt_ = get_template("registration/emails/notif.txt").render(context)
+			html_ = get_template("registration/emails/notif.html").render(context)
+			sent_mail=send_mail(
+				subject,
+				txt_,
+				from_email,
+				[email],
+				html_message=html_,
+				fail_silently=False, 
+				)
 
 
 

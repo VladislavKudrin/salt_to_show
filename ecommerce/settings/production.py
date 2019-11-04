@@ -37,7 +37,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
     
-ALLOWED_HOSTS = ['salt-testserver.herokuapp.com']
+
+ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com']
+
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'info@saltish.co' 
@@ -76,6 +78,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'rest_framework',
     'dj_pagination',
+    "django_cron",
 
     #our apps
     'chat_ecommerce',
@@ -254,7 +257,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-DEFAULT_LANGUAGE_PREF = 'EN'
+DEFAULT_LANGUAGE_PREF = 'RU'
 
 
 
@@ -296,7 +299,7 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATA_UPLOAD_MAX_MEMORY_SIZE = 500000000 # value in bytes
@@ -334,5 +337,9 @@ PAGINATION_SETTINGS = {
 }
 
 
-
+CRON_CLASSES = [
+    "ecommerce.views.MyCronJob",
+    'django_cron.cron.FailedRunsNotificationCronJob',
+    # ...
+]
 
