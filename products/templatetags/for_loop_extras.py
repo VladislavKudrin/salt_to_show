@@ -11,7 +11,10 @@ def to_next_path(value):
 		link = '?' + link
 		return link 	
 	return ''
-
+@register.filter
+def to_clean_path(value):
+	print(value[3:])
+	return value
 
 @register.filter
 def index(array, index):

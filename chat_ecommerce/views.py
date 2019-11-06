@@ -3,15 +3,19 @@ from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
+
 from datetime import datetime, timezone
 from django.core.mail import send_mail
-
+from django.conf import settings
 from django.views.generic import DetailView, ListView
 
 from .forms import ComposeForm
 from .models import Thread, ChatMessage, Notification
 from accounts.models import User
-from ecommerce import settings
+
+from products.models import Product
+
+
 
 
 def set_chat_timezone(request):
@@ -33,17 +37,6 @@ class InboxView(LoginRequiredMixin, ListView):
         # Причем указывыаем просто  названия моделей.
         context['threads_with_unred'] = threads_with_unred
         context['chats'] = Thread.objects.by_recent_message(me)
-        if self.request.session.get('language') == 'RU':
-            context['title'] = 'Выберите собеседника, чтобы начать диалог'
-            context['no_dialogs'] = 'Похоже, у тебя еще нет собеседников. Попробуй кому-то написать!'
-        elif self.request.session.get('language') == 'UA':
-            context['title'] = 'Виберіть співрозмовника, щоб почати діалог'
-            context['no_dialogs'] = 'У тебе поки що немає діалогів. Спробуй комусь написати!'
-        else:
-            context['title'] = 'Please select a chat to start conversation'
-            context['no_dialogs'] = 'You have no dialogs yet. Try to text someone!'
-        if not threads_with_unred:
-            context['title'] = ''
         return context
 
 
@@ -59,10 +52,9 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         return Thread.objects.by_recent_message(self.request.user)
     def get_object(self):
         other_username  = self.kwargs.get("username")
-        other_user = User.objects.filter(username=other_username)[0]
-        obj, created    = Thread.objects.get_or_new(self.request.user, other_username)
-        if obj == None:
-            raise Http404
+        product_slug  = self.kwargs.get("product_id")
+        # product = Product.objects.filter(slug=product_slug, active = True)#authentic = authentic
+        obj, created = Thread.objects.get_or_new(user = self.request.user, other_username = other_username, product_slug = product_slug)
         me = self.request.user
         unread_notifications = Notification.objects.filter(user=me, read=False).filter(message__thread=obj) #unred notifications for this specific thread
         if unread_notifications:  

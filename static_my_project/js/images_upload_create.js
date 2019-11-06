@@ -34,6 +34,7 @@ $.ajax({
 
 
 //create
+var authenticityCheckBtn = $('#btn_authenticity_check').html()
 var currentPath = window.location.href
 if (currentPath.indexOf("create") != -1){
     var languageOption = $('#language').val()
@@ -44,18 +45,17 @@ if (currentPath.indexOf("create") != -1){
     console.log(action_order)
     var buttonImageUpload = $('.image-upload-button')
     var imagesUploadLimit = $('#images-upload-limit')
-    buttonImageUpload.hide()
-    if (languageOption=='RU'){
-        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Выбрать</label>')
-    }//if rus
-    else if (languageOption=='UA'){
-        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Вибрати</label>')
-    }//if rus
-    else {
-        buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Browse</label>')
-    }//if not rus
-
-     
+    // buttonImageUpload.hide()
+    // if (languageOption=='RU'){
+    //     buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Выбрать</label>')
+    // }//if rus
+    // else if (languageOption=='UA'){
+    //     buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Вибрати</label>')
+    // }//if rus
+    // else {
+    //     buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Browse</label>')
+    // }//if not rus
+    var errorTooManyImages = $('#error_too_many_images').html()
     var uploadUrl = formSubmit.attr('image_upload_url')
     var deleteImageUrl = formSubmit.attr('image_delete_url')
     var rotateImageUrl = formSubmit.attr('image_rotate_url')
@@ -152,20 +152,11 @@ function deleteRotateItem(item){
             var myFiles = $(this)[0].files;
             if (myFiles.length>imagesUploadLimit.val()){
                 if ($('.image').length==0){
-                    if(languageOption=='RU'){
-                        $('#id_image').addClass('is-invalid')
-                        $('#id_image').after('<p class="invalid-feedback image"><strong>Многовато фотографий! Максимальное колличество - '+ imagesUploadLimit.val() +'</strong></p>')//if more than 8 one time
-                    }//if ru
-                    else if (languageOption=='UA'){
-                        $('#id_image').addClass('is-invalid')
-                        $('#id_image').after('<p class="invalid-feedback image"><strong>Занадто багато фотографій! Максимальна кiлькiсть - '+ imagesUploadLimit.val() +'</strong></p>')//if more than 8 one time
-                    }//if ua
-                    else{
-                        $('#id_image').addClass('is-invalid')
-                        $('#id_image').after('<p class="invalid-feedback image"><strong>Too many images. Should be less than '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
-                    }//if not ru
+                    $('#id_image').addClass('is-invalid')
+                    $('#id_image').after('<p style="position:relative!important" class="invalid-feedback image"><strong>' + errorTooManyImages +' '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
                 return console.log('hellow')
-            }}//ifmorethan8
+                }//if nothing under images errors
+            }//ifmorethan8
             displayUploading(myFiles, true)
             $.each(myFiles, 
             function(index, value){
@@ -203,21 +194,12 @@ function deleteRotateItem(item){
     })//change-buttonImageUpload
 
 
-    function displayCreating(submitBtn, defaultText, doSubmit){
-        console.log('')
+    function displayCreating(submitBtn, authenticityCheckBtn, defaultText, doSubmit){
       if (doSubmit){
         submitBtn.addClass("disabled")
         submitBtn.attr("disabled", true)
-        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check...")
-        if(languageOption=='RU'){
-            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Проверка на оригинальность...")
-        }//if rus
-        else if (languageOption=='UA'){
-            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Перевірка на оригінальність...")
-        }//if rus
-        else{
-            submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Authenticity check...")
-        }//if not rus
+        console.log(authenticityCheckBtn)
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> " + authenticityCheckBtn)
         } //if dosubmit 
       else {
         submitBtn.removeClass("disabled")
@@ -234,7 +216,7 @@ function deleteRotateItem(item){
     var elements = $('#example-form-1 ul li')
     var keyArray = []
     var rotateArray = []
-    displayCreating(createFormSubmitBtn, "",true)
+    displayCreating(createFormSubmitBtn, authenticityCheckBtn, "",true)
     $.each(elements,
     function(index, value){
         var attr = $(value).find("[name='qq-file-id']").val()
@@ -242,9 +224,6 @@ function deleteRotateItem(item){
         keyArray.push(attr)  
         rotateArray.push(rotatedImageTimes)
     })//eacharray
-    console.log(rotateArray)
-    console.log(keyArray)
-    console.log('wpwowowo')
     $.ajax({
     url: action,
     method:'POST',
@@ -255,17 +234,8 @@ function deleteRotateItem(item){
         if(data['error']) {
         $.each(data['error'],
             function(index, value){
-                var btnText = 'Залить' 
-                if(languageOption=='RU'){
-                btnText = 'Залить'
-                }//if rus
-                else if (languageOption=='UA'){
-                btnText = 'Залити'
-                }//if rus
-                else{
-                btnText = 'Create'
-                }//if not rus
-                displayCreating(createFormSubmitBtn, btnText,false)
+                var btnText = createFormSubmitBtnTxt
+                displayCreating(createFormSubmitBtn, authenticityCheckBtn, btnText,false)
                 if ($('.'+index).length==0){
                     $('#id_' + index).addClass('is-invalid')
                     $('#id_' + index).after("<p class='m-0 invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
@@ -273,13 +243,11 @@ function deleteRotateItem(item){
             })//each
             }//if there are errors
         else {
-            console.log('here')
           $.ajax({
             url: action_order,
             method:'POST',
             data: {'data[]':keyArray, 'slug':data.slug, 'rotate[]':rotateArray},
             success:function(data){
-              console.log('successsssss')
                 },//success second ajax
             error:function(errorData){
                 }//error second ajax
@@ -288,8 +256,6 @@ function deleteRotateItem(item){
                 }//else
             },//success
     error:function(errorData){
-        console.log('error')
-        console.log(errorData)
         }//error_1
     })//ajax
     })//submit
@@ -374,7 +340,7 @@ if (currentPath.indexOf("update") != -1){
         if(data['error']) {
         $.each(data['error'],
                 function(index, value){
-                    var btnText = 'Сохранить' 
+                    var btnText = createFormSubmitBtnTxt
                     if(languageOption=='RU'){
                     btnText = 'Сохранить'
                     }//if rus

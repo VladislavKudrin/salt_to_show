@@ -1,0 +1,1012 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-28 19:02+0000\n"
+"PO-Revision-Date: 2019-10-29 22:45+0100\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.2.4\n"
+
+#: accounts/forms.py:37
+#, python-brace-format
+msgid ""
+"This email does not exist or already acivated. Would you like to <a href="
+"\"{link}\">register</a>?"
+msgstr "Такого мейлу не існує. Хочеш <a href={link}>зареєструватися</a>?"
+
+#: accounts/forms.py:85
+msgid "Only alphanumeric characters are allowed"
+msgstr "Юзернейм повинен містити тільки латинські символи або цифри"
+
+#: accounts/forms.py:86
+msgid "Username"
+msgstr "Юзернейм"
+
+#: accounts/forms.py:87
+msgid "Your username"
+msgstr "Свій юзернейм"
+
+#: accounts/forms.py:89
+msgid "Region"
+msgstr "Регіон"
+
+#: accounts/forms.py:90
+msgid "Name"
+msgstr "Ім’я та прізвище"
+
+#: accounts/forms.py:91
+msgid "Your full name"
+msgstr "Повне ім’я"
+
+#: accounts/forms.py:92
+msgid "Cannot change email"
+msgstr "Не можна змінити мейл"
+
+#: accounts/forms.py:93
+msgid "Recieve marketing email?"
+msgstr "Отримувати розсилку?"
+
+#: accounts/forms.py:94
+msgid "Profile photo"
+msgstr "Фото профілю"
+
+#: accounts/forms.py:95
+msgctxt "profile_update"
+msgid "Update"
+msgstr "Оновити"
+
+#: accounts/forms.py:99 accounts/forms.py:101
+msgid "-- Please select your region --"
+msgstr "— Виберіть свій регіон —"
+
+#: accounts/forms.py:144
+msgid "You must select a region"
+msgstr "Потрібно вибрати регіон"
+
+#: accounts/forms.py:222
+msgid "Min 8 characters, digits + numbers"
+msgstr "Мінімум 8 символів та цифр"
+
+#: accounts/forms.py:223 ecommerce/forms.py:11
+msgid "Your Email"
+msgstr "Твій мейл"
+
+#: accounts/forms.py:231
+#, python-brace-format
+msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
+msgstr "<a href={resend_link}> (Кликни, щоб вислати підтвердження ще раз</a>.)"
+
+#: accounts/models.py:274
+msgid "1-Click Account Verification"
+msgstr "Активація аккаунту одним кліком"
+
+#: accounts/templates/accounts/profile.html:52
+msgid "Items:"
+msgstr "Айтеми:"
+
+#: accounts/templates/accounts/profile.html:89
+#: accounts/templates/accounts/wish-list.html:57
+#: products/templates/products/user-history.html:65
+#: products/templates/products/user-list.html:59
+msgid "No items yet"
+msgstr "Поки що тут пусто"
+
+#: accounts/templates/accounts/snippets/begin-chat.html:3
+msgid "Update profile"
+msgstr "Оновити аккаунт"
+
+#: accounts/templates/accounts/snippets/begin-chat.html:6
+#: accounts/templates/accounts/snippets/begin-chat.html:8 products/views.py:163
+msgid "Contact seller"
+msgstr "Зв’язатися с продавцем"
+
+#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:64
+msgid "Submit"
+msgstr "Надіслати"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:7
+msgid "Choose your region"
+msgstr "Вибрати регіон"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:22
+msgid "Save changes"
+msgstr "Зберегти зміни"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:23
+msgid "Close"
+msgstr "Закрити"
+
+#: accounts/templates/accounts/wish-list.html:24
+msgid "Wishlist:"
+msgstr "Улюблене:"
+
+#: accounts/views.py:101 accounts/views.py:234 accounts/views.py:238
+msgid "You're in"
+msgstr "Ти на сайті"
+
+#: accounts/views.py:119
+#, python-brace-format
+msgid ""
+"Your email has already been confirmed. Do you need to <a href="
+"\"{link}\">reset your password</a>?"
+msgstr ""
+"Ти вже підтвердив/підтвердила свій мейл. <a href={link}>Скинути пароль</a>?"
+
+#: accounts/views.py:137
+msgid "Activation link was sent. Check your Email!"
+msgstr "Активація відправлена. Перевір пошту!"
+
+#: accounts/views.py:179
+msgid "Login | Register"
+msgstr "Увійти | Зареєструватися"
+
+#: accounts/views.py:180
+msgid "Or"
+msgstr "Або"
+
+#: accounts/views.py:181
+msgid "Forgot password?"
+msgstr "Забув/забула пароль?"
+
+#: accounts/views.py:199
+msgid "Please check your email to confirm your account. "
+msgstr "Будь ласка, перевір свою пошту, щоб підтвердити аккаунт. "
+
+#: accounts/views.py:208
+msgid "Email not confirmed. "
+msgstr "Мейл не підтверджений. "
+
+#: accounts/views.py:217
+msgid "The password seems to be wrong. Try again!"
+msgstr "Невірний пароль. Спробуй ще раз!"
+
+#: accounts/views.py:259
+msgid "Update your details"
+msgstr "Оновити аккаунт"
+
+#: accounts/views.py:260 templates/registration/password_change_form.html:24
+msgid "Change password"
+msgstr "Змінити пароль"
+
+#: accounts/views.py:261 products/views.py:433
+#: templates/registration/password_change_form.html:32
+msgid "Save"
+msgstr "Зберегти"
+
+#: accounts/views.py:262
+msgid "Logout"
+msgstr "Выйти"
+
+#: categories/templates/categories/snippets/filter-box.html:274
+#: products/forms.py:53
+msgid "Select a brand"
+msgstr "Обери бренд"
+
+#: categories/views.py:300 ecommerce/views.py:140
+msgid "Kids"
+msgstr "Діти"
+
+#: categories/views.py:301 ecommerce/views.py:141
+msgid "New"
+msgstr "Свiже"
+
+#: categories/views.py:302
+msgid "Hide Filters"
+msgstr "Сховати фільтри"
+
+#: categories/views.py:303
+msgid "Show Filters"
+msgstr "Показати фільтри"
+
+#: categories/views.py:304
+msgid "Found"
+msgstr "Знайдено"
+
+#: categories/views.py:305
+msgid "Items"
+msgstr "айтемов"
+
+#: categories/views.py:306
+msgid "Sort by"
+msgstr "Сортувати по"
+
+#: categories/views.py:307
+msgid "New first"
+msgstr "Спочатку новi"
+
+#: categories/views.py:308
+msgid "Low price first"
+msgstr "Спочатку дешеві"
+
+#: categories/views.py:309
+msgid "High price first"
+msgstr "Спочатку дорогі"
+
+#: categories/views.py:310 products/forms.py:60
+msgid "Gender"
+msgstr "Гендер"
+
+#: categories/views.py:311
+msgid "Type"
+msgstr "Тип"
+
+#: categories/views.py:312 products/forms.py:61
+msgid "Category"
+msgstr "Категорiя"
+
+#: categories/views.py:313
+msgid "All"
+msgstr "Усi"
+
+#: categories/views.py:314 products/forms.py:62
+msgid "Size"
+msgstr "Рoзмiр"
+
+#: categories/views.py:315 products/forms.py:63
+msgid "Condition"
+msgstr "Стан"
+
+#: categories/views.py:316 ecommerce/views.py:142 products/forms.py:20
+msgid "Brand"
+msgstr "Бренд"
+
+#: categories/views.py:317 products/forms.py:64
+msgid "Price"
+msgstr "Цiна"
+
+#: chat_ecommerce/templates/chat_ecommerce/inbox.html:312
+msgid "Please select a chat to start conversation"
+msgstr "Виберіть співрозмовника, щоб почати діалог"
+
+#: ecommerce/forms.py:17
+msgid "Your message"
+msgstr "Твій месседж"
+
+#: ecommerce/forms.py:18
+msgid "Content"
+msgstr "Зміст"
+
+#: ecommerce/views.py:39
+msgid "Bazar"
+msgstr "Базар"
+
+#: ecommerce/views.py:40
+msgid "Marketplace"
+msgstr "Маркетплейс"
+
+#: ecommerce/views.py:41
+msgid "No counterfeit"
+msgstr "Без фейків"
+
+#: ecommerce/views.py:42
+#, python-format
+msgid ""
+"What makes SALT different from others? Well, we have a zero-fake-policy "
+"here. Fakes make online shopping unbearable. The countterfeit industry in "
+"fashion is valued around $600 billion. While someone makes tons of money, "
+"the quality of shopping for the customer is deteriorating. But we love "
+"shopping. Probably even more than you. So we set up a very simple goal -  to "
+"make shopping as pleasant and safe as possible. Therefore, on SALT you can "
+"be 100% sure that you are buying a nice authentic piece."
+msgstr ""
+"Те, що відрізняє нас від інших: на SALT немає і ніколи не буде фейків. Фейки "
+"- це те, що робить онлайн-шопінг нестерпним. Індустрія підробок у сфері моди "
+"оцінюється в 600 млрд доларів. У той час, коли хтось заробляє величезні "
+"гроші, якість шопінгу для покупця погіршується. Але ми любимо шопінг. "
+"Напевно, навіть більше, ніж Ти. Нами рухає дуже проста мета зробити шопінг "
+"максимально приємним і безпечним. Тому на SALT ти можеш бути на 100% "
+"впевнена_ий, що здобуваєш оригінальну річ."
+
+#: ecommerce/views.py:43
+msgid "2-step-verification"
+msgstr "Двухфакторна верифікація"
+
+#: ecommerce/views.py:44
+msgid ""
+"SALT has two-factor product verification (sounds awesome, right?). In simple "
+"words, each item is checked exactly two times. The first one happens right "
+"after uploading. Just in a few seconds, our AI-model assigns a label to the "
+"product - fake or authentic. The model thinks fast and improves itself with "
+"each loaded item (neural networks and all that). And the second step is a "
+"thorough manual check performed by our experienced experts. Thanks to the "
+"two-factor verification of all items, no fake will get to SALT."
+msgstr ""
+"На SALT діє двухфакторна верифікація продукту (звучить круто, правда?). "
+"Простими словами, кожен айтем перевіряється рівно два рази. Перший - відразу "
+"після завантаження. За лічені секунди наша модель Штучного Інтелекту "
+"привласнює продукту лейбл - фейк або оригінал. Модель думає швидко і "
+"поліпшується з кожним завантаженим айтемом (нейронні сіточки і все таке). А "
+"другий крок - це ретельний мануальний чек, що виконується нашими "
+"досвідченими експертами. Завдяки двухфакторной верифікації продукту жоден "
+"фейк не потрапить на SALT."
+
+#: ecommerce/views.py:45
+msgid "Less is more"
+msgstr "Краще менше, та краще"
+
+#: ecommerce/views.py:46
+msgid ""
+"Simplicity is our core concept. And it's not only limited in minimalistic "
+"design and intuitive interface of SALT. We want both buyers and sellers to "
+"feel respected. Therefore, there is no and never will be annoying ads and "
+"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT "
+"is a community where designer and streetwear clothes take their second "
+"chance. The item finds its new owner without harming the environment. SALT "
+"acts as a modest mediator in this straightforward, but essential deal."
+msgstr ""
+"Простота - це наш основний концепт. І це стосується не тільки "
+"мінімалістичного дизайну та інтуїтивного інтерфейсу. Ми хочемо, щоб наших "
+"покупців і продавців поважали. Тому на SALT немає і ніколи не буде "
+"настирливої ​​реклами і платного просування. ніяких банерів, спливаючих вікон "
+"і преміум-акаунтів. SALT - це ком’юніті, де дизайнерська і вулична мода "
+"набуває другий шанс. Річ знаходить свого нового власника без шкоди "
+"навколишньому середовищу. SALT при цьому лише виконує скромну роль "
+"посередника в цій нехитрій угоді"
+
+#: ecommerce/views.py:63
+msgid "Contact us"
+msgstr "Зв’яжіться з нами"
+
+#: ecommerce/views.py:65
+msgid "Sending...."
+msgstr "Відправлення…."
+
+#: ecommerce/views.py:97
+msgid "Thank you"
+msgstr "Дякуємо"
+
+#: ecommerce/views.py:98
+msgid "Success"
+msgstr "Успiх"
+
+#: ecommerce/views.py:143
+msgid "Contribute to the sustainable clothes-circle."
+msgstr "Підтримуй круговорот одягу в природі."
+
+#: ecommerce/views.py:144
+msgid "Find your designer piece fast and safe."
+msgstr "Знайди свій брендовий айтем швидко та без фейків."
+
+#: ecommerce/views.py:145
+msgid "Safe"
+msgstr "Надійно"
+
+#: ecommerce/views.py:146
+msgid "Uploaded items are monitored 24/7/365. There are no fakes on SALT."
+msgstr "Завантажені речі перевіряються 24/7/365. На SALT немає фейків і кидал."
+
+#: ecommerce/views.py:147
+msgid "AI-Powered"
+msgstr "Сучасно"
+
+#: ecommerce/views.py:148
+msgid "We use Machine Learning to detect fakes in our catalogue."
+msgstr ""
+"Ми використовуємо Штучний Інтелект, щоб виключати підробки з нашого каталогу."
+
+#: ecommerce/views.py:149
+msgid "Simple"
+msgstr "Просто"
+
+#: ecommerce/views.py:150
+msgid "Our intuitive design was made with love to simplicity and minimalism."
+msgstr ""
+"Наш інтуїтивний дизайн розроблений з любов’ю до простоти i мінімалізму."
+
+#: ecommerce/views.py:151
+msgid "Read more"
+msgstr "Дізнайся більше"
+
+#: ecommerce/views.py:152
+msgid "Go to your profile"
+msgstr "Перейти в акаунт"
+
+#: ecommerce/views.py:153
+msgid "Join our community"
+msgstr "Приєднуйся"
+
+#: ecommerce/views.py:154
+msgid "Login | Registration"
+msgstr "Логін | Реєстрація"
+
+#: ecommerce/views.py:155
+msgid "Trending:"
+msgstr "У тренді:"
+
+#: ecommerce/views.py:156
+msgid "See all"
+msgstr "Показати всі"
+
+#: ecommerce/views.py:157
+msgid "Popular designers:"
+msgstr "Популярні бренди:"
+
+#: products/forms.py:50
+msgid "Some keywords about your item"
+msgstr "Пара слів про айтем"
+
+#: products/forms.py:51
+msgid "Describe your item in details"
+msgstr "Детально опиши айтем"
+
+#: products/forms.py:52
+msgid "Enter a price in "
+msgstr "Введи ціну в "
+
+#: products/forms.py:54
+msgid "Select a gender"
+msgstr "Вибери гендер"
+
+#: products/forms.py:55
+msgid "Select a category"
+msgstr "Вибери категорію"
+
+#: products/forms.py:56
+msgid "Select a size"
+msgstr "Вибери розмір"
+
+#: products/forms.py:57
+msgid "Select a condition"
+msgstr "Вибери стан"
+
+#: products/forms.py:59
+msgid "Title"
+msgstr "Название"
+
+#: products/forms.py:65
+msgid "Description"
+msgstr "Описание"
+
+#: products/forms.py:116
+msgid "Please, select a gender"
+msgstr "— Вибери гендер —"
+
+#: products/forms.py:129
+msgid "Please, select a valid category"
+msgstr "— Вибери категорію —"
+
+#: products/forms.py:146
+msgid "Please, select a valid size"
+msgstr "— Вибери розмір —"
+
+#: products/forms.py:158
+msgid "Please, select a condition"
+msgstr "— Вибери стан —"
+
+#: products/forms.py:172
+msgid "Please, select existing brand"
+msgstr "— Вибери існуючий бренд —"
+
+#: products/forms.py:183
+msgid "Please, make it shorter. # of lines to be removed:"
+msgstr "Зробіть її коротшою. Кількість рядків, які потрібно видалити:"
+
+#: products/forms.py:187
+msgid "Please, make it shorter. # of characters to be removed:"
+msgstr "Зробіть її коротшою. # символів, які потрібно видалити:"
+
+#: products/forms.py:203
+msgid "Images*"
+msgstr "Зображення *"
+
+#: products/forms.py:209
+msgid "Upload at least 4 images"
+msgstr "Завантажте щонайменше 4 зображення"
+
+#: products/forms.py:214
+msgid "Not enough photos. Minimal amount - 4"
+msgstr "Недостатньо фотографій. Мінімальна сума - 4"
+
+#: products/forms.py:219
+msgid "Too many files, max. amount 8"
+msgstr "Забагато файлів, макс. сума 8"
+
+#: products/templates/products/product-create.html:156
+msgid ""
+"Email help@saltysalt.co if the brand you are trying to add does not exist."
+msgstr "Напиши на help@saltysalt.co якщо твій бажаний бренд відсутній."
+
+#: products/templates/products/product-create.html:258
+msgid "Photos*"
+msgstr "Фотографії *"
+
+#: products/templates/products/product-create.html:264
+msgid "Browse"
+msgstr "Вибрать"
+
+#: products/templates/products/product-create.html:269
+msgid "Too many images. Should be less than"
+msgstr "Too many images. Should be less than"
+
+#: products/templates/products/product-create.html:270
+msgid "Authenticity check..."
+msgstr "Перевірка справжності …"
+
+#: products/templates/products/snippets/card-my-items.html:19
+msgctxt "card_my_items_approved"
+msgid "Approved"
+msgstr "Затверджено"
+
+#: products/templates/products/snippets/card-my-items.html:52
+#: products/views.py:166
+msgid "Fake"
+msgstr "Фейк"
+
+#: products/templates/products/snippets/card-my-items.html:87
+msgid "Pending"
+msgstr "Перевіряється"
+
+#: products/templates/products/snippets/logged-user-update-card.html:8
+#: products/views.py:432
+msgid "Update"
+msgstr "Редагувати"
+
+#: products/templates/products/snippets/logged-user-update-card.html:17
+msgid "Delete"
+msgstr "Видалити"
+
+#: products/templates/products/user-history.html:31
+msgid "Viewed items:"
+msgstr "Нещодавно переглянуте:"
+
+#: products/templates/products/user-list.html:24
+msgid "My Items:"
+msgstr "Мої Айтеми:"
+
+#: products/views.py:158
+msgid "Report?"
+msgstr "Скарга?"
+
+#: products/views.py:159
+msgid "Size:"
+msgstr "Розмiр:"
+
+#: products/views.py:160
+msgid "Condition:"
+msgstr "Стан:"
+
+#: products/views.py:162
+msgid "Description:"
+msgstr "Описание:"
+
+#: products/views.py:164
+msgid "Authentic"
+msgstr "Оригiнал"
+
+#: products/views.py:165
+msgid "2-step-verified on"
+msgstr "Двухфакторна перевірка пройдена"
+
+#: products/views.py:167
+msgid "Checked on"
+msgstr "Перевірено"
+
+#: products/views.py:168
+msgid "AI-checked"
+msgstr "Перевірено ШI"
+
+#: products/views.py:169
+msgid "Needs to be approved by our expert team"
+msgstr "Пiсля перевірки экспертом айтем буде опублiкован"
+
+#: products/views.py:170
+msgid "Posted"
+msgstr "Завантажено"
+
+#: products/views.py:171
+msgid "ago"
+msgstr "тому"
+
+#: products/views.py:292 products/views.py:351
+msgctxt "Upload_Item_create"
+msgid "Create"
+msgstr "Залити"
+
+#: products/views.py:293 products/views.py:352
+msgid "Add a new item"
+msgstr "Додати новий айтем"
+
+#: products/views.py:315
+msgid "New item upload"
+msgstr ""
+
+#: products/views.py:316
+msgid ""
+"New product was uploaded. Please verify authenticity: \n"
+" {} \n"
+" Product Title: {} \n"
+" Product Description: \n"
+" {}"
+msgstr ""
+
+#: products/views.py:325
+msgid ""
+"Your item was checked by AI. Within next 24 hours the check will be "
+"confirmed by our moderator team and your item will be published"
+msgstr ""
+"Твій Айтем перевірений Іcкусственним Інтелектом. Протягом 24 годин перевірку "
+"підтвердить модератор і Айтем буде виставлений на продаж"
+
+#: search/templates/search/snippets/search-form.html:4
+#: templates/base/navbar.html:170
+msgid "Search"
+msgstr "Пошук"
+
+#: templates/400.html:9 templates/403.html:7 templates/500.html:9
+msgid "Oops ... Something went wrong. We're notified and working on a fix!"
+msgstr "Ой … Щось пішло не так. Ми повідомленнi i вже працюємо над вирішенням!"
+
+#: templates/404.html:9
+msgid "Oops ... This page doesn't exist! :("
+msgstr "Ой … Tакой сторінки не існує! :("
+
+#: templates/base/footer.html:129 templates/base/footer.html:134
+msgid "About"
+msgstr "Про нас"
+
+#: templates/base/footer.html:130 templates/base/footer.html:135
+msgid "Contact"
+msgstr "Контакт"
+
+#: templates/base/navbar.html:239
+msgctxt "account_dropdown_home "
+msgid "Home"
+msgstr "Аккаунт"
+
+#: templates/base/navbar.html:243 templates/sidebar.html:50
+msgid "Messages"
+msgstr "Повідомлення"
+
+#: templates/base/navbar.html:253 templates/sidebar.html:60
+msgid "My items"
+msgstr "Мої айтеми"
+
+#: templates/base/navbar.html:254 templates/sidebar.html:61
+msgid "Wishlist"
+msgstr "Улюблене"
+
+#: templates/base/navbar.html:255 templates/sidebar.html:62
+msgctxt "account_dropdown_history"
+msgid "History"
+msgstr "Переглянуте"
+
+#: templates/base/navbar.html:256 templates/sidebar.html:63
+msgid "Settings"
+msgstr "Налаштування"
+
+#: templates/forms/helper_text.html:3 templates/languages/helper_text-en.html:3
+msgid "* marked fields are required"
+msgstr "* відзначені поля, обов’язкові до заповнення"
+
+#: templates/languages/trans_custom/translation_custom.html:5
+msgid "Adults"
+msgstr "Дорослi"
+
+#: templates/languages/trans_custom/translation_custom.html:11
+msgid "Men"
+msgstr "Чоловіче"
+
+#: templates/languages/trans_custom/translation_custom.html:13
+msgid "Boys"
+msgstr "Хлопчикi"
+
+#: templates/languages/trans_custom/translation_custom.html:15
+msgid "Women"
+msgstr "Жіноче"
+
+#: templates/languages/trans_custom/translation_custom.html:17
+msgid "Girls"
+msgstr "Дівчатка"
+
+#: templates/languages/trans_custom/translation_custom.html:19
+msgid "Gender-Neutral"
+msgstr "Унісекс"
+
+#: templates/languages/trans_custom/translation_custom.html:25
+msgid "Tops"
+msgstr "Верх"
+
+#: templates/languages/trans_custom/translation_custom.html:27
+msgid "Bottoms"
+msgstr "Низ"
+
+#: templates/languages/trans_custom/translation_custom.html:29
+msgid "Shoes"
+msgstr "Взуття"
+
+#: templates/languages/trans_custom/translation_custom.html:31
+msgid "Accessories"
+msgstr "Аксесуари"
+
+#: templates/languages/trans_custom/translation_custom.html:33
+msgid "Outerwear"
+msgstr "Верхній одяг"
+
+#: templates/languages/trans_custom/translation_custom.html:35
+msgid "Dresses & Overalls"
+msgstr "Сукні i Комбінезони"
+
+#: templates/languages/trans_custom/translation_custom.html:37
+msgid "T-Shirts & Polos"
+msgstr "Футболки i Поло"
+
+#: templates/languages/trans_custom/translation_custom.html:39
+msgid "Tops & Body"
+msgstr "Топи і Боді"
+
+#: templates/languages/trans_custom/translation_custom.html:41
+msgid "Shirts"
+msgstr "Сорочки"
+
+#: templates/languages/trans_custom/translation_custom.html:43
+msgid "Sweaters"
+msgstr "Светри"
+
+#: templates/languages/trans_custom/translation_custom.html:45
+msgid "Sweatshirts/Hoodies"
+msgstr "Світшоти i Худі"
+
+#: templates/languages/trans_custom/translation_custom.html:47
+msgid "Jeans"
+msgstr "Джинси"
+
+#: templates/languages/trans_custom/translation_custom.html:49
+msgid "Shorts"
+msgstr "Шорти"
+
+#: templates/languages/trans_custom/translation_custom.html:51
+msgid "Sweatpants"
+msgstr "Спортивні штани"
+
+#: templates/languages/trans_custom/translation_custom.html:53
+msgid "Pants"
+msgstr "Брюки"
+
+#: templates/languages/trans_custom/translation_custom.html:55
+msgid "Rocks"
+msgstr "Спідниці"
+
+#: templates/languages/trans_custom/translation_custom.html:57
+msgid "Sneakers"
+msgstr "Снікерси"
+
+#: templates/languages/trans_custom/translation_custom.html:59
+msgid "Classic Shoes"
+msgstr "Класичне взуття"
+
+#: templates/languages/trans_custom/translation_custom.html:61
+msgid "Boots"
+msgstr "Черевики і Чоботи"
+
+#: templates/languages/trans_custom/translation_custom.html:63
+msgid "Sandals"
+msgstr "Сандалі"
+
+#: templates/languages/trans_custom/translation_custom.html:65
+msgid "High Heels"
+msgstr "Каблуки"
+
+#: templates/languages/trans_custom/translation_custom.html:67
+msgid "Bags & Backpacks"
+msgstr "Сумки і Рюкзаки"
+
+#: templates/languages/trans_custom/translation_custom.html:69
+msgid "Bags & Luggage"
+msgstr "Сумки і Рюкзаки"
+
+#: templates/languages/trans_custom/translation_custom.html:71
+msgid "Belts"
+msgstr "Ремені"
+
+#: templates/languages/trans_custom/translation_custom.html:73
+msgid "Scarves"
+msgstr "Шарфи"
+
+#: templates/languages/trans_custom/translation_custom.html:75
+msgid "Hats"
+msgstr "Головні убори"
+
+#: templates/languages/trans_custom/translation_custom.html:77
+msgid "Jewelry & Watches"
+msgstr "Прикраси і Годинники"
+
+#: templates/languages/trans_custom/translation_custom.html:79
+msgid "Wallets"
+msgstr "Гаманці"
+
+#: templates/languages/trans_custom/translation_custom.html:81
+msgid "Socks/Underwear"
+msgstr "Спідня білизна"
+
+#: templates/languages/trans_custom/translation_custom.html:83
+msgid "Sunglasses"
+msgstr "Окуляри"
+
+#: templates/languages/trans_custom/translation_custom.html:85
+msgid "Miscellaneous"
+msgstr "Різне"
+
+#: templates/languages/trans_custom/translation_custom.html:87
+msgid "Winter Jackets"
+msgstr "Зимові куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:89
+msgid "Leather Jackets"
+msgstr "Шкіряні куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:91
+msgid "Coats"
+msgstr "Пальто"
+
+#: templates/languages/trans_custom/translation_custom.html:93
+msgid "Jeans Jackets"
+msgstr "Джинсові куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:95
+msgid "Light Jackets"
+msgstr "Легкі куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:97
+msgid "Dresses"
+msgstr "Плаття"
+
+#: templates/languages/trans_custom/translation_custom.html:99
+msgid "Overalls"
+msgstr "Комбінезони"
+
+#: templates/languages/trans_custom/translation_custom.html:105
+msgid "New with tags"
+msgstr "Нова річ з бирками"
+
+#: templates/languages/trans_custom/translation_custom.html:107
+msgid "Gently used"
+msgstr "Чудовий стан"
+
+#: templates/languages/trans_custom/translation_custom.html:109
+msgid "Used"
+msgstr "Нормальний стан"
+
+#: templates/registration/activation-error.html:17
+msgid "Activation Error"
+msgstr "Помилка"
+
+#: templates/registration/activation-error.html:18
+msgid "Please try again"
+msgstr "Спробуй ще раз"
+
+#: templates/registration/activation-error.html:20
+msgid "Re-activate your Email below"
+msgstr "Повторна активація мейла"
+
+#: templates/registration/activation-error.html:27
+msgid "Resend Activation"
+msgstr "Надіслати"
+
+#: templates/registration/emails/verify.html:2
+#, python-format
+msgid ""
+"\n"
+"<p>Hey,</p> \n"
+"\n"
+"\n"
+"<p>Please activate your account for %(email)s by clicking the link below:</"
+"p>\n"
+"\n"
+"<p><a href='%(path)s'>%(path)s</a></p>\n"
+"\n"
+"<p>Once you activate, you can login!</p>\n"
+"\n"
+"\n"
+"<p>Thank you,</p>\n"
+"\n"
+"<p>SALT</p>\n"
+"\n"
+msgstr ""
+"\n"
+"<P> Привіт, </ p>\n"
+"\n"
+"\n"
+"<P> Будь ласка, активуй %(email)s, натиснувши на: </ p>\n"
+"\n"
+"<P> <a href=%(path)s>%(path)s</a> </ p>\n"
+"\n"
+"<P> Після цього можеш користуватися аккаунтом. </ P>\n"
+"\n"
+"\n"
+"<P> Дякуємо, </ p>\n"
+"\n"
+"<P> SALT </ p>\n"
+
+#: templates/registration/emails/verify.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hey, \n"
+"\n"
+"Please activate your account for %(email)s by clicking the link below:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"Once you activate, you can login!\n"
+"\n"
+"\n"
+"Thank you,\n"
+"SALT\n"
+"\n"
+msgstr ""
+"\n"
+"Привіт,\n"
+"\n"
+"\n"
+"Будь ласка, активуй %(email)s, натиснувши на:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"Після цьюго можеш користуватися аккаунтом.\n"
+"\n"
+"\n"
+"Дякуємо,\n"
+"\n"
+"SALT\n"
+
+#: templates/registration/password_change_done.html:27
+msgid "Password changed successfully"
+msgstr "Пароль успішно змінений"
+
+#: templates/registration/password_reset_complete.html:6
+msgid "Password reset complete"
+msgstr "Відновлення пароля пройшло успішно"
+
+#: templates/registration/password_reset_complete.html:7
+msgid "Login now"
+msgstr "Зайди з новим паролем"
+
+#: templates/registration/password_reset_confirm.html:9
+msgid "Set your new password"
+msgstr "Вкажи свій новий пароль"
+
+#: templates/registration/password_reset_confirm.html:13
+msgctxt "save_new_password"
+msgid "Submit"
+msgstr "Підтвердити"
+
+#: templates/registration/password_reset_done.html:8
+msgid "Almost there... Check your email to reset password"
+msgstr "Залишилось ще трошки… Перевір свій мейл, щоб відновити пароль"
+
+#: templates/registration/password_reset_email.html:2
+#: templates/registration/password_reset_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hello, \n"
+"\n"
+"Reset your password on %(domain)s for %(user)s:\n"
+msgstr ""
+"\n"
+"Привіт,\n"
+"\n"
+"Скинути пароль %(domain)s для %(user)s:\n"
+"\n"
+"\n"
+
+#: templates/registration/password_reset_form.html:10
+msgid "Reset password"
+msgstr "Відновити пароль"
+
+#: templates/registration/password_reset_form.html:14
+msgctxt "password_reset"
+msgid "Submit"
+msgstr "Підтвердити"

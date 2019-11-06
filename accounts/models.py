@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.utils.translation import gettext as _ 
 
 from ecommerce.utils import random_string_generator, unique_key_generator, random_string_generator_username
 from products.models import Product
@@ -98,23 +99,23 @@ class UserManager(BaseUserManager):
 
 
 class Region(models.Model):
-	region 				= models.CharField(max_length=120, blank=True, null=True)
-	currency 			= models.CharField(max_length=120, default='USD', blank=True, null=True)
-	currency_mult 		= models.DecimalField(decimal_places=6, max_digits=10, default=0, null=True)
+	region        = models.CharField(max_length=120, blank=True, null=True)
+	currency      = models.CharField(max_length=120, default='USD', blank=True, null=True)
+	currency_mult = models.DecimalField(decimal_places=6, max_digits=10, default=0, null=True)
 	def __str__(self):
 		return str(self.region)
 
 class User(AbstractBaseUser):
-	username 		= models.CharField(max_length=255, blank=False, null=True, unique=True)
-	email 			= models.EmailField(max_length=255, unique=True)
-	full_name 		= models.CharField(max_length=255, blank=True, null=True)
-	is_active 		= models.BooleanField(default=True)
-	staff 			= models.BooleanField(default=False)
-	admin 			= models.BooleanField(default=False)
-	timestamp		= models.DateTimeField(auto_now_add=True)
-	profile_foto	= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-	wishes 			= models.ManyToManyField(Product, related_name='users', blank=True)
-	region 			= models.ForeignKey(Region, related_name='users_region', blank=True, null=True)
+	username     = models.CharField(max_length=255, blank=False, null=True, unique=True)
+	email        = models.EmailField(max_length=255, unique=True)
+	full_name    = models.CharField(max_length=255, blank=True, null=True)
+	is_active    = models.BooleanField(default=True)
+	staff        = models.BooleanField(default=False)
+	admin        = models.BooleanField(default=False)
+	timestamp    = models.DateTimeField(auto_now_add=True)
+	profile_foto = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	wishes       = models.ManyToManyField(Product, related_name='users', blank=True)
+	region       = models.ForeignKey(Region, related_name='users_region', blank=True, null=True)
 	
 	USERNAME_FIELD = 'email'
 	#email and password by default
@@ -168,7 +169,7 @@ LANGUAGE_CHOISES = (
 	('en', 'EN')
 	)
 class LanguagePreference(models.Model):
-	user = models.ForeignKey(User, related_name='language')
+	user     = models.ForeignKey(User, related_name='language')
 	language = models.CharField(max_length=120, default='en', choices=LANGUAGE_CHOISES)
 	def __str__(self):
 		return str(self.user)
@@ -179,9 +180,9 @@ class LanguagePreference(models.Model):
 
 
 class Wishlist(models.Model):
-	user    	= models.ForeignKey(User, related_name='wishes_user')
-	product 	= models.ForeignKey(Product, related_name='wishes_products')
-	timestamp	= models.DateTimeField(auto_now_add=True)
+	user      = models.ForeignKey(User, related_name='wishes_user')
+	product   = models.ForeignKey(Product, related_name='wishes_products')
+	timestamp = models.DateTimeField(auto_now_add=True)
 
 
 
@@ -220,14 +221,14 @@ class EmailActivationManager(models.Manager):
 			)
 
 class EmailActivation(models.Model):
-	user 			= models.ForeignKey(User)
-	email 			= models.EmailField()
-	key 			= models.CharField(max_length=120, blank=True,null=True)
-	activated 		= models.BooleanField(default=False)
-	forced_expired 	= models.BooleanField(default=False)
-	expires 		= models.IntegerField(default=7)#Days
-	timestamp 		= models.DateTimeField(auto_now_add = True)
-	update 			= models.DateTimeField(auto_now = True)
+	user            = models.ForeignKey(User)
+	email           = models.EmailField()
+	key             = models.CharField(max_length=120, blank=True,null=True)
+	activated       = models.BooleanField(default=False)
+	forced_expired  = models.BooleanField(default=False)
+	expires         = models.IntegerField(default=7)#Days
+	timestamp       = models.DateTimeField(auto_now_add = True)
+	update          = models.DateTimeField(auto_now = True)
 
 	error_css_class = 'error'
 	objects = EmailActivationManager()
@@ -257,7 +258,7 @@ class EmailActivation(models.Model):
 			return True
 		return False
 
-	def send_activation(self, language = None):
+	def send_activation(self):
 		if not self.activated and not self.forced_expired:
 			if self.key:
 				base_url = getattr(settings, 'BASE_URL', 'https://www.saltysalt.co')
@@ -270,15 +271,7 @@ class EmailActivation(models.Model):
 				}
 				txt_ = get_template("registration/emails/verify.txt").render(context)
 				html_ = get_template("registration/emails/verify.html").render(context)
-				subject = '1-Click Account Verification'
-				if language=='RU':
-					txt_ = get_template("registration/emails/verify_rus.txt").render(context)
-					html_ = get_template("registration/emails/verify_rus.html").render(context)
-					subject = 'Активация аккаунта одним кликом'
-				elif language=='UA':
-					txt_ = get_template("registration/emails/verify_ua.txt").render(context)
-					html_ = get_template("registration/emails/verify_ua.html").render(context)
-					subject = 'Активація аккаунту одним кліком'
+				subject = _('1-Click Account Verification')
 				from_email = settings.DEFAULT_FROM_EMAIL
 				recipient_list = [self.email]
 				sent_mail=send_mail(
@@ -307,7 +300,7 @@ def post_save_language_pref(sender, instance, created, *args, **kwargs):
 		if not is_social:
 			if not is_admin:		
 				obj = EmailActivation.objects.create(user=instance.user, email=instance.user.email)
-				obj.send_activation(instance.language)
+				obj.send_activation()
 			else:
 				EmailActivation.objects.create(user=instance.user, email=instance.user.email, activated=True)
 
@@ -324,10 +317,10 @@ post_save.connect(post_save_language_pref, sender=LanguagePreference)
 
 
 class GuestEmail(models.Model):
-	email = models.EmailField()
-	active = models.BooleanField(default=True)
+	email     = models.EmailField()
+	active    = models.BooleanField(default=True)
 	timestamp = models.DateTimeField(auto_now_add=True)
-	update = models.DateTimeField(auto_now=True)
+	update    = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return self.email

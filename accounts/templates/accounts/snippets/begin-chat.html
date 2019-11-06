@@ -1,21 +1,12 @@
-{% if request.session.language == 'RU' %}
-
-{% include 'accounts/snippets/languages/begin-chat-ru.html' %}  
-
-{% elif request.session.language == 'UA' %}
-
-{% include 'accounts/snippets/languages/begin-chat-ua.html' %}  
-
+{% load i18n %}
+{% if request.user.username == object.username %}
+	<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Update profile' %}</a>
 {% else %}
-
-{% include 'accounts/snippets/languages/begin-chat-en.html' %}  
+	{{ object.id }}
+	{% if object.user %}
+	<a href="/messages/{{ object.user.username }}/{{ object.slug }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
+	{% else %}
+	<a href="/messages/{{ object.username }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
+	{% endif %}
 
 {% endif %}
-
-
-
-
-
-
-
-

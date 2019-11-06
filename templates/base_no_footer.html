@@ -38,9 +38,6 @@ html,body{
 
 
 <body>
-{% if not request.session.language %}
-<meta http-equiv="Refresh" content="0; url={{ request|to_default_language }}">
-{% endif %}
 {% if request.user.is_authenticated %}
   <input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
 {% endif %}

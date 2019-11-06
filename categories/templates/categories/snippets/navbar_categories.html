@@ -1,4 +1,5 @@
 {% load for_loop_extras %}
+{% load i18n %}
 <style type="text/css">
 .edge{
   right: 0!important;
@@ -74,7 +75,6 @@ li a{
   display: none !important; 
 }
 </style>
-
 <div id='nav_categories'>
 <hr class="mb-0 mt-2 ml-0 mr-0" style="border-top-color: white">
 <nav class="navbar navbar-expand-lg navbar-light bg-white" >
@@ -103,18 +103,18 @@ li a{
       <li class="nav-item custom-li-dropdown">
         <div class="dropdown-navcat">
           <a class="nav-link dropdown-toggle dropdown-click-btn">
-            {{ gender|to_translate:request }}
+            {% trans gender.gender_eng %}
           </a>
           <div class="dropdown-content-navcat m-0">
             <div class="row overflow-auto m-0 row-dropdown-categories my-custom-scrollbar"  style="overflow-y: hidden; overflow-x: hidden;">
               {% for category in fields_category %}
                 {% if category.category_for == gender %}
                   <div class="col text-center">
-                    <a class="text-center" href="{{ category.get_absolute_url }}">{{ category|to_translate:request }}</a>
+                    <a class="text-center" href="{{ category.get_absolute_url }}">{% trans category.category_eng %}</a>
                     <hr class="mt-0">
                     {% for undercategory in fields_undercategory %}
                       {% if undercategory.undercategory_for == category %}
-                        <a href="{{ undercategory.get_absolute_url }}" class="col-12">{{ undercategory|to_translate:request }}</a>
+                        <a href="{{ undercategory.get_absolute_url }}" class="col-12">{% trans undercategory.undercategory_eng %}</a>
                       {% endif %}
                     {% endfor %}
                   </div>
@@ -134,11 +134,11 @@ li a{
             <div class="row overflow-auto m-0 row-dropdown-categories my-custom-scrollbar" >
               {% for gender in gender_navbar_kids %}
                 <div class="col text-center">
-                  <a class="text-center" href="{{ gender.get_absolute_url }}">{{ gender|to_translate:request }}</a>
+                  <a class="text-center" href="{{ gender.get_absolute_url }}">{% trans gender.gender_eng %}</a>
                   <hr class="mt-0">
                   {% for category in fields_category %}
                     {% if category.category_for == gender %}
-                        <a href="{{ category.get_absolute_url }}" class="col-12">{{ category|to_translate:request }}</a>
+                        <a href="{{ category.get_absolute_url }}" class="col-12">{% trans category.category_eng %}</a>
                       {% endif %}
                   {% endfor %}
                 </div>
@@ -198,4 +198,3 @@ li a{
       
     })//window click
 </script>
-

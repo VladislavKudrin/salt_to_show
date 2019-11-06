@@ -1,7 +1,8 @@
 {% load static %}
 {% load for_loop_extras %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -38,9 +39,6 @@ html,body{
 
 
 <body class=''>
-{% if not request.session.language %}
-<meta http-equiv="Refresh" content="0; url={{ request|to_default_language }}">
-{% endif %}
 {% if request.user.is_authenticated %}
   <input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
 {% endif %}

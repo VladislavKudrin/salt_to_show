@@ -1,0 +1,1026 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-28 18:37+0000\n"
+"PO-Revision-Date: 2019-10-29 22:40+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Poedit 2.2.4\n"
+
+#: accounts/forms.py:37
+#, python-brace-format
+msgid ""
+"This email does not exist or already acivated. Would you like to <a href="
+"\"{link}\">register</a>?"
+msgstr ""
+"Такого мейла не существует или он уже активирован. Хочешь <a href={link}"
+">зарегистрироваться</a>?"
+
+#: accounts/forms.py:85
+msgid "Only alphanumeric characters are allowed"
+msgstr "Юзернейм должен содержать только латинские символы или цифры"
+
+#: accounts/forms.py:86
+msgid "Username"
+msgstr "Юзернейм"
+
+#: accounts/forms.py:87
+msgid "Your username"
+msgstr "Твой юзернейм"
+
+#: accounts/forms.py:89
+msgid "Region"
+msgstr "Регион"
+
+#: accounts/forms.py:90
+msgid "Name"
+msgstr "Имя и фамилия"
+
+#: accounts/forms.py:91
+msgid "Your full name"
+msgstr "Твои имя и фамилия"
+
+#: accounts/forms.py:92
+msgid "Cannot change email"
+msgstr "Нельзя изменить Email"
+
+#: accounts/forms.py:93
+msgid "Recieve marketing email?"
+msgstr "Получать рассылку?"
+
+#: accounts/forms.py:94
+msgid "Profile photo"
+msgstr "Фото профиля"
+
+#: accounts/forms.py:95
+msgctxt "profile_update"
+msgid "Update"
+msgstr "Обновить"
+
+#: accounts/forms.py:99 accounts/forms.py:101
+msgid "-- Please select your region --"
+msgstr "— Выбери регион —"
+
+#: accounts/forms.py:144
+msgid "You must select a region"
+msgstr "Выбери регион"
+
+#: accounts/forms.py:222
+msgid "Min 8 characters, digits + numbers"
+msgstr "Минимум 8 символов и цифр"
+
+#: accounts/forms.py:223 ecommerce/forms.py:11
+msgid "Your Email"
+msgstr "Твой Email"
+
+#: accounts/forms.py:231
+#, python-brace-format
+msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
+msgstr ""
+"<a href={resend_link}> (Кликни, чтобы выслать подтверждение еще раз)</a>."
+
+#: accounts/models.py:274
+msgid "1-Click Account Verification"
+msgstr "Активация аккаунта одним кликом"
+
+#: accounts/templates/accounts/profile.html:52
+msgid "Items:"
+msgstr "Айтемы:"
+
+#: accounts/templates/accounts/profile.html:89
+#: accounts/templates/accounts/wish-list.html:57
+#: products/templates/products/user-history.html:65
+#: products/templates/products/user-list.html:59
+msgid "No items yet"
+msgstr "Пока что здесь пусто"
+
+#: accounts/templates/accounts/snippets/begin-chat.html:3
+msgid "Update profile"
+msgstr "Обновить профиль"
+
+#: accounts/templates/accounts/snippets/begin-chat.html:6
+#: accounts/templates/accounts/snippets/begin-chat.html:8 products/views.py:163
+msgid "Contact seller"
+msgstr "Связаться с продавцом"
+
+#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:64
+msgid "Submit"
+msgstr "Отправить"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:7
+msgid "Choose your region"
+msgstr "Выбери свой регион"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:22
+msgid "Save changes"
+msgstr "Сохранить"
+
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:23
+msgid "Close"
+msgstr "Закрыть"
+
+#: accounts/templates/accounts/wish-list.html:24
+msgid "Wishlist:"
+msgstr "Избранное:"
+
+#: accounts/views.py:101 accounts/views.py:231 accounts/views.py:235
+msgid "You're in"
+msgstr "Ты на сайте"
+
+#: accounts/views.py:119
+#, python-brace-format
+msgid ""
+"Your email has already been confirmed. Do you need to <a href="
+"\"{link}\">reset your password</a>?"
+msgstr "Твой Мейл уже активирован. Хочешь <a href={link}>сбросить пароль</a>?"
+
+#: accounts/views.py:137
+msgid "Activation link was sent. Check your Email!"
+msgstr "Активация отправлена. Проверь почту!"
+
+#: accounts/views.py:176
+msgid "Login | Register"
+msgstr "Войти | Зарегистрироваться"
+
+#: accounts/views.py:177
+msgid "Or"
+msgstr "Или"
+
+#: accounts/views.py:178
+msgid "Forgot password?"
+msgstr "Забыл_а пароль?"
+
+#: accounts/views.py:196
+msgid "Please check your email to confirm your account. "
+msgstr "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. "
+
+#: accounts/views.py:205
+msgid "Email not confirmed. "
+msgstr "Мейл не подтвержден. "
+
+#: accounts/views.py:214
+msgid "The password seems to be wrong. Try again!"
+msgstr "Неверный пароль. Попробуй еще раз!"
+
+#: accounts/views.py:256
+msgid "Update your details"
+msgstr "Обновить аккаунт"
+
+#: accounts/views.py:257 templates/registration/password_change_form.html:24
+msgid "Change password"
+msgstr "Изменить пароль"
+
+#: accounts/views.py:258 products/views.py:433
+#: templates/registration/password_change_form.html:32
+msgid "Save"
+msgstr "Сохранить"
+
+#: accounts/views.py:259
+msgid "Logout"
+msgstr "Выйти"
+
+#: categories/templates/categories/snippets/filter-box.html:274
+#: products/forms.py:53
+msgid "Select a brand"
+msgstr "Выбери бренд"
+
+#: categories/views.py:300 ecommerce/views.py:140
+msgid "Kids"
+msgstr "Дети"
+
+#: categories/views.py:301 ecommerce/views.py:141
+msgid "New"
+msgstr "Свежее"
+
+#: categories/views.py:302
+msgid "Hide Filters"
+msgstr "Спрятать фильтры"
+
+#: categories/views.py:303
+msgid "Show Filters"
+msgstr "Показать фильтры"
+
+#: categories/views.py:304
+msgid "Found"
+msgstr "Найдено"
+
+#: categories/views.py:305
+msgid "Items"
+msgstr "Айтемов"
+
+#: categories/views.py:306
+msgid "Sort by"
+msgstr "Сортировать по"
+
+#: categories/views.py:307
+msgid "New first"
+msgstr "Сначала новые"
+
+#: categories/views.py:308
+msgid "Low price first"
+msgstr "Сначала дешевые"
+
+#: categories/views.py:309
+msgid "High price first"
+msgstr "Сначала дорогие"
+
+#: categories/views.py:310 products/forms.py:60
+msgid "Gender"
+msgstr "Гендер"
+
+#: categories/views.py:311
+msgid "Type"
+msgstr "Тип"
+
+#: categories/views.py:312 products/forms.py:61
+msgid "Category"
+msgstr "Категория"
+
+#: categories/views.py:313
+msgid "All"
+msgstr "Все"
+
+#: categories/views.py:314 products/forms.py:62
+msgid "Size"
+msgstr "Размер"
+
+#: categories/views.py:315 products/forms.py:63
+msgid "Condition"
+msgstr "Состояние"
+
+#: categories/views.py:316 ecommerce/views.py:142 products/forms.py:20
+msgid "Brand"
+msgstr "Бренд"
+
+#: categories/views.py:317 products/forms.py:64
+msgid "Price"
+msgstr "Цена"
+
+#: chat_ecommerce/templates/chat_ecommerce/inbox.html:312
+msgid "Please select a chat to start conversation"
+msgstr "Выберите собеседника, чтобы начать диалог"
+
+#: ecommerce/forms.py:17
+msgid "Your message"
+msgstr "Твой месседж"
+
+#: ecommerce/forms.py:18
+msgid "Content"
+msgstr "Содержание"
+
+#: ecommerce/views.py:39
+msgid "Bazar"
+msgstr "Базар"
+
+#: ecommerce/views.py:40
+msgid "Marketplace"
+msgstr "Маркетплейс"
+
+#: ecommerce/views.py:41
+msgid "No counterfeit"
+msgstr "Без фейков"
+
+#: ecommerce/views.py:42
+#, python-format
+msgid ""
+"What makes SALT different from others? Well, we have a zero-fake-policy "
+"here. Fakes make online shopping unbearable. The countterfeit industry in "
+"fashion is valued around $600 billion. While someone makes tons of money, "
+"the quality of shopping for the customer is deteriorating. But we love "
+"shopping. Probably even more than you. So we set up a very simple goal -  to "
+"make shopping as pleasant and safe as possible. Therefore, on SALT you can "
+"be 100% sure that you are buying a nice authentic piece."
+msgstr ""
+"То, что отличает нас от других: на SALT нет и никогда не будет фейков. Фейки "
+"– это то, что делает онлайн-шопинг невыносимым. Индустрия подделок в сфере "
+"моды оценивается в 600 млрд долларов. В то время, как кто-то зарабатывает "
+"огромные деньги, качество шоппинга для покупателя ухудшается. Но мы любим "
+"шопинг. Наверное, даже больше, чем Ты. Нами движет очень простая цель "
+"сделать шопинг максимально приятным и безопасным. Поэтому на SALT ты можешь "
+"быть на 100% уверен_а, что приобретаешь оригинальную вещь."
+
+#: ecommerce/views.py:43
+msgid "2-step-verification"
+msgstr "Двухфакторная верификация"
+
+#: ecommerce/views.py:44
+msgid ""
+"SALT has two-factor product verification (sounds awesome, right?). In simple "
+"words, each item is checked exactly two times. The first one happens right "
+"after uploading. Just in a few seconds, our AI-model assigns a label to the "
+"product - fake or authentic. The model thinks fast and improves itself with "
+"each loaded item (neural networks and all that). And the second step is a "
+"thorough manual check performed by our experienced experts. Thanks to the "
+"two-factor verification of all items, no fake will get to SALT."
+msgstr ""
+"На SALT действует двухфакторная верификация продукта (звучит круто, "
+"правда?). Простыми словами, каждый айтем проверяется ровно два раза. Первый "
+"– сразу после загрузки. За считанные секунды наша модель Искусственного "
+"Интеллекта присваивает продукту лейбл – фейк или оригинал. Модель думает "
+"быстро и улучшается с каждым загруженным айтемом (нейронные сети и все "
+"такое). А второй шаг – это тщательный мануальный чек, выполняемый нашими "
+"опытными экспертами. Благодаря двухфакторной верификации продукта ни один "
+"фейк не попадет на SALT."
+
+#: ecommerce/views.py:45
+msgid "Less is more"
+msgstr "Лучше меньше, да лучше"
+
+#: ecommerce/views.py:46
+msgid ""
+"Simplicity is our core concept. And it's not only limited in minimalistic "
+"design and intuitive interface of SALT. We want both buyers and sellers to "
+"feel respected. Therefore, there is no and never will be annoying ads and "
+"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT "
+"is a community where designer and streetwear clothes take their second "
+"chance. The item finds its new owner without harming the environment. SALT "
+"acts as a modest mediator in this straightforward, but essential deal."
+msgstr ""
+"Простота – это наш основной концепт. И это касается не только "
+"минималистичного дизайна и интуитивного интерфейса. Мы хотим, чтобы наших "
+"покупателей и продавцов уважали. Поэтому на SALT нет и никогда не будет "
+"назойливой рекламы и платного продвижения. Никаких баннеров, всплывающих "
+"окон и премиум-аккаунтов. SALT – это коммьюнити, где дизайнерская и уличная "
+"мода приобретает второй шанс. Вещь находит своего нового владельца без вреда "
+"окружающей среде. SALT при этом лишь выполняет скромную роль посредника в "
+"этой незамысловатой сделке."
+
+#: ecommerce/views.py:63
+msgid "Contact us"
+msgstr "Напиши нам"
+
+#: ecommerce/views.py:65
+msgid "Sending...."
+msgstr "Отправка…."
+
+#: ecommerce/views.py:97
+msgid "Thank you"
+msgstr "Спасибо"
+
+#: ecommerce/views.py:98
+msgid "Success"
+msgstr "Успех"
+
+#: ecommerce/views.py:143
+msgid "Contribute to the sustainable clothes-circle."
+msgstr "Поддерживай круговорот одежды в природе."
+
+#: ecommerce/views.py:144
+msgid "Find your designer piece fast and safe."
+msgstr "Найди свой брендовый айтем быстро и без фейков."
+
+#: ecommerce/views.py:145
+msgid "Safe"
+msgstr "Надежно"
+
+#: ecommerce/views.py:146
+msgid "Uploaded items are monitored 24/7/365. There are no fakes on SALT."
+msgstr "Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал."
+
+#: ecommerce/views.py:147
+msgid "AI-Powered"
+msgstr "Современно"
+
+#: ecommerce/views.py:148
+msgid "We use Machine Learning to detect fakes in our catalogue."
+msgstr ""
+"Мы используем Искусственный Интеллект, чтобы исключать подделки из нашего "
+"каталога."
+
+#: ecommerce/views.py:149
+msgid "Simple"
+msgstr "Просто"
+
+#: ecommerce/views.py:150
+msgid "Our intuitive design was made with love to simplicity and minimalism."
+msgstr "Наш интуитивный дизайн разработан с любовью к простоте и минимализму."
+
+#: ecommerce/views.py:151
+msgid "Read more"
+msgstr "Узнай больше"
+
+#: ecommerce/views.py:152
+msgid "Go to your profile"
+msgstr "Перейти в аккаунт"
+
+#: ecommerce/views.py:153
+msgid "Join our community"
+msgstr "Присоединяйся"
+
+#: ecommerce/views.py:154
+msgid "Login | Registration"
+msgstr "Логин | Регистрация"
+
+#: ecommerce/views.py:155
+msgid "Trending:"
+msgstr "В тренде:"
+
+#: ecommerce/views.py:156
+msgid "See all"
+msgstr "Показать все"
+
+#: ecommerce/views.py:157
+msgid "Popular designers:"
+msgstr "Популярные бренды:"
+
+#: products/forms.py:50
+msgid "Some keywords about your item"
+msgstr "Пара слов про айтем"
+
+#: products/forms.py:51
+msgid "Describe your item in details"
+msgstr "Подробно опиши айтем"
+
+#: products/forms.py:52
+msgid "Enter a price in "
+msgstr "Введи цену в "
+
+#: products/forms.py:54
+msgid "Select a gender"
+msgstr "Выбери гендер"
+
+#: products/forms.py:55
+msgid "Select a category"
+msgstr "Выбери категорию"
+
+#: products/forms.py:56
+msgid "Select a size"
+msgstr "Выбери размер"
+
+#: products/forms.py:57
+msgid "Select a condition"
+msgstr "Выбери состояние"
+
+#: products/forms.py:59
+msgid "Title"
+msgstr "Название"
+
+#: products/forms.py:65
+msgid "Description"
+msgstr "Описание"
+
+#: products/forms.py:116
+msgid "Please, select a gender"
+msgstr "— Выбери гендер —"
+
+#: products/forms.py:129
+msgid "Please, select a valid category"
+msgstr "Выбери подходящую категорию"
+
+#: products/forms.py:146
+msgid "Please, select a valid size"
+msgstr "Выбери подходящий размер"
+
+#: products/forms.py:158
+msgid "Please, select a condition"
+msgstr "— Выбери состояние —"
+
+#: products/forms.py:172
+msgid "Please, select existing brand"
+msgstr "— Выбери существующий бренд —"
+
+#: products/forms.py:183
+msgid "Please, make it shorter. # of lines to be removed:"
+msgstr "Сделай короче. Убери # строк :"
+
+#: products/forms.py:187
+msgid "Please, make it shorter. # of characters to be removed:"
+msgstr "Сделай короче. Убери # символов :"
+
+#: products/forms.py:203
+msgid "Images*"
+msgstr "Фото*"
+
+#: products/forms.py:209
+msgid "Upload at least 4 images"
+msgstr "Загрузи как минимум 4 фото"
+
+#: products/forms.py:214
+msgid "Not enough photos. Minimal amount - 4"
+msgstr "Недостаточно фотографий. Минимальное колличество - 4"
+
+#: products/forms.py:219
+msgid "Too many files, max. amount 8"
+msgstr "Слишком много фотографий. Максимальное колличество - 8"
+
+#: products/templates/products/product-create.html:156
+msgid ""
+"Email help@saltysalt.co if the brand you are trying to add does not exist."
+msgstr "Напиши на help@saltysalt.co если не нашел своего бренда."
+
+#: products/templates/products/product-create.html:258
+msgid "Photos*"
+msgstr "Фото*"
+
+#: products/templates/products/product-create.html:264
+msgid "Browse"
+msgstr "Выбрать"
+
+#: products/templates/products/product-create.html:269
+msgid "Too many images. Should be less than"
+msgstr "Залей меньше фото. Их должно быть не больше"
+
+#: products/templates/products/product-create.html:270
+msgid "Authenticity check..."
+msgstr "Проверка на оригинальность…"
+
+#: products/templates/products/snippets/card-my-items.html:19
+msgctxt "card_my_items_approved"
+msgid "Approved"
+msgstr "На сайте"
+
+#: products/templates/products/snippets/card-my-items.html:52
+#: products/views.py:166
+msgid "Fake"
+msgstr "Фейк"
+
+#: products/templates/products/snippets/card-my-items.html:87
+msgid "Pending"
+msgstr "Проверяется"
+
+#: products/templates/products/snippets/logged-user-update-card.html:8
+#: products/views.py:432
+msgid "Update"
+msgstr "Редактировать"
+
+#: products/templates/products/snippets/logged-user-update-card.html:17
+msgid "Delete"
+msgstr "Удалить"
+
+#: products/templates/products/user-history.html:31
+msgid "Viewed items:"
+msgstr "Недавно просмотренное:"
+
+#: products/templates/products/user-list.html:24
+msgid "My Items:"
+msgstr "Мои айтемы:"
+
+#: products/views.py:158
+msgid "Report?"
+msgstr "Пожаловаться?"
+
+#: products/views.py:159
+msgid "Size:"
+msgstr "Размер:"
+
+#: products/views.py:160
+msgid "Condition:"
+msgstr "Состояние:"
+
+#: products/views.py:162
+msgid "Description:"
+msgstr "Описание:"
+
+#: products/views.py:164
+msgid "Authentic"
+msgstr "Оригинал"
+
+#: products/views.py:165
+msgid "2-step-verified on"
+msgstr "Двухфакторная проверка пройдена"
+
+#: products/views.py:167
+msgid "Checked on"
+msgstr "Проверено"
+
+#: products/views.py:168
+msgid "AI-checked"
+msgstr "Проверено ИИ"
+
+#: products/views.py:169
+msgid "Needs to be approved by our expert team"
+msgstr "После проверки экспертом айтем будет залит"
+
+#: products/views.py:170
+msgid "Posted"
+msgstr "Загружено"
+
+#: products/views.py:171
+msgid "ago"
+msgstr "назад"
+
+#: products/views.py:292 products/views.py:351
+msgctxt "Upload_Item_create"
+msgid "Create"
+msgstr "Залить"
+
+#: products/views.py:293 products/views.py:352
+msgid "Add a new item"
+msgstr "Залить новый айтем"
+
+#: products/views.py:315
+msgid "New item upload"
+msgstr ""
+
+#: products/views.py:316
+msgid ""
+"New product was uploaded. Please verify authenticity: \n"
+" {} \n"
+" Product Title: {} \n"
+" Product Description: \n"
+" {}"
+msgstr ""
+
+#: products/views.py:325
+msgid ""
+"Your item was checked by AI. Within next 24 hours the check will be "
+"confirmed by our moderator team and your item will be published"
+msgstr ""
+"Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку "
+"подтвердит модератор и айтем будет выставлен на продажу"
+
+#: search/templates/search/snippets/search-form.html:4
+#: templates/base/navbar.html:170
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/400.html:9 templates/403.html:7 templates/500.html:9
+msgid "Oops ... Something went wrong. We're notified and working on a fix!"
+msgstr "Ой … Что-то пошло не так. Мы оповещены и уже работаем над решением!"
+
+#: templates/404.html:9
+msgid "Oops ... This page doesn't exist! :("
+msgstr "Ой … Tакой страницы не существует! :("
+
+#: templates/base/footer.html:129 templates/base/footer.html:134
+msgid "About"
+msgstr "О нас"
+
+#: templates/base/footer.html:130 templates/base/footer.html:135
+msgid "Contact"
+msgstr "Контакт"
+
+#: templates/base/navbar.html:239
+msgctxt "account_dropdown_home "
+msgid "Home"
+msgstr "Аккаунт"
+
+#: templates/base/navbar.html:243
+msgid "Messages"
+msgstr "Сообщения"
+
+#: templates/base/navbar.html:253
+msgid "My items"
+msgstr "Мои айтемы"
+
+#: templates/base/navbar.html:254
+msgid "Wishlist"
+msgstr "Избранное"
+
+#: templates/base/navbar.html:255
+msgctxt "account_dropdown_history"
+msgid "History"
+msgstr "Просмотренное"
+
+#: templates/base/navbar.html:256
+msgid "Settings"
+msgstr "Настройки"
+
+#: templates/forms/helper_text.html:3 templates/languages/helper_text-en.html:3
+msgid "* marked fields are required"
+msgstr "* отмечены поля, обязательные к заполнению"
+
+#: templates/languages/trans_custom/translation_custom.html:5
+msgid "Adults"
+msgstr "Взрослые"
+
+#: templates/languages/trans_custom/translation_custom.html:11
+msgid "Men"
+msgstr "Мужское"
+
+#: templates/languages/trans_custom/translation_custom.html:13
+msgid "Boys"
+msgstr "Мальчики"
+
+#: templates/languages/trans_custom/translation_custom.html:15
+msgid "Women"
+msgstr "Женское"
+
+#: templates/languages/trans_custom/translation_custom.html:17
+msgid "Girls"
+msgstr "Девочки"
+
+#: templates/languages/trans_custom/translation_custom.html:19
+msgid "Gender-Neutral"
+msgstr "Унисекс"
+
+#: templates/languages/trans_custom/translation_custom.html:25
+msgid "Tops"
+msgstr "Верх"
+
+#: templates/languages/trans_custom/translation_custom.html:27
+msgid "Bottoms"
+msgstr "Низ"
+
+#: templates/languages/trans_custom/translation_custom.html:29
+msgid "Shoes"
+msgstr "Обувь"
+
+#: templates/languages/trans_custom/translation_custom.html:31
+msgid "Accessories"
+msgstr "Аксессуары"
+
+#: templates/languages/trans_custom/translation_custom.html:33
+msgid "Outerwear"
+msgstr "Верхняя одежда"
+
+#: templates/languages/trans_custom/translation_custom.html:35
+msgid "Dresses & Overalls"
+msgstr "Платья и Комбинезоны"
+
+#: templates/languages/trans_custom/translation_custom.html:37
+msgid "T-Shirts & Polos"
+msgstr "Футболки и Поло"
+
+#: templates/languages/trans_custom/translation_custom.html:39
+msgid "Tops & Body"
+msgstr "Топы и Боди"
+
+#: templates/languages/trans_custom/translation_custom.html:41
+msgid "Shirts"
+msgstr "Рубашки"
+
+#: templates/languages/trans_custom/translation_custom.html:43
+msgid "Sweaters"
+msgstr "Свитера"
+
+#: templates/languages/trans_custom/translation_custom.html:45
+msgid "Sweatshirts/Hoodies"
+msgstr "Свитшоты и Худи"
+
+#: templates/languages/trans_custom/translation_custom.html:47
+msgid "Jeans"
+msgstr "Джинсы"
+
+#: templates/languages/trans_custom/translation_custom.html:49
+msgid "Shorts"
+msgstr "Шорты"
+
+#: templates/languages/trans_custom/translation_custom.html:51
+msgid "Sweatpants"
+msgstr "Спортивные штаны"
+
+#: templates/languages/trans_custom/translation_custom.html:53
+msgid "Pants"
+msgstr "Брюки"
+
+#: templates/languages/trans_custom/translation_custom.html:55
+msgid "Rocks"
+msgstr "Юбки"
+
+#: templates/languages/trans_custom/translation_custom.html:57
+msgid "Sneakers"
+msgstr "Сникерсы"
+
+#: templates/languages/trans_custom/translation_custom.html:59
+msgid "Classic Shoes"
+msgstr "Классическая обувь"
+
+#: templates/languages/trans_custom/translation_custom.html:61
+msgid "Boots"
+msgstr "Ботинки и Сапоги"
+
+#: templates/languages/trans_custom/translation_custom.html:63
+msgid "Sandals"
+msgstr "Сандали"
+
+#: templates/languages/trans_custom/translation_custom.html:65
+msgid "High Heels"
+msgstr "Каблуки"
+
+#: templates/languages/trans_custom/translation_custom.html:67
+msgid "Bags & Backpacks"
+msgstr "Сумки и Рюкзаки"
+
+#: templates/languages/trans_custom/translation_custom.html:69
+msgid "Bags & Luggage"
+msgstr "Сумки и Рюкзаки"
+
+#: templates/languages/trans_custom/translation_custom.html:71
+msgid "Belts"
+msgstr "Ремни"
+
+#: templates/languages/trans_custom/translation_custom.html:73
+msgid "Scarves"
+msgstr "Шарфы"
+
+#: templates/languages/trans_custom/translation_custom.html:75
+msgid "Hats"
+msgstr "Головные уборы"
+
+#: templates/languages/trans_custom/translation_custom.html:77
+msgid "Jewelry & Watches"
+msgstr "Украшения и Часы"
+
+#: templates/languages/trans_custom/translation_custom.html:79
+msgid "Wallets"
+msgstr "Кошельки"
+
+#: templates/languages/trans_custom/translation_custom.html:81
+msgid "Socks/Underwear"
+msgstr "Нижнее белье"
+
+#: templates/languages/trans_custom/translation_custom.html:83
+msgid "Sunglasses"
+msgstr "Очки"
+
+#: templates/languages/trans_custom/translation_custom.html:85
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: templates/languages/trans_custom/translation_custom.html:87
+msgid "Winter Jackets"
+msgstr "Зимние куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:89
+msgid "Leather Jackets"
+msgstr "Кожаные куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:91
+msgid "Coats"
+msgstr "Пальто"
+
+#: templates/languages/trans_custom/translation_custom.html:93
+msgid "Jeans Jackets"
+msgstr "Джинсовые куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:95
+msgid "Light Jackets"
+msgstr "Легкие куртки"
+
+#: templates/languages/trans_custom/translation_custom.html:97
+msgid "Dresses"
+msgstr "Платья"
+
+#: templates/languages/trans_custom/translation_custom.html:99
+msgid "Overalls"
+msgstr "Комбинезоны"
+
+#: templates/languages/trans_custom/translation_custom.html:105
+msgid "New with tags"
+msgstr "Новая вещь с бирками"
+
+#: templates/languages/trans_custom/translation_custom.html:107
+msgid "Gently used"
+msgstr "Отличное состояние"
+
+#: templates/languages/trans_custom/translation_custom.html:109
+msgid "Used"
+msgstr "Нормальное состояние"
+
+#: templates/registration/activation-error.html:17
+msgid "Activation Error"
+msgstr "Ошибка активации"
+
+#: templates/registration/activation-error.html:18
+msgid "Please try again"
+msgstr "Попробуй еще раз"
+
+#: templates/registration/activation-error.html:20
+msgid "Re-activate your Email below"
+msgstr "Повторная активация Мейла"
+
+#: templates/registration/activation-error.html:27
+msgid "Resend Activation"
+msgstr "Прислать активацию"
+
+#: templates/registration/emails/verify.html:2
+#, python-format
+msgid ""
+"\n"
+"<p>Hey,</p> \n"
+"\n"
+"\n"
+"<p>Please activate your account for %(email)s by clicking the link below:</"
+"p>\n"
+"\n"
+"<p><a href='%(path)s'>%(path)s</a></p>\n"
+"\n"
+"<p>Once you activate, you can login!</p>\n"
+"\n"
+"\n"
+"<p>Thank you,</p>\n"
+"\n"
+"<p>SALT</p>\n"
+"\n"
+msgstr ""
+"\n"
+"<p>Привет,</p> \n"
+"\n"
+"\n"
+"<p>Пожалуйста, активируй %(email)s, нажав на:</p>\n"
+"\n"
+"<a href=%(path)s>%(path)s</a></p>\n"
+"\n"
+"<p>После, можешь пользоваться аккаунтом.</p>\n"
+"\n"
+"\n"
+"<p>Спасибо,</p>\n"
+"\n"
+"<p>SALT</p>\n"
+
+#: templates/registration/emails/verify.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hey, \n"
+"\n"
+"Please activate your account for %(email)s by clicking the link below:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"Once you activate, you can login!\n"
+"\n"
+"\n"
+"Thank you,\n"
+"SALT\n"
+"\n"
+msgstr ""
+"\n"
+"Привет, \n"
+"\n"
+"\n"
+"Пожалуйста, активируй %(email)s , нажав на:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"После этого можешь пользоваться аккаунтом.\n"
+"\n"
+"\n"
+"Спасибо,\n"
+"\n"
+"SALT\n"
+
+#: templates/registration/password_change_done.html:27
+msgid "Password changed successfully"
+msgstr "Пароль успешно изменен"
+
+#: templates/registration/password_reset_complete.html:6
+msgid "Password reset complete"
+msgstr "Восстановление пароля прошло успешно"
+
+#: templates/registration/password_reset_complete.html:7
+msgid "Login now"
+msgstr "Войти сейчас"
+
+#: templates/registration/password_reset_confirm.html:9
+msgid "Set your new password"
+msgstr "Укажи свой новый пароль"
+
+#: templates/registration/password_reset_confirm.html:13
+msgctxt "save_new_password"
+msgid "Submit"
+msgstr "Подтвердить"
+
+#: templates/registration/password_reset_done.html:8
+msgid "Almost there... Check your email to reset password"
+msgstr "Осталось еще чуть-чуть… Проверь свой мейл, чтобы восстановить пароль"
+
+#: templates/registration/password_reset_email.html:2
+#: templates/registration/password_reset_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hello, \n"
+"\n"
+"Reset your password on %(domain)s for %(user)s:\n"
+msgstr ""
+"\n"
+"Привет, \n"
+"\n"
+"Сброс пароля на %(domain)s для %(user)s:\n"
+
+#: templates/registration/password_reset_form.html:10
+msgid "Reset password"
+msgstr "Сбросить пароль"
+
+#: templates/registration/password_reset_form.html:14
+msgctxt "password_reset"
+msgid "Submit"
+msgstr "Сбросить"
+
+#~ msgid "Create"
+#~ msgstr "Создать"
+
+#, python-format
+#~ msgid "%(gendero)s"
+#~ msgstr "awdaw"
+
+#~ msgid "Lolka"
+#~ msgstr "Шарага"
+
+#~ msgid "HI PISKA"
+#~ msgstr "Приветsdas"
