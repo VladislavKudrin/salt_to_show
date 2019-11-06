@@ -14,16 +14,6 @@ class Overcategory(models.Model):
 	overcategory_ua 	= models.CharField(max_length=120, blank=True)
 	def __str__(self):
 		return self.overcategory
-	def return_language(self, language):
-		if language == 'RU':
-			return self.overcategory_ru
-		elif language == 'EN':
-			return self.overcategory_eng
-		elif language == 'UA':
-			return self.overcategory_ua
-		else:
-			return self.overcategory_eng
-		return self
 	def get_absolute_url(self):
 		return reverse('products:list') + 'overcategory='+str(self.id)
 
@@ -36,16 +26,6 @@ class Gender(models.Model):
 	gender_ua 	= models.CharField(max_length=120, blank=True)
 	def __str__(self):
 		return (self.gender)
-	def return_language(self, language):
-		if language == 'RU':
-			return self.gender_ru
-		elif language == 'EN':
-			return self.gender_eng
-		elif language == 'UA':
-			return self.gender_ua
-		else:
-			return self.gender_eng
-		return self
 	def get_absolute_url(self):
 		return reverse('products:list') + 'overcategory='+str(self.gender_for.id) + '&gender='+str(self.id)
 
@@ -58,16 +38,6 @@ class Category(models.Model):
 	category_ua 	= models.CharField(max_length=120, blank=True)
 	def __str__(self):
 		return (self.category)
-	def return_language(self, language):
-		if language == 'RU':
-			return self.category_ru
-		elif language == 'EN':
-			return self.category_eng
-		elif language == 'UA':
-			return self.category_ua
-		else:
-			return self.category_eng
-		return self
 	def get_absolute_url(self):
 		return reverse('products:list') + 'overcategory='+str(self.category_for.gender_for.id) + '&gender='+str(self.category_for.id) + '&category='+str(self.id)
 class Undercategory(models.Model):
@@ -79,16 +49,6 @@ class Undercategory(models.Model):
 	undercategory_ua 	= models.CharField(max_length=120, blank=True)
 	def __str__(self):
 		return (self.undercategory)
-	def return_language(self, language):
-		if language == 'RU':
-			return self.undercategory_ru
-		elif language == 'EN':
-			return self.undercategory_eng
-		elif language == 'UA':
-			return self.undercategory_ua
-		else:
-			return self.undercategory_eng
-		return self
 	def get_absolute_url(self):
 		return reverse('products:list') + 'overcategory='+str(self.undercategory_for.category_for.gender_for.id) + '&gender='+str(self.undercategory_for.category_for.id) + '&undercategory='+str(self.id)
 class Size(models.Model):
@@ -114,16 +74,6 @@ class Condition(models.Model):
 	condition_eng 	= models.CharField(max_length=120, blank=True)
 	def __str__(self):
 		return self.condition
-	def return_language(self, language):
-		if language == 'RU':
-			return self.condition_ru
-		elif language == 'EN':
-			return self.condition_eng
-		elif language == 'UA':
-			return self.condition_ua
-		else:
-			return self.condition_eng
-		return self
 
 
 
