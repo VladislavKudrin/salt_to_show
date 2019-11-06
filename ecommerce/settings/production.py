@@ -93,7 +93,8 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'image_uploader'
+    'image_uploader',
+    'language_pref'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -163,7 +164,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    #our
+    'ecommerce.middleware.LanguagePreferenceMiddleware',
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
@@ -258,9 +260,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 # LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru'
 DEFAULT_LANGUAGE_PREF = 'RU'
-
 
 
 TIME_ZONE = 'UTC'
@@ -273,6 +274,13 @@ USE_TZ = True
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')
+]
+
+LANGUAGES=[
+    ('ru', 'Russian'),
+    ('en', 'English'),
+    ('uk', 'Ukranian'),
+
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -304,7 +312,7 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
-from ecommerce.aws.conf import *
+# from ecommerce.aws.conf import *
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATA_UPLOAD_MAX_MEMORY_SIZE = 500000000 # value in bytes

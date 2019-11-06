@@ -94,7 +94,8 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'categories',
-    'image_uploader'
+    'image_uploader',
+    'language_pref'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -164,7 +165,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    #our
+    'ecommerce.middleware.LanguagePreferenceMiddleware',
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
@@ -269,6 +271,13 @@ USE_TZ = True
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')
+]
+
+LANGUAGES=[
+    ('ru', 'Russian'),
+    ('en', 'English'),
+    ('uk', 'Ukranian'),
+
 ]
 
 # Static files (CSS, JavaScript, Images)
