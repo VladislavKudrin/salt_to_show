@@ -199,14 +199,14 @@ p {
 	}
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 700px) {
 	#mobile {
 		visibility: hidden;
 		display: none;
 	}
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 700px) {
 	.alert-success {
     top: 100px;
 }
@@ -360,9 +360,8 @@ p {
 					<div class="col-7 pl-0 pr-0" style="display: flex; align-items: center;">
 						<small class="text">{{ region }}</small>
 					</div>
-					
-
 				</div>
+			</div>
 
 			<div class="col-4 pl-2 text-right">
 				{% if object.user.profile_foto %}
@@ -371,19 +370,18 @@ p {
 					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
 				{% endif %}
 			</div>
+		
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div id="published-line">
+					<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }} 
+					</small>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<div class="col-12">
-		
-	</div>
-
-
-			<div id="published-line" class="col-8 my-auto">
-				<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }} 
-				</small>
-			</div>
-
 </div>
 
 
@@ -493,6 +491,7 @@ p {
 						<small class="text">{{ region }}</small>
 					</div>
 				</div>
+			</div>
 
 
 			<div class="col-4 text-right">
