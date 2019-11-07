@@ -2,7 +2,6 @@
 {% if request.user.username == object.username %}
 	<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Update profile' %}</a>
 {% else %}
-	{{ object.id }}
 	{% if object.user %}
 	<a href="/messages/{{ object.user.username }}/{{ object.slug }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
 	{% else %}
