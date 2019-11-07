@@ -129,6 +129,15 @@ def to_user_currency(value, arg):
 	return product_price
 
 
+@register.filter
+def generalize(value):
+	"""
+	1 hour, 10 min ago  > 1 hour ago
+	5 days, 4 hours ago > 5 days ago
+	"""
+	generalized = value.split(',')[0]
+	return generalized
+
 
 
 

@@ -380,7 +380,7 @@ p {
 
 
 			<div id="published-line" class="col-8 my-auto">
-				<small class="text">{{ posted }} {{ object.timestamp|timesince }} {{ ago }} 
+				<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }} 
 				</small>
 			</div>
 
@@ -506,7 +506,7 @@ p {
 	</div>
 
 		<div id="published-line" class="col-8 my-auto">
-			<small class="text">{{ posted }} {{ object.timestamp|timesince }} {{ ago }}
+			<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
 			</small>
 		</div>
 </div>
