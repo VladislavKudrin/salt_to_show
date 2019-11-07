@@ -95,7 +95,7 @@ INSTALLED_APPS = [
     'billing',
     'categories',
     'image_uploader',
-    'language_pref'
+    'language_pref',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
