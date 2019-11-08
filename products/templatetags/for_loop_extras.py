@@ -11,7 +11,10 @@ def to_next_path(value):
 		link = '?' + link
 		return link 	
 	return ''
-
+@register.filter
+def to_clean_path(value):
+	print(value[3:])
+	return value
 
 @register.filter
 def index(array, index):
@@ -125,6 +128,15 @@ def to_user_currency(value, arg):
 			product_price = str(round(product_price)) + ' ' + currency
 	return product_price
 
+
+@register.filter
+def generalize(value):
+	"""
+	1 hour, 10 min ago  > 1 hour ago
+	5 days, 4 hours ago > 5 days ago
+	"""
+	generalized = value.split(',')[0]
+	return generalized
 
 
 

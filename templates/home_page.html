@@ -2,7 +2,7 @@
 {% load static %}
 {% url 'products:create' as products_create_url %}
 {% block content %}
-
+{% load i18n %}
 <head>
 <style type="text/css">
 
@@ -484,10 +484,6 @@ nav{
 
 </style>
 </head>
-
-
-
-
 {% include 'categories/snippets/navbar_categories.html' %}
 <!--First row - banner -->
 <div class="row fluid middle-heading banner-mobile marketplace" style='padding-top: 35px;padding-left:10px;text-align:left;text-transform: uppercase;'>

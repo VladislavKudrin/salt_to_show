@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.template.loader import get_template
 from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.translation import gettext as _
 
 
 from .models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
@@ -259,61 +260,24 @@ class CategoryFilterView(ListView):
 		context['fields_condition']=fields_condition  
 		# context['sizes']=sizes
 		context['fields_brand']=fields_brand
-		if self.request.session.get('language') == 'RU':
-			context['kids_navbar'] = 'Дети'
-			context['new_navbar'] = 'Свежее'
-			context['hide_filters'] = 'Спрятать фильтры'
-			context['found'] = 'Найдено'
-			context['items'] = 'айтемов'
-			context['sort_by'] = 'Сортировать по'
-			context['new'] = 'Сначала новые'
-			context['price_to_high'] = 'Сначала дешевые'
-			context['price_to_low'] = 'Сначала дорогие'
-			context['gender'] = 'Гендер'
-			context['overcategory'] = 'Тип'
-			context['category'] = 'Категория'
-			context['all'] = 'Все'
-			context['size'] = 'Размер'
-			context['condition'] = 'Состояние'
-			context['brand'] = 'Бренд'
-			context['price'] = 'Цена'
-		elif self.request.session.get('language') == 'UA':
-			context['kids_navbar'] = 'Дiти'
-			context['new_navbar'] = 'Свiже'
-			context['hide_filters'] = 'Сховати фільтри'
-			context['found'] = 'Знайдено'
-			context['items'] = 'айтемов'
-			context['sort_by'] = 'Сортувати по'
-			context['new'] = 'Спочатку новi'
-			context['price_to_high'] = 'Спочатку дешеві'
-			context['price_to_low'] = 'Спочатку дорогі'
-			context['gender'] = 'Гендер'
-			context['overcategory'] = 'Тип'
-			context['category'] = 'Категорiя'
-			context['all'] = 'Усi'
-			context['size'] = 'Рoзмiр'
-			context['condition'] = 'Стан'
-			context['brand'] = 'Бренд'
-			context['price'] = 'Цiна'
-		else:
-			context['kids_navbar'] = 'Kids'
-			context['new_navbar'] = 'New'
-			context['hide_filters'] = 'Hide Filters'
-			context['found'] = 'Found'
-			context['items'] = 'Items'
-			context['sort_by'] = 'Sort by'
-			context['new'] = 'New first'
-			context['price_to_high'] = 'Low price first'
-			context['price_to_low'] = 'High price first'
-			context['gender'] = 'Gender'
-			context['overcategory'] = 'Type'
-			context['category'] = 'Category'
-			context['all'] = 'All'
-			context['size'] = 'Size'
-			context['condition'] = 'Condition'
-			context['brand'] = 'Brand'
-			context['price'] = 'Price'
-
+		context['kids_navbar'] = _('Kids')
+		context['new_navbar'] = _('New')
+		context['hide_filters'] = _('Hide Filters')
+		context['show_filters'] = _('Show Filters')
+		context['found'] = _('Found')
+		context['items'] = _('Items')
+		context['sort_by'] = _('Sort by')
+		context['new'] = _('New first')
+		context['price_to_high'] = _('Low price first')
+		context['price_to_low'] = _('High price first')
+		context['gender'] = _('Gender')
+		context['overcategory'] = _('Type')
+		context['category'] = _('Category')
+		context['all'] = _('All')
+		context['size'] = _('Size')
+		context['condition'] = _('Condition')
+		context['brand'] = _('Brand')
+		context['price'] = _('Price')
 		return render(request, "products/list.html", context)
 
 
@@ -344,74 +308,73 @@ def translation_view(request):
 			# Size.objects.create(size_for = 'Tops', size_admin = size.size_admin, size = size.size, size_type = Overcategory.objects.get(overcategory='Kids'))
 			# Size.objects.create(size_for = 'Bottoms', size_admin = size.size_admin, size = size.size, size_type = Overcategory.objects.get(overcategory='Kids'))
 			# size.delete()
-		if request.POST:
-			#overcategories
-			for data in request.POST:
-				for overcategory in Overcategory.objects.all():
-					if data.split('_')[0] == overcategory.overcategory:
-						if data.split('_')[1] == 'ru':
-							overcategory.overcategory_ru = request.POST.get(data)
-							overcategory.save() 
-						elif data.split('_')[1] == 'en':
-							overcategory.overcategory_eng = request.POST.get(data)
-							overcategory.save() 
-						elif data.split('_')[1] == 'ua':
-							overcategory.overcategory_ua = request.POST.get(data)
-							overcategory.save()
-						elif data.split('_')[1] == 'main':
-							overcategory.overcategory = request.POST.get(data)
-							overcategory.save() 
-			#gender
-			for data in request.POST:
-				for gender in Gender.objects.all():
-					if data.split('_')[0] == gender.gender:
-						if data.split('_')[1] == 'ru':
-							gender.gender_ru = request.POST.get(data)
-							gender.save() 
-						elif data.split('_')[1] == 'en':
-							gender.gender_eng = request.POST.get(data)
-							gender.save() 
-						elif data.split('_')[1] == 'ua':
-							gender.gender_ua = request.POST.get(data)
-							gender.save()
-						elif data.split('_')[1] == 'main':
-							gender.gender = request.POST.get(data)
-							gender.save()
-			#categories
-			for data in request.POST:
-				for category in Category.objects.all():
-					if data.split('_')[0] == category.category:
-						if data.split('_')[1] == 'ru':
-							category.category_ru = request.POST.get(data)
-							category.save() 
-						elif data.split('_')[1] == 'en':
-							category.category_eng = request.POST.get(data)
-							category.save() 
-						elif data.split('_')[1] == 'ua':
-							category.category_ua = request.POST.get(data)
-							category.save()
-						elif data.split('_')[1] == 'main':
-							category.category = request.POST.get(data)
-							category.save() 
-			#undercategories
-			for data in request.POST:
-				for undercategory in Undercategory.objects.all():
-					if data.split('_')[0] == undercategory.undercategory:
-						if data.split('_')[1] == 'ru':
-							undercategory.undercategory_ru = request.POST.get(data)
-							undercategory.save() 
-						elif data.split('_')[1] == 'en':
-							undercategory.undercategory_eng = request.POST.get(data)
-							undercategory.save() 
-						elif data.split('_')[1] == 'ua':
-							undercategory.undercategory_ua = request.POST.get(data)
-							undercategory.save()
-						elif data.split('_')[1] == 'main':
-							undercategory.undercategory = request.POST.get(data)
-							undercategory.save()
+	# 	if request.POST:
+	# 		#overcategories
+	# 		for data in request.POST:
+	# 			for overcategory in Overcategory.objects.all():
+	# 				if data.split('_')[0] == overcategory.overcategory:
+	# 					if data.split('_')[1] == 'ru':
+	# 						overcategory.overcategory_ru = request.POST.get(data)
+	# 						overcategory.save() 
+	# 					elif data.split('_')[1] == 'en':
+	# 						overcategory.overcategory_eng = request.POST.get(data)
+	# 						overcategory.save() 
+	# 					elif data.split('_')[1] == 'ua':
+	# 						overcategory.overcategory_ua = request.POST.get(data)
+	# 						overcategory.save()
+	# 					elif data.split('_')[1] == 'main':
+	# 						overcategory.overcategory = request.POST.get(data)
+	# 						overcategory.save() 
+	# 		#gender
+	# 		for data in request.POST:
+	# 			for gender in Gender.objects.all():
+	# 				if data.split('_')[0] == gender.gender:
+	# 					if data.split('_')[1] == 'ru':
+	# 						gender.gender_ru = request.POST.get(data)
+	# 						gender.save() 
+	# 					elif data.split('_')[1] == 'en':
+	# 						gender.gender_eng = request.POST.get(data)
+	# 						gender.save() 
+	# 					elif data.split('_')[1] == 'ua':
+	# 						gender.gender_ua = request.POST.get(data)
+	# 						gender.save()
+	# 					elif data.split('_')[1] == 'main':
+	# 						gender.gender = request.POST.get(data)
+	# 						gender.save()
+	# 		#categories
+	# 		for data in request.POST:
+	# 			for category in Category.objects.all():
+	# 				if data.split('_')[0] == category.category:
+	# 					if data.split('_')[1] == 'ru':
+	# 						category.category_ru = request.POST.get(data)
+	# 						category.save() 
+	# 					elif data.split('_')[1] == 'en':
+	# 						category.category_eng = request.POST.get(data)
+	# 						category.save() 
+	# 					elif data.split('_')[1] == 'ua':
+	# 						category.category_ua = request.POST.get(data)
+	# 						category.save()
+	# 					elif data.split('_')[1] == 'main':
+	# 						category.category = request.POST.get(data)
+	# 						category.save() 
+	# 		#undercategories
+	# 		for data in request.POST:
+	# 			for undercategory in Undercategory.objects.all():
+	# 				if data.split('_')[0] == undercategory.undercategory:
+	# 					if data.split('_')[1] == 'ru':
+	# 						undercategory.undercategory_ru = request.POST.get(data)
+	# 						undercategory.save() 
+	# 					elif data.split('_')[1] == 'en':
+	# 						undercategory.undercategory_eng = request.POST.get(data)
+	# 						undercategory.save() 
+	# 					elif data.split('_')[1] == 'ua':
+	# 						undercategory.undercategory_ua = request.POST.get(data)
+	# 						undercategory.save()
+	# 					elif data.split('_')[1] == 'main':
+	# 						undercategory.undercategory = request.POST.get(data)
+	# 						undercategory.save()
 
-	else:
-		return redirect('home')
+	# else:
 	return render(request, "categories/translate.html", context)
 		
 

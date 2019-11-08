@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% load crispy_forms_tags %}
-
+{% load i18n %}
 {% block content %}
 
   <div class='text-center'>
@@ -17,6 +17,7 @@
             <input type="hidden" name="popchik" value="{{ user_email }}">
             <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
             <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
+            <div style='display: none' id='contactSubmitted'>{{ submitted }}</div>
              {{ form|crispy }}
              <button type="submit" class="btn btn-block button-black hover-button large-button">{{ button }}</button>
           </form>

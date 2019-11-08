@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% load pagination_tags %}	
+{% load pagination_tags %}
+{% load i18n %}	
 {% block content %}
 
 <head>
@@ -23,9 +24,9 @@
 
 			<div class='col-12 text-center'>
 				{% if object.profile_foto %}
-		        <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:80px; height: 80px">
+		        <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:60px; height: 60px">
 		        {% else %}
-		        <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:80px; height: 80px">
+		        <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:60px; height: 60px">
 		        {% endif %}
 			</div>
 		</div>
@@ -48,7 +49,7 @@
 		<div class='row'>
 			<div class='col-12'><br>
 
-					<p class="heading" id="products-by-user" >{{ items_title }}</p>
+					<p class="heading" id="products-by-user" >{% trans 'Items:' %}</p>
 
 			</div>
 		</div>
@@ -85,7 +86,7 @@
 	{% else %}
 	
 <div class='col mx-auto'>
-		<div class="heading text-center" style='color:#aeacac;'>{{ no_items }}</div>
+		<div class="heading text-center" style='color:#aeacac;'>{% trans 'No items yet' %}</div>
 </div>
 	{% endif %}
 

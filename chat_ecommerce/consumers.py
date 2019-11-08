@@ -18,10 +18,14 @@ class ChatConsumer(AsyncConsumer):
 		other_user = self.scope['url_route']['kwargs']['username'] #get that username from url kwargs, kwargs coming from routing.py urls
 		# other_user_full = User.objects.filter(username=other_user).first() #get user 
 		me = self.scope['user'] # takes user this.username gives username / self.request.user
-		print(me)
-		thread_obj = await self.get_thread(me, other_user) #get the thread
-		# print(me, thread_obj.id)
+		try:
+			product_slug = self.scope['url_route']['kwargs']['product_id']
+		except:
+			product_slug = None
+		thread_obj, created = await self.get_thread(user = me, other_username = other_user, product_slug = product_slug) #get the thread
+
 		self.thread_obj = thread_obj
+
 		chat_room = f'thread_{thread_obj.id}' #get chat_room (=thread)
 		# print(f'CHAT ROOM{chat_room}')
 		self.chat_room = chat_room
@@ -118,8 +122,8 @@ class ChatConsumer(AsyncConsumer):
 		return list(Thread.objects.filter(chatmessage__notification__user=user, chatmessage__notification__read='False').distinct().values_list('id', flat=True))
 
 	@database_sync_to_async
-	def get_thread(self, user, other_username):
-		return Thread.objects.get_or_new(user, other_username)[0]
+	def get_thread(self, user, other_username, product_slug):
+		return Thread.objects.get_or_new(user = user, other_username = other_username, product_slug = product_slug)
 
 	@database_sync_to_async
 	def create_chat_message(self, me, msg):

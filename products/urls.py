@@ -1,22 +1,5 @@
 from django.conf.urls import url
-
-
-
-from .views import (
-    # ProductListView, 
-    ProductDetailSlugView,
-    ProductCreateView,
-    AccountProductListView,
-    ProductUpdateView,
-    product_delete,
-    ProductDeleteView,
-    image_update_view,
-    image_create_order,
-    product_report,
-    FakeProductsListView,
-    # product_reported,
-
-    )
+from .views import *
 from categories.views import CategoryFilterView
 
 
@@ -35,9 +18,6 @@ urlpatterns = [
     url(r'^report/$', product_report, name='report'),
     url(r'^fakelist/$', FakeProductsListView.as_view(), name='fake-list'),
     url(r'^(?P<filter>[\w.@+-=&]+)$', CategoryFilterView.as_view(), name='list-filter'),
-
-    # url(r'^reported/$', product_reported, name='reported'),
-    # url(r'^wish-list/$', WishListView.as_view(), name='wish-list'),
 ]
 
 

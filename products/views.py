@@ -1,5 +1,6 @@
 
 import numpy
+import json
 from pathlib import Path
 from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse, HttpResponse
@@ -8,91 +9,42 @@ from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-import json
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.conf import settings
+from django.utils.translation import gettext as _
+from django.utils.translation import pgettext
+from django.utils import translation
+from django.core.mail import send_mail
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
-
-
 from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
 from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
 from image_uploader.models import unique_form_id_generator, UploadedFile
-from django.core.mail import send_mail
 
 
-
-
-
-
-
-class ProductFeaturedListView(ListView):
-	#queryset = Product.objects.all()
-	template_name = "products/list.html"
-	def get_queryset(self, *args, **kwargs):
-		request = self.request
-		return Product.objects.all().featured()
-
-class ProductFeaturedDetailView(ObjectViewedMixin, DetailView):
-	queryset = Product.objects.all().featured()
-	template_name = "products/featured-detail.html"
-
-	# def get_queryset(self, *args, **kwargs):
-	# 	request = self.request
-	# 	return Product.objects.featured()
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
-	#queryset = Product.objects.all()
 	template_name = "products/user-history.html"
-
-	#template_name = "products/list.html"
-
-	# def get_context_data(self, *args, **kwargs):
-	# 	context = super(ProductListView, self).get_context_data(*args, **kwargs)
-	##super обращается к классу-родителю, вызывает родитель-метод get_context_data
-	# 	print(context)
-	# 	return context
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
 		views = request.user.objectviewed_set.by_model(Product, model_queryset=False)
-		#.filter(content_type='product') #reverse relationship with ForeignKey
-		#viewed_ids = [x.object_id for x in views]
-		# viewed_ids=[]
-		# for x in views:
-		# 	views_ids.append(x.object_id)
 		return views
 		
-	def get_context_data(self, *args, **kwargs): #overwrite method
+	def get_context_data(self, *args, **kwargs): 
 		user = self.request.user
-		# all_wishes = user.wishes_user.all()
-		# wished_products = [wish.product for wish in all_wishes]
-		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  #default method
+		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
-		if self.request.session.get('language') == 'RU':
-			context['title']='Недавно просмотренное'
-		elif self.request.session.get('language') == 'UA':
-			context['title']='Нещодавно переглянуте'
-		else:
-			context['title']='Viewed items'		
-		# context['wishes'] = wished_products
 		return context
-
-def product_list_view(request):
-	queryset = Product.objects.all()
-	context = {
-		'object_list': queryset.order_by('-timestamp')
-	}
-	return render(request, "products/list.html", context)
 
 class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	queryset = Product.objects.all()
@@ -101,8 +53,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get("slug")
-		
-		#instance = get_object_or_404(Product, slug=slug, active=True)
 		try:
 			instance = Product.objects.get(slug=slug, active=True)
 		except Product.DoesNotExist:
@@ -112,7 +62,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 			instance = qs.first()
 		except:
 			raise Http404("Hmm")
-
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
 
@@ -127,67 +76,25 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		wishes = Wishlist.objects.filter(product=product).count() #counting all likes for a product
 		context['likes'] = wishes
 		context['region'] = product.user.region
-		# all_wishes = user.wishes_user.all()
-		# wished_products = [wish.product for wish in all_wishes]
 		slug = self.kwargs.get('slug')
 		all_ = ProductImage.objects.all().filter(slug=slug)
 		for idx, image in enumerate(all_):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
-		if self.request.session.get('language') == 'RU':
-			context['report'] = 'Жалоба?'
-			context['size'] = 'Размер:'
-			context['condition'] = 'Состояние:'
-			context['object_condition'] = product.condition.condition_ru
-			context['description'] = 'Описание:'
-			context['btn_title'] = 'Написать продавцу'
-			context['authentic'] = 'Оригинал'
-			context['verified'] = 'Двухфакторная проверка пройдена'
-			context['fake'] = 'Фейк'
-			context['checked_on'] = 'Проверено'
-			context['ai_checked'] = 'Проверено ИИ'
-			context['to_be_approved'] = 'После проверки экспертом айтем будет залит'
-			context['posted'] = 'Загружено'
-			context['ago'] = 'назад'
-			context['sex'] = product.sex.gender_ru
-			context['category'] = product.category.category_ru
-			context['undercategory'] = product.undercategory.undercategory_ru
-		elif self.request.session.get('language') == 'UA':
-			context['report'] = 'Скарга?'
-			context['size'] = 'Розмiр:'
-			context['condition'] = 'Стан:'
-			context['object_condition'] = product.condition.condition_ua
-			context['description'] = 'Опис:'
-			context['btn_title'] = 'Написати продавцю'
-			context['authentic'] = 'Оригiнал'
-			context['verified'] = 'Двухфакторна перевірка пройдена'
-			context['fake'] = 'Фейк'
-			context['checked_on'] = 'Перевірено'
-			context['ai_checked'] = 'Перевірено ШI'
-			context['to_be_approved'] = 'Пiсля перевірки экспертом айтем буде опублiкован'
-			context['posted'] = 'Завантажено'
-			context['ago'] = 'тому'
-			context['sex'] = product.sex.gender_ua
-			context['category'] = product.category.category_ua
-			context['undercategory'] = product.undercategory.undercategory_ua
-		else:
-			context['report'] = 'Report?'
-			context['size'] = 'Size:'
-			context['condition'] = 'Condition:'
-			context['object_condition'] = product.condition.condition_eng
-			context['description'] = 'Description:'
-			context['btn_title'] = 'Contact seller'
-			context['authentic'] = 'Authentic'
-			context['verified'] = '2-step-verified on'
-			context['fake'] = 'Fake'
-			context['checked_on'] = 'Checked on'
-			context['ai_checked'] = 'AI-checked'
-			context['to_be_approved'] = 'Needs to be approved by our expert team'
-			context['posted'] = 'Posted'
-			context['ago'] = 'ago'
-			context['sex'] = product.sex.gender_eng
-			context['category'] = product.category.category_eng
-			context['undercategory'] = product.undercategory.undercategory_eng
+		context['report'] = _('Report?')
+		context['size'] = _('Size:')
+		context['condition'] = _('Condition:')
+		context['object_condition'] = product.condition.condition_eng
+		context['description'] = _('Description:')
+		context['btn_title'] = _('Contact seller')
+		context['authentic'] = _('Authentic')
+		context['verified'] = _('2-step-verified on')
+		context['fake'] = _('Fake')
+		context['checked_on'] = _('Checked on')
+		context['ai_checked'] = _('AI-checked')
+		context['to_be_approved'] = _('Needs to be approved by our expert team')
+		context['posted'] = _('Posted')
+		context['ago'] = _('ago')
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -236,13 +143,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		else:
 			return self.form_invalid(form)
 
-			# errors = form.errors
-			# # HttpResponse(json.dumps(errors), status=404)
-			# response = JsonResponse({"error": "there was an error"})
-			# response.status_code = 403
-			# return(response)
-			# return JsonResponse(form.errors.as_json(), status=400)
-
 	def get(self, request, *args, **kwargs):
 		brands = Brand.objects.all()
 		brand_arr = []
@@ -250,7 +150,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():
-			language = request.session.get('language')
 			json_data={
 			'brand':brand_arr,
 			}
@@ -265,53 +164,29 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 				categories = [{
 					"category":data.category,
 					"id":data.id,
-					"category_language":data.return_language(language)
+					"category_language":_(data.category_eng)
 						}
 						for data in category_list]
 				undercategories = [{
 					"undercategory_for":data.undercategory_for.category,
 					"undercategory":data.undercategory,
 					"id":data.id,
-					'undercategory_language':data.return_language(language)
+					'undercategory_language':_(data.undercategory_eng)
 						}
 						for data in undercategory_list] 
 				json_data = {
 						'categories':categories,
 						'undercategories':undercategories
 						}
-				# qs = Size.objects.filter(size_for=selected_obj)
-				# sizes = [{
-				# 		"size": data.size,
-				# 		"id":data.id 
-				# 		} 
-				# 		for data in qs]
-				# json_data={
-				# 		'sizes': sizes
-				# 			}
 				return JsonResponse(json_data)
 			return JsonResponse(json_data)
 		product_form = ImageForm(request)
-		if self.request.session.get('language') == 'RU':
-			context={
-			'form': product_form,
-			'button': 'Залить',
-			'title':'Добавить новый айтем',
-			'form_id': form_id
-			}
-		elif self.request.session.get('language') == 'UA':
-			context={
-			'form': product_form,
-			'button': 'Залити',
-			'title':'Додати новий айтем',
-			'form_id': form_id
-			}
-		else:
-			context={
-			'form': product_form,
-			'button': 'Create',
-			'title':'Add a new item',
-			'form_id': form_id
-			}
+		context={
+		'form': product_form,
+		'button': pgettext('Upload_Item_create', 'Create'),
+		'title': _('Add a new item'),
+		'form_id': form_id
+		}
 
 		context['overcategories'] = Overcategory.objects.all()
 		context['genders'] = Gender.objects.all()
@@ -331,18 +206,14 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		path = "{base}{path}".format(base=base_url, path=url)
 
 		#Message after upload
-		subject = 'New item upload'
-		message = 'New product was uploaded. Please verify authenticity: \n {} \n Product Title: {} \n Product Description: \n {}'.format(path, product.title, product.description)
+		subject = _('New item upload')
+		message = _('New product was uploaded. Please verify authenticity: \n {} \n Product Title: {} \n Product Description: \n {}'.format(path, product.title, product.description))
 		from_email = settings.DEFAULT_FROM_EMAIL
 		to_email = settings.DEFAULT_FROM_EMAIL
 		send_mail(subject, message, from_email, [to_email], fail_silently=False)
 
-		if request.session.get('language')=='RU':
-			msg = 'Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку подтвердит модератор и айтем будет выставлен на продажу'
-		elif request.session.get('language')=='UA':
-			msg = 'Твій айтем перевірений Штучним Інтелектом. Протягом 24 годин перевірку підтвердить модератор, пiсля чого айтем буде виставлений на продаж'
-		else: 
-			msg = 'Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published'
+		msg = _('Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published')
+
 		messages.add_message(request, messages.SUCCESS, msg)
 
 		if self.request.is_ajax():	
@@ -355,22 +226,13 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 
 	def form_invalid(self, form):
 		if self.request.is_ajax():
-			# json_data={
-			# 	'errors':json.dumps(form.errors)
-			# 	}
+
 			return JsonResponse({'error':form.errors})
-		if self.request.session.get('language') == 'RU':
-			context={
-			'form': form,
-			'button': 'Залить',
-			'title':'Добавить новый айтем',
-			}
-		else:
-			context={
-			'form': form,
-			'button': 'Create',
-			'title':'Add a new product'
-			}
+		context={
+		'form': form,
+		'button': pgettext('Upload_Item_create', 'Create'),
+		'title':_('Add a new item')
+		}
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(self.request, 'products/product-create.html', context)
 
@@ -383,15 +245,6 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
 		user = self.request.user
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Мои айтемы'
-			context['emptiness'] = 'Пока что здесь пусто'
-		elif self.request.session.get('language') == 'UA':
-			context['title'] = 'Мої айтеми'
-			context['emptiness'] = 'Пока що тут пусто'
-		else:
-			context['title'] = 'My items'
-			context['emptiness'] = 'No items yet'
 		return context
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
@@ -417,7 +270,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		request = self.request
 		slug = self.kwargs.get('slug')
 		user = self.request.user
-		#instance = get_object_or_404(Product, slug=slug, active=True)
 		try:
 			instance = Product.objects.get(slug=slug, active=True, user=user)
 		except Product.DoesNotExist:
@@ -430,9 +282,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 			instance = qs.first()
 		except:
 			raise Http404("Hmm")
-
 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 		return instance
+
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
 		request = self.request
@@ -444,15 +296,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 		context['categories_all'] = Category.objects.filter(category_for = Gender.objects.get(gender = 'Women'))
 		context['conditions'] = Condition.objects.all()
 		context['sizes'] = Size.objects.all()
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Редактировать'
-			context['button']='Сохранить' 
-		elif self.request.session.get('language') == 'UA':
-			context['title'] = 'Редагувати'
-			context['button']='Зберегти' 
-		else:
-			context['title'] = 'Update'
-			context['button']='Save'
+		context['object_slug'] = slug 
+		context['title'] = _('Update')
+		context['button']=_('Save')
 		
 		new_all_=[]
 		all_ = ProductImage.objects.all().filter(slug=slug)
@@ -460,6 +306,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
 		context['images'] = new_all_
 		return context
+
 	def form_valid(self, form):
 		request = self.request
 		product = form.save()
@@ -471,27 +318,12 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 							}
 			return JsonResponse(json_data)
 		return redirect(url)
+
 	def form_invalid(self, form):
 		if self.request.is_ajax():
-			# json_data={
-			# 	'errors':json.dumps(form.errors)
-			# 	}
 			return JsonResponse({'error':form.errors})
-		if self.request.session.get('language') == 'RU':
-			context={
-			'form': form,
-			'button': 'Залить',
-			'title':'Добавить новый айтем',
-			}
-		else:
-			context={
-			'form': form,
-			'button': 'Create',
-			'title':'Add a new product'
-			}
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
 		return render(self.request, 'products/product-create.html', context)
-
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
 	form_class = ProductCreateForm
@@ -512,28 +344,6 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 			raise Http404("Hmm")
 		return instance
 
-class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
-	template_name = 'products/product-delete.html'
-	model = Product
-	success_url='/products/list/'
-	def get_object(self, *args, **kwargs):
-		request = self.request
-		slug = self.kwargs.get('slug')
-		user = self.request.user
-		#instance = get_object_or_404(Product, slug=slug, active=True)
-		try:
-			instance = Product.objects.get(slug=slug, active=True, user=user)
-		except Product.DoesNotExist:
-			raise Http404("Not found!")
-		except Product.MultipleObjectsReturned:
-			qs = Product.objects.filter(slug=slug, active=True, user=user)
-			instance = qs.first()
-		except:
-			raise Http404("Hmm")
-
-		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
-		return instance
-	
 @login_required
 def product_delete(request):
 	if request.user.is_authenticated():
@@ -544,17 +354,14 @@ def product_delete(request):
 			try:
 				product_obj = Product.objects.get(id=product_id, user = user)
 			except Product.DoesNotExist:
-				print("Show message to user!")
 				return redirect("accounts:home")
 			if product_obj.user == user:
 				product_obj.delete()
 				deleted = True
 			if request.is_ajax():
-				print("Ajax request")
 				json_data={
 					"deleted":deleted,
 				}
-				#return JsonResponse({"message":"Error 400"}, status_code=400)
 				return JsonResponse(json_data, status=200)
 		return redirect("products:user-list")
 	else:
@@ -564,66 +371,58 @@ def product_delete(request):
 def product_report(request):
 	product_id=request.POST.get('product_id')
 	user = request.user
-	# print('SUCCESS REPORT WORKING')
-	# product_obj = Product.objects.get(id=product_id)
-	
 	previous = request.POST.get('previous', '/')
-		# return HttpResponseRedirect(next)
+
 	if product_id is not None:
 		try:
 			product_obj = Product.objects.get(id=product_id)
 		except Product.DoesNotExist:
 			return HttpResponseRedirect(previous)
-	# 	user_wishes_exist = user_wishes.filter(product=product_obj)
 		reported_product = ReportedProduct.objects.filter(user = user, product = product_obj)
 		if reported_product.exists():
-			if request.session.get('language')=='RU':
-				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы уже получили твою жалобу.')
-			elif request.session.get('language')=='UA':
-				messages.add_message(request, messages.SUCCESS, 'Дякуємо. Ми вже отримали твою скаргу.')
-			else:
-				messages.add_message(request, messages.SUCCESS, "Thank you. We have already received your report.")
-	# 		user.wishes.remove(product_obj)
-	# 		user_wishes_exist.first().delete()
-	# 		added = False
-	# 		user_wishes_exist=user_wishes.count()
+			messages.add_message(request, messages.SUCCESS, _("Thank you. We have already received your report."))
 		else: 
 			ReportedProduct.objects.create(user=user, product=product_obj)
-			if request.session.get('language')=='RU':
-				messages.add_message(request, messages.SUCCESS, 'Спасибо. Мы проверим этот айтем мануально.')
-			elif request.session.get('language')=='UA':
-				messages.add_message(request, messages.SUCCESS, 'Дякуємо. Ми перевіримо цей айтем мануально.')
-			else:
-				messages.add_message(request, messages.SUCCESS, "Thank you. We will check this item manually.")
-	# 		added = True
-	# 	if request.is_ajax():
-	# 		json_data={
-	# 			"added": added,
-	# 			"removed": not added,
-	# 			 "wishes_count": user_wishes_exist,
-	# 			 'product_likes': product_likes,
-	# 		}
-	# 		return JsonResponse(json_data, status=200)
+			messages.add_message(request, messages.SUCCESS, _("Thank you. We will check this item manually."))
 	return HttpResponseRedirect(previous)
 
 class FakeProductsListView(LoginRequiredMixin, ListView):
 	template_name = 'products/fake-list.html'
+
 	def get_queryset(self, *args, **kwargs):
 		return Product.objects.fake()
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
-		if self.request.session.get('language') == 'RU':
-			context['title'] = 'Обнаруженные фейки:'
-		elif self.request.session.get('language') == 'UA':
-			context['title'] = 'Виявлені фейки:'
-		else:
-			context['title'] = 'Detected fakes:'
-		return context
+		context['title'] = 'Detected fakes:'
 
 
 
 
+
+
+
+
+# class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
+# 	template_name = 'products/product-delete.html'
+# 	model = Product
+# 	success_url='/products/list/'
+# 	def get_object(self, *args, **kwargs):
+# 		request = self.request
+# 		slug = self.kwargs.get('slug')
+# 		user = self.request.user
+# 		try:
+# 			instance = Product.objects.get(slug=slug, active=True, user=user)
+# 		except Product.DoesNotExist:
+# 			raise Http404("Not found!")
+# 		except Product.MultipleObjectsReturned:
+# 			qs = Product.objects.filter(slug=slug, active=True, user=user)
+# 			instance = qs.first()
+# 		except:
+# 			raise Http404("Hmm")
+# 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+# 		return instance
+	
 
 
 

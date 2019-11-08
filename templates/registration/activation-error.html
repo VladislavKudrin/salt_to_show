@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %} 
+{% load i18n %}
 {% block content %}
 
 <style type="text/css">
@@ -10,19 +11,26 @@
     }
 </style>
 
-{% if request.session.language == 'RU' %}
+<div class='row mx-auto'>
+    <div class="col-xs-5 col-md-12 text-md-center">
+        {% if key %}
+        <p class="heading m-0 mt-5">{% trans 'Activation Error' %}</p>
+        <p class="heading m-0 mt-5" >{% trans 'Please try again' %}</p>
+        {% else %}
+            <p class="heading m-0 mt-5" >{% trans 'Re-activate your Email below' %}</p>
+        {% endif %}
+    </div>
+    <div class="col-4 mx-auto text-center">
 
-{% include 'languages/activation-error-ru.html' %}  
+            <form method='POST' action=''>{% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-dark" type='submit' value="{% trans 'Resend Activation' %}"/>
+            </form>
+      </div>
+</div>
 
-{% elif request.session.language == 'UA' %}
 
-{% include 'languages/activation-error-ua.html' %}  
- 
-{% else %}
-
-{% include 'languages/activation-error-en.html' %}  
-
-{% endif %}
+</div>
 
 
 {% endblock %}

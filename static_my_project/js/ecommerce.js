@@ -69,23 +69,11 @@ $(document).ready(
     var contactForm = $('.contact-form')
     var contactFormMethod = contactForm.attr("method")
     var contactFormEndpoint = contactForm.attr("action")
-    function displaySubmitting(submitBtn, defaultText, doSubmit, languageOption){
+    function displaySubmitting(submitBtn, defaultText, doSubmit, submitText){
       if (doSubmit){
-        if (languageOption == 'RU'){
         submitBtn.addClass("disabled")
-        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Отправка....")
+        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> "+submitText)
         submitBtn.attr("disabled", true)
-        }//if rus
-        else if (languageOption == 'UA'){
-        submitBtn.addClass("disabled")
-        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Відправка....")
-        submitBtn.attr("disabled", true)
-        }//if not rus
-        else {
-        submitBtn.addClass("disabled")
-        submitBtn.html("<i class='fas fa-spin fa-spinner'></i> Sending....")
-        submitBtn.attr("disabled", true)
-        }//if not rus
         
       } //if submit
       else {
@@ -101,35 +89,19 @@ $(document).ready(
         var contactFormSubmitBtnTxt = contactFormSubmitBtn.text()
         var contactFormData = contactForm.serialize()
         var thisForm = $(this)
-        displaySubmitting(contactFormSubmitBtn, "",true, language)
+        var submitText = $('#contactSubmitted').text()
+        displaySubmitting(contactFormSubmitBtn, "",true, submitText)
         $.ajax({
           method: contactFormMethod,
           url: contactFormEndpoint,
           data: contactFormData,
           success: function(data){
             thisForm[0].reset()
-            if (language == 'RU'){
-              $.alert({
-              title: 'Успех',
+            $.alert({
+              title: data.success_message,
               content: data.message,
               theme: "modern"
               })//alert
-            }//if rus
-            else if (language == 'UA')  {
-              $.alert({
-              title: 'Успіх',
-              content: data.message,
-              theme: "modern"
-              })//alert
-            }//if not rus
-            else {
-              $.alert({
-              title: 'Success',
-              content: data.message,
-              theme: "modern"
-              })//alert
-            }//if not rus
-
           setTimeout(
             function()
             {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false)}, 1000)

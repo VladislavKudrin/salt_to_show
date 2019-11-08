@@ -1,5 +1,6 @@
 {% extends "base_no_footer.html" %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 
 <head>
@@ -314,7 +315,7 @@ button:focus {
 	</div>
 	<div id="inbox-text" class='row text-center align-items-center'>
 		<div class='col'>
-			{{ title }}
+			{% trans 'Please select a chat to start conversation' %}
 		</div>
 	</div>
 </div>
