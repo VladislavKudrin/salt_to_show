@@ -282,7 +282,7 @@ LANGUAGES=[
     ('uk', 'Ukranian'),
 
 ]
-
+CHAT_WITH_PRODUCTS = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 

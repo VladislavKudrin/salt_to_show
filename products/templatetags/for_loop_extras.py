@@ -4,6 +4,16 @@ from django.conf import settings
 from django.shortcuts import redirect
 register = template.Library()
 
+
+
+@register.filter
+def get_chat_options(value):
+	if settings.CHAT_WITH_PRODUCTS:
+		return settings.CHAT_WITH_PRODUCTS
+	else:
+		return False
+
+
 @register.filter
 def to_next_path(value):
 	if '?' in value:
