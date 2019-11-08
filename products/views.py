@@ -123,8 +123,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs) 
-		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-		context['cart']=cart_obj
 		new_all_=[]
 		request = self.request
 		user = request.user
