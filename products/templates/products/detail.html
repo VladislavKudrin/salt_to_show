@@ -293,6 +293,9 @@ p {
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' %} 
 		{% endif %}
+		{{ request.user.is_admin }}
+		{{ request.user }}
+		{{ object.user }}
 	</div>
 
 	<div class="col-8 my-auto">
