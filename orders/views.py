@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView
 
 from billing.models import BillingProfile
-from .models import Order
+from .models import Order, Transaction
 
 class OrderListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
@@ -18,3 +18,9 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 		if qs.count()==1:
 			return qs.first()
 		raise Http404
+
+
+def transaction_initiation_view(request):
+	print(request.POST)
+	next_ = request.POST.get('next')
+	return redirect(next_)

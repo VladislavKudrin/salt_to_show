@@ -6,6 +6,7 @@ from datetime import datetime, date, timezone
 
 from products.models import Product
 
+
 class ThreadManager(models.Manager):
     # def by_user(self, user): 
     #     qlookup = Q(first=user) | Q(second=user)
@@ -72,14 +73,14 @@ class ThreadManager(models.Manager):
 
 
 class Thread(models.Model):
-    first     = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_first')
-    second    = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_second')
-    updated   = models.DateTimeField(auto_now=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    product   = models.ForeignKey(Product, null=True, blank=True)
-    active    = models.BooleanField(default=True)
+    first         = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_first')
+    second        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_second')
+    updated       = models.DateTimeField(auto_now=True)
+    timestamp     = models.DateTimeField(auto_now_add=True)
+    product       = models.ForeignKey(Product, null=True, blank=True)
+    active        = models.BooleanField(default=True)
     
-    objects      = ThreadManager()
+    objects       = ThreadManager()
     
     def get_absolute_url_first(self):
         if self.product:

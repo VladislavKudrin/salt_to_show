@@ -510,9 +510,17 @@ button:focus {
 									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.first.username }}
 									</a>
-									{% if object.product %}
+									{% if object.product and request.user != object.product.user %}
 										<div style='float: right!important;'>
-											<button class="btn btn-dark">Buy</button>
+											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
+												<input type="hidden" name="next" value="{{ request.path }}">
+												<button type="submit" class="btn btn-dark border-dark">Buy</button>
+											</form>
+											
+										</div>
+									{% elif object.product and request.user == object.product.user %}
+										<div style='float: right!important;'>
+											<button class="btn btn-light border-dark">Sell</button>
 										</div>
 									{% endif %}
 									</div>
@@ -545,6 +553,19 @@ button:focus {
 									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.second.username }}
 								    </a>
+									{% if object.product and request.user != object.product.user %}
+										<div style='float: right!important;'>
+											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
+												<input type="hidden" name="next" value="{{ request.path }}">
+												<button type="submit" class="btn btn-dark border-dark">Buy</button>
+											</form>
+									
+										</div>
+									{% elif object.product and request.user == object.product.user %}
+										<div style='float: right!important;'>
+											<button class="btn btn-light border-dark">Sell</button>
+										</div>
+									{% endif %}
 									</div>
 								</div>	
 						
