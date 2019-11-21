@@ -351,7 +351,6 @@ button:focus {
 <div class='container-fluid m-0 p-0'>
 
 	<div class='row'>
-
 		<div class='col-12 col-md-3' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
@@ -513,15 +512,21 @@ button:focus {
 									{% if object.product and request.user != object.product.user %}
 										<div style='float: right!important;'>
 											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
-												<input type="hidden" name="next" value="{{ request.path }}">
+												<input type="hidden" name="next" value="{{ request.path }}" readonly="true">
+												<input type="hidden" name="product" value="{{ object.product.id }}" readonly="true">
+												<input type="hidden" name="opponent" value="{{ object.first }}" readonly="true">
 												<button type="submit" class="btn btn-dark border-dark">Buy</button>
 											</form>
 											
 										</div>
 									{% elif object.product and request.user == object.product.user %}
-										<div style='float: right!important;'>
-											<button class="btn btn-light border-dark">Sell</button>
-										</div>
+									<!-- Transaction initiated, but not confirmed -->
+										{% if object.transaction_thread.accepted == False %}
+											<div style='float: right!important;'>
+												<button class="btn btn-light border-dark">Sell</button>
+											</div>
+										{% endif %}
+									<!-- Transaction initiated, but not confirmed -->
 									{% endif %}
 									</div>
 								</div>
@@ -550,21 +555,27 @@ button:focus {
 									</div>
 
 									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
-									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.first.get_absolute_url }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.second.username }}
 								    </a>
 									{% if object.product and request.user != object.product.user %}
 										<div style='float: right!important;'>
 											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
-												<input type="hidden" name="next" value="{{ request.path }}">
+												<input type="hidden" name="next" value="{{ request.path }}" readonly="true">
+												<input type="hidden" name="product" value="{{ object.product.id }}" readonly="true">
+												<input type="hidden" name="opponent" value="{{ object.second }}" readonly="true">
 												<button type="submit" class="btn btn-dark border-dark">Buy</button>
 											</form>
 									
 										</div>
 									{% elif object.product and request.user == object.product.user %}
-										<div style='float: right!important;'>
-											<button class="btn btn-light border-dark">Sell</button>
-										</div>
+									<!-- Transaction initiated, but not confirmed -->
+										{% if object.transaction_thread.accepted == False %}
+											<div style='float: right!important;'>
+												<button class="btn btn-light border-dark">Sell</button>
+											</div>
+										{% endif %}
+									<!-- Transaction initiated, but not confirmed -->
 									{% endif %}
 									</div>
 								</div>	

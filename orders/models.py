@@ -170,7 +170,7 @@ post_save.connect(post_save_order, sender=Order)
 class Transaction(models.Model):
 	accepted = models.BooleanField(default=False)
 	order    = models.OneToOneField(Order, null=True, blank=True)
-	thread   = models.OneToOneField(Thread, blank = True, null=True)
+	thread   = models.OneToOneField(Thread, blank = True, null=True,related_name="transaction_thread")
 
 
 
