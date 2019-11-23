@@ -5,7 +5,6 @@ $(document).ready(
 
 
 
-
     //click image
     function click_image(){
       $('.wish-div').click(
@@ -20,11 +19,19 @@ $(document).ready(
           
 
 
+
+
     //search
       var searchForm = $(".search-form")
       var searchInput = searchForm.find("[name='q']") //input name = 'q'
       var actionEndpoint = searchForm.attr("action");
+      var searchAutocompleteInput = $("#searchAutoComplete")
+      var currentPath = window.location.href
 
+      // on search page autofocus on by default
+      if (currentPath.indexOf("search") != -1){
+        searchAutocompleteInput.focus();
+      }
 
       $.ajax({
       url: actionEndpoint,
@@ -32,22 +39,19 @@ $(document).ready(
       success: function(data){
               var availableTags = data.filtered_products
               var searchBtn = searchForm.find("[type='submit']")
+
               $( "#searchAutoComplete" ).autocomplete({
-                          source: availableTags
+                          source: availableTags,
+                          position: { my: "left-24 bottom", at: "left top", collision: "flip" }
                           }).data("ui-autocomplete")._renderItem=function (ul, item) { //for  clicking results
                           return $("<li></li>")
                           .data("item.autocomplete", item)
                           .append("<a href='/search/?q=" + item.value + "'>"+"<span class='suggestions'>" +item.value+ "</span></a>")
                           .appendTo(ul);
-                          };
-              $('#ui-id-1').attr('style', 'z-index:2000')
+};
+              $('#ui-id-1').attr('style', 'z-index:2000;')
               }, 
       error: function(errorData){
-          // $.alert({
-          //     title: 'OOps!',
-          //     content: 'Simple alert!',
-          //     theme: "modern"
-          //   });
           console.log('some error');
             }
       })//ajax

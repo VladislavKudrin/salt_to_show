@@ -73,14 +73,14 @@
 }
 
 .search-button {
-  font-size: 14px;
+/*  font-size: 14px;
   padding: 6px 12px;
   background-size: 1000px;
   -webkit-transition: background 350ms ease-out;
   -moz-transition: background 350ms ease-out;
   -ms-transition: background 350ms ease-out;
   -o-transition: background 350ms ease-out;
-  transition: background 350ms ease-out;
+  transition: background 350ms ease-out;*/
 }
 
 .medium-button {

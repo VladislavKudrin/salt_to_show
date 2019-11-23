@@ -141,5 +141,8 @@ if settings.DEBUG:
 
 
 
+admin.site.site_header = 'SALT ADMIN'                    # default: "Django Administration"
+admin.site.index_title = 'SALT ADMIN'                   # default: "Site administration"
+admin.site.site_title = 'SALT'                          # default: "Django site admin"
 
 

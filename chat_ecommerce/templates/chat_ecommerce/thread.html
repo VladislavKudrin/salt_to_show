@@ -509,7 +509,7 @@ button:focus {
 										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
 									</a>
 									{% else %}
-									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 									</a>
 									{% endif %}
@@ -518,7 +518,7 @@ button:focus {
 									</div>
 
 									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
-									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.second.username }}
 								    </a>
 									</div>

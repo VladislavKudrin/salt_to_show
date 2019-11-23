@@ -514,8 +514,8 @@ msgstr "Забагато файлів, макс. сума 8"
 
 #: products/templates/products/product-create.html:160
 msgid ""
-"Email help@saltysalt.co if the brand you are trying to add does not exist."
-msgstr "Напиши на help@saltysalt.co якщо твій бажаний бренд відсутній."
+"Email info@saltish.co if the brand you are trying to add does not exist."
+msgstr "Напиши на info@saltish.co якщо твій бажаний бренд відсутній."
 
 #: products/templates/products/product-create.html:262
 msgid "Photos*"
