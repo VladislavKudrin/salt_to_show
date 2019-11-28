@@ -34,7 +34,6 @@ class AddressListView(LoginRequiredMixin, ListView):
         return Address.objects.filter(billing_profile=billing_profile)
 
 
-
 class AddressUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'addresses/update.html'
     form_class = AddressForm

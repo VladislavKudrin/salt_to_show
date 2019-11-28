@@ -4,6 +4,9 @@ import os
 from .settings import BASE_DIR
 from categories.models import Brand
 from django.utils.text import slugify
+from django.core.validators import RegexValidator
+from django.utils.translation import gettext as _
+
 
 
 def random_string_generator_username():
@@ -77,9 +80,11 @@ def unique_slug_generator(instance, new_slug=None):
 
 
 
+def add_message(backend, user, request, response, *args, **kwargs):
+    messages.add_message(request, messages.SUCCESS, _("You're in"))
 
 
-
+alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
 
 # def create_brands(f):
 # #     # print(f.read())

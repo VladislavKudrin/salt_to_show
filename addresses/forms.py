@@ -2,22 +2,25 @@ from django import forms
 
 from .models import Address
 
-
+from billing.models import BillingProfile
 class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = [
-            #'billing_profile',
-            #'address_type',
-            'nickname',
             'name',
-            'address_line_1',
-            'address_line_2',
+            'additional_line',
+            'street',
+            'number',
+            'postal_code',
             'city',
-            'country',
             'state',
-            'postal_code'
+            'country',
+            'post_office'        
         ]
+
+    def __init__(self, request, *args, **kwargs):
+        super(AddressForm, self).__init__(*args, **kwargs)
+        self.request=request
 
 
 
@@ -28,14 +31,13 @@ class AddressCheckoutForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = [
-            'nickname',
             'name',
-            #'billing_profile',
-            #'address_type',
-            'address_line_1',
-            'address_line_2',
+            'additional_line',
+            'street',
+            'number',
+            'postal_code',
             'city',
-            'country',
             'state',
-            'postal_code'
+            'country',
+            'post_office'        
         ]

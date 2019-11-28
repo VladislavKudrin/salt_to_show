@@ -16,14 +16,16 @@ from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django.utils import translation
-
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePreference
-from .forms import RegisterLoginForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm, RegionModalForm
+from .forms import *
 from .signals import user_logged_in_signal
 from products.models import Product
 from marketing.utils import Mailchimp
 from marketing.models import MarketingPreference
+from billing.models import BillingProfile
+from addresses.models import Address
+from ecommerce.utils import add_message
 
 
 def region_init(request):
@@ -192,39 +194,6 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			messages.add_message(form.request, messages.SUCCESS, _("You're in"))				
 		return redirect(next_path)
 
-def add_message(backend, user, request, response, *args, **kwargs):
-	messages.add_message(request, messages.SUCCESS, _("You're in"))
-
-class UserDetailUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
-	form_class = UserDetailChangeForm
-	template_name='accounts/detail-update-view.html'
-	def get_object(self):
-		return self.request.user
-
-	def get_context_data(self, *args, **kwargs):
-		context = super(UserDetailUpdateView, self).get_context_data(*args,**kwargs)
-		context['title'] = _('Update your details')
-		context['password_btn'] = _('Change password')
-		context['save_btn'] = _('Save')
-		context['logout_btn'] = _('Logout')
-		return context
-
-	def get_success_url(self):
-		return reverse("accounts:user-update")
-
-	# def form_valid(self, form):
-	# 	print('Form valid')
-	# 	user = self.request.user
-	# 	print(user.region)
-	# 	mark_pref = MarketingPreference.objects.filter(user=user).first()
-	# 	if mark_pref.subscribed == True: 
-	# 		print('Forms Acc, if True')
-	# 		response_status, response = Mailchimp().subscribe(user.email)
-	# 	elif mark_pref.subscribed == False:
-	# 		print('Forms acc, if True') 
-	# 		response_status, response = Mailchimp().unsubscribe(user.email)
-	# 	return super(UserDetailUpdateView, self).form_valid(form)
-
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
 
@@ -257,7 +226,6 @@ class WishListView(LoginRequiredMixin, ListView):
 		user = self.request.user
 		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
 		wished_products = [wish.product for wish in wishes]
-		print(wished_products)
 		# pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
 		return wished_products
 		#context = super(WishListView, self).get_context_data(*args,**kwargs)
@@ -330,44 +298,42 @@ class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
 	# 	request.session['guest_email_id'] = new_guest_email.id
 	# 	return redirect(self.get_next_url())
 
-	
-# def login_page(request):
-# 	form = LoginForm(request.POST or None)
-# 	context ={
+class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
+	form_class = AccountMultiForm
+	template_name='accounts/account-update-view.html'
 
-# 		'form':form
+	def get_object(self):
+		return self.request.user
 
-# 	}
-# 	#print(request.user.is_authenticated())
+	def get_address(self):
+		return Address.objects.filter(billing_profile__user=self.object).first()
 
-# 	next_ = request.GET.get('next')
-# 	next_post = request.POST.get('next')
-# 	redirect_path=next_ or next_post or None
-# 	if form.is_valid():
-# 		username = form.cleaned_data.get("username")
-# 		password = form.cleaned_data.get("password")		
-# 		user = authenticate(request, username=username, password=password)
-# 		if user is not None:
-# 			login(request, user)
-# 			try:
-# 				del request.session['guest_email_id']
-# 			except:
-# 				pass
-# 			if is_safe_url(redirect_path, request.get_host()):
-# 				return redirect(redirect_path)
-# 			else:
-# 				return redirect("/")
-# 		else:
-# 			print("Error")
-	        
-# 	return render(request, "accounts/login.html", context)
+	def get_success_url(self):
+		return reverse("accounts:user-update")
 
-# #User = get_user_model()
+	def form_valid(self, form):
+		user_form = form['user_form'].save()
+		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
+		profile = form['address_form'].save(commit=False)
+		profile.billing_profile = billing_profile
+		profile.save()
+		return super(AccountUpdateView, self).form_valid(form)
 
+	def get_context_data(self, *args, **kwargs):
+		context = super(AccountUpdateView, self).get_context_data(*args,**kwargs)
+		context['title'] = _('Update your details')
+		context['password_btn'] = _('Change password')
+		context['save_btn'] = _('Save')
+		context['logout_btn'] = _('Logout')
+		return context
 
-
-
-
+	def get_form_kwargs(self):
+		kwargs = super(AccountUpdateView, self).get_form_kwargs()
+		kwargs.update(instance={
+		    'user_form': self.object,
+		    'address_form': self.get_address()
+		})
+		return kwargs
 
 
 

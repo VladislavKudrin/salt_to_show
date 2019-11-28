@@ -2,14 +2,11 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.core.urlresolvers import reverse
-
-
 from accounts.models import GuestEmail
-
 import stripe
+
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe")
 STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk')
-
 User=settings.AUTH_USER_MODEL
 
 

@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'dj_pagination',
     "django_cron",
+    'betterforms',
 
     #our apps
     'chat_ecommerce',
