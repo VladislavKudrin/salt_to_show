@@ -1,4 +1,3 @@
-
 import numpy
 import json
 from pathlib import Path
@@ -26,9 +25,10 @@ from carts.models import Cart
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
-from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
+from .forms import *
 from image_uploader.models import unique_form_id_generator, UploadedFile
-
+from addresses.models import Address
+from billing.models import BillingProfile, Card
 
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
@@ -395,8 +395,61 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 		context['title'] = 'Detected fakes:'
 
 
+class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
+	form_class = CheckoutMultiForm
+	template_name='products/checkout.html'
+
+	def get_object(self):
+		product_id = self.kwargs.get('product_id')
+		if product_id.isdigit():
+			product_obj = Product.objects.filter(id=product_id).first()
+			if product_obj is not None:
+				self.product = product_obj
+			else: 
+				raise Http404("Product with this id does not exist")
+		else: 
+			raise Http404("Some asshole put a non-digit to url")
+		return self.request.user
+		
+
+	def get_address(self):
+		return Address.objects.filter(billing_profile__user=self.object).first()
+
+	def get_card(self):
+		return Card.objects.filter(billing_profile__user=self.object).first()
+
+	def get_success_url(self):
+		return reverse("accounts:user-update")
+
+	def form_valid(self, form):
+		user_form = form['user_form'].save()
+		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
+		profile = form['address_form'].save(commit=False)
+		profile.billing_profile = billing_profile
+		profile.save()
+		card_form = form['card_form'].save()
+		return super(ProductCheckoutView, self).form_valid(form)
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)
+		context['title'] = _('Update your details')
+		context['password_btn'] = _('Change password')
+		context['buy_btn'] = ('Оплатить')
+		context['product'] = self.product
+		return context
 
 
+	def get_form_kwargs(self):
+		kwargs = super(ProductCheckoutView, self).get_form_kwargs()
+		kwargs.update(instance={
+		    'user_form': self.object,
+		    'address_form': self.get_address(),
+		    'card_form': self.get_card(),
+		})
+		return kwargs
+
+
+		
 
 
 

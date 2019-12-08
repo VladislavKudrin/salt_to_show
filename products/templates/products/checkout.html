@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %} 
+{% load static %}
+{% load for_loop_extras %}
+{% load checked_time %}
+{% block content %}
+
+<head>
+<style type="text/css">
+
+.change-ava{
+  min-width:155px;
+}
+
+#trigger {
+    visibility: hidden; 
+    display: none; 
+  } 
+
+label{
+  display:flex; 
+  font-size:10px; 
+  color:white; 
+  opacity:.4; 
+  margin-bottom: 0px; 
+  padding-top: 5px;
+}
+
+input{
+  background:transparent;
+  border:none;
+  border-bottom:1px solid transparent;
+  color:#dbdce0; transition: 
+  border-bottom .4s; 
+  width:100% !important;
+}
+
+input:focus{
+  border-bottom:1px solid #1abc9c; 
+  outline:none;
+}
+
+.credit{
+  background:#16181a; 
+  border-radius:14px !important; 
+  max-width: 340px; 
+  margin:auto;
+  padding:40px 30px 10px 30px; 
+  box-shadow: 2px 10px 40px black; 
+  line-height: normal;
+}
+
+.logo-card{
+  max-width:50px; 
+  margin-top: -50px;
+}
+
+
+
+</style>
+</head>
+
+
+
+
+<form action="" method="POST" role="form" enctype='multipart/form-data' class=''>
+{% csrf_token %}
+<div class='container' style="width:70%">
+  <div class="row">
+
+
+
+
+    <p class="col-12 text-center heading">Продукт</p>
+      <div class='col-xs-12 card-full text-center  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+        {% include 'products/snippets/card.html' with instance=product %}
+      </div>
+
+
+
+
+
+    <p class="col-12 text-center heading">Обновить инфу</p>
+    <div class="col-4 alert alert-primary text-center">
+      {% if object.profile_foto %}
+      <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:120px; height: 120px">
+      {% else %}
+      <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:120px; height: 120px">
+      {% endif %}
+      {{form.user_form.profile_foto|as_crispy_field}} 
+    </div>
+    <div class="col-4 alert alert-primary">
+      {{form.user_form.username|as_crispy_field}}
+      {{form.user_form.email|as_crispy_field}}
+    </div>
+    <div class="col-4 alert alert-primary">
+      {{form.user_form.region|as_crispy_field}}
+      {{form.user_form.subscribed|as_crispy_field}} 
+          <a href='{% url "password_change" %}' class="btn hover-button button-white medium-button" role="button" aria-pressed="true">{{ password_btn }}</a>
+    </div>
+
+
+
+
+
+   <p class="col-12 text-center heading">Адрес</p>
+    <div class="col-6 alert alert-primary">
+      {{form.address_form.name|as_crispy_field}}
+    {{form.address_form.additional_line|as_crispy_field}}
+  </div>
+    <div class="col-4 alert alert-primary">
+      {{form.address_form.street|as_crispy_field}} 
+      {{form.address_form.city|as_crispy_field}} 
+    </div>
+    <div class="col-2 alert alert-primary">
+      {{form.address_form.number|as_crispy_field}}
+      {{form.address_form.postal_code|as_crispy_field}} 
+    </div>
+    <div class="col-6 alert alert-primary">
+      {{form.address_form.state|as_crispy_field}}
+      {{form.address_form.country|as_crispy_field}} 
+      </div>
+    <div class="col-6 alert alert-primary">
+      {{form.address_form.post_office|as_crispy_field}} 
+       </div>
+
+
+
+
+<div class="col-6 alert alert-primary">
+  <div class="credit">
+    <img src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
+    <img src="http://enwaara.se/codepen/mastercard.png" class="logo-card">
+     <div class="row">
+
+      <div class="col-12 p-0 m-0">
+        <label>Name:</label>
+        <div class=''>
+        {{form.card_form.holder}}
+        </div>
+      </div>
+
+      <div class="col-12 p-0 m-0">
+          <label>Card number:</label>
+        <div class="">
+        {{form.card_form.number}}
+        </div>
+      </div>
+
+      <div class="col-4  p-0 m-0">
+        <label>Month:</label>
+        <div class="">
+        {{form.card_form.month}}
+        </div>
+      </div>
+
+      <div class="col-4 p-0 m-0">
+        <label>Year:</label>
+        <div class=''>
+        {{form.card_form.year}}
+        </div>
+      </div>
+
+      <div class="col-4 p-0 m-0">
+        <label>CVV:</label>
+        <div class=''>
+        {{form.card_form.cvv}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="col-6 alert alert-primary">
+  <div class='row'>
+    <div class="col-6 text-left alert alert-primary">
+      Стоимость айтема:
+    </div>
+    <div class="col-6 text-right alert alert-primary">
+      {{ product|to_user_currency:request }}
+    </div>
+    <div class="col-6 text-left alert alert-primary">
+      Стоимость доставки:
+    </div>
+    <div class="col-6 text-right alert alert-primary">
+      23 грн
+    </div>
+    <div class="col-6 text-left alert alert-primary">
+      К оплате:
+    </div>
+    <div class="col-6 text-right alert alert-primary">
+      {{ product|to_user_currency:request }} + 23 грн
+    </div>
+  </div>
+</div>
+
+    <div class="col-12 alert alert-primary text-center pt-5">
+        <button type="submit" class="mt-3 btn button-black hover-button large-button btn-block" style='width:25%;'>{{ buy_btn }}</button>
+    </div>
+
+  </div>
+</div>
+</form>
+
+
+
+
+
+
+<script>
+  var currentPath = window.location.href
+  if (currentPath.indexOf("details") != -1){
+
+      var languageOption = $('#language').val()
+      var avatar = $('.avatar-upload-button')
+      console.log(languageOption)
+      avatar.hide()
+      avatar.parent().prepend('<label for="avatar_custom" class="bt  hover-button button-white medium-button m-0">' + avatar.attr('label_for_btn') + '</label>')
+      $(".avatar-upload-button").change(function (){
+          var fieldVal = event.target.files[0].name;
+          if (fieldVal != undefined || fieldVal != ""){
+            if ($(".filepath")[0]) {
+              $(".filepath").text(fieldVal);
+            }
+            else{
+              avatar.parent().append("<small><span class='filepath'>" + fieldVal + "</span></small>")
+            }
+          }
+        });
+  };
+
+</script>
+
+{% endblock %}
+
+
+

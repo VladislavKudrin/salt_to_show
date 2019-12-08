@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, FormView, DetailView, View, UpdateView, ListView
@@ -75,12 +74,6 @@ def languge_pref_view(request):
 		if is_safe_url(redirect_path, request.get_host()):
 			return redirect(redirect_path)
 	return redirect(redirect_path)
-
-class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
-	template_name = 'accounts/home.html' 
-	def get_object(self):
-		user=User.objects.check_username(self.request.user)
-		return self.request.user
 
 class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 	error_css_class = 'error'
@@ -280,23 +273,6 @@ def wishlistupdate(request):
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
-
-class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
-	form_class = GuestForm
-	default_next = '/register/'
-
-	def get_success_url(self):
-		return self.get_next_url()
-
-	def form_invalid(self, form):
-		return redirect('/register/')
-
-	# def form_valid(self, form):
-	# 	request = self.request
-	# 	email = form.cleaned_data.get("email")
-	# 	new_guest_email = GuestEmail.objects.create(email=email)
-	# 	request.session['guest_email_id'] = new_guest_email.id
-	# 	return redirect(self.get_next_url())
 
 class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
 	form_class = AccountMultiForm

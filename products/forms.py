@@ -10,11 +10,14 @@ from django.utils.translation import gettext as _
 
 from .models import Product, ImageOrderUtil, ProductImage
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
-
 from ecommerce.utils import random_string_generator
 from image_uploader.models import UploadedFile
 from image_uploader.validators import validate_file_extension
 import re
+from addresses.forms import AddressForm
+from accounts.forms import UserDetailChangeForm
+from betterforms.multiform import MultiModelForm
+from billing.forms import CardForm
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label=_('Brand'), required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill'}))
@@ -218,11 +221,6 @@ class ImageForm(ProductCreateForm):
 class UploadFileForm(forms.Form):
 	image = forms.FileField()
 
-
-
-
-
-
 class ProductUpdateForm(ProductCreateForm):
 	def __init__(self, request, slug=None, *args, **kwargs):
 		super(ProductUpdateForm, self).__init__(request, *args, **kwargs)
@@ -282,7 +280,12 @@ class ProductUpdateForm(ProductCreateForm):
 				product.save()
 			return product
 
-
+class CheckoutMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
+    form_classes = {
+    'user_form' : UserDetailChangeForm,
+    'address_form' : AddressForm,
+    'card_form': CardForm,
+    }  
 
 
 

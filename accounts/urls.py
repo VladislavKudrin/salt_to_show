@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-
 from products.views import UserProductHistoryView
 from .views import *
 

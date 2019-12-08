@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'dj_pagination',
     "django_cron",
     'betterforms',
+    'django_extensions',
 
 
     #our apps
@@ -87,7 +88,6 @@ INSTALLED_APPS = [
     'addresses',
     'products',
     'search',
-    'tags',
     'analitics',
     'carts',
     'marketing',
