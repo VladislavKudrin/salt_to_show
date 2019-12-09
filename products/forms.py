@@ -282,7 +282,6 @@ class ProductUpdateForm(ProductCreateForm):
 
 class CheckoutMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
     form_classes = {
-    'user_form' : UserDetailChangeForm,
     'address_form' : AddressForm,
     'card_form': CardForm,
     }  

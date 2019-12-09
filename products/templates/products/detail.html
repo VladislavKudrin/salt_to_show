@@ -490,12 +490,20 @@
 	<div class="col-12 pb-2">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+		{% elif request.user.is_authenticated and request.user.is_admin %}
+			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
 		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
+			{% include 'accounts/snippets/begin-chat.html' %} 
+			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
 		{% endif %}
 	</div>
 
 
+
+
+
+		
 		<div class="col-8 uppercase-font">
 			<div class="flip-card-2" style="width: 100%;">
 				{% if object.authentic == 'authentic' %}

@@ -22,9 +22,9 @@ from .signals import user_logged_in_signal
 from products.models import Product
 from marketing.utils import Mailchimp
 from marketing.models import MarketingPreference
-from billing.models import BillingProfile
 from addresses.models import Address
 from ecommerce.utils import add_message
+from billing.models import BillingProfile, Card
 
 
 def region_init(request):
@@ -284,6 +284,9 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 	def get_address(self):
 		return Address.objects.filter(billing_profile__user=self.object).first()
 
+	def get_card(self):
+		return Card.objects.filter(billing_profile__user=self.object).first()
+
 	def get_success_url(self):
 		return reverse("accounts:user-update")
 
@@ -293,6 +296,7 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 		profile = form['address_form'].save(commit=False)
 		profile.billing_profile = billing_profile
 		profile.save()
+		card_form = form['card_form'].save()
 		return super(AccountUpdateView, self).form_valid(form)
 
 	def get_context_data(self, *args, **kwargs):
@@ -307,7 +311,8 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 		kwargs = super(AccountUpdateView, self).get_form_kwargs()
 		kwargs.update(instance={
 		    'user_form': self.object,
-		    'address_form': self.get_address()
+		    'address_form': self.get_address(),
+		    'card_form': self.get_card(),
 		})
 		return kwargs
 

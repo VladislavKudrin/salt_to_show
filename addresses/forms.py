@@ -15,7 +15,8 @@ class AddressForm(forms.ModelForm):
             'city',
             'state',
             'country',
-            'post_office'        
+            'post_office',
+            'phone',      
         ]
 
     def __init__(self, request, *args, **kwargs):

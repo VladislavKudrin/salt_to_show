@@ -422,7 +422,6 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		return reverse("accounts:user-update")
 
 	def form_valid(self, form):
-		user_form = form['user_form'].save()
 		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
 		profile = form['address_form'].save(commit=False)
 		profile.billing_profile = billing_profile
@@ -442,7 +441,6 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 	def get_form_kwargs(self):
 		kwargs = super(ProductCheckoutView, self).get_form_kwargs()
 		kwargs.update(instance={
-		    'user_form': self.object,
 		    'address_form': self.get_address(),
 		    'card_form': self.get_card(),
 		})

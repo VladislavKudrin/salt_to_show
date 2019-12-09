@@ -17,6 +17,7 @@ from marketing.utils import Mailchimp
 from ecommerce.utils import alphanumeric
 from crispy_forms.helper import FormHelper
 from django import forms
+from billing.forms import CardForm
 
 User = get_user_model()
 
@@ -184,7 +185,6 @@ class UserDetailChangeForm(forms.ModelForm):
         # self.helper.form_show_labels = False 
         self.request = request
         self.fields['username'].label = _('Username')
-        self.fields['username'].widget.attrs['placeholder'] = _('Your username')
         self.fields['username'].validators = [alphanumeric]
         # self.fields['profile_foto'].label = _('Profile photo')
         self.fields['profile_foto'].label = False
@@ -215,6 +215,7 @@ class AccountMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.
     form_classes = {
     'user_form' : UserDetailChangeForm,
     'address_form' : AddressForm,
+    'card_form': CardForm,
     }   
 
 
