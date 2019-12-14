@@ -100,6 +100,7 @@ class UserManager(BaseUserManager):
 
 class Region(models.Model):
 	region        = models.CharField(max_length=120, blank=True, null=True)
+	region_code   = models.CharField(max_length=120, blank=True, null=True)
 	currency      = models.CharField(max_length=120, default='USD', blank=True, null=True)
 	currency_mult = models.DecimalField(decimal_places=6, max_digits=10, default=0, null=True)
 	def __str__(self):

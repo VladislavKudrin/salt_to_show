@@ -10,11 +10,11 @@ class ProductAdmin(admin.ModelAdmin):
 	fieldsets = (
         ('User', {'fields': ('user',)}),
         ('Authentity', {'fields': ('authentic','get_absolute_url_admin')}),
-        ('Product info', {'fields': ('title', 'slug', 'description', 'price', 'active')}),
+        ('Product info', {'fields': ('title', 'slug', 'description', 'price', 'active', 'timestamp')}),
         ('Product brand, category and size', {'fields': ('brand','overcategory', 'sex', 'category', 'undercategory', 'size')}),
         ('Condition', {'fields': ('condition',)}),
     )
-	readonly_fields = ['get_absolute_url_admin']
+	readonly_fields = ['get_absolute_url_admin', 'timestamp']
 	def get_absolute_url_admin(self, obj):
 		return '<a href="{url}">Product</a>'.format(url=reverse('products:detail', kwargs={"slug":obj.slug}))
 	get_absolute_url_admin.allow_tags=True

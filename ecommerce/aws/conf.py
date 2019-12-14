@@ -1,14 +1,17 @@
 import datetime
-AWS_ACCESS_KEY_ID = "AKIA2R5PIZK6GSBLECBR"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = "AKIA2R5PIZK6M3HVE26S"
+AWS_SECRET_ACCESS_KEY = "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"
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
 
+AWS_GROUP_NAME = 'EnvisionGroup'
+AWS_USERNAME = 'envision-user'
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
 
-AWS_STORAGE_BUCKET_NAME = 'salt-staging'
+AWS_STORAGE_BUCKET_NAME = 'salt-bucket-eu'
+
 S3DIRECT_REGION = 'eu-central-1'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
@@ -25,6 +28,13 @@ AWS_HEADERS = {
     'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
 }
 AWS_QUERYSTRING_AUTH = False
+
+
+
+
+
+# ----- TESTSERVER -----
+
 
 # import datetime
 

@@ -1,6 +1,5 @@
 
 /*Checkbox black*/
-
 .form-check-input {
     position: absolute;
     margin-top: .25rem;
@@ -291,7 +290,7 @@ background-color: black;
 
 .ui-menu-item {
       padding: 4px !important;
-      max-width: 239px;
+      max-width: 260px;
       text-overflow: ellipsis;
       overflow: hidden;  
       white-space: nowrap;  
@@ -319,7 +318,7 @@ background-color: black;
       border-bottom:  1px solid black !important;
       border-right:  1px solid black !important;
       border-left:  1px solid black !important;
-      border-top: none !important;
+      border-top: 1px solid black !important;
 }
 
 /*.ui-autocomplete-input {
@@ -694,6 +693,16 @@ border: 2px red solid;
   border: 1px solid #efefef;
 }
 
+
+.ui-widget{
+      font-family: inherit;
+  font-size: 0.9em;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #404040 !important;
+  opacity: 1; /* Firefox 
+}
 
 
 

@@ -5,6 +5,41 @@ $(document).ready(
 
 
 
+    // Labels and placeholders for accounts settings and checkout
+    var inputs = ["#id_user_form-username", "#id_user_form-email", "#id_user_form-region", "#id_address_form-name", "#id_address_form-additional_line", "#id_address_form-street", "#id_address_form-city", "#id_address_form-number", "#id_address_form-postal_code", "#id_address_form-state", "#id_address_form-country", "#id_address_form-post_office", "#id_address_form-phone"]
+
+    jQuery.each(inputs, function(index, item) {
+        var item_val = $(item).val()
+        var input_str = 'input'+item
+        var css_small = {"font-size": "10px", "padding-top": "1px"}
+        var css_big = {"font-size": "14px", "padding-top": "calc(.375rem + 1px)"}
+
+        // for prefilled fields
+        if (item_val){
+          $("label[for='" + $(item).attr('id') + "']").css(css_small);
+        }
+
+        // on focus
+        $(item).focus(function() {
+          $("label[for='" + $(this).attr('id') + "']").css(css_small);
+        });
+
+        // if fields were touched
+        $(item).blur(function() {
+          var input_str_val = $(input_str).val()
+          // if fields were filled out
+          if ( input_str_val ) {
+            $("label[for='" + $(this).attr('id') + "']").css(css_small);
+          };
+          // if fields were left blank
+          if ( input_str_val == '' ) {
+            $("label[for='" + $(this).attr('id') + "']").css(css_big);
+          };
+
+        });
+    });
+
+
 
     //click image
     function click_image(){
@@ -20,11 +55,19 @@ $(document).ready(
           
 
 
+
+
     //search
       var searchForm = $(".search-form")
       var searchInput = searchForm.find("[name='q']") //input name = 'q'
       var actionEndpoint = searchForm.attr("action");
+      var searchAutocompleteInput = $("#searchAutoComplete")
+      var currentPath = window.location.href
 
+      // on search page autofocus on by default
+      if (currentPath.indexOf("search") != -1){
+        searchAutocompleteInput.focus();
+      }
 
       $.ajax({
       url: actionEndpoint,
@@ -32,22 +75,19 @@ $(document).ready(
       success: function(data){
               var availableTags = data.filtered_products
               var searchBtn = searchForm.find("[type='submit']")
+
               $( "#searchAutoComplete" ).autocomplete({
-                          source: availableTags
+                          source: availableTags,
+                          position: { my: "left-24 bottom", at: "left top", collision: "flip" }
                           }).data("ui-autocomplete")._renderItem=function (ul, item) { //for  clicking results
                           return $("<li></li>")
                           .data("item.autocomplete", item)
                           .append("<a href='/search/?q=" + item.value + "'>"+"<span class='suggestions'>" +item.value+ "</span></a>")
                           .appendTo(ul);
-                          };
-              $('#ui-id-1').attr('style', 'z-index:2000')
+};
+              $('#ui-id-1').attr('style', 'z-index:2000;')
               }, 
       error: function(errorData){
-          // $.alert({
-          //     title: 'OOps!',
-          //     content: 'Simple alert!',
-          //     theme: "modern"
-          //   });
           console.log('some error');
             }
       })//ajax

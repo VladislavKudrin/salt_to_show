@@ -11,234 +11,234 @@
 <input type="hidden" id='language_pref' name="language_pref" value="{{ request.session.language }}">
 
 <style type="text/css">
-.flag-report {
-	display: flex;
-	justify-content: flex-end;
-	padding-right: 25%;
-}
-
-.username-text {
-	overflow: hidden; 
-	white-space: nowrap; 
-	text-overflow: ellipsis;
-}
-
-.zoomImg{
-	cursor: zoom-in!important;
-}
-.zoomedInCursor{
-	cursor: zoom-out!important;
-}
-
-.user-input{
-	font-size: 12px;
-}
-
-
-
-
-.b-description_readmore_button{
-	font-weight: 600;
-	font-size: 20px !important;
-}
-
-
-
-#published-line {
-	line-height: 1;
-}
-
-
-html, body {
-    max-width: 100%;
-}
-
-#onhover:hover {
-	text-decoration: underline;
-}
-
-.hidden {
-    display:none;
-}
-
-#more {
-	display: none;
-}
-
-small {
-	font-size: 11px;
-}
-
-
-
-.avatar-pdv{
-	width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 100% !important;
-}
-
-
-/*Flip-Cards */
-.flip-card {
-  width: 200px;
-  height: 20px;
-  backface-visibility:hidden;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-/*  text-align: center;*/
-/*  padding-left: 40px;*/
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  -webkit-transition: transform 0.6s;
-  -webkit-transform-style: preserve-3d;
-}
-
-.flip-card-back {
-	text-align: center;
-}
-
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
-
-  -webkit-transition: 0.6s;
-  -webkit-transform-style: preserve-3d;
-
-  -moz-transition: 0.6s;
-  -moz-transform-style: preserve-3d;
-
-  -o-transition: 0.6s;
-  -o-transform-style: preserve-3d;
-
-  -ms-transition: 0.6s;
-  -ms-transform-style: preserve-3d;
-
-  transition: 0.6s;
-  transform-style: preserve-3d;
-
-}
-
-.flip-card-front {
-  background-color: white;
-  color: black;
-  -webkit-transform: translate3d(0, 0, 0);
-}
-
-.flip-card-back {
-  background-color: white;
-  color: black;
-} 
-
-
-.morecontent span {
-	display: none;
-}
-
-
-.b-description_readmore_ellipsis:after {    
-  content: '';
-  display: inline-block;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 75%;
-  height: 20px;    
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 65%);
-} 
-
-.b-description_readmore_button {
-    font-size: 11px;
-    /* display: inline-block; */
-    /* width: 100px; */
-    /* border: 1px solid black; */
-    /* padding: 4px 0; */
-    cursor: pointer;
-    text-align: center;
- }
-
- .b-description_readmore_button:hover {
- 	color: gray;
- }
-
-p { 
-    margin-block-end: 0em !important;
-}
-
-
-/*For not popping up...*/
-.fixed-top, .sticky-top{
-    padding-bottom: 0!important;
-    margin-bottom: :0!important;
-}
-
-/* for django messages be not on top */
-.alert-success {
-    top: 50px;
-}
-
-@media only screen and (max-width: 1600px) {
-	.authenticity-text {
-		padding-top: 12%;
+	.flag-report {
+		display: flex;
+		justify-content: flex-end;
+		padding-right: 25%;
 	}
-}
 
-@media only screen and (min-width: 1600px) {
-	.authenticity-text {
-		padding-top: 5%	;
+	.username-text {
+		overflow: hidden; 
+		white-space: nowrap; 
+		text-overflow: ellipsis;
 	}
-}
 
-@media only screen and (min-width: 1200px) {
-	#mobile {
-		visibility: hidden;
-		display: none;
+	.zoomImg{
+		cursor: zoom-in!important;
 	}
-}
+	.zoomedInCursor{
+		cursor: zoom-out!important;
+	}
 
-@media only screen and (max-width: 1200px) {
-	.alert-success {
-    top: 100px;
-}
+	.user-input{
+		font-size: 12px;
+	}
+
+
+
+
+	.b-description_readmore_button{
+		font-weight: 600;
+		font-size: 20px !important;
+	}
+
+
+
+	#published-line {
+		line-height: 1;
+	}
+
 
 	html, body {
-    max-width: 100%;
-    overflow-x: hidden;
+	    max-width: 100%;
 	}
 
-	img {
-		max-width: 320px !important;
-		max-height: 240px !important;
+	#onhover:hover {
+		text-decoration: underline;
 	}
 
-	#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
-		visibility: hidden;
+	.hidden {
+	    display:none;
+	}
+
+	#more {
 		display: none;
 	}
 
-	.alert-success {
-    top: 70px !important;
+	small {
+		font-size: 11px;
 	}
-	
-}
 
-._rotate-right {
-    transform: rotate(270deg);
-}
 
-.underline{
-	text-decoration: underline;
-}
+
+	.avatar-pdv{
+		width: 50px;
+	    height: 50px;
+	    object-fit: cover;
+	    border-radius: 100% !important;
+	}
+
+
+	/*Flip-Cards */
+	.flip-card {
+	  width: 200px;
+	  height: 20px;
+	  backface-visibility:hidden;
+	}
+
+	.flip-card-inner {
+	  position: relative;
+	  width: 100%;
+	  height: 100%;
+	/*  text-align: center;*/
+	/*  padding-left: 40px;*/
+	  transition: transform 0.6s;
+	  transform-style: preserve-3d;
+	  -webkit-transition: transform 0.6s;
+	  -webkit-transform-style: preserve-3d;
+	}
+
+	.flip-card-back {
+		text-align: center;
+	}
+
+	.flip-card-front, .flip-card-back {
+	  position: absolute;
+	  width: 100%;
+	  height: 100%;
+
+	  -webkit-backface-visibility: hidden;
+	  -moz-backface-visibility: hidden;
+	  -o-backface-visibility: hidden;
+	  backface-visibility: hidden;
+
+	  -webkit-transition: 0.6s;
+	  -webkit-transform-style: preserve-3d;
+
+	  -moz-transition: 0.6s;
+	  -moz-transform-style: preserve-3d;
+
+	  -o-transition: 0.6s;
+	  -o-transform-style: preserve-3d;
+
+	  -ms-transition: 0.6s;
+	  -ms-transform-style: preserve-3d;
+
+	  transition: 0.6s;
+	  transform-style: preserve-3d;
+
+	}
+
+	.flip-card-front {
+	  background-color: white;
+	  color: black;
+	  -webkit-transform: translate3d(0, 0, 0);
+	}
+
+	.flip-card-back {
+	  background-color: white;
+	  color: black;
+	} 
+
+
+	.morecontent span {
+		display: none;
+	}
+
+
+	.b-description_readmore_ellipsis:after {    
+	  content: '';
+	  display: inline-block;
+	  position: absolute;
+	  bottom: 0;
+	  right: 0;
+	  width: 75%;
+	  height: 20px;    
+	  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 65%);
+	} 
+
+	.b-description_readmore_button {
+	    font-size: 11px;
+	    /* display: inline-block; */
+	    /* width: 100px; */
+	    /* border: 1px solid black; */
+	    /* padding: 4px 0; */
+	    cursor: pointer;
+	    text-align: center;
+	 }
+
+	 .b-description_readmore_button:hover {
+	 	color: gray;
+	 }
+
+	p { 
+	    margin-block-end: 0em !important;
+	}
+
+
+	/*For not popping up...*/
+	.fixed-top, .sticky-top{
+	    padding-bottom: 0!important;
+	    margin-bottom: :0!important;
+	}
+
+	/* for django messages be not on top */
+	.alert-success {
+	    top: 50px;
+	}
+
+	@media only screen and (max-width: 1600px) {
+		.authenticity-text {
+			padding-top: 12%;
+		}
+	}
+
+	@media only screen and (min-width: 1600px) {
+		.authenticity-text {
+			padding-top: 5%	;
+		}
+	}
+
+	@media only screen and (min-width: 700px) {
+		#mobile {
+			visibility: hidden;
+			display: none;
+		}
+	}
+
+	@media only screen and (max-width: 700px) {
+		.alert-success {
+	    top: 100px;
+	}
+
+		html, body {
+	    max-width: 100%;
+	    overflow-x: hidden;
+		}
+
+		img {
+			max-width: 320px !important;
+			max-height: 240px !important;
+		}
+
+		#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
+			visibility: hidden;
+			display: none;
+		}
+
+		.alert-success {
+	    top: 70px !important;
+		}
+		
+	}
+
+	._rotate-right {
+	    transform: rotate(270deg);
+	}
+
+	.underline{
+		text-decoration: underline;
+	}
 
 </style>
 </head>
@@ -272,13 +272,20 @@ p {
 	</a>
 	</div>
 	<div class="col-12 pb-3 uppercase-title" >{{ object.title }}</div>
+
+
 	<div class="col-6 field-name">{{ size }}</div>
 	<div class="col-6  my-auto user-input" style=' padding-bottom:1px'>{{ object.size.size }}</div>
 	<div class="col-6 field-name">{{ condition }}</div>
 	<div class="col-6  my-auto user-input" style=' padding-bottom:4px'>{% trans object.condition.condition_eng %}</div>
 	<div class="col-12 field-name">{{ description }}</div>
 	<div class="col-12  b-description_readmore js-description_readmore user-input" style='overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
+
+
 </div>
+
+
+
 
 <div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
 	<div class="col-9  archivo">{{ object.brand }}</div>
@@ -290,19 +297,23 @@ p {
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
 		{% elif request.user.is_authenticated and request.user.is_admin %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
 		{% else %}
 			{% include 'accounts/snippets/begin-chat.html' %} 
+			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
 		{% endif %}
 	</div>
 
-	<div class="col-8 my-auto">
+	
+
+	<div class="col-9 my-auto">
 		<div class="flip-card" style="width: 100%">
 			{% if object.authentic == 'authentic' %}
 		        <div class=" flip-card-inner">
 					<div class="flip-card-front my-auto uppercase-font archivo pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
-				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>{{ verified }} {{ object.timestamp| print_timestamp }}</small></div>
+				            	<div class="col my-auto text-left" style="line-height: 1"><small>{{ verified }} {{ object.timestamp| print_timestamp }}</small></div>
 
 			              	</div>
 		            	</div>
@@ -314,7 +325,7 @@ p {
 					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
-				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>{{ checked_on }} {{ object.timestamp| print_timestamp }}</small></div>
+				            	<div class="col my-auto text-left" style="line-height: 1"><small>{{ checked_on }} {{ object.timestamp| print_timestamp }}</small></div>
 
 			              	</div>
 		            	</div>
@@ -325,7 +336,7 @@ p {
 					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
-				            	<div class="col my-auto mr-2 ml-2" style="line-height: 1"><small>{{ to_be_approved }}</small></div>
+				            	<div class="col my-auto text-left" style="line-height: 1"><small>{{ to_be_approved }}</small></div>
 
 			              	</div>
 		            	</div>
@@ -335,17 +346,50 @@ p {
        	</div>
 	</div>
 
-	<div class="col-4 my-auto">
-		<div class="flip-card" style="width: 100%;">
-        <div class=" flip-card-inner">
-			<div class="flip-card-front my-auto uppercase-font pt-1 flag-report"><i class="fas fa-flag my-auto fa-1x"></i><span></span>
-			</div>
-            <div class="flip-card-back pt-0">
-		        {% include 'products/snippets/product-report.html' with product=object report=report %}  
-	        </div>
-            </div>
-        </div>
+
+	<div class="col-1 my-auto share pl-0" title="Share">
+   	<i class="fas fa-share-alt"></i>
+   </div>
+
+
+	<div class="col-1 my-auto pl-2" title="Report">
+		{% include 'products/snippets/product-report.html' with product=object report=report %}  
    	</div>
+
+<div class='container share-to-hide pl-0 pr-0' style='display:none'>
+	<div class='col-12 share-icons pt-2' style='display: flex; flex-direction: row;justify-content: space-between;'>
+
+
+			<a href="http://twitter.com/share?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Twitter">
+			<i class="fab fa-twitter"></i>
+			</a>
+
+			<a href="whatsapp://send?text={{request.build_absolute_uri}}" target="_blank" title="Share with Whatsapp">
+			<i class="fab fa-whatsapp-square"></i>
+			</a>
+
+			<a href="https://telegram.me/share/url?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Telegram">
+			<i class="fab fa-telegram-plane"></i>
+			</a>
+
+			<a href="http://vk.com/share.php?url={{request.build_absolute_uri}}&amp;title={{object.title}}&amp;comment={{object.decription}}" target="_blank" title="Share on VK">
+			<i class="fab fa-vk"></i>
+			</a>
+
+			<a href="http://www.facebook.com/share.php?u={{request.build_absolute_uri}}&amp;t={{object.title}}" target="_blank" title="Share on Facebook">
+			<i class="fab fa-facebook"></i>
+			</a>
+
+			<a href="https://www.facebook.com/dialog/send&amp;link={{request.build_absolute_uri}}" target="_blank" title="Share with Messenger">
+			<i class="fab fa-facebook-messenger"></i>
+			</a>
+
+		</div>
+</div>
+
+	
+
+
 
 	<div class="col-12 pb-2 authenticity-text" >
 		<div class="row">
@@ -360,9 +404,9 @@ p {
 					<div class="col-7 pl-0 pr-0" style="display: flex; align-items: center;">
 						<small class="text">{{ region }}</small>
 					</div>
-					
 
 				</div>
+			</div>
 
 			<div class="col-4 pl-2 text-right">
 				{% if object.user.profile_foto %}
@@ -371,20 +415,23 @@ p {
 					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
 				{% endif %}
 			</div>
-		</div>
-	</div>
 
-	<div class="col-12">
 		
-	</div>
+		</div>
 
+		<div class="row">
+			<div class="col-12">
 
-			<div id="published-line" class="col-8 my-auto">
-				<small class="text">{{ posted }} {{ object.timestamp|timesince }} {{ ago }} 
-				</small>
+				<div id="published-line">
+					<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }} 
+					</small>
+				</div>
 			</div>
 
+		</div>
+	</div>
 </div>
+
 
 
 
@@ -393,7 +440,7 @@ p {
 		{% if object.images.all %}
 		<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
 			<ol class="carousel-indicators"></ol>
-			<div class="carousel-inner">
+			<div class="carousel-inner" style='min-height: 240px'>
 			{% for image in images %}
 				{% if image.image_order == 1 %}
 					<div class="carousel-item active" class="carousel slide" data-interval="false">
@@ -443,36 +490,83 @@ p {
 	<div class="col-12 pb-2">
 		{% if request.user.is_authenticated and request.user == object.user %}
 			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+		{% elif request.user.is_authenticated and request.user.is_admin %}
+			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
 		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' with btn_title='Contact seller' %} 
+			{% include 'accounts/snippets/begin-chat.html' %} 
+			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
 		{% endif %}
 	</div>
-	<div class="col-8 uppercase-font">
-		<div class="flip-card-2" style="width: 100%;">
-			{% if object.authentic == 'authentic' %}
-		        <div class=" flip-card-2-inner">
-					<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
-		        </div>
-		    {% elif object.authentic == 'fake' %}
-		        <div class=" flip-card-2-inner">
-					<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
-		        </div>
-		    {% else %}
-		        <div class=" flip-card-2-inner">
-					<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
-		        </div>
-		    {% endif %}
-       	</div>
-	</div>
 
-	<div class="col-4">
-		<div class="flip-card" style="width: 100%;">
-	        <div class=" flip-card-inner">
-				<div class="flip-card-front my-auto uppercase-font text-right">{% include 'products/snippets/product-report.html' with product=object %} 
-				</div>
-	        </div>
+
+
+
+
+		
+		<div class="col-8 uppercase-font">
+			<div class="flip-card-2" style="width: 100%;">
+				{% if object.authentic == 'authentic' %}
+			        <div class=" flip-card-2-inner">
+						<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
+			        </div>
+			    {% elif object.authentic == 'fake' %}
+			        <div class=" flip-card-2-inner">
+						<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
+			        </div>
+			    {% else %}
+			        <div class=" flip-card-2-inner">
+						<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
+			        </div>
+			    {% endif %}
+	       	</div>
+		</div>
+
+		<div class="col-2 share" title="Share"><i class="fas fa-share-alt"></i></div>
+
+
+
+		<div class="col-2">
+			<div class="flip-card" style="width: 100%;">
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-font text-right">{% include 'products/snippets/product-report.html' with product=object %} 
+					</div>
+		        </div>
+		    </div>
 	    </div>
-    </div>
+
+
+<div class='container share-to-hide pl-0 pr-0' style='display:none'>
+	<div class='col-12 share-icons pt-2' style='display: flex; flex-direction: row;justify-content: space-between;'>
+
+
+			<a href="http://twitter.com/share?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Twitter">
+			<i class="fab fa-twitter"></i>
+			</a>
+
+			<a href="whatsapp://send?text={{request.build_absolute_uri}}" target="_blank" title="Share with Whatsapp">
+			<i class="fab fa-whatsapp-square"></i>
+			</a>
+
+			<a href="https://telegram.me/share/url?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Telegram">
+			<i class="fab fa-telegram-plane"></i>
+			</a>
+
+			<a href="http://vk.com/share.php?url={{request.build_absolute_uri}}&amp;title={{object.title}}&amp;comment={{object.decription}}" target="_blank" title="Share on VK">
+			<i class="fab fa-vk"></i>
+			</a>
+
+			<a href="http://www.facebook.com/share.php?u={{request.build_absolute_uri}}&amp;t={{object.title}}" target="_blank" title="Share on Facebook">
+			<i class="fab fa-facebook"></i>
+			</a>
+
+			<a href="https://www.facebook.com/dialog/send&amp;link={{request.build_absolute_uri}}" target="_blank" title="Share with Messenger">
+			<i class="fab fa-facebook-messenger"></i>
+			</a>
+
+		</div>
+</div>
+
 		<div class="col-12 pt-3 pb-3 uppercase-title" >{{ object.title }}</div>
 	<div class="col-3 field-name uppercase">{{ size }}</div>
 	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:1px'>{{ object.size.size }}</div>
@@ -493,6 +587,7 @@ p {
 						<small class="text">{{ region }}</small>
 					</div>
 				</div>
+			</div>
 
 
 			<div class="col-4 text-right">
@@ -506,10 +601,13 @@ p {
 	</div>
 
 		<div id="published-line" class="col-8 my-auto">
-			<small class="text">{{ posted }} {{ object.timestamp|timesince }} {{ ago }}
+			<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
 			</small>
 		</div>
 </div>
+
+
+
 
 
 
@@ -536,6 +634,15 @@ p {
   // if($('.zoomImg').css('opacity')==1){
   // 	console.log('zoomed')
   // }//if zoomed
+
+$(document).ready(function(){
+
+  $(".share").click(function(){
+
+    $(".share-to-hide").toggle();
+
+  });
+});
 
 
 
@@ -684,10 +791,11 @@ $('.js-description_readmore').moreLines({
 	//     if (t.length < 200) return;
 
 
-	    $(this).html(
-	      t.slice(0, 200) + '<a href="#" class="more" style="font-weight:bold; text-decoration: underline;"> more</a>' +
-	      '<span style="display:none;">' + t.slice(200, t.length) + ' <a href="#" class="less" style="font-weight:bold; text-decoration: underline;"> less</a></span>'
-	    );
+
+	    // $(this).html(
+	    //   t.slice(0, 200) + '<a href="#" class="more" style="font-weight:bold; text-decoration: underline;"> more</a>' +
+	    //   '<span style="display:none;">' + t.slice(200, t.length) + ' <a href="#" class="less" style="font-weight:bold; text-decoration: underline;"> less</a></span>'
+	    // );
 
 
 	//   });

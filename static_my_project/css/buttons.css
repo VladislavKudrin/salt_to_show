@@ -1,4 +1,139 @@
-/* button hover effects */
+/* button no hover effects for mobile */
+
+@media only screen and (max-width: 768px){
+
+  .hover-button {
+  text-align: center;
+  /*color: #000;*/
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Archivo', 'Roboto', sans-serif !important;
+
+}
+
+.button-black {
+  color: white;
+  border: 1px solid black;
+  background-color: black; 
+}
+
+.button-black:hover {
+  color: black;
+  background-color: white;
+}
+
+.button-white {
+  color: black;
+  border: 1px solid black;
+  background-color: white;
+  background-position: 0%;
+  transition: none;
+}
+
+.button-white:hover {
+  color: white;
+  background-color: black;
+}
+
+#button-sell-buy {
+  font-size: 12px;
+  height: 25px;
+  width: 45px;
+  padding-top: 3px;
+  background-size: 500px;
+  transition: none;
+}
+
+.large-button {
+  font-size: 14px;
+  padding: 8px 16px;
+  background-size: 5000px;
+  transition: none;
+}
+
+.prod-create-browse {
+  font-size: 12px;
+  letter-spacing: normal !important;
+  padding: 6px 12px;
+}
+
+.search-button {
+  font-size: 14px;
+  padding: 6px 12px;
+  background-size: 1000px;
+  transition: none;
+}
+
+.medium-button {
+  font-size: 12px;
+  padding: 6px 12px;
+  background-size: 2500px;
+  transition: none;
+}
+
+.btn-dark {
+  background-color:#000;
+  color: #FFF;
+}
+
+
+.btn-dark-home {
+  background-color:#000;
+  color: #FFF; 
+  height: 230px;
+}
+
+.btn-dark-home:hover{
+  border: 0.5px solid white !important;
+}
+
+.btn-dark-home:focus{
+    background: rgba(1, 1, 1, 0.86);
+}
+
+.btn-dark-home:active{
+    background: rgba(1, 1, 1, 0.86);
+}
+
+.btn-light-home{
+  height: 230px;
+}
+
+.btn-light-home:hover{
+   border: 0.5px solid #80808087 !important;
+}
+
+.btn-outline-dark:hover{
+    background-color:#000;
+}
+.btn-outline-dark:focus{
+    background-color:#000;
+}
+.btn-outline-dark:active{
+    background-color:#000;
+}
+
+.btn.focus, .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.hidden-button {
+  background: none;
+  padding: 0px;
+  border: none;
+}
+
+.hidden-button-outline:focus {
+   outline: none; 
+}
+
+}
+
+/* button hover effects for desktop */
+
+@media only screen and (min-width: 768px){
 
 .hover-button {
   text-align: center;
@@ -31,7 +166,7 @@
   background-image: -webkit-linear-gradient(45deg, white 50%, transparent 50%);
   background-image: linear-gradient(45deg, white 50%, transparent 50%);
   background-position: 0%;
-  transition: background 250ms ease-out;*/
+  transition: background 250ms ease-out;
 }
 
 .button-white:hover {
@@ -73,14 +208,14 @@
 }
 
 .search-button {
-  font-size: 14px;
+/*  font-size: 14px;
   padding: 6px 12px;
   background-size: 1000px;
   -webkit-transition: background 350ms ease-out;
   -moz-transition: background 350ms ease-out;
   -ms-transition: background 350ms ease-out;
   -o-transition: background 350ms ease-out;
-  transition: background 350ms ease-out;
+  transition: background 350ms ease-out;*/
 }
 
 .medium-button {
@@ -205,3 +340,4 @@
 }*/
 
 /* end button hover effects */
+}

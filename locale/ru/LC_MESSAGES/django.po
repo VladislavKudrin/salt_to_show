@@ -518,8 +518,8 @@ msgstr "Слишком много фотографий. Максимальное
 
 #: products/templates/products/product-create.html:160
 msgid ""
-"Email help@saltysalt.co if the brand you are trying to add does not exist."
-msgstr "Напиши на help@saltysalt.co если не нашел своего бренда."
+"Email info@saltish.co if the brand you are trying to add does not exist."
+msgstr "Напиши на info@saltish.co если твоего бренда нет в списке."
 
 #: products/templates/products/product-create.html:262
 msgid "Photos*"

@@ -38,7 +38,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
     
 
-ALLOWED_HOSTS = ['.saltish.co', 'salt-testserver.herokuapp.com']
+ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com', 'salt-testserver.herokuapp.com']
 
 
 EMAIL_HOST = 'smtp.gmail.com'
@@ -79,13 +79,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'dj_pagination',
     "django_cron",
+    'betterforms',
+    'django_extensions',
+
 
     #our apps
     'chat_ecommerce',
     'addresses',
     'products',
     'search',
-    'tags',
     'analitics',
     'carts',
     'marketing',
@@ -94,7 +96,7 @@ INSTALLED_APPS = [
     'billing',
     'categories',
     'image_uploader',
-    'language_pref'
+    'language_pref',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

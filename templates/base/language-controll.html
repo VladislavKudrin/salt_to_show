@@ -25,7 +25,7 @@
 </div> -->
 <div class="btn-group" >
     <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <i id="lang-button" class="fas fa-globe-americas"></i> <small>{{ LANGUAGE_CODE|upper }}</small>
+       <i id="lang-button" class="fas fa-globe-americas"></i> <small>{% if LANGUAGE_CODE|upper == 'UK' %}UA{% else %}{{ LANGUAGE_CODE|upper }}{% endif %}</small>
     </button>
     <div class="dropdown-menu m-0 p-0">
     <form method='POST' action="{% url 'set_language_custom' %}">{% csrf_token %}
