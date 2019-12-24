@@ -42,6 +42,24 @@ class AboutPageView(TemplateView):
 		context['minimalism_text'] = _("Simplicity is our core concept. And it's not only limited in minimalistic design and intuitive interface of SALT. We want both buyers and sellers to feel respected. Therefore, there is no and never will be annoying ads and paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT is a community where designer and streetwear clothes take their second chance. The item finds its new owner without harming the environment. SALT acts as a modest mediator in this straightforward, but essential deal.")
 		return context
 
+class PrivacyPageView(TemplateView):
+	template_name = 'base/privacy.html'
+	def get_context_data(self, *args, **kwargs):
+		context=super(PrivacyPageView, self).get_context_data(*args, **kwargs)
+		return context
+
+class TermsPageView(TemplateView):
+	template_name = 'base/terms.html'
+	def get_context_data(self, *args, **kwargs):
+		context=super(TermsPageView, self).get_context_data(*args, **kwargs)
+		return context
+
+class FAQPageView(TemplateView):
+	template_name = 'base/faq.html'
+	def get_context_data(self, *args, **kwargs):
+		context=super(FAQPageView, self).get_context_data(*args, **kwargs)
+		return context
+
 class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	form_class = ContactForm
 	template_name = 'contact/contact.html'
