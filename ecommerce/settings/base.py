@@ -97,7 +97,6 @@ INSTALLED_APPS = [
     'categories',
     'image_uploader',
     'language_pref',
-    'liqpay'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
