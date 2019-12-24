@@ -15,6 +15,7 @@ class Address(models.Model):
 	state				= models.CharField(max_length=120, null=True, blank=True)
 	country				= models.CharField(max_length=120, null=True, blank=True)
 	post_office			= models.CharField(max_length=120, null=True, blank=True)
+	phone				= models.CharField(max_length=120, null=True, blank=True)
 
 
 	def __str__(self):

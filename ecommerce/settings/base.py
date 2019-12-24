@@ -81,13 +81,13 @@ INSTALLED_APPS = [
     'dj_pagination',
     "django_cron",
     'betterforms',
+    'django_extensions',
 
     #our apps
     'chat_ecommerce',
     'addresses',
     'products',
     'search',
-    'tags',
     'analitics',
     'carts',
     'marketing',

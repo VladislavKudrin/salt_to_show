@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, FormView, DetailView, View, UpdateView, ListView
@@ -23,9 +22,9 @@ from .signals import user_logged_in_signal
 from products.models import Product
 from marketing.utils import Mailchimp
 from marketing.models import MarketingPreference
-from billing.models import BillingProfile
 from addresses.models import Address
 from ecommerce.utils import add_message
+from billing.models import BillingProfile, Card
 
 
 def region_init(request):
@@ -75,12 +74,6 @@ def languge_pref_view(request):
 		if is_safe_url(redirect_path, request.get_host()):
 			return redirect(redirect_path)
 	return redirect(redirect_path)
-
-class AccountHomeView(LoginRequiredMixin, DetailView):  #default accounts/login
-	template_name = 'accounts/home.html' 
-	def get_object(self):
-		user=User.objects.check_username(self.request.user)
-		return self.request.user
 
 class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 	error_css_class = 'error'
@@ -281,23 +274,6 @@ def wishlistupdate(request):
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
 
-class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
-	form_class = GuestForm
-	default_next = '/register/'
-
-	def get_success_url(self):
-		return self.get_next_url()
-
-	def form_invalid(self, form):
-		return redirect('/register/')
-
-	# def form_valid(self, form):
-	# 	request = self.request
-	# 	email = form.cleaned_data.get("email")
-	# 	new_guest_email = GuestEmail.objects.create(email=email)
-	# 	request.session['guest_email_id'] = new_guest_email.id
-	# 	return redirect(self.get_next_url())
-
 class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
 	form_class = AccountMultiForm
 	template_name='accounts/account-update-view.html'
@@ -308,6 +284,9 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 	def get_address(self):
 		return Address.objects.filter(billing_profile__user=self.object).first()
 
+	def get_card(self):
+		return Card.objects.filter(billing_profile__user=self.object).first()
+
 	def get_success_url(self):
 		return reverse("accounts:user-update")
 
@@ -317,6 +296,7 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 		profile = form['address_form'].save(commit=False)
 		profile.billing_profile = billing_profile
 		profile.save()
+		card_form = form['card_form'].save()
 		return super(AccountUpdateView, self).form_valid(form)
 
 	def get_context_data(self, *args, **kwargs):
@@ -331,7 +311,8 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView):
 		kwargs = super(AccountUpdateView, self).get_form_kwargs()
 		kwargs.update(instance={
 		    'user_form': self.object,
-		    'address_form': self.get_address()
+		    'address_form': self.get_address(),
+		    'card_form': self.get_card(),
 		})
 		return kwargs
 

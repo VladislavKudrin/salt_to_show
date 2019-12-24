@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% if request.user != object.user %}
+
+<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
+
+{% endif %} 

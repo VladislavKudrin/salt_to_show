@@ -699,12 +699,6 @@ border: 2px red solid;
   font-size: 0.9em;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #404040 !important;
-  opacity: 1; /* Firefox 
-}
-
-
 
 
 

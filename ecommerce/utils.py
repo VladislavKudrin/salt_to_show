@@ -6,6 +6,7 @@ from categories.models import Brand
 from django.utils.text import slugify
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
+from django.contrib import messages
 
 
 
