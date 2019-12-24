@@ -97,6 +97,7 @@ INSTALLED_APPS = [
     'categories',
     'image_uploader',
     'language_pref',
+    'liqpay'
 
 ]
 
