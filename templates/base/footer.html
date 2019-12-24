@@ -3,218 +3,182 @@
 <head>
   <style type="text/css">
 
-  .footer-copyright {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    opacity: 0.9;
-  }
+    .soc-seti {
+      display: flex;
+    }
 
-  .footer-text {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    opacity: 0.8;
-  }
+    .soc-seti .soc-set {
+      list-style: none;
+    }
 
-  .footer-text:hover {
-    opacity: 1;
-  }
-  
+    .soc-seti .soc-set .a-soc {
+      width: 30px;
+      height: 30px;
+      background-color: #fff;
+      text-align: center;
+      line-height: 25px;
+      font-size: 15px;
+      display: block;
+      border-radius: 50% !important;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #fff;
+      z-index: 1;
+    }
 
-.soc-seti {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
+    .soc-seti .soc-set .a-soc .icon {
+      position: relative;
+      color: #262626;
+      transition: .5s;
+      z-index: 3;
+    }
 
-.soc-seti .soc-set {
-  list-style: none;
-}
+    .soc-seti .soc-set .a-soc:hover .icon {
+      color: #fff;
+      transform: rotateY(360deg);
+    }
 
-.soc-seti .soc-set .a-soc {
-  width: 30px;
-  height: 30px;
-  background-color: #fff;
-  text-align: center;
-  line-height: 25px;
-  font-size: 15px;
-  display: block;
-  border-radius: 50% !important;
-  position: relative;
-  overflow: hidden;
-  border: 3px solid #fff;
-  z-index: 1;
-}
+    .soc-seti .soc-set .a-soc:before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f00;
+      transition: .5s;
+      z-index: 2;
+    }
 
-.soc-seti .soc-set .a-soc .icon {
-  position: relative;
-  color: #262626;
-  transition: .5s;
-  z-index: 3;
-}
+    .soc-seti .soc-set .a-soc:hover:before {
+      top: 0;
+    }
 
-.soc-seti .soc-set .a-soc:hover .icon {
-  color: #fff;
-  transform: rotateY(360deg);
-}
+    .soc-seti .soc-set:nth-child(3) {
+      font-weight: bold;
+    }
 
-.soc-seti .soc-set .a-soc:before {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #f00;
-  transition: .5s;
-  z-index: 2;
-}
+    .soc-seti .soc-set:nth-child(1) .a-soc:before{
+      background: #4a76a8;
+    }
 
-.soc-seti .soc-set .a-soc:hover:before {
-  top: 0;
-}
+    .soc-seti .soc-set:nth-child(2) .a-soc:before{
+      background: linear-gradient(#e66465, #9198e5);
+      font-weight: bold;
+    }
 
-.soc-seti .soc-set:nth-child(3) {
-  font-weight: bold;
-}
+    .soc-seti .soc-set:nth-child(3) .a-soc:before {
+      background: #0077b5;
+    }
 
-.soc-seti .soc-set:nth-child(1) .a-soc:before{
-  background: #4a76a8;
-}
+    .soc-seti .soc-set:nth-child(4) .a-soc:before{
+      background: #3b5999;
+    }
 
-.soc-seti .soc-set:nth-child(2) .a-soc:before{
-  background: linear-gradient(#e66465, #9198e5);
-  font-weight: bold;
-}
+    .footer-links{
+      opacity: 0.8;
+    }
 
-.soc-seti .soc-set:nth-child(3) .a-soc:before {
-  background: #0077b5;
-}
+    .footer-links:hover{
+      opacity: 1;
+    }
 
-.soc-seti .soc-set:nth-child(4) .a-soc:before{
-  background: #3b5999;
-}
+    .footer-logo {
+      display: flex;
+      justify-content: center;
+    }
 
-.footer-desktop {
-  margin: 15px auto;
-}
+    .footer-social {
+      display: flex;
+      justify-content: flex-end;
+    }
 
-.footer-mobile {
-  margin: 16px auto;
-}
+    @media only screen and (max-width: 1025px) {
+      .footer-desktop {
+        display: none;
+        visibility: hidden;
+      }
 
-@media only screen and (max-width: 500px) {
-  .footer-desktop {
-    visibility: hidden;
-    display: none;
-  }
+      .footer-links {
+        display: flex;
+        justify-content: space-between;
+      }
 
-  .font {
-    font-size: 12px;
-  }
-}
+      .footer-logo {
+        display: flex;
+        justify-content: flex-start;
+      }
+    }
 
-@media only screen and (min-width: 500px) {
-  .footer-mobile {
-    visibility: hidden;
-    display: none;
-  }
-}
+    @media only screen and (min-width: 1025px) {
+      .footer-mobile {
+        display: none;
+        visibility: hidden;
+      }
+    }
 
-@media only screen and (max-width: 1300px) {
-  .soc-seti {
-      right: 45%;
-      left: 45%;
-  }
-}
-
-@media only screen and (min-width: 1300px) {
-  .soc-seti {
-      right: 40%;
-      left: 50%;
-  }
-}
-
-/*.all-devices {
-      right: 40%;
-      left: 50%;
-}*/
-
-.tablets {
-  margin: 14px 0px;
-  padding: 0 0;
-}
-
-
-}
   </style>
 </head>
 
+<footer class="page-footer small">
+  <div class="container-fluid footer-container">
 
-<script type="text/javascript">
-  var currentPath = window.location.href
-  if (($(window).width() === 600)){
-    $('.footer-desktop').addClass('tablets');
-    console.log('success tablets')
-  }
+    <div class="row footer-desktop">
+      <div class="col-4 my-auto footer-links">
+        <a href="{% url 'about' %}" class="text-body mr-4 font">{% trans 'About' %}</a>
+        <a href='{% url "contact" %}' class="text-body mr-4 font">{% trans 'Contact' %}</a>
+        <a href='{% url "terms" %}' class="text-body mr-4 font">Оферта</a>
+        <a href='{% url "privacy" %}' class="text-body mr-4 font">Прайваси</a>
+        <a href='{% url "faq" %}' class="text-body font">FAQ</a>
+      </div>
 
-</script>
+      <div class="col-4 my-auto pl-4 footer-logo">
+        SALT © 2019
+      </div>
 
-<footer class="page-footer font-small">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-4 my-2 footer-desktop">
-            <a href="{% url 'about' %}" class="text-body mx-3 font">{% trans 'About' %}</a>
-            <a href='{% url "contact" %}' class="text-body mx-3 font">{% trans 'Contact' %}</a>
-          </div>
-
-          <div class="col-6 mt-2 footer-mobile">
-            <a href="{% url 'about' %}" class="text-body mr-3 font">{% trans 'About' %}</a>
-            <a href='{% url "contact" %}' class="text-body font">{% trans 'Contact' %}</a>
-          </div>
-
-          <div class="col-6 mt-2 footer-mobile">
-            <ul class="soc-seti pl-0">
-              <li class="soc-set">
-                <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
-              </li>
-              <!-- <li class="soc-set" >
-                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
-              </li> -->
-            </ul>
-          </div>
-
-
-          <div class="col-xs-12 col-md-4 my-2 footer-desktop">
-            <ul class="soc-seti pl-0">
-              <li class="soc-set pl-1">
-                <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
-              </li>
-              <li class="soc-set">
-                <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
-              </li>
-              <!-- <li class="soc-set">
-                <a class="a-soc" href="#"><i class="fab fa-facebook-f icon"></i></a>
-              </li> -->
-            </ul>
-          </div>
-
-          <div class="col-md-4 my-2 text-right footer-desktop">
-            <a class="text-body mx-3 font">SALT © 2019</a>
-          </div>
-
+      <div class="col-4 my-auto footer-social">
+        <div class="soc-seti pt-1">
+          <li class="soc-set">
+            <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
+          </li>
+          <li class="soc-set">
+            <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
+          </li>
+          <li class="soc-set">
+            <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
+          </li>
         </div>
       </div>
-  </footer>
+    </div>
+
+    <div class="row footer-mobile">
+      <div class="col-12 my-auto footer-links">
+        <a href="{% url 'about' %}" class="text-body mr-2 font">{% trans 'About' %}</a>
+        <a href='{% url "contact" %}' class="text-body mr-2 font">{% trans 'Contact' %}</a>
+        <a href='{% url "terms" %}' class="text-body mr-2 font">Оферта</a>
+        <a href='{% url "privacy" %}' class="text-body mr-2 font">Прайваси</a>
+        <a href='{% url "faq" %}' class="text-body font">FAQ</a>
+      </div>
+
+      <div class="col-6 my-auto footer-logo">
+        SALT © 2019
+      </div>
+
+      <div class="col-6 my-auto footer-social">
+        <div class="soc-seti pt-1">
+          <li class="soc-set">
+            <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
+          </li>
+          <li class="soc-set">
+            <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
+          </li>
+          <li class="soc-set">
+            <a class="a-soc" href="https://www.linkedin.com/company/saltish-co/about/"><i class="fab fa-linkedin-in icon"></i></a>
+          </li>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
 
