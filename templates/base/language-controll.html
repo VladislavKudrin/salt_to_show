@@ -1,37 +1,21 @@
 {% load i18n %}
 {% load for_loop_extras %}
 {% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+
 <style type="text/css">
-   #language_drop:hover{
-    color:black;
-    background-color: white
-       } 
+
 </style>
-<!-- <div class="input-group input-group-sm mr-2">
-  <div class="input-group-prepend">
-    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split border-0" id='language_drop' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <i id="lang-button" class="fas fa-globe-americas"></i> {{ LANGUAGE_CODE|upper }}
-    </button>
-    <div class="dropdown-menu m-0 p-0">
-        <form method='POST' action="{% url 'set_language_custom' %}">{% csrf_token %}
-            <input type="hidden" name="next" value='{{ redirect_to }}'>
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <button class="btn dropdown-item-lang {% if language.code == LANGUAGE_CODE %} activated {% endif %}"type='submit' name="language" value="{{ language.code }}"><small>{{ language.name_local }}</small></button><br/>
-            {% endfor %}
-        </form>
-  </div>
-</div> -->
+
 <div class="btn-group" >
-    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <i id="lang-button" class="fas fa-globe-americas"></i> <small>{% if LANGUAGE_CODE|upper == 'UK' %}UA{% else %}{{ LANGUAGE_CODE|upper }}{% endif %}</small>
+    <button type="button" class="btn btn-lang-display buy-sell" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <small class=''>{% if LANGUAGE_CODE|upper == 'UK' %}UA{% else %}{{ LANGUAGE_CODE|upper }}{% endif %}</small>
     </button>
-    <div class="dropdown-menu m-0 p-0">
+
+    <div class="dropdown-menu m-0 p-0 dropdown-lang">
     <form method='POST' action="{% url 'set_language_custom' %}">{% csrf_token %}
         <input type="hidden" name="next" value='{{ redirect_to }}'>
-        {% get_available_languages as LANGUAGES %}
-        {% get_language_info_list for LANGUAGES as languages %}
         {% for language in languages %}
             <button class="btn dropdown-item-lang {% if language.code == LANGUAGE_CODE %} activated {% endif %}"type='submit' name="language" value="{{ language.code }}"><small>{{ language.name_local }}</small></button><br/>
         {% endfor %}
