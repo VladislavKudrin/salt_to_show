@@ -12,6 +12,9 @@ from .views import home_page, test_page, ContactPageView, AboutPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 
+
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('language_pref.urls')),
@@ -41,6 +44,7 @@ urlpatterns = [
     url(r'^webhooks/mailchimp/$', MailChimpWebhookView.as_view(),name='webhook-mailchimp'),
     url(r'^api/cart/', cart_detail_api_view, name='api-cart'),
     url(r'^cart/', include("carts.urls",namespace='carts')),
+    url(r'^checkout/payment/', include('billing.urls', namespace='payment')),
    #url(r'^accounts/login/$', RedirectView.as_view(url='/login') ),
     url(r'^accounts/login/$', RedirectView.as_view(url='/account')),
     url(r'^accounts/$', RedirectView.as_view(url='/account')),

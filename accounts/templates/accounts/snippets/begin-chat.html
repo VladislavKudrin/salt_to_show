@@ -4,17 +4,18 @@
 
 {% if 'test'|get_chat_options == 'True' %}
 
-{% if request.user.username == object.username %}
-	<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Update profile' %}</a>
-{% else %}
-	{% if object.user %}
-	<a href="/messages/{{ object.user.username }}/{{ object.slug }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
-
+	{% if request.user.username == object.username %}
+		<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Update profile' %}</a>
 	{% else %}
 		{% if object.user %}
 			<a href="/messages/{{ object.user.username }}/{{ object.slug }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
+
 		{% else %}
-			<a href="/messages/{{ object.username }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
+			{% if object.user %}
+				<a href="/messages/{{ object.user.username }}/{{ object.slug }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
+			{% else %}
+				<a href="/messages/{{ object.username }}" class="btn hover-button button-black medium-button btn-block">{% trans 'Contact seller' %}</a>
+			{% endif %}
 		{% endif %}
 	{% endif %}
 

@@ -287,20 +287,19 @@
       Стоимость айтема:
     </div>
     <div class="col-6 text-right">
-      {{ product|to_user_currency:request }}
+      {{ product.price|to_user_currency:request }}
     </div>
     <div class="col-6 text-left">
       Стоимость доставки:
     </div>
     <div class="col-6 text-right">
-      23 грн
+      {{ product.shipping_price.national_shipping|to_user_currency:request }}
     </div>
     <div class="col-6 text-left">
       К оплате:
     </div>
     <div class="col-6 text-right">
-      {{ product|to_user_currency:request }} + 23 грн
-    </div>
+      {{ product.price|add:product.shipping_price.national_shipping|to_user_currency:request }}
   </div>
 </div>
 

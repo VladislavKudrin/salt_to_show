@@ -107,6 +107,11 @@ LOGOUT_URL = '/logout/'
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = True
 
+#LiqPay
+#Sandbox
+PUBLIC_KEY = 'sandbox_i6955995458'
+PRIVATE_KEY = 'sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG'
+
 #STRIPE
 STRIPE_SECRET_KEY = "sk_test_REAVuHTtQBJVnT7IpoKavJpL"
 STRIPE_PUB_KEY =  "pk_test_GoRpsjlzZ5HC3eqcLe7Nhzcr"

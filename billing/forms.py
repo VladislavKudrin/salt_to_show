@@ -17,3 +17,6 @@ class CardForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super(CardForm, self).__init__(*args, **kwargs)
         self.request=request
+
+    def save(self, commit=True):
+        print(self.cleaned_data)

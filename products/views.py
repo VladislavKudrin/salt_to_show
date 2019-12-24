@@ -29,7 +29,7 @@ from .forms import *
 from image_uploader.models import unique_form_id_generator, UploadedFile
 from addresses.models import Address
 from billing.models import BillingProfile, Card
-
+from orders.models import Order
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
 	template_name = "products/user-history.html"
@@ -238,7 +238,7 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.by_user(request.user).order_by('-timestamp')
+		return Product.objects.by_user(request.user).order_by('-timestamp').active()
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
@@ -307,6 +307,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 	def form_valid(self, form):
 		request = self.request
+		print('Valid?')
 		product = form.save()
 		url = product.get_absolute_url()
 		if self.request.is_ajax():	
@@ -388,7 +389,7 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 	template_name = 'products/fake-list.html'
 
 	def get_queryset(self, *args, **kwargs):
-		return Product.objects.fake()
+		return Product.objects.fake().active()
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
@@ -402,9 +403,13 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 	def get_object(self):
 		product_id = self.kwargs.get('product_id')
 		if product_id.isdigit():
-			product_obj = Product.objects.filter(id=product_id).first()
+			product_obj = Product.objects.filter(id=product_id).active().first()
+			user = self.request.user
 			if product_obj is not None:
-				self.product = product_obj
+				if product_obj.user != user:
+					self.product = product_obj
+				else:
+					raise Http404("Product belongs to user")
 			else: 
 				raise Http404("Product with this id does not exist")
 		else: 
@@ -423,11 +428,12 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 
 	def form_valid(self, form):
 		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
-		profile = form['address_form'].save(commit=False)
-		profile.billing_profile = billing_profile
-		profile.save()
-		card_form = form['card_form'].save()
-		return super(ProductCheckoutView, self).form_valid(form)
+		address = form['address_form'].save(commit=False)
+		address.billing_profile = billing_profile
+		address.save()
+		order = Order.objects.new_or_get(billing_profile, self.product)
+		# self.request.session['order_id'] = order.order_id
+		return redirect("payment:pay_view")
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)

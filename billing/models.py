@@ -87,6 +87,9 @@ class Card(models.Model):
 	year                	= models.CharField(max_length=2, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
 	cvv 					= models.CharField(max_length=3, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
 	timestamp               = models.DateTimeField(auto_now_add=True)
+	card_token 				= models.TextField(null=True, blank=True)
+	active					= models.BooleanField(default=True)
+	default					= models.BooleanField(default=True)
 
 	def __str__(self):
 		return "{} {} {}".format(self.billing_profile, self.number, self.holder)
