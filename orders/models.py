@@ -138,6 +138,9 @@ class Order(models.Model):
 			self.transaction.complete_transaction(response.json())
 			self.status = 'shipped'
 			self.save()
+			if self.product:
+				self.product.active = False
+				self.product.save()
 		else:
 			self.transaction.transaction_error(response.json())
 

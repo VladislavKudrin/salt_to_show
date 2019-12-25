@@ -45,31 +45,9 @@ class PayView(TemplateView):
         data = liqpay.cnb_data(params)
         return render(request, self.template_name, {'signature': signature, 'data': data})
 
-# @method_decorator(csrf_exempt, name='dispatch')
-# class PayCallbackView(View):
-#     def post(self, request, *args, **kwargs):
-#         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
-#         data = request.POST.get('data')
-#         signature = request.POST.get('signature')
-#         sign = liqpay.str_to_sign(LIQPAY_PRIV_KEY + data + LIQPAY_PRIV_KEY)
-#         if sign == signature:
-#             response = liqpay.decode_data_from_str(data)
-#             order_id = response.get("order_id")
-#             order = Order.objects.filter(order_id=order_id)
-#             if order.exists() and order.count() == 1:
-#                 order = order.first()
-#                 transaction = Transaction.objects.new_or_get(order=order, data=response)
-#                 billing_profile = order.billing_profile
-#                 if response.get("status") == "hold_wait":
-#                     order.status = "hold_wait"
-#                     order.save()
-#                 else:
-#                     transaction.transaction_error(data=response)
-#                 if not billing_profile.has_card:
-#                     card = Card.objects.create(billing_profile = billing_profile, card_token = response.get("card_token"))
-#         return HttpResponse()
-class PayCallbackView(APIView):
-    def post(self, request):
+@method_decorator(csrf_exempt, name='dispatch')
+class PayCallbackView(View):
+    def post(self, request, *args, **kwargs):
         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
         data = request.POST.get('data')
         signature = request.POST.get('signature')
@@ -89,23 +67,7 @@ class PayCallbackView(APIView):
                     transaction.transaction_error(data=response)
                 if not billing_profile.has_card:
                     card = Card.objects.create(billing_profile = billing_profile, card_token = response.get("card_token"))
-        return Response({"code":200})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return HttpResponse()
 
 
 
