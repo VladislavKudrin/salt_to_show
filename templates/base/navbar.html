@@ -9,8 +9,6 @@
 {% url 'products:create' as products_create_url %}
 {% url 'accounts:wish-list' as wish_list %}
 {% url 'categories:filter' as filter_url %}
-
-
 {% load for_loop_extras %}
 {% load i18n %}
 {% load notifications %}
@@ -19,7 +17,15 @@
 
 <style type="text/css">
 
+#navbar-desktop{
+    line-height: 1 !important;
+}
 
+@media only screen and (max-width: 370px) { 
+    .logo-mobile-xs {
+        padding: 0px 0px;
+    }
+}
 
 @media only screen and (max-width: 760px) { 
 
@@ -36,6 +42,35 @@
   .navbar-mb{
     margin-bottom: 0px;
   }
+
+      .btn-lang-display{
+    font-size: 1em;
+    display: flex;
+    padding:  2px 5px 1px 5px !important;;
+    justify-content: center;
+    text-align: center;
+    color: #000; 
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Archivo', 'Roboto', sans-serif !important;
+    }
+
+
+    .dropdown-lang{
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      border: 1px solid rgb(8, 8, 8) !important;
+      margin-top: 2px !important;
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      left: -113% !important;
+    }
+
+    .dropdown-item-lang{
+    border: 0px solid transparent !important;
+    padding: .375rem .75rem !important;
+    }
+
 }
 
 @media only screen and (min-width: 760px) { 
@@ -53,6 +88,69 @@
       visibility: hidden;
       display: none;
     } 
+
+    .buy-sell{
+    padding: 4px 5px 1px 5px !important;
+    min-width: 45px;
+    max-width: 60px;
+    height: 25px;
+    }
+
+    .buy-sell:hover{
+    color: white;
+    background-color: black;
+    }
+
+    .dropdown-account{
+      max-width: 8rem !important;
+      min-width: 8rem !important;
+      border: 1px solid rgb(8, 8, 8) !important;
+      margin-top: 2px !important;
+      left: -171% !important;
+    font-size: 80%;
+    font-weight: 400;
+
+    }
+
+    .dropdown-item-account{
+    border: 0px solid transparent !important;
+    padding: .375rem .75rem !important;
+    font-family: 'Noto Sans', sans-serif !important;
+    }  
+
+    .btn-lang-display{
+    font-size: 1em;
+    display: flex;
+    padding:  2px 5px 1px 5px !important;;
+    justify-content: center;
+    text-align: center;
+    color: #000; 
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Archivo', 'Roboto', sans-serif !important;
+    }
+
+    .btn-lang-display[aria-expanded="true"]{
+    color:white !important;
+    background-color: black !important;
+    padding-bottom: 0px !important;
+    }
+
+    .dropdown-lang{
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      border: 1px solid rgb(8, 8, 8) !important;
+      margin-top: 2px !important;
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      left: -113% !important;
+    }
+
+    .dropdown-item-lang{
+    border: 0px solid transparent !important;
+    padding: .375rem .75rem !important;
+    }
+
 }
 
 
@@ -91,14 +189,11 @@
 
 </style>
 
-
 <div hidden class='col-6' id='sidebar-slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
   {% include "sidebar.html" %}
 </div>
 
-
-
-<nav class="navbar navbar-mb sticky-top navbar-expand-md navbar-light bg-white pb-0">
+<nav class="navbar navbar-mb sticky-top navbar-expand-md navbar-light bg-white pb-1 pt-2 pl-4 pr-4">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav  mr-auto">
             <li class="nav-item">
@@ -122,170 +217,168 @@
     </div>
 
 
-    <ul id="navbar-mobile" class="navbar-nav mb-2">
+    <ul id="navbar-mobile" class="navbar-nav">
             <li class="nav-item list-unstyled" style="display: inline-block;">
                  <a href="{% url 'home' %}">
                     <div class="row"> 
-                         <div class="col logo-font-small pr-0"><span>SALT</span></div>
+                         <div class="col logo-font-small pr-0 logo-mobile-xs"><span>SALT</span></div>
                     </div>
                 </a>
             </li>
 
 
-            <li class="nav-item" style="display: inline-block;">                
-            <button class='btn pr-1 pl-3 pb-2' id='sidebar-trigger' style="padding-left: 12px !important;"><i class="fas fa-grip-horizontal">
-              
-    
-            </i></button>
+            <li class="nav-item pl-2 " style="display: inline-block;">                
+            <button class='btn pb-2 pt-0' id='sidebar-trigger' style="">
+                <img src="{% static 'icons/hamburger.png' %}"  style="width:20px; height: 20px;">
+        </button>
         
             </li>
-        </ul>
+    </ul>
 
-    <ul class="ml-auto mr-0 mt-2 pl-0 pr-0" id='lang-mobile'>
-        <li style='display: inline;'>
+
+    <ul class="m-0 p-0" id='buttons'>
+
+        <li style='display: inline;' class='pl-2'>
             <button id="search-button" class="btn pr-0" type="button" data-toggle="collapse" data-target="#collapseSearchbar" aria-expanded="false" aria-controls="collapseSearchbar" >
                 <i class="fa fa-search fa-1x" style=""></i>
             </button>
-
         </li> 
-        <li class="" style='width:30px; position:relative; display: inline;'>
-         {% include 'base/language-controll.html' %}
-        </li>  
-    </ul>
 
-    <ul class="pl-0 mt-2" id='buttons'>
-        <li class="" style="height: 30px; display: inline;">
-          <a id="button-sell-buy" class="hover-button button-white ml-0" role="button" href="{{ products_create_url }}">Sell</a> 
+        <li class="hover-button buy-sell pl-2" style='font-size: 1.2em; position:relative; display: inline;'>
+        {% include 'base/language-controll.html' %}
         </li>
 
-        <li class="" style="height: 30px; display: inline;">
-          <a id="button-sell-buy" class="hover-button button-black" role="button" href="{{ product_list_url }}">Buy</a>
+        <li class="pl-1" style="display: inline;">
+          <a id="" class="  hover-button buy-sell ml-0" role="button" href="{{ products_create_url }}">Sell</a> 
         </li>
+
+        <li class="pl-2" style="display: inline;">
+          <a id="" class=" hover-button buy-sell" role="button" href="{{ product_list_url }}">Buy</a>
+        </li>
+
     </ul>
 
     <div class="collapse" id="collapseSearchbar" style="width: 100%;">
         <form action='{% url "search:query" %}' class="search-form form my-lg-0 ">
-            <div class='input-group'>
-                <input class="form-control border-right-0 pt-0 mr-n1 pb-0" id='searchAutoComplete' type="text" style="height:30px; margin-top: 1px;" placeholder="{% trans 'Search' %}" name='q' value='{{ request.GET.q }}' aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-dark" style="margin-left: 5px; margin-top: 1px; height: 30px;" type='submit'><i class="fa fa-search fa-1x align-top"></i></button>
-                </div>
+            <div class='input-group' style=''>
+                <input class="form-control" id='searchAutoComplete' type="text" style="height:30px; border-bottom: 1px solid black !important;" placeholder="{% trans 'Search' %}" name='q' value='{{ request.GET.q }}' aria-label="Search">
+
             </div>
         </form>
     </div>
-
         <!-- ЦЕМ! -->
-
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto align-items-center mb-1">
+        <ul class="navbar-nav ml-auto align-items-center">
+           <li class="nav-item">
+             {% include 'base/language-controll.html' %}
+            </li> 
 
-       <li class="nav-item">
-         {% include 'base/language-controll.html' %}
-        </li> 
+            <li class="nav-item pl-2">
+                  <small><a id="" class="hover-button buy-sell" role="button" href="{{ products_create_url }}">Sell</a></small>
+            </li>      
+             
+            <li class="nav-item pl-2">
+                  <small><a id="" class="hover-button buy-sell" role="button" href="{{ product_list_url }}">Buy</a></small>
+            </li> 
 
-        <li class="nav-item mr-2 {% if request.path == products_create_url %}active{% endif %}">
-              <a id="button-sell-buy" class="hover-button button-white" role="button" href="{{ products_create_url }}">Sell</a>
-        </li>      
-         
-        <li class="nav-item ml-0  {% if request.path == product_list_url %}active{% endif %}">
-              <a id="button-sell-buy" class="hover-button button-black" role="button" href="{{ product_list_url }}">Buy</a>
-        </li>        
 
-  
+            {% if request.user.is_authenticated %}    
 
-        {% if request.user.is_authenticated %}                                
-        <li class="nav-item">
-        <a class="nav-link pb-0 pr-0" href="{{ wish_list }}">
 
-        <i id="wishlist-button" class="fas fa-heart black-heart"></i>
-        <span class='navbar-wish-count'>{{ request.user.wishes.all.count  }}</span>
-        
-        </a>
-        </li>
-        {% endif %}
+            <li class="nav-item pl-2">
 
-        {% if request.user.is_authenticated %}
-        <li class="nav-item dropdown ml-2 mr-0">
-            {% if request.user.profile_foto %}
-            <a class="nav-link dropdown-toggle m-0 p-0 test1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link pb-1" class="hover-button button-sell-buy button-black" href="{{ wish_list }}" style='font-size: 1.2em;'>
 
-                    {% if request.user|get_notif > 0 %}
-                        <div style='padding-left: 26px; padding-bottom: 0px'>
-                            <div class='notifications'></div>
-                        </div>
-                    {% else %}
-                    {% endif %}
-                <img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar test1" alt="..." style="width:40px; height: 40px">
+            <i id="wishlist-button" class="fas fa-heart black-heart"></i>
 
+            <span class='navbar-wish-count'>{{ request.user.wishes.all.count }}</span>
+            
             </a>
+
+            </li>
+            {% endif %}
+
+
+
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown pl-3">
+                {% if request.user.profile_foto %}
+                <a class="nav-link dropdown m-0 p-0 test1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        {% if request.user|get_notif > 0 %}
+                            <div style='padding-left: 26px; padding-bottom: 0px'>
+                                <div class='notifications'></div>
+                            </div>
+                        {% else %}
+                        {% endif %}
+                    <img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar test1" alt="..." style="width:40px; height: 40px">
+
+                </a>
+
+                {% else %}
+
+                <a class="nav-link dropdown mb-0 pb-0 pl-0 mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% if request.user|get_notif > 0 %}
+                            <div style='padding-left: 13px; padding-bottom: 0px'>
+                                <div class='notifications'></div>
+                            </div>
+                        {% else %}
+                        {% endif %}
+
+                        <i id="user-button" class="fas fa-user" ></i></a>
+
+                {% endif %}
+              
+
+                <div class="dropdown-menu dropdown-account m-0 p-0 text-center" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item dropdown-item-account" href="{{ request.user.get_absolute_url }}">{% trans 'Home' context 'account_dropdown_home '%}</a>
+                    <a class="dropdown-item dropdown-item-account " href="{% url 'chat:inbox' %}">
+                            <div class='row'>
+                                <div class='col-9 mx-auto m-0 p-0'>
+                                    <div>{% trans 'Messages' %}</div>
+                                </div>
+                                {% if request.user|get_notif > 0 %}
+                                    <div class='col-3 my-auto text-right'>
+                                        <span style='font-size: 13px; font-weight: bold'>{{ request.user|get_notif }}</span>
+                                     </div>
+                                {% else %}
+                                {% endif %}
+                            </div>
+                    </a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "products:user-list" %}'>{% trans 'My items' %}</a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "accounts:wish-list" %}'>{% trans 'Wishlist' %}</a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "accounts:history-product" %}'>{% trans 'History' context 'account_dropdown_history' %}</a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "accounts:user-update" %}'>{% trans 'Settings' %}</a>
+                </div>
+            </li>
 
             {% else %}
 
-            <a class="nav-link dropdown-toggle mb-0 pb-0 pl-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {% if request.user|get_notif > 0 %}
-                        <div style='padding-left: 13px; padding-bottom: 0px'>
-                            <div class='notifications'></div>
-                        </div>
-                    {% else %}
-                    {% endif %}
+            <li class="nav-item pl-2">
+                  <small><a id="" class="hover-button buy-sell" role="button" href="{{ login_url }}">Login</a></small>
+            </li> 
 
-                    <i id="user-button" class="fas fa-user" ></i></a>
+          {% endif %}
+        </ul>
+    </div>
 
-            {% endif %}
-          
-          
-            <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ request.user.get_absolute_url }}">{% trans 'Home' context 'account_dropdown_home '%}</a>
-                <a class="dropdown-item" href="{% url 'chat:inbox' %}">
-                        <div class='row'>
-                            <div class='col-9 mx-auto m-0 p-0'>
-                                <div>{% trans 'Messages' %}</div>
-                            </div>
-                            {% if request.user|get_notif > 0 %}
-                                <div class='col-3 my-auto text-right'>
-                                    <span style='font-size: 13px; font-weight: bold'>{{ request.user|get_notif }}</span>
-                                 </div>
-                            {% else %}
-                            {% endif %}
-                        </div>
-                </a>
-                <a class="dropdown-item" href='{% url "products:user-list" %}'>{% trans 'My items' %}</a>
-                <a class="dropdown-item" href='{% url "accounts:wish-list" %}'>{% trans 'Wishlist' %}</a>
-                <a class="dropdown-item" href='{% url "accounts:history-product" %}'>{% trans 'History' context 'account_dropdown_history' %}</a>
-                <a class="dropdown-item" href='{% url "accounts:user-update" %}'>{% trans 'Settings' %}</a>
-            </div>
-        </li>
-
-        {% else %}
-        <li class="nav-item {% if request.path == login_url %}active{% endif %}">
-            <a class="nav-link" href="{{ login_url }}"><i id="user-button" class="fas fa-user"></i></a>
-        </li>
-  
-      {% endif %}
-
-
-
-</ul>
-
-
-</div>
 </nav>
 
 <script type="text/javascript">
 
-$(document).ready(function(){
+    $(document).ready(function(){
 
-//sidebar the only one js 
-$("#sidebar-slider").slideReveal({
-  trigger: $("#sidebar-trigger"),
-  push: false,
-  overlay: true,
-  overlayColor:'rgba(0,0,0,0.5)',
-  width:'500px',
-});
+    //sidebar the only one js 
+    $("#sidebar-slider").slideReveal({
+      trigger: $("#sidebar-trigger"),
+      push: false,
+      overlay: true,
+      overlayColor:'rgba(0,0,0,0.5)',
+      width:'500px',
+    });
 
-$("#sidebar-slider").attr("hidden",false); // make sidebar not popping up
+    $("#sidebar-slider").attr("hidden",false); // make sidebar not popping up
 
-})//document ready
+    })//document ready
 
 </script>
