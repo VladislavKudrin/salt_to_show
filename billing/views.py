@@ -9,7 +9,8 @@ from django.urls import reverse
 # STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe")
 # STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk')
 # stripe.api_key = STRIPE_SECRET_KEY
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from liqpay.liqpay3 import LiqPay
 LIQPAY_PRIV_KEY = getattr(settings, "LIQPAY_PRIVATE_KEY", "sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG")
@@ -44,9 +45,31 @@ class PayView(TemplateView):
         data = liqpay.cnb_data(params)
         return render(request, self.template_name, {'signature': signature, 'data': data})
 
-@method_decorator(csrf_exempt, name='dispatch')
-class PayCallbackView(View):
-    def post(self, request, *args, **kwargs):
+# @method_decorator(csrf_exempt, name='dispatch')
+# class PayCallbackView(View):
+#     def post(self, request, *args, **kwargs):
+#         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
+#         data = request.POST.get('data')
+#         signature = request.POST.get('signature')
+#         sign = liqpay.str_to_sign(LIQPAY_PRIV_KEY + data + LIQPAY_PRIV_KEY)
+#         if sign == signature:
+#             response = liqpay.decode_data_from_str(data)
+#             order_id = response.get("order_id")
+#             order = Order.objects.filter(order_id=order_id)
+#             if order.exists() and order.count() == 1:
+#                 order = order.first()
+#                 transaction = Transaction.objects.new_or_get(order=order, data=response)
+#                 billing_profile = order.billing_profile
+#                 if response.get("status") == "hold_wait":
+#                     order.status = "hold_wait"
+#                     order.save()
+#                 else:
+#                     transaction.transaction_error(data=response)
+#                 if not billing_profile.has_card:
+#                     card = Card.objects.create(billing_profile = billing_profile, card_token = response.get("card_token"))
+#         return HttpResponse()
+class PayCallbackView(APIView):
+    def post(self, request):
         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
         data = request.POST.get('data')
         signature = request.POST.get('signature')
@@ -66,7 +89,7 @@ class PayCallbackView(View):
                     transaction.transaction_error(data=response)
                 if not billing_profile.has_card:
                     card = Card.objects.create(billing_profile = billing_profile, card_token = response.get("card_token"))
-        return HttpResponse()
+        return Response({"code":200})
 
 
 
