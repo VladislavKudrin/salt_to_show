@@ -22,7 +22,7 @@ class PayView(TemplateView):
     template_name = 'billing/pay.html'
     def get(self, request, *args, **kwargs):
         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
-        callback_url = reverse('payment:pay_callback')
+        callback_url = settings.BASE_URL + reverse('payment:pay_callback')
         if settings.TESTMODE:
             callback_url = "https://en26sty6m4lpq.x.pipedream.net/"
         order = Order.objects.by_request(request).first()
@@ -38,7 +38,7 @@ class PayView(TemplateView):
             "letter_of_credit_date" : "2020-01-20 00:00:00",
             "server_url"            : callback_url, # url to callback view
             "recurringbytoken"      : "1",
-            "result_url"            : reverse('orders:list')
+            "result_url"            : settings.BASE_URL + reverse('orders:list')
         }
         signature = liqpay.cnb_signature(params)
         data = liqpay.cnb_data(params)
