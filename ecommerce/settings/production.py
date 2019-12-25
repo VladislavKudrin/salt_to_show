@@ -48,6 +48,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
 BASE_URL = 'https://www.salt-testserver.herokuapp.com'
+BASE_URL_WITHOUT_WWW = 'https://salt-testserver.herokuapp.com'
 
 MANAGERS = (
     ('Vladislav Kudrin', "info@saltish.co" ),
