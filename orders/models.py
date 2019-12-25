@@ -92,9 +92,12 @@ class Order(models.Model):
 		return reverse("orders:detail", kwargs={'order_id':self.order_id})
 
 	def update_total(self):
-		# cart_total=self.cart.total
-		product_total = self.product.price
-		shipping_total=self.product.shipping_price.national_shipping
+		product_total = 0
+		shipping_total = 0
+		if self.product.price:
+			product_total = self.product.price
+		if self.product.shipping_price:
+			shipping_total=self.product.shipping_price.national_shipping
 		new_total = math.fsum([product_total, shipping_total])
 		formatted_total = format(new_total, '.2f')
 		self.total=formatted_total

@@ -309,6 +309,14 @@ class Product(models.Model):
 
 	objects = ProductManager()
 	
+	def make_total(self):
+		shipping_price = 0
+		price = 0
+		if self.shipping_price:
+			shipping_price = self.shipping_price.national_shipping
+		if self.price:
+			price = self.price
+		return shipping_price + price
 
 	def get_absolute_url(self):
 		#return "/products/{slug}/".format(slug=self.slug)

@@ -292,15 +292,17 @@
     <div class="col-6 text-left">
       Стоимость доставки:
     </div>
-    <div class="col-6 text-right">
-      {{ product.shipping_price.national_shipping|to_user_currency:request }}
-    </div>
+    {% if product.shipping_price.national_shipping %}
+      <div class="col-6 text-right">
+        {{ product.shipping_price.national_shipping|to_user_currency:request }}
+      </div>
+    {% endif %}
     <div class="col-6 text-left">
       К оплате:
     </div>
     <div class="col-6 text-right">
-      {{ product.price|add:product.shipping_price.national_shipping|to_user_currency:request }}
-  </div>
+      {{ product.make_total|to_user_currency:request }}
+    </div>
 </div>
 
     <div class="col-12 text-center" style='border-top: 1px solid gray; padding-top: 1rem'>

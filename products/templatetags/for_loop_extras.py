@@ -126,7 +126,7 @@ def to_translate(value, arg):
 def to_user_currency(value, arg):
 	request = arg
 	product_price_original = value
-	currency = ' $'
+	currency = '$'
 	product_price = str(round(product_price_original)) + ' ' + currency
 	if request.user.is_authenticated():
 		region = request.user.region
