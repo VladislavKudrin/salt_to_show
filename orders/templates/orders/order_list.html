@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
-
-
-
 {% block content %}
 
-<div class='row'>
-	<div class="col-12">
+<div class="container">
+	<div class='row'>
+		<div class='col-12'>
+			<p class="heading">Orders:</p>
+		</div>
+	</div>
+
+
 	
-		<h1>Orders</h1>
-		<table class='table'>
+<!-- 		<table class='table'>
 			<thead>
 				<th>Order Id</th><th>Status</th><th>Total</th><th>Action</th>
 			</thead>
@@ -21,6 +23,34 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+ -->
+
+	<table class="table">
+	  <thead>
+	    <tr>
+	      <th scope="col" style="width: 25%;">Order ID</th>
+	      <th scope="col" style="width: 25%;">Order Date</th>
+	      <th scope="col" style="width: 25%;">Shipping Status</th>
+	      <th scope="col" style="width: 25%;">Sold By</th>
+	      <th scope="col" style="width: 25%;">Total</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	{% for object in object_list %}
+		    <tr>
+		      <td><a href='{{ object.get_absolute_url }}'>{{ object.order_id }}</a></td>
+		      <td>{{ object.get_status }}</td>
+		      <td>{{ object.total }}</td>
+		    </tr>
+	    {% empty %}
+		    <tr>
+		      <td>No orders yet</td>
+		    </tr>
+	    {% endfor %}
+	  </tbody>
+	</table>
+
 </div>
 
 

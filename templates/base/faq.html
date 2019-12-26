@@ -4,11 +4,145 @@
 
 <head>
 	<style type="text/css">
+
+
+.page-section {
+		height: 480px;
+		width: 50%;		
+		margin-left: 20%;
+		margin-top: 8%;
+		padding: 5em 3em;
+		color: black;
+}
+
+.navigation {
+  	position: fixed;
+		margin-left: 2%;
+  	color: black;
+}
+	
+.navigation__link {
+	display: block;
+	color: black; 
+	text-decoration: none;
+	padding: 0.25em;
+}
+
+.navigation__link:hover {
+	color: white;
+	background-color: black;
+}
 		
+.navigation__link.active {
+	color: white;
+	background-color: black;
+}
+
+
 	</style>
 </head>
 
-<body>
-</body>
+
+<div class="container-fluid" style="margin-top: 10%;">
+
+<nav class="navigation" id="mainNav">
+			<a class="navigation__link" href="#buy">Как купить</a>
+			<a class="navigation__link" href="#sell">Как продать</a>
+			<a class="navigation__link" href="#pay">Как оплатить</a>
+			<a class="navigation__link" href="#return">Отмена/возврат</a>
+<!-- 				<a class="navigation__link" href="#5">Section 5</a>
+				<a class="navigation__link" href="#6">Section 6</a>
+				<a class="navigation__link" href="#7">Section 7</a> -->
+</nav>
+
+<div class="page-section" id="buy">
+			<p style=''>Как купить</p>
+			<p>			Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных SALT (далее – Оператор).
+
+			- Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.
+
+			- Настоящая политика Оператора в отношении обработки персональных данных (далее – Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта http://saltish.co. </p>
+</div>
+<div class="page-section" id="sell">
+			<p style=''>Как продать</p>
+			<p>			Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных SALT (далее – Оператор).
+
+			- Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.
+
+			- Настоящая политика Оператора в отношении обработки персональных данных (далее – Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта http://saltish.co. </p>
+</div>
+<div class="page-section" id="pay">
+			<p style=''>Как оплатить</p>
+			<p>			Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных SALT (далее – Оператор).
+
+			- Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.
+
+			- Настоящая политика Оператора в отношении обработки персональных данных (далее – Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта http://saltish.co. </p>
+</div>
+<div class="page-section" id="return">
+			<p style=''>Отмена/возврат</p>
+			<p>			Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных SALT (далее – Оператор).
+
+			- Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.
+
+			- Настоящая политика Оператора в отношении обработки персональных данных (далее – Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта http://saltish.co. </p>
+</div>
+<!-- <div class="page-section" id="5">
+			<h1>Section Five</h1>
+</div>
+<div class="page-section" id="6">
+			<h1>Section Six</h1>
+</div>
+<div class="page-section" id="7">
+			<h1>Section Seven</h1>
+</div> -->
+
+</div>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+		$('a[href*="#"]').bind('click', function(e) {
+			console.log(e)
+				e.preventDefault(); // prevent hard jump, the default behavior
+
+				var target = $(this).attr("href"); // Set the target as variable
+
+				// perform animated scrolling by getting top-position of target-element and set it as scroll target
+				$('html, body').stop().animate({
+						scrollTop: $(target).offset().top 
+						
+				}, 500, function() {
+						location.hash = target; //attach the hash (#jumptarget) to the pageurl
+				});
+				console.log($(target).offset().top)
+
+				return false;
+		});
+});
+
+$(window).scroll(function() {
+		var scrollDistance = $(window).scrollTop();
+
+		// Show/hide menu on scroll
+		//if (scrollDistance >= 850) {
+		//		$('nav').fadeIn("fast");
+		//} else {
+		//		$('nav').fadeOut("fast");
+		//}
+	
+		// Assign active class to nav links while scolling
+		$('.page-section').each(function(i) {
+				if ($(this).position().top <= scrollDistance) {
+						$('.navigation a.active').removeClass('active');
+						$('.navigation a').eq(i).addClass('active');
+				}
+		});
+}).scroll();
+
+</script>
+
+
 
 {% endblock %}
