@@ -37,7 +37,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
     
-
+TESTMODE = False
 ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com', 'salt-testserver.herokuapp.com']
 
 
@@ -97,6 +97,8 @@ INSTALLED_APPS = [
     'categories',
     'image_uploader',
     'language_pref',
+    'liqpay'
+
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -106,6 +108,10 @@ LOGOUT_URL = '/logout/'
 #SESSION OPTIONS
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = True
+#LiqPay
+#Live
+LIQPAY_PUBLIC_KEY = os.environ.get('LIQPAY_PUBLIC_KEY')
+LIQPAY_PRIVATE_KEY = os.environ.get('LIQPAY_PRIVATE_KEY')
 
 # import stripe
 # STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
@@ -284,7 +290,7 @@ LANGUAGES=[
     ('uk', 'Ukranian'),
 
 ]
-CHAT_WITH_PRODUCTS = False
+CHAT_WITH_PRODUCTS = 'exclude'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -314,7 +320,7 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
-# from ecommerce.aws.conf import *
+from ecommerce.aws.conf import *
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATA_UPLOAD_MAX_MEMORY_SIZE = 500000000 # value in bytes

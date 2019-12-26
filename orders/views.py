@@ -1,14 +1,22 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
-from django.shortcuts import render
+from django.http import Http404, HttpResponse
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView
+from django.contrib.auth import get_user_model
 
+from ecommerce.mixins import RequestFormAttachMixin
 from billing.models import BillingProfile
-from .models import Order
+from .models import Order, Transaction
+
+from chat_ecommerce.models import Thread
+from products.models import Product
+
+User = get_user_model()
 
 class OrderListView(LoginRequiredMixin, ListView):
+	template_name = "orders/order_list.html"
 	def get_queryset(self):
-		return Order.objects.by_request(self.request).not_created()
+		return Order.objects.by_request(self.request)
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
 	def get_object(self):
@@ -18,3 +26,22 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 		if qs.count()==1:
 			return qs.first()
 		raise Http404
+
+def order_complete_view(request):
+	order_id = request.POST.get('order_id')
+	user_orders = Order.objects.by_request(request).exclude(status='shipped').filter(order_id=order_id)
+	if user_orders.exists():
+		order = user_orders.first()
+		order.complete_this_order(request)
+	return redirect('orders:list')
+
+# def transaction_initiation_view(request):
+# 	if request.method == 'POST':
+# 		opponent = User.objects.get(email=request.POST.get('opponent'))
+# 		product = Product.objects.get(id=request.POST.get('product'))
+# 		next_ = request.POST.get('next')
+# 		thread_users = Thread.objects.filter(first = request.user, second = opponent, product = product, active=True) or Thread.objects.filter(second = request.user, first = opponent, product = product)
+# 		if thread_users.exists():
+# 			obj, created = Transaction.objects.get_or_create(thread = thread_users.first())
+# 			print(obj, 'TRANSACTION')
+# 	return redirect(next_)

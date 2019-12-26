@@ -97,6 +97,7 @@ INSTALLED_APPS = [
     'categories',
     'image_uploader',
     'language_pref',
+    'liqpay'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -106,6 +107,11 @@ LOGOUT_URL = '/logout/'
 #SESSION OPTIONS
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = True
+
+#LiqPay
+#Sandbox
+PUBLIC_KEY = 'sandbox_i6955995458'
+PRIVATE_KEY = 'sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG'
 
 #STRIPE
 STRIPE_SECRET_KEY = "sk_test_REAVuHTtQBJVnT7IpoKavJpL"
