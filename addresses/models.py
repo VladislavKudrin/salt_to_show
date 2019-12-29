@@ -1,12 +1,14 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from billing.models import BillingProfile
-
-
+from ecommerce.utils import alphaSpaces, phone_regex
+from django.core.validators import MinLengthValidator
 
 class Address(models.Model):
 	billing_profile 	= models.ForeignKey(BillingProfile, related_name='address')
-	name            	= models.CharField(max_length=120, null=True, blank=True)
+	name            	= models.CharField(max_length=120, null=True, blank=True, validators=[alphaSpaces, MinLengthValidator(6)])
+	post_office			= models.CharField(max_length=120, null=True, blank=True)
+	phone				= models.CharField(max_length=17, null=True, blank=True, validators=[phone_regex])
 	additional_line		= models.CharField(max_length=120, null=True, blank=True)
 	street				= models.CharField(max_length=120, null=True, blank=True)
 	number				= models.CharField(max_length=120, null=True, blank=True)
@@ -14,8 +16,6 @@ class Address(models.Model):
 	city				= models.CharField(max_length=120, null=True, blank=True)
 	state				= models.CharField(max_length=120, null=True, blank=True)
 	country				= models.CharField(max_length=120, null=True, blank=True)
-	post_office			= models.CharField(max_length=120, null=True, blank=True)
-	phone				= models.CharField(max_length=120, null=True, blank=True)
 
 
 	def __str__(self):

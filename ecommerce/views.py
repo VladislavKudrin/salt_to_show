@@ -24,6 +24,7 @@ from products.models import Product
 from accounts.models import Wishlist
 from operator import itemgetter
 from categories.models import Brand
+from .utils import get_data_from_novaposhta_api
 
 def test_page(request):
 	return render(request, "categories/slidebar.html", {})
@@ -159,7 +160,7 @@ def home_page(request):
 
 class MyCronJob(CronJobBase):
 	RUN_EVERY_MINS = 0.01 # every 2 hours
-	MIN_NUM_FAILURES = 3
+	MIN_NUM_FAILURES = 1
 	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
 	code = 'my_app.my_cron_job'    # a unique code
 
@@ -203,6 +204,24 @@ class MyCronJob(CronJobBase):
 				html_message=html_,
 				fail_silently=False, 
 				)
+
+
+
+
+class NovaPoshtaAPI(CronJobBase):
+	RUN_EVERY_MINS = 1440 # 60*24 every 24 hours 
+	# RUN_EVERY_MINS = 2 # for testing
+	MIN_NUM_FAILURES = 1
+	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+	code = 'novaposhta'    # a unique code
+
+	def do(self):
+		get_data_from_novaposhta_api()
+		send_mail('Cron Job Done', 'NovaPoshtaAPI successfully retrieved', settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_FROM_EMAIL])
+
+
+
+
 
 
 

@@ -1,8 +1,9 @@
 from django import forms
-
 from .models import Address
-
 from billing.models import BillingProfile
+import os
+from ecommerce.settings import BASE_DIR
+
 class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
@@ -19,23 +20,47 @@ class AddressForm(forms.ModelForm):
             'phone',      
         ]
 
+    def get_latest_postoffices_ua(self):
+        path = os.path.join(BASE_DIR, "static_my_project", 'post_offices_ua.txt')
+        post_offices = []
+        with open(path, 'r') as filehandle:
+            for line in filehandle:
+                line = line[:-1] # remove linebreak which is the last character of the string
+                post_offices.append(line)
+        return post_offices
+
+    def get_latest_postoffices_ru(self):
+        path = os.path.join(BASE_DIR, "static_my_project", 'post_offices_ru.txt')
+        post_offices = []
+        with open(path, 'r') as filehandle:
+            for line in filehandle:
+                line = line[:-1] # remove linebreak which is the last character of the string
+                post_offices.append(line)
+        return post_offices
+
+
     def __init__(self, request, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
+        if request.session.get('_language') == 'uk':
+            post_offices = ['Обери відділення Нової Пошти'] + self.get_latest_postoffices_ua()
+        elif request.session.get('_language') == 'ru':
+            post_offices = ['Выбери отделение Новой Почты'] + self.get_latest_postoffices_ru()
+        else: 
+            post_offices = ['None']
+
         self.request=request
-        print(self.request.user.region)
-        # user = self.request.user
-        # user_region = str(user.region)
+        self.fields['post_office'] = forms.ChoiceField(choices=tuple([(name, name) for name in post_offices]))
+        self.fields['name'].required = True
+        self.fields['phone'].required = True
+        self.fields['post_office'].required = True
 
-        # if "USA" in user_region:
-        #     self.fields.pop('state')
 
-        # # if str(user.region).contains("USA"):
-        # #     print(user.region)
-
-        # # print(user.region)
-        # # print(self.fields)
-        # # self.fields = ['name']
-        # # print(self.fields)
+    def clean_post_office(self):
+        data_office = self.cleaned_data.get('post_office')
+        error_message = "Пожалуйста, выбери отделение"
+        if data_office is '' or data_office == 'Выбери отделение Новой Почты' or data_office =='Обери відділення Нової Пошти':
+            self.add_error('post_office', error_message)
+        return data_office
 
 
 

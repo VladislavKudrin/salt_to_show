@@ -46,7 +46,7 @@
 
 .credit label{
   display:flex; 
-  font-size:10px; 
+  font-size:12px; 
   color:white; 
   opacity:.4; 
   margin-bottom: 0px; 
@@ -71,6 +71,7 @@
   background:#16181a; 
   border-radius:14px !important; 
   max-width: 340px; 
+  min-height: 204px;
   margin: 10px auto 40px auto;
   padding:40px 30px 10px 30px; 
   box-shadow: 2px 10px 40px black; 
@@ -242,47 +243,27 @@
 
 {% endif %}
 
-<p class="col-12 text-center heading" style="border-top: 1px solid gray; padding-top: 1rem;">Карта</p>
+<p class="col-12 text-center heading" style="border-top: 1px solid gray; padding-top: 1rem;">Данные для переводов</p>
 <div class="col-12">
   <div class="credit">
     <img src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
     <img src="https://seeklogo.net/wp-content/uploads/2011/08/mastercard-logo.png" class="logo-card">
      <div class="row">
 
-      <div class="col-12 p-0 m-0">
-        <label>Name:</label>
+      <div class="col-12 pb-3">
+        <label>ФИО:</label>
         <div class=''>
         {{form.card_form.holder}}
         </div>
       </div>
 
-      <div class="col-12 p-0 m-0">
-          <label>Card number:</label>
+      <div class="col-12 ">
+          <label>Номер карты:</label>
         <div class="">
         {{form.card_form.number}}
         </div>
       </div>
 
-      <div class="col-4  p-0 m-0">
-        <label>Month:</label>
-        <div class="">
-        {{form.card_form.month}}
-        </div>
-      </div>
-
-      <div class="col-4 p-0 m-0">
-        <label>Year:</label>
-        <div class=''>
-        {{form.card_form.year}}
-        </div>
-      </div>
-
-      <div class="col-4 p-0 m-0">
-        <label>CVV:</label>
-        <div class=''>
-        {{form.card_form.cvv}}
-        </div>
-      </div>
 
     </div>
   </div>
