@@ -85,7 +85,7 @@ class Order(models.Model):
 			convertet_total = round((int(total)/region_user.currency_mult),6)
 		return convertet_total
 	def get_status(self):
-		return self.status
+		return self.get_status_display()
 
 
 	def get_absolute_url(self):
