@@ -157,6 +157,10 @@ class User(AbstractBaseUser):
 			return self.wishes
 		pass
 
+
+
+
+
 	@property
 	def is_staff(self):
 		return self.staff

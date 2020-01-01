@@ -20,6 +20,7 @@ from django.utils import translation
 from django.core.mail import send_mail
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
+from ecommerce.utils import get_data_from_novaposhta_api
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
@@ -30,6 +31,7 @@ from image_uploader.models import unique_form_id_generator, UploadedFile
 from addresses.models import Address
 from billing.models import BillingProfile, Card
 from orders.models import Order
+
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
 	template_name = "products/user-history.html"
@@ -400,6 +402,16 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 	form_class = CheckoutMultiForm
 	template_name='products/checkout.html'
 
+
+	# def get(self, request, *args, **kwargs):
+	# 	# if self.request.is_ajax():
+	# 	# 	json_data={
+	# 	# 	'post_offices': get_data_from_novaposhta_api(),
+	# 	# 	}
+	# 	# 	return JsonResponse(json_data)
+	# 	return super(ProductCheckoutView,self).get(request, *args, **kwargs)
+
+
 	def get_object(self):
 		product_id = self.kwargs.get('product_id')
 		if product_id.isdigit():
@@ -434,13 +446,22 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		order = Order.objects.new_or_get(billing_profile, self.product)
 		# self.request.session['order_id'] = order.order_id
 		return redirect("payment:pay_view")
+		# return redirect("accounts:user-update")
+
+	# def form_invalid(self, form):
+	# 	if self.request.is_ajax():
+	# 		print('INVALID AJAX')
+	# 	print('INVALID')
+	# 	return redirect("payment:pay_view")
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)
 		context['title'] = _('Update your details')
 		context['password_btn'] = _('Change password')
-		context['buy_btn'] = ('Оплатить')
+		context['buy_btn'] = ('Перейти к оплате')
 		context['product'] = self.product
+		if self.get_address() is not None:
+			context['user_post_office'] = self.get_address().post_office
 		return context
 
 
@@ -448,7 +469,7 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		kwargs = super(ProductCheckoutView, self).get_form_kwargs()
 		kwargs.update(instance={
 		    'address_form': self.get_address(),
-		    'card_form': self.get_card(),
+		    # 'card_form': self.get_card(),
 		})
 		return kwargs
 

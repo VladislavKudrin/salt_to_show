@@ -1,27 +1,166 @@
 {% extends 'base.html' %}
-
-
-
 {% block content %}
 
-<div class='row'>
-	<div class="col-12">
+<head>
 	
-		<h1>Orders</h1>
-		<table class='table'>
-			<thead>
-				<th>Order Id</th><th>Status</th><th>Total</th><th>Action</th>
-			</thead>
-			<tbody>
-				{% for object in object_list %}
-					{% include 'orders/snippets/order_complete_form.html' %}
-					{% empty %}
-						<tr><td colspan='3'><p class='lead'>No Orders Yet</p></td></tr>
-				{% endfor %}
-			</tbody>
-		</table>
+	<style type="text/css">
+		table {
+		  table-layout: fixed;
+		  width: 100%;
+		  border-collapse: collapse;
+		}
+
+		thead th:nth-child(1) {
+		  width: 35%;
+		}
+
+		thead th:nth-child(2) {
+		  width: 35%;
+		}
+
+		thead th:nth-child(3) {
+		  width: 35%;
+		}
+
+		thead th:nth-child(4) {
+		  width: 35%;
+		}
+
+		th {
+		  padding: 0em 0.5em;
+		  /*text-align: center;
+		  vertical-align: middle;*/
+		}
+
+		td {
+		  padding: 0.5em;
+		  /*text-align: center;
+		  vertical-align: middle;*/
+		}
+
+		thead {
+		  background-color: black;
+		  color: white;
+		}
+
+		thead th{
+		  border-right: 1px solid white;
+		}
+
+		tbody td {
+		  border: 1px solid lightgray;
+		  background-color: white;
+		}
+
+		.orders-heading {
+			font-size: 14px;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: bold;
+		}
+
+		.order-received {
+			color: white;
+			background-color: black;
+			width: 79%;
+		}
+
+		.order-received:hover {
+			color: white;
+			cursor: auto !important;
+		}
+
+	</style>
+
+</head>
+
+<body>
+
+<div class="container" style="width: 70%;">
+
+	<div class='row'>
+		<div class='col-12'>
+			<p class="heading" id="products-by-user">Orders:</p>
+		</div>
+	</div>
+
+</div> 
+
+
+{% for object in object_list %}
+<div class="container" style="width: 70%;">
+	<div class='row' style="border-bottom: 1px solid lightgray; padding: 1em;">
+		<div class='col-6'>
+			<div class="row">
+				<div class="col">
+					{% include 'products/snippets/card-order.html' with instance=object.product %}
+				</div>
+			</div>
+		</div>
+		<div class='col-6' style="font-size: 14px;">
+			<div class="row">
+
+				<div class="col-12 field-name" style="padding-bottom: 2.5rem; line-height: 1.2;">
+				{{ object.product.title }}
+				</div>
+
+				<div class="col-8">
+					<div class="row">
+
+						<div class="col-6">
+							<span class="field-name" style="font-weight: bold;">Status:</span>
+						</div>
+						<div class="col-6">
+							<span class="field-name" style="font-weight: bold;">Total:</span>
+						</div>
+			
+
+
+						<div class="col-6">
+							{{ object.get_status }}
+						</div>
+						<div class="col-6">
+							{{ object.total }}
+						</div>
+					</div>
+				</div>
+
+				<div class="col-4">
+					<div class="row">
+						<div class="col-12">
+							<button class="btn hover-button button-white medium-button order-button" style="border: 1px solid black; margin-top: 0.3rem;">Received</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
 	</div>
 </div>
+{% empty %}
+<div class="container" style="width: 70%;">
+	<div class="row">
+		<div class="col">
+			No orders yet
+		</div>
+	</div>
+</div>
+{% endfor %}
 
+
+
+
+
+
+<script type="text/javascript">
+	var order_button = document.querySelector(".order-button")
+	order_button.onclick = function() {
+    	order_button.innerHTML = '✔';
+    	order_button.className += " order-received";
+    	order_button.classList.remove("button-white");
+};
+
+</script>
+
+</body>
 
 {% endblock %}

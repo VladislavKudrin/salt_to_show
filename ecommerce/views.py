@@ -24,6 +24,7 @@ from products.models import Product
 from accounts.models import Wishlist
 from operator import itemgetter
 from categories.models import Brand
+from .utils import get_data_from_novaposhta_api
 
 def test_page(request):
 	return render(request, "categories/slidebar.html", {})
@@ -40,6 +41,24 @@ class AboutPageView(TemplateView):
 		context['ai_text'] = _("SALT has two-factor product verification (sounds awesome, right?). In simple words, each item is checked exactly two times. The first one happens right after uploading. Just in a few seconds, our AI-model assigns a label to the product - fake or authentic. The model thinks fast and improves itself with each loaded item (neural networks and all that). And the second step is a thorough manual check performed by our experienced experts. Thanks to the two-factor verification of all items, no fake will get to SALT.")
 		context['minimalism_slogan'] = _('Less is more')
 		context['minimalism_text'] = _("Simplicity is our core concept. And it's not only limited in minimalistic design and intuitive interface of SALT. We want both buyers and sellers to feel respected. Therefore, there is no and never will be annoying ads and paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT is a community where designer and streetwear clothes take their second chance. The item finds its new owner without harming the environment. SALT acts as a modest mediator in this straightforward, but essential deal.")
+		return context
+
+class PrivacyPageView(TemplateView):
+	template_name = 'base/privacy.html'
+	def get_context_data(self, *args, **kwargs):
+		context=super(PrivacyPageView, self).get_context_data(*args, **kwargs)
+		return context
+
+class TermsPageView(TemplateView):
+	template_name = 'base/terms.html'
+	def get_context_data(self, *args, **kwargs):
+		context=super(TermsPageView, self).get_context_data(*args, **kwargs)
+		return context
+
+class FAQPageView(TemplateView):
+	template_name = 'base/faq.html'
+	def get_context_data(self, *args, **kwargs):
+		context=super(FAQPageView, self).get_context_data(*args, **kwargs)
 		return context
 
 class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
@@ -141,7 +160,7 @@ def home_page(request):
 
 class MyCronJob(CronJobBase):
 	RUN_EVERY_MINS = 0.01 # every 2 hours
-	MIN_NUM_FAILURES = 3
+	MIN_NUM_FAILURES = 1
 	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
 	code = 'my_app.my_cron_job'    # a unique code
 
@@ -185,6 +204,24 @@ class MyCronJob(CronJobBase):
 				html_message=html_,
 				fail_silently=False, 
 				)
+
+
+
+
+class NovaPoshtaAPI(CronJobBase):
+	RUN_EVERY_MINS = 1440 # 60*24 every 24 hours 
+	# RUN_EVERY_MINS = 2 # for testing
+	MIN_NUM_FAILURES = 1
+	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+	code = 'novaposhta'    # a unique code
+
+	def do(self):
+		get_data_from_novaposhta_api()
+		send_mail('Cron Job Done', 'NovaPoshtaAPI successfully retrieved', settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_FROM_EMAIL])
+
+
+
+
 
 
 

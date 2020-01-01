@@ -358,9 +358,10 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
-
+FAILED_RUNS_CRONJOB_EMAIL_PREFIX = "[Server check]: "
 CRON_CLASSES = [
     "ecommerce.views.MyCronJob",
+    "ecommerce.views.NovaPoshtaAPI",
     'django_cron.cron.FailedRunsNotificationCronJob',
     # ...
 ]
