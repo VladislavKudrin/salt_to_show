@@ -414,19 +414,22 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 
 	def get_object(self):
 		product_id = self.kwargs.get('product_id')
-		if product_id.isdigit():
-			product_obj = Product.objects.filter(id=product_id).active().first()
-			user = self.request.user
-			if product_obj is not None:
-				if product_obj.user != user:
-					self.product = product_obj
-				else:
-					raise Http404("Product belongs to user")
+		user = self.request.user
+		if user.region.region_code == 'ua':
+			if product_id.isdigit():
+				product_obj = Product.objects.filter(id=product_id).active().first()
+				if product_obj is not None:
+					if product_obj.user != user:
+						self.product = product_obj
+					else:
+						raise Http404("Product belongs to user")
+				else: 
+					raise Http404("Product with this id does not exist")
 			else: 
-				raise Http404("Product with this id does not exist")
-		else: 
-			raise Http404("Some asshole put a non-digit to url")
-		return self.request.user
+				raise Http404("Some asshole put a non-digit to url")
+			return self.request.user
+		else:
+			raise Http404("This option is only available for users in Ukraine") 
 		
 
 	def get_address(self):
