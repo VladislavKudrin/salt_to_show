@@ -345,6 +345,7 @@
                                 {% endif %}
                             </div>
                     </a>
+                    <a class="dropdown-item dropdown-item-account" href='{http://127.0.0.1:8000/orders/}'>My orders</a>
                     <a class="dropdown-item dropdown-item-account" href='{% url "products:user-list" %}'>{% trans 'My items' %}</a>
                     <a class="dropdown-item dropdown-item-account" href='{% url "accounts:wish-list" %}'>{% trans 'Wishlist' %}</a>
                     <a class="dropdown-item dropdown-item-account" href='{% url "accounts:history-product" %}'>{% trans 'History' context 'account_dropdown_history' %}</a>
