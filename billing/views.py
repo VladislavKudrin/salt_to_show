@@ -63,6 +63,9 @@ class PayCallbackView(View):
                 if response.get("status") == "hold_wait":
                     order.status = "hold_wait"
                     order.save()
+                    if order.product:
+                        order.product.active = False
+                        order.product.save()
                 else:
                     transaction.transaction_error(data=response)
                 if not billing_profile.has_card:
