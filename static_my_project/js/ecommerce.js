@@ -5,6 +5,42 @@ $(document).ready(
 
 
 
+    // Labels and placeholders for accounts settings and checkout
+    var inputs = ["#id_user_form-username", "#id_user_form-email", "#id_user_form-region", "#id_address_form-name", "#id_address_form-additional_line", "#id_address_form-street", "#id_address_form-city", "#id_address_form-number", "#id_address_form-postal_code", "#id_address_form-state", "#id_address_form-country", "#id_address_form-post_office", "#id_address_form-phone"]
+
+    jQuery.each(inputs, function(index, item) {
+        var item_val = $(item).val()
+        var input_str = 'input'+item
+        var css_small = {"font-size": "10px", "padding-top": "1px"}
+        var css_big = {"font-size": "14px", "padding-top": "calc(.375rem + 1px)"}
+
+        // for prefilled fields
+        if (item_val){
+          $("label[for='" + $(item).attr('id') + "']").css(css_small);
+        }
+
+        // on focus
+        $(item).focus(function() {
+          $("label[for='" + $(this).attr('id') + "']").css(css_small);
+        });
+
+        // if fields were touched
+        $(item).blur(function() {
+          var input_str_val = $(input_str).val()
+          // if fields were filled out
+          if ( input_str_val ) {
+            $("label[for='" + $(this).attr('id') + "']").css(css_small);
+          };
+          // if fields were left blank
+          if ( input_str_val == '' ) {
+            $("label[for='" + $(this).attr('id') + "']").css(css_big);
+          };
+
+        });
+    });
+
+
+
     //click image
     function click_image(){
       $('.wish-div').click(

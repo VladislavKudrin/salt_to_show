@@ -55,6 +55,7 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         product_slug  = self.kwargs.get("product_id")
         # product = Product.objects.filter(slug=product_slug, active = True)#authentic = authentic
         obj, created = Thread.objects.get_or_new(user = self.request.user, other_username = other_username, product_slug = product_slug)
+
         me = self.request.user
         unread_notifications = Notification.objects.filter(user=me, read=False).filter(message__thread=obj) #unred notifications for this specific thread
         if unread_notifications:  
@@ -75,6 +76,8 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         context['form'] = self.get_form()
         context['chat_messages_ordered'] = obj.chatmessage_set.all().order_by('pk')
         context['chats'] = Thread.objects.by_recent_message(self.request.user)
+        if obj.product:
+            print(obj.product, 'hi')
         # print(context['chats'])
          # = Thread.objects.filter(chatmessage__user__notification=1)
         # threads_with_unred_notifications = Thread.objects.filter(chatmessage__user=me)

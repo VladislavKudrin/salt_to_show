@@ -1,4 +1,3 @@
-
 import numpy
 import json
 from pathlib import Path
@@ -21,14 +20,17 @@ from django.utils import translation
 from django.core.mail import send_mail
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
+from ecommerce.utils import get_data_from_novaposhta_api
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from accounts.models import User, Wishlist
 from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
-from .forms import ProductCreateForm, ImageForm, ProductUpdateForm
+from .forms import *
 from image_uploader.models import unique_form_id_generator, UploadedFile
-
+from addresses.models import Address
+from billing.models import BillingProfile, Card
+from orders.models import Order
 
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
@@ -238,7 +240,7 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.by_user(request.user).order_by('-timestamp')
+		return Product.objects.by_user(request.user).order_by('-timestamp').active()
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
@@ -307,6 +309,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 	def form_valid(self, form):
 		request = self.request
+		print('Valid?')
 		product = form.save()
 		url = product.get_absolute_url()
 		if self.request.is_ajax():	
@@ -388,15 +391,93 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 	template_name = 'products/fake-list.html'
 
 	def get_queryset(self, *args, **kwargs):
-		return Product.objects.fake()
+		return Product.objects.fake().active()
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
 		context['title'] = 'Detected fakes:'
 
 
+class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
+	form_class = CheckoutMultiForm
+	template_name='products/checkout.html'
 
 
+	# def get(self, request, *args, **kwargs):
+	# 	# if self.request.is_ajax():
+	# 	# 	json_data={
+	# 	# 	'post_offices': get_data_from_novaposhta_api(),
+	# 	# 	}
+	# 	# 	return JsonResponse(json_data)
+	# 	return super(ProductCheckoutView,self).get(request, *args, **kwargs)
+
+
+	def get_object(self):
+		product_id = self.kwargs.get('product_id')
+		user = self.request.user
+		if user.region.region_code == 'ua':
+			if product_id.isdigit():
+				product_obj = Product.objects.filter(id=product_id).active().first()
+				if product_obj is not None:
+					if product_obj.user != user:
+						self.product = product_obj
+					else:
+						raise Http404("Product belongs to user")
+				else: 
+					raise Http404("Product with this id does not exist")
+			else: 
+				raise Http404("Some asshole put a non-digit to url")
+			return self.request.user
+		else:
+			raise Http404("This option is only available for users in Ukraine") 
+		
+
+	def get_address(self):
+		return Address.objects.filter(billing_profile__user=self.object).first()
+
+	def get_card(self):
+		return Card.objects.filter(billing_profile__user=self.object).first()
+
+	def get_success_url(self):
+		return reverse("accounts:user-update")
+
+	def form_valid(self, form):
+		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
+		address = form['address_form'].save(commit=False)
+		address.billing_profile = billing_profile
+		address.save()
+		order = Order.objects.new_or_get(billing_profile, self.product)
+		# self.request.session['order_id'] = order.order_id
+		return redirect("payment:pay_view")
+		# return redirect("accounts:user-update")
+
+	# def form_invalid(self, form):
+	# 	if self.request.is_ajax():
+	# 		print('INVALID AJAX')
+	# 	print('INVALID')
+	# 	return redirect("payment:pay_view")
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)
+		context['title'] = _('Update your details')
+		context['password_btn'] = _('Change password')
+		context['buy_btn'] = ('Перейти к оплате')
+		context['product'] = self.product
+		if self.get_address() is not None:
+			context['user_post_office'] = self.get_address().post_office
+		return context
+
+
+	def get_form_kwargs(self):
+		kwargs = super(ProductCheckoutView, self).get_form_kwargs()
+		kwargs.update(instance={
+		    'address_form': self.get_address(),
+		    # 'card_form': self.get_card(),
+		})
+		return kwargs
+
+
+		
 
 
 

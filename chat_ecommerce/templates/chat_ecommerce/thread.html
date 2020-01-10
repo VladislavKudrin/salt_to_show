@@ -46,7 +46,8 @@
 	display: inline-block!important
 }
 #chat-items{
-	height: 82%!important
+/*	height: 82%!important
+*/	max-height: calc(100vh - 184px) !important; 
 }
 }
 
@@ -351,8 +352,6 @@ button:focus {
 <div class='container-fluid m-0 p-0'>
 
 	<div class='row'>
-
-
 		<div class='col-12 col-md-3' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
@@ -384,7 +383,7 @@ button:focus {
 											{% endif %}
 										{% endif %}
 									</div>
-									{% if obj.product %}
+									{% if obj.product and request.user != obj.product.user %}
 										<div class='col-4 col-md-9 pl-md-0 text-left dialogs-username'>
 										<div class="row my-auto">
 											<div class="col-6 text-center">
@@ -435,7 +434,25 @@ button:focus {
 											{% endif %}
 										{% endif %}
 									</div>
-									<div class='col-4 col-md-9 text-left my-auto dialogs-username'>
+									{% if obj.product and request.user != obj.product.user %}
+										<div class='col-4 col-md-9 pl-md-0 text-left dialogs-username'>
+											<div class="row my-auto">
+												<div class="col-6 text-center">
+													<b>{{ obj.second.username }}</b>
+												</div>
+												<div class="col-6 text-right">
+													<small>{{ obj.product|to_user_currency:request }}</small>
+												</div>
+											</div>
+											<div class="row mt-2">
+												<div class="col-12 text-left my-auto">
+													<small>{{ obj.product.title }}</small>
+												</div>
+											</div>
+											<span class='obj_id_s' id="{{ obj.id }}"></span>
+										</div>
+									{% else %}
+									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
 										{{ obj.second.username }}
 										{% if threads_with_unred %}
 											{% for noti in threads_with_unred %}
@@ -444,8 +461,9 @@ button:focus {
 												{% endif %}
 											{% endfor %}
 										{% endif %}
-											<span class='obj_id_s' id="{{ obj.id }}"></span>
+									<span class='obj_id_s' id="{{ obj.id }}"></span>
 									</div>
+									{% endif %}
 									<div class="col-4 my-auto text-right arrow-select-chat">
 										<i class="fas fa-lg fa-chevron-right"></i>
 									</div>
@@ -466,7 +484,7 @@ button:focus {
 
 				<div class='col text-center my-auto'>
 						{% if request.user != object.first %}
-							
+<!-- THATS FOR THE FIRST USER IN THREAD -->
 								<div class='row justify-content-center'>
 
 									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
@@ -492,11 +510,30 @@ button:focus {
 									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.first.username }}
 									</a>
+									{% if object.product and request.user != object.product.user %}
+										<div style='float: right!important;'>
+											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
+												<input type="hidden" name="next" value="{{ request.path }}" readonly="true">
+												<input type="hidden" name="product" value="{{ object.product.id }}" readonly="true">
+												<input type="hidden" name="opponent" value="{{ object.first }}" readonly="true">
+												<button type="submit" class="btn btn-dark border-dark">Buy</button>
+											</form>
+											
+										</div>
+									{% elif object.product and request.user == object.product.user %}
+									<!-- Transaction initiated, but not confirmed -->
+										{% if object.transaction_thread.accepted == False %}
+											<div style='float: right!important;'>
+												<button class="btn btn-light border-dark">Sell</button>
+											</div>
+										{% endif %}
+									<!-- Transaction initiated, but not confirmed -->
+									{% endif %}
 									</div>
 								</div>
 						
 						{% else %}
-
+<!-- THATS FOR THE SECOND USER -->
 								<div class='row justify-content-center'>
 									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
 									<div class="row row-avatar-arrow">
@@ -509,6 +546,7 @@ button:focus {
 										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
 									</a>
 									{% else %}
+
 									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 									</a>
@@ -518,9 +556,30 @@ button:focus {
 									</div>
 
 									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
+
 									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+
 									{{ object.second.username }}
 								    </a>
+									{% if object.product and request.user != object.product.user %}
+										<div style='float: right!important;'>
+											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
+												<input type="hidden" name="next" value="{{ request.path }}" readonly="true">
+												<input type="hidden" name="product" value="{{ object.product.id }}" readonly="true">
+												<input type="hidden" name="opponent" value="{{ object.second }}" readonly="true">
+												<button type="submit" class="btn btn-dark border-dark">Buy</button>
+											</form>
+									
+										</div>
+									{% elif object.product and request.user == object.product.user %}
+									<!-- Transaction initiated, but not confirmed -->
+										{% if object.transaction_thread.accepted == False %}
+											<div style='float: right!important;'>
+												<button class="btn btn-light border-dark">Sell</button>
+											</div>
+										{% endif %}
+									<!-- Transaction initiated, but not confirmed -->
+									{% endif %}
 									</div>
 								</div>	
 						
@@ -529,7 +588,6 @@ button:focus {
 				</div>
 			<div class='row '>
 				<div class='col pr-0'>
-
 					<ul id='chat-items' class='my-custom-scrollbar' >
 							{% for msg in chat_messages_ordered %}
 								<li>
@@ -568,10 +626,7 @@ button:focus {
 				</div>
 			</div>
 
-<div class='row'>
-
-
-
+					<div class='row'>
 						<form id='websocket-form' method='POST'> {% csrf_token %}
 							<div class='row' id='input-row' style='position: fixed;bottom: 0; width:77%; margin-left:0px;' >
 								<div class='col-10 col-md-11 my-auto pr-0'>
@@ -584,7 +639,7 @@ button:focus {
 								</div>
 							</div>
 						</form>
-</div>
+					</div>
 
 
 		</div>

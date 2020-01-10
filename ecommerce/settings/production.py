@@ -37,7 +37,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
     
-
+TESTMODE = False
 ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com', 'salt-testserver.herokuapp.com']
 
 
@@ -48,6 +48,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
 BASE_URL = 'https://www.saltish.co'
+BASE_URL_WITHOUT_WWW = 'https://saltish.co'
 
 MANAGERS = (
     ('Vladislav Kudrin', "info@saltish.co" ),
@@ -79,13 +80,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'dj_pagination',
     "django_cron",
+    'betterforms',
+    'django_extensions',
+
 
     #our apps
     'chat_ecommerce',
     'addresses',
     'products',
     'search',
-    'tags',
     'analitics',
     'carts',
     'marketing',
@@ -95,6 +98,8 @@ INSTALLED_APPS = [
     'categories',
     'image_uploader',
     'language_pref',
+    'liqpay'
+
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -104,6 +109,10 @@ LOGOUT_URL = '/logout/'
 #SESSION OPTIONS
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = True
+#LiqPay
+#Live
+LIQPAY_PUBLIC_KEY = os.environ.get('LIQPAY_PUBLIC_KEY')
+LIQPAY_PRIVATE_KEY = os.environ.get('LIQPAY_PRIVATE_KEY')
 
 # import stripe
 # STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
@@ -282,7 +291,7 @@ LANGUAGES=[
     ('uk', 'Ukranian'),
 
 ]
-CHAT_WITH_PRODUCTS = False
+CHAT_WITH_PRODUCTS = 'exclude'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -312,7 +321,7 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
-from ecommerce.aws.conf import *
+
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATA_UPLOAD_MAX_MEMORY_SIZE = 500000000 # value in bytes
@@ -349,9 +358,10 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
-
+FAILED_RUNS_CRONJOB_EMAIL_PREFIX = "[Server check]: "
 CRON_CLASSES = [
     "ecommerce.views.MyCronJob",
+    "ecommerce.views.NovaPoshtaAPI",
     'django_cron.cron.FailedRunsNotificationCronJob',
     # ...
 ]

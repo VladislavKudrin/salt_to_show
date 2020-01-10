@@ -1,53 +1,45 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-
 from billing.models import BillingProfile
-
-ADDRESS_TYPES = (
-    ('billing', 'Billing address'),
-    ('shipping', 'Shipping address'),
-)
-
+from ecommerce.utils import alphaSpaces, phone_regex
+from django.core.validators import MinLengthValidator
 
 class Address(models.Model):
-	billing_profile 	= models.ForeignKey(BillingProfile)
-	name            	= models.CharField(max_length=120, null=True, blank=True, help_text='Shipping to? Who is it for?')
-	nickname        	= models.CharField(max_length=120, null=True, blank=True, help_text='Internal Reference Nickname')
-	#address_type		= models.CharField(max_length=120, choices=ADDRESS_TYPES, null=True)
-	address_line_1		= models.CharField(max_length=120)
-	address_line_2		= models.CharField(max_length=120, null=True, blank=True)
-	city				= models.CharField(max_length=120)
-	state				= models.CharField(max_length=120)
-	country				= models.CharField(max_length=120, default='United State of America')
-	postal_code			= models.CharField(max_length=120)
+	billing_profile 	= models.ForeignKey(BillingProfile, related_name='address')
+	name            	= models.CharField(max_length=120, null=True, blank=True, validators=[alphaSpaces, MinLengthValidator(6)])
+	post_office			= models.CharField(max_length=120, null=True, blank=True)
+	phone				= models.CharField(max_length=17, null=True, blank=True, validators=[phone_regex])
+	additional_line		= models.CharField(max_length=120, null=True, blank=True)
+	street				= models.CharField(max_length=120, null=True, blank=True)
+	number				= models.CharField(max_length=120, null=True, blank=True)
+	postal_code			= models.CharField(max_length=120, null=True, blank=True)
+	city				= models.CharField(max_length=120, null=True, blank=True)
+	state				= models.CharField(max_length=120, null=True, blank=True)
+	country				= models.CharField(max_length=120, null=True, blank=True)
 
 
 	def __str__(self):
-		if self.nickname:
-			return str(self.nickname)
-		return str(self.address_line_1)
+		return str(self.street) or ""
 
 	def get_absolute_url(self):
 		return reverse("address-update", kwargs={"pk": self.pk})
 
 	def get_short_address(self):
-		for_name = self.name 
-		if self.nickname:
-			for_name = "{} | {},".format( self.nickname, for_name)
-		return "{for_name} {line1}, {city}".format(
-			for_name = for_name or "",
-			line1 = self.address_line_1,
-			city = self.city
+		return "{name} {street}, {city}".format(
+			name = self.name or "",
+			street = self.street or "",
+			city = self.city or ""
 		) 
 
-
 	def get_address(self):
-		return "{for_name}\n{line1}\n{line2}\n{city}\n{state}, {postal}\n{country}".format(
-			for_name = self.name or "",
-			line1 = self.address_line_1,
-			line2 = self.address_line_2 or "",
-			city = self.city,
-			state = self.state,
-			postal= self.postal_code,
-			country = self.country
+		return "{name}\n{additional_line}\n{street}\n{number}\n{postal_code}\n{city}\n{state}\n{country}\n{post_office}".format(
+			name = self.name or "",
+			additional_line = self.additional_line or "",
+			street = self.street or "",
+			number = self.number or "",
+			postal_code = self.postal_code or "",
+			city= self.city or "",
+			state = self.state or "",
+			country = self.country or "",
+			post_office = self.post_office or ""
 			)

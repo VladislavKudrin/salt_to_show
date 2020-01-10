@@ -8,13 +8,16 @@ from django.core.validators import validate_image_file_extension
 from django.conf import settings
 from django.utils.translation import gettext as _
 
-from .models import Product, ImageOrderUtil, ProductImage
+from .models import Product, ImageOrderUtil, ProductImage, Shipping_price
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
-
 from ecommerce.utils import random_string_generator
 from image_uploader.models import UploadedFile
 from image_uploader.validators import validate_file_extension
 import re
+from addresses.forms import AddressForm
+from accounts.forms import UserDetailChangeForm
+from betterforms.multiform import MultiModelForm
+from billing.forms import CardForm
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label=_('Brand'), required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill'}))
@@ -22,6 +25,7 @@ class ProductCreateForm(forms.ModelForm):
 	undercategory = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"custom-readonly"}))
 	size = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"custom-readonly"}))
 	condition = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"custom-readonly"}))
+	shipping_price = forms.IntegerField()
 	class Meta:
 		model = Product
 		fields = [
@@ -33,6 +37,7 @@ class ProductCreateForm(forms.ModelForm):
 		'undercategory',
 		'size',
 		'condition',
+		'shipping_price'
 			]
 	def __init__(self, request, *args, **kwargs):
 		super(ProductCreateForm, self).__init__(*args, **kwargs)
@@ -62,6 +67,7 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['size'].label = _('Size')
 		self.fields['condition'].label = _('Condition')
 		self.fields['price'].label = _('Price')
+		self.fields['shipping_price'].label = _('Shipping price')
 		self.fields['description'].label = _('Description')
 
 
@@ -165,6 +171,11 @@ class ProductCreateForm(forms.ModelForm):
 		# if region_user:
 		# 	price = round((int(price)/region_user.currency_mult),6)
 		return price
+	def clean_shipping_price(self):
+		user = self.request.user
+		price = Product.objects.price_to_region_price(price = self.cleaned_data.get('shipping_price'), user = user)
+		shipping_price = Shipping_price.objects.create(national_shipping = price)
+		return shipping_price
 
 class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
@@ -218,11 +229,6 @@ class ImageForm(ProductCreateForm):
 class UploadFileForm(forms.Form):
 	image = forms.FileField()
 
-
-
-
-
-
 class ProductUpdateForm(ProductCreateForm):
 	def __init__(self, request, slug=None, *args, **kwargs):
 		super(ProductUpdateForm, self).__init__(request, *args, **kwargs)
@@ -253,35 +259,58 @@ class ProductUpdateForm(ProductCreateForm):
 		if self.request.user.region:
 			currency_mult = self.request.user.region.currency_mult
 			price = round(product.price * currency_mult)
+			price_shipping = round(product.shipping_price.national_shipping * currency_mult)
 			self.initial['price']=price
-		if request.session.get('language') == 'RU':
-			self.initial['undercategory']=undercategory.undercategory_ru
-			self.initial['sex']=gender.gender_ru
-			self.initial['condition']=condition.condition_ru
-		elif request.session.get('language') == 'EN':
-			self.initial['undercategory']=undercategory.undercategory_eng
-			self.initial['sex']=gender.gender_eng
-			self.initial['condition']=condition.condition_eng
-		elif request.session.get('language') == 'UA':
-			self.initial['undercategory']=undercategory.undercategory_ua
-			self.initial['sex']=gender.gender_ua
-			self.initial['condition']=condition.condition_ua
-	def save(self, commit=True):
-			product = Product.objects.get(slug=self.slug)
-			product.title = self.cleaned_data['title']
-			product.brand = self.cleaned_data['brand']
-			product.overcategory = self.cleaned_data['overcategory']
-			product.sex = self.cleaned_data['sex']
-			product.category = self.cleaned_data['category']
-			product.undercategory = self.cleaned_data['undercategory']
-			product.size = self.cleaned_data['size']
-			product.condition = self.cleaned_data['condition']
-			product.price = self.cleaned_data['price']
-			product.description = self.cleaned_data['description']
-			if commit:
-				product.save()
-			return product
+			self.initial['shipping_price']=price_shipping
 
+
+
+		# if request.session.get('language') == 'RU':
+		# 	self.initial['undercategory']=undercategory.undercategory_ru
+		# 	self.initial['sex']=gender.gender_ru
+		# 	self.initial['condition']=condition.condition_ru
+		# elif request.session.get('language') == 'EN':
+		# 	self.initial['undercategory']=undercategory.undercategory_eng
+		# 	self.initial['sex']=gender.gender_eng
+		# 	self.initial['condition']=condition.condition_eng
+		# elif request.session.get('language') == 'UA':
+		# 	self.initial['undercategory']=undercategory.undercategory_ua
+		# 	self.initial['sex']=gender.gender_ua
+		# 	self.initial['condition']=condition.condition_ua
+	def clean_shipping_price(self):
+		shipping_data = self.cleaned_data.get('shipping_price')
+		user = self.request.user
+		slug = self.slug
+		product = Product.objects.filter(slug=slug)
+		if product.exists():
+			shipping_price = Shipping_price.objects.filter(product=product.first())
+			if shipping_price.exists():
+				price = Product.objects.price_to_region_price(price = shipping_data, user = self.request.user)
+				shipping_price.update(national_shipping=price)
+				shipping_price.first().save()
+		else:
+			raise forms.ValidationError(_("Must be shipping price"))
+	def save(self, commit=True):
+		product                = Product.objects.get(slug=self.slug)
+		product.title          = self.cleaned_data['title']
+		product.brand          = self.cleaned_data['brand']
+		product.overcategory   = self.cleaned_data['overcategory']
+		product.sex            = self.cleaned_data['sex']
+		product.category       = self.cleaned_data['category']
+		product.undercategory  = self.cleaned_data['undercategory']
+		product.size           = self.cleaned_data['size']
+		product.condition      = self.cleaned_data['condition']
+		product.price          = self.cleaned_data['price']
+		product.description    = self.cleaned_data['description']
+		if commit:
+			product.save()
+		return product
+
+class CheckoutMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
+    form_classes = {
+    'address_form' : AddressForm,
+    'card_form': CardForm,
+    }  
 
 
 

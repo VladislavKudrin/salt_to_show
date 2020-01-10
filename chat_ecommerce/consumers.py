@@ -23,7 +23,6 @@ class ChatConsumer(AsyncConsumer):
 		except:
 			product_slug = None
 		thread_obj, created = await self.get_thread(user = me, other_username = other_user, product_slug = product_slug) #get the thread
-
 		self.thread_obj = thread_obj
 
 		chat_room = f'thread_{thread_obj.id}' #get chat_room (=thread)

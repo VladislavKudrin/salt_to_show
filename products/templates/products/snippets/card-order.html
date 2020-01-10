@@ -1,0 +1,26 @@
+{% load static %}
+{% load for_loop_extras %}
+<style type="text/css">
+  .card-img-top {
+    min-height: 10em;
+    min-width: 10em;
+    max-height: 10em;
+    max-width: 10em;    
+  }
+</style>
+
+<div class="row">
+  <div class="col-8">
+
+  {% if instance.thumbnail %}
+  {% with instance.thumbnail.all|first as thumbnail %}
+
+    <div class="wish-div" style='display:flex, justify-content: center'>
+      <img link_for_click ="{{ instance.get_absolute_url }}"class=" card-img-top-hidden my-auto " src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
+     
+    </div>
+  {% endwith %}
+  {% endif %}
+    {% include 'products/snippets/card_image_script.html' %}  
+  </div>
+</div>

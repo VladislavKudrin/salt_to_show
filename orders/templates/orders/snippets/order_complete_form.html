@@ -1,0 +1,10 @@
+<form method="POST" action="{% url 'orders:complete_order' %}">{% csrf_token %}
+	<input type="hidden" name="order_id" value="{{ object.order_id }}">
+	<tr>
+		<td>{{ object.order_id }}</td>
+		<td>{{ object.get_status }}</td>
+		<td>{{ object.total }}</td>
+		<td><button type="submit" class="btn btn-dark">Gekommen</button></td>
+		<td><button class="btn btn-danger">Nicht gekommen</button></td>
+	</tr>
+</form>

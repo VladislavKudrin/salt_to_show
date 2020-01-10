@@ -8,13 +8,19 @@ from django.core.urlresolvers import reverse
 import re
 from django.utils.translation import gettext as _ 
 from django.utils.translation import pgettext
-User = get_user_model()
-
+from betterforms.multiform import MultiModelForm
+from addresses.forms import AddressForm, AddressCheckoutForm
 from marketing.models import MarketingPreference
 from .models import EmailActivation, GuestEmail, LanguagePreference, Region
 from .signals import user_logged_in_signal
-from django.core.validators import RegexValidator
 from marketing.utils import Mailchimp
+from ecommerce.utils import alphanumeric
+from crispy_forms.helper import FormHelper
+from django import forms
+from billing.forms import CardForm
+
+User = get_user_model()
+
 
 class ReactivateEmailForm(forms.Form):
     error_css_class = 'error'
@@ -56,85 +62,6 @@ class UserAdminCreationForm(forms.ModelForm):
             user.save()
         return user
 
-class UserDetailChangeForm(forms.ModelForm): 
-    username  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
-    region = forms.ChoiceField(widget=forms.Select(), required=False)
-    full_name = forms.CharField(required=False, widget=forms.TextInput(attrs={"class":'form-control'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), required=False)
-    subscribed = forms.BooleanField(required=False)
-    profile_foto = forms.FileField(required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
-    class Meta:
-        model = User
-        fields = [
-                'username',
-                'region',
-                'full_name',
-                'profile_foto',
-                    ]
-    def __init__(self, request, *args, **kwargs):
-        super(UserDetailChangeForm, self).__init__(*args, **kwargs)
-        alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
-        self.fields['username'].label = _('Username')
-        self.fields['username'].widget.attrs['placeholder'] = _('Your username')
-        self.fields['username'].validators = [alphanumeric]
-        self.fields['region'].label = _('Region')
-        self.fields['full_name'].label = _('Name')
-        self.fields['full_name'].widget.attrs['placeholder'] = _('Your full name')
-        self.fields['full_name'].widget.help_text = _('Cannot change email')
-        self.fields['subscribed'].label = _('Recieve marketing email?')
-        self.fields['profile_foto'].label = _('Profile photo')
-        self.fields['profile_foto'].widget.attrs['label_for_btn'] = pgettext('profile_update','Update')
-        #REGIONS
-        self.initial['region'] = request.user.region
-        if self.initial['region'] is None: 
-            self.initial['region'] = ('default', _('-- Please select your region --'))
-        region_choices = [(e.region, e.region) for e in Region.objects.all()] #currently available options
-        region_choices.append(tuple(('default', _('-- Please select your region --')))) #append default value
-        self.fields['region'].choices = region_choices
-
-        self.request = request
-        self.fields['email'].initial=request.user.email
-        self.fields['subscribed'].initial=request.user.marketing.subscribed
-        self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
-
-    # def clean_username(self):
-    #     data = self.cleaned_data['username']
-    #     contains_rus = bool(re.search('[а-яА-Я]', data))
-    #     if contains_rus:
-    #         raise forms.ValidationError("Юзернейм должен содержать только латинские символы")
-    #     return data
-
-    def clean_subscribed(self):
-        marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
-        subscribed_user = self.cleaned_data.get('subscribed')
-        marketing_pref.update(subscribed=subscribed_user)
-        marketing_pref.first().save()
-
-    def clean_region(self):
-        data = self.cleaned_data['region']
-        if data == 'default':
-            raise forms.ValidationError(_("You must select a region"))
-        clean_data = Region.objects.filter(region=data)[0]
-        # user = self.request.user
-        # mark_pref = MarketingPreference.objects.filter(user=user).first()
-        # if mark_pref.subscribed == True: 
-        #     print('Forms Acc, if True')
-        #     response_status, response = Mailchimp().change_subscription_status(user.email, 'subscribed')
-        # elif mark_pref.subscribed == False:
-        #     print('Forms acc, if True') 
-        #     response_status, response = Mailchimp().change_subscription_status(user.email, 'unsubscribed')
-        return clean_data
-
-
-    # def save(self, commit=True):
-    #     request = self.request
-    #     data = self.cleaned_data
-    #     password = data.get("password")
-    #     user_objects = User.objects.filter(email=email)
-    #     if not user_objects.exists(): 
-    #         username = User.objects.check_username(username=email.split("@")[0])
-    #         User.objects.create_user(email=email, username=username, password=password, is_active=False)
-
 class UserAdminChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
@@ -171,8 +98,6 @@ class GuestForm(forms.ModelForm):
             request = self.request
             request.session['guest_email_id'] = obj.id
         return obj
-
-
 
 class RegisterLoginForm(forms.ModelForm):
     class Meta:
@@ -217,7 +142,6 @@ class RegisterLoginForm(forms.ModelForm):
             username = User.objects.check_username(username=email.split("@")[0])
             User.objects.create_user(email=email, username=username, password=password, is_active=False)
 
-
 class RegionModalForm(forms.ModelForm):
     class Meta:
         model = User
@@ -228,32 +152,73 @@ class RegionModalForm(forms.ModelForm):
         super(RegionModalForm, self).__init__(*args, **kwargs)
         self.fields['location'].widget.attrs['readonly'] = True
         self.fields['location'].widget.attrs['value'] = self.request.GET.get('location')
-        print(self.request.POST)
     def save(self):
         user = self.request.user
         region = self.cleaned_data.get('region')
         user.region = region
         user.save()
 
+class UserDetailChangeForm(forms.ModelForm): 
+    username  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
+    region = forms.ChoiceField(widget=forms.Select(), required=False)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), required=False)
+    subscribed = forms.BooleanField(required=False)
+    profile_foto = forms.FileField(required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
+    
+    class Meta:
+        model = User
+        fields = [
+                'username',
+                'region',
+                'profile_foto',
+                    ]
+
+    def get_region_choices(self):
+        region_choices = [(e.region, e.region) for e in Region.objects.all()] #currently available options
+        region_choices.append(tuple(('default', _('-- Please select your region --')))) #append default value
+        return region_choices
 
 
-        
+    def __init__(self, request, *args, **kwargs):
+        super(UserDetailChangeForm, self).__init__(*args, **kwargs)
+        # self.helper = FormHelper()
+        # self.helper.form_show_labels = False 
+        self.request = request
+        self.fields['username'].label = _('Username')
+        self.fields['username'].validators = [alphanumeric]
+        # self.fields['profile_foto'].label = _('Profile photo')
+        self.fields['profile_foto'].label = False
+        self.fields['profile_foto'].widget.attrs['label_for_btn'] = pgettext('profile_update','Update')
+        self.fields['region'].label = _('Region')
+        self.initial['region'] = request.user.region
+        if self.initial['region'] is None: self.initial['region'] = ('default', _('-- Please select your region --'))
+        self.fields['region'].choices = self.get_region_choices()
+        self.fields['email'].initial=request.user.email
+        self.fields['subscribed'].label = _('Recieve marketing email?')
+        self.fields['subscribed'].initial=request.user.marketing.subscribed
+        self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
+
+    def clean_subscribed(self):
+        marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
+        subscribed_user = self.cleaned_data.get('subscribed')
+        marketing_pref.update(subscribed=subscribed_user)
+
+    def clean_region(self):
+        data = self.cleaned_data['region']
+        if data == 'default':
+            raise forms.ValidationError(_("You must select a region"))
+        clean_data = Region.objects.filter(region=data)[0]
+        return clean_data
 
 
+class AccountMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
+    form_classes = {
+    'user_form' : UserDetailChangeForm,
+    'address_form' : AddressForm,
+    'card_form': CardForm,
+    }   
 
 
-#----Deleting guest mails if there are any-----------------
-    # user_logged_in_signal.send(user.__class__, instance = user, request = request)
-    # try:
-    #     del request.session['guest_email_id']
-    # except:
-    #     pass
-
-
-    # if user is None:
-    #     raise forms.ValidationError("Oops... something went wrong. Please contact us!")
-
-#-------------ACTIVE-FALSE-----------------
 
 
  
