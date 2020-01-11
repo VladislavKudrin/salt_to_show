@@ -571,7 +571,7 @@ html,body{
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
+    padding: 10px 0px;
     border-top: 1px solid #e8eaef;
 }
 
@@ -698,12 +698,6 @@ border: 2px red solid;
       font-family: inherit;
   font-size: 0.9em;
 }
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #404040 !important;
-  opacity: 1; /* Firefox 
-}
-
 
 
 
