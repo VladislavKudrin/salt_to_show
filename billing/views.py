@@ -27,13 +27,16 @@ class PayView(TemplateView):
         if settings.TESTMODE:
             callback_url = "https://en26sty6m4lpq.x.pipedream.net/"
         order = Order.objects.by_request(request).first()
+        billingprofile, created = BillingProfile.objects.new_or_get(request)
+        if billingprofile:
+            address = billingprofile.address.first().get_address()
         params = {
             "action"                : "hold",
             "version"               : "3",
             "phone"                 : "380950000001",
             "amount"                : str(order.convert_total(request.user)),
             "currency"              : "UAH",
-            "description"           : "description text",
+            "description"           : address,
             "order_id"              : order.order_id,
             "letter_of_credit"      : "1",
             "letter_of_credit_date" : "2020-01-20 00:00:00",
