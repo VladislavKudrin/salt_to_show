@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load for_loop_extras %}
 <head>
 	
 	<style type="text/css">
@@ -119,16 +119,18 @@
 							{{ object.get_status }}
 						</div>
 						<div class="col-6">
-							{{ object.total }}
+							{{ object.total|to_user_currency:request }}
 						</div>
 					</div>
 				</div>
 
 				<div class="col-4">
 					<div class="row">
+						{% if object.get_status != 'Created' %}
 						<div class="col-12">
-							<button class="btn hover-button button-white medium-button order-button" style="border: 1px solid black; margin-top: 0.3rem;">Received</button>
+							{% include 'orders/snippets/order_complete_form.html' %}
 						</div>
+						{% endif %}
 					</div>
 				</div>
 

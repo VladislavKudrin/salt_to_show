@@ -1,5 +1,6 @@
 {% load i18n %}
-{% if not object.order.get_status == 'Paid' %}
+
+{% if not object.order.get_status == 'Paid' or not object.order %}
 
 	{% if request.user != object.user and request.user.region.region_code == 'ua' %}
 

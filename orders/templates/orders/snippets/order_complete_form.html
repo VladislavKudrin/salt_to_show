@@ -1,10 +1,17 @@
 <form method="POST" action="{% url 'orders:complete_order' %}">{% csrf_token %}
 	<input type="hidden" name="order_id" value="{{ object.order_id }}">
-	<tr>
-		<td>{{ object.order_id }}</td>
-		<td>{{ object.get_status }}</td>
-		<td>{{ object.total }}</td>
-		<td><button type="submit" class="btn btn-dark">Gekommen</button></td>
-		<td><button class="btn btn-danger">Nicht gekommen</button></td>
-	</tr>
+	<button type="submit" {% if object.get_status == 'Shipped' %}
+	class="btn hover-button medium-button order-button order-received"
+	disabled="true"
+	style="border: 1px solid black; margin-top: 0.3rem;opacity: 100!important" 
+	{% else %}
+	class="btn hover-button button-white medium-button order-button"
+	style="border: 1px solid black; margin-top: 0.3rem;opacity: 100!important"
+	{% endif %}>
+	{% if object.get_status == 'Shipped' %}
+	✔
+	{% else %}
+	Received
+	{% endif %}
+	</button>
 </form>
