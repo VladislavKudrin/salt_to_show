@@ -47,8 +47,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
-BASE_URL = 'https://www.salt-testserver.herokuapp.com'
-BASE_URL_WITHOUT_WWW = 'https://salt-testserver.herokuapp.com'
+BASE_URL = 'https://www.saltish.co'
+BASE_URL_WITHOUT_WWW = 'https://saltish.co'
 
 MANAGERS = (
     ('Vladislav Kudrin', "info@saltish.co" ),
@@ -321,7 +321,7 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
-from ecommerce.aws.conf import *
+
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 DATA_UPLOAD_MAX_MEMORY_SIZE = 500000000 # value in bytes
@@ -358,9 +358,10 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
-
+FAILED_RUNS_CRONJOB_EMAIL_PREFIX = "[Server check]: "
 CRON_CLASSES = [
     "ecommerce.views.MyCronJob",
+    "ecommerce.views.NovaPoshtaAPI",
     'django_cron.cron.FailedRunsNotificationCronJob',
     # ...
 ]

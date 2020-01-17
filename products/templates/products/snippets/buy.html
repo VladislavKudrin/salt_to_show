@@ -1,7 +1,10 @@
 {% load i18n %}
 
-{% if request.user != object.user %}
+{% if not object.order.get_status == 'Paid' or not object.order %}
 
-<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
+	{% if request.user != object.user and request.user.region.region_code == 'ua' %}
 
+	<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
+
+	{% endif %} 
 {% endif %} 

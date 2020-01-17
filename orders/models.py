@@ -82,10 +82,10 @@ class Order(models.Model):
 		total = self.total
 		region_user = user.region
 		if region_user:
-			convertet_total = round((int(total)/region_user.currency_mult),6)
+			convertet_total = round(total*region_user.currency_mult)
 		return convertet_total
 	def get_status(self):
-		return self.status
+		return self.get_status_display()
 
 
 	def get_absolute_url(self):

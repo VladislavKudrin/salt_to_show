@@ -7,6 +7,11 @@ from django.utils.text import slugify
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
 from django.contrib import messages
+import requests
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.core.files import File
+from django.core.mail import send_mail
 
 
 
@@ -86,6 +91,57 @@ def add_message(backend, user, request, response, *args, **kwargs):
 
 
 alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
+alphaSpaces = RegexValidator(r'^[a-zA-Zа-яА-ЯҐЄІЇґєії\'\`\’\-\. ]+$', 'Only letters and spaces are allowed')
+phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'")
+
+
+def get_data_from_novaposhta_api():
+    print('Function call from cron job')
+    r = requests.post('http://testapi.novaposhta.ua/v2.0/json/AddressGeneral/getWarehouses', json={
+        "modelName": "AddressGeneral",
+        "calledMethod": "getWarehouses",
+        "methodProperties": {
+        "Language": "ru",
+        },
+        "apiKey": "f5c686be4fb428d1b7c3aa4fb730496b"
+          }
+        )
+
+    data = r.json()['data']
+    offices_ua = []
+    offices_ru = []
+    for i in data: 
+        number = i['Number']
+        address_ua = i['ShortAddress']
+        address_ru = i['ShortAddressRu']
+
+        string_ua = f'Відділення № {number}, {address_ua}'
+        offices_ua.append(string_ua)
+
+        string_ru = f'Отделение № {number}, {address_ru}'
+        offices_ru.append(string_ru)
+
+    path_ua = os.path.join(BASE_DIR, "static_my_project", 'post_offices_ua.txt')
+    with open(path_ua, 'w') as f:
+        myfile = File(f)
+        for listitem in offices_ua:
+            f.write('%s\n' % listitem)
+    myfile.closed
+    f.closed
+
+    path_ru = os.path.join(BASE_DIR, "static_my_project", 'post_offices_ru.txt')
+    with open(path_ru, 'w') as f:
+        myfile = File(f)
+        for listitem in offices_ru:
+            f.write('%s\n' % listitem)
+    myfile.closed
+    f.closed
+
+    print(f'Offices_ua written, Offices_ru written')
+    return 
+
+
+
 
 # def create_brands(f):
 # #     # print(f.read())
