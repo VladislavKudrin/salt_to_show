@@ -415,6 +415,7 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 	def get_object(self):
 		product_id = self.kwargs.get('product_id')
 		user = self.request.user
+		print(user.region.region_code)
 		if user.region.region_code == 'ua':
 			if product_id.isdigit():
 				product_obj = Product.objects.filter(id=product_id).active().first()

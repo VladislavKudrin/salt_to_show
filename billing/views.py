@@ -19,6 +19,7 @@ from .models import BillingProfile, Card
 from orders.models import Order, Transaction
 
 
+
 class PayView(TemplateView):
     template_name = 'billing/pay.html'
     def get(self, request, *args, **kwargs):
@@ -31,15 +32,14 @@ class PayView(TemplateView):
         if billingprofile:
             address = billingprofile.address.first().get_address()
         params = {
-            "action"                : "hold",
+            "action"                : "p2p",
             "version"               : "3",
             "phone"                 : "380950000001",
             "amount"                : str(order.convert_total(request.user)),
             "currency"              : "UAH",
             "description"           : address,
+            "receiver_card"         : "5168742220852416",
             "order_id"              : order.order_id,
-            "letter_of_credit"      : "1",
-            "letter_of_credit_date" : "2020-01-20 00:00:00",
             "server_url"            : callback_url, # url to callback view
             "recurringbytoken"      : "1",
             "result_url"            : settings.BASE_URL_WITHOUT_WWW + reverse('orders:list')
@@ -63,7 +63,7 @@ class PayCallbackView(View):
                 order = order.first()
                 transaction = Transaction.objects.new_or_get(order=order, data=response)
                 billing_profile = order.billing_profile
-                if response.get("status") == "hold_wait":
+                if response.get("status") == "success":
                     order.status = "hold_wait"
                     order.save()
                     if order.product:
