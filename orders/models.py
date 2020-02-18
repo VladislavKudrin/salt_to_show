@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.core.urlresolvers import reverse
 from django.conf import settings
-
+from django.db.models import Q
 from addresses.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
@@ -19,17 +19,25 @@ import json
 
 ORDER_STATUS_CHOICES = (
 	('created', 'Created'),
-	('hold_wait', 'Paid'),
+	('paid', 'Paid'),
 	('shipped', 'Shipped'),
 	('refunded', 'Refunded'),
 	)
 
 class OrderManagerQuerySet(models.query.QuerySet):
+	def by_request_sold(self, request):
+		user = request.user
+		orders = self.filter(product__user=user).not_created()
+		return orders
 	def by_request(self, request):
 		billing_profile, created = BillingProfile.objects.new_or_get(request)
 		return self.filter(billing_profile=billing_profile)
 	def not_created(self):
 		return self.exclude(status='created')
+	def not_refunded(self):
+		return self.exclude(status='refunded')
+	def not_shipped(self):
+		return self.exclude(status='shipped')
 class OrderManager(models.Manager):
 	def get_queryset(self):
 		return OrderManagerQuerySet(self.model, using=self.db)
@@ -53,25 +61,34 @@ class OrderManager(models.Manager):
 
 	def by_request(self, request):
 		return self.get_queryset().by_request(request)
+	def by_request_sold(self, request):
+		return self.get_queryset().by_request_sold(request)
+	def not_created(self):
+		return self.get_queryset().not_created()
+	def not_refunded(self):
+		return self.get_queryset().not_refunded()
+	def not_shipped(self):
+		return self.get_queryset().not_shipped()
 
 
 class Order(models.Model):
-	order_id               = models.CharField(max_length=120, blank = True)
-	billing_profile        = models.ForeignKey(BillingProfile, null=True, blank=True)
-	shipping_address       = models.ForeignKey(Address, related_name="shipping_address", null=True, blank=True)
-	billing_address        = models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
+	order_id                 = models.CharField(max_length=120, blank = True)
+	billing_profile          = models.ForeignKey(BillingProfile, null=True, blank=True)
+	shipping_address         = models.ForeignKey(Address, related_name="shipping_address", null=True, blank=True)
+	billing_address          = models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
+	track_number             = models.CharField(max_length=120, blank=True, null=True)
 	shipping_address_final = models.TextField(blank=True, null=True)
 	billing_address_final  = models.TextField(blank=True, null=True)
-	# cart                 = models.ForeignKey(Cart)
-	product                = models.OneToOneField(Product, blank=True, null=True)
-	status                 = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
-	shipping_total         = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
-	total                  = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-	active                 = models.BooleanField(default=True)
-	objects                = OrderManager()
-	timestamp              = models.DateTimeField(auto_now_add=True)
-	updated                = models.DateTimeField(auto_now=True)
-	thread                 = models.OneToOneField(Thread, null=True, blank=True)
+	# cart                   = models.ForeignKey(Cart)
+	product                  = models.OneToOneField(Product, blank=True, null=True)
+	status                   = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
+	shipping_total           = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
+	total                    = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+	active                   = models.BooleanField(default=True)
+	objects                  = OrderManager()
+	timestamp                = models.DateTimeField(auto_now_add=True)
+	updated                  = models.DateTimeField(auto_now=True)
+	# thread                 = models.OneToOneField(Thread, null=True, blank=True)
 
 	def __str__(self):
 		return self.order_id
@@ -120,30 +137,41 @@ class Order(models.Model):
 		return self.status
 
 	def complete_this_order(self, request):
-		liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
-		params = {
-			"action"        : "hold_completion",
-			"version"       : "3",
-			"order_id"      : self.order_id
-		}
-		signature = liqpay.cnb_signature(params)
-		data = liqpay.cnb_data(params)
-		payload_with_token = {
-   			"data": data,
-   			"signature":signature
-				}
-		response = requests.post('https://www.liqpay.ua/api/request', data=payload_with_token)
-		response_json = response.json()
-		if response_json.get('status') == 'success':
-			self.transaction.complete_transaction(response.json())
-			self.status = 'shipped'
-			self.save()
-			if self.product:
-				self.product.active = False
-				self.product.save()
-		else:
-			self.transaction.transaction_error(response.json())
-
+		# liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
+		# params = {
+		# 	"action"        : "hold_completion",
+		# 	"version"       : "3",
+		# 	"order_id"      : self.order_id
+		# }
+		# signature = liqpay.cnb_signature(params)
+		# data = liqpay.cnb_data(params)
+		# payload_with_token = {
+  #  			"data": data,
+  #  			"signature":signature
+		# 		}
+		# response = requests.post('https://www.liqpay.ua/api/request', data=payload_with_token)
+		# response_json = response.json()
+		try:
+			self.transaction
+		except:
+			Transaction.objects.new_or_get(order=self)
+		self.status = 'shipped'
+		self.save()
+		if self.product:
+			self.product.active = False
+			self.product.save()
+		# if response_json.get('status') == 'success':
+		# 	self.transaction.complete_transaction(response.json())
+		# 	self.status = 'shipped'
+		# 	self.save()
+		# 	if self.product:
+		# 		self.product.active = False
+		# 		self.product.save()
+		# # else:
+		# # 	self.transaction.transaction_error(response.json())
+	def get_seller(self):
+		user = self.product.user
+		return user
 
 def pre_save_create_order_id(sender, instance, *args, **kwargs):
 	if not instance.order_id:
@@ -201,7 +229,7 @@ def post_save_order(sender, instance, created, *args, **kwargs):
 post_save.connect(post_save_order, sender=Order)
 
 class TransactionManager(models.Manager):
-	def new_or_get(self, order, data):
+	def new_or_get(self, order, data=None):
 		qs = self.get_queryset().filter(
 			order = order
 			)
@@ -229,7 +257,8 @@ class Transaction(models.Model):
 
 	def transaction_error(self, data):
 		self.data_error = data
-		self.save
+		print(self.data_error)
+		self.save()
 
 
 

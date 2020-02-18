@@ -56,6 +56,8 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
+ALLOWED_IP_ADDRESSES = os.environ.get('ALLOWED_IP_ADDRESSES')
+
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 ASGI_APPLICATION = 'ecommerce.routing.application'
 

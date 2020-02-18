@@ -18,7 +18,9 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext
 from django.utils import translation
 from django.core.mail import send_mail
+from django.utils.safestring import mark_safe
 
+from ecommerce.utils import add_message
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from ecommerce.utils import get_data_from_novaposhta_api
 from analitics.mixins import ObjectViewedMixin
@@ -55,16 +57,27 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get("slug")
-		try:
-			instance = Product.objects.get(slug=slug, active=True)
-		except Product.DoesNotExist:
-			raise Http404("Not found!")
-		except Product.MultipleObjectsReturned:
-			qs = Product.objects.filter(slug=slug, active=True)
-			instance = qs.first()
-		except:
-			raise Http404("Hmm")
-		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+		if not self.request.user.is_admin:
+			try:
+				instance = Product.objects.get(slug=slug, active=True)
+			except Product.DoesNotExist:
+				raise Http404("Not found!")
+			except Product.MultipleObjectsReturned:
+				qs = Product.objects.filter(slug=slug, active=True)
+				instance = qs.first()
+			except:
+				raise Http404("Hmm")
+			#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+		else:
+			try:
+				instance = Product.objects.get(slug=slug)
+			except Product.DoesNotExist:
+				raise Http404("Not found!")
+			except Product.MultipleObjectsReturned:
+				qs = Product.objects.filter(slug=slug)
+				instance = qs.first()
+			except:
+				raise Http404("Hmm")
 		return instance
 
 	def get_context_data(self, *args, **kwargs):
@@ -144,6 +157,12 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 			return self.form_invalid(form)
 
 	def get(self, request, *args, **kwargs):
+		billing_profile, created = BillingProfile.objects.new_or_get(self.request)
+		card, created = Card.objects.new_or_get(billing_profile=billing_profile)
+		if card.is_valid_card() == False:
+			msg = _("Please add card information to add an item!")
+			messages.add_message(request, messages.WARNING, mark_safe(msg))
+			return redirect("accounts:user-update")
 		brands = Brand.objects.all()
 		brand_arr = []
 		form_id = unique_form_id_generator()
@@ -447,7 +466,9 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		address = form['address_form'].save(commit=False)
 		address.billing_profile = billing_profile
 		address.save()
-		order = Order.objects.new_or_get(billing_profile, self.product)
+		order, created = Order.objects.new_or_get(billing_profile, self.product)
+		order.shipping_address = address
+		order.save()
 		# self.request.session['order_id'] = order.order_id
 		return redirect("payment:pay_view")
 		# return redirect("accounts:user-update")

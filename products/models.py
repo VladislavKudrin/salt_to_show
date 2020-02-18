@@ -160,8 +160,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		return(x_b)
 
 	def authentic(self):
-		return self.filter(authentic='authentic')
-
+		return self.filter(authentic='authentic').exclude(order__status='paid')
 	def fake(self):
 		return self.filter(authentic='fake')	
 

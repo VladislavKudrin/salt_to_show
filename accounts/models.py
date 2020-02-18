@@ -156,11 +156,6 @@ class User(AbstractBaseUser):
 		if self.wishes:
 			return self.wishes
 		pass
-
-
-
-
-
 	@property
 	def is_staff(self):
 		return self.staff
@@ -168,6 +163,15 @@ class User(AbstractBaseUser):
 	@property
 	def is_admin(self):
 		return self.admin
+
+# def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
+# 	if created:
+# 		billing_profile = Billing_profile.
+
+
+# post_save.connect(post_save_language_pref, sender=LanguagePreference)
+
+
 LANGUAGE_CHOISES = (
 	('ru', 'RU'),
 	('ua', 'UA'),

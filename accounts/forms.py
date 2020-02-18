@@ -8,6 +8,9 @@ from django.core.urlresolvers import reverse
 import re
 from django.utils.translation import gettext as _ 
 from django.utils.translation import pgettext
+from django.forms import inlineformset_factory
+
+
 from betterforms.multiform import MultiModelForm
 from addresses.forms import AddressForm, AddressCheckoutForm
 from marketing.models import MarketingPreference
@@ -191,7 +194,8 @@ class UserDetailChangeForm(forms.ModelForm):
         self.fields['profile_foto'].widget.attrs['label_for_btn'] = pgettext('profile_update','Update')
         self.fields['region'].label = _('Region')
         self.initial['region'] = request.user.region
-        if self.initial['region'] is None: self.initial['region'] = ('default', _('-- Please select your region --'))
+        if self.initial['region'] is None: 
+            self.initial['region'] = ('default', _('-- Please select your region --'))
         self.fields['region'].choices = self.get_region_choices()
         self.fields['email'].initial=request.user.email
         self.fields['subscribed'].label = _('Recieve marketing email?')
@@ -205,18 +209,20 @@ class UserDetailChangeForm(forms.ModelForm):
 
     def clean_region(self):
         data = self.cleaned_data['region']
-        if data == 'default':
+        if data == 'default' or data == '':
             raise forms.ValidationError(_("You must select a region"))
-        clean_data = Region.objects.filter(region=data)[0]
-        return clean_data
+        clean_data = Region.objects.filter(region=data)
+        return clean_data.first()
 
 
-class AccountMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
-    form_classes = {
-    'user_form' : UserDetailChangeForm,
-    'address_form' : AddressForm,
-    'card_form': CardForm,
-    }   
+# class AccountMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
+#     form_classes = {
+#     'user_form' : UserDetailChangeForm,
+#     'address_form' : AddressForm,
+#     'card_form': CardForm,
+#     }
+
+
 
 
 

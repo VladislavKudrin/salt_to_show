@@ -3,6 +3,13 @@ from django import forms
 from .models import Order
 
 
+
+
+class OrderTrackForm(forms.ModelForm):
+	class Meta:
+		model = Order
+		fields = ['track_number',]
+
 # class OrderCompletedForm(forms.ModelForm):
 # 	class Meta:
 # 		model = Order

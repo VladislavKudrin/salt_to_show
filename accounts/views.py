@@ -15,6 +15,9 @@ from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django.utils import translation
+
+
+
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePreference
 from .forms import *
@@ -23,8 +26,10 @@ from products.models import Product
 from marketing.utils import Mailchimp
 from marketing.models import MarketingPreference
 from addresses.models import Address
+from addresses.forms import AddressForm
 from ecommerce.utils import add_message
 from billing.models import BillingProfile, Card
+from billing.forms import CardForm
 
 
 def region_init(request):
@@ -273,48 +278,106 @@ def wishlistupdate(request):
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
-
-class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
-	form_class = AccountMultiForm
+class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
 	template_name='accounts/account-update-view.html'
-
-	def get_object(self):
-		return self.request.user
-
-	def get_address(self):
-		return Address.objects.filter(billing_profile__user=self.object).first()
-
-	def get_card(self):
-		return Card.objects.filter(billing_profile__user=self.object).first()
-
+	def get(self, request, *args, **kwargs):
+		
+		return render(self.request, self.template_name, self.get_context_data())
 	def get_success_url(self):
 		return reverse("accounts:user-update")
 
-	def form_valid(self, form):
-		user_form = form['user_form'].save()
-		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
-		profile = form['address_form'].save(commit=False)
-		profile.billing_profile = billing_profile
-		profile.save()
-		card_form = form['card_form'].save()
-		return super(AccountUpdateView, self).form_valid(form)
+	def get_address(self):
+		billing_profile, created = BillingProfile.objects.new_or_get(self.request)
+		address, created = Address.objects.new_or_get(billing_profile)
+		return address
 
+	def get_card(self):
+		billing_profile, created = BillingProfile.objects.new_or_get(self.request)
+		card, created = Card.objects.new_or_get(billing_profile)
+		return card
 	def get_context_data(self, *args, **kwargs):
-		context = super(AccountUpdateView, self).get_context_data(*args,**kwargs)
+		context = {}
+		# if self.request.POST:
+		# 	context['user_form'] = UserDetailChangeForm(data=self.request.POST, request=self.request, prefix='user_form', instance=self.get_object())
+		# 	context['address_form'] = AddressForm(data=self.request.POST, request=self.request, prefix='address_form', instance=self.get_address())
+		# 	context['card_form'] = CardForm(data=self.request.POST, request=self.request, prefix='card_form', instance=self.get_card())
+		# else:
+		context['user_form'] = UserDetailChangeForm(self.request, prefix='user_form', instance=self.get_object())
+		context['address_form'] = AddressForm(self.request, prefix='address_form', instance=self.get_address())
+		context['card_form'] = CardForm(self.request, prefix='card_form', instance=self.get_card())
+		context['object'] = self.get_object()
 		context['title'] = _('Update your details')
 		context['password_btn'] = _('Change password')
 		context['save_btn'] = _('Save')
 		context['logout_btn'] = _('Logout')
 		return context
+	def get_object(self):
+		self.object = self.request.user
+		return self.request.user
+	def form_valid(self, user_form, address_form, card_form):
+		user_form.save(commit=True)
+		address_form.save(commit=True)
+		card_form.save(commit=True)
+		return(HttpResponseRedirect(self.get_success_url()))
+	# def form_invalid(self, user_form, address_form, card_form):
+	# 	return self.render_to_response(
+	# 		self.get_context_data(user_form=user_form,
+	# 								address_form=address_form,
+	# 								card_form=card_form))
+	def post(self, request, *args, **kwargs):
+		user_form = UserDetailChangeForm(data=self.request.POST, files=self.request.FILES, request=self.request, prefix='user_form', instance=self.get_object())
+		address_form = AddressForm(data=self.request.POST, request=self.request, prefix='address_form', instance=self.get_address())
+		card_form = CardForm(data=self.request.POST, request=self.request, prefix='card_form', instance=self.get_card())
+		if user_form.is_valid() and address_form.is_valid() and card_form.is_valid():
+			return self.form_valid(user_form, address_form, card_form)
+		return HttpResponseRedirect(self.get_success_url())
 
-	def get_form_kwargs(self):
-		kwargs = super(AccountUpdateView, self).get_form_kwargs()
-		kwargs.update(instance={
-		    'user_form': self.object,
-		    'address_form': self.get_address(),
-		    'card_form': self.get_card(),
-		})
-		return kwargs
+# class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
+# 	form_class = AccountMultiForm
+# 	template_name='accounts/account-update-view.html'
 
 
+
+
+
+# 	def form_valid(self, form):
+# 		form = form_classes
+# 		user_form = form['user_form'].save()
+# 		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
+# 		profile = form['address_form'].save(commit=False)
+# 		profile.billing_profile = billing_profile
+# 		profile.save()
+# 		card_form = form['card_form']
+# 		if card_form.is_valid():
+# 			print('valid')
+# 			card_form = form['card_form'].save()
+# 		return super(AccountUpdateView, self).form_valid(form)
+
+# 	def get_context_data(self, *args, **kwargs):
+# 		context = super(AccountUpdateView, self).get_context_data(*args,**kwargs)
+# 		context['title'] = _('Update your details')
+# 		context['password_btn'] = _('Change password')
+# 		context['save_btn'] = _('Save')
+# 		context['logout_btn'] = _('Logout')
+# 		return context
+
+# 	def get_form_kwargs(self):
+# 		kwargs = super(AccountUpdateView, self).get_form_kwargs()
+# 		kwargs.update(instance={
+# 		    'user_form': self.object,
+# 		    'address_form': self.get_address(),
+# 		    'card_form': self.get_card(),
+# 		})
+# 		return kwargs
+# 	def post(self, request, *args, **kwargs):
+# 		form = self.form_class
+# 		self.form_valid(form)
+		
+
+# 		return HttpResponse('html')
+# 		# if form.is_valid():
+# 		# 	print('valid')
+# 		# 	return self.form_valid(form)
+# 		# else:
+# 		# 	print('not')
 

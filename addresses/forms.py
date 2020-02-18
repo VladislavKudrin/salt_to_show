@@ -42,12 +42,7 @@ class AddressForm(forms.ModelForm):
 
     def __init__(self, request, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
-        if request.session.get('_language') == 'uk':
-            post_offices = ['Обери відділення Нової Пошти'] + self.get_latest_postoffices_ua()
-        elif request.session.get('_language') == 'ru':
-            post_offices = ['Выбери отделение Новой Почты'] + self.get_latest_postoffices_ru()
-        else: 
-            post_offices = ['None']
+        post_offices = ['Choose Nova Poshta station'] + self.get_latest_postoffices_ua()
 
         self.request=request
         self.fields['post_office'] = forms.ChoiceField(choices=tuple([(name, name) for name in post_offices]))
@@ -62,12 +57,12 @@ class AddressForm(forms.ModelForm):
 
 
     def clean_post_office(self):
+        data_office = self.cleaned_data.get('post_office')
+        error_message = "Пожалуйста, выбери отделение"
         if 'checkout' in self.request.path:
-            data_office = self.cleaned_data.get('post_office')
-            error_message = "Пожалуйста, выбери отделение"
-            if data_office is '' or data_office == 'Выбери отделение Новой Почты' or data_office =='Обери відділення Нової Пошти':
+            if data_office is '' or data_office == 'Choose Nova Poshta station':
                 self.add_error('post_office', error_message)
-            return data_office
+        return data_office
 
 
 
