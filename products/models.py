@@ -16,7 +16,7 @@ from categories.models import Size, Brand, Undercategory, Gender, Category, Over
 
 
 class Shipping_price(models.Model):
-	national_shipping      = models.DecimalField(decimal_places=6, max_digits=16, default=23)
+	national_shipping      = models.DecimalField(decimal_places=6, max_digits=16, default=55)
 	international_shipping = models.DecimalField(decimal_places=6, max_digits=16, default=0)
 	def __str__(self):
 		return(str(self.id))
