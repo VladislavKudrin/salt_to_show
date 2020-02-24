@@ -161,20 +161,40 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 
 	def form_valid(self, form):
 		next_path = self.get_next_url()
-		user = authenticate(form.request, username=form.cleaned_data.get('email'), password=form.cleaned_data.get('password'))
-		user_objects = User.objects.filter(email=form.cleaned_data.get('email')).exists()
-		link_sent2 = EmailActivation.objects.email_exists(form.cleaned_data.get('email')).exists()
+		email_from_form = form.cleaned_data.get('email')
+		user = authenticate(form.request, username=email_from_form, password=form.cleaned_data.get('password'))
+
+		# Admin login
+		if user is not None:
+			if user.admin: 
+				print('Hello admin!')
+				language_pref_login_page = translation.get_language()
+				login(form.request, user)
+				language_pref = LanguagePreference.objects.filter(user=user)
+				if language_pref.exists():
+					self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref.first().language
+				else:
+					self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref_login_page
+					LanguagePreference.objects.create(user=user, language=language_pref_login_page)
+
+		user_objects = User.objects.filter(email=email_from_form).exists()
+		link_sent2 = EmailActivation.objects.email_exists(email_from_form).exists()
 		if user_objects is False:
 			form.save()
-			user_created = User.objects.filter(email=form.cleaned_data.get('email')).first()
+			user_created = User.objects.filter(email=email_from_form).first()
 			LanguagePreference.objects.create(user=user_created, language=translation.get_language())
 			next_path = 'login'
 			msg1 = _("Please check your email to confirm your account. ") + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
-			msg2 = _("Email not confirmed. ") + form.cleaned_data.get('msg')
-			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
+			if user is not None:
+				if user.admin: 
+					msg2 = ('Ох заживеееем!')
+					messages.add_message(form.request, messages.SUCCESS, mark_safe(msg2))
+			else:
+				msg2 = _("Email not confirmed. ") + form.cleaned_data.get('msg')
+				messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
 		elif user is None:
 			next_path = 'login'
 			msg3 = _("The password seems to be wrong. Try again!")
