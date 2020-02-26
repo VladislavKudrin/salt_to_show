@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView, View
 from django.contrib.auth import get_user_model
@@ -44,6 +44,19 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 		if qs.count()==1:
 			return qs.first()
 		raise Http404
+
+def order_delete_view(request):
+	if request.POST:
+		order_id = request.POST.get('order_id')
+		user_orders = Order.objects.by_request(request).filter(order_id=order_id, status='created')
+		if user_orders.exists():
+			order = user_orders.first()
+			order.delete()
+			if request.is_ajax():
+				return HttpResponse('')
+		return redirect('orders:list')
+	else:
+		return redirect('orders:list')
 
 def order_complete_view(request):
 	if request.POST:

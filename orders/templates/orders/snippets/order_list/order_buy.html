@@ -46,6 +46,8 @@
 						{% if object.track_number %}
 							{{ object.track_number }}
 						{% endif %}
+						{% else %}
+							{% include 'orders/snippets/order_created_remove_form.html' %}
 						{% endif %}
 					</div>
 				</div>
@@ -63,3 +65,18 @@
 	</div>
 </div>
 {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

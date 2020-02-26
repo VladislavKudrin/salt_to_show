@@ -4,6 +4,9 @@ from django.db.models.signals import pre_save, post_save
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Q
+from django.utils.translation import gettext as _ 
+from django.core.mail import send_mail
+
 from addresses.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
@@ -135,7 +138,30 @@ class Order(models.Model):
 			self.status = "paid"
 			self.save()
 		return self.status
+	def send_email(self):
+		email = self.billing_profile.email
+		order_id = self.order_id
+		time = '24'
+		context = {
+						'time':time,
+						'order_id':order_id
 
+
+				}
+		txt_ = get_template("orders/email/contact_message.txt").render(context)
+		html_ = get_template("orders/email/contact_message.html").render(context)
+		subject = _('Order Confirmation')
+		from_email = settings.DEFAULT_FROM_EMAIL
+		recipient_list = [email]
+		sent_mail=send_mail(
+					subject,
+					txt_,
+					from_email,
+					recipient_list,
+					html_message=html_,
+					fail_silently=False, 
+
+					)
 	def complete_this_order(self, request):
 		# liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
 		# params = {

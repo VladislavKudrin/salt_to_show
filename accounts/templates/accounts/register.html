@@ -41,7 +41,7 @@ body{
 						</div> 
 						<div class="col-1 col-md-1 pl-1 pb-3 my-auto " id='pw'>
 							<div onclick="showpassword(this);" style="font-size:15px">
-								<i class="eye fa fa-eye"></i> 
+								<i class="eye fa fa-eye-slash"></i> 
 							</div>
 						</div>
 					</div>
@@ -63,13 +63,13 @@ body{
 
 
 function showpassword(button) {
-	if ($('.eye').hasClass('fa-eye')) {
+	if ($('.eye').hasClass('fa-eye-slash')) {
 		document.getElementById("id_password").type='text';
-		$('.eye').removeClass('fa-eye').addClass('fa-eye-slash');
+		$('.eye').removeClass('fa-eye-slash').addClass('fa-eye');
 	}
 	else{
 		document.getElementById("id_password").type='password';
-		$('.eye').removeClass('fa-eye-slash').addClass('fa-eye');
+		$('.eye').removeClass('fa-eye').addClass('fa-eye-slash');
 	}
 }
 

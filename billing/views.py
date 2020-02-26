@@ -71,6 +71,7 @@ class PayCallbackView(View):
                     if order.product:
                         order.product.active = False
                         order.product.save()
+                        order.send_email()
                 else:
                     transaction.transaction_error(data=response)
                 # if not billing_profile.has_card:
@@ -158,8 +159,8 @@ class PayToUserCallbackView(View):
                     'error_response':response,
                     'order_id':order_id
                     }
-                    txt_ = get_template("registration/emails/payback_failure.txt").render(context)
-                    html_ = get_template("registration/emails/payback_failure.html").render(context)
+                    txt_ = get_template("billing/emails/payback_failure.txt").render(context)
+                    html_ = get_template("billing/emails/payback_failure.html").render(context)
                     subject = ('Payment Failure: ' + order_id)
                     from_email = settings.DEFAULT_FROM_EMAIL
                     recipient_list = [settings.DEFAULT_FROM_EMAIL]
