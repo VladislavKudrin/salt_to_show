@@ -136,15 +136,33 @@ $(document).ready(
           url: contactFormEndpoint,
           data: contactFormData,
           success: function(data){
+          if (data.report){
+            $.alert({
+              title: data.success_message,
+              content: data.message,
+              theme: "modern",
+              buttons:{
+                confirm:{
+                  text: 'OK',
+                  action:function(){
+                  window.location.href = data.location
+                        }//action OK alert
+                      }//confirm
+                    }//buttons
+                  })//alert
+              }//if report
+          else{
             thisForm[0].reset()
             $.alert({
               title: data.success_message,
               content: data.message,
-              theme: "modern"
+              theme: "modern",
               })//alert
           setTimeout(
             function()
             {displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false)}, 1000)
+        }//if not report
+
           
         },
           error: function(error){

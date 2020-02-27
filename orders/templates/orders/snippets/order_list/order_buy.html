@@ -39,6 +39,7 @@
 
 				<div class="col-4">
 					<div class="row">
+						{% include 'orders/snippets/report_button.html' %}
 						{% if object.get_status != 'Created' %}
 						<div class="col-12">
 							{% include 'orders/snippets/order_complete_form.html' %}

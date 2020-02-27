@@ -7,6 +7,7 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic import TemplateView
+from django.urls import reverse
 
 from django_cron import CronJobBase, Schedule
 from chat_ecommerce.models import Notification
@@ -64,7 +65,15 @@ class FAQPageView(TemplateView):
 class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	form_class = ContactForm
 	template_name = 'contact/contact.html'
-
+	def post(self, request, *args, **kwargs):
+		order_id = request.POST.get('order_id_report')
+		if order_id:
+			request.session['order_id'] = order_id
+			context = self.get_context_data()
+			context['form'] = ContactForm(request, order_id)
+			return render(self.request, self.template_name, context)
+		else:
+			return super(ContactPageView, self).post(request, *args, **kwargs)
 	def get_context_data(self, *args, **kwargs):
 		context=super(ContactPageView, self).get_context_data(*args, **kwargs)
 		context['user_email'] = self.request.user.email
@@ -96,20 +105,24 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 
 					)
 		if self.request.is_ajax():
-			return JsonResponse({
-				"message":_("Thank you"),
-				"success_message":_("Success")
-				})
-			
-		def form_invalid(self, form):
-			errors = form.errors.as_json()
-			if request.is_ajax():
-				return HttpResponse(errors, status=400, content_type='application/json')
+			if self.request.session.get('order_id'):
+				del self.request.session['order_id']
+				return JsonResponse({
+					"message":_("Thank you, your report has been sended"),
+					"success_message":_("Success"),
+					"report": True,
+					"location": reverse('contact')
+					})
+			else:	
+				return JsonResponse({
+					"message":_("Thank you"),
+					"success_message":_("Success")
+					})
 
 	
 	def form_invalid(self, form):
 		errors = form.errors.as_json()
-		if request.is_ajax():
+		if self.request.is_ajax():
 			return HttpResponse(errors, status=400, content_type='application/json')
 
 def home_page(request):
