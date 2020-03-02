@@ -50,11 +50,13 @@ class ProductCreateForm(forms.ModelForm):
 		self.lan = request.session.get('language')
 		self.fields['sex'].widget.attrs['readonly'] = True
 		self.fields['undercategory'].widget.attrs['readonly'] = True
+		self.fields['shipping_price'].widget.attrs['class'] = 'custom-readonly'
 		self.fields['size'].widget.attrs['readonly'] = True
 		self.fields['condition'].widget.attrs['readonly'] = True
 		self.fields['title'].widget.attrs['placeholder'] = _('Some keywords about your item')
 		self.fields['description'].widget.attrs['placeholder'] = _('Describe your item in details')
-		self.fields['price'].widget.attrs['placeholder'] = _('Enter a price in ') + ('{currency}').format(currency=currency_placeholder)
+		self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
+		self.fields['shipping_price'].widget.attrs['placeholder'] = _('Shipping costs')
 		self.fields['brand'].widget.attrs['placeholder'] = _('Select a brand')
 		self.fields['sex'].widget.attrs['placeholder'] = _('Select a gender')
 		self.fields['undercategory'].widget.attrs['placeholder'] = _('Select a category')
