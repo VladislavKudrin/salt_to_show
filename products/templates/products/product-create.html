@@ -262,13 +262,18 @@ select{
       </div>
     </div>
 
-    <div class="col-12 col-md-3 price-col">
+    <div class="col-12 col-md-6">
       {{form.price|as_crispy_field}}
     </div>
-
-    <div class="col-12 col-md-3 shipping-col">
-      {{form.shipping_price|as_crispy_field}}
+    <div class="col-12 col-md-6">
+      {{form.national_shipping|as_crispy_field}}
     </div>
+
+    <div class="col-12 col-md-6">
+      {{form.international_shipping|as_crispy_field}}
+    </div>
+
+
   </div> 
 
 
