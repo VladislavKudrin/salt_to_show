@@ -55,22 +55,24 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['condition'].widget.attrs['readonly'] = True
 		self.fields['title'].widget.attrs['placeholder'] = _('Some keywords about your item')
 		self.fields['description'].widget.attrs['placeholder'] = _('Describe your item in details')
-		self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
-		self.fields['shipping_price'].widget.attrs['placeholder'] = _('Shipping costs')
+		# self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
+		# self.fields['shipping_price'].widget.attrs['placeholder'] = _('Shipping costs')
 		self.fields['brand'].widget.attrs['placeholder'] = _('Select a brand')
-		self.fields['sex'].widget.attrs['placeholder'] = _('Select a gender')
-		self.fields['undercategory'].widget.attrs['placeholder'] = _('Select a category')
-		self.fields['size'].widget.attrs['placeholder'] = _('Select a size')
-		self.fields['condition'].widget.attrs['placeholder'] = _('Select a condition')
+		self.fields['sex'].widget.attrs['placeholder'] = _('Gender')
+		self.fields['undercategory'].widget.attrs['placeholder'] = _('Category')
+		self.fields['size'].widget.attrs['placeholder'] = _('Size')
+		self.fields['condition'].widget.attrs['placeholder'] = _('Condition')
 		self.fields['price'].initial = ''
-		self.fields['title'].label = _('Title')
-		self.fields['sex'].label = _('Gender')
-		self.fields['undercategory'].label = _('Category')
-		self.fields['size'].label = _('Size')
-		self.fields['condition'].label = _('Condition')
+		self.fields['title'].label = False
+		self.fields['sex'].label = False
+		self.fields['undercategory'].label = False
+		self.fields['size'].label = False
+		self.fields['condition'].label = False
 		self.fields['price'].label = _('Price')
 		self.fields['shipping_price'].label = _('Shipping price')
-		self.fields['description'].label = _('Description')
+		self.fields['description'].label = False
+		self.fields['brand'].label = False
+		self.fields['price'].widget.attrs['step'] = 1
 
 
 		
