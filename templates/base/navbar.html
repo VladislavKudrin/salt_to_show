@@ -97,7 +97,7 @@
     }
 
     .buy-sell:hover{
-    color: white;
+    color: white !important;
     background-color: black;
     }
 
@@ -189,6 +189,10 @@
 
 </style>
 
+{% if request.user.is_authenticated %}
+<input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
+{% endif %}
+
 <div hidden class='col-6' id='sidebar-slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
   {% include "sidebar.html" %}
 </div>
@@ -229,7 +233,7 @@
 
             <li class="nav-item pl-2 " style="display: inline-block;">                
             <button class='btn pb-2 pt-0' id='sidebar-trigger' style="">
-                <img src="{% static 'icons/hamburger.png' %}"  style="width:20px; height: 20px;">
+                <img data-src="{% static 'icons/hamburger.png' %}"  style="width:20px; height: 20px;">
         </button>
         
             </li>
@@ -311,13 +315,13 @@
                             </div>
                         {% else %}
                         {% endif %}
-                    <img src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar test1" alt="..." style="width:40px; height: 40px">
+                    <img data-src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar test1" alt="..." style="width:40px; height: 40px">
 
                 </a>
 
                 {% else %}
 
-                <a class="nav-link dropdown mb-0 pb-0 pl-0 mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown mb-0 pb-1 pl-0 mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         {% if request.user|get_notif > 0 %}
                             <div style='padding-left: 13px; padding-bottom: 0px'>
                                 <div class='notifications'></div>

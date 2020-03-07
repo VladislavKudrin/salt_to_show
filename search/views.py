@@ -11,7 +11,7 @@ class SearchProductView(ListView):
 		if request.is_ajax():
 			query=request.GET.get('q')
 			filtered_products = []
-			all_ = Product.objects.all().authentic()
+			all_ = Product.objects.all().authentic().available()
 			all_products= []
 			for x in all_:
 				all_products.append(x.title)
@@ -35,5 +35,5 @@ class SearchProductView(ListView):
 		method_dict=request.GET
 		query=method_dict.get('q', None)
 		if query is not None:
-			return Product.objects.search(query).order_by('-timestamp').authentic()
-		return Product.objects.authentic()
+			return Product.objects.search(query).order_by('-timestamp').authentic().available()
+		return Product.objects.authentic().available()

@@ -1,4 +1,65 @@
-±
+    html,body{
+    font-family: 'Noto Sans', sans-serif !important; 
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: grayscale;
+    -o-font-smoothing: antialiased;
+    -ms-font-smoothing: antialiased;
+    }
+
+      .customDropright{
+      background-color: white; 
+      border: none
+    }
+
+    .customDropright:hover{
+      background-color: white; 
+      border: none
+    }
+    .customDropright:focus {
+     outline: none; 
+    }
+    .brandautofill::focus-within {
+    background: black;
+    }
+
+
+    .msg-read {
+    background-color: white;
+    }
+    .msg-unread {
+    background-color: white;
+    }
+    .pull-right{
+      text-align: right
+    }
+    .pull-left{
+      text-align: left
+    }
+    .rotating{
+    display: none
+    }
+
+    #language-pref{
+    display: block
+    }
+    .language-pref-globe{
+    cursor: pointer
+    }
+
+    .dropdown-item-lang{
+    cursor: pointer
+    }
+
+
+    div.dropdown-menu button.activated{
+    color:white;
+    background-color: black;
+    }
+    div.dropdown-menu button{
+    width: 100%
+    }
+
+    
 /*Checkbox black*/
 .form-check-input {
     position: absolute;
@@ -723,7 +784,7 @@ border: 2px red solid;
   font-size: 14px;
 }
 
-.labels-placement input[type=text], input[type=email], select{
+.labels-placement input[type=text], input[type=email] {
   padding-bottom: 3px !important;
   padding-top: 13px !important;
   padding-left: calc(.375rem + 1px) !important;
