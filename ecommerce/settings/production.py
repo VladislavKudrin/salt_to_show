@@ -69,7 +69,7 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-ALLOWED_IP_ADDRESSES = os.environ.get('ALLOWED_IP_ADDRESSES')
+PAY_USER_SECRET_KEY = os.environ.get('PAY_USER_SECRET_KEY')
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 ASGI_APPLICATION = 'ecommerce.routing.application'

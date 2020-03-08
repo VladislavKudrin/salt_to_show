@@ -17,7 +17,7 @@ from django.utils.decorators import method_decorator
 from liqpay.liqpay3 import LiqPay
 LIQPAY_PRIV_KEY = getattr(settings, "LIQPAY_PRIVATE_KEY", "sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG")
 LIQPAY_PUB_KEY =  getattr(settings, "LIQPAY_PUBLIC_KEY", 'sandbox_i6955995458')
-ALLOWED_IP_ADDRESSES = getattr(settings, "ALLOWED_IP_ADDRESSES", '').split(',')
+PAY_USER_SECRET_KEY = getattr(settings, "PAY_USER_SECRET_KEY", '')
 from .models import BillingProfile, Card
 from orders.models import Order, Transaction
 from analitics.utils import get_client_ip
@@ -85,17 +85,15 @@ class PayCallbackView(View):
 class PayToUserView(LoginRequiredMixin, View):
     template_name = 'billing/pay2user.html'
     
-    def get_ip(self):
-        response = requests.get('https://api.ipify.org?format=json')
-        if response.status_code == 200:
-            ip = response.json().get('ip')
-            return ip
-        return None
+    # def get_ip(self):
+    #     response = requests.get('https://api.ipify.org?format=json')
+    #     if response.status_code == 200:
+    #         ip = response.json().get('ip')
+    #         return ip
+    #     return None
     def get(self, request, *args, **kwargs):
-        ip = self.get_ip()
-        print('IP', ip)
-        print('ADDRESSES', ALLOWED_IP_ADDRESSES)
-        if request.user.is_admin and ip in ALLOWED_IP_ADDRESSES:
+        secret_key = self.kwargs.get("secret_key")
+        if request.user.is_admin and secret_key == PAY_USER_SECRET_KEY:
             orders = Order.objects.filter(status='shipped', active=True)
             context={
                 'orders':orders
@@ -104,8 +102,8 @@ class PayToUserView(LoginRequiredMixin, View):
         else:
             return redirect('home')
     def post(self, request, *args, **kwargs):
-        ip = self.get_ip()
-        if request.user.is_admin and ip in ALLOWED_IP_ADDRESSES:
+        secret_key = self.kwargs.get("secret_key")
+        if request.user.is_admin and secret_key == PAY_USER_SECRET_KEY:
             order_id = request.POST.get('order_id')
             liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
             callback_url = settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay2user_callback')
@@ -125,7 +123,7 @@ class PayToUserView(LoginRequiredMixin, View):
                     "order_id"              : order.order_id+'complete',
                     "server_url"            : callback_url, # url to callback view
                     "recurringbytoken"      : "1",
-                    "result_url"            : settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay2user')
+                    "result_url"            : settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay2user',kwargs={'secret_key':secret_key})
                 }
                 signature = liqpay.cnb_signature(params)
                 data = liqpay.cnb_data(params)
