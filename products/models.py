@@ -11,15 +11,11 @@ from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
+from currency_converter import CurrencyConverter
+
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
 
-
-class Shipping_price(models.Model):
-	national_shipping      = models.DecimalField(decimal_places=6, max_digits=16, default=55)
-	international_shipping = models.DecimalField(decimal_places=6, max_digits=16, default=0)
-	def __str__(self):
-		return(str(self.id))
 
 class ImageOrderUtil(models.Model):
 	slug			= models.SlugField(default=None, unique = True, blank=True)
@@ -279,36 +275,40 @@ AUTHENTICITY_CHOICES = (
 
 
 class Product(models.Model):
-	user           = models.ForeignKey(User, null=True, blank=True)
-	title          = models.CharField(max_length = 120)
-	slug           = models.SlugField(default=None, unique = True, blank=True)
-	description    = models.TextField()
-	price          = models.DecimalField(decimal_places=6, max_digits=16, default=0)
-	featured       = models.BooleanField(default=False)
-	active         = models.BooleanField(default=True)
-	timestamp      = models.DateTimeField(auto_now_add=True)
-	category       = models.ForeignKey(Category, blank = True, null=True)
-	sex            = models.ForeignKey(Gender, blank = True, null=True)
-	condition      = models.ForeignKey(Condition, blank = True, null=True)
-	size           = models.ForeignKey(Size, blank=False, null=True)
-	brand          = models.ForeignKey(Brand, blank=False, null=True)
-	undercategory  = models.ForeignKey(Undercategory, blank = False, null=True)
-	overcategory   = models.ForeignKey(Overcategory, blank = True, null=True)
-	authentic      = models.CharField(max_length=120, default='undefined', choices=AUTHENTICITY_CHOICES, null=True)
-	shipping_price = models.OneToOneField(Shipping_price, blank = True, null=True, related_name='product')
+	user                   = models.ForeignKey(User, null=True, blank=True)
+	title                  = models.CharField(max_length = 120)
+	slug                   = models.SlugField(default=None, unique = True, blank=True)
+	description            = models.TextField()
+	price                  = models.DecimalField(decimal_places=6, max_digits=16, default=0)
+	featured               = models.BooleanField(default=False)
+	active                 = models.BooleanField(default=True)
+	timestamp              = models.DateTimeField(auto_now_add=True)
+	category               = models.ForeignKey(Category, blank = True, null=True)
+	sex                    = models.ForeignKey(Gender, blank = True, null=True)
+	condition              = models.ForeignKey(Condition, blank = True, null=True)
+	size                   = models.ForeignKey(Size, blank=False, null=True)
+	brand                  = models.ForeignKey(Brand, blank=False, null=True)
+	undercategory          = models.ForeignKey(Undercategory, blank = False, null=True)
+	overcategory           = models.ForeignKey(Overcategory, blank = True, null=True)
+	authentic              = models.CharField(max_length=120, default='undefined', choices=AUTHENTICITY_CHOICES, null=True)
+	national_shipping      = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=False, null=True)
+	international_shipping = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=True, null=True)
 
 
 
 	objects = ProductManager()
 	
 	def make_total(self):
-		shipping_price = 0
+		national_shipping = 0
+		international_shipping = 0
 		price = 0
-		if self.shipping_price:
-			shipping_price = self.shipping_price.national_shipping
+		if self.national_shipping:
+			national_shipping = self.national_shipping
+		if self.international_shipping:
+			international_shipping = self.international_shipping
 		if self.price:
 			price = self.price
-		return shipping_price + price
+		return national_shipping + price
 
 	def get_absolute_url(self):
 		#return "/products/{slug}/".format(slug=self.slug)
@@ -320,6 +320,7 @@ class Product(models.Model):
 	def get_absolute_url_for_delete(self):
 		#return "/products/{slug}/".format(slug=self.slug)
 		return reverse('products:delete', kwargs={"slug":self.slug})
+
 
 	def __str__(self):
 		return self.title
