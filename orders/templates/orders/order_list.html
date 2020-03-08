@@ -76,77 +76,37 @@
 <body>
 
 <div class="container" style="width: 70%;">
-
 	<div class='row'>
 		<div class='col-12'>
 			<p class="heading" id="products-by-user">Orders:</p>
 		</div>
 	</div>
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+	  <li class="nav-item">
+	    <a class="nav-link tab {% if tab == 'buy' %}active{% endif %}{% if not tab %}show active{% endif %}" id="buy-tab" data-toggle="tab" href="#buy" role="tab" aria-controls="buy" aria-selected="true">Orders</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link tab {% if tab == 'sold' %}active{% endif %}" id="sold-tab" data-toggle="tab" href="#sold" role="tab" aria-controls="sold" aria-selected="false">Sold</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link tab {% if tab == 'completed' %}active{% endif %}" id="completed-tab" data-toggle="tab" href="#completed" role="tab" aria-controls="completed" aria-selected="false">Completed</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link tab {% if tab == 'refunded' %}active{% endif %}" id="refunded-tab" data-toggle="tab" href="#refunded" role="tab" aria-controls="refunded" aria-selected="false">Refunded</a>
+	  </li>
+	</ul>
+	<div class="tab-content" id="myTabContent">
+	  <div class="tab-pane fade {% if tab == 'buy' %}show active{% endif %}{% if not tab %}show active{% endif %}" id="buy" role="tabpanel" aria-labelledby="buy-tab">
+		{% include 'orders/snippets/order_list/order_buy.html' %}
+		</div>
+	  <div class="tab-pane fade {% if tab == 'sold' %}show active{% endif %}" id="sold" role="tabpanel" aria-labelledby="sold-tab">{% include 'orders/snippets/order_list/order_sold.html' %}</div>
+	  <div class="tab-pane fade {% if tab == 'completed' %}show active{% endif %}" id="completed" role="tabpanel" aria-labelledby="completed-tab">{% include 'orders/snippets/order_list/order_completed.html' %}</div>
+	  <div class="tab-pane fade {% if tab == 'refunded' %}show active{% endif %}" id="refunded" role="tabpanel" aria-labelledby="refunded-tab">{% include 'orders/snippets/order_list/order_refunded.html' %}</div>
+	</div>
 
 </div> 
+	
 
-
-{% for object in object_list %}
-<div class="container" style="width: 70%;">
-	<div class='row' style="border-bottom: 1px solid lightgray; padding: 1em;">
-		<div class='col-6'>
-			<div class="row">
-				<div class="col">
-					{% include 'products/snippets/card-order.html' with instance=object.product %}
-				</div>
-			</div>
-		</div>
-		<div class='col-6' style="font-size: 14px;">
-			<div class="row">
-
-				<div class="col-12 field-name" style="padding-bottom: 2.5rem; line-height: 1.2;">
-				{{ object.product.title }}
-				</div>
-
-				<div class="col-8">
-					<div class="row">
-
-						<div class="col-6">
-							<span class="field-name" style="font-weight: bold;">Status:</span>
-						</div>
-						<div class="col-6">
-							<span class="field-name" style="font-weight: bold;">Total:</span>
-						</div>
-			
-
-
-						<div class="col-6">
-							{{ object.get_status }}
-						</div>
-						<div class="col-6">
-							{{ object.total|to_user_currency:request }}
-						</div>
-					</div>
-				</div>
-
-				<div class="col-4">
-					<div class="row">
-						{% if object.get_status != 'Created' %}
-						<div class="col-12">
-							{% include 'orders/snippets/order_complete_form.html' %}
-						</div>
-						{% endif %}
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-</div>
-{% empty %}
-<div class="container" style="width: 70%;">
-	<div class="row">
-		<div class="col">
-			No orders yet
-		</div>
-	</div>
-</div>
-{% endfor %}
 
 
 
@@ -154,12 +114,24 @@
 
 
 <script type="text/javascript">
-	var order_button = document.querySelector(".order-button")
-	order_button.onclick = function() {
-    	order_button.innerHTML = '✔';
-    	order_button.className += " order-received";
-    	order_button.classList.remove("button-white");
-};
+	var link = window.location.href
+	var tab = $(".tab")
+	tab.click(function(e){
+		$target=$(e.target)
+		link = '?tab=' + $target.attr('aria-controls')
+		window.history.replaceState( {} , 'title', link)
+
+	})//tab click 
+
+	
+	// 	var order_button = document.querySelector(".order-button")
+	// if (order_button){
+	// 	order_button.onclick = function() {
+ //    	order_button.innerHTML = '✔';
+ //    	order_button.className += " order-received";
+ //    	order_button.classList.remove("button-white");
+	// 		};
+	// }
 
 </script>
 

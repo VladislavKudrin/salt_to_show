@@ -12,6 +12,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.files import File
 from django.core.mail import send_mail
+from django.shortcuts import redirect
 
 
 
@@ -140,7 +141,12 @@ def get_data_from_novaposhta_api():
     print(f'Offices_ua written, Offices_ru written')
     return 
 
-
+def stay_where_you_are(request):
+    prev_url = request.META.get('HTTP_REFERER')
+    if prev_url is not None: 
+        return redirect(prev_url)
+    else:
+        return redirect('/')
 
 
 # def create_brands(f):

@@ -1,170 +1,33 @@
 {% load static %}
 {% load for_loop_extras %}
-<!doctype html>
-<html lang="en">
+{% load i18n %}
+<!DOCTYPE html>
+<html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SALT</title>
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
-    <style type="text/css">
-      
-      
-html,body{
-  font-family: 'Noto Sans', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: grayscale;
-  -o-font-smoothing: antialiased;
-  -ms-font-smoothing: antialiased;
-/*  font-size: 16px; 
-  text-decoration: none;
-  letter-spacing: normal; 
-  text-align: inherit; */
-  /*  line-height: 25px;*/
-  /*   text-transform: none; */
-  /*   color: inherit; */
-}
-
-
-
-    </style>
-
-    {% include 'base/css.html' %}
-    {% block base_head %}{% endblock %}
-    {% include 'base/cdn_js.html' %}
-
-  </head>
-
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SALT</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  {% include 'base/css.html' %}
+  {% include 'base/cdn_js.html' %}
+</head>
 <body>
-{% if request.user.is_authenticated %}
-  <input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
-{% endif %}
-    {% include 'base/navbar.html' with brand_name='eCommerce' %}
-
-        <!-- <div class='col-12 text-left p-0'>
-        <button class='btn btn-filter' id='trigger_2'><i class="fas fa-grip-horizontal"></i></button>
-        </div> -->
-
-    <div class='container-fluid ajax-search' style="height: 100%;">
-    {% include 'base/messages.html' %}           
-
-
-    {% block content %}
-      {% endblock %}
-    </div>
-
-
-<!-- <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script> -->
-
-<style type="text/css">
-  .customDropright{
-    background-color: white; 
-    border: none
-  }
-
-  .customDropright:hover{
-    background-color: white; 
-    border: none
-  }
-  .customDropright:focus {
-   outline: none; 
-}
-.brandautofill::focus-within {
-  background: black;
-}
-
-
-.msg-read {
-  background-color: white;
-}
-.msg-unread {
-  background-color: white;
-}
-.pull-right{
-    text-align: right
-}
-.pull-left{
-    text-align: left
-}
-.rotating{
-  display: none
-}
-
-#language-pref{
-  display: block
-}
-.language-pref-globe{
-  cursor: pointer
-}
-
-.dropdown-item-lang{
-  cursor: pointer
-}
-
-
-div.dropdown-menu button.activated{
-  color:white;
-  background-color: black;
-}
-div.dropdown-menu button{
-width: 100%
-}
-</style>
-
-
-
-
-<script type="text/javascript">
-
-
-$(document).ready(function(){
-
- var regionInput = $('#region_input')
-var urlRegion = '/region-init/'
-if (regionInput.val() == 'None'){
-  var location = window.location.href
-  $.ajax({
-            url: urlRegion,
-            data:{location: location},
-            success: function(data){
-                $(document.body).append(data.html)
-                $('.modal').modal('show')
-               
-                }//success_first
-
-            })//ajax
-}//if region none
-
-var languageGlobe = $('#language-pref') 
-$('.language-preference-globe').click(
-      function(event){ 
-        languageGlobe.select()
-}
-)//onclick
- 
-
-})//document ready
-
-
-</script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
-<script>
+{% include 'base/navbar.html' with brand_name='eCommerce' %}
+<div class='container-fluid ajax-search' style="height: 100%;">
+  {% include 'base/messages.html' %}
+  {% block content %}
+  {% endblock %}
+</div>
+{% block javascript %}
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+  <script type="text/javascript">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'UA-150733918-1');
-</script>
-
-    {% block extra_js %}{% endblock extra_js %}
-    {% block javascript %}
-    {% endblock %}
-    {% block script %}{% endblock %}
-    {% include 'base/js.html' %}
+  gtag('config', 'UA-150733918-1');   
+  </script> 
+{% include 'base/js.html' %} 
+{% endblock %}
 </body>
- 
 </html>

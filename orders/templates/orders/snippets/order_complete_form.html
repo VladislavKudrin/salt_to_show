@@ -1,11 +1,14 @@
-<form method="POST" action="{% url 'orders:complete_order' %}">{% csrf_token %}
+<form id="complete_order_form" method="POST" action="{% url 'orders:complete_order' %}">{% csrf_token %}
 	<input type="hidden" name="order_id" value="{{ object.order_id }}">
 	<button type="submit" {% if object.get_status == 'Shipped' %}
-	class="btn hover-button medium-button order-button order-received"
+	class="btn hover-button medium-button order-button btn-block order-received"
 	disabled="true"
 	style="border: 1px solid black; margin-top: 0.3rem;opacity: 100!important" 
 	{% else %}
-	class="btn hover-button button-white medium-button order-button"
+
+	data-toggle="modal" data-target="#feedbackModal_{{ object.order_id }}"
+	class="btn hover-button button-white medium-button btn-block order-button"
+
 	style="border: 1px solid black; margin-top: 0.3rem;opacity: 100!important"
 	{% endif %}>
 	{% if object.get_status == 'Shipped' %}
@@ -15,3 +18,31 @@
 	{% endif %}
 	</button>
 </form>
+{% include 'orders/snippets/order_feedback.html' %}
+
+<script type="text/javascript">
+	var orderBtn = $('.order-button')
+	var formComplete = $('#complete_order_form')
+  	var formCompleteEndpoint = formComplete.attr("action")
+	formComplete.submit(
+		function(e){
+			e.preventDefault()
+			form = $(this)
+			var formData = form.serialize()
+			$.ajax({
+			      url: formCompleteEndpoint,
+			      data: formData,
+			      method:'post',
+			      success: function(data){
+			   			  var completeBtn = form.find("[type='submit']")
+			   			  completeBtn.html('✔')
+			   			  completeBtn.addClass('order-received')
+						  completeBtn.removeClass("button-white")
+			              $('#'+data.order_id).attr('disabled', false)
+			              }, 
+			      error: function(errorData){
+			          
+			            }
+			      })//ajax feedback
+	})//order click
+</script>

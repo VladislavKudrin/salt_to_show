@@ -303,6 +303,11 @@
    outline: none; 
 }
 
+.report-btn {
+  padding: 0px 1rem !important;
+
+}
+
 /*.btn-filter:hover{
     color:rgba(58, 59, 66, 0.96);
 }
