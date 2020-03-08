@@ -32,7 +32,7 @@
                     {% else %}
                     {% endif %}
 
-        	<img src="{{ request.user.profile_foto.url }}"  class="avatar ml-2" alt="..." style="width:60px; height: 60px"></a>
+        	<img data-src="{{ request.user.profile_foto.url }}"  class="avatar ml-2" alt="..." style="width:60px; height: 60px"></a>
         {% else %}
         <a href="{{ request.user.get_absolute_url }}">
         	                                    {% if request.user|get_notif > 0 %}
@@ -41,7 +41,7 @@
                         </div>
                     {% else %}
                     {% endif %}
-                   <img src="{% static 'img/user_noname.png' %}" class="avatar ml-2" alt="..." style="width:60px; height: 60px"></a>
+                   <img data-src="{% static 'img/user_noname.png' %}" class="avatar ml-2" alt="..." style="width:60px; height: 60px"></a>
         {% endif %}
 		</li><hr>
 	<li><a href='{% url "chat:inbox" %}'>

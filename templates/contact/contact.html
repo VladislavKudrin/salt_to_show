@@ -4,6 +4,14 @@
 {% load i18n %}
 {% block content %}
 
+<head>
+  <style type="text/css">
+    .asteriskField {
+      display: none;
+    }
+  </style>
+</head>
+
   <div class='text-center'>
 
     <p class="heading">{{ title }}</p>
@@ -24,13 +32,13 @@
           <br>
         </div>  
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class='col text-center'>
         <p class="heading text-center">Контактные данные</p>
         <p>Телефон: +4915226789201</p>
         <p>Мэйл: info@saltish.co</p>
       </div>
-    </div>
+    </div> -->
   </div>
 
 {% endblock %}

@@ -147,7 +147,7 @@ class CategoryFilterView(ListView):
 				list_size=data_size_link,
 				user=request.user
 				)
-		qs_for_link = qs_for_link.order_by('-timestamp').authentic()
+		qs_for_link = qs_for_link.order_by('-timestamp').authentic().available()
 		paginator = Paginator(qs_for_link, items_per_page) # Show 25 contacts per page
 		page = request.GET.get('page')
 		try:
@@ -158,7 +158,7 @@ class CategoryFilterView(ListView):
 		except EmptyPage:
 				# If page is out of range (e.g. 9999), deliver last page of results.
 			qs_for_link = paginator.page(paginator.num_pages)
-		qs = Product.objects.all().authentic().order_by('-timestamp')
+		qs = Product.objects.all().authentic().available().order_by('-timestamp')
 		qs_cat={}
 		qs_undercat={}
 		if request.is_ajax():
@@ -209,7 +209,7 @@ class CategoryFilterView(ListView):
 					qs=qs.order_by('-price')
 				else:
 					qs=qs.order_by('-timestamp')
-				object_list = qs.authentic()
+				object_list = qs.authentic().available()
 				paginator = Paginator(object_list, items_per_page) 
 				page = request.GET.get('page')
 				try:

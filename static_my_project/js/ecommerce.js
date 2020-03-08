@@ -1,12 +1,64 @@
+
+
 $(document).ready(
   
   function(){
-    
+  
+
+  // Region Modal Initialization
+
+    var regionInput = $('#region_input')
+    var urlRegion = '/region-init/'
+    if (regionInput.val() == 'None'){
+    var location = window.location.href
+    $.ajax({
+              url: urlRegion,
+              data:{location: location},
+              success: function(data){
+                  $(document.body).append(data.html)
+                  $('.modal').modal('show')
+                 
+                  }//success_first
+
+              })//ajax
+    }//if region none
+    var languageGlobe = $('#language-pref') 
+    $('.language-preference-globe').click(
+        function(event){ 
+          languageGlobe.select()
+    }
+    )//onclick
 
 
 
     // Labels and placeholders for accounts settings and checkout
-    var inputs = ["#id_user_form-username", "#id_user_form-email", "#id_user_form-region", "#id_address_form-name", "#id_address_form-additional_line", "#id_address_form-street", "#id_address_form-city", "#id_address_form-number", "#id_address_form-postal_code", "#id_address_form-state", "#id_address_form-country", "#id_address_form-post_office", "#id_address_form-phone"]
+    var inputs = [
+    "#id_user_form-username", 
+    "#id_user_form-email", 
+    "#id_user_form-region", 
+    "#id_address_form-name", 
+    "#id_address_form-additional_line", 
+    "#id_address_form-street", 
+    "#id_address_form-city", 
+    "#id_address_form-number", 
+    "#id_address_form-postal_code", 
+    "#id_address_form-state", 
+    "#id_address_form-country", 
+    "#id_address_form-post_office", 
+    "#id_address_form-phone",
+    "#id_title",
+    "#id_brand",
+    "#id_title",
+    "#id_sex",
+    "#id_undercategory",
+    "#id_condition",
+    "#id_size",
+    "#id_price",
+    "#id_shipping_price",
+    "#id_description",
+    "#id_email",
+    "#id_content",
+    ]
 
     jQuery.each(inputs, function(index, item) {
         var item_val = $(item).val()
@@ -345,7 +397,17 @@ function bind_ajax_heart(form){
   }
   bind_ajax_heart(productForm)
 
-      
+  
+// lazy loading
+  $.extend($.lazyLoadXT, {
+    // edgeY:  200,
+    // edgeX:  200,
+    // blankImage: "{% static 'img/dust_stratches.png' %}",
+    blankImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/1024px-Solid_white.svg.png",
+    scrollContainer: document.getElementById("my-custom-scrollbar"),
+    srcAttr: 'data-src'
+  });
+    
 
 // Wishlist Product Detail View
 

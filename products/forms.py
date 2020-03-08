@@ -37,8 +37,6 @@ class ProductCreateForm(forms.ModelForm):
 		'size',
 		'condition',
 		'national_shipping',
-		'international_shipping'
-		# 'shipping_price'
 			]
 	def __init__(self, request, *args, **kwargs):
 		super(ProductCreateForm, self).__init__(*args, **kwargs)
@@ -58,22 +56,23 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['description'].widget.attrs['placeholder'] = _('Describe your item in details')
 		self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
 		self.fields['national_shipping'].widget.attrs['placeholder'] = _('National shipping costs')
-		self.fields['international_shipping'].widget.attrs['placeholder'] = _('International shipping costs')
 		self.fields['brand'].widget.attrs['placeholder'] = _('Select a brand')
-		self.fields['sex'].widget.attrs['placeholder'] = _('Select a gender')
-		self.fields['undercategory'].widget.attrs['placeholder'] = _('Select a category')
-		self.fields['size'].widget.attrs['placeholder'] = _('Select a size')
-		self.fields['condition'].widget.attrs['placeholder'] = _('Select a condition')
+		self.fields['sex'].widget.attrs['placeholder'] = _('Gender')
+		self.fields['undercategory'].widget.attrs['placeholder'] = _('Category')
+		self.fields['size'].widget.attrs['placeholder'] = _('Size')
+		self.fields['condition'].widget.attrs['placeholder'] = _('Condition')
 		self.fields['price'].initial = ''
-		self.fields['national_shipping'].initial = ''
-		self.fields['international_shipping'].initial = ''
-		self.fields['title'].label = _('Title')
-		self.fields['sex'].label = _('Gender')
-		self.fields['undercategory'].label = _('Category')
-		self.fields['size'].label = _('Size')
-		self.fields['condition'].label = _('Condition')
+		self.fields['title'].label = False
+		self.fields['sex'].label = False
+		self.fields['undercategory'].label = False
+		self.fields['size'].label = False
+		self.fields['condition'].label = False
 		self.fields['price'].label = _('Price')
-		self.fields['description'].label = _('Description')
+		self.fields['national_shipping'].label = _('Shipping price')
+		self.fields['description'].label = False
+		self.fields['brand'].label = False
+		self.fields['price'].widget.attrs['step'] = 1
+
 
 
 		

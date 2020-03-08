@@ -8,14 +8,14 @@ from django.utils.translation import gettext as _
 class ContactForm(forms.Form):
 	email = forms.EmailField(widget=forms.EmailInput(attrs={
 		'class':'form-control',
-		'placeholder':_('Your Email')
+		# 'placeholder':_('Your Email')
 
 
 		}))
 	content = forms.CharField(widget=forms.Textarea(attrs={
 		'class':'form-control',
 		'placeholder':_('Your message'),
-		}),label=_('Content'))
+		}),label=False)
 	def __init__(self, request, order_id=None, *args, **kwargs):
 		super(ContactForm, self).__init__(*args, **kwargs)
 		self.request = request
