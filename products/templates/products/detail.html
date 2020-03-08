@@ -35,8 +35,6 @@
 	}
 
 
-
-
 	.b-description_readmore_button{
 		font-weight: 600;
 		font-size: 20px !important;
@@ -64,12 +62,6 @@
 	#more {
 		display: none;
 	}
-
-	small {
-		font-size: 11px;
-	}
-
-
 
 	.avatar-pdv{
 		width: 50px;
@@ -313,7 +305,7 @@
 					<div class="flip-card-front my-auto uppercase-font archivo pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
-				            	<div class="col my-auto text-left" style="line-height: 1"><small>{{ verified }} {{ object.timestamp| print_timestamp }}</small></div>
+				            	<div class="col my-auto text-left" style="line-height: 1"><span class='user-input'>{{ verified }} {{ object.timestamp| print_timestamp }}</span></div>
 
 			              	</div>
 		            	</div>
@@ -325,7 +317,7 @@
 					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
-				            	<div class="col my-auto text-left" style="line-height: 1"><small>{{ checked_on }} {{ object.timestamp| print_timestamp }}</small></div>
+				            	<div class="col my-auto text-left" style="line-height: 1"><span class='user-input'>{{ checked_on }} {{ object.timestamp| print_timestamp }}</span></div>
 
 			              	</div>
 		            	</div>
@@ -336,7 +328,7 @@
 					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
 		                <div class="flip-card-back">
 			                <div class="row">
-				            	<div class="col my-auto text-left" style="line-height: 1"><small>{{ to_be_approved }}</small></div>
+				            	<div class="col my-auto text-left" style="line-height: 1"><span class='user-input'>{{ to_be_approved }}</span></div>
 
 			              	</div>
 		            	</div>
@@ -396,13 +388,13 @@
 			<div class="col-8 my-auto">
 				<div class="row">
 					<div class="col-12 pr-0" style="display: flex; align-items: center;">
-						<small class="text username-text">{{ object.user.username }}</small>
+						<span class="user-input text username-text">{{ object.user.username }}</span>
 					</div>
 					<div class="col-1 pr-3">
 						<i class="fas fa-map-marker-alt"></i>
 					</div>
 					<div class="col-7 pl-0 pr-0" style="display: flex; align-items: center;">
-						<small class="text">{{ region }}</small>
+						<span class='user-input text'>{{ region }}</span>
 					</div>
 
 				</div>
@@ -423,8 +415,8 @@
 			<div class="col-12">
 
 				<div id="published-line">
-					<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }} 
-					</small>
+					<span class='user-input text'>{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }} 
+					</span>
 				</div>
 			</div>
 
@@ -584,7 +576,7 @@
 						<i class="fas fa-map-marker-alt"></i>
 					</div>
 					<div class="col-7 pl-0" style="display: flex; align-items: center;">
-						<small class="text">{{ region }}</small>
+						<span class='user-input text'>{{ region }}</span>
 					</div>
 				</div>
 			</div>
@@ -601,8 +593,8 @@
 	</div>
 
 		<div id="published-line" class="col-8 my-auto">
-			<small class="text">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
-			</small>
+			<span class='user-input text'>{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
+			</span>
 		</div>
 </div>
 
