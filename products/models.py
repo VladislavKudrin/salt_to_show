@@ -11,8 +11,6 @@ from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
-from currency_converter import CurrencyConverter
-
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
 
