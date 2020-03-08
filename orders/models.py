@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.utils.translation import gettext as _ 
 from django.core.mail import send_mail
-
+from django.template.loader import get_template
 from addresses.models import Address
 from billing.models import BillingProfile, Feedback
 from carts.models import Cart
