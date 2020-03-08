@@ -114,14 +114,6 @@
 
 
 <script type="text/javascript">
-	var order_button = document.querySelector(".order-button")
-	if (order_button){
-		order_button.onclick = function() {
-    	order_button.innerHTML = '✔';
-    	order_button.className += " order-received";
-    	order_button.classList.remove("button-white");
-			};
-	}
 	var link = window.location.href
 	var tab = $(".tab")
 	tab.click(function(e){
@@ -129,10 +121,17 @@
 		link = '?tab=' + $target.attr('aria-controls')
 		window.history.replaceState( {} , 'title', link)
 
-	}) 
+	})//tab click 
 
 	
-	
+	// 	var order_button = document.querySelector(".order-button")
+	// if (order_button){
+	// 	order_button.onclick = function() {
+ //    	order_button.innerHTML = '✔';
+ //    	order_button.className += " order-received";
+ //    	order_button.classList.remove("button-white");
+	// 		};
+	// }
 
 </script>
 

@@ -8,6 +8,8 @@ from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
+
+from django.urls import resolve
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
@@ -20,7 +22,7 @@ from django.utils import translation
 from django.core.mail import send_mail
 from django.utils.safestring import mark_safe
 
-from ecommerce.utils import add_message
+from ecommerce.utils import add_message, stay_where_you_are
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from ecommerce.utils import get_data_from_novaposhta_api
 from analitics.mixins import ObjectViewedMixin
@@ -146,6 +148,8 @@ def image_update_view(request):
 		ProductThumbnail.objects.create_update_thumbnail(product=image.first().product)
 	return redirect('home')
 
+
+
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
@@ -154,15 +158,25 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		if form.is_valid():
 			return self.form_valid(form)
 		else:
+	
 			return self.form_invalid(form)
 
 	def get(self, request, *args, **kwargs):
 		billing_profile, created = BillingProfile.objects.new_or_get(self.request)
 		card, created = Card.objects.new_or_get(billing_profile=billing_profile)
+		user_region = request.user.region.region_code
+
+		if user_region != 'ua':
+			msg_not_eligible = _("Only customers in Ukraine are eligible to sell (as for now)")
+			messages.add_message(request, messages.WARNING, mark_safe(msg_not_eligible))
+			return stay_where_you_are(request)
+
+
 		if card.is_valid_card() == False:
 			msg = _("Please add card information to add an item!")
 			messages.add_message(request, messages.WARNING, mark_safe(msg))
 			return redirect("accounts:user-update")
+
 		brands = Brand.objects.all()
 		brand_arr = []
 		form_id = unique_form_id_generator()

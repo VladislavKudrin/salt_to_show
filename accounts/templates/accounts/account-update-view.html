@@ -25,7 +25,7 @@
   font-size: 14px;
 }
 
-.labels-placement input[type=text], input[type=email], select{
+.labels-placement input[type=text], input[type=email] {
   padding-bottom: 3px !important;
   padding-top: 13px !important;
   padding-left: calc(.375rem + 1px) !important;
@@ -123,9 +123,9 @@
       <div class="row">
         <div class="col-xs-6 col-md-4   text-center">
           {% if object.profile_foto %}
-          <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
+          <img data-src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
           {% else %}
-          <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:92px; height: 92px; margin-bottom: 1rem;">
+          <img data-src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:92px; height: 92px; margin-bottom: 1rem;">
           {% endif %}
           {{user_form.profile_foto|as_crispy_field}} 
         </div>
@@ -182,8 +182,8 @@
 <p class="col-12 text-center heading" style="border-top: 1px solid gray; padding-top: 1rem;">Данные для переводов</p>
 <div class="col-12">
   <div class="credit">
-    <img src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
-    <img src="https://seeklogo.net/wp-content/uploads/2011/08/mastercard-logo.png" class="logo-card">
+    <img data-src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
+    <img data-src="https://seeklogo.net/wp-content/uploads/2011/08/mastercard-logo.png" class="logo-card">
      <div class="row">
 
       <div class="col-12 pb-3">

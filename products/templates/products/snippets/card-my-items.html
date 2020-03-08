@@ -17,7 +17,7 @@
       <div class='wish-div my-auto ' style='justify-content: flex-start; display: flex;'>
       <a class="like-center my-auto ">{% include 'accounts/wish-list-update.html' with product=instance %}</a>
       <span class="badge badge-pill badge-dark badge-status my-auto">{% trans 'Approved' context 'card_my_items_approved' %}</span>
-      <img link_for_click ="{{ instance.get_absolute_url }}"class="card-img-top my-auto " src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
+      <img link_for_click ="{{ instance.get_absolute_url }}"class="card-img-top my-auto " data-src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
       <a href="{{ instance.get_absolute_url }}">
     </div>
 
