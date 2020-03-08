@@ -22,7 +22,7 @@ from orders.models import Order, Transaction
 from analitics.utils import get_client_ip
 import requests
 
-
+settings.ALLOWED_IP_ADDRESSES = settings.ALLOWED_IP_ADDRESSES.split(',')
 class PayView(TemplateView):
     template_name = 'billing/pay.html'
     def get(self, request, *args, **kwargs):
