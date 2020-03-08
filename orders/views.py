@@ -32,6 +32,7 @@ class OrderListView(LoginRequiredMixin, View):
 		orders_refunded = orders_refunded_buy | orders_refunded_sell
 		orders_completed = orders_completed_buy | orders_completed_sell
 		context['form'] = FeedbackForm(self.request)
+		print(orders_buy)
 		context['tab'] = tab
 		context['orders_sold'] = orders_sold.filter(status='paid')
 		context['orders_buy'] = orders_buy

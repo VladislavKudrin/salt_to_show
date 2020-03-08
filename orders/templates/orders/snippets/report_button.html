@@ -1,4 +1,10 @@
 {% load i18n %}
+<style type="text/css">
+	.report-btn {
+		padding: 0px 1rem !important;
+	}	
+</style>
+
 <form method="POST" action="{% url 'contact' %}">{% csrf_token %}
 	<input type="hidden" name="order_id_report" value="{{ object.order_id }}">
 	<button title="{% trans 'Report' %}" class="btn report-btn" type="submit"><i class="fas fa-exclamation-triangle"></i></button>

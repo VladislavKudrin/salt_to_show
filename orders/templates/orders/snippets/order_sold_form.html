@@ -8,10 +8,10 @@
 
 <form method="POST" action="{% url 'orders:track_order' %}">{% csrf_token %}
 	<div class="row">
-		<div class="col-4" style="display: flex; align-items: center;">
+		<div class="col-12 col-xl-4" style="display: flex; align-items: center;">
 			<span class="field-name">Tracking:</span>
 		</div>
-		<div class="col-8 input-group">	
+		<div class="col-12 col-xl-8 input-group">	
 			<div class="input-group">
 				<input type="hidden" name="order_id" value="{{ object.order_id }}">
 			  	<input type="text" id="track_number" name="track_number" value="{% if object.track_number %}{{ object.track_number }}{% else %} {% endif %}" style="width: 82%;">

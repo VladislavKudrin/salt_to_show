@@ -3,8 +3,12 @@
 <style type="text/css">
 
 @media only screen and (min-width: 760px) { 
-.input-group:focus-within{
+.search_inputgroup:focus-within{
 	border-bottom: 1px solid #404040 !important;
+}
+
+.search_inputgroup{
+	border-bottom: 1px solid white !important;
 }
 
 .search-form input::placeholder{
@@ -14,9 +18,7 @@
 
 }
 
-.input-group{
-	border-bottom: 1px solid white !important;
-}
+
 
 
 
@@ -48,7 +50,7 @@
 
 
 <form action='{% url "search:query" %}' class="search-form form my-2 my-lg-0 ">
-	<div class='input-group'>
+	<div class='input-group search_inputgroup'>
 		<div class="">
 			<button class="btn search-btn" type='submit'>
 				<i class="fa fa-search fa-1x align-top">
