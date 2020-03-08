@@ -91,9 +91,6 @@
 	  <li class="nav-item">
 	    <a class="nav-link tab {% if tab == 'completed' %}active{% endif %}" id="completed-tab" data-toggle="tab" href="#completed" role="tab" aria-controls="completed" aria-selected="false">Completed</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link tab {% if tab == 'refunded' %}active{% endif %}" id="refunded-tab" data-toggle="tab" href="#refunded" role="tab" aria-controls="refunded" aria-selected="false">Refunded</a>
-	  </li>
 	</ul>
 	<div class="tab-content" id="myTabContent">
 	  <div class="tab-pane fade {% if tab == 'buy' %}show active{% endif %}{% if not tab %}show active{% endif %}" id="buy" role="tabpanel" aria-labelledby="buy-tab">
@@ -101,9 +98,6 @@
 		</div>
 	  <div class="tab-pane fade {% if tab == 'sold' %}show active{% endif %}" id="sold" role="tabpanel" aria-labelledby="sold-tab">{% include 'orders/snippets/order_list/order_sold.html' %}</div>
 	  <div class="tab-pane fade {% if tab == 'completed' %}show active{% endif %}" id="completed" role="tabpanel" aria-labelledby="completed-tab">{% include 'orders/snippets/order_list/order_completed.html' %}</div>
-	  <div class="tab-pane fade {% if tab == 'refunded' %}show active{% endif %}" id="refunded" role="tabpanel" aria-labelledby="refunded-tab">{% include 'orders/snippets/order_list/order_refunded.html' %}</div>
-	</div>
-
 </div> 
 	
 
