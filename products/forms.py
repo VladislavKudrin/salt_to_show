@@ -173,17 +173,15 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_price(self):
 		data = self.cleaned_data
 		price = data.get('price')
+		self.cleaned_data['price_original'] = price
 		user = self.request.user
 		price = Product.objects.price_to_region_price(price = price, user = user)
-		# if region_user:
-		# 	price = round((int(price)/region_user.currency_mult),6)
 		return price
 
-	# def clean_shipping_price(self):
-	# 	user = self.request.user
-	# 	price = Product.objects.price_to_region_price(price = self.cleaned_data.get('shipping_price'), user = user)
-	# 	shipping_price = Shipping_price.objects.create(national_shipping = price)
-	# 	return shipping_price
+	def clean_national_shipping(self):
+		user = self.request.user
+		national_shipping = Product.objects.price_to_region_price(price = self.cleaned_data.get('national_shipping'), user = user)
+		return national_shipping
 
 class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
@@ -214,6 +212,7 @@ class ImageForm(ProductCreateForm):
 		product.overcategory = self.cleaned_data['overcategory']
 		product.active = True
 		form_id = self.request.POST.get('form_id')
+		product.price_original = self.cleaned_data['price_original']
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']

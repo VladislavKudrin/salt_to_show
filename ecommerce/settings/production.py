@@ -190,6 +190,7 @@ MIDDLEWARE = [
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
+    'compression_middleware.middleware.CompressionMiddleware',
 ]
 
 SOCIAL_AUTH_PIPELINE = (

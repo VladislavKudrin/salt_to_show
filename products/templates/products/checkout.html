@@ -193,13 +193,13 @@
           </div>
           <div class="col-12 space-between">
             <span>Shipping price:</span>
-            <span>{{ product.national_shipping }}</span>
+            <span>{{ product.national_shipping|to_user_currency:request }}</span>
           </div>
         </div>
         <div class='row' style='padding-top: 0.5em; font-weight: 600;'>
             <div class="col-12 space-between">
               <span>To pay:</span>
-              <span>{{ product.make_total }}</span>
+              <span>{{ product.make_total|to_user_currency:request }}</span>
             </div>
         </div>  
         <div class='row'>

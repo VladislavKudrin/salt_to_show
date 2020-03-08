@@ -291,6 +291,8 @@ class Product(models.Model):
 	authentic              = models.CharField(max_length=120, default='undefined', choices=AUTHENTICITY_CHOICES, null=True)
 	national_shipping      = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=False, null=True)
 	international_shipping = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=True, null=True)
+	price_original  	   = models.DecimalField(decimal_places=0, max_digits=16, default=0, blank=True, null=True)
+	currency_original  	   = models.CharField(max_length = 120, default='undefined', blank=True, null=True)
 
 
 
@@ -335,6 +337,11 @@ def product_post_save_reciever(sender, created, instance, *args, **kwargs):
 		product = ProductThumbnail.objects.filter(product=instance)
 		if not product.exists():
 			ProductThumbnail.objects.create_update_thumbnail(product=instance)
+	else: # to save original currency 
+		products = Product.objects.filter(id=instance.id)
+		user = instance.user
+		products.update(currency_original=user.region.currency)
+
 
 post_save.connect(product_post_save_reciever, sender=Product)
 
