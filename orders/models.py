@@ -82,7 +82,7 @@ class Order(models.Model):
 	track_number           = models.CharField(max_length=120, blank=True, null=True)
 	shipping_address_final = models.TextField(blank=True, null=True)
 	billing_address_final  = models.TextField(blank=True, null=True)
-	product                = models.OneToOneField(Product, blank=True, null=True)
+	product                = models.ForeignKey(Product, blank = True, null=True, related_name='order')
 	status                 = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
 	shipping_total         = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
 	total                  = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
