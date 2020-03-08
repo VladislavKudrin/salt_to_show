@@ -173,10 +173,9 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_price(self):
 		data = self.cleaned_data
 		price = data.get('price')
+		self.cleaned_data['price_original'] = price
 		user = self.request.user
 		price = Product.objects.price_to_region_price(price = price, user = user)
-		# if region_user:
-		# 	price = round((int(price)/region_user.currency_mult),6)
 		return price
 
 	def clean_national_shipping(self):
@@ -213,6 +212,7 @@ class ImageForm(ProductCreateForm):
 		product.overcategory = self.cleaned_data['overcategory']
 		product.active = True
 		form_id = self.request.POST.get('form_id')
+		product.price_original = self.cleaned_data['price_original']
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']
