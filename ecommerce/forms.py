@@ -16,8 +16,10 @@ class ContactForm(forms.Form):
 		'class':'form-control',
 		'placeholder':_('Your message'),
 		}),label=_('Content'))
-	def __init__(self, request, *args, **kwargs):
+	def __init__(self, request, order_id=None, *args, **kwargs):
 		super(ContactForm, self).__init__(*args, **kwargs)
 		self.request = request
 		self.fields['email'].initial = request.user.email
 		self.fields['email'].widget.attrs['readonly'] = True
+		if order_id is not None:
+			self.fields['content'].initial = _('Order Id: ') + order_id

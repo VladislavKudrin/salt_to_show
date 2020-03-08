@@ -1,0 +1,13 @@
+<style type="text/css">
+#div_id_track_number{
+	margin-bottom: 0px!important;
+}
+</style>
+
+{% load crispy_forms_tags %} 
+<form method="POST" action="{% url 'orders:track_order' %}">{% csrf_token %}
+	<input type="hidden" name="order_id" value="{{ object.order_id }}">
+	<input type="text" id="track_number" name="track_number" value="{% if object.track_number %}{{ object.track_number }}{% else %} {% endif %}">
+	<button type="submit" class="btn hover-button button-white medium-button" style="border: 1px solid black;opacity: 100!important">Submit</button>
+</form>
+

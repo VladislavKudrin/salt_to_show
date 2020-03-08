@@ -156,11 +156,6 @@ class User(AbstractBaseUser):
 		if self.wishes:
 			return self.wishes
 		pass
-
-
-
-
-
 	@property
 	def is_staff(self):
 		return self.staff
@@ -168,6 +163,15 @@ class User(AbstractBaseUser):
 	@property
 	def is_admin(self):
 		return self.admin
+
+# def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
+# 	if created:
+# 		billing_profile = Billing_profile.
+
+
+# post_save.connect(post_save_language_pref, sender=LanguagePreference)
+
+
 LANGUAGE_CHOISES = (
 	('ru', 'RU'),
 	('ua', 'UA'),
@@ -181,8 +185,16 @@ class LanguagePreference(models.Model):
 
 
 
+class WishlistQuerySet(models.query.QuerySet):
+	def available(self):
+		return self.exclude(product__order__status='paid')
 
+class WishlistManager(models.Manager):
+	def get_queryset(self):
+		return WishlistQuerySet(self.model, using=self._db)
 
+	def available(self):
+		return self.get_queryset().available()
 
 class Wishlist(models.Model):
 	user      = models.ForeignKey(User, related_name='wishes_user')
@@ -190,7 +202,7 @@ class Wishlist(models.Model):
 	timestamp = models.DateTimeField(auto_now_add=True)
 
 
-
+	objects = WishlistManager()
 
 
 

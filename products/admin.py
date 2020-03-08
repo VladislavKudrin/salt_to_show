@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.conf import settings
 
-from .models import Product, ProductImage, ProductThumbnail, ReportedProduct, Shipping_price
+from .models import Product, ProductImage, ProductThumbnail, ReportedProduct
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -10,7 +10,7 @@ class ProductAdmin(admin.ModelAdmin):
 	fieldsets = (
         ('User', {'fields': ('user',)}),
         ('Authentity', {'fields': ('authentic','get_absolute_url_admin')}),
-        ('Product info', {'fields': ('title', 'slug', 'description', 'price', 'active', 'timestamp', 'shipping_price')}),
+        ('Product info', {'fields': ('title', 'slug', 'description', 'price', 'active', 'timestamp')}),
         ('Product brand, category and size', {'fields': ('brand','overcategory', 'sex', 'category', 'undercategory', 'size')}),
         ('Condition', {'fields': ('condition',)}),
     )
@@ -28,10 +28,6 @@ class ProductImageAdmin(admin.ModelAdmin):
 	class Meta:
 		model=ProductImage
 
-class Shipping_priceAdmin(admin.ModelAdmin):
-	list_display = ['product']
-	class Meta:
-		model=Shipping_price
 
 admin.site.register(Product, ProductAdmin)
 
@@ -41,4 +37,3 @@ admin.site.register(ProductThumbnail)
 
 admin.site.register(ReportedProduct)
 
-admin.site.register(Shipping_price, Shipping_priceAdmin)

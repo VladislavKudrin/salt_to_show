@@ -1,0 +1,13 @@
+{% load i18n %}
+{% blocktrans %}
+Failed Transaktion:
+{{ order_id }}
+
+
+Response:
+
+{{ error_response }}
+
+
+
+{% endblocktrans %}

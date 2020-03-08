@@ -1,0 +1,17 @@
+{% load i18n %}
+{% blocktrans %}
+Hey, 
+
+Your order {{ order_id }} has been successfully paid.
+We have informed the seller to send your item in {{ time }} hours. 
+
+
+
+
+
+Thank you,
+SALT
+
+{% endblocktrans %}
+
+

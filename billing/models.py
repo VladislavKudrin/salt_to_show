@@ -6,9 +6,30 @@ from accounts.models import GuestEmail
 import stripe
 from django.core.validators import RegexValidator
 
+
+
+
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe")
 STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk')
 User=settings.AUTH_USER_MODEL
+
+
+
+# class Rating(models.Model):
+# 	rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
+# 	points = models.DecimalField(decimal_places=1, max_digits=2, default=0)
+# 	users  = models.IntegerField()
+	
+
+# 	def __str__(self):
+# 		return self.billing_profile
+# 	def calculate_rating(self):
+# 		points = self.points
+# 		users = self.users
+# 		rating = round((point/users),1)
+# 		self.rating = rating
+# 		self.save()
+
 
 class BillingProfileManager(models.Manager):
 	def new_or_get(self, request):
@@ -28,15 +49,14 @@ class BillingProfileManager(models.Manager):
 		return obj, created
 
 class BillingProfile(models.Model):
-	user 				= models.OneToOneField(User, null=True, blank=True)
-	email 				= models.EmailField()
-	active 				= models.BooleanField(default=True)
-	timestamp 			= models.DateTimeField(auto_now_add=True)
-	update 				= models.DateTimeField(auto_now=True)
-	customer_id 		= models.CharField(max_length=120, null=True, blank=True)
-
-	objects = BillingProfileManager()
-
+	user        = models.OneToOneField(User, null=True, blank=True, related_name='billing_profile')
+	email       = models.EmailField()
+	active      = models.BooleanField(default=True)
+	timestamp   = models.DateTimeField(auto_now_add=True)
+	update      = models.DateTimeField(auto_now=True)
+	customer_id = models.CharField(max_length=120, null=True, blank=True)
+	rating      = models.DecimalField(decimal_places=1, max_digits=16, default=0, null=True)
+	objects     = BillingProfileManager()
 	def __str__(self):
 		return self.email
 
@@ -61,38 +81,98 @@ class BillingProfile(models.Model):
 			return default_cards.first()
 		return None
 
+	def count_feedbacks(self):
+		feedbacks = Feedback.objects.filter(to_user=self)
+		return feedbacks.count()
+
 	def set_cards_inactive(self):
 		cards_qs = self.get_cards()
 		cards_qs.update(active=False)
 		return cards_qs.filter(active=True).count()
 
-def billing_profile_created_reciever(sender, instance, *args, **kwargs):
-	if not instance.customer_id and instance.email:
-		# print("API REQUEST")
-		customer = stripe.Customer.create(email = instance.email)
-		# print(customer)
-		instance.customer_id = customer.id
-# pre_save.connect(billing_profile_created_reciever, sender=BillingProfile)
+	def refresh_rating(self):
+		rating_arr = Feedback.objects.values_list('rating', flat=True)
+		rating_sum = sum(rating_arr)
+		self.rating = rating_sum
+		self.save()
+
+	@property
+	def calculated_rating(self):
+		rating_points = self.rating
+		feedbacks = self.count_feedbacks()
+		calculated_rating = round((rating_points/feedbacks),1)
+		return calculated_rating
+
+
+
+def billing_profile_created_reciever(sender, instance, created, *args, **kwargs):
+	if created:
+		billing_profile = instance
+		card = Card.objects.new_or_get(billing_profile=billing_profile)
+	# if not instance.customer_id and instance.email:
+	# 	# print("API REQUEST")
+	# 	customer = stripe.Customer.create(email = instance.email)
+	# 	# print(customer)
+	# 	instance.customer_id = customer.id
+post_save.connect(billing_profile_created_reciever, sender=BillingProfile)
 
 def user_created_reciever(sender, instance, created, *args, **kwargs):
 	if created and instance.email:
 		BillingProfile.objects.get_or_create(user=instance, email=instance.email)
 post_save.connect(user_created_reciever, sender=User)
 
-class Card(models.Model):
-	billing_profile         = models.ForeignKey(BillingProfile)
-	holder					= models.CharField(max_length=50, null=True, blank=True)
-	number					= models.CharField(max_length=16, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
-	month               	= models.CharField(max_length=2, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
-	year                	= models.CharField(max_length=2, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
-	cvv 					= models.CharField(max_length=3, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
-	timestamp               = models.DateTimeField(auto_now_add=True)
-	card_token 				= models.TextField(null=True, blank=True)
-	active					= models.BooleanField(default=True)
-	default					= models.BooleanField(default=True)
+
+class Feedback(models.Model):
+	from_user = models.OneToOneField(User, null=True, blank=False, related_name='feedback')
+	to_user   = models.OneToOneField(BillingProfile, null=True, blank=False, related_name='feedback')
+	rating    = models.DecimalField(decimal_places=1, max_digits=2, default=0, blank=False, null=True)
+	comment   = models.TextField(default='', blank=True)
 
 	def __str__(self):
+		return self.to_user.email
+
+def feedback_created_reciever(sender, instance, created, *args, **kwargs):
+	if created:
+		to_user = instance.to_user
+		to_user.refresh_rating()
+
+post_save.connect(feedback_created_reciever, sender=Feedback)
+
+
+
+class CardManager(models.Manager):
+	def new_or_get(self, billing_profile):
+		billing_profile=billing_profile
+		created=False
+		obj=None
+		obj, created = self.model.objects.get_or_create(
+														billing_profile=billing_profile)
+		return obj, created
+class Card(models.Model):
+	billing_profile = models.ForeignKey(BillingProfile, related_name='card')
+	holder          = models.CharField(max_length=50, null=True, blank=True)
+	number          = models.CharField(max_length=16, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
+	month           = models.CharField(max_length=2, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
+	year            = models.CharField(max_length=2, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
+	cvv             = models.CharField(max_length=3, null=True, blank=True, validators=[RegexValidator(r'^\d+$')])
+	timestamp       = models.DateTimeField(auto_now_add=True)
+	card_token      = models.TextField(null=True, blank=True)
+	active          = models.BooleanField(default=True)
+	default         = models.BooleanField(default=True)
+	objects         = CardManager()
+	def __str__(self):
 		return "{} {} {}".format(self.billing_profile, self.number, self.holder)
+
+	def is_valid_card(self):
+		valid = True
+		if self.number is None or self.holder is None:
+			return False
+		if self.holder == '' or self.number == '':
+			return False 
+		if self.number is not None:
+			if len(str(self.number)) != 16:
+				return False
+		return valid
 
 class ChargeManager(models.Manager):
 	def do(self, billing_profile, order_obj, card=None): # Charge.objects.do()

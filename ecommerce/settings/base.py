@@ -235,8 +235,12 @@ PAGINATION_DISPLAY_PAGE_LINKS = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'saltdb',
+        'USER': 'roma',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 
