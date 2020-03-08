@@ -32,7 +32,33 @@ $(document).ready(
 
 
     // Labels and placeholders for accounts settings and checkout
-    var inputs = ["#id_user_form-username", "#id_user_form-email", "#id_user_form-region", "#id_address_form-name", "#id_address_form-additional_line", "#id_address_form-street", "#id_address_form-city", "#id_address_form-number", "#id_address_form-postal_code", "#id_address_form-state", "#id_address_form-country", "#id_address_form-post_office", "#id_address_form-phone"]
+    var inputs = [
+    "#id_user_form-username", 
+    "#id_user_form-email", 
+    "#id_user_form-region", 
+    "#id_address_form-name", 
+    "#id_address_form-additional_line", 
+    "#id_address_form-street", 
+    "#id_address_form-city", 
+    "#id_address_form-number", 
+    "#id_address_form-postal_code", 
+    "#id_address_form-state", 
+    "#id_address_form-country", 
+    "#id_address_form-post_office", 
+    "#id_address_form-phone",
+    "#id_title",
+    "#id_brand",
+    "#id_title",
+    "#id_sex",
+    "#id_undercategory",
+    "#id_condition",
+    "#id_size",
+    "#id_price",
+    "#id_shipping_price",
+    "#id_description",
+    "#id_email",
+    "#id_content",
+    ]
 
     jQuery.each(inputs, function(index, item) {
         var item_val = $(item).val()
