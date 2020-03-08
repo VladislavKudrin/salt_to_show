@@ -179,11 +179,10 @@ class ProductCreateForm(forms.ModelForm):
 		# 	price = round((int(price)/region_user.currency_mult),6)
 		return price
 
-	# def clean_shipping_price(self):
-	# 	user = self.request.user
-	# 	price = Product.objects.price_to_region_price(price = self.cleaned_data.get('shipping_price'), user = user)
-	# 	shipping_price = Shipping_price.objects.create(national_shipping = price)
-	# 	return shipping_price
+	def clean_national_shipping(self):
+		user = self.request.user
+		national_shipping = Product.objects.price_to_region_price(price = self.cleaned_data.get('national_shipping'), user = user)
+		return national_shipping
 
 class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
