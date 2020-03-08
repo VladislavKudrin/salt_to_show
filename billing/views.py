@@ -22,7 +22,7 @@ from orders.models import Order, Transaction
 from analitics.utils import get_client_ip
 import requests
 
-settings.ALLOWED_IP_ADDRESSES = settings.ALLOWED_IP_ADDRESSES.split(',')
+
 class PayView(TemplateView):
     template_name = 'billing/pay.html'
     def get(self, request, *args, **kwargs):
@@ -83,6 +83,7 @@ class PayCallbackView(View):
 
 class PayToUserView(LoginRequiredMixin, View):
     template_name = 'billing/pay2user.html'
+    ALLOWED_IP_ADDRESSES = settings.ALLOWED_IP_ADDRESSES.split(',')
     def get_ip(self):
         response = requests.get('https://api.ipify.org?format=json')
         if response.status_code == 200:
@@ -91,7 +92,7 @@ class PayToUserView(LoginRequiredMixin, View):
         return None
     def get(self, request, *args, **kwargs):
         ip = self.get_ip()
-        if request.user.is_admin and ip in settings.ALLOWED_IP_ADDRESSES:
+        if request.user.is_admin and ip in self.ALLOWED_IP_ADDRESSES:
             orders = Order.objects.filter(status='shipped', active=True)
             context={
                 'orders':orders
@@ -101,7 +102,7 @@ class PayToUserView(LoginRequiredMixin, View):
             return redirect('home')
     def post(self, request, *args, **kwargs):
         ip = self.get_ip()
-        if request.user.is_admin and ip in settings.ALLOWED_IP_ADDRESSES:
+        if request.user.is_admin and ip in self.ALLOWED_IP_ADDRESSES:
             order_id = request.POST.get('order_id')
             liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
             callback_url = settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay2user_callback')
