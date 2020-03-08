@@ -49,7 +49,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
 
-if TESTSERVER:
+if TESTSERVER == 'True':
     BASE_URL = 'https://www.salt-testserver.herokuapp.com'
     BASE_URL_WITHOUT_WWW = 'https://salt-testserver.herokuapp.com'
     LIQPAY_PUBLIC_KEY = 'sandbox_i6955995458'
