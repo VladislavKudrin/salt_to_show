@@ -123,8 +123,8 @@ post_save.connect(user_created_reciever, sender=User)
 
 
 class Feedback(models.Model):
-	from_user = models.OneToOneField(User, null=True, blank=False, related_name='feedback')
-	to_user   = models.OneToOneField(BillingProfile, null=True, blank=False, related_name='feedback')
+	from_user = models.ForeignKey(User, null=True, blank=False, related_name='feedback')
+	to_user   = models.ForeignKey(BillingProfile, null=True, blank=False, related_name='feedback')
 	rating    = models.DecimalField(decimal_places=1, max_digits=2, default=0, blank=False, null=True)
 	comment   = models.TextField(default='', blank=True)
 
