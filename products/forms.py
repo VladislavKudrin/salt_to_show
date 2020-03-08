@@ -74,6 +74,8 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['brand'].label = False
 		self.fields['price'].widget.attrs['step'] = 1
 		self.fields['national_shipping'].widget.attrs['step'] = 1
+		self.fields['price'].widget.attrs['class'] = 'labels-placement'
+		self.fields['national_shipping'].widget.attrs['class'] = 'labels-placement'
 
 
 

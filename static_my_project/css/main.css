@@ -784,12 +784,21 @@ border: 2px red solid;
 }
 
 
-.labels-placement input[type=text], input[type=email], input[type=number] {
+.labels-placement{
 
   padding-bottom: 3px !important;
   padding-top: 13px !important;
   padding-left: calc(.375rem + 1px) !important;
   font-size: 14px !important;
+}
+
+/*size for placeholders*/
+#id_title, #id_brand, #id_sex, #id_undercategory, #id_size, #id_condition, #id_description, #id_email, #id_password {
+  font-size: 14px;
+}
+
+.asteriskField {
+    display: none;
 }
 
 /*.placic-style {

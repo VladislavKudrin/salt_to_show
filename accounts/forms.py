@@ -155,6 +155,7 @@ class RegionModalForm(forms.ModelForm):
         super(RegionModalForm, self).__init__(*args, **kwargs)
         self.fields['location'].widget.attrs['readonly'] = True
         self.fields['location'].widget.attrs['value'] = self.request.GET.get('location')
+        self.fields['region'].label = False
     def save(self):
         user = self.request.user
         region = self.cleaned_data.get('region')
@@ -162,9 +163,9 @@ class RegionModalForm(forms.ModelForm):
         user.save()
 
 class UserDetailChangeForm(forms.ModelForm): 
-    username  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control'}))
-    region = forms.ChoiceField(widget=forms.Select(), required=False)
-    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control', 'disabled':'true'}), required=False)
+    username  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control labels-placement'}))
+    region = forms.ChoiceField(widget=forms.Select(attrs={"class":'labels-placement'}), required=False)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control labels-placement', 'disabled':'true'}), required=False)
     subscribed = forms.BooleanField(required=False)
     profile_foto = forms.FileField(required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
     
