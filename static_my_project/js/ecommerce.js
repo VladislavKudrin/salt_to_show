@@ -58,6 +58,7 @@ $(document).ready(
     "#id_description",
     "#id_email",
     "#id_content",
+    "#id_national_shipping",
     ]
 
     jQuery.each(inputs, function(index, item) {

@@ -54,24 +54,27 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['condition'].widget.attrs['readonly'] = True
 		self.fields['title'].widget.attrs['placeholder'] = _('Some keywords about your item')
 		self.fields['description'].widget.attrs['placeholder'] = _('Describe your item in details')
-		self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
-		self.fields['national_shipping'].widget.attrs['placeholder'] = _('National shipping costs')
+		# self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
+		# self.fields['national_shipping'].widget.attrs['placeholder'] = _('National shipping costs')
 		self.fields['brand'].widget.attrs['placeholder'] = _('Select a brand')
 		self.fields['sex'].widget.attrs['placeholder'] = _('Gender')
 		self.fields['undercategory'].widget.attrs['placeholder'] = _('Category')
 		self.fields['size'].widget.attrs['placeholder'] = _('Size')
 		self.fields['condition'].widget.attrs['placeholder'] = _('Condition')
 		self.fields['price'].initial = ''
+		self.fields['national_shipping'].initial = ''
 		self.fields['title'].label = False
 		self.fields['sex'].label = False
 		self.fields['undercategory'].label = False
 		self.fields['size'].label = False
 		self.fields['condition'].label = False
-		self.fields['price'].label = _('Price')
-		self.fields['national_shipping'].label = _('Shipping price')
+		self.fields['price'].label = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
+		self.fields['national_shipping'].label = _('Shipping price ') + ('{currency}').format(currency=currency_placeholder)
 		self.fields['description'].label = False
 		self.fields['brand'].label = False
 		self.fields['price'].widget.attrs['step'] = 1
+		self.fields['national_shipping'].widget.attrs['step'] = 1
+
 
 
 
