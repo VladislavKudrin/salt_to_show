@@ -95,7 +95,7 @@ class PayToUserView(LoginRequiredMixin, View):
         return ALLOWED_IP_ADDRESSES
     def get(self, request, *args, **kwargs):
         ip = self.get_ip()
-        if request.user.is_admin and ip in get_allowed_ip():
+        if request.user.is_admin and ip in self.get_allowed_ip():
             orders = Order.objects.filter(status='shipped', active=True)
             context={
                 'orders':orders
@@ -105,7 +105,7 @@ class PayToUserView(LoginRequiredMixin, View):
             return redirect('home')
     def post(self, request, *args, **kwargs):
         ip = self.get_ip()
-        if request.user.is_admin and ip in get_allowed_ip():
+        if request.user.is_admin and ip in self.get_allowed_ip():
             order_id = request.POST.get('order_id')
             liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
             callback_url = settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay2user_callback')
