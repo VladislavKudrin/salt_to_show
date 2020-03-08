@@ -93,6 +93,8 @@ class PayToUserView(LoginRequiredMixin, View):
         return None
     def get(self, request, *args, **kwargs):
         ip = self.get_ip()
+        print('IP', ip)
+        print('ADDRESSES', ALLOWED_IP_ADDRESSES)
         if request.user.is_admin and ip in ALLOWED_IP_ADDRESSES:
             orders = Order.objects.filter(status='shipped', active=True)
             context={
