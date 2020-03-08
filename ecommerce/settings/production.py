@@ -40,7 +40,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
     
 
-ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com', 'salt-testserver.herokuapp.com']
 
 TESTMODE = False
 EMAIL_HOST = 'smtp.gmail.com'
@@ -55,11 +54,13 @@ if TESTSERVER:
     BASE_URL_WITHOUT_WWW = 'https://salt-testserver.herokuapp.com'
     LIQPAY_PUBLIC_KEY = 'sandbox_i6955995458'
     LIQPAY_PRIVATE_KEY = 'sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG'
+    ALLOWED_HOSTS = ['salt-testserver.herokuapp.com']
 else:
     BASE_URL = 'https://www.saltish.co'
     BASE_URL_WITHOUT_WWW = 'https://saltish.co'
     LIQPAY_PUBLIC_KEY = os.environ.get('LIQPAY_PUBLIC_KEY')
     LIQPAY_PRIVATE_KEY = os.environ.get('LIQPAY_PRIVATE_KEY')
+    ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com']
 
 
 MANAGERS = (
