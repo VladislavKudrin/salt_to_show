@@ -250,7 +250,7 @@
 		{% for image in images %}
 		<div class="row">
 			<div class="col mb-3" style="display: flex; justify-content: center;">
-				<img class='for_zoom' src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
+				<img class='for_zoom' data-src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
 			</div>
 		</div>
 		{% endfor %}
@@ -410,9 +410,9 @@
 
 			<div class="col-4 pl-2 text-right">
 				{% if object.user.profile_foto %}
-					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
+					<a href='{{ object.user.get_absolute_url }}'><img  data-src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
 				{% else %}
-					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
+					<a href='{{ object.user.get_absolute_url }}'><img data-src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
 				{% endif %}
 			</div>
 
@@ -444,7 +444,7 @@
 			{% for image in images %}
 				{% if image.image_order == 1 %}
 					<div class="carousel-item active" class="carousel slide" data-interval="false">
-						<img src="{{ image.image.url }}" alt="...">
+						<img data-src="{{ image.image.url }}" alt="...">
 					</div>
 				{% endif %}
 			{% endfor %}
@@ -452,7 +452,7 @@
 			{% for image in images %}
 				{% if not image.image_order == 1 %}
 					<div class="carousel-item" data-interval="false">
-						<img src="{{ image.image.url }}" alt="...">
+						<img data-src="{{ image.image.url }}" alt="...">
 					</div>
 				{% endif %}
 			{% endfor %}
@@ -592,9 +592,9 @@
 
 			<div class="col-4 text-right">
 				{% if object.user.profile_foto %}
-					<a href='{{ object.user.get_absolute_url }}'><img  src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
+					<a href='{{ object.user.get_absolute_url }}'><img  data-src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
 				{% else %}
-					<a href='{{ object.user.get_absolute_url }}'><img src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
+					<a href='{{ object.user.get_absolute_url }}'><img data-src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
 				{% endif %}
 			</div>
 		</div>

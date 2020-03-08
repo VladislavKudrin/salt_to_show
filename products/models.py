@@ -156,9 +156,13 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		return(x_b)
 
 	def authentic(self):
-		return self.filter(authentic='authentic').exclude(order__status='paid')
+		return self.filter(authentic='authentic')
+
 	def fake(self):
-		return self.filter(authentic='fake')	
+		return self.filter(authentic='fake')
+
+	def available(self):
+		return self.exclude(order__status='paid')
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -252,6 +256,7 @@ class ProductManager(models.Manager):
 
 	def fake(self):
 		return self.get_queryset().active().fake()
+
 	def price_to_region_price(self, user, price):
 		region_user = user.region
 		if region_user:
@@ -260,15 +265,6 @@ class ProductManager(models.Manager):
 
 
 User=settings.AUTH_USER_MODEL
-
-
-
-# CONDITION_CHOICES = (
-# 	('item condition', 'Select an item condition'),
-# 	('new with tags', 'New with tags'),
-# 	('gently used', 'Gently used'),
-# 	('used', 'Used'),
-# 	)
 
 
 AUTHENTICITY_CHOICES = (

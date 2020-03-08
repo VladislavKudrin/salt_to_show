@@ -219,7 +219,7 @@ class ProfileView(DetailView):
 		username = self.kwargs.get('username')
 		user  = User.objects.filter_by_username(username=username)
 		context = super(ProfileView, self).get_context_data(*args,**kwargs)
-		context['products'] = Product.objects.filter(user=user).authentic()
+		context['products'] = Product.objects.filter(user=user).authentic().available()
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -239,25 +239,15 @@ class ProfileView(DetailView):
 class WishListView(LoginRequiredMixin, ListView):
 	template_name = 'accounts/wish-list.html'
 
-
 	def get_queryset(self, *args, **kwargs):
 		user = self.request.user
-		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
+		wishes = Wishlist.objects.filter(user=user).available().order_by('-timestamp')
 		wished_products = [wish.product for wish in wishes]
-		# pk_wishes = [x.pk for x in wishes] #['1', '3', '4'] / primary key list
 		return wished_products
-		#context = super(WishListView, self).get_context_data(*args,**kwargs)
-		# all_wishes = user.wishes_user.all()
-		# wished_products = []
-		# for wish in all_wishes: 
-		# 	wished_products.append(wish.product)
-		# print(wished_products)
-		# return wished_products
-		# return Product.objects.filter()
 
 	def get_context_data(self, *args, **kwargs):
 		user = self.request.user
-		wishes = Wishlist.objects.filter(user=user).order_by('-timestamp')
+		wishes = Wishlist.objects.filter(user=user).available().order_by('-timestamp')
 		wished_products = [wish.product for wish in wishes]
 		context = super(WishListView, self).get_context_data(*args,**kwargs)
 		context['wishes'] = wished_products
@@ -351,53 +341,3 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
 		if user_form.is_valid() and address_form.is_valid() and card_form.is_valid():
 			return self.form_valid(user_form, address_form, card_form)
 		return HttpResponseRedirect(self.get_success_url())
-
-# class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
-# 	form_class = AccountMultiForm
-# 	template_name='accounts/account-update-view.html'
-
-
-
-
-
-# 	def form_valid(self, form):
-# 		form = form_classes
-# 		user_form = form['user_form'].save()
-# 		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
-# 		profile = form['address_form'].save(commit=False)
-# 		profile.billing_profile = billing_profile
-# 		profile.save()
-# 		card_form = form['card_form']
-# 		if card_form.is_valid():
-# 			print('valid')
-# 			card_form = form['card_form'].save()
-# 		return super(AccountUpdateView, self).form_valid(form)
-
-# 	def get_context_data(self, *args, **kwargs):
-# 		context = super(AccountUpdateView, self).get_context_data(*args,**kwargs)
-# 		context['title'] = _('Update your details')
-# 		context['password_btn'] = _('Change password')
-# 		context['save_btn'] = _('Save')
-# 		context['logout_btn'] = _('Logout')
-# 		return context
-
-# 	def get_form_kwargs(self):
-# 		kwargs = super(AccountUpdateView, self).get_form_kwargs()
-# 		kwargs.update(instance={
-# 		    'user_form': self.object,
-# 		    'address_form': self.get_address(),
-# 		    'card_form': self.get_card(),
-# 		})
-# 		return kwargs
-# 	def post(self, request, *args, **kwargs):
-# 		form = self.form_class
-# 		self.form_valid(form)
-		
-
-# 		return HttpResponse('html')
-# 		# if form.is_valid():
-# 		# 	print('valid')
-# 		# 	return self.form_valid(form)
-# 		# else:
-# 		# 	print('not')
-

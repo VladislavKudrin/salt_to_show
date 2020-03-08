@@ -50,7 +50,7 @@ body{
 
 				<p class="heading">{{ or_option }}</p>
 		        <a href="{% url 'social:begin' 'google-oauth2' %}{{ request.build_absolute_uri|to_next_path }}"> <button class="btn button-white large-button hover-button btn-block">
-					 <img src="{% static 'icons/google.png' %}" class="avatar" style="width:20px; height: 20px">
+					 <img data-src="{% static 'icons/google.png' %}" class="avatar" style="width:20px; height: 20px">
 		        </button>
 		        </a>
         		<br><small><a href='{% url "password_reset" %}'>{{ password_forgot }}</a></small>
