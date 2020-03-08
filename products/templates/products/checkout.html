@@ -188,18 +188,18 @@
       <div class="col-xs-12 col-md-6 pt-3 " style="padding-bottom: 1rem; padding-top: 1rem; border-top: 1px solid gray">
         <div class='row' style='color: #737373;border-bottom: 1px dashed #e1e1e1;padding-bottom: 0.75em;font-size: 0.9em;'>
           <div class="col-12 space-between">
-            <span>Цена:</span>
+            <span>Price:</span>
             <span>{{ product.price|to_user_currency:request }}</span>
           </div>
           <div class="col-12 space-between">
-            <span>Цена доставки:</span>
-            <span>{{ product.shipping_price.national_shipping|to_user_currency:request }}</span>
+            <span>Shipping price:</span>
+            <span>{{ product.national_shipping }}</span>
           </div>
         </div>
         <div class='row' style='padding-top: 0.5em; font-weight: 600;'>
             <div class="col-12 space-between">
-              <span>К оплате:</span>
-              <span>{{ product.make_total|to_user_currency:request }}</span>
+              <span>To pay:</span>
+              <span>{{ product.make_total }}</span>
             </div>
         </div>  
         <div class='row'>
