@@ -61,13 +61,20 @@
 		.order-received {
 			color: white;
 			background-color: black;
-			width: 79%;
 		}
 
 		.order-received:hover {
 			color: white;
 			cursor: auto !important;
 		}
+
+		@media only screen and (max-width: 768px) {
+			.container {
+				width: 100% !important;
+			}
+		}
+
+
 
 	</style>
 
@@ -76,11 +83,15 @@
 <body>
 
 <div class="container" style="width: 70%;">
+
+	
 	<div class='row'>
 		<div class='col-12'>
 			<p class="heading" id="products-by-user">Orders:</p>
 		</div>
 	</div>
+
+
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 	  <li class="nav-item">
 	    <a class="nav-link tab {% if tab == 'buy' %}active{% endif %}{% if not tab %}show active{% endif %}" id="buy-tab" data-toggle="tab" href="#buy" role="tab" aria-controls="buy" aria-selected="true">Orders</a>
@@ -91,18 +102,18 @@
 	  <li class="nav-item">
 	    <a class="nav-link tab {% if tab == 'completed' %}active{% endif %}" id="completed-tab" data-toggle="tab" href="#completed" role="tab" aria-controls="completed" aria-selected="false">Completed</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link tab {% if tab == 'refunded' %}active{% endif %}" id="refunded-tab" data-toggle="tab" href="#refunded" role="tab" aria-controls="refunded" aria-selected="false">Refunded</a>
-	  </li>
 	</ul>
+
+
 	<div class="tab-content" id="myTabContent">
 	  <div class="tab-pane fade {% if tab == 'buy' %}show active{% endif %}{% if not tab %}show active{% endif %}" id="buy" role="tabpanel" aria-labelledby="buy-tab">
 		{% include 'orders/snippets/order_list/order_buy.html' %}
 		</div>
-	  <div class="tab-pane fade {% if tab == 'sold' %}show active{% endif %}" id="sold" role="tabpanel" aria-labelledby="sold-tab">{% include 'orders/snippets/order_list/order_sold.html' %}</div>
-	  <div class="tab-pane fade {% if tab == 'completed' %}show active{% endif %}" id="completed" role="tabpanel" aria-labelledby="completed-tab">{% include 'orders/snippets/order_list/order_completed.html' %}</div>
-	  <div class="tab-pane fade {% if tab == 'refunded' %}show active{% endif %}" id="refunded" role="tabpanel" aria-labelledby="refunded-tab">{% include 'orders/snippets/order_list/order_refunded.html' %}</div>
-	</div>
+	  <div class="tab-pane fade {% if tab == 'sold' %}show active{% endif %}" id="sold" role="tabpanel" aria-labelledby="sold-tab">{% include 'orders/snippets/order_list/order_sold.html' %}
+	  </div>
+	  <div class="tab-pane fade {% if tab == 'completed' %}show active{% endif %}" id="completed" role="tabpanel" aria-labelledby="completed-tab">{% include 'orders/snippets/order_list/order_completed.html' %}
+	  </div>
+	</div> 
 
 </div> 
 	

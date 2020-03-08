@@ -4,7 +4,7 @@
 {% block content %}
 
 <head>
-	<style type="text/css">
+<style type="text/css">
 
 /*body {
   position: relative !important;;
@@ -31,8 +31,45 @@
 color:black;
 }
 
+.faq-side {
+	padding-left: 3rem;
+}
 
-	</style>
+/*For mobile */
+@media only screen and (max-width: 767px) {
+	.faq-side {
+		visibility: hidden;
+		display: none;
+	}
+
+	.faq-text {
+		padding-left: 2rem !important;
+		padding-right: 2rem !important;
+	}
+
+	.faq-sub-heading {
+		padding-top: 3rem !important;
+	}
+}
+
+/*For tablets*/
+@media only screen and (min-width: 767px) and (max-width: 1025px) {
+	.faq-side {
+		padding-left: 0 !important;
+	}
+
+	.faq-sub-heading {
+		padding-top: 5rem !important;
+	}
+	.faq-text {
+		padding-left: 6.5rem !important;
+		padding-right: 2rem !important;
+	}
+
+}
+
+
+</style>
 </head>
 
 
@@ -41,7 +78,7 @@ color:black;
 <div class='row'>
 
 
-<div class='col-2 pl-5' > <!-- ТОЛЬКО ДЛЯ БОЛЬШИК ЭКРАНОВ 3 рем. ДЛЯ АЙПАДОВ НИКАКОГО. ДЛЯ ТЕЛЕФОНОВ ЭТОЙ КОЛОНКИ ВООБЩЕ НЕТ -->
+<div class='col-2 pl-5 faq-side'> 
 <div id="list-example" class="list-group position-fixed">
   <a class="list-group-item list-group-item-action" href="#buy">Как купить</a>
   <a class="list-group-item list-group-item-action" href="#sell">Как продать</a>
@@ -51,10 +88,10 @@ color:black;
 </div>
 
 
-<div class='col-9 offset-md-1 p-0' style='max-width: 680px'> <!-- ДЛЯ МОБАЙЛ СДЕЛАТЬ КОЛ 12 ПАДИНГ ЛЕФТ РАЙТ 3 + сделать айнхайтлих для оферты и тд -->
+<div class='col-12 col-xl-9 offset-md-1 p-0 faq-text' style='max-width: 680px'> 
 <div data-spy="scroll" data-target="#list-example" data-offset="" class="scrollspy-example">
 <span class='heading text-center'>FAQ</span>
-  <p id="buy" class='pt-5 sub-heading'>Как купить</p> <!-- ТОЛЬКО ДЛЯ БОЛЬШИК ЭКРАНОВ 3рем. ДЛЯ АЙПАДОВ 5 рем. ДЛЯ ТЕЛЕФОНОВ НОЛЬ	 -->
+  <p id="buy" class='pt-5 sub-heading faq-sub-heading'>Как купить</p> 
    			<p>- Выбери понравившийся айтем и нажми на кнопку КУПИТЬ БЕЗОПАСНО</p>
 			<p>- Введи свои данные и выбери адрес ближайшего отделения Нова Пошта</p>
 			<p>- Проверь стоимость товара и доставки, затем нажми на ОПЛАТИТЬ</p>
@@ -68,7 +105,7 @@ color:black;
 			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
 			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
   
-  <p id="sell" class='pt-5 sub-heading'>Как продать</p>
+  <p id="sell" class='pt-5 sub-heading faq-sub-heading'>Как продать</p>
   			<p>- Выстави свои айтемы на продажу в разделе SELL</p>
 			- После того, как кто-то купит твой айтем, отправь его на адрес покупателя</p> 
 			<p>- Деньги придут на твою карту, как только покупатель получит и подтвердит соответствие айтема в своем профиле</p>
@@ -77,7 +114,7 @@ color:black;
 			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
 			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
 
-  <p id="delivery" class='pt-5 sub-heading'>Как получить</p>
+  <p id="delivery" class='pt-5 sub-heading faq-sub-heading'>Как получить</p>
 			<p>- Для жителей Украины доставка осуществляется через Нова Пошта</p>
 			<p>- Просто выбери подходящее для тебя отделение из предложенных</p> 
 			<p>- Сроки доставки зависят от регионов отправки и получения </p>
@@ -93,7 +130,7 @@ color:black;
 			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
 			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
 			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-  <p id="return" class='pt-5 sub-heading'>Как вернуть<p>
+  <p id="return" class='pt-5 sub-heading faq-sub-heading'>Как вернуть<p>
 			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
 			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
 			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
