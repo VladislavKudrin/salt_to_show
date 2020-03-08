@@ -17,6 +17,7 @@ from django.utils.decorators import method_decorator
 from liqpay.liqpay3 import LiqPay
 LIQPAY_PRIV_KEY = getattr(settings, "LIQPAY_PRIVATE_KEY", "sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG")
 LIQPAY_PUB_KEY =  getattr(settings, "LIQPAY_PUBLIC_KEY", 'sandbox_i6955995458')
+ALLOWED_IP_ADDRESSES = getattr(settings, "ALLOWED_IP_ADDRESSES", '').split(',')
 from .models import BillingProfile, Card
 from orders.models import Order, Transaction
 from analitics.utils import get_client_ip
@@ -90,12 +91,9 @@ class PayToUserView(LoginRequiredMixin, View):
             ip = response.json().get('ip')
             return ip
         return None
-    def get_allowed_ip(self):
-        ALLOWED_IP_ADDRESSES = settings.ALLOWED_IP_ADDRESSES.split(',')
-        return ALLOWED_IP_ADDRESSES
     def get(self, request, *args, **kwargs):
         ip = self.get_ip()
-        if request.user.is_admin and ip in self.get_allowed_ip():
+        if request.user.is_admin and ip in ALLOWED_IP_ADDRESSES:
             orders = Order.objects.filter(status='shipped', active=True)
             context={
                 'orders':orders
@@ -105,7 +103,7 @@ class PayToUserView(LoginRequiredMixin, View):
             return redirect('home')
     def post(self, request, *args, **kwargs):
         ip = self.get_ip()
-        if request.user.is_admin and ip in self.get_allowed_ip():
+        if request.user.is_admin and ip in ALLOWED_IP_ADDRESSES:
             order_id = request.POST.get('order_id')
             liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
             callback_url = settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay2user_callback')
