@@ -147,8 +147,8 @@ class Order(models.Model):
 
 
 				}
-		txt_ = get_template("orders/emails/contact_message.txt").render(context)
-		html_ = get_template("orders/emails/contact_message.html").render(context)
+		txt_ = get_template("orders/emails/inform_about_order.txt").render(context)
+		html_ = get_template("orders/emails/inform_about_order.html").render(context)
 		subject = _('Order Confirmation')
 		from_email = settings.DEFAULT_FROM_EMAIL
 		recipient_list = [email]
