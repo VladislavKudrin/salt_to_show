@@ -188,15 +188,8 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
 		elif link_sent2:
-			if user is not None:
-				if user.admin: 
-					msg2 = ('Ох заживеееем!')
-					messages.add_message(form.request, messages.SUCCESS, mark_safe(msg2))
-				else:
-					print('smth')
-			else:
-				msg2 = _("Email not confirmed. ") + form.cleaned_data.get('msg')
-				messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
+			msg2 = _("Email not confirmed. ") + form.cleaned_data.get('msg')
+			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
 		elif user is None:
 			next_path = 'login'
 			msg3 = _("The password seems to be wrong. Try again!")
