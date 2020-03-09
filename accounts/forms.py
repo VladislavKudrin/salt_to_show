@@ -188,6 +188,7 @@ class UserDetailChangeForm(forms.ModelForm):
         # self.helper = FormHelper()
         # self.helper.form_show_labels = False 
         self.request = request
+        self.fields['email'].label = _('Email')
         self.fields['username'].label = _('Username')
         self.fields['username'].validators = [alphanumeric]
         # self.fields['profile_foto'].label = _('Profile photo')

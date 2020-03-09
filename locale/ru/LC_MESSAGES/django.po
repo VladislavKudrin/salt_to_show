@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-08 18:18+0000\n"
-"PO-Revision-Date: 2020-03-08 19:19+0100\n"
+"PO-Revision-Date: 2020-03-09 17:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -411,7 +411,8 @@ msgstr "Надежно"
 
 #: ecommerce/views.py:158
 msgid "Uploaded items are monitored 24/7/365. There are no fakes on SALT."
-msgstr "Загруженные вещи проверяются 24/7/365. На SALT нет фейков и кидал."
+msgstr ""
+"Загруженные вещи проверяются 24/7/365. На SALT нет фейков и мошенников."
 
 #: ecommerce/views.py:159
 msgid "AI-Powered"

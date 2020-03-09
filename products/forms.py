@@ -88,11 +88,12 @@ class ProductCreateForm(forms.ModelForm):
 			self.fields['title'].initial = 'оооо Макарена'
 			self.fields['description'].initial = 'Макареночка с маслом и сырником'
 			self.fields['brand'].initial = 'Boris Bidjan Saberi'
-			
-			self.fields['sex'].initial = sex.first().gender_for
-			self.fields['undercategory'].initial = undercategory.first().undercategory_for
-			self.fields['size'].initial = size.first().size_for
-			self.fields['condition'].initial = condition.first()
+
+			# TODO
+			# self.fields['sex'].initial = sex.first().gender_for
+			# self.fields['undercategory'].initial = undercategory.first().undercategory_for
+			# self.fields['size'].initial = size.first().size_for
+			# self.fields['condition'].initial = condition.first()
 
 
 
