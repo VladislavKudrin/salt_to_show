@@ -166,7 +166,7 @@ def home_page(request):
 	context['login_registration'] = _('Login | Registration')
 	context['trending'] = _('Trending:')
 	context['see_all'] = _('See all')
-	context['popular_brands_'] = _('Popular designers:')
+	context['popular_brands'] = _('Popular designers:')
 
 	return render(request, "home_page.html", context)
 
