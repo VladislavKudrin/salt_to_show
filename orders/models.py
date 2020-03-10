@@ -137,19 +137,33 @@ class Order(models.Model):
 			self.status = "paid"
 			self.save()
 		return self.status
-	def send_email(self):
+	def send_email(self, success=False):
 		email = self.billing_profile.email
 		order_id = self.order_id
 		time = '24'
-		context = {
-						'time':time,
-						'order_id':order_id
+		if success:
+			context = {
+							'time':time,
+							'order_id':order_id
 
 
-				}
-		txt_ = get_template("orders/emails/inform_about_order.txt").render(context)
-		html_ = get_template("orders/emails/inform_about_order.html").render(context)
-		subject = _('Order Confirmation')
+					}
+			txt_ = get_template("orders/emails/inform_about_order.txt").render(context)
+			html_ = get_template("orders/emails/inform_about_order.html").render(context)
+			subject = _('Order Confirmation')
+		else:
+			try:
+				error = self.transaction.get_error(key='err_description')
+			except:
+				error = _('uknnown error')
+			context = {
+							'error':error,
+							'order_id':order_id
+
+					}
+			txt_ = get_template("orders/emails/inform_error_payment.txt").render(context)
+			html_ = get_template("orders/emails/inform_error_payment.html").render(context)
+			subject = _('Order Error')
 		from_email = settings.DEFAULT_FROM_EMAIL
 		recipient_list = [email]
 		sent_mail=send_mail(
@@ -267,7 +281,7 @@ class TransactionManager(models.Manager):
 		return obj
 
 class Transaction(models.Model):
-	order             = models.OneToOneField(Order, null=True, blank=True)
+	order             = models.ForeignKey(Order, null=True, blank=True)
 	data_initiation   = models.TextField(null=True, blank=True)
 	data_completition = models.TextField(null=True, blank=True)
 	data_error        = models.TextField(null=True, blank=True)
@@ -284,6 +298,11 @@ class Transaction(models.Model):
 		self.data_error = data
 		print(self.data_error)
 		self.save()
+	def get_error(self, key=None):
+		if key == None:
+			return self.data_error
+		else:
+			return self.data_error.get(key)
 
 
 

@@ -74,9 +74,10 @@ class PayCallbackView(View):
                     if order.product:
                         order.product.active = False
                         order.product.save()
-                        order.send_email()
+                        order.send_email(success=True)
                 else:
                     transaction.transaction_error(data=response)
+                    order.send_email(success=False)
                 # if not billing_profile.has_card:
                 #     card = Card.objects.create(billing_profile = billing_profile, card_token = response.get("card_token"))
         return HttpResponse()
