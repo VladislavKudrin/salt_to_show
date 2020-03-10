@@ -88,12 +88,6 @@ class ProductCreateForm(forms.ModelForm):
 			self.fields['description'].initial = 'Макареночка с маслом и сырником'
 			self.fields['brand'].initial = 'Boris Bidjan Saberi'
 
-			# TODO
-			# self.fields['sex'].initial = sex.first().gender_for
-			# self.fields['undercategory'].initial = undercategory.first().undercategory_for
-			# self.fields['size'].initial = size.first().size_for
-			# self.fields['condition'].initial = condition.first()
-
 
 
 
@@ -210,6 +204,8 @@ class ImageForm(ProductCreateForm):
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		if self.request.user.is_admin:
+			return cleaned_images
 		if len(cleaned_images)==0:
 			raise forms.ValidationError(_("Upload at least 4 images"))
 		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
@@ -238,18 +234,19 @@ class ImageForm(ProductCreateForm):
 			array_rotate = self.request.POST.getlist('rotateTimes')
 			array_qq_id = self.request.POST.getlist('qq-file-id')
 			qs_rotate = {}
-			for idx, i in enumerate(array_qq_id):
-				qs_rotate[i] = array_rotate[idx]
-			for idx, file in enumerate(images):
-				this_rotate = qs_rotate.get(str(file.file_id))
-				file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
-				obj = ProductImage.objects.create(
-					product=product,
-					image=file,
-					slug=product.slug,
-					image_order=idx+1
-									)
-			UploadedFile.objects.delete_uploaded_files(form_id)
+			if images:
+				for idx, i in enumerate(array_qq_id):
+					qs_rotate[i] = array_rotate[idx]
+				for idx, file in enumerate(images):
+					this_rotate = qs_rotate.get(str(file.file_id))
+					file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
+					obj = ProductImage.objects.create(
+						product=product,
+						image=file,
+						slug=product.slug,
+						image_order=idx+1
+										)
+				UploadedFile.objects.delete_uploaded_files(form_id)
 		return product
 		
 class UploadFileForm(forms.Form):
