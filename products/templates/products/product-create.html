@@ -137,17 +137,11 @@ select{
   padding-bottom: 1%;
 }
 
-.asteriskField {
-    display: none;
-}
-
 #div_id_brand{
   margin-bottom: 0px;
 }
 
-#id_title, #id_brand, #id_sex, #id_undercategory, #id_size, #id_condition, #id_description {
-  font-size: 14px;
-}
+
 
 </style>
 </head>
@@ -274,11 +268,11 @@ select{
     </div>
 
 
-    <div class="col-12 col-md-3 price-col labels-placement">
+    <div class="col-12 col-md-3 price-col">
       {{form.price|as_crispy_field}}
     </div>
 
-    <div class="col-12 col-md-3 shipping-col labels-placement">
+    <div class="col-12 col-md-3 shipping-col">
       {{form.national_shipping|as_crispy_field}}
     </div>
 

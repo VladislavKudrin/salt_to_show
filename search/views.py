@@ -3,6 +3,7 @@ from django.shortcuts import render
 from products.models import Product
 from django.views.generic import ListView
 from django.http import JsonResponse
+from django.utils.translation import gettext as _
 
 class SearchProductView(ListView):
 	template_name = "search/view.html"
@@ -28,6 +29,7 @@ class SearchProductView(ListView):
 		context=super(SearchProductView,self).get_context_data(*args,**kwargs)
 		query=self.request.GET.get('q')
 		context['query']=self.request.GET.get('q')
+		context['emptiness'] = _('Oops... No results for your query. Try another one!')
 		return context
 
 	def get_queryset(self, *args, **kwargs):

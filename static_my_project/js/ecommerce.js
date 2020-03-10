@@ -59,6 +59,10 @@ $(document).ready(
     "#id_email",
     "#id_content",
     "#id_national_shipping",
+    "#id_region",
+    "#id_old_password",
+    "#id_new_password1",
+    "#id_new_password2",
     ]
 
     jQuery.each(inputs, function(index, item) {

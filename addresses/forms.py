@@ -46,6 +46,8 @@ class AddressForm(forms.ModelForm):
 
         self.request=request
         self.fields['post_office'] = forms.ChoiceField(choices=tuple([(name, name) for name in post_offices]))
+        self.fields['name'].widget.attrs['class']='labels-placement'
+        self.fields['phone'].widget.attrs['class']='labels-placement'
         if 'checkout' in request.path:
             self.fields['name'].required = True
             self.fields['phone'].required = True
@@ -54,6 +56,7 @@ class AddressForm(forms.ModelForm):
             self.fields['name'].required = False
             self.fields['phone'].required = False
             self.fields['post_office'].required = False
+
 
 
     def clean_post_office(self):

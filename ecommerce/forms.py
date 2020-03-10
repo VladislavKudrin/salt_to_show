@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 
 class ContactForm(forms.Form):
 	email = forms.EmailField(widget=forms.EmailInput(attrs={
-		'class':'form-control',
+		'class':'form-control labels-placement',
 		# 'placeholder':_('Your Email')
 
 

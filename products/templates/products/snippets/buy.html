@@ -2,7 +2,7 @@
 
 {% if not object.order.get_status == 'Paid' or not object.order %}
 
-	{% if request.user != object.user and request.user.region.region_code == 'ua' %}
+	{% if request.user != object.user and request.user.region.region_code == 'ua' and object.is_payable %}
 
 	<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
 

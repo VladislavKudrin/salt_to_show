@@ -74,6 +74,26 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['brand'].label = False
 		self.fields['price'].widget.attrs['step'] = 1
 		self.fields['national_shipping'].widget.attrs['step'] = 1
+		self.fields['price'].widget.attrs['class'] = 'labels-placement'
+		self.fields['national_shipping'].widget.attrs['class'] = 'labels-placement'
+
+		sex = Gender.objects.filter(id=6)
+		undercategory = Undercategory.objects.filter(id=4)
+		size = Size.objects.filter(id=4)
+		condition = Condition.objects.filter(id=1)
+		if request.user.admin == True:
+			print('ХОЗЯИН ДОМА')
+			self.fields['price'].initial = 123
+			self.fields['national_shipping'].initial = 123
+			self.fields['title'].initial = 'оооо Макарена'
+			self.fields['description'].initial = 'Макареночка с маслом и сырником'
+			self.fields['brand'].initial = 'Boris Bidjan Saberi'
+
+			# TODO
+			# self.fields['sex'].initial = sex.first().gender_for
+			# self.fields['undercategory'].initial = undercategory.first().undercategory_for
+			# self.fields['size'].initial = size.first().size_for
+			# self.fields['condition'].initial = condition.first()
 
 
 
@@ -82,6 +102,7 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_sex(self):
 		request = self.request
 		data_sex = self.cleaned_data.get('sex')
+		print(data)
 		sex = Gender.objects.filter(id=int(data_sex))
 		error_message = _("Please, select a gender")
 		if sex is '' or sex.exists()==False:
