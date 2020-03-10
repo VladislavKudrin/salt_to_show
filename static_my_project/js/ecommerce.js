@@ -274,7 +274,7 @@ $(document).ready(
       var contentConfirmSecond = 'Айтем успешно удален'
       var cancelText = 'Отмена'
     }//if ru
-    else if (languagePref.val() == 'UA'){
+    else if (languagePref.val() == 'UK'){
       var placeholderText = 'Чому?'
       var titleConfirm = 'Видалити айтем?'
       var btnText = 'Видалити'

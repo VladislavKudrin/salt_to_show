@@ -277,7 +277,7 @@ $(document).ready(
 //Product Update
     var currentPath = window.location.href
     if (currentPath.indexOf("update") != -1){
-        var languageOption = $('#language').val()
+        var languageOption = $('#language_pref').val()
         function rotateItem(item){
         item.on("click", 
         function(event){
@@ -332,7 +332,7 @@ $(document).ready(
                         if(languageOption=='RU'){
                         btnText = 'Сохранить'
                         }//if rus
-                        else if (languageOption=='UA'){
+                        else if (languageOption=='UK'){
                         btnText = 'Зберегти'
                         }//if rus
                         else{

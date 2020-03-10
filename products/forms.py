@@ -81,8 +81,7 @@ class ProductCreateForm(forms.ModelForm):
 		undercategory = Undercategory.objects.filter(id=4)
 		size = Size.objects.filter(id=4)
 		condition = Condition.objects.filter(id=1)
-		if request.user.admin == True:
-			print('ХОЗЯИН ДОМА')
+		if request.user.is_admin:
 			self.fields['price'].initial = 123
 			self.fields['national_shipping'].initial = 123
 			self.fields['title'].initial = 'оооо Макарена'
@@ -102,7 +101,6 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_sex(self):
 		request = self.request
 		data_sex = self.cleaned_data.get('sex')
-		print(data)
 		sex = Gender.objects.filter(id=int(data_sex))
 		error_message = _("Please, select a gender")
 		if sex is '' or sex.exists()==False:
