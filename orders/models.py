@@ -183,8 +183,8 @@ class Order(models.Model):
 		self.status = 'shipped'
 		self.save()
 		if self.product:
-			self.product.active = False
-			self.product.save()
+			product_qs = Product.objects.filter(id=self.product.id)
+			product_qs.update(active=False)
 		# if response_json.get('status') == 'success':
 		# 	self.transaction.complete_transaction(response.json())
 		# 	self.status = 'shipped'
