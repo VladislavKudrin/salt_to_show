@@ -59,27 +59,30 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get("slug")
-		if not self.request.user.is_admin:
-			try:
-				instance = Product.objects.get(slug=slug, active=True)
-			except Product.DoesNotExist:
-				raise Http404("Not found!")
-			except Product.MultipleObjectsReturned:
-				qs = Product.objects.filter(slug=slug, active=True)
-				instance = qs.first()
-			except:
-				raise Http404("Hmm")
-			#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
-		else:
-			try:
-				instance = Product.objects.get(slug=slug)
-			except Product.DoesNotExist:
-				raise Http404("Not found!")
-			except Product.MultipleObjectsReturned:
-				qs = Product.objects.filter(slug=slug)
-				instance = qs.first()
-			except:
-				raise Http404("Hmm")
+
+		# For admins to be able to view not active items
+		if self.request.user.is_authenticated():
+			if self.request.user.is_admin:
+				try:
+					instance = Product.objects.get(slug=slug)
+				except Product.DoesNotExist:
+					raise Http404("Not found!")
+				except Product.MultipleObjectsReturned:
+					qs = Product.objects.filter(slug=slug)
+					instance = qs.first()
+				except:
+					raise Http404("Hmm")
+				#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+				return instance
+		try:
+			instance = Product.objects.get(slug=slug, active=True)
+		except Product.DoesNotExist:
+			raise Http404("Not found!")
+		except Product.MultipleObjectsReturned:
+			qs = Product.objects.filter(slug=slug, active=True)
+			instance = qs.first()
+		except:
+			raise Http404("Hmm")
 		return instance
 
 	def get_context_data(self, *args, **kwargs):
