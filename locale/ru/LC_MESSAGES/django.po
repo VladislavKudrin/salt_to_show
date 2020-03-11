@@ -180,6 +180,14 @@ msgstr "Сохранить"
 msgid "Logout"
 msgstr "Выйти"
 
+#: addresses/forms.py:52
+msgid "Name"
+msgstr "ФИО"
+
+#: addresses/forms.py:53
+msgid "Phone"
+msgstr "Телефон"
+
 #: billing/templates/billing/emails/payback_failure.html:2
 #, python-format
 msgid ""
@@ -300,7 +308,7 @@ msgstr "Твой месседж"
 
 #: ecommerce/forms.py:25
 msgid "Order Id: "
-msgstr ""
+msgstr "Номер заказа: "
 
 #: ecommerce/utils.py:94
 msgid "Only alphanumeric characters are allowed"
@@ -393,7 +401,7 @@ msgstr "Отправка…."
 
 #: ecommerce/views.py:111
 msgid "Thank you, your report has been sended"
-msgstr ""
+msgstr "Спасибо, мы получили твою жалобу"
 
 #: ecommerce/views.py:112 ecommerce/views.py:119
 msgid "Success"
@@ -418,7 +426,7 @@ msgstr "Надежно"
 #: ecommerce/views.py:158
 msgid "Uploaded items are monitored 24/7/365. There are no fakes on SALT."
 msgstr ""
-"Загруженные вещи проверяются 24/7/365. На SALT нет фейков и мошенников."
+"Загруженные айтемы проверяются 24/7/365. На SALT нет фейков и мошенников."
 
 #: ecommerce/views.py:159
 msgid "AI-Powered"
@@ -468,7 +476,7 @@ msgstr "Популярные бренды:"
 
 #: orders/models.py:152
 msgid "Order Confirmation"
-msgstr ""
+msgstr "Подтверждение заказа"
 
 #: orders/templates/orders/emails/inform_about_order.html:2
 #, python-format
@@ -537,6 +545,64 @@ msgid ""
 "\n"
 msgstr ""
 
+#: orders/templates/orders/order_list.html:92
+msgctxt "orders_page"
+msgid "Orders:"
+msgstr "Заказы:"
+
+#: orders/templates/orders/order_list.html:99
+msgctxt "orders_tab"
+msgid "Orders"
+msgstr "Все"
+
+#: orders/templates/orders/order_list.html:102
+msgid "Sold"
+msgstr "Продано"
+
+#: orders/templates/orders/order_list.html:105
+msgid "Completed"
+msgstr "Завершено"
+
+#: orders/templates/orders/snippets/order_complete_form.html:19
+msgid "Received"
+msgstr "Подтвердить"
+
+#: orders/templates/orders/snippets/order_created_remove_form.html:6
+msgid "Delete Order"
+msgstr "Удалить"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:25
+#: orders/templates/orders/snippets/order_list/order_completed.html:22
+#: orders/templates/orders/snippets/order_list/order_sold.html:38
+msgid "Status:"
+msgstr "Статус:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:29
+#: orders/templates/orders/snippets/order_list/order_completed.html:26
+#: orders/templates/orders/snippets/order_list/order_sold.html:42
+msgid "Total:"
+msgstr "Сумма:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:34
+msgctxt "orders"
+msgid "Report:"
+msgstr "Проблема?"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:44
+#: orders/templates/orders/snippets/order_sold_form.html:14
+msgid "Tracking:"
+msgstr "Трекинг:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:73
+#: orders/templates/orders/snippets/order_list/order_completed.html:44
+#: orders/templates/orders/snippets/order_list/order_sold.html:69
+msgid "No orders yet"
+msgstr "Пока что здесь пусто"
+
+#: orders/templates/orders/snippets/order_list/order_sold.html:46
+msgid "Address:"
+msgstr "Адрес:"
+
 #: orders/templates/orders/snippets/report_button.html:10
 #, fuzzy
 #| msgid "Report?"
@@ -552,14 +618,12 @@ msgid "Describe your item in details"
 msgstr "Подробно опиши айтем"
 
 #: products/forms.py:71
-#, fuzzy
-#| msgid "Price"
 msgid "Price in "
-msgstr "Цена"
+msgstr "Цена в "
 
 #: products/forms.py:72
-msgid "Shipping price "
-msgstr ""
+msgid "Shipping price in "
+msgstr "Доставка в "
 
 #: products/forms.py:107
 msgid "Please, select a gender"
@@ -604,6 +668,19 @@ msgstr "Недостаточно фотографий. Минимальное к
 #: products/forms.py:226
 msgid "Too many files, max. amount 8"
 msgstr "Слишком много фотографий. Максимальное колличество - 8"
+
+
+#: products/templates/products/checkout.html:192
+msgid "Price:"
+msgstr "Цена:"
+
+#: products/templates/products/checkout.html:196
+msgid "Shipping price:"
+msgstr "Доставка:"
+
+#: products/templates/products/checkout.html:202
+msgid "To pay:"
+msgstr "К оплате:"
 
 #: products/templates/products/product-create.html:174
 msgid ""
@@ -708,10 +785,12 @@ msgstr "назад"
 #: products/views.py:170
 msgid "Only customers in Ukraine are eligible to sell (as for now)"
 msgstr ""
+"Пока только юзеры из Украины могут заливать айтемы на продажу (мы работаем "
+"над этим)"
 
 #: products/views.py:176
 msgid "Please add card information to add an item!"
-msgstr ""
+msgstr "Пожалуйста, добавь данные своей карты прежде чем заливать айтем!"
 
 #: products/views.py:219 products/views.py:266
 msgctxt "Upload_Item_create"
@@ -745,11 +824,11 @@ msgstr ""
 
 #: products/views.py:417
 msgid "Thank you. We have already received your report."
-msgstr ""
+msgstr "Спасибо, мы уже получили твою жалобу."
 
 #: products/views.py:420
 msgid "Thank you. We will check this item manually."
-msgstr ""
+msgstr "Спасибо, мы проверим этот айтем дополнительно."
 
 #: search/templates/search/snippets/search-form.html:60
 #: templates/base/navbar.html:268
@@ -1211,6 +1290,22 @@ msgstr "Отличное состояние"
 msgid "Used"
 msgstr "Нормальное состояние"
 
+#: templates/languages/trans_custom/translation_custom.html:115
+msgid "Created"
+msgstr "Создан"
+
+#: templates/languages/trans_custom/translation_custom.html:117
+msgid "Paid"
+msgstr "Оплачен"
+
+#: templates/languages/trans_custom/translation_custom.html:119
+msgid "Shipped"
+msgstr "Отправлен"
+
+#: templates/languages/trans_custom/translation_custom.html:121
+msgid "Refunded"
+msgstr "Возмещён"
+
 #: templates/registration/activation-error.html:17
 msgid "Activation Error"
 msgstr "Ошибка активации"
@@ -1407,11 +1502,15 @@ msgctxt "password_reset"
 msgid "Submit"
 msgstr "Сбросить"
 
+#~ msgctxt "navbar"
+#~ msgid "Login"
+#~ msgstr "Логин"
+
+#~ msgid "Choose Nova Poshta station"
+#~ msgstr "Выбери филиал Нова Пошта"
+
 #~ msgid "Your username"
 #~ msgstr "Твой юзернейм"
-
-#~ msgid "Name"
-#~ msgstr "Имя и фамилия"
 
 #~ msgid "Your full name"
 #~ msgstr "Твои имя и фамилия"
@@ -1479,9 +1578,6 @@ msgstr "Сбросить"
 #~ "<p>Спасибо,</p>\n"
 #~ "\n"
 #~ "<p>SALT</p>\n"
-
-#~ msgid "Create"
-#~ msgstr "Создать"
 
 #, python-format
 #~ msgid "%(gendero)s"

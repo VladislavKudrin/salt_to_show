@@ -8,6 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-11 14:46+0000\n"
+
 "PO-Revision-Date: 2019-11-06 18:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -176,6 +177,14 @@ msgstr "Зберегти"
 #: accounts/views.py:317
 msgid "Logout"
 msgstr "Выйти"
+
+#: addresses/forms.py:52
+msgid "Name"
+msgstr "Ім’я та прізвище"
+
+#: addresses/forms.py:53
+msgid "Phone"
+msgstr ""
 
 #: billing/templates/billing/emails/payback_failure.html:2
 #, python-format
@@ -533,6 +542,74 @@ msgid ""
 "\n"
 msgstr ""
 
+#: orders/templates/orders/order_list.html:92
+msgctxt "orders_page"
+msgid "Orders:"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:99
+msgctxt "orders_tab"
+msgid "Orders"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:102
+msgid "Sold"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:105
+msgid "Completed"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_complete_form.html:19
+msgid "Received"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_created_remove_form.html:6
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete Order"
+msgstr "Видалити"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:25
+#: orders/templates/orders/snippets/order_list/order_completed.html:22
+#: orders/templates/orders/snippets/order_list/order_sold.html:38
+msgid "Status:"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:29
+#: orders/templates/orders/snippets/order_list/order_completed.html:26
+#: orders/templates/orders/snippets/order_list/order_sold.html:42
+msgid "Total:"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:34
+#, fuzzy
+#| msgid "Report?"
+msgctxt "orders"
+msgid "Report:"
+msgstr "Скарга?"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:44
+#: orders/templates/orders/snippets/order_sold_form.html:14
+#, fuzzy
+#| msgid "Trending:"
+msgid "Tracking:"
+msgstr "У тренді:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:73
+#: orders/templates/orders/snippets/order_list/order_completed.html:44
+#: orders/templates/orders/snippets/order_list/order_sold.html:69
+#, fuzzy
+#| msgid "No items yet"
+msgid "No orders yet"
+msgstr "Поки що тут пусто"
+
+#: orders/templates/orders/snippets/order_list/order_sold.html:46
+#, fuzzy
+#| msgid "Dresses"
+msgid "Address:"
+msgstr "Плаття"
+
 #: orders/templates/orders/snippets/report_button.html:10
 #, fuzzy
 #| msgid "Report?"
@@ -554,8 +631,10 @@ msgid "Price in "
 msgstr "Цiна"
 
 #: products/forms.py:72
-msgid "Shipping price "
-msgstr ""
+#, fuzzy
+#| msgid "Enter a price in "
+msgid "Shipping price in "
+msgstr "Введи ціну в "
 
 #: products/forms.py:107
 msgid "Please, select a gender"
@@ -600,6 +679,23 @@ msgstr "Недостатньо фотографій. Мінімальна сум
 #: products/forms.py:226
 msgid "Too many files, max. amount 8"
 msgstr "Забагато файлів, макс. сума 8"
+
+
+#: products/templates/products/checkout.html:192
+#, fuzzy
+#| msgid "Price"
+msgid "Price:"
+msgstr "Цiна"
+
+#: products/templates/products/checkout.html:196
+#, fuzzy
+#| msgid "Enter a price in "
+msgid "Shipping price:"
+msgstr "Введи ціну в "
+
+#: products/templates/products/checkout.html:202
+msgid "To pay:"
+msgstr ""
 
 #: products/templates/products/product-create.html:174
 msgid ""
@@ -1104,6 +1200,25 @@ msgstr "Чудовий стан"
 msgid "Used"
 msgstr "Нормальний стан"
 
+#: templates/languages/trans_custom/translation_custom.html:115
+#, fuzzy
+#| msgctxt "Upload_Item_create"
+#| msgid "Create"
+msgid "Created"
+msgstr "Залити"
+
+#: templates/languages/trans_custom/translation_custom.html:117
+msgid "Paid"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:119
+msgid "Shipped"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:121
+msgid "Refunded"
+msgstr ""
+
 #: templates/registration/activation-error.html:17
 msgid "Activation Error"
 msgstr "Помилка"
@@ -1302,11 +1417,14 @@ msgctxt "password_reset"
 msgid "Submit"
 msgstr "Підтвердити"
 
+#, fuzzy
+#~| msgid "Login now"
+#~ msgctxt "navbar"
+#~ msgid "Login"
+#~ msgstr "Зайди з новим паролем"
+
 #~ msgid "Your username"
 #~ msgstr "Свій юзернейм"
-
-#~ msgid "Name"
-#~ msgstr "Ім’я та прізвище"
 
 #~ msgid "Your full name"
 #~ msgstr "Повне ім’я"
@@ -1319,9 +1437,6 @@ msgstr "Підтвердити"
 
 #~ msgid "Content"
 #~ msgstr "Зміст"
-
-#~ msgid "Enter a price in "
-#~ msgstr "Введи ціну в "
 
 #~ msgid "Select a gender"
 #~ msgstr "Вибери гендер"
