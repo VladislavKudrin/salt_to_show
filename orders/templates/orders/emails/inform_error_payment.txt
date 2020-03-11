@@ -1,0 +1,17 @@
+{% load i18n %}
+{% blocktrans %}
+Hey, 
+
+Your order {{ order_id }} has not been paid. Reason: {{ error }} .
+You can go to Orders and delete this order. After that, please, try again. 
+
+
+
+
+
+Thank you,
+SALT
+
+{% endblocktrans %}
+
+

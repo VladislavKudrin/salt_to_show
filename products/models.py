@@ -290,7 +290,7 @@ class Product(models.Model):
 	undercategory          = models.ForeignKey(Undercategory, blank = False, null=True)
 	overcategory           = models.ForeignKey(Overcategory, blank = True, null=True)
 	authentic              = models.CharField(max_length=120, default='undefined', choices=AUTHENTICITY_CHOICES, null=True)
-	national_shipping      = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=False, null=True)
+	national_shipping      = models.DecimalField(decimal_places=0, max_digits=16, default=0, blank=False, null=True)
 	international_shipping = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=True, null=True)
 	price_original  	   = models.DecimalField(decimal_places=0, max_digits=16, default=0, blank=True, null=True)
 	currency_original  	   = models.CharField(max_length = 120, default='undefined', blank=True, null=True)
@@ -299,17 +299,19 @@ class Product(models.Model):
 
 	objects = ProductManager()
 	
+	
 	def make_total(self):
 		national_shipping = 0
 		international_shipping = 0
 		price = 0
 		if self.national_shipping:
 			national_shipping = self.national_shipping
-		if self.international_shipping:
-			international_shipping = self.international_shipping
-		if self.price:
-			price = self.price
-		return national_shipping + price
+		# if self.international_shipping:
+		# 	international_shipping = self.international_shipping
+		if self.price_original:
+			price = self.price_original
+		sum_ = national_shipping + price
+		return sum_
 
 	def get_absolute_url(self):
 		#return "/products/{slug}/".format(slug=self.slug)
@@ -337,7 +339,9 @@ def product_pre_save_reciever(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
-
+CURRENCY_CHOICES = {
+			"грн" : "UAH"	
+				}
 def product_post_save_reciever(sender, created, instance, *args, **kwargs):
 	if not created:
 		product = ProductThumbnail.objects.filter(product=instance)
@@ -346,7 +350,7 @@ def product_post_save_reciever(sender, created, instance, *args, **kwargs):
 	else: # to save original currency 
 		products = Product.objects.filter(id=instance.id)
 		user = instance.user
-		products.update(currency_original=user.region.currency)
+		products.update(currency_original=CURRENCY_CHOICES.get(user.region.currency))
 
 
 post_save.connect(product_post_save_reciever, sender=Product)

@@ -234,16 +234,16 @@ PAGINATION_DISPLAY_PAGE_LINKS = True
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'saltdb',
-#         'USER': 'roma',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '5433',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'saltdb',
+        'USER': 'roma',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5433',
+    }
+}
 
 
 # Password validation

@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.loader import get_template
 from django.core.mail import send_mail
+from django.utils import translation
+
 # import stripe
 # STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe")
 # STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk')
@@ -21,7 +23,7 @@ LIQPAY_PRIV_KEY = getattr(settings, "LIQPAY_PRIVATE_KEY", "sandbox_tLSKnsdkFbQgI
 LIQPAY_PUB_KEY =  getattr(settings, "LIQPAY_PUBLIC_KEY", 'sandbox_i6955995458')
 PAY_USER_SECRET_KEY = getattr(settings, "PAY_USER_SECRET_KEY", '')
 from .models import BillingProfile, Card
-from orders.models import Order, Transaction
+from orders.models import Order, Transaction, Payout
 from analitics.utils import get_client_ip
 import requests
 
@@ -40,13 +42,13 @@ class PayView(TemplateView):
         params = {
             "action"                : "p2p",
             "version"               : "3",
-            "amount"                : str(order.convert_total(request.user)),
-            "currency"              : "UAH",
+            "amount"                : str(order.total),
+            "currency"              : order.product.currency_original,
             "description"           : address,
             "receiver_card"         : "5168742220852416",
+            "language"              : translation.get_language(),
             "order_id"              : order.order_id,
             "server_url"            : callback_url, # url to callback view
-            "recurringbytoken"      : "1",
             "result_url"            : settings.BASE_URL_WITHOUT_WWW + reverse('orders:list')
         }
         signature = liqpay.cnb_signature(params)
@@ -74,9 +76,10 @@ class PayCallbackView(View):
                     if order.product:
                         order.product.active = False
                         order.product.save()
-                        order.send_email()
+                        order.send_email(success=True)
                 else:
                     transaction.transaction_error(data=response)
+                    order.send_email(success=False)
                 # if not billing_profile.has_card:
                 #     card = Card.objects.create(billing_profile = billing_profile, card_token = response.get("card_token"))
         return HttpResponse()
@@ -115,11 +118,12 @@ class PayToUserView(LoginRequiredMixin, View):
             if order.exists():
                 order = order.first()
                 seller_billing_profile = order.get_seller().billing_profile
+                payout = Payout.objects.new_or_get(order=order, to_billing_profile=seller_billing_profile)
                 params = {
                     "action"                : "p2p",
                     "version"               : "3",
-                    "amount"                : str(order.convert_total(order.get_seller())),
-                    "currency"              : "UAH",
+                    "amount"                : str(order.total),
+                    "currency"              : order.product.currency_original,
                     "description"           : order.product.title,
                     "receiver_card"         : seller_billing_profile.card.first().number,
                     "order_id"              : order.order_id+'complete',
@@ -151,13 +155,20 @@ class PayToUserCallbackView(View):
             if order.exists() and order.count() == 1:
                 order = order.first()
                 transaction = Transaction.objects.new_or_get(order=order, data=response)
+                payback = Payback.objects.new_or_get(order=order)
                 if response.get("status") == "success":
                     order.active = False
                     order.save()
+                    payback.successful = True
+                    payback.response_data = response
+                    payback.save()
                     if order.product:
                         order.product.active = False
                         order.product.save()
                 else:
+                    payback.successful = False
+                    payback.response_data = response
+                    payback.save()
                     transaction.transaction_error(data=response)
                     context={
                     'error_response':response,

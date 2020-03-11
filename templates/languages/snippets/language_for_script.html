@@ -1,0 +1,3 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<input type="hidden" name="language_for_script" id="language_pref" value="{{ LANGUAGE_CODE|upper }}">

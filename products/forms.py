@@ -77,23 +77,13 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['price'].widget.attrs['class'] = 'labels-placement'
 		self.fields['national_shipping'].widget.attrs['class'] = 'labels-placement'
 
-		sex = Gender.objects.filter(id=6)
-		undercategory = Undercategory.objects.filter(id=4)
-		size = Size.objects.filter(id=4)
-		condition = Condition.objects.filter(id=1)
-		if request.user.admin == True:
-			print('ХОЗЯИН ДОМА')
+
+		if request.user.is_admin:
 			self.fields['price'].initial = 123
 			self.fields['national_shipping'].initial = 123
 			self.fields['title'].initial = 'оооо Макарена'
 			self.fields['description'].initial = 'Макареночка с маслом и сырником'
 			self.fields['brand'].initial = 'Boris Bidjan Saberi'
-
-			# TODO
-			# self.fields['sex'].initial = sex.first().gender_for
-			# self.fields['undercategory'].initial = undercategory.first().undercategory_for
-			# self.fields['size'].initial = size.first().size_for
-			# self.fields['condition'].initial = condition.first()
 
 
 
@@ -102,7 +92,6 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_sex(self):
 		request = self.request
 		data_sex = self.cleaned_data.get('sex')
-		print(data)
 		sex = Gender.objects.filter(id=int(data_sex))
 		error_message = _("Please, select a gender")
 		if sex is '' or sex.exists()==False:
@@ -199,10 +188,10 @@ class ProductCreateForm(forms.ModelForm):
 		price = Product.objects.price_to_region_price(price = price, user = user)
 		return price
 
-	def clean_national_shipping(self):
-		user = self.request.user
-		national_shipping = Product.objects.price_to_region_price(price = self.cleaned_data.get('national_shipping'), user = user)
-		return national_shipping
+	# def clean_national_shipping(self):
+	# 	user = self.request.user
+	# 	national_shipping = Product.objects.price_to_region_price(price = self.cleaned_data.get('national_shipping'), user = user)
+	# 	return national_shipping
 
 class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
@@ -212,6 +201,8 @@ class ImageForm(ProductCreateForm):
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		if self.request.user.is_admin:
+			return cleaned_images
 		if len(cleaned_images)==0:
 			raise forms.ValidationError(_("Upload at least 4 images"))
 		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
@@ -234,24 +225,27 @@ class ImageForm(ProductCreateForm):
 		product.active = True
 		form_id = self.request.POST.get('form_id')
 		product.price_original = self.cleaned_data['price_original']
+		if self.request.user.is_admin:
+			product.authentic = 'authentic'
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']
 			array_rotate = self.request.POST.getlist('rotateTimes')
 			array_qq_id = self.request.POST.getlist('qq-file-id')
 			qs_rotate = {}
-			for idx, i in enumerate(array_qq_id):
-				qs_rotate[i] = array_rotate[idx]
-			for idx, file in enumerate(images):
-				this_rotate = qs_rotate.get(str(file.file_id))
-				file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
-				obj = ProductImage.objects.create(
-					product=product,
-					image=file,
-					slug=product.slug,
-					image_order=idx+1
-									)
-			UploadedFile.objects.delete_uploaded_files(form_id)
+			if images:
+				for idx, i in enumerate(array_qq_id):
+					qs_rotate[i] = array_rotate[idx]
+				for idx, file in enumerate(images):
+					this_rotate = qs_rotate.get(str(file.file_id))
+					file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
+					obj = ProductImage.objects.create(
+						product=product,
+						image=file,
+						slug=product.slug,
+						image_order=idx+1
+										)
+				UploadedFile.objects.delete_uploaded_files(form_id)
 		return product
 		
 class UploadFileForm(forms.Form):
