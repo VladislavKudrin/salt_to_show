@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-08 18:18+0000\n"
+"POT-Creation-Date: 2020-03-09 20:20+0000\n"
 "PO-Revision-Date: 2019-11-06 18:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -39,28 +39,34 @@ msgstr "Твій мейл"
 msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
 msgstr "<a href={resend_link}> (Кликни, щоб вислати підтвердження ще раз</a>.)"
 
-#: accounts/forms.py:181 accounts/forms.py:198
+#: accounts/forms.py:182 accounts/forms.py:200
 msgid "-- Please select your region --"
 msgstr "— Виберіть свій регіон —"
 
-#: accounts/forms.py:190
+#: accounts/forms.py:191
+#, fuzzy
+#| msgid "Your Email"
+msgid "Email"
+msgstr "Твій мейл"
+
+#: accounts/forms.py:192
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:194
+#: accounts/forms.py:196
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Оновити"
 
-#: accounts/forms.py:195
+#: accounts/forms.py:197
 msgid "Region"
 msgstr "Регіон"
 
-#: accounts/forms.py:201
+#: accounts/forms.py:203
 msgid "Recieve marketing email?"
 msgstr "Отримувати розсилку?"
 
-#: accounts/forms.py:213
+#: accounts/forms.py:215
 msgid "You must select a region"
 msgstr "Потрібно вибрати регіон"
 
@@ -113,7 +119,7 @@ msgstr "Закрити"
 msgid "Wishlist:"
 msgstr "Улюблене:"
 
-#: accounts/views.py:101 accounts/views.py:212 ecommerce/utils.py:91
+#: accounts/views.py:101 accounts/views.py:207 ecommerce/utils.py:91
 msgid "You're in"
 msgstr "Ти на сайті"
 
@@ -145,31 +151,39 @@ msgstr "Забув/забула пароль?"
 msgid "Please check your email to confirm your account. "
 msgstr "Будь ласка, перевір свою пошту, щоб підтвердити аккаунт. "
 
-#: accounts/views.py:196
+#: accounts/views.py:191
 msgid "Email not confirmed. "
 msgstr "Мейл не підтверджений. "
 
-#: accounts/views.py:200
+#: accounts/views.py:195
 msgid "The password seems to be wrong. Try again!"
 msgstr "Невірний пароль. Спробуй ще раз!"
 
-#: accounts/views.py:319 products/views.py:498
+#: accounts/views.py:314 products/views.py:498
 msgid "Update your details"
 msgstr "Оновити аккаунт"
 
-#: accounts/views.py:320 products/views.py:499
+#: accounts/views.py:315 products/views.py:499
 #: templates/registration/password_change_form.html:24
 msgid "Change password"
 msgstr "Змінити пароль"
 
-#: accounts/views.py:321 products/views.py:334
+#: accounts/views.py:316 products/views.py:334
 #: templates/registration/password_change_form.html:32
 msgid "Save"
 msgstr "Зберегти"
 
-#: accounts/views.py:322
+#: accounts/views.py:317
 msgid "Logout"
 msgstr "Выйти"
+
+#: addresses/forms.py:52
+msgid "Name"
+msgstr "Ім’я та прізвище"
+
+#: addresses/forms.py:53
+msgid "Phone"
+msgstr ""
 
 #: billing/templates/billing/emails/payback_failure.html:2
 #, python-format
@@ -527,6 +541,74 @@ msgid ""
 "\n"
 msgstr ""
 
+#: orders/templates/orders/order_list.html:92
+msgctxt "orders_page"
+msgid "Orders:"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:99
+msgctxt "orders_tab"
+msgid "Orders"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:102
+msgid "Sold"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:105
+msgid "Completed"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_complete_form.html:19
+msgid "Received"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_created_remove_form.html:6
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete Order"
+msgstr "Видалити"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:25
+#: orders/templates/orders/snippets/order_list/order_completed.html:22
+#: orders/templates/orders/snippets/order_list/order_sold.html:38
+msgid "Status:"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:29
+#: orders/templates/orders/snippets/order_list/order_completed.html:26
+#: orders/templates/orders/snippets/order_list/order_sold.html:42
+msgid "Total:"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:34
+#, fuzzy
+#| msgid "Report?"
+msgctxt "orders"
+msgid "Report:"
+msgstr "Скарга?"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:44
+#: orders/templates/orders/snippets/order_sold_form.html:14
+#, fuzzy
+#| msgid "Trending:"
+msgid "Tracking:"
+msgstr "У тренді:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:73
+#: orders/templates/orders/snippets/order_list/order_completed.html:44
+#: orders/templates/orders/snippets/order_list/order_sold.html:69
+#, fuzzy
+#| msgid "No items yet"
+msgid "No orders yet"
+msgstr "Поки що тут пусто"
+
+#: orders/templates/orders/snippets/order_list/order_sold.html:46
+#, fuzzy
+#| msgid "Dresses"
+msgid "Address:"
+msgstr "Плаття"
+
 #: orders/templates/orders/snippets/report_button.html:10
 #, fuzzy
 #| msgid "Report?"
@@ -548,71 +630,89 @@ msgid "Price in "
 msgstr "Цiна"
 
 #: products/forms.py:72
-msgid "Shipping price "
-msgstr ""
+#, fuzzy
+#| msgid "Enter a price in "
+msgid "Shipping price in "
+msgstr "Введи ціну в "
 
-#: products/forms.py:86
+#: products/forms.py:107
 msgid "Please, select a gender"
 msgstr "— Вибери гендер —"
 
-#: products/forms.py:99
+#: products/forms.py:120
 msgid "Please, select a valid category"
 msgstr "— Вибери категорію —"
 
-#: products/forms.py:116
+#: products/forms.py:137
 msgid "Please, select a valid size"
 msgstr "— Вибери розмір —"
 
-#: products/forms.py:128
+#: products/forms.py:149
 msgid "Please, select a condition"
 msgstr "— Вибери стан —"
 
-#: products/forms.py:142
+#: products/forms.py:163
 msgid "Please, select existing brand"
 msgstr "— Вибери існуючий бренд —"
 
-#: products/forms.py:166
+#: products/forms.py:187
 msgid "Please, make it shorter. # of lines to be removed:"
 msgstr "Зробіть її коротшою. Кількість рядків, які потрібно видалити:"
 
-#: products/forms.py:170
+#: products/forms.py:191
 msgid "Please, make it shorter. # of characters to be removed:"
 msgstr "Зробіть її коротшою. # символів, які потрібно видалити:"
 
-#: products/forms.py:190
+#: products/forms.py:211
 msgid "Images*"
 msgstr "Зображення *"
 
-#: products/forms.py:195
+#: products/forms.py:216
 msgid "Upload at least 4 images"
 msgstr "Завантажте щонайменше 4 зображення"
 
-#: products/forms.py:200
+#: products/forms.py:221
 msgid "Not enough photos. Minimal amount - 4"
 msgstr "Недостатньо фотографій. Мінімальна сума - 4"
 
-#: products/forms.py:205
+#: products/forms.py:226
 msgid "Too many files, max. amount 8"
 msgstr "Забагато файлів, макс. сума 8"
 
-#: products/templates/products/product-create.html:180
+#: products/templates/products/checkout.html:192
+#, fuzzy
+#| msgid "Price"
+msgid "Price:"
+msgstr "Цiна"
+
+#: products/templates/products/checkout.html:196
+#, fuzzy
+#| msgid "Enter a price in "
+msgid "Shipping price:"
+msgstr "Введи ціну в "
+
+#: products/templates/products/checkout.html:202
+msgid "To pay:"
+msgstr ""
+
+#: products/templates/products/product-create.html:174
 msgid ""
 "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co якщо твій бажаний бренд відсутній."
 
-#: products/templates/products/product-create.html:289
+#: products/templates/products/product-create.html:283
 msgid "Photos*"
 msgstr "Фотографії *"
 
-#: products/templates/products/product-create.html:294
+#: products/templates/products/product-create.html:288
 msgid "Browse"
 msgstr "Вибрать"
 
-#: products/templates/products/product-create.html:299
+#: products/templates/products/product-create.html:293
 msgid "Too many images. Should be less than"
 msgstr "Too many images. Should be less than"
 
-#: products/templates/products/product-create.html:300
+#: products/templates/products/product-create.html:294
 msgid "Authenticity check..."
 msgstr "Перевірка справжності …"
 
@@ -984,6 +1084,25 @@ msgstr "Чудовий стан"
 msgid "Used"
 msgstr "Нормальний стан"
 
+#: templates/languages/trans_custom/translation_custom.html:115
+#, fuzzy
+#| msgctxt "Upload_Item_create"
+#| msgid "Create"
+msgid "Created"
+msgstr "Залити"
+
+#: templates/languages/trans_custom/translation_custom.html:117
+msgid "Paid"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:119
+msgid "Shipped"
+msgstr ""
+
+#: templates/languages/trans_custom/translation_custom.html:121
+msgid "Refunded"
+msgstr ""
+
 #: templates/registration/activation-error.html:17
 msgid "Activation Error"
 msgstr "Помилка"
@@ -1182,11 +1301,14 @@ msgctxt "password_reset"
 msgid "Submit"
 msgstr "Підтвердити"
 
+#, fuzzy
+#~| msgid "Login now"
+#~ msgctxt "navbar"
+#~ msgid "Login"
+#~ msgstr "Зайди з новим паролем"
+
 #~ msgid "Your username"
 #~ msgstr "Свій юзернейм"
-
-#~ msgid "Name"
-#~ msgstr "Ім’я та прізвище"
 
 #~ msgid "Your full name"
 #~ msgstr "Повне ім’я"
@@ -1199,9 +1321,6 @@ msgstr "Підтвердити"
 
 #~ msgid "Content"
 #~ msgstr "Зміст"
-
-#~ msgid "Enter a price in "
-#~ msgstr "Введи ціну в "
 
 #~ msgid "Select a gender"
 #~ msgstr "Вибери гендер"

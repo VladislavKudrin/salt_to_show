@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-08 18:18+0000\n"
-"PO-Revision-Date: 2020-03-09 17:52+0100\n"
+"POT-Creation-Date: 2020-03-09 20:20+0000\n"
+"PO-Revision-Date: 2020-03-09 21:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -43,28 +43,34 @@ msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
 msgstr ""
 "<a href={resend_link}> (Кликни, чтобы выслать подтверждение еще раз)</a>."
 
-#: accounts/forms.py:181 accounts/forms.py:198
+#: accounts/forms.py:182 accounts/forms.py:200
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
 
-#: accounts/forms.py:190
+#: accounts/forms.py:191
+#, fuzzy
+#| msgid "Your Email"
+msgid "Email"
+msgstr "Твой Email"
+
+#: accounts/forms.py:192
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:194
+#: accounts/forms.py:196
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Обновить"
 
-#: accounts/forms.py:195
+#: accounts/forms.py:197
 msgid "Region"
 msgstr "Регион"
 
-#: accounts/forms.py:201
+#: accounts/forms.py:203
 msgid "Recieve marketing email?"
 msgstr "Получать рассылку?"
 
-#: accounts/forms.py:213
+#: accounts/forms.py:215
 msgid "You must select a region"
 msgstr "Выбери регион"
 
@@ -117,7 +123,7 @@ msgstr "Закрыть"
 msgid "Wishlist:"
 msgstr "Избранное:"
 
-#: accounts/views.py:101 accounts/views.py:212 ecommerce/utils.py:91
+#: accounts/views.py:101 accounts/views.py:207 ecommerce/utils.py:91
 msgid "You're in"
 msgstr "Ты на сайте"
 
@@ -148,31 +154,39 @@ msgstr "Забыл_а пароль?"
 msgid "Please check your email to confirm your account. "
 msgstr "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. "
 
-#: accounts/views.py:196
+#: accounts/views.py:191
 msgid "Email not confirmed. "
 msgstr "Мейл не подтвержден. "
 
-#: accounts/views.py:200
+#: accounts/views.py:195
 msgid "The password seems to be wrong. Try again!"
 msgstr "Неверный пароль. Попробуй еще раз!"
 
-#: accounts/views.py:319 products/views.py:498
+#: accounts/views.py:314 products/views.py:498
 msgid "Update your details"
 msgstr "Обновить аккаунт"
 
-#: accounts/views.py:320 products/views.py:499
+#: accounts/views.py:315 products/views.py:499
 #: templates/registration/password_change_form.html:24
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: accounts/views.py:321 products/views.py:334
+#: accounts/views.py:316 products/views.py:334
 #: templates/registration/password_change_form.html:32
 msgid "Save"
 msgstr "Сохранить"
 
-#: accounts/views.py:322
+#: accounts/views.py:317
 msgid "Logout"
 msgstr "Выйти"
+
+#: addresses/forms.py:52
+msgid "Name"
+msgstr "ФИО"
+
+#: addresses/forms.py:53
+msgid "Phone"
+msgstr "Телефон"
 
 #: billing/templates/billing/emails/payback_failure.html:2
 #, python-format
@@ -294,7 +308,7 @@ msgstr "Твой месседж"
 
 #: ecommerce/forms.py:25
 msgid "Order Id: "
-msgstr ""
+msgstr "Номер заказа: "
 
 #: ecommerce/utils.py:94
 msgid "Only alphanumeric characters are allowed"
@@ -387,7 +401,7 @@ msgstr "Отправка…."
 
 #: ecommerce/views.py:111
 msgid "Thank you, your report has been sended"
-msgstr ""
+msgstr "Спасибо, мы получили твою жалобу"
 
 #: ecommerce/views.py:112 ecommerce/views.py:119
 msgid "Success"
@@ -412,7 +426,7 @@ msgstr "Надежно"
 #: ecommerce/views.py:158
 msgid "Uploaded items are monitored 24/7/365. There are no fakes on SALT."
 msgstr ""
-"Загруженные вещи проверяются 24/7/365. На SALT нет фейков и мошенников."
+"Загруженные айтемы проверяются 24/7/365. На SALT нет фейков и мошенников."
 
 #: ecommerce/views.py:159
 msgid "AI-Powered"
@@ -462,7 +476,7 @@ msgstr "Популярные бренды:"
 
 #: orders/models.py:152
 msgid "Order Confirmation"
-msgstr ""
+msgstr "Подтверждение заказа"
 
 #: orders/templates/orders/emails/inform_about_order.html:2
 #, python-format
@@ -531,6 +545,64 @@ msgid ""
 "\n"
 msgstr ""
 
+#: orders/templates/orders/order_list.html:92
+msgctxt "orders_page"
+msgid "Orders:"
+msgstr "Заказы:"
+
+#: orders/templates/orders/order_list.html:99
+msgctxt "orders_tab"
+msgid "Orders"
+msgstr "Все"
+
+#: orders/templates/orders/order_list.html:102
+msgid "Sold"
+msgstr "Продано"
+
+#: orders/templates/orders/order_list.html:105
+msgid "Completed"
+msgstr "Завершено"
+
+#: orders/templates/orders/snippets/order_complete_form.html:19
+msgid "Received"
+msgstr "Подтвердить"
+
+#: orders/templates/orders/snippets/order_created_remove_form.html:6
+msgid "Delete Order"
+msgstr "Удалить"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:25
+#: orders/templates/orders/snippets/order_list/order_completed.html:22
+#: orders/templates/orders/snippets/order_list/order_sold.html:38
+msgid "Status:"
+msgstr "Статус:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:29
+#: orders/templates/orders/snippets/order_list/order_completed.html:26
+#: orders/templates/orders/snippets/order_list/order_sold.html:42
+msgid "Total:"
+msgstr "Сумма:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:34
+msgctxt "orders"
+msgid "Report:"
+msgstr "Проблема?"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:44
+#: orders/templates/orders/snippets/order_sold_form.html:14
+msgid "Tracking:"
+msgstr "Трекинг:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:73
+#: orders/templates/orders/snippets/order_list/order_completed.html:44
+#: orders/templates/orders/snippets/order_list/order_sold.html:69
+msgid "No orders yet"
+msgstr "Пока что здесь пусто"
+
+#: orders/templates/orders/snippets/order_list/order_sold.html:46
+msgid "Address:"
+msgstr "Адрес:"
+
 #: orders/templates/orders/snippets/report_button.html:10
 #, fuzzy
 #| msgid "Report?"
@@ -546,77 +618,87 @@ msgid "Describe your item in details"
 msgstr "Подробно опиши айтем"
 
 #: products/forms.py:71
-#, fuzzy
-#| msgid "Price"
 msgid "Price in "
-msgstr "Цена"
+msgstr "Цена в "
 
 #: products/forms.py:72
-msgid "Shipping price "
-msgstr ""
+msgid "Shipping price in "
+msgstr "Доставка в "
 
-#: products/forms.py:86
+#: products/forms.py:107
 msgid "Please, select a gender"
 msgstr "— Выбери гендер —"
 
-#: products/forms.py:99
+#: products/forms.py:120
 msgid "Please, select a valid category"
 msgstr "Выбери подходящую категорию"
 
-#: products/forms.py:116
+#: products/forms.py:137
 msgid "Please, select a valid size"
 msgstr "Выбери подходящий размер"
 
-#: products/forms.py:128
+#: products/forms.py:149
 msgid "Please, select a condition"
 msgstr "— Выбери состояние —"
 
-#: products/forms.py:142
+#: products/forms.py:163
 msgid "Please, select existing brand"
 msgstr "— Выбери существующий бренд —"
 
-#: products/forms.py:166
+#: products/forms.py:187
 msgid "Please, make it shorter. # of lines to be removed:"
 msgstr "Сделай короче. Убери # строк :"
 
-#: products/forms.py:170
+#: products/forms.py:191
 msgid "Please, make it shorter. # of characters to be removed:"
 msgstr "Сделай короче. Убери # символов :"
 
-#: products/forms.py:190
+#: products/forms.py:211
 msgid "Images*"
 msgstr "Фото*"
 
-#: products/forms.py:195
+#: products/forms.py:216
 msgid "Upload at least 4 images"
 msgstr "Загрузи как минимум 4 фото"
 
-#: products/forms.py:200
+#: products/forms.py:221
 msgid "Not enough photos. Minimal amount - 4"
 msgstr "Недостаточно фотографий. Минимальное колличество - 4"
 
-#: products/forms.py:205
+#: products/forms.py:226
 msgid "Too many files, max. amount 8"
 msgstr "Слишком много фотографий. Максимальное колличество - 8"
 
-#: products/templates/products/product-create.html:180
+#: products/templates/products/checkout.html:192
+msgid "Price:"
+msgstr "Цена:"
+
+#: products/templates/products/checkout.html:196
+msgid "Shipping price:"
+msgstr "Доставка:"
+
+#: products/templates/products/checkout.html:202
+msgid "To pay:"
+msgstr "К оплате:"
+
+#: products/templates/products/product-create.html:174
 msgid ""
 "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co если твоего бренда нет в списке."
 
-#: products/templates/products/product-create.html:289
+#: products/templates/products/product-create.html:283
 msgid "Photos*"
 msgstr "Фото*"
 
-#: products/templates/products/product-create.html:294
+#: products/templates/products/product-create.html:288
 msgid "Browse"
 msgstr "Выбрать"
 
-#: products/templates/products/product-create.html:299
+#: products/templates/products/product-create.html:293
 msgid "Too many images. Should be less than"
 msgstr "Залей меньше фото. Их должно быть не больше"
 
-#: products/templates/products/product-create.html:300
+#: products/templates/products/product-create.html:294
 msgid "Authenticity check..."
 msgstr "Проверка на оригинальность…"
 
@@ -702,10 +784,12 @@ msgstr "назад"
 #: products/views.py:170
 msgid "Only customers in Ukraine are eligible to sell (as for now)"
 msgstr ""
+"Пока только юзеры из Украины могут заливать айтемы на продажу (мы работаем "
+"над этим)"
 
 #: products/views.py:176
 msgid "Please add card information to add an item!"
-msgstr ""
+msgstr "Пожалуйста, добавь данные своей карты прежде чем заливать айтем!"
 
 #: products/views.py:219 products/views.py:266
 msgctxt "Upload_Item_create"
@@ -739,11 +823,11 @@ msgstr ""
 
 #: products/views.py:417
 msgid "Thank you. We have already received your report."
-msgstr ""
+msgstr "Спасибо, мы уже получили твою жалобу."
 
 #: products/views.py:420
 msgid "Thank you. We will check this item manually."
-msgstr ""
+msgstr "Спасибо, мы проверим этот айтем дополнительно."
 
 #: search/templates/search/snippets/search-form.html:60
 #: templates/base/navbar.html:268
@@ -988,6 +1072,22 @@ msgstr "Отличное состояние"
 msgid "Used"
 msgstr "Нормальное состояние"
 
+#: templates/languages/trans_custom/translation_custom.html:115
+msgid "Created"
+msgstr "Создан"
+
+#: templates/languages/trans_custom/translation_custom.html:117
+msgid "Paid"
+msgstr "Оплачен"
+
+#: templates/languages/trans_custom/translation_custom.html:119
+msgid "Shipped"
+msgstr "Отправлен"
+
+#: templates/languages/trans_custom/translation_custom.html:121
+msgid "Refunded"
+msgstr "Возмещён"
+
 #: templates/registration/activation-error.html:17
 msgid "Activation Error"
 msgstr "Ошибка активации"
@@ -1184,11 +1284,15 @@ msgctxt "password_reset"
 msgid "Submit"
 msgstr "Сбросить"
 
+#~ msgctxt "navbar"
+#~ msgid "Login"
+#~ msgstr "Логин"
+
+#~ msgid "Choose Nova Poshta station"
+#~ msgstr "Выбери филиал Нова Пошта"
+
 #~ msgid "Your username"
 #~ msgstr "Твой юзернейм"
-
-#~ msgid "Name"
-#~ msgstr "Имя и фамилия"
 
 #~ msgid "Your full name"
 #~ msgstr "Твои имя и фамилия"
@@ -1256,9 +1360,6 @@ msgstr "Сбросить"
 #~ "<p>Спасибо,</p>\n"
 #~ "\n"
 #~ "<p>SALT</p>\n"
-
-#~ msgid "Create"
-#~ msgstr "Создать"
 
 #, python-format
 #~ msgid "%(gendero)s"
