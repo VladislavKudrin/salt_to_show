@@ -5,7 +5,7 @@ FIXTURES = [
 		'admin',
 		'brands',
 		'regions',
-		'categories'
+		'categories',
 		]
 
 class Command(BaseCommand):

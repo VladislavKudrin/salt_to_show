@@ -77,10 +77,7 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['price'].widget.attrs['class'] = 'labels-placement'
 		self.fields['national_shipping'].widget.attrs['class'] = 'labels-placement'
 
-		sex = Gender.objects.filter(id=6)
-		undercategory = Undercategory.objects.filter(id=4)
-		size = Size.objects.filter(id=4)
-		condition = Condition.objects.filter(id=1)
+
 		if request.user.is_admin:
 			self.fields['price'].initial = 123
 			self.fields['national_shipping'].initial = 123
@@ -191,10 +188,10 @@ class ProductCreateForm(forms.ModelForm):
 		price = Product.objects.price_to_region_price(price = price, user = user)
 		return price
 
-	def clean_national_shipping(self):
-		user = self.request.user
-		national_shipping = Product.objects.price_to_region_price(price = self.cleaned_data.get('national_shipping'), user = user)
-		return national_shipping
+	# def clean_national_shipping(self):
+	# 	user = self.request.user
+	# 	national_shipping = Product.objects.price_to_region_price(price = self.cleaned_data.get('national_shipping'), user = user)
+	# 	return national_shipping
 
 class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))

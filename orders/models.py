@@ -7,6 +7,10 @@ from django.db.models import Q
 from django.utils.translation import gettext as _ 
 from django.core.mail import send_mail
 from django.template.loader import get_template
+from django.utils import timezone
+
+
+
 from addresses.models import Address
 from billing.models import BillingProfile, Feedback
 from carts.models import Cart
@@ -76,7 +80,7 @@ class OrderManager(models.Manager):
 
 class Order(models.Model):
 	order_id               = models.CharField(max_length=120, blank = True)
-	billing_profile        = models.ForeignKey(BillingProfile, null=True, blank=True)
+	billing_profile        = models.ForeignKey(BillingProfile, null=True, blank=False)
 	shipping_address       = models.ForeignKey(Address, related_name="shipping_address", null=True, blank=True)
 	billing_address        = models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
 	track_number           = models.CharField(max_length=120, blank=True, null=True)
@@ -97,6 +101,7 @@ class Order(models.Model):
 
 	class Meta:
 		ordering = ['-timestamp', '-updated']
+
 	def convert_total(self, user):
 		total = self.total
 		region_user = user.region
@@ -113,8 +118,8 @@ class Order(models.Model):
 	def update_total(self):
 		product_total = 0
 		shipping_total = 0
-		if self.product.price:
-			product_total = self.product.price
+		if self.product.price_original:
+			product_total = self.product.price_original
 		if self.product.national_shipping:
 			shipping_total=self.product.national_shipping
 		new_total = math.fsum([product_total, shipping_total])
@@ -140,8 +145,8 @@ class Order(models.Model):
 	def send_email(self, success=False):
 		email = self.billing_profile.email
 		order_id = self.order_id
-		time = '24'
 		if success:
+			time = '24'
 			context = {
 							'time':time,
 							'order_id':order_id
@@ -286,6 +291,7 @@ class Transaction(models.Model):
 	data_completition = models.TextField(null=True, blank=True)
 	data_error        = models.TextField(null=True, blank=True)
 	complete          = models.BooleanField(default=False)
+	timestamp         = models.DateTimeField(default=timezone.now)
 	objects           = TransactionManager()
 
 	def complete_transaction(self, data):
@@ -306,11 +312,41 @@ class Transaction(models.Model):
 
 
 
+class PayoutManager(models.Manager):
+	def new_or_get(self, order, to_billing_profile=None):
+		qs = self.get_queryset().filter(
+					order = order
+					)
+		if qs.count()==1:
+			obj=qs.first()
+		else:
+			obj=self.model.objects.create(
+				order=order,
+				to_billing_profile=to_billing_profile)	
+		return obj
+
+
+class Payout(models.Model):
+	to_billing_profile = models.ForeignKey(BillingProfile, null=True, blank=False)
+	order              = models.OneToOneField(Order, null=True, blank=False)
+	total              = models.DecimalField(decimal_places=0, max_digits=16, default=0, blank=False, null=True)
+	successful         = models.BooleanField(default=False)
+	response_data      = models.TextField(null=True, blank=True)
+	timestamp          = models.DateTimeField(default=timezone.now)
+	objects = PayoutManager()
+
+	def __str__(self):
+		return self.order.order_id + ' ' + str(self.successful)
 
 
 
+def post_save_payout(sender, instance, created, *args, **kwargs):
+	if created:
+		total = instance.order.total
+		instance.total = total
+		instance.save()
 
-
+post_save.connect(post_save_payout, sender=Payout)
 
 
 

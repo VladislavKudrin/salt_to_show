@@ -189,17 +189,17 @@
         <div class='row' style='color: #737373;border-bottom: 1px dashed #e1e1e1;padding-bottom: 0.75em;font-size: 0.9em;'>
           <div class="col-12 space-between">
             <span>Price:</span>
-            <span>{{ product.price|to_user_currency:request }}</span>
+            <span>{{ product.price_original }} {{ product.currency_original }}</span>
           </div>
           <div class="col-12 space-between">
             <span>Shipping price:</span>
-            <span>{{ product.national_shipping|to_user_currency:request }}</span>
+            <span>{{ product.national_shipping|format_decimal }} {{ product.currency_original }}</span>
           </div>
         </div>
         <div class='row' style='padding-top: 0.5em; font-weight: 600;'>
             <div class="col-12 space-between">
               <span>To pay:</span>
-              <span>{{ product.make_total|to_user_currency:request }}</span>
+              <span>{{ product.make_total|format_decimal }} {{ product.currency_original }}</span>
             </div>
         </div>  
         <div class='row'>

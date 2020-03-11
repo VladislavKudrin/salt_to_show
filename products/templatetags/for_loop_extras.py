@@ -140,7 +140,9 @@ def to_user_currency(value, arg):
 		return product_price
 	return 'No price set'
 
-
+@register.filter
+def format_decimal(value):
+	return format(value, '.0f')
 @register.filter
 def generalize(value):
 	"""
