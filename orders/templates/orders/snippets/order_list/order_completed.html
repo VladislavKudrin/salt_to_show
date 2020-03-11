@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load for_loop_extras %}
 {% for object in orders_completed %}
 
@@ -18,11 +19,11 @@
 				<div class="col-12">
 					<div class="row">
 						<div class="col-4">
-							<span class="field-name" style="font-weight: bold;">Status:</span><br>
+							<span class="field-name" style="font-weight: bold;">{% trans 'Status:' %}</span><br>
 							<span>{{ object.get_status }}</span>
 						</div>
 						<div class="col-4">
-							<span class="field-name" style="font-weight: bold;">Total:</span><br>
+							<span class="field-name" style="font-weight: bold;">{% trans 'Total:' %}</span><br>
 							<span>{{ object.total|to_user_currency:request }}</span>
 						</div>
 						<div class="col-4">
@@ -40,7 +41,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col mt-4">
-			No orders yet
+			{% trans 'No orders yet' %}
 		</div>
 	</div>
 </div>
