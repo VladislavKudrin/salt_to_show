@@ -8,8 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-11 14:46+0000\n"
-
-"PO-Revision-Date: 2019-11-06 18:58+0100\n"
+"PO-Revision-Date: 2020-03-11 17:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 #: accounts/forms.py:39
 #, python-brace-format
@@ -45,8 +44,6 @@ msgid "-- Please select your region --"
 msgstr "— Виберіть свій регіон —"
 
 #: accounts/forms.py:191
-#, fuzzy
-#| msgid "Your Email"
 msgid "Email"
 msgstr "Твій мейл"
 
@@ -95,8 +92,7 @@ msgstr "Оновити аккаунт"
 #: accounts/templates/accounts/snippets/begin-chat.html:15
 #: accounts/templates/accounts/snippets/begin-chat.html:17
 #: accounts/templates/accounts/snippets/begin-chat.html:28
-#: accounts/templates/accounts/snippets/begin-chat.html:30
-#: products/views.py:104
+#: accounts/templates/accounts/snippets/begin-chat.html:30 products/views.py:104
 msgid "Contact seller"
 msgstr "Зв’язатися с продавцем"
 
@@ -327,21 +323,20 @@ msgstr "Без фейків"
 #: ecommerce/views.py:40
 #, python-format
 msgid ""
-"What makes SALT different from others? Well, we have a zero-fake-policy "
-"here. Fakes make online shopping unbearable. The countterfeit industry in "
-"fashion is valued around $600 billion. While someone makes tons of money, "
-"the quality of shopping for the customer is deteriorating. But we love "
-"shopping. Probably even more than you. So we set up a very simple goal - to "
-"make shopping as pleasant and safe as possible. Therefore, on SALT you can "
-"be %s%% sure that you are buying a nice authentic piece."
+"What makes SALT different from others? Well, we have a zero-fake-policy here. "
+"Fakes make online shopping unbearable. The countterfeit industry in fashion "
+"is valued around $600 billion. While someone makes tons of money, the quality "
+"of shopping for the customer is deteriorating. But we love shopping. Probably "
+"even more than you. So we set up a very simple goal - to make shopping as "
+"pleasant and safe as possible. Therefore, on SALT you can be %s%% sure that "
+"you are buying a nice authentic piece."
 msgstr ""
 "Те, що відрізняє нас від інших: на SALT немає і ніколи не буде фейків. Фейки "
-"- це те, що робить онлайн-шопінг нестерпним. Індустрія підробок у сфері моди "
-"оцінюється в 600 млрд доларів. У той час, коли хтось заробляє величезні "
-"гроші, якість шопінгу для покупця погіршується. Але ми любимо шопінг. "
-"Напевно, навіть більше, ніж Ти. Нами рухає дуже проста мета зробити шопінг "
-"максимально приємним і безпечним. Тому на SALT ти можеш бути на %s%% "
-"впевнена_ий, що здобуваєш оригінальну річ."
+"ніхто не любить, і ми це розуміємо. Саме тому й існує SALT - перша торгова "
+"площадка брендового одягу, на якій за цим стежать. По-справжньому стежать. "
+"Нами рухає дуже проста мета зробити шопінг максимально приємним і безпечним. "
+"Тому на SALT ти можеш бути на %s%%  впевнена_ий, що завжди здобуваєш "
+"оригінальну річ."
 
 #: ecommerce/views.py:41
 msgid "2-step-verification"
@@ -354,17 +349,16 @@ msgid ""
 "after uploading. Just in a few seconds, our AI-model assigns a label to the "
 "product - fake or authentic. The model thinks fast and improves itself with "
 "each loaded item (neural networks and all that). And the second step is a "
-"thorough manual check performed by our experienced experts. Thanks to the "
-"two-factor verification of all items, no fake will get to SALT."
+"thorough manual check performed by our experienced experts. Thanks to the two-"
+"factor verification of all items, no fake will get to SALT."
 msgstr ""
-"На SALT діє двухфакторна верифікація продукту (звучить круто, правда?). "
+"На SALT діє двухфакторная верифікація продукту (звучить круто, правда?). "
 "Простими словами, кожен айтем перевіряється рівно два рази. Перший - відразу "
-"після завантаження. За лічені секунди наша модель Штучного Інтелекту "
-"привласнює продукту лейбл - фейк або оригінал. Модель думає швидко і "
-"поліпшується з кожним завантаженим айтемом (нейронні сіточки і все таке). А "
-"другий крок - це ретельний мануальний чек, що виконується нашими "
-"досвідченими експертами. Завдяки двухфакторной верифікації продукту жоден "
-"фейк не потрапить на SALT."
+"після завантаження. За лічені секунди наш Штучний інтелект розпізнає "
+"підробки. Модель вдосконалюється з кожним завантаженим айтемом (нейронні "
+"мережі та усе таке). А другий крок - це ретельний мануальний чек, який "
+"виконують наші досвідчені експерти. Завдяки двухфакторной верифікації "
+"продукту на SALT не пройде жоден фейк."
 
 #: ecommerce/views.py:43
 msgid "Less is more"
@@ -375,19 +369,19 @@ msgid ""
 "Simplicity is our core concept. And it's not only limited in minimalistic "
 "design and intuitive interface of SALT. We want both buyers and sellers to "
 "feel respected. Therefore, there is no and never will be annoying ads and "
-"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT "
-"is a community where designer and streetwear clothes take their second "
-"chance. The item finds its new owner without harming the environment. SALT "
-"acts as a modest mediator in this straightforward, but essential deal."
+"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT is "
+"a community where designer and streetwear clothes take their second chance. "
+"The item finds its new owner without harming the environment. SALT acts as a "
+"modest mediator in this straightforward, but essential deal."
 msgstr ""
 "Простота - це наш основний концепт. І це стосується не тільки "
 "мінімалістичного дизайну та інтуїтивного інтерфейсу. Ми хочемо, щоб наших "
 "покупців і продавців поважали. Тому на SALT немає і ніколи не буде "
-"настирливої ​​реклами і платного просування. ніяких банерів, спливаючих вікон "
-"і преміум-акаунтів. SALT - це ком’юніті, де дизайнерська і вулична мода "
-"набуває другий шанс. Річ знаходить свого нового власника без шкоди "
-"навколишньому середовищу. SALT при цьому лише виконує скромну роль "
-"посередника в цій нехитрій угоді"
+"настирливої ​​реклами і платного просування. ніяких банерів, спливаючих вікон і "
+"преміум-акаунтів. SALT - це ком’юніті, де дизайнерська і вулична мода набуває "
+"другий шанс. Річ знаходить свого нового власника без шкоди навколишньому "
+"середовищу. SALT при цьому лише виконує скромну роль посередника в цій "
+"нехитрій угоді"
 
 #: ecommerce/views.py:80
 msgid "Contact us"
@@ -440,8 +434,7 @@ msgstr "Просто"
 
 #: ecommerce/views.py:162
 msgid "Our intuitive design was made with love to simplicity and minimalism."
-msgstr ""
-"Наш інтуїтивний дизайн розроблений з любов’ю до простоти i мінімалізму."
+msgstr "Наш інтуїтивний дизайн розроблений з любов’ю до простоти i мінімалізму."
 
 #: ecommerce/views.py:163
 msgid "Read more"
@@ -488,8 +481,8 @@ msgid ""
 "black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
-"align: center; padding: 32px 32px;\">\n"
+"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;\">\n"
 "\n"
 "\n"
 " \n"
@@ -565,8 +558,6 @@ msgid "Received"
 msgstr ""
 
 #: orders/templates/orders/snippets/order_created_remove_form.html:6
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Order"
 msgstr "Видалити"
 
@@ -583,36 +574,26 @@ msgid "Total:"
 msgstr ""
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:34
-#, fuzzy
-#| msgid "Report?"
 msgctxt "orders"
 msgid "Report:"
 msgstr "Скарга?"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:44
 #: orders/templates/orders/snippets/order_sold_form.html:14
-#, fuzzy
-#| msgid "Trending:"
 msgid "Tracking:"
 msgstr "У тренді:"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:73
 #: orders/templates/orders/snippets/order_list/order_completed.html:44
 #: orders/templates/orders/snippets/order_list/order_sold.html:69
-#, fuzzy
-#| msgid "No items yet"
 msgid "No orders yet"
 msgstr "Поки що тут пусто"
 
 #: orders/templates/orders/snippets/order_list/order_sold.html:46
-#, fuzzy
-#| msgid "Dresses"
 msgid "Address:"
-msgstr "Плаття"
+msgstr "Адрес: "
 
 #: orders/templates/orders/snippets/report_button.html:10
-#, fuzzy
-#| msgid "Report?"
 msgid "Report"
 msgstr "Скарга?"
 
@@ -625,16 +606,12 @@ msgid "Describe your item in details"
 msgstr "Детально опиши айтем"
 
 #: products/forms.py:71
-#, fuzzy
-#| msgid "Price"
 msgid "Price in "
-msgstr "Цiна"
+msgstr "Цiна у"
 
 #: products/forms.py:72
-#, fuzzy
-#| msgid "Enter a price in "
 msgid "Shipping price in "
-msgstr "Введи ціну в "
+msgstr "Введи ціну у"
 
 #: products/forms.py:107
 msgid "Please, select a gender"
@@ -680,26 +657,20 @@ msgstr "Недостатньо фотографій. Мінімальна сум
 msgid "Too many files, max. amount 8"
 msgstr "Забагато файлів, макс. сума 8"
 
-
 #: products/templates/products/checkout.html:192
-#, fuzzy
-#| msgid "Price"
 msgid "Price:"
-msgstr "Цiна"
+msgstr "Цiна:"
 
 #: products/templates/products/checkout.html:196
-#, fuzzy
-#| msgid "Enter a price in "
 msgid "Shipping price:"
-msgstr "Введи ціну в "
+msgstr "Ціну доставки"
 
 #: products/templates/products/checkout.html:202
 msgid "To pay:"
-msgstr ""
+msgstr "До оплати:"
 
 #: products/templates/products/product-create.html:174
-msgid ""
-"Email info@saltish.co if the brand you are trying to add does not exist."
+msgid "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co якщо твій бажаний бренд відсутній."
 
 #: products/templates/products/product-create.html:283
@@ -720,7 +691,7 @@ msgstr "Перевірка справжності …"
 
 #: products/templates/products/snippets/buy.html:7
 msgid "Купить безопасно"
-msgstr ""
+msgstr "Купити безпечно"
 
 #: products/templates/products/snippets/card-my-items.html:19
 msgctxt "card_my_items_approved"
@@ -829,8 +800,8 @@ msgstr ""
 
 #: products/views.py:248
 msgid ""
-"Your item was checked by AI. Within next 24 hours the check will be "
-"confirmed by our moderator team and your item will be published"
+"Your item was checked by AI. Within next 24 hours the check will be confirmed "
+"by our moderator team and your item will be published"
 msgstr ""
 "Твій Айтем перевірений Іcкусственним Інтелектом. Протягом 24 годин перевірку "
 "підтвердить модератор і Айтем буде виставлений на продаж"
@@ -874,16 +845,16 @@ msgid ""
 "<div id=\"list-example\" class=\"list-group position-fixed\">\n"
 "  <a class=\"list-group-item list-group-item-action\" href=\"#buy\">BUYERS</"
 "a>\n"
-"  <a class=\"list-group-item list-group-item-action\" href=\"#sell"
-"\">SELLERS</a>\n"
+"  <a class=\"list-group-item list-group-item-action\" href=\"#sell\">SELLERS</"
+"a>\n"
 "</div>\n"
 "</div>\n"
 "\n"
 "\n"
 "<div class='col-12 col-xl-9 offset-md-1 p-0 faq-text' style='max-width: "
 "680px'> \n"
-"<div data-spy=\"scroll\" data-target=\"#list-example\" data-offset=\"\" "
-"class=\"scrollspy-example\">\n"
+"<div data-spy=\"scroll\" data-target=\"#list-example\" data-offset=\"\" class="
+"\"scrollspy-example\">\n"
 "<span class='heading text-center'>FAQ</span>\n"
 "\n"
 "\n"
@@ -894,9 +865,9 @@ msgid ""
 "\n"
 "<p>\n"
 "\n"
-"<strong>There is a secure purchase system on SALT. That means that the "
-"seller receives payment only after the buyer confirms the successful "
-"delivery of the item.</strong>\n"
+"<strong>There is a secure purchase system on SALT. That means that the seller "
+"receives payment only after the buyer confirms the successful delivery of the "
+"item.</strong>\n"
 "\n"
 "<strong>I want to buy an item on SALT. Hmm ... How do I do this?</strong>\n"
 "- Choose on the item you want to purchase and click on BUY SECURE\n"
@@ -915,10 +886,10 @@ msgid ""
 "\n"
 "<strong>When am I gonna receive the item? I can't wait!</strong>\n"
 "- For the residents of Ukraine, delivery is carried out through Nova Posta\n"
-"- The exact delivery time depends on the regions of the sender and "
-"recipient. Usually it is 1-2 days from the moment of sending\n"
-"- You can calculate delivery times here: https://novaposhta.ua/en/"
-"onlineorder/estimatedate\n"
+"- The exact delivery time depends on the regions of the sender and recipient. "
+"Usually it is 1-2 days from the moment of sending\n"
+"- You can calculate delivery times here: https://novaposhta.ua/en/onlineorder/"
+"estimatedate\n"
 "\n"
 "<strong>Is SALT free? </strong>\n"
 "- Yes, shopping on SALT is absolutely free. And also - 100%%%% <a style="
@@ -958,8 +929,7 @@ msgid ""
 "after 7 days, the money is transferred to your card automatically\n"
 "\n"
 "<strong>What is the SALT commission for each transaction? </strong>\n"
-"- As for now - none. We will keep this platform free for as long as "
-"possible\n"
+"- As for now - none. We will keep this platform free for as long as possible\n"
 "</p>\n"
 "\n"
 "</div>\n"
@@ -1298,8 +1268,8 @@ msgid ""
 "black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
-"align: center; padding: 32px 32px;\">\n"
+"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;\">\n"
 "\n"
 "\n"
 "\t\t<div style=\"font-size: 20px; text-align: left !important;\">\n"
@@ -1462,8 +1432,8 @@ msgstr "Підтвердити"
 #~ "<p>Hey,</p> \n"
 #~ "\n"
 #~ "\n"
-#~ "<p>Please activate your account for %(email)s by clicking the link below:"
-#~ "</p>\n"
+#~ "<p>Please activate your account for %(email)s by clicking the link below:</"
+#~ "p>\n"
 #~ "\n"
 #~ "<p><a href='%(path)s'>%(path)s</a></p>\n"
 #~ "\n"
