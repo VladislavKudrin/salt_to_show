@@ -1,3 +1,4 @@
+{% load i18n %}
 <form id="complete_order_form" method="POST" action="{% url 'orders:complete_order' %}">{% csrf_token %}
 	<input type="hidden" name="order_id" value="{{ object.order_id }}">
 	<button type="submit" {% if object.get_status == 'Shipped' %}
@@ -14,7 +15,7 @@
 	{% if object.get_status == 'Shipped' %}
 	✔
 	{% else %}
-	Received
+	{% trans 'Received' %}
 	{% endif %}
 	</button>
 </form>

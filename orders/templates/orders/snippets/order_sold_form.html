@@ -3,13 +3,13 @@
 	margin-bottom: 0px!important;
 }
 </style>
-
+{% load i18n %}
 {% load crispy_forms_tags %} 
 
 <form method="POST" action="{% url 'orders:track_order' %}">{% csrf_token %}
 	<div class="row">
 		<div class="col-12 col-xl-4" style="display: flex; align-items: center;">
-			<span class="field-name">Tracking:</span>
+			<span class="field-name">{% trans 'Tracking:' %}</span>
 		</div>
 		<div class="col-12 col-xl-8 input-group">	
 			<div class="input-group">
