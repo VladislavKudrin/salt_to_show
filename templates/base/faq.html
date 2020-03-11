@@ -74,7 +74,7 @@ p {
 
 </style>
 </head>
-{% blocktrans %}
+
 
 
 <div class="container-fluid">
@@ -83,8 +83,8 @@ p {
 
 <div class='col-2 pl-5 faq-side'> 
 <div id="list-example" class="list-group position-fixed">
-  <a class="list-group-item list-group-item-action" href="#buy">BUYERS</a>
-  <a class="list-group-item list-group-item-action" href="#sell">SELLERS</a>
+  <a class="list-group-item list-group-item-action" href="#buy">{% trans 'BUYERS' %}</a>
+  <a class="list-group-item list-group-item-action" href="#sell">{% trans 'SELLERS' %}</a>
 </div>
 </div>
 
@@ -95,58 +95,74 @@ p {
 
 
 
-  <p id="buy" class='pt-5 sub-heading faq-sub-heading'>BUYERS</p> 
+  <p id="buy" class='pt-5 sub-heading faq-sub-heading'>{% trans 'BUYERS' %}</p> 
 
 
 
 <p>
 
-<strong>There is a secure purchase system on SALT. That means that the seller receives payment only after the buyer confirms the successful delivery of the item.</strong>
+<strong>{% trans 'There is a secure purchase system on SALT. That means that the seller receives payment only after the buyer confirms the successful delivery of the item.' %}</strong>
 
-<strong>I want to buy an item on SALT. Hmm ... How do I do this?</strong>
+<strong>{% trans 'I want to buy an item on SALT. Hmm ... How do I do this?' %}</strong>
+{% blocktrans %}
 - Choose on the item you want to purchase and click on BUY SECURE
 - Enter your details and select the address of the nearest office of Nova Poshta
 - Check the cost of goods and delivery, then click on PAY
 - On the LiqPay website, enter the card details safely (PrivatBank, Visa, MasterCard), and that's it - the item was bought!
+{% endblocktrans %}
 
-<strong>Payment completed. What's next? </strong>
+<strong>{% trans "Payment completed. What's next?" %} </strong>
+{% blocktrans %}
 - The seller receives a notification of the purchase and shippment data for sending the item
 - Once the item has been sent, in the ORDERS section you can track delivery by the tracking number
 - When the item is delivered, confirm the delivery in the ORDERS section.
+{% endblocktrans %}
 
-<strong>When am I gonna receive the item? I can't wait!</strong>
+<strong>{% trans "When am I gonna receive the item? I can't wait!" %}</strong>
+{% blocktrans %}
 - For the residents of Ukraine, delivery is carried out through Nova Posta
 - The exact delivery time depends on the regions of the sender and recipient. Usually it is 1-2 days from the moment of sending
 - You can calculate delivery times here: https://novaposhta.ua/en/onlineorder/estimatedate
+{% endblocktrans %}
 
-<strong>Is SALT free? </strong>
+<strong>{% trans 'Is SALT free?' %} </strong>
+{% blocktrans %}
 - Yes, shopping on SALT is absolutely free. And also - 100%% <a style="text-decoration: underline" href="https://www.saltish.co/about/#safe">safe</a> 
+{% endblocktrans %}
 
-<strong>I received the item, but ... it does not match the description. What do I do? </strong>
+<strong>{% trans 'I received the item, but ... it does not match the description. What do I do?' %} </strong>
+{% blocktrans %}
 - In the ORDERS section, click on REPORT and we will contact you within 24 hours to double-check
 - If the item, indeed, does not match the description, we will refund you money on the specified card
+{% endblocktrans %}
 </p>
 
 
   
-  <p id="sell" class='pt-5 sub-heading faq-sub-heading'>SELLERS</p>
+  <p id="sell" class='pt-5 sub-heading faq-sub-heading'>{% trans 'SELLERS' %}</p>
 
 <p>
-<strong>I found a nice item in my closet. How to sell it on SALT? </strong>
+<strong>{% trans 'I found a nice item in my closet. How to sell it on SALT?' %} </strong>
+{% blocktrans %}
 - First, enter your card details in the profile settings (so that customers can transfer you <a href="https://www.youtube.com/watch?v=cC3Kn9Y-cC4"> money </a>!)
 - Click on SELL and fill out a simple form
 - That's it - the item is uploaded and available in the section MY ITEMS
 - After (successful) two-factor verification, it will be visible to everyone in the general catalogue
+{% endblocktrans %}
 
-<strong>Someone purchased my item. When will I get the money?</strong>
+<strong>{% trans 'Someone purchased my item. When will I get the money?' %}</strong>
+{% blocktrans %}
 - Don’t worry - the money has already been debited from the buyer's card
 - Therefore, you should immediately ship the item and add tracking in the ORDERS section
 - As soon as the buyer confirms the successful delivery, the money will come to your card within 24 hours
 - The buyer has 7 days to confirm the successful  delivery 
 - In case the buyer does not confirm the delivery (or did not contact us) after 7 days, the money is transferred to your card automatically
+{% endblocktrans %}
 
-<strong>What is the SALT commission for each transaction? </strong>
+<strong>{% trans 'What is the SALT commission for each transaction?' %} </strong>
+{% blocktrans %}
 - As for now - none. We will keep this platform free for as long as possible
+{% endblocktrans %}
 </p>
 
 </div>
@@ -155,7 +171,7 @@ p {
 
 </div>
 </div>
-{% endblocktrans %}
+
 
 <script type="text/javascript">
 
