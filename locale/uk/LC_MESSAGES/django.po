@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-08 18:18+0000\n"
+"POT-Creation-Date: 2020-03-11 16:35+0000\n"
 "PO-Revision-Date: 2019-11-06 18:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -39,28 +39,34 @@ msgstr "Твій мейл"
 msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
 msgstr "<a href={resend_link}> (Кликни, щоб вислати підтвердження ще раз</a>.)"
 
-#: accounts/forms.py:181 accounts/forms.py:198
+#: accounts/forms.py:182 accounts/forms.py:200
 msgid "-- Please select your region --"
 msgstr "— Виберіть свій регіон —"
 
-#: accounts/forms.py:190
+#: accounts/forms.py:191
+#, fuzzy
+#| msgid "Your Email"
+msgid "Email"
+msgstr "Твій мейл"
+
+#: accounts/forms.py:192
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:194
+#: accounts/forms.py:196
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Оновити"
 
-#: accounts/forms.py:195
+#: accounts/forms.py:197
 msgid "Region"
 msgstr "Регіон"
 
-#: accounts/forms.py:201
+#: accounts/forms.py:203
 msgid "Recieve marketing email?"
 msgstr "Отримувати розсилку?"
 
-#: accounts/forms.py:213
+#: accounts/forms.py:215
 msgid "You must select a region"
 msgstr "Потрібно вибрати регіон"
 
@@ -106,6 +112,7 @@ msgid "Save changes"
 msgstr "Зберегти зміни"
 
 #: accounts/templates/accounts/snippets/region-modal/region-modal.html:23
+#: orders/templates/orders/snippets/order_feedback.html:37
 msgid "Close"
 msgstr "Закрити"
 
@@ -113,7 +120,7 @@ msgstr "Закрити"
 msgid "Wishlist:"
 msgstr "Улюблене:"
 
-#: accounts/views.py:101 accounts/views.py:212 ecommerce/utils.py:91
+#: accounts/views.py:101 accounts/views.py:207 ecommerce/utils.py:91
 msgid "You're in"
 msgstr "Ти на сайті"
 
@@ -145,29 +152,29 @@ msgstr "Забув/забула пароль?"
 msgid "Please check your email to confirm your account. "
 msgstr "Будь ласка, перевір свою пошту, щоб підтвердити аккаунт. "
 
-#: accounts/views.py:196
+#: accounts/views.py:191
 msgid "Email not confirmed. "
 msgstr "Мейл не підтверджений. "
 
-#: accounts/views.py:200
+#: accounts/views.py:195
 msgid "The password seems to be wrong. Try again!"
 msgstr "Невірний пароль. Спробуй ще раз!"
 
-#: accounts/views.py:319 products/views.py:498
+#: accounts/views.py:314 products/views.py:498
 msgid "Update your details"
 msgstr "Оновити аккаунт"
 
-#: accounts/views.py:320 products/views.py:499
+#: accounts/views.py:315 products/views.py:499
 #: templates/registration/password_change_form.html:24
 msgid "Change password"
 msgstr "Змінити пароль"
 
-#: accounts/views.py:321 products/views.py:334
+#: accounts/views.py:316 products/views.py:334
 #: templates/registration/password_change_form.html:32
 msgid "Save"
 msgstr "Зберегти"
 
-#: accounts/views.py:322
+#: accounts/views.py:317
 msgid "Logout"
 msgstr "Выйти"
 
@@ -456,8 +463,16 @@ msgstr "Показати всі"
 msgid "Popular designers:"
 msgstr "Популярні бренди:"
 
-#: orders/models.py:152
+#: orders/models.py:158
 msgid "Order Confirmation"
+msgstr ""
+
+#: orders/models.py:163
+msgid "uknnown error"
+msgstr ""
+
+#: orders/models.py:171
+msgid "Order Error"
 msgstr ""
 
 #: orders/templates/orders/emails/inform_about_order.html:2
@@ -527,6 +542,149 @@ msgid ""
 "\n"
 msgstr ""
 
+#: orders/templates/orders/emails/inform_error_payment.html:2
+#, python-format
+msgid ""
+"\n"
+"<p>Hey,</p> \n"
+"\n"
+"\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
+"align: center; padding: 32px 32px;\">\n"
+"\n"
+"\n"
+" \n"
+"\t\t<div style=\"font-size: 20px; text-align: left !important;\">\n"
+"\t\t\t<p>Your order <b>%(order_id)s</b> has not been paid. Reason: <b>"
+"%(error)s</b> .</p>\n"
+"\t\t\t<p>You can go to <b>Orders</b> and <b>delete</b> this order. After "
+"that, please, try again.</p>\n"
+"\n"
+"\n"
+"\n"
+"\t\t\t<p>Thank you,\n"
+"\t\t\t<br> SALT</p>\n"
+"\t\t</div>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
+"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\"\" ><img "
+"style='width: 20px; height: 20px; margin: 0 4px;' src=\"https://image."
+"flaticon.com/icons/png/512/2168/2168311.png\"></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+"\n"
+"<p>SALT</p>\n"
+"\n"
+msgstr ""
+
+#: orders/templates/orders/emails/inform_error_payment.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hey, \n"
+"\n"
+"Your order %(order_id)s has not been paid. Reason: %(error)s .\n"
+"You can go to Orders and delete this order. After that, please, try again. \n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"Thank you,\n"
+"SALT\n"
+"\n"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:91
+msgid "Orders:"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:98
+msgid "Purchases"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:101
+msgid "Sales"
+msgstr ""
+
+#: orders/templates/orders/order_list.html:104
+msgid "Archive"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_complete_form.html:18
+msgid "Received"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_created_remove_form.html:5
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete Order"
+msgstr "Видалити"
+
+#: orders/templates/orders/snippets/order_feedback.html:24
+msgid "Rate the order:"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_feedback.html:38
+msgid "Send feedback"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:24
+#: orders/templates/orders/snippets/order_list/order_completed.html:22
+#: orders/templates/orders/snippets/order_list/order_refunded.html:24
+#: orders/templates/orders/snippets/order_list/order_sold.html:37
+msgid "Status:"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:28
+#: orders/templates/orders/snippets/order_list/order_completed.html:26
+#: orders/templates/orders/snippets/order_list/order_refunded.html:28
+#: orders/templates/orders/snippets/order_list/order_sold.html:41
+msgid "Total:"
+msgstr ""
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:33
+#, fuzzy
+#| msgid "Report?"
+msgid "Report:"
+msgstr "Скарга?"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:43
+#: orders/templates/orders/snippets/order_sold_form.html:12
+#, fuzzy
+#| msgid "Trending:"
+msgid "Tracking:"
+msgstr "У тренді:"
+
+#: orders/templates/orders/snippets/order_list/order_buy.html:72
+#: orders/templates/orders/snippets/order_list/order_completed.html:44
+#: orders/templates/orders/snippets/order_list/order_refunded.html:52
+#: orders/templates/orders/snippets/order_list/order_sold.html:68
+#, fuzzy
+#| msgid "No items yet"
+msgid "No orders yet"
+msgstr "Поки що тут пусто"
+
+#: orders/templates/orders/snippets/order_list/order_sold.html:45
+msgid "Address:"
+msgstr ""
+
 #: orders/templates/orders/snippets/report_button.html:10
 #, fuzzy
 #| msgid "Report?"
@@ -551,68 +709,68 @@ msgstr "Цiна"
 msgid "Shipping price "
 msgstr ""
 
-#: products/forms.py:86
+#: products/forms.py:96
 msgid "Please, select a gender"
 msgstr "— Вибери гендер —"
 
-#: products/forms.py:99
+#: products/forms.py:109
 msgid "Please, select a valid category"
 msgstr "— Вибери категорію —"
 
-#: products/forms.py:116
+#: products/forms.py:126
 msgid "Please, select a valid size"
 msgstr "— Вибери розмір —"
 
-#: products/forms.py:128
+#: products/forms.py:138
 msgid "Please, select a condition"
 msgstr "— Вибери стан —"
 
-#: products/forms.py:142
+#: products/forms.py:152
 msgid "Please, select existing brand"
 msgstr "— Вибери існуючий бренд —"
 
-#: products/forms.py:166
+#: products/forms.py:176
 msgid "Please, make it shorter. # of lines to be removed:"
 msgstr "Зробіть її коротшою. Кількість рядків, які потрібно видалити:"
 
-#: products/forms.py:170
+#: products/forms.py:180
 msgid "Please, make it shorter. # of characters to be removed:"
 msgstr "Зробіть її коротшою. # символів, які потрібно видалити:"
 
-#: products/forms.py:190
+#: products/forms.py:200
 msgid "Images*"
 msgstr "Зображення *"
 
-#: products/forms.py:195
+#: products/forms.py:207
 msgid "Upload at least 4 images"
 msgstr "Завантажте щонайменше 4 зображення"
 
-#: products/forms.py:200
+#: products/forms.py:212
 msgid "Not enough photos. Minimal amount - 4"
 msgstr "Недостатньо фотографій. Мінімальна сума - 4"
 
-#: products/forms.py:205
+#: products/forms.py:217
 msgid "Too many files, max. amount 8"
 msgstr "Забагато файлів, макс. сума 8"
 
-#: products/templates/products/product-create.html:180
+#: products/templates/products/product-create.html:174
 msgid ""
 "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co якщо твій бажаний бренд відсутній."
 
-#: products/templates/products/product-create.html:289
+#: products/templates/products/product-create.html:283
 msgid "Photos*"
 msgstr "Фотографії *"
 
-#: products/templates/products/product-create.html:294
+#: products/templates/products/product-create.html:288
 msgid "Browse"
 msgstr "Вибрать"
 
-#: products/templates/products/product-create.html:299
+#: products/templates/products/product-create.html:293
 msgid "Too many images. Should be less than"
 msgstr "Too many images. Should be less than"
 
-#: products/templates/products/product-create.html:300
+#: products/templates/products/product-create.html:294
 msgid "Authenticity check..."
 msgstr "Перевірка справжності …"
 
@@ -745,6 +903,10 @@ msgstr ""
 #: templates/base/navbar.html:268
 msgid "Search"
 msgstr "Пошук"
+
+#: search/views.py:32
+msgid "Oops... No results for your query. Try another one!"
+msgstr ""
 
 #: templates/400.html:9 templates/403.html:7 templates/500.html:9
 msgid "Oops ... Something went wrong. We're notified and working on a fix!"
