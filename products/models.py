@@ -10,8 +10,7 @@ from django.db import models
 from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
-
-from currency_converter import CurrencyConverter
+from datetime import date
 
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
@@ -291,12 +290,15 @@ class Product(models.Model):
 	undercategory          = models.ForeignKey(Undercategory, blank = False, null=True)
 	overcategory           = models.ForeignKey(Overcategory, blank = True, null=True)
 	authentic              = models.CharField(max_length=120, default='undefined', choices=AUTHENTICITY_CHOICES, null=True)
-	national_shipping      = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=False, null=True)
+	national_shipping      = models.DecimalField(decimal_places=0, max_digits=16, default=0, blank=False, null=True)
 	international_shipping = models.DecimalField(decimal_places=6, max_digits=16, default=0, blank=True, null=True)
+	price_original  	   = models.DecimalField(decimal_places=0, max_digits=16, default=0, blank=True, null=True)
+	currency_original  	   = models.CharField(max_length = 120, default='undefined', blank=True, null=True)
 
 
 
 	objects = ProductManager()
+	
 	
 	def make_total(self):
 		national_shipping = 0
@@ -304,11 +306,12 @@ class Product(models.Model):
 		price = 0
 		if self.national_shipping:
 			national_shipping = self.national_shipping
-		if self.international_shipping:
-			international_shipping = self.international_shipping
-		if self.price:
-			price = self.price
-		return national_shipping + price
+		# if self.international_shipping:
+		# 	international_shipping = self.international_shipping
+		if self.price_original:
+			price = self.price_original
+		sum_ = national_shipping + price
+		return sum_
 
 	def get_absolute_url(self):
 		#return "/products/{slug}/".format(slug=self.slug)
@@ -321,9 +324,14 @@ class Product(models.Model):
 		#return "/products/{slug}/".format(slug=self.slug)
 		return reverse('products:delete', kwargs={"slug":self.slug})
 
-
 	def __str__(self):
 		return self.title
+
+	@property
+	def is_payable(self):
+		item = self.timestamp.date() # timestamp of item
+		threshold = date(2020, 3, 1) # not possible to buy items older than this 1th of March 
+		return item > threshold
 
 def product_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.slug:
@@ -331,12 +339,19 @@ def product_pre_save_reciever(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
-
+CURRENCY_CHOICES = {
+			"грн" : "UAH"	
+				}
 def product_post_save_reciever(sender, created, instance, *args, **kwargs):
 	if not created:
 		product = ProductThumbnail.objects.filter(product=instance)
 		if not product.exists():
 			ProductThumbnail.objects.create_update_thumbnail(product=instance)
+	else: # to save original currency 
+		products = Product.objects.filter(id=instance.id)
+		user = instance.user
+		products.update(currency_original=CURRENCY_CHOICES.get(user.region.currency))
+
 
 post_save.connect(product_post_save_reciever, sender=Product)
 

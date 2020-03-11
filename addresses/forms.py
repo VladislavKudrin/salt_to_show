@@ -4,6 +4,7 @@ from billing.models import BillingProfile
 import os
 from ecommerce.settings import BASE_DIR
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 class AddressForm(forms.ModelForm):
     class Meta:
@@ -46,6 +47,10 @@ class AddressForm(forms.ModelForm):
 
         self.request=request
         self.fields['post_office'] = forms.ChoiceField(choices=tuple([(name, name) for name in post_offices]))
+        self.fields['name'].widget.attrs['class']='labels-placement'
+        self.fields['phone'].widget.attrs['class']='labels-placement'
+        self.fields['name'].label = _('Name')
+        self.fields['phone'].label = _('Phone')
         if 'checkout' in request.path:
             self.fields['name'].required = True
             self.fields['phone'].required = True
@@ -54,6 +59,7 @@ class AddressForm(forms.ModelForm):
             self.fields['name'].required = False
             self.fields['phone'].required = False
             self.fields['post_office'].required = False
+
 
 
     def clean_post_office(self):

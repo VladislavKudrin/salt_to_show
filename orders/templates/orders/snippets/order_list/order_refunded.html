@@ -1,38 +1,32 @@
+{% load i18n %}
 {% load for_loop_extras %}
 {% for object in orders_refunded %}
 <div class="container">
 	<div class='row' style="border-bottom: 1px solid lightgray; padding: 1em;">
-		<div class='col-6'>
+		<div class='col-12 col-xl-6'>
 			<div class="row">
 				<div class="col">
 					{% include 'products/snippets/card-order.html' with instance=object.product %}
 				</div>
 			</div>
 		</div>
-		<div class='col-6' style="font-size: 14px;">
+		<div class='col-12 col-xl-6' style="font-size: 14px;">
 			<div class="row">
 
 				<div class="col-12 field-name" style="padding-bottom: 2.5rem; line-height: 1.2;">
 				{{ object.product.title }}
 				</div>
 
-				<div class="col-8">
+				<div class="col-12">
 					<div class="row">
 
-						<div class="col-6">
-							<span class="field-name" style="font-weight: bold;">Status:</span>
+						<div class="col-4">
+							<span class="field-name" style="font-weight: bold;">{% trans 'Status:' %}</span><br>
+							<span>{{ object.get_status }}</span>
 						</div>
-						<div class="col-6">
-							<span class="field-name" style="font-weight: bold;">Total:</span>
-						</div>
-			
-
-
-						<div class="col-6">
-							{{ object.get_status }}
-						</div>
-						<div class="col-6">
-							{{ object.total|to_user_currency:request }}
+						<div class="col-4">
+							<span class="field-name" style="font-weight: bold;">{% trans 'Total:' %}</span><br>
+							<span>{{ object.total|to_user_currency:request }}</span>
 						</div>
 					</div>
 				</div>
@@ -54,8 +48,8 @@
 {% empty %}
 <div class="container">
 	<div class="row">
-		<div class="col">
-			No orders yet
+		<div class="col mt-4">
+			{% trans 'No orders yet' %}
 		</div>
 	</div>
 </div>

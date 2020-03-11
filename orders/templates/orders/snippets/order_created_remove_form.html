@@ -1,7 +1,8 @@
+{% load i18n %}
 <form id='delete-order-form' method="POST" action="{% url 'orders:delete_order' %}">{% csrf_token %}
 	<input type="hidden" name="order_id" value="{{ object.order_id }}">
-	<button type="submit" class="delete-order-btn btn btn-outline-danger hover-button large-button btn-block settings-btn" style="border: 1px solid black; margin-top: 0.3rem;opacity: 100!important">
-	Delete Order
+	<button type="submit" class="delete-order-btn btn btn-outline-danger hover-button medium-button btn-block settings-btn" style="border: 1px solid black; margin-top: 0.3rem;opacity: 100!important">
+	{% trans 'Delete Order' %}
 	</button>
 </form>
 

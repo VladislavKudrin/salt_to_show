@@ -28,7 +28,7 @@ p span
 
 .has-stripe::after {
   content: ''; 
-  background-image: url('{% static 'img/dark_stripes.png' %}');
+  background-color: black;
   position: absolute;
   left: 0px;
   top: 0px;
@@ -48,7 +48,7 @@ p span
 
 .has-stripe-2::after {
   content: ''; 
-  background-image: url('{% static 'img/dark_stripes.png' %}');
+  background-color: black;
   position: absolute;
   left: 0px;
   top: 0px;
@@ -62,6 +62,7 @@ p span
   font-family: 'Archivo', sans-serif ;
   font-size: 7vh !important;
   text-transform: uppercase;
+  font-weight: 100;
 }
 
 .letter{
@@ -138,13 +139,16 @@ height: 40vw;
 
 .heading-black{
   padding-bottom: 2vw;
+  font-weight: 100;
+    padding-left: 6vw;
 
 }
 
 .description{
-  font-size: 1em;
+  font-size: 1.15em;
   padding-right: 6vw;
   padding-left: 6vw;
+  line-height: 1.7;
 }
 
 .bazar{
@@ -227,6 +231,7 @@ height: 40vw;
 
 .heading-black{
   font-size: 1.3em !important;
+  font-weight: 100;
 }
 
 .col-about{
@@ -285,7 +290,7 @@ p {
     </div>
     <div class="col-xs-12 col-md-9 my-auto col-about">
     <p class="my-auto slogan">
-    <span class='heading-black' >{{ authentic_slogan }}</span>
+    <span class='text-left  heading-black' >{{ authentic_slogan }}</span>
     <span class='text-left description'>{{ authentic_text }}</span>
     </p>
     </div>
@@ -298,7 +303,7 @@ p {
     </div> 
     <div class="col-xs-12 col-md-9 my-auto slogan col-about">
     <p class="my-auto slogan" >
-    <span class='heading-black'> {{ai_slogan}}</span>
+    <span class='text-left heading-black'> {{ai_slogan}}</span>
     <span class='text-left description'> {{ai_text}}</span>
     </p>
     </div>
@@ -311,7 +316,7 @@ p {
     </div>
     <div class="col-xs-12 col-md-9 my-auto col-about">
     <p class=" my-auto slogan ">
-    <span class='heading-black'>{{ minimalism_slogan}}</span>
+    <span class='text-left heading-black'>{{ minimalism_slogan}}</span>
     <span class='text-left description'>{{ minimalism_text }} </span>
     </p>
     </div>
@@ -325,12 +330,9 @@ p {
 
 
 
-{% endblock %}
 
-{% block script %}
+
 <script>
-
-
 
 $(window).on('scroll', function() {
    var st = $(this).scrollTop();
@@ -363,6 +365,6 @@ $(window).on('scroll', function() {
 });
 
 </script>
+
+
 {% endblock %}
-
-

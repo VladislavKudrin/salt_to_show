@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load static %}
 {% block content %}
 
 <head>
-	<style type="text/css">
+<style type="text/css">
 
 /*body {
   position: relative !important;;
@@ -31,87 +31,131 @@
 color:black;
 }
 
+.faq-side {
+	padding-left: 3rem;
+}
 
-	</style>
+/*For mobile */
+@media only screen and (max-width: 767px) {
+	.faq-side {
+		visibility: hidden;
+		display: none;
+	}
+
+	.faq-text {
+		padding-left: 2rem !important;
+		padding-right: 2rem !important;
+	}
+
+	.faq-sub-heading {
+		padding-top: 3rem !important;
+	}
+}
+
+/*For tablets*/
+@media only screen and (min-width: 767px) and (max-width: 1025px) {
+	.faq-side {
+		padding-left: 0 !important;
+	}
+
+	.faq-sub-heading {
+		padding-top: 5rem !important;
+	}
+	.faq-text {
+		padding-left: 6.5rem !important;
+		padding-right: 2rem !important;
+	}
+
+}
+p {
+  white-space: pre-wrap;
+/*  font-family: monospace;*/
+}
+
+</style>
 </head>
-
+{% blocktrans %}
 
 
 <div class="container-fluid">
 <div class='row'>
 
 
-<div class='col-2 pl-5' > <!-- ТОЛЬКО ДЛЯ БОЛЬШИК ЭКРАНОВ 3 рем. ДЛЯ АЙПАДОВ НИКАКОГО. ДЛЯ ТЕЛЕФОНОВ ЭТОЙ КОЛОНКИ ВООБЩЕ НЕТ -->
+<div class='col-2 pl-5 faq-side'> 
 <div id="list-example" class="list-group position-fixed">
-  <a class="list-group-item list-group-item-action" href="#buy">Как купить</a>
-  <a class="list-group-item list-group-item-action" href="#sell">Как продать</a>
-  <a class="list-group-item list-group-item-action" href="#delivery">Как получить</a>
-  <a class="list-group-item list-group-item-action" href="#return">Как вернуть</a>
+  <a class="list-group-item list-group-item-action" href="#buy">BUYERS</a>
+  <a class="list-group-item list-group-item-action" href="#sell">SELLERS</a>
 </div>
 </div>
 
 
-<div class='col-9 offset-md-1 p-0' style='max-width: 680px'> <!-- ДЛЯ МОБАЙЛ СДЕЛАТЬ КОЛ 12 ПАДИНГ ЛЕФТ РАЙТ 3 + сделать айнхайтлих для оферты и тд -->
+<div class='col-12 col-xl-9 offset-md-1 p-0 faq-text' style='max-width: 680px'> 
 <div data-spy="scroll" data-target="#list-example" data-offset="" class="scrollspy-example">
 <span class='heading text-center'>FAQ</span>
-  <p id="buy" class='pt-5 sub-heading'>Как купить</p> <!-- ТОЛЬКО ДЛЯ БОЛЬШИК ЭКРАНОВ 3рем. ДЛЯ АЙПАДОВ 5 рем. ДЛЯ ТЕЛЕФОНОВ НОЛЬ	 -->
-   			<p>- Выбери понравившийся айтем и нажми на кнопку КУПИТЬ БЕЗОПАСНО</p>
-			<p>- Введи свои данные и выбери адрес ближайшего отделения Нова Пошта</p>
-			<p>- Проверь стоимость товара и доставки, затем нажми на ОПЛАТИТЬ</p>
-			<p>- На сайте LiqPay ты сможешь безопасно ввести данные карты (ПриватБанк, Visa, MasterCard), и все — сделка совершена</p>
-			<p>- Продавцу придет оповещение о покупке и твои данные для отправки</p>
-			<p>- Когда получишь товар, проверь его на соответствие и подтверди получение в разделе ЗАКАЗЫ</p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
+
+
+
+  <p id="buy" class='pt-5 sub-heading faq-sub-heading'>BUYERS</p> 
+
+
+
+<p>
+
+<strong>There is a secure purchase system on SALT. That means that the seller receives payment only after the buyer confirms the successful delivery of the item.</strong>
+
+<strong>I want to buy an item on SALT. Hmm ... How do I do this?</strong>
+- Choose on the item you want to purchase and click on BUY SECURE
+- Enter your details and select the address of the nearest office of Nova Poshta
+- Check the cost of goods and delivery, then click on PAY
+- On the LiqPay website, enter the card details safely (PrivatBank, Visa, MasterCard), and that's it - the item was bought!
+
+<strong>Payment completed. What's next? </strong>
+- The seller receives a notification of the purchase and shippment data for sending the item
+- Once the item has been sent, in the ORDERS section you can track delivery by the tracking number
+- When the item is delivered, confirm the delivery in the ORDERS section.
+
+<strong>When am I gonna receive the item? I can't wait!</strong>
+- For the residents of Ukraine, delivery is carried out through Nova Posta
+- The exact delivery time depends on the regions of the sender and recipient. Usually it is 1-2 days from the moment of sending
+- You can calculate delivery times here: https://novaposhta.ua/en/onlineorder/estimatedate
+
+<strong>Is SALT free? </strong>
+- Yes, shopping on SALT is absolutely free. And also - 100%% <a style="text-decoration: underline" href="https://www.saltish.co/about/#safe">safe</a> 
+
+<strong>I received the item, but ... it does not match the description. What do I do? </strong>
+- In the ORDERS section, click on REPORT and we will contact you within 24 hours to double-check
+- If the item, indeed, does not match the description, we will refund you money on the specified card
+</p>
+
+
   
-  <p id="sell" class='pt-5 sub-heading'>Как продать</p>
-  			<p>- Выстави свои айтемы на продажу в разделе SELL</p>
-			- После того, как кто-то купит твой айтем, отправь его на адрес покупателя</p> 
-			<p>- Деньги придут на твою карту, как только покупатель получит и подтвердит соответствие айтема в своем профиле</p>
-			<p>- Комиссия SALT 3%</p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
+  <p id="sell" class='pt-5 sub-heading faq-sub-heading'>SELLERS</p>
 
-  <p id="delivery" class='pt-5 sub-heading'>Как получить</p>
-			<p>- Для жителей Украины доставка осуществляется через Нова Пошта</p>
-			<p>- Просто выбери подходящее для тебя отделение из предложенных</p> 
-			<p>- Сроки доставки зависят от регионов отправки и получения </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-  <p id="return" class='pt-5 sub-heading'>Как вернуть<p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
-			<p>- Если полученный айтем не соответствует представленному на сайте, ты можешь пожаловаться в разделе ЗАКАЗЫ</p>
-			<p>- Мы свяжемся с тобой и рассмотрим конкретный случай</p>
-			<p>- В случае подтверждения несоответствия мы вернем тебе деньги за покупку </p>
+<p>
+<strong>I found a nice item in my closet. How to sell it on SALT? </strong>
+- First, enter your card details in the profile settings (so that customers can transfer you <a href="https://www.youtube.com/watch?v=cC3Kn9Y-cC4"> money </a>!)
+- Click on SELL and fill out a simple form
+- That's it - the item is uploaded and available in the section MY ITEMS
+- After (successful) two-factor verification, it will be visible to everyone in the general catalogue
+
+<strong>Someone purchased my item. When will I get the money?</strong>
+- Don’t worry - the money has already been debited from the buyer's card
+- Therefore, you should immediately ship the item and add tracking in the ORDERS section
+- As soon as the buyer confirms the successful delivery, the money will come to your card within 24 hours
+- The buyer has 7 days to confirm the successful  delivery 
+- In case the buyer does not confirm the delivery (or did not contact us) after 7 days, the money is transferred to your card automatically
+
+<strong>What is the SALT commission for each transaction? </strong>
+- As for now - none. We will keep this platform free for as long as possible
+</p>
+
 </div>
 </div>
 
 
 </div>
 </div>
+{% endblocktrans %}
 
 <script type="text/javascript">
 

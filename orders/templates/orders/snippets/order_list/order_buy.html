@@ -1,55 +1,63 @@
+{% load i18n %}
 {% load for_loop_extras %}
 {% for object in orders_buy %}
 <div class="container">
 	<div class='row' style="border-bottom: 1px solid lightgray; padding: 1em;">
-		<div class='col-6'>
+		<div class='col-12 col-xl-6'>
 			<div class="row">
 				<div class="col">
 					{% include 'products/snippets/card-order.html' with instance=object.product %}
 				</div>
 			</div>
 		</div>
-		<div class='col-6' style="font-size: 14px;">
+		<div class='col-12 col-xl-6' style="font-size: 14px;">
 			<div class="row">
 
 				<div class="col-12 field-name" style="padding-bottom: 2.5rem; line-height: 1.2;">
 				{{ object.product.title }}
 				</div>
 
-				<div class="col-8">
+				<div class="col-12 mb-3">
 					<div class="row">
 
-						<div class="col-6">
-							<span class="field-name" style="font-weight: bold;">Status:</span>
+						<div class="col-4">
+							<span class="field-name">{% trans 'Status:' %}</span><br>
+							<span>{{ object.get_status }}</span>
 						</div>
-						<div class="col-6">
-							<span class="field-name" style="font-weight: bold;">Total:</span>
+						<div class="col-4">
+							<span class="field-name">{% trans 'Total:' %}</span><br>
+							<span>{{ object.total|to_user_currency:request }}</span>
 						</div>
-			
 
-
-						<div class="col-6">
-							{{ object.get_status }}
-						</div>
-						<div class="col-6">
-							{{ object.total|to_user_currency:request }}
+						<div class="col-4">
+							<span class="field-name">{% trans 'Report:' %}</span>
+							{% include 'orders/snippets/report_button.html' %}
 						</div>
 					</div>
 				</div>
 
-				<div class="col-4">
+				<div class="col-12">
 					<div class="row">
-						{% include 'orders/snippets/report_button.html' %}
-						{% if object.get_status != 'Created' %}
 						<div class="col-12">
-							{% include 'orders/snippets/order_complete_form.html' %}
+							{% if object.track_number %}
+								<p><span class="field-name">{% trans 'Tracking:' %}</span> {{ object.track_number }}</p>
+							{% endif %}
 						</div>
-						{% if object.track_number %}
-							{{ object.track_number }}
-						{% endif %}
-						{% else %}
-							{% include 'orders/snippets/order_created_remove_form.html' %}
-						{% endif %}
+					</div>
+				</div>	
+
+
+
+
+				<div class="col-12">
+					<div class="row">
+						<div class="col">
+							{% if object.get_status != 'Created' %}
+								{% include 'orders/snippets/order_complete_form.html' %}
+							{% else %}
+								{% include 'orders/snippets/order_created_remove_form.html' %}
+							{% endif %}
+						</div>
 					</div>
 				</div>
 
@@ -60,8 +68,8 @@
 {% empty %}
 <div class="container">
 	<div class="row">
-		<div class="col">
-			No orders yet
+		<div class="col mt-4">
+			{% trans 'No orders yet' %}
 		</div>
 	</div>
 </div>

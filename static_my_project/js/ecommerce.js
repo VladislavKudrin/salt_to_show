@@ -32,7 +32,38 @@ $(document).ready(
 
 
     // Labels and placeholders for accounts settings and checkout
-    var inputs = ["#id_user_form-username", "#id_user_form-email", "#id_user_form-region", "#id_address_form-name", "#id_address_form-additional_line", "#id_address_form-street", "#id_address_form-city", "#id_address_form-number", "#id_address_form-postal_code", "#id_address_form-state", "#id_address_form-country", "#id_address_form-post_office", "#id_address_form-phone"]
+    var inputs = [
+    "#id_user_form-username", 
+    "#id_user_form-email", 
+    "#id_user_form-region", 
+    "#id_address_form-name", 
+    "#id_address_form-additional_line", 
+    "#id_address_form-street", 
+    "#id_address_form-city", 
+    "#id_address_form-number", 
+    "#id_address_form-postal_code", 
+    "#id_address_form-state", 
+    "#id_address_form-country", 
+    "#id_address_form-post_office", 
+    "#id_address_form-phone",
+    "#id_title",
+    "#id_brand",
+    "#id_title",
+    "#id_sex",
+    "#id_undercategory",
+    "#id_condition",
+    "#id_size",
+    "#id_price",
+    "#id_shipping_price",
+    "#id_description",
+    "#id_email",
+    "#id_content",
+    "#id_national_shipping",
+    "#id_region",
+    "#id_old_password",
+    "#id_new_password1",
+    "#id_new_password2",
+    ]
 
     jQuery.each(inputs, function(index, item) {
         var item_val = $(item).val()
@@ -243,7 +274,7 @@ $(document).ready(
       var contentConfirmSecond = 'Айтем успешно удален'
       var cancelText = 'Отмена'
     }//if ru
-    else if (languagePref.val() == 'UA'){
+    else if (languagePref.val() == 'UK'){
       var placeholderText = 'Чому?'
       var titleConfirm = 'Видалити айтем?'
       var btnText = 'Видалити'

@@ -8,7 +8,6 @@ from django.core.validators import RegexValidator
 
 
 
-
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe")
 STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk')
 User=settings.AUTH_USER_MODEL
@@ -123,8 +122,8 @@ post_save.connect(user_created_reciever, sender=User)
 
 
 class Feedback(models.Model):
-	from_user = models.OneToOneField(User, null=True, blank=False, related_name='feedback')
-	to_user   = models.OneToOneField(BillingProfile, null=True, blank=False, related_name='feedback')
+	from_user = models.ForeignKey(User, null=True, blank=False, related_name='feedback')
+	to_user   = models.ForeignKey(BillingProfile, null=True, blank=False, related_name='feedback')
 	rating    = models.DecimalField(decimal_places=1, max_digits=2, default=0, blank=False, null=True)
 	comment   = models.TextField(default='', blank=True)
 
@@ -214,6 +213,10 @@ class Charge(models.Model):
 	risk_level              = models.CharField(max_length=120, null=True, blank=True)
 
 	objects = ChargeManager()
+
+
+
+
 
 
 # ---------------------------------------------------------------

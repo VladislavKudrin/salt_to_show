@@ -777,19 +777,35 @@ border: 2px red solid;
 
 .col-form-label  {
   position: absolute;
-  opacity: 0.5;
-  color: gray;
+  color: #778;
   padding-left: calc(.375rem + 1px);
   padding-top: calc(.390rem + 2px);
   font-size: 14px;
 }
 
-.labels-placement input[type=text], input[type=email] {
+
+.labels-placement{
+
   padding-bottom: 3px !important;
   padding-top: 13px !important;
   padding-left: calc(.375rem + 1px) !important;
   font-size: 14px !important;
 }
+
+/*size for placeholders*/
+#id_title, #id_brand, #id_sex, #id_undercategory, #id_size, #id_condition, #id_description, #id_email, #id_password, #id_address_form-phone, #id_address_form-name {
+  font-size: 14px;
+}
+
+.asteriskField {
+    display: none;
+}
+
+/*.placic-style {
+  color: gray;
+  opacity: 0.7;
+  font-size: 14px;
+}*/
 
 @media only screen and (max-width: 850px) {
   .checkout-container {

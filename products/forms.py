@@ -37,8 +37,6 @@ class ProductCreateForm(forms.ModelForm):
 		'size',
 		'condition',
 		'national_shipping',
-		'international_shipping'
-		# 'shipping_price'
 			]
 	def __init__(self, request, *args, **kwargs):
 		super(ProductCreateForm, self).__init__(*args, **kwargs)
@@ -56,24 +54,38 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['condition'].widget.attrs['readonly'] = True
 		self.fields['title'].widget.attrs['placeholder'] = _('Some keywords about your item')
 		self.fields['description'].widget.attrs['placeholder'] = _('Describe your item in details')
-		self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
-		self.fields['national_shipping'].widget.attrs['placeholder'] = _('National shipping costs')
-		self.fields['international_shipping'].widget.attrs['placeholder'] = _('International shipping costs')
+		# self.fields['price'].widget.attrs['placeholder'] = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
+		# self.fields['national_shipping'].widget.attrs['placeholder'] = _('National shipping costs')
 		self.fields['brand'].widget.attrs['placeholder'] = _('Select a brand')
-		self.fields['sex'].widget.attrs['placeholder'] = _('Select a gender')
-		self.fields['undercategory'].widget.attrs['placeholder'] = _('Select a category')
-		self.fields['size'].widget.attrs['placeholder'] = _('Select a size')
-		self.fields['condition'].widget.attrs['placeholder'] = _('Select a condition')
+		self.fields['sex'].widget.attrs['placeholder'] = _('Gender')
+		self.fields['undercategory'].widget.attrs['placeholder'] = _('Category')
+		self.fields['size'].widget.attrs['placeholder'] = _('Size')
+		self.fields['condition'].widget.attrs['placeholder'] = _('Condition')
 		self.fields['price'].initial = ''
 		self.fields['national_shipping'].initial = ''
-		self.fields['international_shipping'].initial = ''
-		self.fields['title'].label = _('Title')
-		self.fields['sex'].label = _('Gender')
-		self.fields['undercategory'].label = _('Category')
-		self.fields['size'].label = _('Size')
-		self.fields['condition'].label = _('Condition')
-		self.fields['price'].label = _('Price')
-		self.fields['description'].label = _('Description')
+		self.fields['title'].label = False
+		self.fields['sex'].label = False
+		self.fields['undercategory'].label = False
+		self.fields['size'].label = False
+		self.fields['condition'].label = False
+		self.fields['price'].label = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
+		self.fields['national_shipping'].label = _('Shipping price in ') + ('{currency}').format(currency=currency_placeholder)
+		self.fields['description'].label = False
+		self.fields['brand'].label = False
+		self.fields['price'].widget.attrs['step'] = 1
+		self.fields['national_shipping'].widget.attrs['step'] = 1
+		self.fields['price'].widget.attrs['class'] = 'labels-placement'
+		self.fields['national_shipping'].widget.attrs['class'] = 'labels-placement'
+
+
+		if request.user.is_admin:
+			self.fields['price'].initial = 123
+			self.fields['national_shipping'].initial = 123
+			self.fields['title'].initial = 'оооо Макарена'
+			self.fields['description'].initial = 'Макареночка с маслом и сырником'
+			self.fields['brand'].initial = 'Boris Bidjan Saberi'
+
+
 
 
 		
@@ -171,17 +183,15 @@ class ProductCreateForm(forms.ModelForm):
 	def clean_price(self):
 		data = self.cleaned_data
 		price = data.get('price')
+		self.cleaned_data['price_original'] = price
 		user = self.request.user
 		price = Product.objects.price_to_region_price(price = price, user = user)
-		# if region_user:
-		# 	price = round((int(price)/region_user.currency_mult),6)
 		return price
 
-	# def clean_shipping_price(self):
+	# def clean_national_shipping(self):
 	# 	user = self.request.user
-	# 	price = Product.objects.price_to_region_price(price = self.cleaned_data.get('shipping_price'), user = user)
-	# 	shipping_price = Shipping_price.objects.create(national_shipping = price)
-	# 	return shipping_price
+	# 	national_shipping = Product.objects.price_to_region_price(price = self.cleaned_data.get('national_shipping'), user = user)
+	# 	return national_shipping
 
 class ImageForm(ProductCreateForm):
 	image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True, 'class':'image-upload-button','accept':'image/*','id':'image_custom'} ))
@@ -191,6 +201,8 @@ class ImageForm(ProductCreateForm):
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
 		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		if self.request.user.is_admin:
+			return cleaned_images
 		if len(cleaned_images)==0:
 			raise forms.ValidationError(_("Upload at least 4 images"))
 		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
@@ -212,24 +224,28 @@ class ImageForm(ProductCreateForm):
 		product.overcategory = self.cleaned_data['overcategory']
 		product.active = True
 		form_id = self.request.POST.get('form_id')
+		product.price_original = self.cleaned_data['price_original']
+		if self.request.user.is_admin:
+			product.authentic = 'authentic'
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']
 			array_rotate = self.request.POST.getlist('rotateTimes')
 			array_qq_id = self.request.POST.getlist('qq-file-id')
 			qs_rotate = {}
-			for idx, i in enumerate(array_qq_id):
-				qs_rotate[i] = array_rotate[idx]
-			for idx, file in enumerate(images):
-				this_rotate = qs_rotate.get(str(file.file_id))
-				file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
-				obj = ProductImage.objects.create(
-					product=product,
-					image=file,
-					slug=product.slug,
-					image_order=idx+1
-									)
-			UploadedFile.objects.delete_uploaded_files(form_id)
+			if images:
+				for idx, i in enumerate(array_qq_id):
+					qs_rotate[i] = array_rotate[idx]
+				for idx, file in enumerate(images):
+					this_rotate = qs_rotate.get(str(file.file_id))
+					file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
+					obj = ProductImage.objects.create(
+						product=product,
+						image=file,
+						slug=product.slug,
+						image_order=idx+1
+										)
+				UploadedFile.objects.delete_uploaded_files(form_id)
 		return product
 		
 class UploadFileForm(forms.Form):

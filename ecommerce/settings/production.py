@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from django.contrib.messages import constants as messages
 
+TESTSERVER = os.environ.get('TESTSERVER')
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
@@ -37,18 +39,29 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
     
+
+
 TESTMODE = False
-ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com', 'salt-testserver.herokuapp.com']
-
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'info@saltish.co' 
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
-BASE_URL = 'https://www.saltish.co'
-BASE_URL_WITHOUT_WWW = 'https://saltish.co'
+
+if TESTSERVER == 'True':
+    BASE_URL = 'https://www.salt-testserver.herokuapp.com'
+    BASE_URL_WITHOUT_WWW = 'https://salt-testserver.herokuapp.com'
+    LIQPAY_PUBLIC_KEY = 'sandbox_i6955995458'
+    LIQPAY_PRIVATE_KEY = 'sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG'
+    ALLOWED_HOSTS = ['salt-testserver.herokuapp.com']
+else:
+    BASE_URL = 'https://www.saltish.co'
+    BASE_URL_WITHOUT_WWW = 'https://saltish.co'
+    LIQPAY_PUBLIC_KEY = os.environ.get('LIQPAY_PUBLIC_KEY')
+    LIQPAY_PRIVATE_KEY = os.environ.get('LIQPAY_PRIVATE_KEY')
+    ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com']
+
 
 MANAGERS = (
     ('Vladislav Kudrin', "info@saltish.co" ),
@@ -56,7 +69,7 @@ MANAGERS = (
 
 ADMINS = MANAGERS
 
-ALLOWED_IP_ADDRESSES = os.environ.get('ALLOWED_IP_ADDRESSES')
+PAY_USER_SECRET_KEY = os.environ.get('PAY_USER_SECRET_KEY')
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 ASGI_APPLICATION = 'ecommerce.routing.application'
@@ -111,10 +124,7 @@ LOGOUT_URL = '/logout/'
 #SESSION OPTIONS
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = True
-#LiqPay
-#Live
-LIQPAY_PUBLIC_KEY = os.environ.get('LIQPAY_PUBLIC_KEY')
-LIQPAY_PRIVATE_KEY = os.environ.get('LIQPAY_PRIVATE_KEY')
+
 
 # import stripe
 # STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
@@ -167,6 +177,7 @@ AUTHENTICATION_BACKENDS = [
         ]
 
 MIDDLEWARE = [
+    'compression_middleware.middleware.CompressionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',

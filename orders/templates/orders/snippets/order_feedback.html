@@ -1,7 +1,7 @@
 <!-- Modal -->
 {% load static %}
 {% if object.feedback is None %}
-
+{% load i18n %}
   <link href="{% static 'rating_js/css/star-rating.css' %}" media="all" rel="stylesheet" type="text/css" />
 
 
@@ -21,7 +21,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Rate the order: {{ object.order_id }}</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Rate the order:' %} {{ object.order_id }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -34,8 +34,8 @@
           {{ form.comment|as_crispy_field }}
       </div>
       <div class="modal-footer">
-        <button type="button" id='dismiss_modal_feedback' class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" disabled='true' id="{{ object.order_id }}" class="btn btn-primary">Send feedback</button>
+        <button type="button" id='dismiss_modal_feedback' class="btn btn-dark" data-dismiss="modal">{% trans 'Close' %}</button>
+        <button type="submit" disabled='true' id="{{ object.order_id }}" class="btn btn-dark">{% trans 'Send feedback' %}</button>
       </div>
       </form>
     </div>

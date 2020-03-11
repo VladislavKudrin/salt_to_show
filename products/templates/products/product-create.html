@@ -137,6 +137,11 @@ select{
   padding-bottom: 1%;
 }
 
+#div_id_brand{
+  margin-bottom: 0px;
+}
+
+
 
 </style>
 </head>
@@ -159,19 +164,19 @@ select{
        font-family: Helvetica; 
       font-size: 14px;'>    
  -->
-
+<div class="placic-style">
   {{form.title|as_crispy_field}}
-
+</div>
   <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 placic-style">
       {{form.brand|as_crispy_field}}
   <div class="tiny">
         {% trans 'Email info@saltish.co if the brand you are trying to add does not exist.' %}
     </div>
   </div>
-    <div class="col-12 col-md-6 ">
+    <div class="col-12 col-md-6 placic-style">
       {{form.sex|as_crispy_field}}
-      <input class='input-gender' type="hidden" readonly name="sex" value=''>
+      <input class='input-gender' type="hidden" readonly name="sex" value='{% if request.user.is_admin %}1{% endif %}'>
       <div class="dropdown-custom">
         <div class="dropdown-content" id='dropdown-box'>
           <div class='row m-0'>
@@ -202,9 +207,9 @@ select{
   </div>
 
   <div class="row ">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 placic-style">
       {{form.undercategory|as_crispy_field}}
-      <input class='input-undercategory' type="hidden" readonly name="undercategory" value=''>
+      <input class='input-undercategory' type="hidden" readonly name="undercategory" value='{% if request.user.is_admin %}1{% endif %}'>
       <div class="dropdown-custom">
         <div class="dropdown-content" id='dropdown-box'>
           <div class='row m-0'>
@@ -218,9 +223,9 @@ select{
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 placic-style">
       {{ form.size|as_crispy_field }}
-      <input class='input-size' type="hidden" readonly name="size" value=''>
+      <input class='input-size' type="hidden" readonly name="size" value='{% if request.user.is_admin %}154{% endif %}'>
       <div class="dropdown-custom">
         <div class="dropdown-content" id='dropdown-box'>
           <div class='row m-0'>
@@ -244,9 +249,9 @@ select{
   </div>
 
   <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 placic-style">
       {{form.condition|as_crispy_field}}
-      <input class='input-condition' type="hidden" readonly name="condition" value=''>
+      <input class='input-condition' type="hidden" readonly name="condition" value='{% if request.user.is_admin %}1{% endif %}'>
       <div class="dropdown-custom">
         <div class="dropdown-content" id='dropdown-box'>
           <div class="row m-0">
@@ -262,29 +267,25 @@ select{
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
+
+    <div class="col-12 col-md-3 price-col">
       {{form.price|as_crispy_field}}
     </div>
-    <div class="col-12 col-md-6">
-      {{form.national_shipping|as_crispy_field}}
-    </div>
 
-    <div class="col-12 col-md-6">
-      {{form.international_shipping|as_crispy_field}}
+    <div class="col-12 col-md-3 shipping-col">
+      {{form.national_shipping|as_crispy_field}}
     </div>
 
 
   </div> 
-
-
-
-        {% trans 'Photos*' %}
-
   <div class="row">
-    <div class="col-12 col-md-12">
+    <div class="col-12 col-md-12 mt-2">
+  <span style="color: #778; padding-left: 0.85em; font-size: 14px;">{% trans 'Photos*' %}</span>
+
+
 
     {% if request.path == product_create_url %}
-      <label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse mt-3">{% trans 'Browse' %}</label>
+      <label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">{% trans 'Browse' %}</label>
     {% endif %} 
       
   {{form.image}}
@@ -304,11 +305,13 @@ select{
 </div>
 </div>
 
+<div class="placic-style">
   {{form.description|as_crispy_field}} 
+</div>
  
   <button type="submit" value="Submit" class="btn button-black hover-button large-button btn-block">{{ button }}</button>
-  {% include "forms/helper_text.html" %}
-  </div>   <!-- style   -->   
+  <!-- {% include "forms/helper_text.html" %} -->
+  </div>
 
 
 
