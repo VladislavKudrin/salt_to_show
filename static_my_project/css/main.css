@@ -793,7 +793,7 @@ border: 2px red solid;
 }
 
 /*size for placeholders*/
-#id_title, #id_brand, #id_sex, #id_undercategory, #id_size, #id_condition, #id_description, #id_email, #id_password {
+#id_title, #id_brand, #id_sex, #id_undercategory, #id_size, #id_condition, #id_description, #id_email, #id_password, #id_address_form-phone, #id_address_form-name {
   font-size: 14px;
 }
 

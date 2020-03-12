@@ -4,6 +4,7 @@
 {% load for_loop_extras %}
 {% load checked_time %}
 {% block content %}
+{% load i18n %}
 
 <head>
 <style type="text/css">
@@ -188,17 +189,20 @@
       <div class="col-xs-12 col-md-6 pt-3 " style="padding-bottom: 1rem; padding-top: 1rem; border-top: 1px solid gray">
         <div class='row' style='color: #737373;border-bottom: 1px dashed #e1e1e1;padding-bottom: 0.75em;font-size: 0.9em;'>
           <div class="col-12 space-between">
-            <span>Price:</span>
+
+            <span>{% trans 'Price:' %}</span>
             <span>{{ product.price_original }} {{ product.currency_original }}</span>
           </div>
           <div class="col-12 space-between">
             <span>Shipping price:</span>
             <span>{{ product.national_shipping|format_decimal }} {{ product.currency_original }}</span>
+
           </div>
         </div>
         <div class='row' style='padding-top: 0.5em; font-weight: 600;'>
             <div class="col-12 space-between">
-              <span>To pay:</span>
+
+              <span>{% trans 'To pay:' %}</span>
               <span>{{ product.make_total|format_decimal }} {{ product.currency_original }}</span>
             </div>
         </div>  

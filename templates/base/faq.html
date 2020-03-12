@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load static %}
 {% block content %}
 
@@ -83,9 +83,8 @@ p {
 
 <div class='col-2 pl-5 faq-side'> 
 <div id="list-example" class="list-group position-fixed">
-<!--   <a class="list-group-item list-group-item-action" href="#whysalt">ПОЧУМУ SALT?</a> -->
-  <a class="list-group-item list-group-item-action" href="#buy">ПОКУПАТЕЛЯМ</a>
-  <a class="list-group-item list-group-item-action" href="#sell">ПРОДАВЦАМ</a>
+  <a class="list-group-item list-group-item-action" href="#buy">{% trans 'BUYERS' %}</a>
+  <a class="list-group-item list-group-item-action" href="#sell">{% trans 'SELLERS' %}</a>
 </div>
 </div>
 
@@ -96,58 +95,75 @@ p {
 
 
 
-<!--   <p id="whysalt" class='pt-5 sub-heading faq-sub-heading'>ПОЧЕМУ СОЛТ? </p>
+  <p id="buy" class='pt-5 sub-heading faq-sub-heading'>{% trans 'BUYERS' %}</p> 
 
- -->
-
-  <p id="buy" class='pt-5 sub-heading faq-sub-heading'>ПОКУПАТЕЛЯМ</p> 
 
 
 <p>
-<strong>На SALT действует система безопасной покупки. Это означает, что продавец получает оплату только после того, как покупатель подтвердит успешную доставку айтема.</strong>
 
-<strong>Я хочу купить вещь на SALT. Хмм... Как же мне это сделать?</strong>
-- Выбери понравившийся айтем и нажми на кнопку КУПИТЬ БЕЗОПАСНО
-- Введи свои данные и выбери адрес ближайшего отделения Нова Пошта
-- Проверь стоимость товара и доставки, затем нажми на ОПЛАТИТЬ
-- На сайте LiqPay ты сможешь безопасно ввести данные карты (ПриватБанк, Visa, MasterCard), и все — вещь куплена!
+<strong>{% trans 'There is a secure purchase system on SALT. That means that the seller receives payment only after the buyer confirms the successful delivery of the item.' %}</strong>
 
-<strong>Оплата совершенна. Что происходит дальше? </strong>
-- Продавец получает оповещение о покупке и данные для отправки Новой Поштой
-- Как только айтем отправлен, в разделе ЗАКАЗЫ ты можешь трекнуть доставку по номеру ТТН
-- Когда товар доставлен, подтверди получение в разделе ЗАКАЗЫ
+<strong>{% trans 'I want to buy an item on SALT. Hmm ... How do I do this?' %}</strong>
+{% blocktrans %}
+- Choose on the item you want to purchase and click on BUY SECURE
+- Enter your details and select the address of the nearest office of Nova Poshta
+- Check the cost of goods and delivery, then click on PAY
+- On the LiqPay website, enter the card details safely (PrivatBank, Visa, MasterCard), and that's it - the item was bought!
+{% endblocktrans %}
 
-<strong>Когда мне придет товар? Жду не дождусь!</strong>
-- Для жителей Украине доставка осуществляется через Нову Пошту. 
-- Точные сроки доставки зависят от регионов отправителя и получателя. Обычно это 1-2 дня с момента отправки. 
-- Рассчитать сроки доставки можно здесь: https://novaposhta.ua/ru/onlineorder/estimatedate
+<strong>{% trans "Payment completed. What's next?" %} </strong>
+{% blocktrans %}
+- The seller receives a notification of the purchase and shippment data for sending the item
+- Once the item has been sent, in the ORDERS section you can track delivery by the tracking number
+- When the item is delivered, confirm the delivery in the ORDERS section.
+{% endblocktrans %}
 
-<strong>Ваш сервис бесплатный? </strong>
-- Да, совершать покупки на СОЛТ абсолютно бесплатно. А еще - 100% безопасно, так как у нас на сайте нет фейков. 
+<strong>{% trans "When am I gonna receive the item? I can't wait!" %}</strong>
+{% blocktrans %}
+- For the residents of Ukraine, delivery is carried out through Nova Posta
+- The exact delivery time depends on the regions of the sender and recipient. Usually it is 1-2 days from the moment of sending
+- You can calculate delivery times here: https://novaposhta.ua/en/onlineorder/estimatedate
+{% endblocktrans %}
 
-<strong>Мне пришла вещь, но как бы это сказать ... в описании было указано другое, и поэтому она осталась лежать на отделении. Что делать?  </strong>
-- В разделе ЗАКАЗЫ нужно нажать на кнопку ПОЖАЛОВАТЬСЯ и мы свяжемся с тобой в течение суток для перепроверки 
-- В случае подтверждения несоответствия вернем тебе деньги за покупку на указанную карту
+<strong>{% trans 'Is SALT free?' %} </strong>
+{% blocktrans %}
+- Yes, shopping on SALT is absolutely free. And also - 100%% <a style="text-decoration: underline" href="https://www.saltish.co/about/#safe">safe</a> 
+{% endblocktrans %}
 
+<strong>{% trans 'I received the item, but ... it does not match the description. What do I do?' %} </strong>
+{% blocktrans %}
+- In the ORDERS section, click on REPORT and we will contact you within 24 hours to double-check
+- If the item, indeed, does not match the description, we will refund you money on the specified card
+{% endblocktrans %}
 </p>
 
 
   
-  <p id="sell" class='pt-5 sub-heading faq-sub-heading'>ПРОДАВЦАМ</p>
+  <p id="sell" class='pt-5 sub-heading faq-sub-heading'>{% trans 'SELLERS' %}</p>
 
 <p>
-<strong>Завалялся модненький айтем. Как продать вещь на СОЛТ? </strong>
--Выставить объявление на СОЛТ предельно просто. 
-- Выстави свои айтемы на продажу в разделе SELL (не забудь добавить перед этим номер карты в личном кабинете - Чтобы покупатели смогли перевести тебе денежки!)
+<strong>{% trans 'I found a nice item in my closet. How to sell it on SALT?' %} </strong>
+{% blocktrans %}
+- First, enter your card details in the profile settings (so that customers can transfer you <a href="https://www.youtube.com/watch?v=cC3Kn9Y-cC4"> money </a>!)
+- Click on SELL and fill out a simple form
+- That's it - the item is uploaded and available in the section MY ITEMS
+- After (successful) two-factor verification, it will be visible to everyone in the general catalogue
+{% endblocktrans %}
 
-<strong>Вещичку купили и мне пришел мейл. Когда придут деньги?</strong>
-- Не переживай - деньги уже списались с карты покупателя. Как только покупатель подтвердит получание айтема - деньги тут же переведутся тебе. 
-- Поэтому незамедлительно отправь купленный айтем на адрес покупателя и добавь трекинг в разделе ЗАКАЗЫ
-- Как только покупатель подтвердит успешную доставку айтема, деньги моментально придут к тебе на карту. 
+<strong>{% trans 'Someone purchased my item. When will I get the money?' %}</strong>
+{% blocktrans %}
+- Don’t worry - the money has already been debited from the buyer's card
+- Therefore, you should immediately ship the item and add tracking in the ORDERS section
+- As soon as the buyer confirms the successful delivery, the money will come to your card within 24 hours
+- The buyer has 7 days to confirm the successful  delivery 
+- In case the buyer does not confirm the delivery (or did not contact us) after 7 days, the money is transferred to your card automatically
+{% endblocktrans %}
 
-<strong>Какая комиссия SALT с каждой сделки? </strong>
-- Пока что никакой! Мы делаем все на чистом энтузиазме и будем держать эту платформу бесплатной как можно дольше.
-<p>
+<strong>{% trans 'What is the SALT commission for each transaction?' %} </strong>
+{% blocktrans %}
+- As for now - none. We will keep this platform free for as long as possible
+{% endblocktrans %}
+</p>
 
 </div>
 </div>
@@ -155,6 +171,7 @@ p {
 
 </div>
 </div>
+
 
 <script type="text/javascript">
 

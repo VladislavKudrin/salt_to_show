@@ -69,7 +69,7 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['size'].label = False
 		self.fields['condition'].label = False
 		self.fields['price'].label = _('Price in ') + ('{currency}').format(currency=currency_placeholder)
-		self.fields['national_shipping'].label = _('Shipping price ') + ('{currency}').format(currency=currency_placeholder)
+		self.fields['national_shipping'].label = _('Shipping price in ') + ('{currency}').format(currency=currency_placeholder)
 		self.fields['description'].label = False
 		self.fields['brand'].label = False
 		self.fields['price'].widget.attrs['step'] = 1

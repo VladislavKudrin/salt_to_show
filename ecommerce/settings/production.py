@@ -49,6 +49,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
 
+
+
 if TESTSERVER == 'True':
     BASE_URL = 'https://www.salt-testserver.herokuapp.com'
     BASE_URL_WITHOUT_WWW = 'https://salt-testserver.herokuapp.com'
@@ -57,7 +59,7 @@ if TESTSERVER == 'True':
     ALLOWED_HOSTS = ['salt-testserver.herokuapp.com']
 else:
     BASE_URL = 'https://www.saltish.co'
-    BASE_URL_WITHOUT_WWW = 'https://saltish.co'
+    BASE_URL_WITHOUT_WWW = 'https://www.saltish.co'
     LIQPAY_PUBLIC_KEY = os.environ.get('LIQPAY_PUBLIC_KEY')
     LIQPAY_PRIVATE_KEY = os.environ.get('LIQPAY_PRIVATE_KEY')
     ALLOWED_HOSTS = ['.saltish.co', 'salt-eu.herokuapp.com']
