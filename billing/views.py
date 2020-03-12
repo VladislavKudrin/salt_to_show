@@ -32,7 +32,7 @@ class PayView(TemplateView):
     template_name = 'billing/pay.html'
     def get(self, request, *args, **kwargs):
         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
-        callback_url = settings.HEROKU_TEST_URL + reverse('payment:pay_callback')
+        callback_url = settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay_callback')
         if settings.TESTMODE:
             callback_url = "https://enbarnzipr23p.x.pipedream.net"
         order = Order.objects.by_request(request).first()
@@ -58,13 +58,6 @@ class PayView(TemplateView):
 @method_decorator(csrf_exempt, name='dispatch')
 class PayCallbackView(View):
     def post(self, request, *args, **kwargs):
-        print('PRIVET!!!!!!!!')
-        print('PRIVET!!!!!!!!')
-        print('PRIVET!!!!!!!!')
-        print('PRIVET!!!!!!!!')
-        print('PRIVET!!!!!!!!')
-        print('PRIVET!!!!!!!!')
-        print('PRIVET!!!!!!!!')
         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
         data = request.POST.get('data')
         signature = request.POST.get('signature')
