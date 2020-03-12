@@ -14,7 +14,6 @@ import itertools
 class ChatConsumer(AsyncConsumer):
 	async def websocket_connect(self, event):
 		# when the socket connects
-		# print('connected', event)
 		other_user = self.scope['url_route']['kwargs']['username'] #get that username from url kwargs, kwargs coming from routing.py urls
 		# other_user_full = User.objects.filter(username=other_user).first() #get user 
 		me = self.scope['user'] # takes user this.username gives username / self.request.user

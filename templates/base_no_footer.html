@@ -19,7 +19,7 @@
   {% block content %}
   {% endblock %}
 </div>
-{% block javascript %}
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
   <script type="text/javascript">
@@ -28,7 +28,7 @@
   gtag('js', new Date());
   gtag('config', 'UA-150733918-1');   
   </script> 
-{% include 'base/js.html' %} 
-{% endblock %}
+    {% block script %}{% endblock %}
+    {% include 'base/js.html' %}
 </body>
 </html>
