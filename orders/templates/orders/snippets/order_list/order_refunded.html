@@ -26,7 +26,7 @@
 						</div>
 						<div class="col-4">
 							<span class="field-name" style="font-weight: bold;">{% trans 'Total:' %}</span><br>
-							<span>{{ object.total|to_user_currency:request }}</span>
+							<span>{{ object.total|format_decimal }} {{ object.product.currency_original }}</span>
 						</div>
 					</div>
 				</div>

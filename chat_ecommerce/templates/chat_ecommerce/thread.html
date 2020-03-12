@@ -46,8 +46,7 @@
 	display: inline-block!important
 }
 #chat-items{
-/*	height: 82%!important
-*/	max-height: calc(100vh - 184px) !important; 
+	height: 82%!important
 }
 }
 
@@ -79,7 +78,7 @@
 
     height:auto;
     overflow:auto;
-	max-height: calc(100vh - 197px); 
+	max-height: calc(100vh - 190px); 
 
 }
 
@@ -289,7 +288,6 @@ button:focus {
 	left:25%;
 	height:20%;
 	border-bottom: 0.75px solid #e1e6e6 !important;
-
 }*/
 .backgroundy{
 	background-color: black;
@@ -547,7 +545,7 @@ button:focus {
 									</a>
 									{% else %}
 
-									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 									</a>
 									{% endif %}
@@ -556,9 +554,7 @@ button:focus {
 									</div>
 
 									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
-
-									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
-
+									<a href="{{ object.first.get_absolute_url }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
 									{{ object.second.username }}
 								    </a>
 									{% if object.product and request.user != object.product.user %}
@@ -630,7 +626,7 @@ button:focus {
 						<form id='websocket-form' method='POST'> {% csrf_token %}
 							<div class='row' id='input-row' style='position: fixed;bottom: 0; width:77%; margin-left:0px;' >
 								<div class='col-10 col-md-11 my-auto pr-0'>
-									{{form }}
+									{{ form }}
 									</div>
 								<div class='col-2 col-md-1 my-auto pl-0' >
 									<button type='submit' class='btn'>
@@ -660,6 +656,7 @@ button:focus {
 
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
+
 </script>
 <script>
 
@@ -768,7 +765,6 @@ socket.onmessage = function(e) {
 	var hour = (now.getHours()<10?'0':'') + now.getHours();
 	var min = (now.getMinutes()<10?'0':'') + now.getMinutes();
 	var date = day + ' '+ hour.toString() + ':' + min.toString()
-	console.log(date)
 	var opponent_username = chatDataMsg.opponent_username
 	var req = chatDataMsg.req
 	var chatHolder = $('#chat-items')

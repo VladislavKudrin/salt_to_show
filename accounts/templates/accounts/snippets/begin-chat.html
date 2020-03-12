@@ -2,8 +2,7 @@
 {% load for_loop_extras %}
 
 
-{% if 'test'|get_chat_options == 'True' %}
-
+{% if 'test'|get_chat_options == 'include' %}
 	{% if request.user.username == object.username %}
 		<a href="{% url 'accounts:user-update' %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Update profile' %}</a>
 	{% else %}
