@@ -155,7 +155,7 @@ class PayToUserCallbackView(View):
             if order.exists() and order.count() == 1:
                 order = order.first()
                 transaction = Transaction.objects.new_or_get(order=order, data=response)
-                payback = Payback.objects.new_or_get(order=order)
+                payback = Payout.objects.new_or_get(order=order)
                 if response.get("status") == "success":
                     order.active = False
                     order.save()
