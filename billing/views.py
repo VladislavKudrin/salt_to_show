@@ -58,6 +58,13 @@ class PayView(TemplateView):
 @method_decorator(csrf_exempt, name='dispatch')
 class PayCallbackView(View):
     def post(self, request, *args, **kwargs):
+        print('PRIVET!!!!!!!!')
+        print('PRIVET!!!!!!!!')
+        print('PRIVET!!!!!!!!')
+        print('PRIVET!!!!!!!!')
+        print('PRIVET!!!!!!!!')
+        print('PRIVET!!!!!!!!')
+        print('PRIVET!!!!!!!!')
         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
         data = request.POST.get('data')
         signature = request.POST.get('signature')
