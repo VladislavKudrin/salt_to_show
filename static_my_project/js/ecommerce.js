@@ -408,10 +408,16 @@ function bind_ajax_heart(form){
     // edgeY:  200,
     // edgeX:  200,
     // blankImage: "{% static 'img/dust_stratches.png' %}",
-    blankImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/1024px-Solid_white.svg.png",
-    scrollContainer: document.getElementById("my-custom-scrollbar"),
+    blankImage: "https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png",
+    scrollContainer: document.getElementById("myTabContent"),
     srcAttr: 'data-src'
   });
+// For ajax
+  $(window).on('ajaxComplete', function() {
+  setTimeout(function() {
+    $(window).lazyLoadXT();
+  }, 50);
+});
     
 
 // Wishlist Product Detail View
