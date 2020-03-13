@@ -1,3 +1,9 @@
+/*   Was middle before, I removed it because of lazy loading ProductDetailVeiw 
+   (was some square around image because of it. If causing problems - remove)*/
+   img{ 
+   vertical-align: inherit !important;
+    }
+
     html,body{
     font-family: 'Noto Sans', sans-serif !important; 
     -webkit-font-smoothing: antialiased;
