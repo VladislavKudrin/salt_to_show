@@ -1,9 +1,9 @@
 {% load i18n %}
 {% blocktrans %}
-Привет!
+Hey!
 
 
-У тебя есть непрочитанные сообщения. Не забудь на них ответить :)
+You have new messages. Check them out!
 
 
 SALT

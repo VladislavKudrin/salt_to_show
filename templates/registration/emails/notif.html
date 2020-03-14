@@ -16,7 +16,6 @@
 		</div>
 	{% endif %}
 
-{% blocktrans %}
 	<div style="border: 1px solid black; display: inline-block; font-size: 20px;  padding: 12px; min-width: 175px;word-break: break-word;
 	max-width: 400px;">
 		<p style='text-align: left !important; font-size: 18px; margin: 0 0 !important'>{{last_message_from}}:</p> </br>
@@ -25,7 +24,7 @@
 
 	<div style="text-align: center; margin: 32px 32px;">
 		<button style="border: 1px solid black; background-color: black; padding: 15px 15px;">
-			<a href="https://www.saltish.co/messages/" style="text-decoration: none; color: white; font-size: 16px">ПЕРЕЙТИ В ДИАЛОГИ</a>
+			<a href="https://www.saltish.co/messages/" style="text-decoration: none; color: white; font-size: 16px">{% trans 'GO TO CHATS' %}</a>
 		</button>
 	</div>
 
@@ -36,6 +35,4 @@
 	</div>
 
 </div>
-
-{% endblocktrans %}
 
