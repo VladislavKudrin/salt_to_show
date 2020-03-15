@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-14 07:24+0000\n"
-"PO-Revision-Date: 2020-03-11 18:07+0100\n"
+"PO-Revision-Date: 2020-03-15 14:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid ""
 "This email does not exist or already acivated. Would you like to <a href="
 "\"{link}\">register</a>?"
-msgstr "Такого мейлу не існує. Хочеш <a href={link}>зареєструватися</a>?"
+msgstr "Цей мейл не існує. Хочеш <a href={link}>зареєструватися</a>?"
 
 #: accounts/forms.py:116
 msgid "Min 8 characters, digits + numbers"
@@ -37,11 +37,11 @@ msgstr "Твій мейл"
 #: accounts/forms.py:120
 #, python-brace-format
 msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
-msgstr "<a href={resend_link}> (Кликни, щоб вислати підтвердження ще раз</a>.)"
+msgstr "<a href={resend_link}> (Клікни, щоб вислати підтвердження ще раз</a>.)"
 
 #: accounts/forms.py:182 accounts/forms.py:200
 msgid "-- Please select your region --"
-msgstr "— Виберіть свій регіон —"
+msgstr "— Вибери свій регіон —"
 
 #: accounts/forms.py:191
 msgid "Email"
@@ -92,8 +92,7 @@ msgstr "Оновити аккаунт"
 #: accounts/templates/accounts/snippets/begin-chat.html:14
 #: accounts/templates/accounts/snippets/begin-chat.html:16
 #: accounts/templates/accounts/snippets/begin-chat.html:27
-#: accounts/templates/accounts/snippets/begin-chat.html:29
-#: products/views.py:107
+#: accounts/templates/accounts/snippets/begin-chat.html:29 products/views.py:107
 msgid "Contact seller"
 msgstr "Зв’язатися с продавцем"
 
@@ -174,7 +173,7 @@ msgstr "Зберегти"
 
 #: accounts/views.py:317
 msgid "Logout"
-msgstr "Выйти"
+msgstr "Вийти"
 
 #: addresses/forms.py:52
 msgid "Name"
@@ -182,7 +181,7 @@ msgstr "Ім’я та прізвище"
 
 #: addresses/forms.py:53
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #: billing/templates/billing/emails/payback_failure.html:2
 #, python-format
@@ -200,6 +199,18 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+"\n"
+"Помилка транзакції:\n"
+"\n"
+"<b>%(order_id)s</b>\n"
+"\n"
+"\n"
+"Відповідь:\n"
+"\n"
+"<b>%(error_response)s</b>\n"
+"\n"
+"\n"
+"\n"
 
 #: billing/templates/billing/emails/payback_failure.txt:2
 #, python-format
@@ -216,6 +227,17 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+"\n"
+"Помилка транзакції:\n"
+"%(order_id)s\n"
+"\n"
+"\n"
+"Відповідь:\n"
+"\n"
+"%(error_response)s\n"
+"\n"
+"\n"
+"\n"
 
 #: categories/templates/categories/snippets/filter-box.html:325
 #: products/forms.py:59
@@ -244,7 +266,7 @@ msgstr "Знайдено"
 
 #: categories/views.py:268
 msgid "Items"
-msgstr "айтемов"
+msgstr "Айтеми"
 
 #: categories/views.py:269
 msgid "Sort by"
@@ -264,7 +286,7 @@ msgstr "Спочатку дорогі"
 
 #: categories/views.py:273 products/forms.py:60
 msgid "Gender"
-msgstr "Гендер"
+msgstr "Стать"
 
 #: categories/views.py:274
 msgid "Type"
@@ -304,7 +326,7 @@ msgstr "Твій месседж"
 
 #: ecommerce/forms.py:25
 msgid "Order Id: "
-msgstr ""
+msgstr "ID замовлення "
 
 #: ecommerce/utils.py:94
 msgid "Only alphanumeric characters are allowed"
@@ -325,24 +347,24 @@ msgstr "Без фейків"
 #: ecommerce/views.py:40
 #, python-format
 msgid ""
-"What makes SALT different from others? Well, we have a zero-fake-policy "
-"here. Fakes make online shopping unbearable. The countterfeit industry in "
-"fashion is valued around $600 billion. While someone makes tons of money, "
-"the quality of shopping for the customer is deteriorating. But we love "
-"shopping. Probably even more than you. So we set up a very simple goal - to "
-"make shopping as pleasant and safe as possible. Therefore, on SALT you can "
-"be %s%% sure that you are buying a nice authentic piece."
+"What makes SALT different from others? Well, we have a zero-fake-policy here. "
+"Fakes make online shopping unbearable. The countterfeit industry in fashion "
+"is valued around $600 billion. While someone makes tons of money, the quality "
+"of shopping for the customer is deteriorating. But we love shopping. Probably "
+"even more than you. So we set up a very simple goal - to make shopping as "
+"pleasant and safe as possible. Therefore, on SALT you can be %s%% sure that "
+"you are buying a nice authentic piece."
 msgstr ""
 "Те, що відрізняє нас від інших: на SALT немає і ніколи не буде фейків. Фейки "
-"ніхто не любить, і ми це розуміємо. Саме тому й існує SALT - перша торгова "
-"площадка брендового одягу, на якій за цим стежать. По-справжньому стежать. "
-"Нами рухає дуже проста мета зробити шопінг максимально приємним і безпечним. "
-"Тому на SALT ти можеш бути на %s%%  впевнена_ий, що завжди здобуваєш "
+"ніхто не любить, і ми це розуміємо. Саме тому й існує SALT - перший "
+"торгівельний майданчик брендового одягу, де за цим стежать. По-справжньому "
+"стежать. Наша мета дуже проста - зробити шопінг максимально приємним і "
+"безпечним. Тому на SALT ти можеш бути на %s%%  впевнена_ий, що купуєш "
 "оригінальну річ."
 
 #: ecommerce/views.py:41
 msgid "2-step-verification"
-msgstr "Двухфакторна верифікація"
+msgstr "Двофакторна верифікація"
 
 #: ecommerce/views.py:42
 msgid ""
@@ -351,16 +373,16 @@ msgid ""
 "after uploading. Just in a few seconds, our AI-model assigns a label to the "
 "product - fake or authentic. The model thinks fast and improves itself with "
 "each loaded item (neural networks and all that). And the second step is a "
-"thorough manual check performed by our experienced experts. Thanks to the "
-"two-factor verification of all items, no fake will get to SALT."
+"thorough manual check performed by our experienced experts. Thanks to the two-"
+"factor verification of all items, no fake will get to SALT."
 msgstr ""
-"На SALT діє двухфакторная верифікація продукту (звучить круто, правда?). "
+"На SALT діє двофакторна верифікація продукту (звучить круто, правда?). "
 "Простими словами, кожен айтем перевіряється рівно два рази. Перший - відразу "
-"після завантаження. За лічені секунди наш Штучний інтелект розпізнає "
+"після завантаження. За лічені секунди наш Штучний Iнтелект розпізнає "
 "підробки. Модель вдосконалюється з кожним завантаженим айтемом (нейронні "
 "мережі та усе таке). А другий крок - це ретельний мануальний чек, який "
-"виконують наші досвідчені експерти. Завдяки двухфакторной верифікації "
-"продукту на SALT не пройде жоден фейк."
+"виконують наші досвідчені експерти. Завдяки двофакторній верифікації продукту "
+"на SALT не пройде жоден фейк."
 
 #: ecommerce/views.py:43
 msgid "Less is more"
@@ -371,19 +393,19 @@ msgid ""
 "Simplicity is our core concept. And it's not only limited in minimalistic "
 "design and intuitive interface of SALT. We want both buyers and sellers to "
 "feel respected. Therefore, there is no and never will be annoying ads and "
-"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT "
-"is a community where designer and streetwear clothes take their second "
-"chance. The item finds its new owner without harming the environment. SALT "
-"acts as a modest mediator in this straightforward, but essential deal."
+"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT is "
+"a community where designer and streetwear clothes take their second chance. "
+"The item finds its new owner without harming the environment. SALT acts as a "
+"modest mediator in this straightforward, but essential deal."
 msgstr ""
 "Простота - це наш основний концепт. І це стосується не тільки "
-"мінімалістичного дизайну та інтуїтивного інтерфейсу. Ми хочемо, щоб наших "
-"покупців і продавців поважали. Тому на SALT немає і ніколи не буде "
-"настирливої ​​реклами і платного просування. ніяких банерів, спливаючих вікон "
-"і преміум-акаунтів. SALT - це ком’юніті, де дизайнерська і вулична мода "
-"набуває другий шанс. Річ знаходить свого нового власника без шкоди "
-"навколишньому середовищу. SALT при цьому лише виконує скромну роль "
-"посередника в цій нехитрій угоді"
+"мінімалістичного дизайну та інтуїтивно зрозумілого інтерфейсу. Ми хочемо, щоб "
+"наших покупців і продавців поважали. Тому на SALT немає і ніколи не буде "
+"нав'язливої реклами і платного просування. жодних банерів, спливаючих вікон і "
+"преміум-акаунтів. SALT - це ком’юніті, де дизайнерська і вулична мода "
+"отримують другий шанс. Річ знаходить свого нового власника не завдаючи шкоди "
+"навколишньому середовищу. SALT при цьому лише виконує роль посередника в цій "
+"нехитрій угоді."
 
 #: ecommerce/views.py:80
 msgid "Contact us"
@@ -395,7 +417,7 @@ msgstr "Відправлення…."
 
 #: ecommerce/views.py:111
 msgid "Thank you, your report has been sended"
-msgstr ""
+msgstr "Дякуэмо, ми отримали твою скаргу"
 
 #: ecommerce/views.py:112 ecommerce/views.py:119
 msgid "Success"
@@ -407,7 +429,7 @@ msgstr "Дякуємо"
 
 #: ecommerce/views.py:155
 msgid "Contribute to the sustainable clothes-circle."
-msgstr "Підтримуй круговорот одягу в природі."
+msgstr "Підтримуй кколообыг одягу в природі."
 
 #: ecommerce/views.py:156
 msgid "Find your designer piece fast and safe."
@@ -432,12 +454,11 @@ msgstr ""
 
 #: ecommerce/views.py:161
 msgid "Simple"
-msgstr "Просто"
+msgstr "Легко"
 
 #: ecommerce/views.py:162
 msgid "Our intuitive design was made with love to simplicity and minimalism."
-msgstr ""
-"Наш інтуїтивний дизайн розроблений з любов’ю до простоти i мінімалізму."
+msgstr "Наш інтуїтивний дизайн розроблений з любов’ю до простоти i мінімалізму."
 
 #: ecommerce/views.py:163
 msgid "Read more"
@@ -445,7 +466,7 @@ msgstr "Дізнайся більше"
 
 #: ecommerce/views.py:164
 msgid "Go to your profile"
-msgstr "Перейти в акаунт"
+msgstr "Перейти до акаунту"
 
 #: ecommerce/views.py:165
 msgid "Join our community"
@@ -469,15 +490,15 @@ msgstr "Популярні бренди:"
 
 #: orders/models.py:158
 msgid "Order Confirmation"
-msgstr ""
+msgstr "Підтвердження замовлення"
 
 #: orders/models.py:163
 msgid "uknnown error"
-msgstr ""
+msgstr "невідома помилка"
 
 #: orders/models.py:171
 msgid "Order Error"
-msgstr ""
+msgstr "Помилка замовлення"
 
 #: orders/templates/orders/emails/inform_about_order.html:2
 #, python-format
@@ -492,8 +513,8 @@ msgid ""
 "black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
-"align: center; padding: 32px 32px;\">\n"
+"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;\">\n"
 "\n"
 "\n"
 " \n"
@@ -527,6 +548,50 @@ msgid ""
 "<p>SALT</p>\n"
 "\n"
 msgstr ""
+"\n"
+"<p>Привіт!</p> \n"
+"\n"
+"\n"
+"<div style=“text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;”>\n"
+"  <a href=“https://www.saltish.co/“ style=“text-decoration: none; color: "
+"black; font-size: 36px”>SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=“background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;”>\n"
+"\n"
+"\n"
+" \n"
+"\t\t<div style=“font-size: 20px; text-align: left !important;”>\n"
+"\t\t\t<p>Твоє замовлення <b>%(order_id)s</b> було успішно оплачено. Ми "
+"повідомили продавця надіслати товар за %(time)s годин.</p>\n"
+"\n"
+"\n"
+"\n"
+"\t\t\t<p>Дякуюємо!\n"
+"\t\t\t<br> SALT</p>\n"
+"\t\t</div>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=“https://vk.com/saltmarketplace” ><img style=‘width: 20px; "
+"height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png”></a>\n"
+"\t\t<a href=“https://www.instagram.com/saltish.co/“ ><img style=‘width: 20px; "
+"height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png”></a>\n"
+"\t\t<a href=“https://www.linkedin.com/company/saltish-co/about/“” ><img "
+"style=‘width: 20px; height: 20px; margin: 0 4px;’ src=“https://image.flaticon."
+"com/icons/png/512/2168/2168311.png”></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+"\n"
+"<p>SALT</p>\n"
+"\n"
 
 #: orders/templates/orders/emails/inform_about_order.txt:2
 #, python-format
@@ -545,6 +610,19 @@ msgid ""
 "SALT\n"
 "\n"
 msgstr ""
+"\n"
+"Салют! \n"
+"\n"
+"Твоє замовлення %(order_id)s було успішно оплачено.\n"
+"Ми повідомили продавця надіслати товар протягов %(time)s годин. \n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"Дякуємо!\n"
+"SALT\n"
+"\n"
 
 #: orders/templates/orders/emails/inform_error_payment.html:2
 #, python-format
@@ -559,8 +637,8 @@ msgid ""
 "black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
-"align: center; padding: 32px 32px;\">\n"
+"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;\">\n"
 "\n"
 "\n"
 " \n"
@@ -596,6 +674,52 @@ msgid ""
 "<p>SALT</p>\n"
 "\n"
 msgstr ""
+"\n"
+"<p>Салют!</p> \n"
+"\n"
+"\n"
+"<div style=“text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;”>\n"
+"  <a href=“https://www.saltish.co/“ style=“text-decoration: none; color: "
+"black; font-size: 36px”>SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=“background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;”>\n"
+"\n"
+"\n"
+" \n"
+"\t\t<div style=“font-size: 20px; text-align: left !important;”>\n"
+"\t\t\t<p>Твоє замовлення <b>%(order_id)s</b> не було оплачено. Причина: <b>"
+"%(error)s</b> .</p>\n"
+"\t\t\t<p>Ти можеш перейти до <b>Замовлення</b> та <b>видалити</b> це "
+"замовлення. Після цього, будь ласка, спробуй ще раз.</p>\n"
+"\n"
+"\n"
+"\n"
+"\t\t\t<p>Thank you,\n"
+"\t\t\t<br> SALT</p>\n"
+"\t\t</div>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=“https://vk.com/saltmarketplace” ><img style=‘width: 20px; "
+"height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png”></a>\n"
+"\t\t<a href=“https://www.instagram.com/saltish.co/“ ><img style=‘width: 20px; "
+"height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png”></a>\n"
+"\t\t<a href=“https://www.linkedin.com/company/saltish-co/about/“” ><img "
+"style=‘width: 20px; height: 20px; margin: 0 4px;’ src=“https://image.flaticon."
+"com/icons/png/512/2168/2168311.png”></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+"\n"
+"<p>SALT</p>\n"
+"\n"
 
 #: orders/templates/orders/emails/inform_error_payment.txt:2
 #, python-format
@@ -614,26 +738,40 @@ msgid ""
 "SALT\n"
 "\n"
 msgstr ""
+"\n"
+"Салют!\n"
+"\n"
+"Твоє замовлення order %(order_id)s не було оплачено. Причина: %(error)s .\n"
+"Ти можеш перейти до “Замовлення” та видалити це замовлення. Після цього, будь "
+"ласка, спробуй ще раз. \n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"Дякуємо!\n"
+"SALT\n"
+"\n"
 
 #: orders/templates/orders/order_list.html:91
 msgid "Orders:"
-msgstr ""
+msgstr "Замовлення:"
 
 #: orders/templates/orders/order_list.html:98
 msgid "Purchases"
-msgstr ""
+msgstr "Покупки"
 
 #: orders/templates/orders/order_list.html:101
 msgid "Sales"
-msgstr ""
+msgstr "Продажі"
 
 #: orders/templates/orders/order_list.html:104
 msgid "Archive"
-msgstr ""
+msgstr "Архів"
 
 #: orders/templates/orders/snippets/order_complete_form.html:18
 msgid "Received"
-msgstr ""
+msgstr "Отримано"
 
 #: orders/templates/orders/snippets/order_created_remove_form.html:5
 msgid "Delete Order"
@@ -641,32 +779,29 @@ msgstr "Видалити"
 
 #: orders/templates/orders/snippets/order_feedback.html:24
 msgid "Rate the order:"
-msgstr ""
+msgstr "Оцініть замовлення:"
 
 #: orders/templates/orders/snippets/order_feedback.html:38
 msgid "Send feedback"
-msgstr ""
+msgstr "Відправити фідбек"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:24
 #: orders/templates/orders/snippets/order_list/order_completed.html:22
 #: orders/templates/orders/snippets/order_list/order_refunded.html:24
 #: orders/templates/orders/snippets/order_list/order_sold.html:37
 msgid "Status:"
-msgstr ""
+msgstr "Сттатус:"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:28
 #: orders/templates/orders/snippets/order_list/order_completed.html:26
 #: orders/templates/orders/snippets/order_list/order_refunded.html:28
 #: orders/templates/orders/snippets/order_list/order_sold.html:41
 msgid "Total:"
-msgstr ""
+msgstr "Усього:"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:33
-#, fuzzy
-#| msgctxt "orders"
-#| msgid "Report:"
 msgid "Report:"
-msgstr "Скарга?"
+msgstr "Скарга:"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:43
 #: orders/templates/orders/snippets/order_sold_form.html:12
@@ -682,15 +817,15 @@ msgstr "Поки що тут пусто"
 
 #: orders/templates/orders/snippets/order_list/order_sold.html:45
 msgid "Address:"
-msgstr "Адрес: "
+msgstr "Адрес:"
 
 #: orders/templates/orders/snippets/report_button.html:10
 msgid "Report"
-msgstr "Скарга?"
+msgstr "Скарга"
 
 #: products/forms.py:55
 msgid "Some keywords about your item"
-msgstr "Пара слів про айтем"
+msgstr "Кілька слів про айтем"
 
 #: products/forms.py:56
 msgid "Describe your item in details"
@@ -698,15 +833,15 @@ msgstr "Детально опиши айтем"
 
 #: products/forms.py:71
 msgid "Price in "
-msgstr "Цiна у"
+msgstr "Цiна у "
 
 #: products/forms.py:72
 msgid "Shipping price in "
-msgstr "Введи ціну у"
+msgstr "Введи ціну у "
 
 #: products/forms.py:96
 msgid "Please, select a gender"
-msgstr "— Вибери гендер —"
+msgstr "— Вибери стать —"
 
 #: products/forms.py:109
 msgid "Please, select a valid category"
@@ -722,7 +857,7 @@ msgstr "— Вибери стан —"
 
 #: products/forms.py:152
 msgid "Please, select existing brand"
-msgstr "— Вибери існуючий бренд —"
+msgstr "— Вибери бренд —"
 
 #: products/forms.py:176
 msgid "Please, make it shorter. # of lines to be removed:"
@@ -742,11 +877,11 @@ msgstr "Завантажте щонайменше 4 зображення"
 
 #: products/forms.py:212
 msgid "Not enough photos. Minimal amount - 4"
-msgstr "Недостатньо фотографій. Мінімальна сума - 4"
+msgstr "Недостатньо фотографій. Мінімальна кількість- 4"
 
 #: products/forms.py:217
 msgid "Too many files, max. amount 8"
-msgstr "Забагато файлів, макс. сума 8"
+msgstr "Забагато файлів, макс. кількість 8"
 
 #: products/templates/products/checkout.html:193
 msgid "Price:"
@@ -754,11 +889,10 @@ msgstr "Цiна:"
 
 #: products/templates/products/checkout.html:205
 msgid "To pay:"
-msgstr "До оплати:"
+msgstr "До сплати:"
 
 #: products/templates/products/product-create.html:174
-msgid ""
-"Email info@saltish.co if the brand you are trying to add does not exist."
+msgid "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co якщо твій бажаний бренд відсутній."
 
 #: products/templates/products/product-create.html:283
@@ -767,15 +901,15 @@ msgstr "Фотографії *"
 
 #: products/templates/products/product-create.html:288
 msgid "Browse"
-msgstr "Вибрать"
+msgstr "Вибрати"
 
 #: products/templates/products/product-create.html:293
 msgid "Too many images. Should be less than"
-msgstr "Too many images. Should be less than"
+msgstr "Забагато зображень. Повинно бути менше ніж"
 
 #: products/templates/products/product-create.html:294
 msgid "Authenticity check..."
-msgstr "Перевірка справжності …"
+msgstr "Перевірка аутентичності ..."
 
 #: products/templates/products/snippets/buy.html:7
 msgid "Купить безопасно"
@@ -810,7 +944,7 @@ msgstr "Нещодавно переглянуте:"
 
 #: products/templates/products/user-list.html:24
 msgid "My Items:"
-msgstr "Мої Айтеми:"
+msgstr "Мої айтеми:"
 
 #: products/views.py:102
 msgid "Report?"
@@ -826,7 +960,7 @@ msgstr "Стан:"
 
 #: products/views.py:106
 msgid "Description:"
-msgstr "Описание:"
+msgstr "Опис:"
 
 #: products/views.py:108
 msgid "Authentic"
@@ -834,7 +968,7 @@ msgstr "Оригiнал"
 
 #: products/views.py:109
 msgid "2-step-verified on"
-msgstr "Двухфакторна перевірка пройдена"
+msgstr "Двофакторну перевірку пройдено"
 
 #: products/views.py:111
 msgid "Checked on"
@@ -858,11 +992,11 @@ msgstr "тому"
 
 #: products/views.py:173
 msgid "Only customers in Ukraine are eligible to sell (as for now)"
-msgstr ""
+msgstr "Лише користувачі з України можуть здійснювати продаж (поки що)"
 
 #: products/views.py:179
 msgid "Please add card information to add an item!"
-msgstr ""
+msgstr "Будь-ласка додайте інформацію, щоб додати айтем!"
 
 #: products/views.py:222 products/views.py:269
 msgctxt "Upload_Item_create"
@@ -875,7 +1009,7 @@ msgstr "Додати новий айтем"
 
 #: products/views.py:245
 msgid "New item upload"
-msgstr ""
+msgstr "Новий айтем додано"
 
 #: products/views.py:246
 msgid ""
@@ -888,19 +1022,19 @@ msgstr ""
 
 #: products/views.py:251
 msgid ""
-"Your item was checked by AI. Within next 24 hours the check will be "
-"confirmed by our moderator team and your item will be published"
+"Your item was checked by AI. Within next 24 hours the check will be confirmed "
+"by our moderator team and your item will be published"
 msgstr ""
-"Твій Айтем перевірений Іcкусственним Інтелектом. Протягом 24 годин перевірку "
+"Твій Айтем перевірений Штучним Інтелектом. Протягом 24 годин перевірку "
 "підтвердить модератор і Айтем буде виставлений на продаж"
 
 #: products/views.py:420
 msgid "Thank you. We have already received your report."
-msgstr ""
+msgstr "Дякуємо, ми вже отримали твою скаргу."
 
 #: products/views.py:423
 msgid "Thank you. We will check this item manually."
-msgstr ""
+msgstr "Дякуємо. Мі перевіримо цей айтем особисто."
 
 #: search/templates/search/snippets/search-form.html:60
 #: templates/base/navbar.html:268
@@ -909,7 +1043,7 @@ msgstr "Пошук"
 
 #: search/views.py:32
 msgid "Oops... No results for your query. Try another one!"
-msgstr ""
+msgstr "Ой... Немає результатів для твого запиту. Спробуй щось інше!"
 
 #: templates/400.html:9 templates/403.html:7 templates/500.html:9
 msgid "Oops ... Something went wrong. We're notified and working on a fix!"
@@ -921,22 +1055,24 @@ msgstr "Ой … Tакой сторінки не існує! :("
 
 #: templates/base/faq.html:86 templates/base/faq.html:98
 msgid "BUYERS"
-msgstr ""
+msgstr "ПОКУПЦЯМ"
 
 #: templates/base/faq.html:87 templates/base/faq.html:142
 msgid "SELLERS"
-msgstr ""
+msgstr "ПРОДАВЦЯМ"
 
 #: templates/base/faq.html:104
 msgid ""
 "There is a secure purchase system on SALT. That means that the seller "
-"receives payment only after the buyer confirms the successful delivery of "
-"the item."
+"receives payment only after the buyer confirms the successful delivery of the "
+"item."
 msgstr ""
+"На SALT існує безпечна система придбання. Це означає, що продавець отримує "
+"плату лише після підтвердження покупцем успішної доставки товару."
 
 #: templates/base/faq.html:106
 msgid "I want to buy an item on SALT. Hmm ... How do I do this?"
-msgstr ""
+msgstr "Я хочу придбати товар на SALT. Хм ... Як це зробити?"
 
 #: templates/base/faq.html:107
 msgid ""
@@ -948,10 +1084,16 @@ msgid ""
 "- On the LiqPay website, enter the card details safely (PrivatBank, Visa, "
 "MasterCard), and that's it - the item was bought!\n"
 msgstr ""
+"\n"
+"- Виберіть предмет, який хочете придбати, і натисніть КУПИТИ БЕЗПЕЧНО\n"
+"- Введіть свої дані та оберіть адресу найближчого відділення Нової Пошти\n"
+"- Перевірте вартість товару та доставки, потім натисніть кнопку ОПЛАТИТИ\n"
+"- На веб-сайті LiqPay введіть реквізити картки (ПриватБанк, Visa, "
+"MasterCard), і все - товар куплений!\n"
 
 #: templates/base/faq.html:114
 msgid "Payment completed. What's next?"
-msgstr ""
+msgstr "Оплата здійснена. Що далі?"
 
 #: templates/base/faq.html:115
 msgid ""
@@ -962,24 +1104,36 @@ msgid ""
 "by the tracking number\n"
 "- When the item is delivered, confirm the delivery in the ORDERS section.\n"
 msgstr ""
+"\n"
+"- Продавець отримує повідомлення, що містить дані про покупку та доставку і "
+"відправляє товару\n"
+"- Після відправлення товару в розділі ЗАМОВЛЕННЯ ви можете відстежувати "
+"доставку за номером для відстеженняі\n"
+"- Після доставки товару підтвердьте отримання в розділі ЗАМОВЛЕННЯ.\n"
 
 #: templates/base/faq.html:121
 msgid "When am I gonna receive the item? I can't wait!"
-msgstr ""
+msgstr "Коли я отримаю товар? Я не можу чекати!"
 
 #: templates/base/faq.html:122
 msgid ""
 "\n"
 "- For the residents of Ukraine, delivery is carried out through Nova Posta\n"
-"- The exact delivery time depends on the regions of the sender and "
-"recipient. Usually it is 1-2 days from the moment of sending\n"
-"- You can calculate delivery times here: https://novaposhta.ua/en/"
-"onlineorder/estimatedate\n"
+"- The exact delivery time depends on the regions of the sender and recipient. "
+"Usually it is 1-2 days from the moment of sending\n"
+"- You can calculate delivery times here: https://novaposhta.ua/en/onlineorder/"
+"estimatedate\n"
 msgstr ""
+"\n"
+"- Для мешканцівв України доставка здійснюється через відділення Нової Пошти\n"
+"- Точний час доставки залежить від регіонів відправника та одержувача. "
+"Зазвичай це 1-2 дні з моменту відпралення\n"
+"- Ви можете розрахувати терміни доставки тут: https://novaposhta.ua/uk/"
+"onlineorder/estimatedate\n"
 
 #: templates/base/faq.html:128
 msgid "Is SALT free?"
-msgstr ""
+msgstr "SALT безкоштовний?"
 
 #: templates/base/faq.html:129
 #, python-format
@@ -989,11 +1143,15 @@ msgid ""
 "\"text-decoration: underline\" href=\"https://www.saltish.co/about/#safe"
 "\">safe</a> \n"
 msgstr ""
+"\n"
+"Так, покупки на SALT абсолютно безкоштовні. А також на 100 %%%% <a style="
+"\"text-decoration: underline\" href=\"https://www.saltish.co/about/#safe\"> "
+"безпечні </a>\n"
 
 #: templates/base/faq.html:133
 msgid ""
 "I received the item, but ... it does not match the description. What do I do?"
-msgstr ""
+msgstr "Я отримав айтем, але ... він не відповідає опису. Що мені робити?"
 
 #: templates/base/faq.html:134
 msgid ""
@@ -1003,10 +1161,15 @@ msgid ""
 "- If the item, indeed, does not match the description, we will refund you "
 "money on the specified card\n"
 msgstr ""
+"\n"
+"- У розділі ЗАМОВЛЕННЯ натисніть СКАРГА, і ми зв’яжемось з вами протягом 24 "
+"годин для подвійної перевірки\n"
+"- Якщо товар, дійсно, не відповідає опису, ми повернемо вам гроші на вказану "
+"картку\n"
 
 #: templates/base/faq.html:145
 msgid "I found a nice item in my closet. How to sell it on SALT?"
-msgstr ""
+msgstr "Я знайшов крутий айтем у своїй шафі. Як продати його на SALT?"
 
 #: templates/base/faq.html:146
 msgid ""
@@ -1019,10 +1182,18 @@ msgid ""
 "- After (successful) two-factor verification, it will be visible to everyone "
 "in the general catalogue\n"
 msgstr ""
+"\n"
+"- Спочатку введіть дані вашої картки в налаштуваннях профілю (щоб клієнти "
+"могли передати вам <a href=\"https://www.youtube.com/watch?v=cC3Kn9Y-cC4\"> "
+"гроші </a>!)\n"
+"- Клацніть на ПРОДАЖ та заповніть просту форму\n"
+"- Це все - товар завантажений та доступний у розділі МОЇ АЙТЕМИ\n"
+"- Після (успішної) двофакторної перевірки він з'явиться  у загальному "
+"каталозі\n"
 
 #: templates/base/faq.html:153
 msgid "Someone purchased my item. When will I get the money?"
-msgstr ""
+msgstr "Хтось придбав мій айтем. Коли я отримаю гроші?"
 
 #: templates/base/faq.html:154
 msgid ""
@@ -1036,17 +1207,27 @@ msgid ""
 "- In case the buyer does not confirm the delivery (or did not contact us) "
 "after 7 days, the money is transferred to your card automatically\n"
 msgstr ""
+"\n"
+"- Не хвилюйтеся - гроші вже списані з картки покупця\n"
+"- Тому вам слід негайно відправити товар і додати номер для відстеження у "
+"розділі ЗАМОВЛЕННЯ\n"
+"- Як тільки покупець підтвердить успішну доставку, гроші надійдуть на вашу "
+"картку протягом 24 годин\n"
+"- Покупець має 7 днів для підтвердження успішної доставки\n"
+"- Якщо покупець не підтвердив доставку (або не зв’язався з нами) через 7 "
+"днів, гроші перераховуються автоматично на вашу картку\n"
 
 #: templates/base/faq.html:162
 msgid "What is the SALT commission for each transaction?"
-msgstr ""
+msgstr "Яка комісія SALT за кожну транзакцію?"
 
 #: templates/base/faq.html:163
 msgid ""
 "\n"
-"- As for now - none. We will keep this platform free for as long as "
-"possible\n"
+"- As for now - none. We will keep this platform free for as long as possible\n"
 msgstr ""
+"\n"
+"- Наразі жодгої. Ми будемо тримати цю платформу безкоштовную як можна довше \n"
 
 #: templates/base/footer.html:128 templates/base/footer.html:156
 msgid "About"
@@ -1058,11 +1239,11 @@ msgstr "Контакт"
 
 #: templates/base/footer.html:130 templates/base/footer.html:158
 msgid "Terms"
-msgstr ""
+msgstr "Умови"
 
 #: templates/base/footer.html:131 templates/base/footer.html:159
 msgid "Privacy"
-msgstr ""
+msgstr "Конфіденційність"
 
 #: templates/base/navbar.html:338
 msgctxt "account_dropdown_home "
@@ -1075,7 +1256,7 @@ msgstr "Повідомлення"
 
 #: templates/base/navbar.html:352
 msgid "My orders"
-msgstr ""
+msgstr "Мої замовлення"
 
 #: templates/base/navbar.html:353 templates/sidebar.html:61
 msgid "My items"
@@ -1108,9 +1289,9 @@ msgid ""
 "\" and determines the procedure for processing personal data and measures to "
 "ensure the security of personal data SALT (hereinafter - the Operator).</p>\n"
 "\t<p>- The operator sets as his most important goal and condition for the "
-"implementation of his activities the observance of the rights and freedoms "
-"of man and citizen when processing his personal data, including protecting "
-"the rights to privacy, personal and family secrets.</p>\n"
+"implementation of his activities the observance of the rights and freedoms of "
+"man and citizen when processing his personal data, including protecting the "
+"rights to privacy, personal and family secrets.</p>\n"
 "\t<p>- This Operator's policy regarding the processing of personal data "
 "(hereinafter - the Policy) applies to all information that the Operator can "
 "receive about visitors to the website http://saltish.co.&nbsp;</p>\n"
@@ -1120,15 +1301,15 @@ msgid ""
 "\t<p class=\"sub-heading\">2. Key Concepts Used in Politics</p>\n"
 "\t<p>- Automated processing of personal data - processing of personal data "
 "using computer technology;</p>\n"
-"\t<p>- Blocking of personal data - temporary termination of the processing "
-"of personal data (unless the processing is necessary to clarify personal "
-"data);</p>\n"
+"\t<p>- Blocking of personal data - temporary termination of the processing of "
+"personal data (unless the processing is necessary to clarify personal data);</"
+"p>\n"
 "\t<p>- Website - a set of graphic and information materials, as well as "
 "computer programs and databases, ensuring their availability on the Internet "
 "at a network address http://saltish.co;</p>\n"
-"\t<p>- Personal data information system - a set of personal data contained "
-"in databases, and information technologies and technical means that ensure "
-"their processing;</p>\n"
+"\t<p>- Personal data information system - a set of personal data contained in "
+"databases, and information technologies and technical means that ensure their "
+"processing;</p>\n"
 "\t<p>- Anonymization of personal data - actions, as a result of which it is "
 "impossible to determine without the use of additional information the "
 "belonging of personal data to a specific User or other personal data subject;"
@@ -1150,14 +1331,14 @@ msgid ""
 "\t<p>- Provision of personal data - actions aimed at the disclosure of "
 "personal data to a specific person or a certain circle of persons;</p>\n"
 "\t<p>- Dissemination of personal data - any actions aimed at disclosing "
-"personal data to an undefined circle of people (transfer of personal data) "
-"or familiarizing oneself with personal data of an unlimited circle of "
-"people, including disclosing personal data in the media, posting on "
-"information and telecommunication networks or providing access to personal "
-"data in any other way;</p>\n"
-"\t<p>- Cross-border transfer of personal data - the transfer of personal "
-"data to the territory of a foreign state to a foreign state authority, a "
-"foreign individual or foreign legal entity;</p>\n"
+"personal data to an undefined circle of people (transfer of personal data) or "
+"familiarizing oneself with personal data of an unlimited circle of people, "
+"including disclosing personal data in the media, posting on information and "
+"telecommunication networks or providing access to personal data in any other "
+"way;</p>\n"
+"\t<p>- Cross-border transfer of personal data - the transfer of personal data "
+"to the territory of a foreign state to a foreign state authority, a foreign "
+"individual or foreign legal entity;</p>\n"
 "\t<p>- Destruction of personal data - any actions as a result of which "
 "personal data is permanently destroyed with the impossibility of further "
 "restoration of the content of personal data in the personal data information "
@@ -1166,16 +1347,16 @@ msgid ""
 "\t<p>\n"
 "\t  <br>\n"
 "\t</p>\n"
-"\t<p class=\"sub-heading\">3. The Operator may process the following "
-"personal data of the User</p>\n"
+"\t<p class=\"sub-heading\">3. The Operator may process the following personal "
+"data of the User</p>\n"
 "\t<p>- Full Name;</p>\n"
 "\t<p>- Email address;</p>\n"
 "\t<p>- Photo;</p>\n"
 "\t<p>The site also collects and processes anonymized data about visitors "
 "(including cookies) using Internet statistics services (Google Analytics and "
 "others).</p>\n"
-"\t<p>The above data are further incorporated in the text of the Policy by "
-"the general concept of Personal Data.</p>\n"
+"\t<p>The above data are further incorporated in the text of the Policy by the "
+"general concept of Personal Data.</p>\n"
 "\t<p>\n"
 "\t  <br>\n"
 "\t</p>\n"
@@ -1199,11 +1380,11 @@ msgid ""
 "\t<p>- The Operator processes the User’s personal data only if it is filled "
 "and / or sent by the User independently through special forms located on the "
 "website http://saltish.co. By filling out the appropriate forms and / or "
-"sending your personal data to the Operator, the User expresses his consent "
-"to this Policy.</p>\n"
-"\t<p>- The operator processes anonymized data about the User if it is "
-"allowed in the settings of the User’s browser (the storage of cookies and "
-"the use of JavaScript technology are enabled).&nbsp;</p>\n"
+"sending your personal data to the Operator, the User expresses his consent to "
+"this Policy.</p>\n"
+"\t<p>- The operator processes anonymized data about the User if it is allowed "
+"in the settings of the User’s browser (the storage of cookies and the use of "
+"JavaScript technology are enabled).&nbsp;</p>\n"
 "\t<p>\n"
 "\t  <br>\n"
 "\t</p>\n"
@@ -1211,11 +1392,11 @@ msgid ""
 "transfer and other types of processing of personal data</p>\n"
 "\t<p>The security of personal data processed by the Operator is ensured "
 "through the implementation of legal, organizational and technical measures "
-"necessary to fully comply with the requirements of the current legislation "
-"in the field of personal data protection.</p>\n"
+"necessary to fully comply with the requirements of the current legislation in "
+"the field of personal data protection.</p>\n"
 "\t<p>- Оператор обеспечивает сохранность персональных данных и принимает все "
-"возможные меры, исключающие доступ к персональным данным неуполномоченных "
-"лиц.</p>\n"
+"возможные меры, исключающие доступ к персональным данным неуполномоченных лиц."
+"</p>\n"
 "\t<p>- The User’s personal data will never, under any circumstances, be "
 "transferred to third parties, with the exception of cases related to the "
 "implementation of applicable law.</p>\n"
@@ -1238,14 +1419,14 @@ msgid ""
 "\t<p>- Cross-border transfer of personal data on the territory of foreign "
 "states that do not meet the above requirements can be carried out only if "
 "there is a written consent of the personal data subject to the cross-border "
-"transfer of his personal data and / or the execution of the contract to "
-"which the personal data subject is a party.</p>\n"
+"transfer of his personal data and / or the execution of the contract to which "
+"the personal data subject is a party.</p>\n"
 "\t<p>\n"
 "\t  <br>\n"
 "\t</p>\n"
 "\t<p class=\"sub-heading\">8. Final terms</p>\n"
-"\t<p>- The user can get any clarification on issues of interest regarding "
-"the processing of his personal data by contacting the Operator via e-mail "
+"\t<p>- The user can get any clarification on issues of interest regarding the "
+"processing of his personal data by contacting the Operator via e-mail "
 "info@saltish.co.</p>\n"
 "\t<p>- This document will reflect any changes in the policy of processing "
 "personal data by the Operator. The policy is valid indefinitely until it is "
@@ -1260,9 +1441,9 @@ msgid ""
 "\n"
 "<div class=\"container container-terms\">\n"
 "\t<p class=\"heading text-center\">Terms of use</p>\n"
-"\t<p>This User Agreement (hereinafter the Agreement) governs the "
-"relationship between the owner of saltish.co (hereinafter SALT or "
-"Administration) on the one hand and the user of the site on the other.</p>\n"
+"\t<p>This User Agreement (hereinafter the Agreement) governs the relationship "
+"between the owner of saltish.co (hereinafter SALT or Administration) on the "
+"one hand and the user of the site on the other.</p>\n"
 "\t<p>SALT is not a media site.</p>\n"
 "\t<p>By using the site, you agree to the terms of this agreement.</p>\n"
 "\t<p>\n"
@@ -1283,8 +1464,7 @@ msgid ""
 "<p> - receive information on the site; </p>\n"
 "<p> - create information for the site; </p>\n"
 "<p> - distribute information on the site; </p>\n"
-"<p> - copy information to other sites with an indication of the source; </"
-"p>\n"
+"<p> - copy information to other sites with an indication of the source; </p>\n"
 "<p> - use the site information for commercial purposes without special "
 "permission. </p>\n"
 "\t<p>\n"
@@ -1323,8 +1503,8 @@ msgid ""
 "\t  <br>\n"
 "\t</p>\n"
 "\t<p class=\"sub-heading\">3. Responsibility of the parties </p>\n"
-"<p> - The user is personally responsible for the information he "
-"disseminates. </p>\n"
+"<p> - The user is personally responsible for the information he disseminates. "
+"</p>\n"
 "\t<p>\n"
 "\t  <br>\n"
 "\t</p>\n"
@@ -1339,7 +1519,7 @@ msgstr ""
 
 #: templates/forms/helper_text.html:3
 msgid "* marked fields are required"
-msgstr "* відзначені поля, обов’язкові до заповнення"
+msgstr "* зазначені поля, обов’язкові до заповнення"
 
 #: templates/languages/trans_custom/translation_custom.html:5
 msgid "Adults"
@@ -1431,7 +1611,7 @@ msgstr "Спідниці"
 
 #: templates/languages/trans_custom/translation_custom.html:57
 msgid "Sneakers"
-msgstr "Снікерси"
+msgstr "Кросівки"
 
 #: templates/languages/trans_custom/translation_custom.html:59
 msgid "Classic Shoes"
@@ -1447,7 +1627,7 @@ msgstr "Сандалі"
 
 #: templates/languages/trans_custom/translation_custom.html:65
 msgid "High Heels"
-msgstr "Каблуки"
+msgstr "Підбори"
 
 #: templates/languages/trans_custom/translation_custom.html:67
 msgid "Bags & Backpacks"
@@ -1511,7 +1691,7 @@ msgstr "Легкі куртки"
 
 #: templates/languages/trans_custom/translation_custom.html:97
 msgid "Dresses"
-msgstr "Плаття"
+msgstr "Сукні"
 
 #: templates/languages/trans_custom/translation_custom.html:99
 msgid "Overalls"
@@ -1519,7 +1699,7 @@ msgstr "Комбінезони"
 
 #: templates/languages/trans_custom/translation_custom.html:105
 msgid "New with tags"
-msgstr "Нова річ з бирками"
+msgstr "Нова річ з біркою"
 
 #: templates/languages/trans_custom/translation_custom.html:107
 msgid "Gently used"
@@ -1530,19 +1710,16 @@ msgid "Used"
 msgstr "Нормальний стан"
 
 #: templates/languages/trans_custom/translation_custom.html:115
-#, fuzzy
-#| msgctxt "Upload_Item_create"
-#| msgid "Create"
 msgid "Created"
-msgstr "Залити"
+msgstr "Створений"
 
 #: templates/languages/trans_custom/translation_custom.html:117
 msgid "Paid"
-msgstr ""
+msgstr "Сплачено"
 
 #: templates/languages/trans_custom/translation_custom.html:119
 msgid "Shipped"
-msgstr ""
+msgstr "Доставлено"
 
 #: templates/registration/activation-error.html:17
 msgid "Activation Error"
@@ -1562,7 +1739,7 @@ msgstr "Надіслати"
 
 #: templates/registration/emails/notif.html:27
 msgid "GO TO CHATS"
-msgstr ""
+msgstr "ПЕРЕЙТИ ДО ЧАТУ"
 
 #: templates/registration/emails/notif.txt:2
 msgid ""
@@ -1576,6 +1753,15 @@ msgid ""
 "SALT\n"
 "\n"
 msgstr ""
+"\n"
+"Салют!\n"
+"\n"
+"\n"
+"У тебе є нові повідомлення. Чекни їх!\n"
+"\n"
+"\n"
+"SALT\n"
+"\n"
 
 #: templates/registration/emails/verify.html:3
 #, python-format
@@ -1590,8 +1776,8 @@ msgid ""
 "black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
-"align: center; padding: 32px 32px;\">\n"
+"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;\">\n"
 "\n"
 "\n"
 "\t\t<div style=\"font-size: 20px; text-align: left !important;\">\n"
@@ -1626,6 +1812,51 @@ msgid ""
 "<p>SALT</p>\n"
 "\n"
 msgstr ""
+"\n"
+"<p>Салют!</p> \n"
+"\n"
+"\n"
+"<div style=“text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;”>\n"
+"  <a href=“https://www.saltish.co/“ style=“text-decoration: none; color: "
+"black; font-size: 36px”>SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=“background-color: #eaeaea4f; font-family: sans-serif;text-align: "
+"center; padding: 32px 32px;”>\n"
+"\n"
+"\n"
+"\t\t<div style=“font-size: 20px; text-align: left !important;”>\n"
+"\t\t\t<p>Будь ласка, активуй свій аккаунт для %(email)s , натиснувши ссылку "
+"нижче:</p>\n"
+"\n"
+"\t\t\t<p><a href=‘%(path)s’>%(path)s</a></p>\n"
+"\n"
+"\t\t\t<p>Після активації ти зможеш увійти!</p>\n"
+"\n"
+"\t\t\t<p>Дякуємо!\n"
+"\t\t\t<br> SALT</p>\n"
+"\t\t</div>\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=“https://vk.com/saltmarketplace” ><img style=‘width: 20px; "
+"height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png”></a>\n"
+"\t\t<a href=“https://www.instagram.com/saltish.co/“ ><img style=‘width: 20px; "
+"height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png”></a>\n"
+"\t\t<a href=“https://www.linkedin.com/company/saltish-co/about/“” ><img "
+"style=‘width: 20px; height: 20px; margin: 0 4px;’ src=“https://image.flaticon."
+"com/icons/png/512/2168/2168311.png”></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+"\n"
+"<p>SALT</p>\n"
+"\n"
 
 #: templates/registration/emails/verify.txt:2
 #, python-format
@@ -1757,8 +1988,8 @@ msgstr "Підтвердити"
 #~ "<p>Hey,</p> \n"
 #~ "\n"
 #~ "\n"
-#~ "<p>Please activate your account for %(email)s by clicking the link below:"
-#~ "</p>\n"
+#~ "<p>Please activate your account for %(email)s by clicking the link below:</"
+#~ "p>\n"
 #~ "\n"
 #~ "<p><a href='%(path)s'>%(path)s</a></p>\n"
 #~ "\n"
