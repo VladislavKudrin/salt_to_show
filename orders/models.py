@@ -217,6 +217,14 @@ class Order(models.Model):
 		user = self.product.user
 		return user
 
+	@property
+	def is_paid(self):
+		if not self.status == 'created':
+			return True
+		else:
+			return False
+
+
 def pre_save_create_order_id(sender, instance, *args, **kwargs):
 	if not instance.order_id:
 		instance.order_id=unique_order_id_generator(instance)
