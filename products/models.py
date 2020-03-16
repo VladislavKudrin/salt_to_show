@@ -161,7 +161,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		return self.filter(authentic='fake')
 
 	def available(self):
-		return self.exclude(order__status='paid')
+		return self.exclude(order__status='paid').exclude(order__status='shipped')
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -326,6 +326,25 @@ class Product(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	@property
+	def is_active(self):
+		return self.active
+
+	@property
+	def is_authentic(self):
+		if self.authentic == 'authentic':
+			return True
+		else:
+			return False
+
+	@property
+	def is_paid(self):
+		try:
+			order = self.order.first()
+			return order.is_paid
+		except:
+			return False
 
 	@property
 	def is_payable(self):

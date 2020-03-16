@@ -1,10 +1,20 @@
 {% load i18n %}
 
-{% if not object.order.get_status == 'Paid' or not object.order %}
+{% if request.user.is_authenticated %}
+	{% if not object.order.is_paid %}
 
-	{% if request.user != object.user and request.user.region.region_code == 'ua' and object.is_payable %}
+		{% if request.user != object.user and request.user.region.region_code == 'ua' and object.is_payable %}
 
-	<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
+		<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
 
+		{% endif %} 
+	{% endif %} 
+{% else %}
+	{% if not object.order.is_paid %}
+		{% if object.is_payable %}
+
+		<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
+
+		{% endif %} 
 	{% endif %} 
 {% endif %} 

@@ -439,19 +439,23 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 	template_name='products/checkout.html'
 
 
-	# def get(self, request, *args, **kwargs):
-	# 	# if self.request.is_ajax():
-	# 	# 	json_data={
-	# 	# 	'post_offices': get_data_from_novaposhta_api(),
-	# 	# 	}
-	# 	# 	return JsonResponse(json_data)
-	# 	return super(ProductCheckoutView,self).get(request, *args, **kwargs)
+	def get(self, request, *args, **kwargs):
+		product = self.get_product()
+		if product is not None:
+			print(product.is_paid)
+			if product.is_paid or not product.is_active or not product.is_payable or not product.is_authentic:
+				return redirect('products:list')
+		return super(ProductCheckoutView,self).get(request, *args, **kwargs)
 
-
+	def get_product(self):
+		id_ = self.kwargs.get('product_id')
+		products = Product.objects.filter(id = id_)
+		if products.exists():
+			return products.first()
+		return None
 	def get_object(self):
 		product_id = self.kwargs.get('product_id')
 		user = self.request.user
-		print(user.region.region_code)
 		if user.region.region_code == 'ua':
 			if product_id.isdigit():
 				product_obj = Product.objects.filter(id=product_id).active().first()

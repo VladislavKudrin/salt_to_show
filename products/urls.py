@@ -4,9 +4,9 @@ from categories.views import CategoryFilterView
 
 
 urlpatterns = [
+    url(r'^$', CategoryFilterView.as_view(), name='list'),
     url(r'^checkout/(?P<product_id>[\w.@+-]+)/$', ProductCheckoutView.as_view(), name='checkout'),
     url(r'^fakelist/$', FakeProductsListView.as_view(), name='fake-list'),
-    url(r'^$', CategoryFilterView.as_view(), name='list'),
     url(r'^handle_image_sort$', image_update_view, name='handle_image_sort'),
     url(r'^handle_image_create_sort$', image_create_order, name='handle_image_create_sort'),
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
