@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 23:08+0000\n"
+"POT-Creation-Date: 2020-03-16 23:16+0000\n"
 "PO-Revision-Date: 2020-03-17 00:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -158,11 +158,11 @@ msgstr "Мейл не підтверджений. "
 msgid "The password seems to be wrong. Try again!"
 msgstr "Невірний пароль. Спробуй ще раз!"
 
-#: accounts/views.py:314 products/views.py:501
+#: accounts/views.py:314 products/views.py:505
 msgid "Update your details"
 msgstr "Оновити аккаунт"
 
-#: accounts/views.py:315 products/views.py:502
+#: accounts/views.py:315 products/views.py:506
 #: templates/registration/password_change_form.html:24
 msgid "Change password"
 msgstr "Змінити пароль"
@@ -914,7 +914,8 @@ msgstr "Забагато фото. Повинно бути менше ніж"
 msgid "Authenticity check..."
 msgstr "Перевірка аутентичності ..."
 
-#: products/templates/products/snippets/buy.html:7
+#: products/templates/products/snippets/buy.html:8
+#: products/templates/products/snippets/buy.html:16
 msgid "Купить безопасно"
 msgstr "Купити безпечно"
 
