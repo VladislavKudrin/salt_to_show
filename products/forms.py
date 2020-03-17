@@ -262,6 +262,7 @@ class ProductUpdateForm(ProductCreateForm):
 		size = Size.objects.get(id=product.size.id)
 		condition = Condition.objects.get(id=product.condition.id)
 		description = product.description
+		price = product.price_original
 		self.initial['brand']=brand.brand_name
 		self.initial['sex']=_(gender.gender_eng)
 		self.initial['undercategory']=_(undercategory.undercategory_eng)
@@ -278,54 +279,22 @@ class ProductUpdateForm(ProductCreateForm):
 		self.fields['condition'].widget.attrs['category'] = undercategory.undercategory_for.category
 		self.fields['condition'].widget.attrs['id_for_upd'] = condition.id
 		self.fields['condition'].widget.attrs['condition'] = condition.condition
-		if self.request.user.region:
-			currency_mult = self.request.user.region.currency_mult
-			price = round(product.price * currency_mult)
-			self.initial['price']=price
+		self.initial['price']=price
 
-
-
-
-
-		# if request.session.get('language') == 'RU':
-		# 	self.initial['undercategory']=undercategory.undercategory_ru
-		# 	self.initial['sex']=gender.gender_ru
-		# 	self.initial['condition']=condition.condition_ru
-		# elif request.session.get('language') == 'EN':
-		# 	self.initial['undercategory']=undercategory.undercategory_eng
-		# 	self.initial['sex']=gender.gender_eng
-		# 	self.initial['condition']=condition.condition_eng
-		# elif request.session.get('language') == 'UA':
-		# 	self.initial['undercategory']=undercategory.undercategory_ua
-		# 	self.initial['sex']=gender.gender_ua
-		# 	self.initial['condition']=condition.condition_ua
-	# def clean_shipping_price(self):
-	# 	shipping_data = self.cleaned_data.get('shipping_price')
-	# 	user = self.request.user
-	# 	slug = self.slug
-	# 	product = Product.objects.filter(slug=slug)
-	# 	if product.exists():
-	# 		shipping_price = Shipping_price.objects.filter(product=product.first())
-	# 		if shipping_price.exists():
-	# 			price = Product.objects.price_to_region_price(price = shipping_data, user = self.request.user)
-	# 			shipping_price.update(national_shipping=price)
-	# 			shipping_price.first().save()
-	# 	else:
-	# 		raise forms.ValidationError(_("Must be shipping price"))
 	def save(self, commit=True):
-		product                        = Product.objects.get(slug=self.slug)
-		product.title                  = self.cleaned_data['title']
-		product.brand                  = self.cleaned_data['brand']
-		product.overcategory           = self.cleaned_data['overcategory']
-		product.sex                    = self.cleaned_data['sex']
-		product.category               = self.cleaned_data['category']
-		product.undercategory          = self.cleaned_data['undercategory']
-		product.size                   = self.cleaned_data['size']
-		product.condition              = self.cleaned_data['condition']
-		product.price                  = self.cleaned_data['price']
-		product.description            = self.cleaned_data['description']
-		product.national_shipping      = self.cleaned_data['national_shipping']
-		product.international_shipping = self.cleaned_data['international_shipping']
+		product                   = Product.objects.get(slug=self.slug)
+		product.title             = self.cleaned_data['title']
+		product.brand             = self.cleaned_data['brand']
+		product.overcategory      = self.cleaned_data['overcategory']
+		product.sex               = self.cleaned_data['sex']
+		product.category          = self.cleaned_data['category']
+		product.undercategory     = self.cleaned_data['undercategory']
+		product.size              = self.cleaned_data['size']
+		product.condition         = self.cleaned_data['condition']
+		product.price             = self.cleaned_data['price']
+		product.description       = self.cleaned_data['description']
+		product.national_shipping = self.cleaned_data['national_shipping']
+		product.price_original    = self.cleaned_data['price_original']
 		if commit:
 			product.save()
 		return product

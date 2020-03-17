@@ -11,6 +11,9 @@
   .filled-stars{
     color:black!important;
   }
+  #div_id_comment > label{
+    display: none!important
+  }
 </style>
 
 {% load crispy_forms_tags %}
@@ -27,11 +30,19 @@
         </button>
       </div>
       <form method="POST" action="{% url 'orders:feedback' %}" id="feedback-form">{% csrf_token %}
-      <div class="modal-body text-center">
+      <div class="modal-body">
           <input type="hidden" name="rating" id="rating-input">
           <input type="hidden" name="order_id" value="{{ object.order_id }}">
-          <input id="rating-system" type="number" class="rating" step="0.5">
-          {{ form.comment|as_crispy_field }}
+          <div class="row text-center">
+            <div class="col-12">
+              <input id="rating-system" type="number" class="rating" step="0.5">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              {{ form.comment|as_crispy_field }}
+            </div>
+          </div>   
       </div>
       <div class="modal-footer">
         <button type="button" id='dismiss_modal_feedback' class="btn btn-dark" data-dismiss="modal">{% trans 'Close' %}</button>
@@ -55,6 +66,7 @@
   $('#rating-system').on('rating:change', function(event, value, caption) {
   $('#rating-input').val(value)
 });
+  $('#feedbackModal_sqmdh3383u').modal('show')
   dismissModalFeedback.click(function(e){
     e.preventDefault()
     window.location.href = currentPath

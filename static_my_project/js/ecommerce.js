@@ -16,12 +16,23 @@ $(document).ready(
               data:{location: location},
               success: function(data){
                   $(document.body).append(data.html)
+                  $('.modal').modal({
+                              keyboard: false,
+                              backdrop: 'static',
+                              focus:true
+                            })
                   $('.modal').modal('show')
                  
                   }//success_first
 
               })//ajax
     }//if region none
+
+
+
+
+
+
     var languageGlobe = $('#language-pref') 
     $('.language-preference-globe').click(
         function(event){ 

@@ -190,7 +190,7 @@ input[type=number] {
 		<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
 			{% include 'products/snippets/languages/product_lists_cont.html' %}
 		</div>
-		<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" style="z-index: 2000; top:90%; left: 85%; cursor: pointer"></i>
+		<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" onclick='{$("html, body").animate({ scrollTop: 0 }, "slow")}' style="z-index: 2000; top:90%; left: 85%; cursor: pointer"></i>
 	</div>
 </div>
 
@@ -202,15 +202,10 @@ input[type=number] {
 			var topFilterbar = $('.sticky-offset').outerHeight(true) 
 			$('.sticky-offset').css('top', topNavbar + 'px')
 
-			if (($(window).width() < 768)){
-				$('#upArrow').click(
-					function(e){
-						$("html, body").animate({ scrollTop: 0 }, "slow")  
-					})//click
+			if (!($(window).width() < 768)){
+					$('#slider_filters').css('top',topNavbar+topFilterbar+'px')
 			}//if mobile
-			else{
-				$('#slider_filters').css('top',topNavbar+topFilterbar+'px')
-			}//if not mobile
+		
 
 	//Scrolling
 const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');

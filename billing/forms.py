@@ -41,6 +41,7 @@ class FeedbackForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super(FeedbackForm, self).__init__(*args, **kwargs)
         self.request=request
+        self.fields['comment'].widget.attrs['rows'] = '5'
     def clean_rating(self):
         rating = self.cleaned_data.get('rating')
         if rating in RATING_CHOICES:

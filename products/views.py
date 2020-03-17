@@ -167,8 +167,12 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	def get(self, request, *args, **kwargs):
 		billing_profile, created = BillingProfile.objects.new_or_get(self.request)
 		card, created = Card.objects.new_or_get(billing_profile=billing_profile)
-		user_region = request.user.region.region_code
-
+		try:
+			user_region = request.user.region.region_code
+		except:
+			msg_not_eligible = _("Only customers in Ukraine are eligible to sell (as for now)")
+			messages.add_message(request, messages.WARNING, mark_safe(msg_not_eligible))
+			return stay_where_you_are(request)
 		if user_region != 'ua':
 			msg_not_eligible = _("Only customers in Ukraine are eligible to sell (as for now)")
 			messages.add_message(request, messages.WARNING, mark_safe(msg_not_eligible))
