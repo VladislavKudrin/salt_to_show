@@ -148,6 +148,7 @@ class Order(models.Model):
 		seller = self.get_seller().email
 		from_email = settings.DEFAULT_FROM_EMAIL
 		current_domain = settings.BASE_URL
+		item = self.product
 		item_url = current_domain + self.product.get_absolute_url()
 		faq_url = current_domain + reverse('faq')+'#sell'
 		orders_url = current_domain + reverse('orders:list')
@@ -160,6 +161,7 @@ class Order(models.Model):
 							'item': item,
 							'faq_url': faq_url,
 							'orders_url': orders_url
+							'item_url': item_url
 					}
 			txt_ = get_template("orders/emails/inform_about_order.txt").render(context)
 			html_ = get_template("orders/emails/inform_about_order.html").render(context)
