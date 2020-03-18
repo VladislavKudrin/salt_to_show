@@ -1,0 +1,98 @@
+<style type="text/css">
+  .credit label{
+  display:flex; 
+  font-size:12px; 
+  color:white; 
+  opacity:.4; 
+  margin-bottom: 0px; 
+  padding-top: 5px;
+}
+
+.credit input{
+  background:transparent;
+  border:none;
+  border-bottom:1px solid transparent;
+  color:#dbdce0; transition: 
+  border-bottom .4s; 
+  width:100% !important;
+}
+
+.credit input:focus{
+  border-bottom:1px solid #1abc9c; 
+  outline:none;
+}
+
+.credit{
+  background:#16181a; 
+  border-radius:14px !important; 
+  max-width: 340px; 
+  min-height: 204px;
+  margin: 10px auto 40px auto;
+  padding:40px 30px 10px 30px; 
+  box-shadow: 2px 10px 40px black; 
+  line-height: normal;
+}
+
+.logo-card{
+  max-width:50px; 
+  margin-top: -50px;
+}
+
+.hidden
+{
+   display: none
+}
+</style>
+
+
+<!-- Modal -->
+<div class="modal fade" id="add_card_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Please add valid card to sell an item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method = 'POST' action={% url 'payment:card_update_view' %} id='modal-form'> {% csrf_token %}
+        <div class="modal-body">
+          <div class="col-12">
+            <div class="credit">
+              <img data-src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
+              <img data-src="https://seeklogo.net/wp-content/uploads/2011/08/mastercard-logo.png" class="logo-card">
+              <div class="row">
+                <div class="col-12 pb-3">
+                  <label>ФИО:</label>
+                  <div class=''>
+                    <input type="text" name="holder" 
+                    {% if request.user.is_authenticated %}
+                      {% if request.user.billing_profile.card %}
+                         value="{{ request.user.billing_profile.default_card.holder }}"
+                      {% endif %}
+                    {% endif %}
+                    >
+                  </div>
+                </div>
+                <div class="col-12 ">
+                  <label>Номер карты:</label>
+                    <input type="text" name="number" maxlength="16"
+                    {% if request.user.is_authenticated %}
+                      {% if request.user.billing_profile.card %}
+                        value="{{ request.user.billing_profile.default_card.number }}"
+                      {% endif %}
+                    {% endif %}
+                    >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-dark">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

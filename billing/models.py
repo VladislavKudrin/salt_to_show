@@ -63,7 +63,7 @@ class BillingProfile(models.Model):
 		return Charge.objects.do(self, order_obj, card)
 
 	def get_cards(self):
-		return self.card_set.all()
+		return self.card.all()
 
 	def get_payment_method_url(self):
 		return reverse('billing-payment-method')

@@ -49,6 +49,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
 
+#REGIONS
+ALLOWED_REGIONS = 'ua'
 
 
 if TESTSERVER == 'True':
