@@ -160,7 +160,7 @@ class Order(models.Model):
 							'order_id':order_id,
 							'item': item,
 							'faq_url': faq_url,
-							'orders_url': orders_url
+							'orders_url': orders_url,
 							'item_url': item_url
 					}
 			txt_ = get_template("orders/emails/inform_about_order.txt").render(context)
