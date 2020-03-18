@@ -148,7 +148,7 @@ class Order(models.Model):
 		seller = self.get_seller().email
 		from_email = settings.DEFAULT_FROM_EMAIL
 		item = self.product
-		current_domain = self.request.META['HTTP_HOST']
+		current_domain = settings.BASE_URL
 		faq_url = current_domain + reverse('faq')+'#sell'
 		orders_url = current_domain + reverse('orders:list')
 		if success:
