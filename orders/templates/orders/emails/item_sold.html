@@ -1,0 +1,37 @@
+{% load i18n %}
+{% blocktrans %}
+
+<div style="text-align: center; padding-bottom: 16px; font-family: sans-serif; padding: 32px 32px;">
+  <a href="https://www.saltish.co/" style="text-decoration: none; color: black; font-size: 36px">SALT</a>
+</div>
+
+<div style="background-color: #eaeaea4f; font-size: 20px; font-family: sans-serif;text-align: center; padding: 32px 32px;">
+
+	<p>Congratulations!</p> 
+
+	<p>You just sold your item <a href="{{product.get_absolute_url}}">{{product.title}}</a> on SALT.</p>
+	<p>We received the payment from the buyer (in total {{total}} UAH) and will keep that until the successful delivery of the item to the buyer. </p>
+	<p>Please ship the item within the next {{ time }} hours, so you get your money as soon as possible and buyer is satisfied.</p>
+	<p>In case there are any questions/issues - don't hestitate to contact us (just answer to this email)</p>
+
+	<p>Read more about how the purchase system works <a href="{% url 'faq' %}#sell">HERE</a></p>
+
+	<div style="text-align: center; margin: 32px 32px;">
+		<button style="border: 1px solid black; background-color: black; padding: 15px 15px;">
+			<a href="{% url 'orders:list' %}" style="text-decoration: none; color: white; font-size: 16px">GO TO YOUR ORDERS</a>
+		</button>
+	</div>
+
+	<p>Thank you,
+	<p>SALT</p>
+
+
+	<div>
+		<a href="https://vk.com/saltmarketplace" ><img style='width: 20px; height: 20px; margin: 0 4px;' src="https://image.flaticon.com/icons/png/512/2175/2175348.png"></a>
+		<a href="https://www.instagram.com/saltish.co/" ><img style='width: 20px; height: 20px; margin: 0 4px;' src="https://image.flaticon.com/icons/png/512/2175/2175198.png"></a>
+		<a href="https://www.linkedin.com/company/saltish-co/about/" ><img style='width: 20px; height: 20px; margin: 0 4px;' src="https://image.flaticon.com/icons/png/512/2168/2168311.png"></a>
+	</div>
+
+</div>
+
+{% endblocktrans %}
