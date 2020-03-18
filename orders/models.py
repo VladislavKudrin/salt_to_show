@@ -148,13 +148,18 @@ class Order(models.Model):
 		seller = self.get_seller().email
 		from_email = settings.DEFAULT_FROM_EMAIL
 		item = self.product
+		current_domain = self.request.META['HTTP_HOST']
+		faq_url = current_domain + reverse('faq')+'#sell'
+		orders_url = current_domain + reverse('orders:list')
 		if success:
 			time = '24'
 			context = {
 							'time': time,
 							'total': self.total,
 							'order_id':order_id,
-							'item': item
+							'item': item,
+							'faq_url': faq_url,
+							'orders_url': orders_url
 					}
 			txt_ = get_template("orders/emails/inform_about_order.txt").render(context)
 			html_ = get_template("orders/emails/inform_about_order.html").render(context)

@@ -14,13 +14,13 @@ from .forms import OrderTrackForm
 
 from chat_ecommerce.models import Thread
 from products.models import Product
+from django.core.urlresolvers import reverse
 
 User = get_user_model()
 
 class OrderListView(LoginRequiredMixin, View):
 	template_name = "orders/order_list.html"
 	def get(self, *args, **kwargs):
-		print(self.request.GET)
 		tab = self.request.GET.get('tab')
 		context = {}
 		orders_sold = Order.objects.by_request_sold(self.request)
@@ -32,7 +32,6 @@ class OrderListView(LoginRequiredMixin, View):
 		orders_refunded = orders_refunded_buy | orders_refunded_sell
 		orders_completed = orders_completed_buy | orders_completed_sell
 		context['form'] = FeedbackForm(self.request)
-		print(orders_buy)
 		context['tab'] = tab
 		context['orders_sold'] = orders_sold.filter(status='paid')
 		context['orders_buy'] = orders_buy
