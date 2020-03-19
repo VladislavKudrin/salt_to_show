@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-19 19:33+0000\n"
-"PO-Revision-Date: 2020-03-19 20:34+0100\n"
+"POT-Creation-Date: 2020-03-19 20:22+0000\n"
+"PO-Revision-Date: 2020-03-19 21:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -900,29 +900,29 @@ msgstr "Отримано"
 msgid "Delete Order"
 msgstr "Видалити"
 
-#: orders/templates/orders/snippets/order_feedback.html:27
+#: orders/templates/orders/snippets/order_feedback.html:25
 msgid "Rate the order:"
 msgstr "Оцініть замовлення:"
 
-#: orders/templates/orders/snippets/order_feedback.html:48
+#: orders/templates/orders/snippets/order_feedback.html:46
 msgid "Close"
 msgstr "Закрити"
 
-#: orders/templates/orders/snippets/order_feedback.html:49
+#: orders/templates/orders/snippets/order_feedback.html:47
 msgid "Send feedback"
 msgstr "Відправити фідбек"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:24
 #: orders/templates/orders/snippets/order_list/order_completed.html:22
 #: orders/templates/orders/snippets/order_list/order_refunded.html:24
-#: orders/templates/orders/snippets/order_list/order_sold.html:37
+#: orders/templates/orders/snippets/order_list/order_sold.html:38
 msgid "Status:"
 msgstr "Статус:"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:28
 #: orders/templates/orders/snippets/order_list/order_completed.html:26
 #: orders/templates/orders/snippets/order_list/order_refunded.html:28
-#: orders/templates/orders/snippets/order_list/order_sold.html:41
+#: orders/templates/orders/snippets/order_list/order_sold.html:48
 msgid "Total:"
 msgstr "Усього:"
 
@@ -938,11 +938,15 @@ msgstr "У тренді:"
 #: orders/templates/orders/snippets/order_list/order_buy.html:72
 #: orders/templates/orders/snippets/order_list/order_completed.html:44
 #: orders/templates/orders/snippets/order_list/order_refunded.html:52
-#: orders/templates/orders/snippets/order_list/order_sold.html:68
+#: orders/templates/orders/snippets/order_list/order_sold.html:75
 msgid "No orders yet"
 msgstr "Поки що тут пусто"
 
-#: orders/templates/orders/snippets/order_list/order_sold.html:45
+#: orders/templates/orders/snippets/order_list/order_sold.html:43
+msgid "Buyer:"
+msgstr "Покупець:"
+
+#: orders/templates/orders/snippets/order_list/order_sold.html:52
 msgid "Address:"
 msgstr "Адрес:"
 
