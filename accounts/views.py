@@ -11,6 +11,7 @@ from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django.utils import translation
+from django.contrib import messages
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import EmailActivation, User, Wishlist, LanguagePreference
