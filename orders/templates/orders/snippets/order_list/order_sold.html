@@ -34,8 +34,15 @@
 					<div class="row">
 
 						<div class="col-4">
-							<span class="field-name" style="font-weight: bold;">{% trans 'Status:' %}</span><br>
-							<span>{% trans object.get_status %}</span>
+							<div class="col-12">
+								<span class="field-name" style="font-weight: bold;">{% trans 'Status:' %}</span><br>
+								<span>{% trans object.get_status %}</span>
+							</div>
+							<br>
+							<div class="col-12">
+								<span class="field-name" style="font-weight: bold;">{% trans 'Buyer:' %}</span><br>
+								<span>{{ object.billing_profile }}</span>
+							</div>
 						</div>
 						<div class="col-4">
 							<span class="field-name" style="font-weight: bold;">{% trans 'Total:' %}</span><br>

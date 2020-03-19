@@ -41,7 +41,7 @@ class Address(models.Model):
 		) 
 
 	def get_address(self):
-		return "{name}\n{additional_line}\n{street}\n{number}\n{postal_code}\n{city}\n{state}\n{country}\n{post_office}".format(
+		return "{name}\n{additional_line}\n{street}\n{number}\n{postal_code}\n{city}\n{state}\n{country}\n{post_office}\n{phone}".format(
 			name = self.name or "",
 			additional_line = self.additional_line or "",
 			street = self.street or "",
@@ -50,5 +50,6 @@ class Address(models.Model):
 			city= self.city or "",
 			state = self.state or "",
 			country = self.country or "",
-			post_office = self.post_office or ""
+			post_office = self.post_office or "",
+			phone = self.phone or ""
 			)
