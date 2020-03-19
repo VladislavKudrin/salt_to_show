@@ -492,11 +492,11 @@ button:focus {
 									</div>
 									<div class="col-6 col-md-12 foto-mobile">
 									{% if object.first.profile_foto %}
-										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
 											<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
 										</a>
 									{% else %}
-										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
 											<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 										</a>
 									{% endif %}
@@ -505,7 +505,7 @@ button:focus {
 									</div>
 
 									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
-									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
 									{{ object.first.username }}
 									</a>
 									{% if object.product and request.user != object.product.user %}
@@ -540,12 +540,12 @@ button:focus {
 									</div>
 									<div class="col-6 col-md-12 foto-mobile">
 									{% if object.second.profile_foto %}
-									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
 										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
 									</a>
 									{% else %}
 
-									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
 										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
 									</a>
 									{% endif %}
@@ -554,7 +554,7 @@ button:focus {
 									</div>
 
 									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
-									<a href="{{ object.first.get_absolute_url }}" style='text-decoration: none; color: inherit'>	{{ object.user.get_absolute_url }}
+									<a href="{{ object.second.get_absolute_url }}" style='text-decoration: none; color: inherit'>
 									{{ object.second.username }}
 								    </a>
 									{% if object.product and request.user != object.product.user %}
