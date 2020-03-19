@@ -18,34 +18,39 @@
 
 
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
   <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
 
   <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
 
   <link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
-
   <link href="{% static 'css/buttons.css' %}" rel="stylesheet" type="text/css">
 
-
-
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-<!-- JQuery Confirm CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.88/jsrender.min.js'></script>
+
+
+
+
+
+
+
 
 </head>
 <body>
+
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WP2FC23"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
 {% include 'languages/snippets/language_for_script.html' %}
 {% include 'base/navbar.html' with brand_name='eCommerce' %}
 <div class='container-fluid ajax-search' style="height: 100%;">
@@ -55,20 +60,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
   {% load i18n %}
 <head>
 <style type="text/css">
+
+
+
+
 
 html, body {
   max-width: 100%;
@@ -172,24 +170,18 @@ html, body {
   position: absolute;
   width: 100%;
   height: 100%;
-
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
-
   -webkit-transition: 0.6s;
   -webkit-transform-style: preserve-3d;
-
   -moz-transition: 0.6s;
   -moz-transform-style: preserve-3d;
-
   -o-transition: 0.6s;
   -o-transform-style: preserve-3d;
-
   -ms-transition: 0.6s;
   -ms-transform-style: preserve-3d;
-
   transition: 0.6s;
   transform-style: preserve-3d;
 
@@ -363,6 +355,8 @@ html, body {
 </style>
 </head>
 {% include 'categories/snippets/navbar_categories.html' %}
+
+
 <!--First row - banner -->
 <div class="row fluid middle-heading banner-mobile marketplace" style='padding-top: 35px;padding-left:10px;text-align:left;text-transform: uppercase;'>
   <div class="col fluid" >
@@ -447,7 +441,7 @@ html, body {
   {% for obj in brands %}
     <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
             <a href="{% url 'products:list' %}brand={{ obj.id }}">
-              
+              <img data-src="{% static 'img/logos/'%}{{ obj }}.png" %}" width="640" height="480" alt={{obj}} class='card-brand my-auto'>
             </a>
         </div>
   {% endfor %}
@@ -619,16 +613,6 @@ html, body {
 
 
 
-<!--  if okay remove permanently...
-
-
-</div>
-</div>
-
- -->
-
-
-
 <script type="text/javascript">
 
 
@@ -668,18 +652,7 @@ plus.text('+')
 
 
 
-
-
-//flying text
-$(function() {
-    setTimeout(function() {
-        $('.fly-in-text').removeClass('hidden');
-    }, 800);
-});
-
-
 // perfect scrollbar
-
 
 $(document).ready(function () {
 $("#slider1").attr("hidden",false);
@@ -688,8 +661,6 @@ const ps = new PerfectScrollbar('.my-custom-scrollbar', {
     wheelSpeed: 1,
     wheelPropagation: false,
     swipeEasing: true,
-
-
     // minScrollbarLength: 10,
     // maxScrollbarLength: 10
 
@@ -731,7 +702,7 @@ $('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(thi
 
 <!-- django Secure AJAX  -->
   <script src='{% static "js/csrf.ajax.js" %}'></script>
-  
+
 <!-- MobileTouch -->
   <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
 
