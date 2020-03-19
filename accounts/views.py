@@ -1,33 +1,23 @@
-from django.db.models import Q
-from django.conf import settings
-from django.shortcuts import render
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.core.urlresolvers import reverse
-from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, FormView, DetailView, View, UpdateView, ListView
+from django.views.generic import FormView, DetailView, View, ListView
 from django.views.generic.edit import FormMixin
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django.utils import translation
 
-
-
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
-from .models import GuestEmail, EmailActivation, User, Wishlist, LanguagePreference
+from .models import EmailActivation, User, Wishlist, LanguagePreference
 from .forms import *
-from .signals import user_logged_in_signal
 from products.models import Product
-from marketing.utils import Mailchimp
-from marketing.models import MarketingPreference
 from addresses.models import Address
 from addresses.forms import AddressForm
-from ecommerce.utils import add_message
 from billing.models import BillingProfile, Card
 from billing.forms import CardForm
 
@@ -63,7 +53,6 @@ def region_init(request):
 	return HttpResponse('html')
 				 
 def languge_pref_view(request):
-	default_next = "/"
 	next_ = request.GET.get('next')
 	next_post = request.POST.get('next')
 	redirect_path=next_ or next_post or None

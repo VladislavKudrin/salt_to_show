@@ -1,130 +1,122 @@
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon : after
+/*.carousel-control-prev{
+  position: absolute;
+  height: 50px !important;
+}
+
+.carousel-control-next{
+  position: absolute;
+  height: 50px !important;
+}*/
+.error
+.hidden
+
+
 /*   Was middle before, I removed it because of lazy loading ProductDetailVeiw 
    (was some square around image because of it. If causing problems - remove)*/
-   img{ 
-   vertical-align: inherit !important;
-    }
-
-    html,body{
-    font-family: 'Noto Sans', sans-serif !important; 
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: grayscale;
-    -o-font-smoothing: antialiased;
-    -ms-font-smoothing: antialiased;
-    }
-
-      .customDropright{
-      background-color: white; 
-      border: none
-    }
-
-    .customDropright:hover{
-      background-color: white; 
-      border: none
-    }
-    .customDropright:focus {
-     outline: none; 
-    }
-    .brandautofill::focus-within {
-    background: black;
-    }
-
-
-    .msg-read {
-    background-color: white;
-    }
-    .msg-unread {
-    background-color: white;
-    }
-    .pull-right{
-      text-align: right
-    }
-    .pull-left{
-      text-align: left
-    }
-    .rotating{
-    display: none
-    }
-
-    #language-pref{
-    display: block
-    }
-    .language-pref-globe{
-    cursor: pointer
-    }
-
-    .dropdown-item-lang{
-    cursor: pointer
-    }
-
-
-    div.dropdown-menu button.activated{
-    color:white;
-    background-color: black;
-    }
-    div.dropdown-menu button{
-    width: 100%
-    }
-
-    
+img{
+  vertical-align : inherit !important;
+}
+html,body{
+  font-family            : 'Noto Sans', sans-serif !important;
+  -webkit-font-smoothing : antialiased;
+  -moz-font-smoothing    : grayscale;
+  -o-font-smoothing      : antialiased;
+  -ms-font-smoothing     : antialiased;
+}
+.customDropright{
+  background-color : white;
+  border           : none
+}
+.customDropright:hover{
+  background-color : white;
+  border           : none
+}
+.customDropright:focus {
+  outline : none;
+}
+.brandautofill::focus-within {
+  background : black;
+}
+.msg-read {
+  background-color : white;
+}
+.msg-unread {
+  background-color : white;
+}
+.pull-right{
+  text-align : right
+}
+.pull-left{
+  text-align : left
+}
+.rotating{
+  display : none
+}
+#language-pref{
+  display : block
+}
+.language-pref-globe{
+  cursor : pointer
+}
+.dropdown-item-lang{
+  cursor : pointer
+}
+div.dropdown-menu button.activated{
+  background-color : black;
+  color            : white;
+}
+div.dropdown-menu button{
+  width : 100%
+}
 /*Checkbox black*/
 .form-check-input {
-    position: absolute;
-    margin-top: .25rem;
-    margin-right: -2rem;
+  position     : absolute;
+  margin-top   : .25rem;
+  margin-right : -2rem;
 }
-
 input[type="checkbox"] {
-  cursor: pointer !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
-  outline: 0 !important;
-  background: lightgray !important;
-  height: 16px !important;
-  width: 16px !important;
-  border: 1px solid white !important;
-
+  appearance         : none !important;
+  height             : 16px !important;
+  width              : 16px !important;
+  cursor             : pointer !important;
+  background         : lightgray !important;
+  border             : 1px solid white !important;
+  outline            : 0 !important;
+  -webkit-appearance : none !important;
+  -moz-appearance    : none !important;
 }
-
 input[type="checkbox"]:checked {
-  background: black !important;
+  background : black !important;
 }
-
 input[type="checkbox"]:hover {
-  filter: brightness(90%) !important;
+  filter : brightness(90%) !important;
 }
-
 input[type="checkbox"]:disabled {
-  background: #e6e6e6 !important; 
-  opacity: 0.6 !important;
-  pointer-events: none !important;
+  opacity        : 0.6 !important;
+  background     : #e6e6e6 !important;
+  pointer-events : none !important;
 }
-
 input[type="checkbox"]:after {
-  content: '' !important;
-  position: relative !important;
-  left: 40% !important;
-  top: 20% !important;
-  width: 30% !important;
-  height: 50% !important;
-  border: solid #fff !important;
-  border-width: 0 2px 2px 0 !important;
-  transform: rotate(45deg) !important;
-  display: none !important;
+  content      : '' !important;
+  position     : relative !important;
+  display      : none !important;
+  top          : 20% !important;
+  left         : 40% !important;
+  height       : 50% !important;
+  width        : 30% !important;
+  border       : solid #fff !important;
+  border-width : 0 2px 2px 0 !important;
+  transform    : rotate(45deg) !important;
 }
-
 input[type="checkbox"]:checked:after {
-  display: block !important;
+  display : block !important;
 }
-
 input[type="checkbox"]:disabled:after {
-  border-color: #7b7b7b !important;
+  border-color : #7b7b7b !important;
 }
-
-
-
-
-
 /*.row-dialog {
   height: 70px;
 }
@@ -139,157 +131,123 @@ input[type="checkbox"]:disabled:after {
 }
 */
 .black-heart{
-    color: black!important;
+  color : black!important;
 }
-
 .black-heart:hover{
-    color: black !important;
+  color : black !important;
 }
-
-
-
-
 .icon{
   background: url('{% static 'icons/upload.png' %}');
 }
-
 #list-col {
-  min-width: 262.5px; 
-  max-width: 262.5px;
+  min-width : 262.5px;
+  max-width : 262.5px;
 /*  margin: 0px 20px;*/
 }
-
 select{
-  border-radius: 0 !important;
-  -webkit-appearance: none;
+  border-radius      : 0 !important;
+  -webkit-appearance : none;
 }
-
 a:hover{
-  text-decoration: none;
-  color:inherit;
+  color           : inherit;
+  text-decoration : none;
 }
-
-
 @media only screen and (min-width: 1200px) {
   .flip-card-2:hover .flip-card-2-inner {
-    transform: rotateY(180deg);
+    transform : rotateY(180deg);
   }
-
   .flip-card-2-back {
-    transform: rotateY(180deg);
-  } 
-
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
+    transform : rotateY(180deg);
   }
-
+  .flip-card:hover .flip-card-inner {
+    transform : rotateY(180deg);
+  }
   .flip-card-back {
-    transform: rotateY(180deg);
-  } 
-
+    transform : rotateY(180deg);
+  }
 }
-
 @media only screen and (max-width: 1200px) {
   .flip-card-back {
-    transform: rotateY(180deg);
-  } 
-
-  #safe-card, #ai-card {
-    margin-bottom: 15px;
+    transform : rotateY(180deg);
   }
-
+  #safe-card, #ai-card {
+    margin-bottom : 15px;
+  }
 }
-
 .not-count {
-  color: white;
-  height: 16px;
-  width: 19px;
-  background-color: black;
-  font-size: 12px;
-  text-align: center;
+  height           : 16px;
+  width            : 19px;
+  background-color : black;
+  font-size        : 12px;
+  color            : white;
+  text-align       : center;
 }
-
 .dropdown-item.active, .dropdown-item:active{
-    background-color: white !important;
-    color: black !important;
+  background-color : white !important;
+  color            : black !important;
 }
-
 .dropdown-item:focus, .dropdown-item:hover{
-    background-color: black !important;
-    color: white !important;
+  background-color : black !important;
+  color            : white !important;
 }
-
 .strike {
-  font-size: 1em;
-  line-height: 2em;
-  position: relative;
+  position    : relative;
+  font-size   : 1em;
+  line-height : 2em;
 }
 .strike::after {
-  border-bottom: 0.1em solid black;
-  content: "";
-  left: 0;
-  margin-top: calc(0.1em / 2 * -1);
-  position: absolute;
-  right: 0;
-  top: 50%;
+  content       : "";
+  position      : absolute;
+  top           : 50%;
+  right         : 0;
+  left          : 0;
+  margin-top    : calc(0.1em / 2 * -1);
+  border-bottom : 0.1em solid black;
 }
-
 .flip-card-2 {
-  background-color: transparent;
-  width: 406px;
-  height: 25px;
+  height              : 25px;
+  width               : 406px;
+  background-color    : transparent;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  -webkit-perspective: 1000px;
-
+  -webkit-perspective : 1000px;
 }
-
 .flip-card-2-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  -webkit-transition: transform 0.6s;
-  -webkit-transform-style: preserve-3d;
+  position                : relative;
+  height                  : 100%;
+  width                   : 100%;
+  text-align              : center;
+  -webkit-transition      : transform 0.6s;
+  transition              : transform 0.6s;
+  -webkit-transform-style : preserve-3d;
+  transform-style         : preserve-3d;
 }
-
 .bg {
 /*  background-image: url("../img/white_wall.png");*/
-  height: 100%;
-  background-position: center;
-  background-repeat: repeat;
+  height              : 100%;
+  background-position : center;
+  background-repeat   : repeat;
 }
-
 #drop-cat {
-  width: 100% !important;
+  width : 100% !important;
 }
-
 .dropdown-menu.customDropRightMenu {
-    width: 100% !important;
-  }
-
-
+  width : 100% !important;
+}
 /*#sort:hover {
   background-color: #e8eaef;
 }*/
-
 .custom-control-label:before{
-    background-color:white;
+  background-color : white;
 }
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
-    background-color:white;
+  background-color : white;
 }
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after{
-    background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='black' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http : //www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='black' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
 }
 .custom-control-input:active~.custom-control-label::before{
-    background-color:green;
+  background-color : green;
 }
-
-
-
-
 /*.d-block{
   position: absolute;
   object-fit: scale-down;
@@ -302,92 +260,75 @@ a:hover{
 }
 */
 .carousel-inner{
-  width:100%;
+  width : 100%;
 /*  max-height: 400px !important;*/
 }
-
 .carousel-item{
 /*    position: relative;
     text-align:top;
     height:100%;*/
 }
-
-
 #id_category::after{
-background-color: black;
-    }
-
+  background-color : black;
+}
 /*.card{
   position: relative;
   background-color: black;
   color:black;
 }*/
-  .ui-autocomplete {
-    max-height: 100px;
-    overflow-y: auto;
+.ui-autocomplete {
     /* prevent horizontal scrollbar */
-    overflow-x: hidden;
-    color: black;
-  }
+  overflow-x : hidden;
+  overflow-y : auto;
+  max-height : 100px;
+  color      : black;
+}
   /* IE 6 doesn't support max-height
    * we use height instead, but this forces the menu to always be this tall
    */
-  * html .ui-autocomplete {
-    height: 100px;
-  }
- 
- #searchAutoComplete{
-  width: 200px;
-  -webkit-transition: width .20s ease-in-out;
-  transition: width .20s ease-in-out;
-  color: black;
+* html .ui-autocomplete {
+  height : 100px;
 }
-
+#searchAutoComplete{
+  width              : 200px;
+  color              : black;
+  -webkit-transition : width .20s ease-in-out;
+  transition         : width .20s ease-in-out;
+}
 .ui-menu-item-wrapper .ui-state-active {
-  color: black !important;
+  color : black !important;
 }
-
-
-
-
 #searchAutoComplete::focus-within {
-  background: black;
+  background : black;
 }
-
-
 .ui-menu-item {
-      padding: 4px !important;
-      max-width: 260px;
-      text-overflow: ellipsis;
-      overflow: hidden;  
-      white-space: nowrap;  
-
+  overflow      : hidden;
+  max-width     : 260px;
+  padding       : 4px !important;
+  text-overflow : ellipsis;
+  white-space   : nowrap;
 }
-
 /*a.ui-state-focus {
       background: yellow !important;
 
 }*/
 .ui-state-disabled {
-      background: none !important;
+  background : none !important;
 }
 .ui-state-active {
 /*      background: rgba(1, 1, 1, 0.1) !important;*/
-      background: none !important;
-      border: 1px black !important;
-      color: black!important;
-
+  background : none !important;
+  color      : black!important;
+  border     : 1px black !important;
 }
-
 .ui-menu {
-      max-height: 200px !important;
-      background: white !important;
-      border-bottom:  1px solid black !important;
-      border-right:  1px solid black !important;
-      border-left:  1px solid black !important;
-      border-top: 1px solid black !important;
+  max-height    : 200px !important;
+  background    : white !important;
+  border-top    : 1px solid black !important;
+  border-right  : 1px solid black !important;
+  border-bottom : 1px solid black !important;
+  border-left   : 1px solid black !important;
 }
-
 /*.ui-autocomplete-input {
     width:500px;
 }
@@ -406,159 +347,113 @@ background-color: black;
 }
 */
 .suggestions {
- color: black;
+  color : black;
 }
-
 /*.navbar{
   align-items: flex-start;
 }*/
-
 .form-control:focus {
-  border-color: black;
-  box-shadow: none;
-  transition: all 0s linear;
+  border-color : black;
+  box-shadow   : none;
+  transition   : all 0s linear;
 }
-
 .navbar-mb{
-  margin-bottom: 30px;
+  margin-bottom : 30px;
 }
-
-
-
 .navbar-wish-count {
-    color: black;
-    margin-left: -5px;
+  max-width   : 10px;
+  margin-left : -5px;
     /*position: absolute;
     top: 28px;
     right: 65px;*/
-    font-size: 10px;
-    max-width: 10px;
+  font-size   : 10px;
+  color       : black;
 }
-
 .fa-heart {
-  color:rgba(190, 45, 51, 0.74);
+  color : rgba(190, 45, 51, 0.74);
 }
-
-
-
 .fa-user {
-  color: black;
+  color : black;
 }
-
 .wish-div a{
-    display:inline-block;
-    color:black;
-    position:absolute;
+  position         : absolute;
+  display          : inline-block;
+  visibility       : hidden;
 /*    margin-left:100px;
     padding:1px 1px;*/
-    background-color: transparent;
-    visibility: hidden;
+  background-color : transparent;
+  color            : black;
 }
-
 .wish-div:hover a {
-    visibility: visible;
-    background-color: transparent;
+  visibility       : visible;
+  background-color : transparent;
 }
-
 /*a:hover {
     color: black !important;
 }*/
-
-
-
 .badge-status {
-  position: absolute;
-  z-index: 1;
-  right: 5%;
-  border: 1px solid white;
-  font-size: 11px !important;
+  position  : absolute;
+  right     : 5%;
+  z-index   : 1;
+  font-size : 11px !important;
+  border    : 1px solid white;
 }
-
 .one-line{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    display:inline-block;
+  display       : inline-block;
+  overflow      : hidden;
+  text-overflow : ellipsis;
+  white-space   : nowrap;
 }
-
 .poloska{
   /*border-top: 1px solid #e8eaef;*/
-  margin-top: 5px;
+  margin-top : 5px;
 }
-
-
-
 ol {
-  list-style: none;
+  list-style : none;
 }
-
 #mssg-text {
-  overflow-wrap: break-word;
+  overflow-wrap : break-word;
 }
-
 .dropdown-menu {
-  width: 100px; 
+  width : 100px;
 }
-
-
 /*#align-userpic-chat, #align-items-chat {
   align-items: center;
 }*/
-
-
-    .conv-user {
-      width: 225px;
+.conv-user {
+  width         : 225px;
       white-space: nowrap; /* Запрещаем перенос строк */
       overflow: hidden; /* Обрезаем все, что не помещается в область */
-      text-overflow: ellipsis;
-    }
-
-
-
-#opponent-pic {
-  margin-left: 390px;
+  text-overflow : ellipsis;
 }
-
+#opponent-pic {
+  margin-left : 390px;
+}
 /*#opponent-name {
   margin-left: -50px;
 }*/
-
 .ps__rail-x {
-  margin-right: 10px;
+  margin-right : 10px;
 }
-
 .ps__rail-y {
-  margin-bottom: 10px;
-  }
-
-
+  margin-bottom : 10px;
+}
 #move-column {
-  width: 250px;
+  width : 250px;
 }
-
 .msg-unread{
-  padding: 0;
-  margin: 0;
+  margin  : 0;
+  padding : 0;
 }
-
 table {
-  display: inline-block;
+  display : inline-block;
 }
-
-
-
-
-
 #conversations {
-  text-align: left;
+  text-align : left;
 }
-
 .table td, .table th {
-  border-top: none !important;
+  border-top : none !important;
 }
-
-
-
 /*.add-info {
   margin-right: 200px;
 }
@@ -570,380 +465,283 @@ table {
 #btn-send-message {
   margin-left: 25px;
 }*/
-
-
 .avatar, .img-thumbnail {
-	width: 100px;
-	height: 100px;
-	border-radius: 50% !important;
+  height        : 100px;
+  width         : 100px;
+  border-radius : 50% !important;
 }
-
 .avatar{
-  object-fit: cover;
+  object-fit : cover;
 }
-
 .username {
-  color: black;
+  color : black;
 }
-
 .msg-unread {
-  background-color: white;
+  background-color : white;
 }
-
 .timestamp {
-  color: grey;
+  color : grey;
 }
-
 #products-by-user {
-	border-bottom: 1px solid #e8eaef;
+  border-bottom : 1px solid #e8eaef;
 }
-
 a {
-	color: black;
+  color : black;
 }
-
 .list-unstyled a:hover {
-	color: black;
-	background-color: #e8eaef;
-	text-decoration: none;
+  background-color : #e8eaef;
+  color            : black;
+  text-decoration  : none;
 }
-
 /*#sidebar {
-	border-right: 1px solid #e8eaef;
-	padding-right: 125px;
+  border-right: 1px solid #e8eaef;
+  padding-right: 125px;
 }*/
-
-
 ul {
-	list-style: none;
+  list-style : none;
 }
-
 /*#sidebar {
   position: absolute;
   width: 100%;
 }
 */
 html{
-  position: relative; 
-  min-height: 100%;
+  position   : relative;
+  min-height : 100%;
 }
-
 html,body{
-  margin:0;
-  padding-bottom: 50px;
+  margin         : 0;
+  padding-bottom : 50px;
 }
-
 .page-footer{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px 0px;
-    border-top: 1px solid #e8eaef;
+  position   : absolute;
+  right      : 0;
+  bottom     : 0;
+  left       : 0;
+  padding    : 10px 0px;
+  border-top : 1px solid #e8eaef;
 }
-
 .pageContentWrapper{
   margin-bottom:100px;/* Height of footer*/
-} 
-
-
+}
 .img-size {
-  height: 100px;
-  width: 100px;
+  height : 100px;
+  width  : 100px;
 }
-
 .container-fluid-product {
-    height: 100%;
-    max-height: 2000px;
-    padding-top: 50px;
-    padding-bottom: 150px;
+  height         : 100%;
+  max-height     : 2000px;
+  padding-top    : 50px;
+  padding-bottom : 150px;
 }
-
 .limit {
-  max-height:1%;
-  overflow:hidden;
+  overflow   : hidden;
+  max-height : 1%;
 }
-
 .contact-padding {
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+  padding-top    : 20px;
+  padding-bottom : 20px;
+  padding-right  : 0px;
+  padding-left   : 0px;
 }
-
-.carousel-control-prev-icon,
 .carousel-control-next-icon {
-  height: 25px;
-  width: 25px;
-  outline: black;
-  background-size: 100%, 100%;
-  border-radius: 0%;
-  border: 1px solid black;
-  background-image: none;
-  background-color: rgba(166, 174, 176, 0.5);
+  height           : 25px;
+  width            : 25px;
+  background-color : rgba(166, 174, 176, 0.5);
+  background-image : none;
+  background-size  : 100%, 100%;
+  border           : 1px solid black;
+  border-radius    : 0%;
+  outline          : black;
 }
-
-.carousel-control-next-icon:after
 {
-  content: '>';
-  font-size: 15px;
-  color: black;
+  content   : '>';
+  font-size : 15px;
+  color     : black;
 }
-
 .carousel-control-prev-icon:after {
-  content: '<';
-  font-size: 15px;
-  color: black;
+  content   : '<';
+  font-size : 15px;
+  color     : black;
 }
-
 * {
-  border-radius: 0 !important;
+  border-radius : 0 !important;
 }
-
-
 .carousel .carousel-inner {
 /*    height: 1000px;*/
-    background: #ffffff;
+  background : #ffffff;
 }
-
 .carousel-item{
-    position: relative;
-    transition: transform 0s;
+  position   : relative;
     /*height:100%;*/
-    background: #ffffff;
+  background : #ffffff;
+  transition : transform 0s;
 }
-
 .carousel-item-active{
-    position: relative;
-    transition: transform 0s;
+  position   : relative;
     /*height:100%;*/
-    background: #ffffff;
+  background : #ffffff;
+  transition : transform 0s;
 }
-
-/*.carousel-control-prev{
-	position: absolute;
-  height: 50px !important;
+{
+  color : red;
 }
-
-.carousel-control-next{
-	position: absolute;
-  height: 50px !important;
-}*/
-
-.error
-    {
-        color: red;
-    }
-
 .error input, .error select {
-border: 2px red solid;
+  border : 2px red solid;
 }
-
-
 .alert alert-block alert-danger{
-    color: black;
+  color : black;
 }
-
-
-
 @media only screen and (max-width: 768px) {
   #list-col {
-    margin: 0;
+    margin : 0;
   }
 }
-
-
-
 .ui-widget-content .ui-corner-tr{
-  height: 100px;
-  width: 100px;
-  border: 1px solid #efefef;
+  height : 100px;
+  width  : 100px;
+  border : 1px solid #efefef;
 }
-
-
 .ui-widget{
-      font-family: inherit;
-  font-size: 0.9em;
+  font-family : inherit;
+  font-size   : 0.9em;
 }
-
-
-
 /*Checkout / Account form*/
-
 .change-ava{
-  min-width:155px;
+  min-width : 155px;
 }
-
-
 #trigger {
-    visibility: hidden; 
-    display: none; 
-  } 
-
-
+  display    : none;
+  visibility : hidden;
+}
 .col-form-label  {
-  position: absolute;
-  color: #778;
-  padding-left: calc(.375rem + 1px);
-  padding-top: calc(.390rem + 2px);
-  font-size: 14px;
+  position     : absolute;
+  padding-top  : calc(.390rem + 2px);
+  padding-left : calc(.375rem + 1px);
+  font-size    : 14px;
+  color        : #778;
 }
-
-
 .labels-placement{
-
-  padding-bottom: 3px !important;
-  padding-top: 13px !important;
-  padding-left: calc(.375rem + 1px) !important;
-  font-size: 14px !important;
+  padding-top    : 13px !important;
+  padding-bottom : 3px !important;
+  padding-left   : calc(.375rem + 1px) !important;
+  font-size      : 14px !important;
 }
-
 /*size for placeholders*/
 #id_title, #id_brand, #id_sex, #id_undercategory, #id_size, #id_condition, #id_description, #id_email, #id_password, #id_address_form-phone, #id_address_form-name {
-  font-size: 14px;
+  font-size : 14px;
 }
-
 .asteriskField {
-    display: none;
+  display : none;
 }
-
 /*.placic-style {
   color: gray;
   opacity: 0.7;
   font-size: 14px;
 }*/
-
 @media only screen and (max-width: 850px) {
   .checkout-container {
-    width: 100%;
+    width : 100%;
   }
 }
-
 @media only screen and (min-width: 850px) {
   .checkout-container {
-    width: 70%;
+    width : 70%;
   }
 }
-
 @media only screen and (max-width: 768px) {
   .col-form-label  {
-    font-size: 13px;
+    font-size : 13px;
   }
   .settings-btn, .checkout-btn {
-    width: 100% !important;
+    width : 100% !important;
   }
   .settings-container, .checkout-container {
-    width: 100% !important;
+    width : 100% !important;
   }
 }
-
 .credit label{
-  display:flex; 
-  font-size:10px; 
-  color:white; 
-  opacity:.4; 
-  margin-bottom: 0px; 
-  padding-top: 5px;
+  display       : flex;
+  margin-bottom : 0px;
+  padding-top   : 5px;
+  opacity       : .4;
+  font-size     : 10px;
+  color         : white;
 }
-
 .credit input{
-  background:transparent;
-  border:none;
-  border-bottom:1px solid transparent;
-  color:#dbdce0; transition: 
-  border-bottom .4s; 
-  width:100% !important;
+  width                     : 100% !important;
+  background                : transparent;
+  border                    : none;
+  border-bottom             : 1px solid transparent;
+  color:#dbdce0; transition:
+  border-bottom .4s;
 }
-
 .credit input:focus{
-  border-bottom:1px solid #1abc9c; 
-  outline:none;
+  border-bottom : 1px solid #1abc9c;
+  outline       : none;
 }
-
 .credit{
-  background:#16181a; 
-  border-radius:14px !important; 
-  max-width: 340px; 
-  margin: 10px auto 40px auto;
-  padding:40px 30px 10px 30px; 
-  box-shadow: 2px 10px 40px black; 
-  line-height: normal;
+  max-width     : 340px;
+  margin        : 10px auto 40px auto;
+  padding       : 40px 30px 10px 30px;
+  background    : #16181a;
+  line-height   : normal;
+  border-radius : 14px !important;
+  box-shadow    : 2px 10px 40px black;
 }
-
-  .liqpay{
-  max-width:70px; 
-  max-height: 50px;
+.liqpay{
+  max-height : 50px;
+  max-width  : 70px;
 }
-
-  .privat{
-  max-width:35px; 
-  max-height: 50px;
+.privat{
+  max-height : 50px;
+  max-width  : 35px;
 }
-
-  .mastercard{
-  max-width:50px; 
-  max-height: 50px;
+.mastercard{
+  max-height : 50px;
+  max-width  : 50px;
 }
-
-  .visa{
-  max-width:50px; 
-  max-height: 50px;
+.visa{
+  max-height : 50px;
+  max-width  : 50px;
 }
-
-  .double-shield{
-  max-width:33px; 
-  max-height: 50px;
+.double-shield{
+  max-height : 50px;
+  max-width  : 33px;
 }
-
-  .novaposhta{
-  max-width:53px; 
-  max-height: 50px;
-  filter: invert(0%) sepia(100%) saturate(100%) hue-rotate(189deg) brightness(0%) contrast(100%);
+.novaposhta{
+  max-height : 50px;
+  max-width  : 53px;
+  filter     : invert(0%) sepia(100%) saturate(100%) hue-rotate(189deg) brightness(0%) contrast(100%);
 }
-
-  .authentic{
-  max-width:36px; 
-  max-height: 50px;
+.authentic{
+  max-height : 50px;
+  max-width  : 36px;
 }
-
-
-
-
-
-.hidden
 {
-   display: none
+  display : none
 }
-
 .payment-icon{
-    max-width: 50px;
-    max-height: 50px;
-    display: inline;
-    padding: 1em;
+  display    : inline;
+  max-height : 50px;
+  max-width  : 50px;
+  padding    : 1em;
 }
-
 .buyer-protection{
-  font-size:12px;
+  font-size : 12px;
 }
-
 .post-office-errors {
-  font-size: 80%;
-  color: #dc3545;
-  font-weight: bold;
-  padding-bottom: 8px;
-  display: flex;
-  justify-content: start;
-  }  
-
-.space-between{
-  display: flex;
-    justify-content: space-between; 
-  } 
-
-.icons-buyer-protection{
-  display:flex; justify-content: center; align-items: center; font-size: 20px;
+  display         : flex;
+  padding-bottom  : 8px;
+  font-size       : 80%;
+  font-weight     : bold;
+  color           : #dc3545;
+  justify-content : start;
 }
-
-
-
-
+.space-between{
+  display         : flex;
+  justify-content : space-between;
+}
+.icons-buyer-protection{
+  display:flex; justify-content: center; align-items: center; font-size : 20px;
+}
