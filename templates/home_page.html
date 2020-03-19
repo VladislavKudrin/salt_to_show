@@ -1,8 +1,72 @@
-{% extends "base.html" %}
 {% load static %}
-{% url 'products:create' as products_create_url %}
-{% block content %}
+{% load for_loop_extras %}
 {% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WP2FC23');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SALT</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+
+  <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
+
+  <link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
+
+  <link href="{% static 'css/buttons.css' %}" rel="stylesheet" type="text/css">
+
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<!-- JQuery Confirm CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WP2FC23"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+{% include 'languages/snippets/language_for_script.html' %}
+{% include 'base/navbar.html' with brand_name='eCommerce' %}
+<div class='container-fluid ajax-search' style="height: 100%;">
+  {% include 'base/messages.html' %}
+  {% block content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {% load i18n %}
 <head>
 <style type="text/css">
 
@@ -383,7 +447,7 @@ html, body {
   {% for obj in brands %}
     <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
             <a href="{% url 'products:list' %}brand={{ obj.id }}">
-              <img data-src="{% static 'img/logos/'%}{{ obj }}.png" %}" width="640" heigh="480"  alt={{obj}} class='card-brand  my-auto'>
+              
             </a>
         </div>
   {% endfor %}
@@ -641,3 +705,40 @@ $('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(thi
 
 
 
+
+
+
+</div>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+  <script type="text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-150733918-1');   
+  </script> 
+    {% block script %}{% endblock %}
+  {% include 'base/js_templates.html' %}
+
+<!-- Lazy Loading Images  -->
+  <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+  <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+
+<!-- ecommerce Custom JS -->
+  <script src='{% static "js/ecommerce.js" %}'></script>
+
+<!-- django Secure AJAX  -->
+  <script src='{% static "js/csrf.ajax.js" %}'></script>
+  
+<!-- MobileTouch -->
+  <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
+
+<!-- Fontawesome -->
+  <script defer src="{% static 'fontawesome//js/all.js' %}"></script>
+
+
+</body>
+{% include 'base/footer.html' %}
+</html>
