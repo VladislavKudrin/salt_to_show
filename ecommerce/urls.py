@@ -14,7 +14,6 @@ from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 
 
 
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('language_pref.urls')),
@@ -60,6 +59,10 @@ urlpatterns = [
     url(r'^faq/$', FAQPageView.as_view(), name='faq'),
 ]
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+       url(r'^__debug__/', include(debug_toolbar.urls)),] + urlpatterns
 
 
 
