@@ -74,7 +74,7 @@ ADMINS = MANAGERS
 PAY_USER_SECRET_KEY = os.environ.get('PAY_USER_SECRET_KEY')
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
-ASGI_APPLICATION = 'ecommerce.asgi.application'
+
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
@@ -99,7 +99,7 @@ INSTALLED_APPS = [
     "django_cron",
     'betterforms',
     'django_extensions',
-    'channels',
+
 
     #our apps
     'chat_ecommerce',
@@ -258,7 +258,7 @@ DATABASES = {
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
-# DATABASES['default']['CONN_MAX_AGE'] = 500
+DATABASES['default']['CONN_MAX_AGE'] = 500
 
 
 # Password validation
