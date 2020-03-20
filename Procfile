@@ -1,1 +1,1 @@
-web: gunicorn ecommerce.wsgi --max-requests 1200 --timeout 60
+web: daphne ecommerce.asgi:application 
