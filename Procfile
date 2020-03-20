@@ -1,1 +1,1 @@
-web: gunicorn ecommerce.wsgi
+web: gunicorn --workers=2 ecommerce.wsgi
