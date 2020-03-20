@@ -58,6 +58,7 @@
             {% endif %}
 		</div>
 	</a></li><br>
+    <li><a href='{% url "orders:list" %}'>{% trans 'My orders' %}</a></li><br>
 	<li><a href='{% url "products:user-list" %}'>{% trans 'My items' %}</a></li><br>
 	<li><a href='{% url "accounts:wish-list" %}'>{% trans 'Wishlist' %}</a></li><br>
 	<li><a href='{% url "accounts:history-product" %}'>{% trans 'History' context 'account_dropdown_history' %}</a></li><br>

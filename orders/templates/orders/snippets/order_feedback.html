@@ -2,11 +2,9 @@
 {% load static %}
 {% if object.feedback is None %}
 {% load i18n %}
-  <link href="{% static 'rating_js/css/star-rating.css' %}" media="all" rel="stylesheet" type="text/css" />
-
-
-
+<link href="{% static 'rating_js/css/star-rating.css' %}" media="all" rel="stylesheet" type="text/css" />
 <link href="{% static 'rating_js/themes/krajee-fas/theme.css' %}" media="all" rel="stylesheet" type="text/css" />
+
 <style type="text/css">
   .filled-stars{
     color:black!important;
@@ -54,7 +52,7 @@
 </div>
 
 <!-- Star Rating -->
-  <script src="{% static 'rating_js/js/star-rating.js' %}"></script>
+<script src="{% static 'rating_js/js/star-rating.js' %}"></script>
 <script src="{% static 'rating_js/themes/krajee-fas/theme.js' %}"></script>
 
 <script type="text/javascript">
@@ -66,7 +64,6 @@
   $('#rating-system').on('rating:change', function(event, value, caption) {
   $('#rating-input').val(value)
 });
-  $('#feedbackModal_sqmdh3383u').modal('show')
   dismissModalFeedback.click(function(e){
     e.preventDefault()
     window.location.href = currentPath

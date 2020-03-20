@@ -1,490 +1,351 @@
-{% extends "base.html" %}
 {% load static %}
-{% url 'products:create' as products_create_url %}
-{% block content %}
+{% load for_loop_extras %}
 {% load i18n %}
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
-
-html, body {
-  max-width: 100%;
-/*  height: 100%;*/
-/*  overflow-x: hidden;*/
-  padding-bottom: 0px;
-}
-
-/*body {
-  padding-bottom: 25px;
-}*/
-
-
-/*Perfect-scrollbar*/
-.my-custom-scrollbar {
-  position: absolute;
-  padding-right: 20px;
-  padding-left: 0px;
-  margin-bottom: 0px;
-}
-
-nav{
-  margin-bottom: 0px!important;
-}
-
-/*Flying text*/
-.fly-in-text {
-    list-style: none;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-}
-.fly-in-text li {
-    display: inline-block;
-/*    margin-right: 5px;*/
-    font-weight: 20;
-    font-size: 1.5em;
-    color: black;
-    opacity: 1;
-    transition: all 0.5s ease;
-}
-.fly-in-text li:last-child {
-    margin-right: 0;
-}
-.fly-in-text.hidden li {
-    opacity: 0;
-}
-.fly-in-text.hidden li:nth-child(1) { transform: translateX(-100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(2) { transform: translateX(-100px) translateY(100px); }
-.fly-in-text.hidden li:nth-child(3) { transform: translateX(100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(4) { transform: translateX(-100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(5) { transform: translateX(100px) translateY(100px); }
-.fly-in-text.hidden li:nth-child(6) { transform: translateX(-100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(7) { transform: translateX(-100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(7) { transform: translateX(-100px) translateY(100px); }
-.fly-in-text.hidden li:nth-child(8) { transform: translateX(100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(9) { transform: translateX(-100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(10) { transform: translateX(100px) translateY(-100px); }
-.fly-in-text.hidden li:nth-child(11) { transform: translateX(100px) translateY(100px); }
-
-/*Mobile*/
-@media only screen and (max-width: 768px){
-  #sell-small, #buy-small {
-    font-size: 0.9em;
-  }
-
-  .banner{
-    font-size: 0.75em;
-  }
-
-  .fly-in-text{
-    padding-left: 70px;
-    width: 400px;
-  }
-
-  .most-liked{
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .flip-card-front, .flip-card-back{
-    font-size: 10px;
-  }
-
-  .jumbotron-cards{
-    padding: 0px !important;
-  }
-
-  #cards-mobile {
-    padding-top: 1em;
-  }
-
-  .flip-card{
-    width: 100px;
-    height: 100px;
-  }
-
-  .card-font {
-    font-size: 20px !important;
-  }
-  .flip-card-front {
-    font-size: 10px;
-  }
-  
- 
-  #cards-mobile {
-    padding-top: 1rem;
-  }
-
-  .flip-card {
-    width: 100px;
-    height: 100px;
-  }
-
-  .spacer{
-    padding-bottom: 0px !important;
-  }
-}
-
-
-/*Most-liked*/
-.scrolling-wrapper {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  }
-  .card {
-    display: inline-block;
-}
-
-.scrolling-wrapper-flexbox {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  }
-  .card {
-    flex: 0 0 auto;
-    margin-right: 3px;
-  
-}
-
-.scrolling-wrapper, .scrolling-wrapper-flexbox {
-  height: 80px;
-  margin-bottom: 20px;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-
-/*Flip-Cards */
-.flip-card {
-  width: 200px;
-  height: 100px;
-  backface-visibility:hidden;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  -webkit-transition: transform 0.6s;
-  -webkit-transform-style: preserve-3d;
-}
-
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
-
-  -webkit-transition: 0.6s;
-  -webkit-transform-style: preserve-3d;
-
-  -moz-transition: 0.6s;
-  -moz-transform-style: preserve-3d;
-
-  -o-transition: 0.6s;
-  -o-transform-style: preserve-3d;
-
-  -ms-transition: 0.6s;
-  -ms-transform-style: preserve-3d;
-
-  transition: 0.6s;
-  transform-style: preserve-3d;
-
-}
-
-.flip-card-front {
-  background-color: white;
-  color: black;
-  -webkit-transform: translate3d(0, 0, 0);
-}
-
-.flip-card-back {
-  background-color: white;
-  color: black;
-} 
-
-.account {
-
-  background: linear-gradient(-45deg, black, white, white, black);
-  background-size: 400% 400%;
-  -webkit-animation: Gradient 15s ease infinite;
-  -moz-animation: Gradient 15s ease infinite;
-  animation: Gradient 15s ease infinite;
-}
-
-@-webkit-keyframes Gradient {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-@-moz-keyframes Gradient {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-@keyframes Gradient {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-
-
-
-@keyframes strike{
-  0%   { width : 0; }
-  100% { width: 100%; }
-}
-.strike {
-  position: relative;
-}
-.strike::after {
-  content: ' ';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  animation-name: strike;
-  animation-duration: 0.6s;
-  animation-timing-function: ease-in;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards; 
-}
-
-
-#read-more{
-  opacity: 0.8;
-}
-
-#read-more:hover{
-  opacity: 1;
-}
-
-#banner-container {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-align:center;
-  text-transform: uppercase;
-  width:100%;
-  line-height: normal;
-}
-#flip {
-  color:white;
-/*  padding-top:5px;
-  padding-bottom:5px;*/
-  padding-right: 10px;
-  padding-left: 10px
-}
-
-
-/*#flip div div  {
-  background: linear-gradient(-45deg, #ee775259, #23d5ab5c);
-}
-#flip div:first-child div {
-  background: linear-gradient(-45deg, #23d5ab5c, #e73c7e5c);
-}
-#flip div:last-child div {
-  background: linear-gradient(-45deg, #e73c7e5c, #23a6d570 );
-}*/
-
-
-/*
-ЖЕСТКИЕ ЦВЕТА
-#flip div div  {
-  background:#02ce02;
-}
-#flip div:first-child div {
-  background: blue;
-}
-#flip div:last-child div {
-  background: red;
-}*/
-
-
-#flip div div  {
-  background:#5CDE5C;
-}
-#flip div:first-child div {
-  background: #0FADF4;
-}
-#flip div:last-child div {
-  background: #FF3333;
-}
-
-
-@keyframes show {
-  0% {margin-top:-270px;}
-  5% {margin-top:-180px;}
-  33% {margin-top:-180px;}
-  38% {margin-top:-90px;}
-  66% {margin-top:-90px;}
-  71% {margin-top:0px;}
-  99.99% {margin-top:0px;}
-  100% {margin-top:-270px;}
-}
-
-
-
-@media only screen and (max-width: 768px){
-
-
-  .middle-heading{
-    font-size: 25px !important;
-  }
-
-  .display-4{
-    font-size: 20px !important;
-  }
-
-  #banner-container {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align:center;
-  text-transform: uppercase;
-  width:100%;
-  line-height: normal;
-}
-
-#flip > div > div {
-  color:#fff;
-  padding:4px 12px;
-  height:30px;
-  margin-bottom:67px;
-  display:inline-block;
-}
-
-.account{
-  margin-top: 40px;
-}
-
-.most-liked{
-  padding-top: 20px !important;
-  padding-bottom: 10px !important;
-}
-
-.sell-buy{
-  padding-bottom: 40px !important;
-
-}
-
-.info{
-  margin-bottom: 10px !important;
-  padding-top: 70px !important;
-}
-
-.read-more{
-  padding-top: 0px !important;
-}
-
-.marketplace{
- padding-left: 2px !important;
-}
-
-.salt{
- padding-right: 2px !important;
-}
-
-.btn-light-home{
- height: 190px !important;
-}
-
-.btn-dark-home{
- height: 190px !important;
-}
-
-.trending-name{
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-  margin-left: 0px !important;
-
-}
-
-.trending-col{
-  padding-right: 10px !important;
-
-}
-
-}
-
-.tricolor {
-  background: linear-gradient(-10deg, #0FADF4 35%,
-    #FF3333 35%, #FF3333 65%, 
-    #5CDE5C 65%);
-  width:100vw !important;
-  text-align:center;
-  color:white !important;
-}
-
-/*.tricolor {
-  background: linear-gradient(-45deg, blue 35%,
-    red 35%, red 65%, 
-    #02ce02 65%);
-  width:100vw !important;
-  text-align:center;
-  color:white !important;
-}
-ЖЕСТКАЯ
-*/
-
-.card-brand {
-    min-width: 250px;
-    max-height: 200px;
-    min-height: 200px;
-    max-width: 250px;
-    object-fit: contain;
-    align-items: center;
-    padding: 60px;
-/*    padding-right: 40px;
-    padding-left: 40px;*/
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    margin-top: 10px !important;
-/*    margin-bottom: 10px;*/
-/*    margin-left: 10px;*/
-/*    max-width: 275px;*/
-}
-
- .spacer {
-     padding-bottom: 100px
- }
-
-
-</style>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WP2FC23');</script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SALT</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/buttons.css' %}" rel="stylesheet" type="text/css">
+
+
+  <style type="text/css">
+
+    html, body {
+      max-width: 100%;
+      padding-bottom: 0px;
+    }
+
+    /*Perfect-scrollbar*/
+    .my-custom-scrollbar {
+      position: absolute;
+      padding-right: 20px;
+      padding-left: 0px;
+      margin-bottom: 0px;
+    }
+
+    /*Mobile*/
+    @media only screen and (max-width: 768px){
+      #sell-small, #buy-small {
+        font-size: 0.9em;
+      }
+
+      .most-liked{
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .flip-card-front, .flip-card-back{
+        font-size: 10px;
+      }
+
+      .flip-card{
+        width: 100px;
+        height: 100px;
+      }
+
+      .card-font {
+        font-size: 20px !important;
+      }
+      .flip-card-front {
+        font-size: 10px;
+      }
+
+      .flip-card {
+        width: 100px;
+        height: 100px;
+      }
+
+      .spacer{
+        padding-bottom: 0px !important;
+      }
+    }
+
+    /*Most-liked*/
+    .scrolling-wrapper {
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      }
+      .card {
+        display: inline-block;
+    }
+      .card {
+        flex: 0 0 auto;
+        margin-right: 3px;
+      
+    }
+
+    .scrolling-wrapper {
+      height: 80px;
+      margin-bottom: 20px;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    /*Flip-Cards */
+    .flip-card {
+      width: 200px;
+      height: 100px;
+      backface-visibility:hidden;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      -webkit-transition: transform 0.6s;
+      -webkit-transform-style: preserve-3d;
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
+      -o-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-transition: 0.6s;
+      -webkit-transform-style: preserve-3d;
+      -moz-transition: 0.6s;
+      -moz-transform-style: preserve-3d;
+      -o-transition: 0.6s;
+      -o-transform-style: preserve-3d;
+      -ms-transition: 0.6s;
+      -ms-transform-style: preserve-3d;
+      transition: 0.6s;
+      transform-style: preserve-3d;
+
+    }
+
+    .flip-card-front {
+      background-color: white;
+      color: black;
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+
+    .flip-card-back {
+      background-color: white;
+      color: black;
+    } 
+
+    .account {
+
+      background: linear-gradient(-45deg, black, white, white, black);
+      background-size: 400% 400%;
+      -webkit-animation: Gradient 15s ease infinite;
+      -moz-animation: Gradient 15s ease infinite;
+      animation: Gradient 15s ease infinite;
+    }
+
+    @-webkit-keyframes Gradient {
+      0% {
+        background-position: 0% 50%
+      }
+      50% {
+        background-position: 100% 50%
+      }
+      100% {
+        background-position: 0% 50%
+      }
+    }
+
+    @-moz-keyframes Gradient {
+      0% {
+        background-position: 0% 50%
+      }
+      50% {
+        background-position: 100% 50%
+      }
+      100% {
+        background-position: 0% 50%
+      }
+    }
+
+    @keyframes Gradient {
+      0% {
+        background-position: 0% 50%
+      }
+      50% {
+        background-position: 100% 50%
+      }
+      100% {
+        background-position: 0% 50%
+      }
+    }
+
+
+    #read-more{
+      opacity: 0.8;
+    }
+
+    #read-more:hover{
+      opacity: 1;
+    }
+
+    #banner-container {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      text-align:center;
+      text-transform: uppercase;
+      width:100%;
+      line-height: normal;
+    }
+    #flip {
+      color:white;
+      padding-right: 10px;
+      padding-left: 10px
+    }
+
+    @media only screen and (max-width: 768px){
+
+      .middle-heading{
+        font-size: 25px !important;
+      }
+
+      #banner-container {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      text-align:center;
+      text-transform: uppercase;
+      width:100%;
+      line-height: normal;
+    }
+
+    .account{
+      margin-top: 40px;
+    }
+
+    .most-liked{
+      padding-top: 20px !important;
+      padding-bottom: 10px !important;
+    }
+
+    .sell-buy{
+      padding-bottom: 40px !important;
+
+    }
+
+    .info{
+      margin-bottom: 10px !important;
+      padding-top: 70px !important;
+    }
+
+    .read-more{
+      padding-top: 0px !important;
+    }
+
+    .marketplace{
+     padding-left: 2px !important;
+    }
+
+    .salt{
+     padding-right: 2px !important;
+    }
+
+    .btn-light-home{
+     height: 190px !important;
+    }
+
+    .btn-dark-home{
+     height: 190px !important;
+    }
+
+    .trending-name{
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+      margin-left: 0px !important;
+
+    }
+
+    .trending-col{
+      padding-right: 10px !important;
+    }
+
+    }
+
+    .card-brand {
+        min-width: 250px;
+        max-height: 200px;
+        min-height: 200px;
+        max-width: 250px;
+        object-fit: contain;
+        align-items: center;
+        padding: 60px;
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        margin-top: 10px !important;
+    }
+
+     .spacer {
+         padding-bottom: 100px
+     }
+
+      .my-custom-scrollbar {
+      position: absolute;
+      padding-right: 20px;
+      padding-left: 0px;
+      margin-bottom: 0px;
+
+      width: 320px;
+      padding-right: 0px;
+      margin-bottom: 0;
+      position: relative;
+        height:auto;
+        overflow:auto;
+      max-height: calc(100vh - 100px);
+      width: 100%;
+      }
+
+
+    </style>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.88/jsrender.min.js'></script>
 </head>
-{% include 'categories/snippets/navbar_categories.html' %}
+
+
+
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WP2FC23"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  {% include 'languages/snippets/language_for_script.html' %}
+  {% include 'base/navbar.html' with brand_name='eCommerce' %}
+  <div class='container-fluid ajax-search' style="height: 100%;">
+  {% include 'base/messages.html' %}
+  {% block content %}
+  {% load i18n %}
+
 <!--First row - banner -->
 <div class="row fluid middle-heading banner-mobile marketplace" style='padding-top: 35px;padding-left:10px;text-align:left;text-transform: uppercase;'>
   <div class="col fluid" >
@@ -569,7 +430,7 @@ nav{
   {% for obj in brands %}
     <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
             <a href="{% url 'products:list' %}brand={{ obj.id }}">
-              <img data-src="{% static 'img/logos/'%}{{ obj }}.png" %}" width="640" heigh="480"  alt={{obj}} class='card-brand  my-auto'>
+              <img data-src="{% static 'img/logos/'%}{{ obj }}.png" %}" width="640" height="480" alt={{obj}} class='card-brand my-auto'>
             </a>
         </div>
   {% endfor %}
@@ -741,16 +602,6 @@ nav{
 
 
 
-<!--  if okay remove permanently...
-
-
-</div>
-</div>
-
- -->
-
-
-
 <script type="text/javascript">
 
 
@@ -790,18 +641,7 @@ plus.text('+')
 
 
 
-
-
-//flying text
-$(function() {
-    setTimeout(function() {
-        $('.fly-in-text').removeClass('hidden');
-    }, 800);
-});
-
-
 // perfect scrollbar
-
 
 $(document).ready(function () {
 $("#slider1").attr("hidden",false);
@@ -810,8 +650,6 @@ const ps = new PerfectScrollbar('.my-custom-scrollbar', {
     wheelSpeed: 1,
     wheelPropagation: false,
     swipeEasing: true,
-
-
     // minScrollbarLength: 10,
     // maxScrollbarLength: 10
 
@@ -827,3 +665,36 @@ $('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(thi
 
 
 
+
+
+
+</div>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+  <script type="text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-150733918-1');   
+  </script> 
+    {% block script %}{% endblock %}
+  {% include 'base/js_templates.html' %}
+
+<!-- Lazy Loading Images  -->
+  <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+  <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+
+  <script src='{% static "js/ecommerce.js" %}'></script>
+  <script src='{% static "js/csrf.ajax.js" %}'></script>
+  <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
+  <script defer src="{% static 'fontawesome//js/all.js' %}"></script>
+  <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+  
+
+    
+
+</body>
+{% include 'base/footer.html' %}
+</html>

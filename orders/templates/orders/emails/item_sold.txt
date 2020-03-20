@@ -1,0 +1,14 @@
+{% load i18n %}
+{% blocktrans %}
+ 
+Congratulations!
+
+You just sold your item {{item.title}}</a> on SALT.
+We received the payment from the buyer (in total {{total}} UAH) and will keep that until the successful delivery of the item to the buyer. 
+Please ship the item within the next {{ time }} hours, so you get your money as soon as possible and buyer is satisfied.
+In case there are any questions/issues - don't hestitate to contact us (just answer to this email)
+
+
+Thank you,
+SALT
+{% endblocktrans %}

@@ -143,19 +143,34 @@ class Order(models.Model):
 			self.save()
 		return self.status
 	def send_email(self, success=False):
-		email = self.billing_profile.email
+		buyer = self.billing_profile.email
 		order_id = self.order_id
+		seller = self.get_seller().email
+		from_email = settings.DEFAULT_FROM_EMAIL
+		current_domain = settings.BASE_URL
+		item = self.product
+		item_url = current_domain + self.product.get_absolute_url()
+		faq_url = current_domain + reverse('faq')+'#sell'
+		orders_url = current_domain + reverse('orders:list')
 		if success:
 			time = '24'
 			context = {
-							'time':time,
-							'order_id':order_id
-
-
+							'time': time,
+							'total': self.total,
+							'order_id':order_id,
+							'item': item,
+							'faq_url': faq_url,
+							'orders_url': orders_url,
+							'item_url': item_url
 					}
 			txt_ = get_template("orders/emails/inform_about_order.txt").render(context)
 			html_ = get_template("orders/emails/inform_about_order.html").render(context)
 			subject = _('Order Confirmation')
+
+			txt_seller = get_template("orders/emails/item_sold.txt").render(context)
+			html_seller = get_template("orders/emails/item_sold.html").render(context)
+			subject_seller = _('Congratulations! You just have sold an item!')
+
 		else:
 			try:
 				error = self.transaction.get_error(key='err_description')
@@ -169,17 +184,26 @@ class Order(models.Model):
 			txt_ = get_template("orders/emails/inform_error_payment.txt").render(context)
 			html_ = get_template("orders/emails/inform_error_payment.html").render(context)
 			subject = _('Order Error')
-		from_email = settings.DEFAULT_FROM_EMAIL
-		recipient_list = [email]
+
+
 		sent_mail=send_mail(
 					subject,
 					txt_,
 					from_email,
-					recipient_list,
+					[buyer],
 					html_message=html_,
 					fail_silently=False, 
-
 					)
+
+		sent_mail2=send_mail(
+					subject_seller,
+					txt_seller,
+					from_email,
+					[seller],
+					html_message=html_seller,
+					fail_silently=False, 
+					)
+
 	def complete_this_order(self, request):
 		# liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
 		# params = {

@@ -1,15 +1,10 @@
 import numpy
-import json
-from pathlib import Path
 from django.views.generic import ListView, DetailView
-from django.http import Http404, JsonResponse, HttpResponse
+from django.http import Http404, JsonResponse
 from django.urls import reverse
-from django.views.generic.edit import FormMixin
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, redirect
 
-from django.urls import resolve
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin 
@@ -18,20 +13,18 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.conf import settings
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext
-from django.utils import translation
 from django.core.mail import send_mail
 from django.utils.safestring import mark_safe
 
 from ecommerce.utils import add_message, stay_where_you_are
-from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
-from ecommerce.utils import get_data_from_novaposhta_api
+from ecommerce.mixins import RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
-from accounts.models import User, Wishlist
-from .models import Product, ProductImage, ImageOrderUtil, ProductThumbnail, ReportedProduct
+from accounts.models import Wishlist
+from .models import Product, ProductImage, ProductThumbnail, ReportedProduct
 from .forms import *
-from image_uploader.models import unique_form_id_generator, UploadedFile
+from image_uploader.models import unique_form_id_generator
 from addresses.models import Address
 from billing.models import BillingProfile, Card
 from orders.models import Order
@@ -46,7 +39,6 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		return views
 		
 	def get_context_data(self, *args, **kwargs): 
-		user = self.request.user
 		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context['cart']=cart_obj
@@ -57,7 +49,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	template_name = "products/detail.html"
 
 	def get_object(self, *args, **kwargs):
-		request = self.request
 		slug = self.kwargs.get("slug")
 
 		# For admins to be able to view not active items

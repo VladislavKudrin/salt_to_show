@@ -13,10 +13,9 @@ import os
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.utils import timezone
-from django.shortcuts import redirect
 from django.utils.translation import gettext as _ 
 
-from ecommerce.utils import random_string_generator, unique_key_generator, random_string_generator_username
+from ecommerce.utils import unique_key_generator, random_string_generator_username
 from products.models import Product
 #send_mail(subject, message, from_email, recipient_list, html_message)
 

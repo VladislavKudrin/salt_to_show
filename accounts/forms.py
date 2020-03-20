@@ -1,26 +1,16 @@
 from django import forms
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.safestring import mark_safe
-from django.contrib import messages
 from django.contrib.auth.password_validation import validate_password
 from django.core.urlresolvers import reverse
-import re
 from django.utils.translation import gettext as _ 
 from django.utils.translation import pgettext
-from django.forms import inlineformset_factory
 
-
-from betterforms.multiform import MultiModelForm
-from addresses.forms import AddressForm, AddressCheckoutForm
 from marketing.models import MarketingPreference
-from .models import EmailActivation, GuestEmail, LanguagePreference, Region
-from .signals import user_logged_in_signal
-from marketing.utils import Mailchimp
+from .models import EmailActivation, GuestEmail, Region
 from ecommerce.utils import alphanumeric
-from crispy_forms.helper import FormHelper
 from django import forms
-from billing.forms import CardForm
 
 User = get_user_model()
 
@@ -44,18 +34,11 @@ class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    # password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
         model = User
         fields = ('full_name', 'email',)
-    # def clean_password2(self):
-    #     # Check that the two password entries match
-    #     # password1 = self.cleaned_data.get("password1")
-    #     # password2 = self.cleaned_data.get("password2")
-    #     # if password1 and password2 and password1 != password2:
-    #     #     raise forms.ValidationError("Passwords don't match")
-    #     return password2
+
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -129,11 +112,6 @@ class RegisterLoginForm(forms.ModelForm):
             self.add_error('password', error)
         return self.cleaned_data.get('password')
 
-
-    # def clean_subscribed(self):
-    #     marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
-    #     subscribed_user = self.cleaned_data.get('subscribed')
-    #     marketing_pref.update(subscribed=subscribed_user)
 
     def save(self, commit=True):
         request = self.request
@@ -215,16 +193,6 @@ class UserDetailChangeForm(forms.ModelForm):
             raise forms.ValidationError(_("You must select a region"))
         clean_data = Region.objects.filter(region=data)
         return clean_data.first()
-
-
-# class AccountMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
-#     form_classes = {
-#     'user_form' : UserDetailChangeForm,
-#     'address_form' : AddressForm,
-#     'card_form': CardForm,
-#     }
-
-
 
 
 

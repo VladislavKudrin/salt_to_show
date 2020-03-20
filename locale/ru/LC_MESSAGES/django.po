@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 23:16+0000\n"
-"PO-Revision-Date: 2020-03-14 08:29+0100\n"
+"POT-Creation-Date: 2020-03-19 20:22+0000\n"
+"PO-Revision-Date: 2020-03-19 21:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -20,7 +20,7 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: accounts/forms.py:39
+#: accounts/forms.py:29
 #, python-brace-format
 msgid ""
 "This email does not exist or already acivated. Would you like to <a href="
@@ -29,50 +29,50 @@ msgstr ""
 "Такого мейла не существует или он уже активирован. Хочешь <a href={link}"
 ">зарегистрироваться</a>?"
 
-#: accounts/forms.py:116
+#: accounts/forms.py:99
 msgid "Min 8 characters, digits + numbers"
 msgstr "Минимум 8 символов и цифр"
 
-#: accounts/forms.py:117
+#: accounts/forms.py:100
 msgid "Your Email"
 msgstr "Твой Email"
 
-#: accounts/forms.py:120
+#: accounts/forms.py:103
 #, python-brace-format
 msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
 msgstr ""
 "<a href={resend_link}> (Кликни, чтобы выслать подтверждение еще раз)</a>."
 
-#: accounts/forms.py:182 accounts/forms.py:200
+#: accounts/forms.py:160 accounts/forms.py:178
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
 
-#: accounts/forms.py:191
+#: accounts/forms.py:169
 msgid "Email"
 msgstr "Твой Email"
 
-#: accounts/forms.py:192
+#: accounts/forms.py:170
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:196
+#: accounts/forms.py:174
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Обновить"
 
-#: accounts/forms.py:197
+#: accounts/forms.py:175
 msgid "Region"
 msgstr "Регион"
 
-#: accounts/forms.py:203
+#: accounts/forms.py:181
 msgid "Recieve marketing email?"
 msgstr "Получать рассылку?"
 
-#: accounts/forms.py:215
+#: accounts/forms.py:193
 msgid "You must select a region"
 msgstr "Выбери регион"
 
-#: accounts/models.py:291
+#: accounts/models.py:290
 msgid "1-Click Account Verification"
 msgstr "Активация аккаунта одним кликом"
 
@@ -96,12 +96,11 @@ msgstr "Обновить профиль"
 #: accounts/templates/accounts/snippets/begin-chat.html:14
 #: accounts/templates/accounts/snippets/begin-chat.html:16
 #: accounts/templates/accounts/snippets/begin-chat.html:27
-#: accounts/templates/accounts/snippets/begin-chat.html:29
-#: products/views.py:107
+#: accounts/templates/accounts/snippets/begin-chat.html:29 products/views.py:98
 msgid "Contact seller"
 msgstr "Связаться с продавцом"
 
-#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:81
+#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:77
 msgid "Submit"
 msgstr "Отправить"
 
@@ -109,73 +108,68 @@ msgstr "Отправить"
 msgid "Choose your region"
 msgstr "Выбери свой регион"
 
-#: accounts/templates/accounts/snippets/region-modal/region-modal.html:22
+#: accounts/templates/accounts/snippets/region-modal/region-modal.html:19
 msgid "Save changes"
 msgstr "Сохранить"
-
-#: accounts/templates/accounts/snippets/region-modal/region-modal.html:23
-#: orders/templates/orders/snippets/order_feedback.html:37
-msgid "Close"
-msgstr "Закрыть"
 
 #: accounts/templates/accounts/wish-list.html:24
 msgid "Wishlist:"
 msgstr "Избранное:"
 
-#: accounts/views.py:101 accounts/views.py:207 ecommerce/utils.py:91
+#: accounts/views.py:91 accounts/views.py:197 ecommerce/utils.py:91
 msgid "You're in"
 msgstr "Ты на сайте"
 
-#: accounts/views.py:110
+#: accounts/views.py:100
 #, python-brace-format
 msgid ""
 "Your email has already been confirmed. Do you need to <a href="
 "\"{link}\">reset your password</a>?"
 msgstr "Твой Мейл уже активирован. Хочешь <a href={link}>сбросить пароль</a>?"
 
-#: accounts/views.py:128
+#: accounts/views.py:118
 msgid "Activation link was sent. Check your Email!"
 msgstr "Активация отправлена. Проверь почту!"
 
-#: accounts/views.py:157
+#: accounts/views.py:147
 msgid "Login | Register"
 msgstr "Войти | Зарегистрироваться"
 
-#: accounts/views.py:158
+#: accounts/views.py:148
 msgid "Or"
 msgstr "Или"
 
-#: accounts/views.py:159
+#: accounts/views.py:149
 msgid "Forgot password?"
 msgstr "Забыл_а пароль?"
 
-#: accounts/views.py:187
+#: accounts/views.py:177
 msgid "Please check your email to confirm your account. "
 msgstr "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. "
 
-#: accounts/views.py:191
+#: accounts/views.py:181
 msgid "Email not confirmed. "
 msgstr "Мейл не подтвержден. "
 
-#: accounts/views.py:195
+#: accounts/views.py:185
 msgid "The password seems to be wrong. Try again!"
 msgstr "Неверный пароль. Попробуй еще раз!"
 
-#: accounts/views.py:314 products/views.py:505
+#: accounts/views.py:304 products/views.py:500
 msgid "Update your details"
 msgstr "Обновить аккаунт"
 
-#: accounts/views.py:315 products/views.py:506
-#: templates/registration/password_change_form.html:24
+#: accounts/views.py:305 products/views.py:501
+#: templates/registration/password_change_form.html:26
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: accounts/views.py:316 products/views.py:337
-#: templates/registration/password_change_form.html:32
+#: accounts/views.py:306 products/views.py:332
+#: templates/registration/password_change_form.html:31
 msgid "Save"
 msgstr "Сохранить"
 
-#: accounts/views.py:317
+#: accounts/views.py:307
 msgid "Logout"
 msgstr "Выйти"
 
@@ -248,11 +242,11 @@ msgstr ""
 msgid "Select a brand"
 msgstr "Выбери бренд"
 
-#: categories/views.py:263 ecommerce/views.py:152
+#: categories/views.py:263 ecommerce/views.py:145
 msgid "Kids"
 msgstr "Дети"
 
-#: categories/views.py:264 ecommerce/views.py:153
+#: categories/views.py:264 ecommerce/views.py:146
 msgid "New"
 msgstr "Свежее"
 
@@ -312,7 +306,7 @@ msgstr "Размер"
 msgid "Condition"
 msgstr "Состояние"
 
-#: categories/views.py:279 ecommerce/views.py:154 products/forms.py:23
+#: categories/views.py:279 ecommerce/views.py:147 products/forms.py:23
 msgid "Brand"
 msgstr "Бренд"
 
@@ -336,19 +330,19 @@ msgstr "Номер заказа: "
 msgid "Only alphanumeric characters are allowed"
 msgstr "Юзернейм должен содержать только латинские символы или цифры"
 
-#: ecommerce/views.py:37
+#: ecommerce/views.py:33
 msgid "Bazar"
 msgstr "Базар"
 
-#: ecommerce/views.py:38
+#: ecommerce/views.py:34
 msgid "Marketplace"
 msgstr "Маркетплейс"
 
-#: ecommerce/views.py:39
+#: ecommerce/views.py:35
 msgid "No counterfeit"
 msgstr "Без фейков"
 
-#: ecommerce/views.py:40
+#: ecommerce/views.py:36
 #, python-format
 msgid ""
 "What makes SALT different from others? Well, we have a zero-fake-policy "
@@ -366,11 +360,11 @@ msgstr ""
 "безопасным. Поэтому на SALT ты можешь быть на %s%% уверен_а, что всегда "
 "приобретаешь оригинальную вещь."
 
-#: ecommerce/views.py:41
+#: ecommerce/views.py:37
 msgid "2-step-verification"
 msgstr "Двухфакторная верификация"
 
-#: ecommerce/views.py:42
+#: ecommerce/views.py:38
 msgid ""
 "SALT has two-factor product verification (sounds awesome, right?). In simple "
 "words, each item is checked exactly two times. The first one happens right "
@@ -388,11 +382,11 @@ msgstr ""
 "опытные эксперты. Благодаря двухфакторной верификации продукта на SALT не "
 "пройдет ни один фейк."
 
-#: ecommerce/views.py:43
+#: ecommerce/views.py:39
 msgid "Less is more"
 msgstr "Лучше меньше, да лучше"
 
-#: ecommerce/views.py:44
+#: ecommerce/views.py:40
 msgid ""
 "Simplicity is our core concept. And it's not only limited in minimalistic "
 "design and intuitive interface of SALT. We want both buyers and sellers to "
@@ -411,98 +405,102 @@ msgstr ""
 "окружающей среде. SALT при этом лишь выполняет скромную роль посредника в "
 "этой незамысловатой сделке."
 
-#: ecommerce/views.py:80
+#: ecommerce/views.py:76
 msgid "Contact us"
 msgstr "Напиши нам"
 
-#: ecommerce/views.py:82
+#: ecommerce/views.py:78
 msgid "Sending...."
 msgstr "Отправка…."
 
-#: ecommerce/views.py:111
+#: ecommerce/views.py:105
 msgid "Thank you, your report has been sended"
 msgstr "Спасибо, твоя жалоба была отправлена"
 
-#: ecommerce/views.py:112 ecommerce/views.py:119
+#: ecommerce/views.py:106 ecommerce/views.py:113
 msgid "Success"
-msgstr "Успех"
+msgstr "Готово!"
 
-#: ecommerce/views.py:118
+#: ecommerce/views.py:112
 msgid "Thank you"
-msgstr "Спасибо"
+msgstr "Спасибо. Мы свяжемся с тобой в ближайшее время!"
 
-#: ecommerce/views.py:155
+#: ecommerce/views.py:148
 msgid "Contribute to the sustainable clothes-circle."
 msgstr "Поддерживай круговорот одежды в природе."
 
-#: ecommerce/views.py:156
+#: ecommerce/views.py:149
 msgid "Find your designer piece fast and safe."
 msgstr "Найди свой брендовый айтем быстро и без фейков."
 
-#: ecommerce/views.py:157
+#: ecommerce/views.py:150
 msgid "Safe"
 msgstr "Надежно"
 
-#: ecommerce/views.py:158
+#: ecommerce/views.py:151
 msgid "Uploaded items are monitored 24/7/365. There are no fakes on SALT."
 msgstr ""
 "Загруженные вещи проверяются 24/7/365. На SALT нет фейков и мошенников."
 
-#: ecommerce/views.py:159
+#: ecommerce/views.py:152
 msgid "AI-Powered"
 msgstr "Современно"
 
-#: ecommerce/views.py:160
+#: ecommerce/views.py:153
 msgid "We use Machine Learning to detect fakes in our catalogue."
 msgstr ""
 "Мы используем Искусственный Интеллект, чтобы исключать подделки из нашего "
 "каталога."
 
-#: ecommerce/views.py:161
+#: ecommerce/views.py:154
 msgid "Simple"
 msgstr "Просто"
 
-#: ecommerce/views.py:162
+#: ecommerce/views.py:155
 msgid "Our intuitive design was made with love to simplicity and minimalism."
 msgstr "Наш интуитивный дизайн разработан с любовью к простоте и минимализму."
 
-#: ecommerce/views.py:163
+#: ecommerce/views.py:156
 msgid "Read more"
 msgstr "Узнай больше"
 
-#: ecommerce/views.py:164
+#: ecommerce/views.py:157
 msgid "Go to your profile"
 msgstr "Перейти в аккаунт"
 
-#: ecommerce/views.py:165
+#: ecommerce/views.py:158
 msgid "Join our community"
 msgstr "Присоединяйся"
 
-#: ecommerce/views.py:166
+#: ecommerce/views.py:159
 msgid "Login | Registration"
 msgstr "Логин | Регистрация"
 
-#: ecommerce/views.py:167
+#: ecommerce/views.py:160
 msgid "Trending:"
 msgstr "В тренде:"
 
-#: ecommerce/views.py:168
+#: ecommerce/views.py:161
 msgid "See all"
 msgstr "Показать все"
 
-#: ecommerce/views.py:169
+#: ecommerce/views.py:162
 msgid "Popular designers:"
 msgstr "Популярные бренды:"
 
-#: orders/models.py:158
+#: orders/models.py:168
 msgid "Order Confirmation"
 msgstr "Подтверждение заказа"
 
-#: orders/models.py:163
+#: orders/models.py:172
+msgid "Congratulations! You just have sold an item!"
+msgstr "Поздравляем! Ты только что продал айтем!"
+
+#: orders/models.py:178
 msgid "uknnown error"
 msgstr "неизвестная ошибка"
 
-#: orders/models.py:171
+#: orders/models.py:186
 msgid "Order Error"
 msgstr "Ошибка заказа"
 
@@ -510,31 +508,30 @@ msgstr "Ошибка заказа"
 #, python-format
 msgid ""
 "\n"
-"<p>Hey,</p> \n"
-"\n"
-"\n"
 "<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
 "serif; padding: 32px 32px;\">\n"
 "  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
 "black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
-"align: center; padding: 32px 32px;\">\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
 "\n"
-"\n"
+"\t<p>Congratulations!</p> \n"
 " \n"
-"\t\t<div style=\"font-size: 20px; text-align: left !important;\">\n"
-"\t\t\t<p>Your order <b>%(order_id)s</b> has been successfully paid. We have "
+"\t<p>Your order <b>%(order_id)s</b> has been successfully paid. We have "
 "informed the seller to send your item in %(time)s hours.</p>\n"
 "\n"
+"\t<div style=\"text-align: center; margin: 32px 32px;\">\n"
+"\t\t<button style=\"border: 1px solid black; background-color: black; "
+"padding: 15px 15px;\">\n"
+"\t\t\t<a href=\"%(orders_url)s\" style=\"text-decoration: none; color: "
+"white; font-size: 16px\">GO TO YOUR ORDERS</a>\n"
+"\t\t</button>\n"
+"\t</div>\n"
 "\n"
-"\n"
-"\t\t\t<p>Thank you,\n"
-"\t\t\t<br> SALT</p>\n"
-"\t\t</div>\n"
-"\n"
-"\n"
+"\t<p>Thank you,\n"
+"\t<p>SALT</p>\n"
 "\n"
 "\n"
 "\t<div>\n"
@@ -544,61 +541,54 @@ msgid ""
 "\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
 "20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
 "png/512/2175/2175198.png\"></a>\n"
-"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\"\" ><img "
+"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\" ><img "
 "style='width: 20px; height: 20px; margin: 0 4px;' src=\"https://image."
 "flaticon.com/icons/png/512/2168/2168311.png\"></a>\n"
 "\t</div>\n"
 "\n"
 "</div>\n"
-"\n"
-"<p>SALT</p>\n"
-"\n"
 msgstr ""
 "\n"
-"<p>Привет,</p> \n"
-"\n"
-"\n"
-"<div style=«text-align: center; padding-bottom: 16px; font-family: sans-"
-"serif; padding: 32px 32px;»>\n"
-"  <a href=«https://www.saltish.co/« style=«text-decoration: none; color: "
-"black; font-size: 36px»>SALT</a>\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=«background-color: #eaeaea4f; font-family: sans-serif;text-align: "
-"center; padding: 32px 32px;»>\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
 "\n"
-"\n"
+"\t<p>Поздравляем!</p> \n"
 " \n"
-"\t\t<div style=«font-size: 20px; text-align: left !important;»>\n"
-"\t\t\t<p>Твой заказ <b>%(order_id)s</b> был успешно оплачен. Мы "
-"проинформировали продавца_щицу отправить предмет в течение %(time)s часов.</"
-"p>\n"
+"\t<p>Оплата твоего заказа <b>%(order_id)s</b> прошла успешно. Мы "
+"проинформировали продавца отправить тебе купленную вещь в течение %(time)s "
+"часов.</p>\n"
 "\n"
+"\t<div style=\"text-align: center; margin: 32px 32px;\">\n"
+"\t\t<button style=\"border: 1px solid black; background-color: black; "
+"padding: 15px 15px;\">\n"
+"\t\t\t<a href=\"%(orders_url)s\" style=\"text-decoration: none; color: "
+"white; font-size: 16px\">GO TO YOUR ORDERS</a>\n"
+"\t\t</button>\n"
+"\t</div>\n"
 "\n"
-"\n"
-"\t\t\t<p>Спасибо,\n"
-"\t\t\t<br> SALT</p>\n"
-"\t\t</div>\n"
-"\n"
-"\n"
+"\t<p>Спасибо за то, что ты с нами!\n"
+"\t<p>SALT</p>\n"
 "\n"
 "\n"
 "\t<div>\n"
-"\t\t<a href=«https://vk.com/saltmarketplace» ><img style=‘width: 20px; "
-"height: 20px; margin: 0 4px;’ src=«https://image.flaticon.com/icons/"
-"png/512/2175/2175348.png»></a>\n"
-"\t\t<a href=«https://www.instagram.com/saltish.co/« ><img style=‘width: "
-"20px; height: 20px; margin: 0 4px;’ src=«https://image.flaticon.com/icons/"
-"png/512/2175/2175198.png»></a>\n"
-"\t\t<a href=«https://www.linkedin.com/company/saltish-co/about/«» ><img "
-"style=‘width: 20px; height: 20px; margin: 0 4px;’ src=«https://image."
-"flaticon.com/icons/png/512/2168/2168311.png»></a>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
+"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\" ><img "
+"style='width: 20px; height: 20px; margin: 0 4px;' src=\"https://image."
+"flaticon.com/icons/png/512/2168/2168311.png\"></a>\n"
 "\t</div>\n"
 "\n"
 "</div>\n"
-"\n"
-"<p>SALT</p>\n"
-"\n"
 
 #: orders/templates/orders/emails/inform_about_order.txt:2
 #, python-format
@@ -608,9 +598,6 @@ msgid ""
 "\n"
 "Your order %(order_id)s has been successfully paid.\n"
 "We have informed the seller to send your item in %(time)s hours. \n"
-"\n"
-"\n"
-"\n"
 "\n"
 "\n"
 "Thank you,\n"
@@ -627,7 +614,7 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"Thank you,\n"
+"Спасибо за то, что ты с нами!\n"
 "SALT\n"
 "\n"
 
@@ -685,18 +672,18 @@ msgstr ""
 "<p>Привет,</p> \n"
 "\n"
 "\n"
-"<div style=«text-align: center; padding-bottom: 16px; font-family: sans-"
-"serif; padding: 32px 32px;»>\n"
-"  <a href=«https://www.saltish.co/« style=«text-decoration: none; color: "
-"black; font-size: 36px»>SALT</a>\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=«background-color: #eaeaea4f; font-family: sans-serif;text-align: "
-"center; padding: 32px 32px;»>\n"
+"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
+"align: center; padding: 32px 32px;\">\n"
 "\n"
 "\n"
 " \n"
-"\t\t<div style=«font-size: 20px; text-align: left !important;»>\n"
+"\t\t<div style=\"font-size: 20px; text-align: left !important;\">\n"
 "\t\t\t<p>Твой заказ <b>%(order_id)s</b> не был оплачен. Причина: <b>"
 "%(error)s</b> .</p>\n"
 "\t\t\t<p>Можешь пройти в <b>Заказы</b> и <b>удалить</b> заказ. После этого "
@@ -712,15 +699,15 @@ msgstr ""
 "\n"
 "\n"
 "\t<div>\n"
-"\t\t<a href=«https://vk.com/saltmarketplace» ><img style=‘width: 20px; "
-"height: 20px; margin: 0 4px;’ src=«https://image.flaticon.com/icons/"
-"png/512/2175/2175348.png»></a>\n"
-"\t\t<a href=«https://www.instagram.com/saltish.co/« ><img style=‘width: "
-"20px; height: 20px; margin: 0 4px;’ src=«https://image.flaticon.com/icons/"
-"png/512/2175/2175198.png»></a>\n"
-"\t\t<a href=«https://www.linkedin.com/company/saltish-co/about/«» ><img "
-"style=‘width: 20px; height: 20px; margin: 0 4px;’ src=«https://image."
-"flaticon.com/icons/png/512/2168/2168311.png»></a>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
+"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\"><img "
+"style='width: 20px; height: 20px; margin: 0 4px;' src=\"https://image."
+"flaticon.com/icons/png/512/2168/2168311.png\"></a>\n"
 "\t</div>\n"
 "\n"
 "</div>\n"
@@ -759,6 +746,141 @@ msgstr ""
 "SALT\n"
 "\n"
 
+#: orders/templates/orders/emails/item_sold.html:2
+#, python-format
+msgid ""
+"\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
+"\n"
+"\t<p>Congratulations!</p> \n"
+"\n"
+"\t<p>You just sold your item <a href=\"%(item_url)s\">%(item.title)s</a> on "
+"SALT.</p>\n"
+"\t<p>We received the payment from the buyer (in total <b>%(total)s UAH</b>) "
+"and will keep that until the successful delivery of the item to the buyer. </"
+"p>\n"
+"\t<p>Please ship the item <b>within the next %(time)s hours</b>, so you get "
+"your money as soon as possible and buyer is satisfied.</p>\n"
+"\t<p>In case there are any questions/issues - don't hestitate to contact us "
+"(just answer to this email)</p>\n"
+"\t<p>Read more about our <a href=\"%(faq_url)s\">purchase system</a></p> \n"
+"\n"
+"\t<div style=\"text-align: center; margin: 32px 32px;\">\n"
+"\t\t<button style=\"border: 1px solid black; background-color: black; "
+"padding: 15px 15px;\">\n"
+"\t\t\t<a href=\"%(orders_url)s\" style=\"text-decoration: none; color: "
+"white; font-size: 16px\">GO TO YOUR TRANSACTIONS</a>\n"
+"\t\t</button>\n"
+"\t</div>\n"
+"\n"
+"\t<p>Thank you,\n"
+"\t<p>SALT</p>\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
+"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\" ><img "
+"style='width: 20px; height: 20px; margin: 0 4px;' src=\"https://image."
+"flaticon.com/icons/png/512/2168/2168311.png\"></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+msgstr ""
+"\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+" <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
+"\n"
+"\t<p>Поздравляем!</p> \n"
+"\n"
+"\t<p>Ты только что продал свой айтем <a href=\"%(item_url)s\">"
+"%(item.title)s</a> на SALT.</p>\n"
+"\t<p>Мы получили платеж от покупателя (в размере <b>%(total)s грн</b>) и "
+"переведем его тебе после успешной доставки вещи покупателю. </p>\n"
+"\t<p>Пожалуйста, отправь вещь <b>в течение %(time)s часов</b>, чтобы как "
+"можно скорее получить оплату и обрадовать покупателя быстрой доставкой.</p>\n"
+"\t<p>Если возникнут какие-то вопросы - обращайся  (просто ответь на этот "
+"мейл)</p>\n"
+"\t<p>Узнай больше про нашу <a href=\"%(faq_url)s\">систему безопасной "
+"сделки</a></p> \n"
+"\n"
+"\t<div style=\"text-align: center; margin: 32px 32px;\">\n"
+"\t\t<button style=\"border: 1px solid black; background-color: black; "
+"padding: 15px 15px;\">\n"
+"\t\t\t<a href=\"%(orders_url)s\" style=\"text-decoration: none; color: "
+"white; font-size: 16px\">ПЕРЕЙТИ В МОИ ТРАНЗАКЦИИ</a>\n"
+"\t\t</button>\n"
+"\t</div>\n"
+"\n"
+"\t<p>Спасибо за то, что ты с нами!\n"
+"\t<p>SALT</p>\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
+"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\" ><img "
+"style='width: 20px; height: 20px; margin: 0 4px;' src=\"https://image."
+"flaticon.com/icons/png/512/2168/2168311.png\"></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+
+#: orders/templates/orders/emails/item_sold.txt:2
+#, python-format
+msgid ""
+"\n"
+" \n"
+"Congratulations!\n"
+"\n"
+"You just sold your item %(item.title)s</a> on SALT.\n"
+"We received the payment from the buyer (in total %(total)s UAH) and will "
+"keep that until the successful delivery of the item to the buyer. \n"
+"Please ship the item within the next %(time)s hours, so you get your money "
+"as soon as possible and buyer is satisfied.\n"
+"In case there are any questions/issues - don't hestitate to contact us (just "
+"answer to this email)\n"
+"\n"
+"\n"
+"Thank you,\n"
+"SALT\n"
+msgstr ""
+"\n"
+" \n"
+"Поздравляем!\n"
+"\n"
+"Ты только что продал свой айтем  %(item.title)s</a> на SALT.\n"
+"Мы получили платеж от покупателя  (в размере %(total)s грн) и переведем его "
+"тебе после успешной доставки вещи покупателю. \n"
+"Пожалуйста, отправь вещь в течение %(time)s часов, чтобы как можно скорее "
+"получить оплату и обрадовать покупателя быстрой доставкой. \n"
+"Если возникнут какие-то вопросы - обращайся  (просто ответь на этот мейл). \n"
+"\n"
+"\n"
+"Спасибо за то, что ты с нами!\n"
+"SALT\n"
+
 #: orders/templates/orders/order_list.html:91
 msgid "Orders:"
 msgstr "Заказы:"
@@ -783,25 +905,29 @@ msgstr "Получено"
 msgid "Delete Order"
 msgstr "Удалить заказ"
 
-#: orders/templates/orders/snippets/order_feedback.html:24
+#: orders/templates/orders/snippets/order_feedback.html:25
 msgid "Rate the order:"
 msgstr "Твой фидбек:"
 
-#: orders/templates/orders/snippets/order_feedback.html:38
+#: orders/templates/orders/snippets/order_feedback.html:46
+msgid "Close"
+msgstr "Закрыть"
+
+#: orders/templates/orders/snippets/order_feedback.html:47
 msgid "Send feedback"
 msgstr "Отправить"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:24
 #: orders/templates/orders/snippets/order_list/order_completed.html:22
 #: orders/templates/orders/snippets/order_list/order_refunded.html:24
-#: orders/templates/orders/snippets/order_list/order_sold.html:37
+#: orders/templates/orders/snippets/order_list/order_sold.html:38
 msgid "Status:"
 msgstr "Статус:"
 
 #: orders/templates/orders/snippets/order_list/order_buy.html:28
 #: orders/templates/orders/snippets/order_list/order_completed.html:26
 #: orders/templates/orders/snippets/order_list/order_refunded.html:28
-#: orders/templates/orders/snippets/order_list/order_sold.html:41
+#: orders/templates/orders/snippets/order_list/order_sold.html:48
 msgid "Total:"
 msgstr "Сумма:"
 
@@ -817,11 +943,15 @@ msgstr "Отслеживание:"
 #: orders/templates/orders/snippets/order_list/order_buy.html:72
 #: orders/templates/orders/snippets/order_list/order_completed.html:44
 #: orders/templates/orders/snippets/order_list/order_refunded.html:52
-#: orders/templates/orders/snippets/order_list/order_sold.html:68
+#: orders/templates/orders/snippets/order_list/order_sold.html:75
 msgid "No orders yet"
 msgstr "Пока что нет заказов"
 
-#: orders/templates/orders/snippets/order_list/order_sold.html:45
+#: orders/templates/orders/snippets/order_list/order_sold.html:43
+msgid "Buyer:"
+msgstr "Покупатель:"
+
+#: orders/templates/orders/snippets/order_list/order_sold.html:52
 msgid "Address:"
 msgstr "Адрес:"
 
@@ -929,7 +1059,7 @@ msgid "Approved"
 msgstr "На сайте"
 
 #: products/templates/products/snippets/card-my-items.html:52
-#: products/views.py:110
+#: products/views.py:101
 msgid "Fake"
 msgstr "Фейк"
 
@@ -938,7 +1068,7 @@ msgid "Pending"
 msgstr "Проверяется"
 
 #: products/templates/products/snippets/logged-user-update-card.html:8
-#: products/views.py:336
+#: products/views.py:331
 msgid "Update"
 msgstr "Редактировать"
 
@@ -954,74 +1084,74 @@ msgstr "Недавно просмотренное:"
 msgid "My Items:"
 msgstr "Мои айтемы:"
 
-#: products/views.py:102
+#: products/views.py:93
 msgid "Report?"
 msgstr "Пожаловаться?"
 
-#: products/views.py:103
+#: products/views.py:94
 msgid "Size:"
 msgstr "Размер:"
 
-#: products/views.py:104
+#: products/views.py:95
 msgid "Condition:"
 msgstr "Состояние:"
 
-#: products/views.py:106
+#: products/views.py:97
 msgid "Description:"
 msgstr "Описание:"
 
-#: products/views.py:108
+#: products/views.py:99
 msgid "Authentic"
 msgstr "Оригинал"
 
-#: products/views.py:109
+#: products/views.py:100
 msgid "2-step-verified on"
 msgstr "Двухфакторная проверка пройдена"
 
-#: products/views.py:111
+#: products/views.py:102
 msgid "Checked on"
 msgstr "Проверено"
 
-#: products/views.py:112
+#: products/views.py:103
 msgid "AI-checked"
 msgstr "Проверено ИИ"
 
-#: products/views.py:113
+#: products/views.py:104
 msgid "Needs to be approved by our expert team"
 msgstr "После проверки экспертом айтем будет залит"
 
-#: products/views.py:114
+#: products/views.py:105
 msgid "Posted"
 msgstr "Загружено"
 
-#: products/views.py:115
+#: products/views.py:106
 msgid "ago"
 msgstr "назад"
 
-#: products/views.py:173
+#: products/views.py:164 products/views.py:168
 msgid "Only customers in Ukraine are eligible to sell (as for now)"
 msgstr ""
 "Пока только юзеры из Украины могут заливать айтемы на продажу (мы работаем "
 "над другими регионами)"
 
-#: products/views.py:179
+#: products/views.py:174
 msgid "Please add card information to add an item!"
-msgstr "Добавь реквизиты карты, чтобы залить айтем!"
+msgstr "Добавь реквизиты карты, чтобы начать загружать вещи"
 
-#: products/views.py:222 products/views.py:269
+#: products/views.py:217 products/views.py:264
 msgctxt "Upload_Item_create"
 msgid "Create"
 msgstr "Залить"
 
-#: products/views.py:223 products/views.py:270
+#: products/views.py:218 products/views.py:265
 msgid "Add a new item"
 msgstr "Залить новый айтем"
 
-#: products/views.py:245
+#: products/views.py:240
 msgid "New item upload"
 msgstr "Залили новый айтем"
 
-#: products/views.py:246
+#: products/views.py:241
 msgid ""
 "New product was uploaded. Please verify authenticity: \n"
 " {} \n"
@@ -1035,7 +1165,7 @@ msgstr ""
 " Product Description: \n"
 " {}"
 
-#: products/views.py:251
+#: products/views.py:246
 msgid ""
 "Your item was checked by AI. Within next 24 hours the check will be "
 "confirmed by our moderator team and your item will be published"
@@ -1043,11 +1173,11 @@ msgstr ""
 "Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку "
 "подтвердит модератор и айтем будет выставлен на продажу"
 
-#: products/views.py:420
+#: products/views.py:415
 msgid "Thank you. We have already received your report."
 msgstr "Спасибо. Мы уже получили твою жалобу."
 
-#: products/views.py:423
+#: products/views.py:418
 msgid "Thank you. We will check this item manually."
 msgstr "Спасибо. Мы проверим айтем мануально."
 
@@ -1272,24 +1402,24 @@ msgstr "Аккаунт"
 msgid "Messages"
 msgstr "Сообщения"
 
-#: templates/base/navbar.html:352
+#: templates/base/navbar.html:352 templates/sidebar.html:61
 msgid "My orders"
 msgstr "Заказы"
 
-#: templates/base/navbar.html:353 templates/sidebar.html:61
+#: templates/base/navbar.html:353 templates/sidebar.html:62
 msgid "My items"
 msgstr "Мои айтемы"
 
-#: templates/base/navbar.html:354 templates/sidebar.html:62
+#: templates/base/navbar.html:354 templates/sidebar.html:63
 msgid "Wishlist"
 msgstr "Избранное"
 
-#: templates/base/navbar.html:355 templates/sidebar.html:63
+#: templates/base/navbar.html:355 templates/sidebar.html:64
 msgctxt "account_dropdown_history"
 msgid "History"
 msgstr "Просмотренное"
 
-#: templates/base/navbar.html:356 templates/sidebar.html:64
+#: templates/base/navbar.html:356 templates/sidebar.html:65
 msgid "Settings"
 msgstr "Настройки"
 
@@ -1934,7 +2064,7 @@ msgstr "Оплачено"
 
 #: templates/languages/trans_custom/translation_custom.html:119
 msgid "Shipped"
-msgstr "Отправлено"
+msgstr "Доставлено"
 
 #: templates/registration/activation-error.html:17
 msgid "Activation Error"
@@ -2104,30 +2234,34 @@ msgstr ""
 "\n"
 "SALT\n"
 
-#: templates/registration/password_change_done.html:27
+#: templates/registration/password_change_done.html:8
 msgid "Password changed successfully"
 msgstr "Пароль успешно изменен"
 
-#: templates/registration/password_reset_complete.html:6
+#: templates/registration/password_reset_complete.html:8
 msgid "Password reset complete"
 msgstr "Восстановление пароля прошло успешно"
 
-#: templates/registration/password_reset_complete.html:7
+#: templates/registration/password_reset_complete.html:9
 msgid "Login now"
 msgstr "Войти сейчас"
 
-#: templates/registration/password_reset_confirm.html:9
+#: templates/registration/password_reset_confirm.html:16
 msgid "Set your new password"
 msgstr "Укажи свой новый пароль"
 
-#: templates/registration/password_reset_confirm.html:13
+#: templates/registration/password_reset_confirm.html:21
 msgctxt "save_new_password"
 msgid "Submit"
 msgstr "Подтвердить"
 
 #: templates/registration/password_reset_done.html:8
-msgid "Almost there... Check your email to reset password"
-msgstr "Осталось еще чуть-чуть… Проверь свой мейл, чтобы восстановить пароль"
+msgid "Almost there..."
+msgstr "Еще чуть-чуть…"
+
+#: templates/registration/password_reset_done.html:9
+msgid "Check your email to reset password"
+msgstr "Чекни свой мейл, чтобы восстановить пароль"
 
 #: templates/registration/password_reset_email.html:2
 #: templates/registration/password_reset_email.txt:2
@@ -2143,11 +2277,11 @@ msgstr ""
 "\n"
 "Сброс пароля на %(domain)s для %(user)s:\n"
 
-#: templates/registration/password_reset_form.html:10
+#: templates/registration/password_reset_form.html:18
 msgid "Reset password"
 msgstr "Сбросить пароль"
 
-#: templates/registration/password_reset_form.html:14
+#: templates/registration/password_reset_form.html:24
 msgctxt "password_reset"
 msgid "Submit"
 msgstr "Сбросить"

@@ -1,11 +1,10 @@
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, get_user_model
+from django.shortcuts import render
 from django.views.generic import FormView
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.urls import reverse
 
@@ -17,14 +16,11 @@ from accounts.models import User
 from django.utils.translation import gettext as _
 
 
-from django.db.models import Q
-from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
+from categories.models import Brand, Undercategory, Overcategory, Gender, Category
 from .mixins import RequestFormAttachMixin
 from .forms import ContactForm
 from products.models import Product
 from accounts.models import Wishlist
-from operator import itemgetter
-from categories.models import Brand
 from .utils import get_data_from_novaposhta_api
 
 def test_page(request):
@@ -83,13 +79,11 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		return context
 
 	def form_valid(self, form):
-		context = {
-						
-						'email':form.cleaned_data.get('email'),
-						'content':form.cleaned_data.get('content'),
-						'sender_email':self.request.user
-
-				}
+		context = {			
+		'email':form.cleaned_data.get('email'),
+		'content':form.cleaned_data.get('content'),
+		'sender_email':self.request.user
+		}
 		txt_ = get_template("contact/email/contact_message.txt").render(context)
 		html_ = get_template("contact/email/contact_message.html").render(context)
 		subject = str(form.cleaned_data.get('email'))+' User Message'
@@ -119,7 +113,6 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 					"success_message":_("Success")
 					})
 
-	
 	def form_invalid(self, form):
 		errors = form.errors.as_json()
 		if self.request.is_ajax():
