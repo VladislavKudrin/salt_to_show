@@ -21,6 +21,7 @@ from addresses.models import Address
 from addresses.forms import AddressForm
 from billing.models import BillingProfile, Card
 from billing.forms import CardForm
+from ecommerce.utils import add_message
 
 
 def region_init(request):
