@@ -99,7 +99,7 @@ INSTALLED_APPS = [
     "django_cron",
     'betterforms',
     'django_extensions',
-
+    'channels',
 
     #our apps
     'chat_ecommerce',
