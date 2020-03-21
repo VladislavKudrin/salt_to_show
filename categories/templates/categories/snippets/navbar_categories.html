@@ -184,5 +184,16 @@ li a{
             }
         }//if len
     })//click on dropdown
- 
+  $(window).click(
+    function(e){
+      var $target = $(e.target)
+      if (!$target.is(dropBtn)){
+
+        if (!$target.is($('.ps__thumb-x'))){
+        dropdownCategories.removeClass('show-dropdown')
+      }//if target not scroll
+
+      }//if target not btn
+      
+    })//window click
 </script>
