@@ -205,38 +205,13 @@ class Order(models.Model):
 					)
 
 	def complete_this_order(self, request):
-		# liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
-		# params = {
-		# 	"action"        : "hold_completion",
-		# 	"version"       : "3",
-		# 	"order_id"      : self.order_id
-		# }
-		# signature = liqpay.cnb_signature(params)
-		# data = liqpay.cnb_data(params)
-		# payload_with_token = {
-  #  			"data": data,
-  #  			"signature":signature
-		# 		}
-		# response = requests.post('https://www.liqpay.ua/api/request', data=payload_with_token)
-		# response_json = response.json()
 		try:
 			self.transaction
 		except:
 			Transaction.objects.new_or_get(order=self)
 		self.status = 'shipped'
 		self.save()
-		if self.product:
-			product_qs = Product.objects.filter(id=self.product.id)
-			product_qs.update(active=False)
-		# if response_json.get('status') == 'success':
-		# 	self.transaction.complete_transaction(response.json())
-		# 	self.status = 'shipped'
-		# 	self.save()
-		# 	if self.product:
-		# 		self.product.active = False
-		# 		self.product.save()
-		# # else:
-		# # 	self.transaction.transaction_error(response.json())
+
 	def get_seller(self):
 		user = self.product.user
 		return user

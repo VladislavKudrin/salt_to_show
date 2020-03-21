@@ -3,9 +3,9 @@
 {% for object in orders_buy %}
 <div class="container">
 	<div class='row' style="border-bottom: 1px solid lightgray; padding: 1em;">
-		<div class='col-12 col-xl-6'>
+		<div class='col-12 col-xl-6' style="display: flex; align-items: center;">
 			<div class="row">
-				<div class="col">
+				<div class="col mb-3 mb-xl-0">
 					{% include 'products/snippets/card-order.html' with instance=object.product %}
 				</div>
 			</div>
@@ -28,7 +28,6 @@
 							<span class="field-name">{% trans 'Total:' %}</span><br>
 							<span>{{ object.total|format_decimal }} {{ object.product.currency_original }}</span>
 						</div>
-
 						<div class="col-4">
 							<span class="field-name">{% trans 'Report:' %}</span>
 							{% include 'orders/snippets/report_button.html' %}
@@ -36,22 +35,36 @@
 					</div>
 				</div>
 
-				<div class="col-12">
+				{% if object.track_number %}
+				<div class="col-12 mb-3">
+					<div class="row">						
+						<div class="col-4">
+							<span class="field-name">{% trans 'Tracking:' %}</span>
+						</div>
+						<div class="col-8">
+							<span>{{ object.track_number }}</span>
+						</div>						
+					</div>
+				</div>
+				{% endif %}	
+				
+				<div class="col-12 mb-3">
 					<div class="row">
-						<div class="col-12">
-							{% if object.track_number %}
-								<p><span class="field-name">{% trans 'Tracking:' %}</span> {{ object.track_number }}</p>
-							{% endif %}
+						<div class="col-4">
+							<span class="field-name">{% trans 'Seller:' %}</span> 
+						</div>
+						<div class="col-8">
+							<span><a href="{{ object.product.user.get_absolute_url }}">{{object.product.user.username}} </a> </span>
 						</div>
 					</div>
-				</div>	
-
-
-
+				</div>
 
 				<div class="col-12">
 					<div class="row">
-						<div class="col">
+						<div class="col-6">
+							{% include 'accounts/snippets/begin-chat.html' with object=object.product.user %}
+						</div>
+						<div class="col-6">
 							{% if object.get_status != 'Created' %}
 								{% include 'orders/snippets/order_complete_form.html' %}
 							{% else %}

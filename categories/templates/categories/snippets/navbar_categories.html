@@ -1,4 +1,4 @@
-{% load for_loop_extras %}
+
 {% load i18n %}
 <style type="text/css">
 .edge{
@@ -187,7 +187,6 @@ li a{
   $(window).click(
     function(e){
       var $target = $(e.target)
-      console.log($target)
       if (!$target.is(dropBtn)){
 
         if (!$target.is($('.ps__thumb-x'))){

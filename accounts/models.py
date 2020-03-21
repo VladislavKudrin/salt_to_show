@@ -236,6 +236,15 @@ class EmailActivationManager(models.Manager):
 				activated=False
 			)
 
+	def confirmed_activation_exists(self, email):
+		return self.get_queryset().filter(
+				 Q(email=email) 
+				|Q(user__email=email)
+			).filter(
+				activated=True
+			)
+
+	
 class EmailActivation(models.Model):
 	user            = models.ForeignKey(User)
 	email           = models.EmailField()

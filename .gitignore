@@ -5,9 +5,8 @@
 *.sublime-project
 fasttracktojquery/
 
-
-# Ignore the default SQLite database.
-
+*.dump
+data/dumps
 #test templates 
 templates/test1.html
 templates/test2.html

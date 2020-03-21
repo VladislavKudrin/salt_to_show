@@ -1,14 +1,14 @@
 {% load i18n %}
 
 {% if request.user.is_authenticated %}
-	{% if not object.order.is_paid %}
+	{% if not object.order.is_paid  %}
 
 		{% if request.user != object.user and request.user.region.region_code == 'ua' and object.is_payable %}
 
 		<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
 
 		{% endif %} 
-	{% endif %} 
+	{% endif %}
 {% else %}
 	{% if not object.order.is_paid %}
 		{% if object.is_payable %}

@@ -279,6 +279,15 @@
         <!-- ЦЕМ! -->
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto align-items-center">
+
+            {% if request.user.is_authenticated %}  
+              {% if request.user.admin %}  
+                <li class="nav-item pr-2">
+                <a href='{% url "logout" %}' class=" btn btn-outline-danger btn-block" role="button" aria-pressed="true"></a>
+                </li> 
+              {% endif %}
+            {% endif %}
+
            <li class="nav-item">
              {% include 'base/language-controll.html' %}
             </li> 
@@ -297,9 +306,7 @@
                   <small><a id="" class="hover-button buy-sell" role="button" href="{{ product_list_url }}">Buy</a></small>
             </li> 
 
-
-            {% if request.user.is_authenticated %}    
-
+            {% if request.user.is_authenticated %}  
 
             <li class="nav-item pl-2">
 
