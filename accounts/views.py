@@ -154,13 +154,12 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		next_path = self.get_next_url()
 		email_from_form = form.cleaned_data.get('email')
 		user = authenticate(form.request, username=email_from_form, password=form.cleaned_data.get('password'))
-		user_objects = User.objects.filter(email=email_from_form).exists()
-		link_sent2 = EmailActivation.objects.email_exists(email_from_form).exists()
+		user_objects_exists = User.objects.filter(email=email_from_form).exists()
+		not_confirmed_activation_exists = EmailActivation.objects.email_exists(email_from_form).exists()
 		confirmed_activation_exists = EmailActivation.objects.confirmed_activation_exists(email_from_form).exists()
 
-		
-
-		if user is not None: # Admin login
+		# ADMIN LOGIN
+		if user is not None:
 			if user.admin: 
 				language_pref_login_page = translation.get_language()
 				login(form.request, user)
@@ -174,8 +173,8 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 				messages.add_message(form.request, messages.SUCCESS, mark_safe(msg_admin))
 				return redirect(next_path)
 		
-		if user_objects is False:
-			print('LOGIN 1')
+		# REGISTRATION
+		if user_objects_exists is False:
 			form.save()
 			user_created = User.objects.filter(email=email_from_form).first()
 			LanguagePreference.objects.create(user=user_created, language=translation.get_language())
@@ -183,18 +182,21 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 			msg1 = _("Please check your email to confirm your account. ") + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
 			return redirect(next_path)
-		elif link_sent2 and not confirmed_activation_exists:
-			print('LOGIN 2')
+		
+		# THERE ARE ONLY NOT CONFIRMED EMAIL ACTIVATION
+		elif not_confirmed_activation_exists and not confirmed_activation_exists:
 			msg2 = _("Email not confirmed. ") + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
+		
+		# WRONG PASSWORD
 		elif user is None:
-			print('LOGIN 3')
 			next_path = 'login'
 			msg3 = _("The password seems to be wrong. Try again!")
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg3))
 			return redirect(next_path)
+
+		# LOGIN 	
 		else:
-			print('LOGIN 4')
 			language_pref_login_page = translation.get_language()
 			login(form.request, user)
 			language_pref = LanguagePreference.objects.filter(user=user)
