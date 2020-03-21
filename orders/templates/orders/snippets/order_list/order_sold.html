@@ -16,13 +16,14 @@
 
 <div class="container">
 	<div class='row' style="border-bottom: 1px solid lightgray; padding: 1em;">
-		<div class='col-12 col-xl-6'>
+		<div class='col-12 col-xl-6' style="display: flex; align-items: center;">
 			<div class="row">
-				<div class="col">
+				<div class="col mb-3 mb-xl-0">
 					{% include 'products/snippets/card-order.html' with instance=object.product %}
 				</div>
 			</div>
 		</div>
+
 		<div class='col-12 col-xl-6' style="font-size: 14px;">
 			<div class="row">
 
@@ -34,33 +35,55 @@
 					<div class="row">
 
 						<div class="col-4">
-							<div class="col-12">
-								<span class="field-name" style="font-weight: bold;">{% trans 'Status:' %}</span><br>
-								<span>{% trans object.get_status %}</span>
-							</div>
-							<br>
-							<div class="col-12">
-								<span class="field-name" style="font-weight: bold;">{% trans 'Buyer:' %}</span><br>
-								<span>{{ object.billing_profile }}</span>
-							</div>
+							<span class="field-name">{% trans 'Status:' %}</span><br>
+							<span>{% trans object.get_status %}</span>
 						</div>
 						<div class="col-4">
-							<span class="field-name" style="font-weight: bold;">{% trans 'Total:' %}</span><br>
+							<span class="field-name">{% trans 'Total:' %}</span><br>
 							<span>{{ object.total|format_decimal }} {{ object.product.currency_original }}</span>
-						</div>
-						<div class="col-4">
-							<span class="field-name" style="font-weight: bold;">{% trans 'Address:' %}</span><br>
-							<span>{{ object.shipping_address_final }}</span>
 						</div>
 			
 					</div>
 				</div>
 
-				<div class="col-12">
+				<div class="col-12 mb-3">
+					<div class="row">
+						<div class="col-4">
+							<span class="field-name">{% trans 'Address:' %}</span> 
+						</div>
+						<div class="col-8">
+							<span>{{ object.shipping_address_final }}</span>
+						</div>
+					</div>
+				</div>
 
-						{% if object.get_status == 'Paid' %}
-								 {% include 'orders/snippets/order_sold_form.html' %}
-						{% endif %}
+				<div class="col-12 mb-3">
+					{% if object.get_status == 'Paid' %}
+							 {% include 'orders/snippets/order_sold_form.html' %}
+					{% endif %}
+				</div>
+
+				<div class="col-12 mb-3">
+					<div class="row">
+						<div class="col-4">
+							<span class="field-name">{% trans 'Buyer:' %}</span>
+						</div>
+						<div class="col-8">
+							<span><a href="{{ object.billing_profile.user.get_absolute_url }}">{{ object.billing_profile.user.username }}</a></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-12">
+					<div class="row">
+						<div class="col-6">
+							{% include 'accounts/snippets/begin-chat.html' with object=object.billing_profile.user %}
+						</div>
+						<div hidden class="col-6">
+							Something will be added here soon
+						</div>
+
+					</div>
 				</div>
 				
 			</div>

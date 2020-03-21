@@ -1,7 +1,7 @@
 <style type="text/css">
-#div_id_track_number{
-	margin-bottom: 0px!important;
-}
+	#div_id_track_number{
+		margin-bottom: 0px!important;
+	}
 </style>
 {% load i18n %}
 {% load crispy_forms_tags %} 
@@ -14,7 +14,7 @@
 		<div class="col-12 col-xl-8 input-group">	
 			<div class="input-group">
 				<input type="hidden" name="order_id" value="{{ object.order_id }}">
-			  	<input type="text" id="track_number" name="track_number" value="{% if object.track_number %}{{ object.track_number }}{% else %} {% endif %}" style="width: 82%;">
+			  	<input type="text" id="track_number" name="track_number" value="{% if object.track_number %}{{ object.track_number }}{% else %} {% endif %}" style="width: 82%; border: 1px solid gray;">
 			  	<div class="input-group-append">
 		  			<button type="submit" class="btn hover-button button-white medium-button input-group-append" style="border: 1px solid black;opacity: 100!important">Ok</button>
 			  	</div>
