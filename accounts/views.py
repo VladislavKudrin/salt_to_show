@@ -150,6 +150,15 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		context['password_forgot'] = _('Forgot password?')
 		return context
 
+	def lang_pref_update(self, user):
+		language_pref_login_page = translation.get_language()
+		language_pref = LanguagePreference.objects.filter(user=user)
+		if language_pref.exists():
+			self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref.first().language
+		else:
+			self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref_login_page
+			LanguagePreference.objects.create(user=user, language=language_pref_login_page)
+
 	def form_valid(self, form):
 		next_path = self.get_next_url()
 		email_from_form = form.cleaned_data.get('email')
@@ -158,55 +167,35 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		not_confirmed_activation_exists = EmailActivation.objects.email_exists(email_from_form).exists()
 		confirmed_activation_exists = EmailActivation.objects.confirmed_activation_exists(email_from_form).exists()
 
-		# ADMIN LOGIN
-		if user is not None:
-			if user.admin: 
-				language_pref_login_page = translation.get_language()
-				login(form.request, user)
-				language_pref = LanguagePreference.objects.filter(user=user)
-				if language_pref.exists():
-					self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref.first().language
-				else:
-					self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref_login_page
-					LanguagePreference.objects.create(user=user, language=language_pref_login_page)
-				msg_admin = ('Ох заживеееем!')
-				messages.add_message(form.request, messages.SUCCESS, mark_safe(msg_admin))
-				return redirect(next_path)
-		
 		# REGISTRATION
 		if user_objects_exists is False:
 			form.save()
 			user_created = User.objects.filter(email=email_from_form).first()
-			LanguagePreference.objects.create(user=user_created, language=translation.get_language())
+			self.lang_pref_update(user_created)
 			next_path = 'login'
-			msg1 = _("Please check your email to confirm your account. ") + form.cleaned_data.get('msg')
-			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg1))
+			msg_check_mail = _("Please check your email to confirm your account. ") + form.cleaned_data.get('msg')
+			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg_check_mail))
 			return redirect(next_path)
 		
 		# THERE ARE ONLY NOT CONFIRMED EMAIL ACTIVATION
 		elif not_confirmed_activation_exists and not confirmed_activation_exists:
-			msg2 = _("Email not confirmed. ") + form.cleaned_data.get('msg')
-			messages.add_message(form.request, messages.WARNING, mark_safe(msg2))
+			msg_confirm_mail = _("Email not confirmed. ") + form.cleaned_data.get('msg')
+			messages.add_message(form.request, messages.WARNING, mark_safe(msg_confirm_mail))
 		
 		# WRONG PASSWORD
 		elif user is None:
 			next_path = 'login'
-			msg3 = _("The password seems to be wrong. Try again!")
-			messages.add_message(form.request, messages.WARNING, mark_safe(msg3))
+			msg_wrong_password = _("The password seems to be wrong. Try again!")
+			messages.add_message(form.request, messages.WARNING, mark_safe(msg_wrong_password))
 			return redirect(next_path)
 
 		# LOGIN 	
 		else:
-			language_pref_login_page = translation.get_language()
+			self.lang_pref_update(user)
 			login(form.request, user)
-			language_pref = LanguagePreference.objects.filter(user=user)
-			if language_pref.exists():
-				self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref.first().language
-			else:
-				self.request.session[translation.LANGUAGE_SESSION_KEY] = language_pref_login_page
-				LanguagePreference.objects.create(user=user, language=language_pref_login_page)
-			messages.add_message(form.request, messages.SUCCESS, _("You're in"))				
-		return redirect(next_path)
+			msg_login_success = ('Ох заживеееем!') if user.admin else _("You're in")
+			messages.add_message(form.request, messages.SUCCESS, mark_safe(msg_login_success))				
+			return redirect(next_path)
 
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
