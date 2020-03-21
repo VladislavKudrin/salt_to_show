@@ -74,8 +74,6 @@ class PayCallbackView(View):
                     order.status = "paid"
                     order.save()
                     if order.product:
-                        order.product.active = False
-                        order.product.save()
                         order.send_email(success=True)
                 else:
                     transaction.transaction_error(data=response)
@@ -162,9 +160,6 @@ class PayToUserCallbackView(View):
                     payback.successful = True
                     payback.response_data = response
                     payback.save()
-                    if order.product:
-                        order.product.active = False
-                        order.product.save()
                 else:
                     payback.successful = False
                     payback.response_data = response

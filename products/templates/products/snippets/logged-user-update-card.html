@@ -2,23 +2,19 @@
 
 
 <div id="buttons-width-mobile" class='row' style="width: 100%; margin: 0px 0px; padding: 0px 0px;">
-	{% if not instance.order.get_status == 'Paid' %}
 	<div class='col-12 pb-1' style="margin: 0px 0px; padding: 0px 0px;">
 
 		<a href="{{ instance.get_absolute_url_for_update }}" id="button-mobile" class="btn hover-button button-black medium-button btn-block">{% trans 'Update' %}</a>
 	</div>
-	{% endif %}
 	<div class='col-12 pb-1' style="margin: 0px 0px; padding: 0px 0px;">
 		{% if instance.get_absolute_url == request.path %}
 		<form class='delete-product-form' method='POST' action='{% url "products:delete" %}' data-endpoint='{% url "products:delete" %}' next_url='{% url "products:user-list" %}' data_id='{{ instance.id }}' data_user='{{ instance.user }}'> {% csrf_token %}
 			<input type='hidden' class='title' name='product_title' value='{{ instance.title }}' />
 			<input type='hidden' name='product_id' value='{{ instance.id }}' />
 			<input type='hidden' name='user_product' value='{{ instance.user }}' />
-			{% if not instance.order.get_status == 'Paid' %}
 			<span class='submit-span'>
 				<button type='submit' id="button-mobile" class='btn hover-button button-black medium-button btn-block'>{% trans 'Delete' %}</button>
 			</span>
-			{% endif %}
 		</form>
 		{% endif %}
 	</div>

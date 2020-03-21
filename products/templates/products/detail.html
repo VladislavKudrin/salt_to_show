@@ -285,14 +285,16 @@
 	<div class="col-9 pb-3 archivo">{{ object.price|to_user_currency:request }}</div>
 	<div class="col-3 pb-3 text-center my-auto archivo" style="font-size: 12px; ">{{ likes }}</div>
 	<div class="col-12 pb-2">
-		{% if request.user.is_authenticated and request.user == object.user %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-		{% elif request.user.is_authenticated and request.user.is_admin %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
-		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' %} 
-			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+		{% if not object.is_paid %}
+			{% if request.user.is_authenticated and request.user == object.user %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% elif request.user.is_authenticated and request.user.is_admin %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% else %}
+				{% include 'accounts/snippets/begin-chat.html' %} 
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% endif %}
 		{% endif %}
 	</div>
 
@@ -480,14 +482,16 @@
 	<div class="col-10 pb-3 brand">{{ object.price|to_user_currency:request }}</div>
 	<div class="col-2 pb-3 pl-1  text-center my-auto" style="font-size: 12px; ">{{ likes }}</div>
 	<div class="col-12 pb-2">
-		{% if request.user.is_authenticated and request.user == object.user %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-		{% elif request.user.is_authenticated and request.user.is_admin %}
-			{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
-			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
-		{% else %}
-			{% include 'accounts/snippets/begin-chat.html' %} 
-			{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+		{% if not object.is_paid %}
+			{% if request.user.is_authenticated and request.user == object.user %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% elif request.user.is_authenticated and request.user.is_admin %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% else %}
+				{% include 'accounts/snippets/begin-chat.html' %} 
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% endif %}
 		{% endif %}
 	</div>
 
