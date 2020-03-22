@@ -441,6 +441,11 @@
     max-height: calc(100vh - 100px);
     width: 100%;
     }
+
+    .fa-heart {
+      color : rgba(190, 45, 51, 0.74);
+      opacity: 0.5;
+    }
     </style>
 </head>
 <body>
@@ -672,14 +677,13 @@
     });
   </script>
   {% block script %}{% endblock %}
-  <!-- Lazy Loading Images  -->
   <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
   <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
   <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
   <script src='{% static "js/ecommerce.js" %}'></script>
   <script src='{% static "js/csrf.ajax.js" %}'></script>
   <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
-  <script defer src="{% static 'fontawesome//js/all_salt.js' %}"></script>
+  <script defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
   <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
 </body>
 </html>
