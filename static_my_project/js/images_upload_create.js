@@ -166,51 +166,63 @@ $(document).ready(
             function() {
                 $('#id_image').removeClass('is-invalid')
                 $('p.image').remove('.invalid-feedback')
-
-                var data = new FormData()
-                var imagesArr = []
-                var myFiles = $(this)[0].files;
-                if (myFiles.length>imagesUploadLimit.val()){
-                    if ($('.image').length==0){
-                        $('#id_image').addClass('is-invalid')
-                        $('#id_image').after('<p style="position:relative!important" class="invalid-feedback image"><strong>' + errorTooManyImages +' '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
-                    return console.log('hellow')
-                    }//if nothing under images errors
-                }//ifmorethan8
-                displayUploading(myFiles, true)
-                $.each(myFiles, 
+                var reader = new FileReader();
+                console.log(reader.result)
+                console.log(reader.files)
+                $.each(reader,
                 function(index, value){
-                    data.append('image', value)
-                })//each-buttonImageUpload
-                data.append('form_id', formId.val())
-                data.append('qq-file-id', i)
+                    console.log(value.result)
+                })//eacharray
+                reader.onload = function()
+                {
+                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ reader.result + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
+                }
+                reader.readAsDataURL(event.target.files[0]);
+                // var data = new FormData()
+                // var imagesArr = []
+                // var myFiles = $(this)[0].files;
+                // if (myFiles.length>imagesUploadLimit.val()){
+                //     if ($('.image').length==0){
+                //         $('#id_image').addClass('is-invalid')
+                //         $('#id_image').after('<p style="position:relative!important" class="invalid-feedback image"><strong>' + errorTooManyImages +' '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
+                //     return console.log('hellow')
+                //     }//if nothing under images errors
+                // }//ifmorethan8
+                // // displayUploading(myFiles, true)
+                // // $.each(myFiles, 
+                // // function(index, value){
+                // //     data.append('image', value)
+                // // })//each-buttonImageUpload
+                // data.append('form_id', formId.val())
+                // data.append('qq-file-id', i)
+                
                 // console.log(i)
-            $.ajax({
-                url: uploadUrl,
-                method:'POST',
-                data: data,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success:function(data){
-                    displayUploading(myFiles, false)
-                    $.each(data.image,
-                      function(index, value){
-                        // console.log('wdaw')
-                      imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
-                      i++
-                      })//eachfoto
+            // $.ajax({
+            //     url: uploadUrl,
+            //     method:'POST',
+            //     data: data,
+            //     cache: false,
+            //     processData: false,
+            //     contentType: false,
+            //     success:function(data){
+            //         displayUploading(myFiles, false)
+            //         $.each(data.image,
+            //           function(index, value){
+            //             // console.log('wdaw')
+            //           imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
+            //           i++
+            //           })//eachfoto
 
-                var elementList = $("ul.gallery > li")
-                elementList.unbind()
-                deleteRotateItem(elementList)
-                if (data.count>8){
-                    buttonImageUpload.attr('disabled', true)
-                }//if more than 8 already uploaded
-                },//success ajax-image-uploader
-                error:function(errorData){
-                }//error ajax-image-uploader
-                })//ajax-image-uploader
+            //     var elementList = $("ul.gallery > li")
+            //     elementList.unbind()
+            //     deleteRotateItem(elementList)
+            //     if (data.count>8){
+            //         buttonImageUpload.attr('disabled', true)
+            //     }//if more than 8 already uploaded
+            //     },//success ajax-image-uploader
+            //     error:function(errorData){
+            //     }//error ajax-image-uploader
+            //     })//ajax-image-uploader
         })//change-buttonImageUpload
 
         formSubmit.submit(
