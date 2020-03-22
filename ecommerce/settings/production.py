@@ -99,6 +99,7 @@ INSTALLED_APPS = [
     "django_cron",
     'betterforms',
     'django_extensions',
+    'django_user_agents',
 
 
     #our apps
@@ -193,6 +194,7 @@ MIDDLEWARE = [
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 SOCIAL_AUTH_PIPELINE = (

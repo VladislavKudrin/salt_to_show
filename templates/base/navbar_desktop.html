@@ -1,0 +1,271 @@
+{% url 'home' as home_url %}
+{% url 'contact' as contact_url %}
+{% url 'products:list' as product_list_url %}
+{% url 'login' as login_url %}
+{% url 'logout' as logout_url %}
+{% url 'register' as register_url %}
+{% url 'carts:home' as cart_url %}
+{% url 'accounts:home' as account_url %}
+{% url 'products:create' as products_create_url %}
+{% url 'accounts:wish-list' as wish_list %}
+{% url 'categories:filter' as filter_url %}
+{% load for_loop_extras %}
+{% load i18n %}
+{% load notifications %}
+{% load static %}
+
+
+<style type="text/css">
+
+#navbar-desktop{
+    line-height: 1 !important;
+}
+
+@media only screen and (min-width: 760px) { 
+   #lang-mobile, #navbar-mobile {
+    visibility: hidden; 
+    display: none; 
+  } 
+
+   #buttons {
+    visibility: hidden; 
+    display: none; 
+  }
+
+    #sidebar-trigger, #sidebar-slider {
+      visibility: hidden;
+      display: none;
+    } 
+
+    .buy-sell{
+    padding: 4px 5px 1px 5px !important;
+    min-width: 45px;
+    max-width: 60px;
+    height: 25px;
+    }
+
+    .buy-sell:hover{
+    color: white !important;
+    background-color: black;
+    }
+
+    .dropdown-account{
+      max-width: 8rem !important;
+      min-width: 8rem !important;
+      border: 1px solid rgb(8, 8, 8) !important;
+      margin-top: 2px !important;
+      left: -171% !important;
+    font-size: 80%;
+    font-weight: 400;
+
+    }
+
+    .dropdown-item-account{
+    border: 0px solid transparent !important;
+    padding: .375rem .75rem !important;
+    font-family: 'Noto Sans', sans-serif !important;
+    }  
+
+    .btn-lang-display{
+    font-size: 1em;
+    display: flex;
+    padding:  2px 5px 1px 5px !important;;
+    justify-content: center;
+    text-align: center;
+    color: #000; 
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Archivo', 'Roboto', sans-serif !important;
+    }
+
+    .btn-lang-display[aria-expanded="true"]{
+    color:white !important;
+    background-color: black !important;
+    padding-bottom: 0px !important;
+    }
+
+    .dropdown-lang{
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      border: 1px solid rgb(8, 8, 8) !important;
+      margin-top: 2px !important;
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      left: -113% !important;
+    }
+
+    .dropdown-item-lang{
+    border: 0px solid transparent !important;
+    padding: .375rem .75rem !important;
+    }
+
+}
+
+
+#lang-button, #search-button {
+    opacity: 0.85;
+}
+
+#wishlist-button, #user-button {
+    opacity: 0.75;
+}
+
+#lang-button:hover, #wishlist-button:hover, #user-button:hover, #search-button:hover {
+    opacity: 1;
+}
+
+.avatar-navbar{
+    width:30px !important;
+    height:30px !important;
+}
+
+
+.notifications{
+    height: 5px;
+    width: 5px;
+    position: absolute;
+    background-color: red;
+    text-align: right;
+    border-radius: 50% !important;
+}
+
+.logo-font{
+  font-family: 'Archivo' ;
+  font-size: 30px !important;
+}
+
+
+</style>
+
+{% if request.user.is_authenticated %}
+<input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
+{% endif %}
+
+<nav class="navbar navbar-mb sticky-top navbar-expand-md navbar-light bg-white pb-1 pt-2 pl-4 pr-4">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav  mr-auto">
+            <li class="nav-item">
+                {% include 'search/snippets/search-form.html' %}
+            </li>
+        </ul>
+    </div>
+
+
+    <div id="navbar-desktop" class="align-bottom"> 
+        <ul class="navbar-nav mx-auto" style="align-self: end;">
+            <li class="nav-item list-unstyled">
+                 <a href="{% url 'home' %}">
+                    <div class="row" style=" width:100px" > 
+                         <div class="col logo-font"><span class=''>SALT</span>
+                         </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+        <!-- ЦЕМ! -->
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto align-items-center">
+
+            {% if request.user.is_authenticated %}  
+              {% if request.user.admin %}  
+                <li class="nav-item pr-2">
+                <a href='{% url "logout" %}' class=" btn btn-outline-danger btn-block" role="button" aria-pressed="true"></a>
+                </li> 
+              {% endif %}
+            {% endif %}
+
+           <li class="nav-item">
+             {% include 'base/language-controll.html' %}
+            </li> 
+
+            <li class="nav-item pl-2">
+                  <small><a id="" class="hover-button buy-sell" role="button" href="{{ products_create_url }}">Sell</a></small>
+            </li>      
+             
+            <li class="nav-item pl-2">
+                  <small><a id="" class="hover-button buy-sell" role="button" href="{{ product_list_url }}">Buy</a></small>
+            </li> 
+
+            {% if request.user.is_authenticated %}  
+
+            <li class="nav-item pl-2">
+
+            <a class="nav-link pb-1" class="hover-button button-sell-buy button-black" href="{{ wish_list }}" style='font-size: 1.2em;'>
+
+            <i id="wishlist-button" class="fas fa-heart black-heart"></i>
+
+            <span class='navbar-wish-count'>{{ request.user.wishes.all.count }}</span>
+            
+            </a>
+
+            </li>
+            {% endif %}
+
+
+
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown pl-3">
+                {% if request.user.profile_foto %}
+                <a class="nav-link dropdown m-0 p-0 test1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        {% if request.user|get_notif > 0 %}
+                            <div style='padding-left: 26px; padding-bottom: 0px'>
+                                <div class='notifications'></div>
+                            </div>
+                        {% else %}
+                        {% endif %}
+                    <img data-src="{{ request.user.profile_foto.url }}"  class="avatar avatar-navbar test1" alt="..." style="width:40px; height: 40px">
+
+                </a>
+
+                {% else %}
+
+                <a class="nav-link dropdown mb-0 pb-1 pl-0 mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% if request.user|get_notif > 0 %}
+                            <div style='padding-left: 13px; padding-bottom: 0px'>
+                                <div class='notifications'></div>
+                            </div>
+                        {% else %}
+                        {% endif %}
+
+                        <i id="user-button" class="fas fa-user" ></i></a>
+
+                {% endif %}
+              
+
+                <div class="dropdown-menu dropdown-account m-0 p-0 text-center" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item dropdown-item-account" href="{{ request.user.get_absolute_url }}">{% trans 'Home' context 'account_dropdown_home '%}</a>
+                    <a class="dropdown-item dropdown-item-account " href="{% url 'chat:inbox' %}">
+                            <div class='row'>
+                                <div class='col-9 mx-auto m-0 p-0'>
+                                    <div>{% trans 'Messages' %}</div>
+                                </div>
+                                {% if request.user|get_notif > 0 %}
+                                    <div class='col-3 my-auto text-right'>
+                                        <span style='font-size: 13px; font-weight: bold'>{{ request.user|get_notif }}</span>
+                                     </div>
+                                {% else %}
+                                {% endif %}
+                            </div>
+                    </a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "orders:list" %}'>{% trans 'My orders' %}</a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "products:user-list" %}'>{% trans 'My items' %}</a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "accounts:wish-list" %}'>{% trans 'Wishlist' %}</a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "accounts:history-product" %}'>{% trans 'History' context 'account_dropdown_history' %}</a>
+                    <a class="dropdown-item dropdown-item-account" href='{% url "accounts:user-update" %}'>{% trans 'Settings' %}</a>
+                </div>
+            </li>
+
+            {% else %}
+
+            <li class="nav-item pl-2">
+                  <small><a id="" class="hover-button buy-sell" role="button" href="{{ login_url }}">Login</a></small>
+            </li> 
+
+          {% endif %}
+        </ul>
+    </div>
+
+</nav>

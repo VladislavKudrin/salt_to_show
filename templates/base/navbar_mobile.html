@@ -1,0 +1,186 @@
+{% url 'home' as home_url %}
+{% url 'contact' as contact_url %}
+{% url 'products:list' as product_list_url %}
+{% url 'login' as login_url %}
+{% url 'logout' as logout_url %}
+{% url 'register' as register_url %}
+{% url 'carts:home' as cart_url %}
+{% url 'accounts:home' as account_url %}
+{% url 'products:create' as products_create_url %}
+{% url 'accounts:wish-list' as wish_list %}
+{% url 'categories:filter' as filter_url %}
+{% load for_loop_extras %}
+{% load i18n %}
+{% load notifications %}
+{% load static %}
+
+
+<style type="text/css">
+
+#navbar-desktop{
+    line-height: 1 !important;
+}
+
+@media only screen and (max-width: 370px) { 
+    .logo-mobile-xs {
+        padding: 0px 0px;
+    }
+}
+
+
+  .dual-collapse2, #navbar-desktop {
+    visibility: hidden; 
+    display: none; 
+  } 
+
+  #navbar-mobile {
+    display: inline-block;
+    width: 30%;
+  }
+
+  .navbar-mb{
+    margin-bottom: 0px;
+  }
+
+    .btn-lang-display{
+    font-size: 1em;
+    display: flex;
+    padding:  2px 5px 1px 5px !important;;
+    justify-content: center;
+    text-align: center;
+    color: #000; 
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Archivo', 'Roboto', sans-serif !important;
+    }
+
+
+    .dropdown-lang{
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      border: 1px solid rgb(8, 8, 8) !important;
+      margin-top: 2px !important;
+      max-width: 6rem !important;
+      min-width: 6rem !important;
+      left: -113% !important;
+    }
+
+    .dropdown-item-lang{
+    border: 0px solid transparent !important;
+    padding: .375rem .75rem !important;
+    }
+
+#search-button {
+    opacity: 0.85;
+}
+
+#search-button:hover {
+    opacity: 1;
+}
+
+
+.notifications{
+    height: 5px;
+    width: 5px;
+    position: absolute;
+    background-color: red;
+    text-align: right;
+    border-radius: 50% !important;
+}
+
+.logo-font{
+  font-family: 'Archivo' ;
+  font-size: 30px !important;
+}
+
+
+</style>
+
+{% if request.user.is_authenticated %}
+<input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
+{% endif %}
+
+<div hidden class='col-6' id='sidebar-slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
+  {% include "sidebar.html" %}
+</div>
+
+<nav class="navbar navbar-mb sticky-top navbar-expand-md navbar-light bg-white pb-1 pt-2 pl-4 pr-4">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav  mr-auto">
+            <li class="nav-item">
+                {% include 'search/snippets/search-form.html' %}
+            </li>
+        </ul>
+    </div>
+
+
+    <ul id="navbar-mobile" class="navbar-nav">
+            <li class="nav-item list-unstyled" style="display: inline-block;">
+                 <a href="{% url 'home' %}">
+                    <div class="row"> 
+                         <div class="col logo-font-small pr-0 logo-mobile-xs"><span>SALT</span></div>
+                    </div>
+                </a>
+            </li>
+
+
+            <li class="nav-item pl-2 " style="display: inline-block;">                
+              <button class='btn pb-2 pt-0' id='sidebar-trigger' style="">
+                  <img data-src="{% static 'icons/hamburger.png' %}"  style="width:20px; height: 20px;">
+              </button>
+        
+            </li>
+    </ul>
+
+
+    <ul class="m-0 p-0" id='buttons'>
+
+        <li style='display: inline;' class='pl-2'>
+            <button id="search-button" class="btn pr-0" type="button" data-toggle="collapse" data-target="#collapseSearchbar" aria-expanded="false" aria-controls="collapseSearchbar" >
+                <i class="fa fa-search fa-1x" style=""></i>
+            </button>
+        </li> 
+
+        <li class="hover-button buy-sell pl-2" style='font-size: 1.2em; position:relative; display: inline;'>
+        {% include 'base/language-controll.html' %}
+        </li>
+
+        <li class="pl-1" style="display: inline;">
+          <a id="" class="  hover-button buy-sell ml-0" role="button" href="{{ products_create_url }}">Sell</a> 
+        </li>
+
+        <li class="pl-2" style="display: inline;">
+          <a id="" class=" hover-button buy-sell" role="button" href="{{ product_list_url }}">Buy</a>
+        </li>
+
+    </ul>
+
+    <div class="collapse" id="collapseSearchbar" style="width: 100%;">
+        <form action='{% url "search:query" %}' class="search-form form my-lg-0 ">
+            <div class='input-group' style=''>
+                <input class="form-control" id='searchAutoComplete' type="text" style="height:30px; border-bottom: 1px solid black !important;" placeholder="{% trans 'Search' %}" name='q' value='{{ request.GET.q }}' aria-label="Search">
+
+            </div>
+        </form>
+    </div>
+
+</nav>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+    //sidebar the only one js 
+    $("#sidebar-slider").slideReveal({
+      trigger: $("#sidebar-trigger"),
+      push: false,
+      overlay: true,
+      overlayColor:'rgba(0,0,0,0.5)',
+      width:'500px',
+    });
+
+    $("#sidebar-slider").attr("hidden",false); // make sidebar not popping up
+
+    })//document ready
+
+</script>

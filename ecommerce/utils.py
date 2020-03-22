@@ -13,6 +13,7 @@ from django.core.files.storage import default_storage
 from django.core.files import File
 from django.core.mail import send_mail
 from django.shortcuts import redirect
+from django.shortcuts import render
 
 
 
@@ -149,6 +150,19 @@ def stay_where_you_are(request):
         return redirect('/')
 
 
+
+def my_render(request, *args, **kwargs):
+    template_location = args[0]
+    args_list = list(args)
+    if request.user_agent.is_mobile:
+        args_list[0] = 'mobile/' + template_location
+        args = tuple(args_list)
+        return render(request, *args, **kwargs)
+    else:
+        args_list[0] = 'desktop/' + template_location
+        args = tuple(args_list)
+        return render(request, *args, **kwargs)
+        
 # def create_brands(f):
 # #     # print(f.read())
 #     brand_list = []

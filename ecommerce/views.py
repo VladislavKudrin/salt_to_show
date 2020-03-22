@@ -21,7 +21,8 @@ from .mixins import RequestFormAttachMixin
 from .forms import ContactForm
 from products.models import Product
 from accounts.models import Wishlist
-from .utils import get_data_from_novaposhta_api
+from .utils import get_data_from_novaposhta_api, my_render
+
 
 def test_page(request):
 	return render(request, "categories/slidebar.html", {})
@@ -160,8 +161,7 @@ def home_page(request):
 	context['trending'] = _('Trending:')
 	context['see_all'] = _('See all')
 	context['popular_brands'] = _('Popular designers:')
-
-	return render(request, "home_page.html", context)
+	return my_render(request, 'home_page.html', context)
 
 
 class MyCronJob(CronJobBase):

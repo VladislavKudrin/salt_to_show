@@ -1,0 +1,13 @@
+<div class="scrolling-wrapper my-custom-scrollbar" id='my-custom-scrollbar' style='height:inherit;'>
+  {% for obj in brands %}
+    <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
+            <a href="{% url 'products:list' %}brand={{ obj.id }}">
+              <img data-src="{% static 'img/logos/'%}{{ obj }}.png" %}" width="640" height="480" alt={{obj}} class='card-brand my-auto'>
+            </a>
+        </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+</div>
