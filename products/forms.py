@@ -200,22 +200,23 @@ class ImageForm(ProductCreateForm):
 		self.fields['image'].label = _("Images*")
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
-		cleaned_images = UploadedFile.objects.filter(form_id=form_id)
-		if self.request.user.is_admin:
-			return cleaned_images
-		if len(cleaned_images)==0:
-			raise forms.ValidationError(_("Upload at least 4 images"))
-		if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
-			# if self.lan == 'RU':
-			# 	raise forms.ValidationError("Недостаточное колличество фотографий. Минимальное колличество - 4")
-			# else:
-			raise forms.ValidationError(_("Not enough photos. Minimal amount - 4"))
-		if len(cleaned_images)>settings.IMAGES_UPLOAD_LIMIT:
-			# if self.lan == 'RU':
-			# 	raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
-			# else:
-			raise forms.ValidationError(_("Too many files, max. amount 8"))
-		return cleaned_images
+		print(self.request.FILES.getlist('image'))
+		# cleaned_images = UploadedFile.objects.filter(form_id=form_id)
+		# if self.request.user.is_admin:
+		# 	return cleaned_images
+		# if len(cleaned_images)==0:
+		# 	raise forms.ValidationError(_("Upload at least 4 images"))
+		# if len(cleaned_images)<settings.IMAGES_UPLOAD_MIN:
+		# 	# if self.lan == 'RU':
+		# 	# 	raise forms.ValidationError("Недостаточное колличество фотографий. Минимальное колличество - 4")
+		# 	# else:
+		# 	raise forms.ValidationError(_("Not enough photos. Minimal amount - 4"))
+		# if len(cleaned_images)>settings.IMAGES_UPLOAD_LIMIT:
+		# 	# if self.lan == 'RU':
+		# 	# 	raise forms.ValidationError("Слишком много файлов. Максимальное колличество - 8")
+		# 	# else:
+		# 	raise forms.ValidationError(_("Too many files, max. amount 8"))
+		# return cleaned_images
 		
 	def save(self, commit=True):
 		product = super(ProductCreateForm, self).save(commit=False)

@@ -148,7 +148,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
 	template_name = 'products/product-create.html'
 	def post(self, request, *args, **kwargs):
-		form = self.get_form()
+		form = ImageForm(data=request.POST, request=request, files=request.FILES)
 		if form.is_valid():
 			return self.form_valid(form)
 		else:

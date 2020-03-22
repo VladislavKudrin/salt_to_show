@@ -85,22 +85,11 @@ $(document).ready(
         var formId = $('#form_id')
         var imagesTemplate = $.templates("#images-upload-update")
         var i = 0
-        $(window).bind('beforeunload',function(){
-         $.ajax({
-            url: deleteImageUrl,
-            method:'POST',
-            data: {'data':'delete_on_reload', 'form_id':formId.val()},
-            success:function(data){
-                    },//success
-            error:function(errorData){
 
-                    }//error
-         })//ajaxbeforereload
-        })//beforereload
     function deleteRotateItem(item){
         item.on("click", 
         function(event){
-            // console.log('rotate')
+            console.log('rotate')
             var $item = $(this),
             $target = $(event.target);
             if ($target.is("a.ui-icon-trash")) {
@@ -149,80 +138,68 @@ $(document).ready(
         }//if rotate
         })//onclicktrash
     }//deleteItem
-        function displayUploading(files, doUpload){
+
+
+
+        function displayUploading(doUpload, where_to_put=null, how_many_files=null){
+            console.log(doUpload)
             if(doUpload){
-            $.each(files, 
-                function(index, value){
-                buttonImageUpload.attr('disabled', true)
-                imageContainer.append("<i class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner' style='font-size: 1.5em;'></i>")
-                })//each-displayfilesupload
+                for (var i = 0; i < how_many_files; i++){
+                    where_to_put.append("<i id='spinner_upload_"+ i +"' class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner' style='font-size: 1.5em;'></i>")
+                };
             }//doUpload
             else{
-                buttonImageUpload.attr('disabled', false)
-                $('.fa-spinner').hide()
+                console.log('#spinner_upload_'+where_to_put)
+                $('#spinner_upload_'+where_to_put).remove();
             }//ifnotdoUpload
         }//displayUploading
+
+
+
+
+
+        //upload images in browser cache
         buttonImageUpload.change(
-            function() {
+            function(evt) {
                 $('#id_image').removeClass('is-invalid')
                 $('p.image').remove('.invalid-feedback')
-                var reader = new FileReader();
-                console.log(reader.result)
-                console.log(reader.files)
-                $.each(reader,
-                function(index, value){
-                    console.log(value.result)
-                })//eacharray
-                reader.onload = function()
-                {
-                  imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ reader.result + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
-                }
-                reader.readAsDataURL(event.target.files[0]);
-                // var data = new FormData()
-                // var imagesArr = []
-                // var myFiles = $(this)[0].files;
-                // if (myFiles.length>imagesUploadLimit.val()){
-                //     if ($('.image').length==0){
-                //         $('#id_image').addClass('is-invalid')
-                //         $('#id_image').after('<p style="position:relative!important" class="invalid-feedback image"><strong>' + errorTooManyImages +' '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
-                //     return console.log('hellow')
-                //     }//if nothing under images errors
-                // }//ifmorethan8
-                // // displayUploading(myFiles, true)
-                // // $.each(myFiles, 
-                // // function(index, value){
-                // //     data.append('image', value)
-                // // })//each-buttonImageUpload
-                // data.append('form_id', formId.val())
-                // data.append('qq-file-id', i)
+                var files = $(this)[0].files;
+                if (files.length > imagesUploadLimit.val()){
+                    if ($('.image').length==0){
+                        $('#id_image').addClass('is-invalid')
+                        $('#id_image').after('<p style="position:relative!important" class="invalid-feedback image"><strong>' + errorTooManyImages +' '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
+                    return console.log('hellow')
+                    }//if nothing under images errors
+                }//ifmorethan8
+                buttonImageUpload.attr('disabled', true);
+                displayUploading(true, imageContainer, files.length);
+                for (var i = 0, f; f = files[i]; i++) {
+                    var new_i = 0
+                    var reader = new FileReader();
+                    reader.onload = (function(theFile){
+                        return function(e){
+                            var li = document.createElement('li');
+                            li.setAttribute('class', 'ui-widget-content ui-corner-tr');
+                            li.innerHTML = ['<img src="',
+                            e.target.result, 
+                            '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value=',
+                            i,
+                            '><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a>'].join('');
+                            
+                            document.getElementById('customSort').insertBefore(li, null);
+                            displayUploading(false, new_i);
+                            new_i += 1
+                            var elementList = $("ul.gallery > li")  
+                            elementList.unbind()
+                            deleteRotateItem(elementList)
+                        };//render thumbnail
+                    })(f)//onload
+                    reader.readAsDataURL(f);
+                }//for images
+                buttonImageUpload.attr('disabled', false);
                 
-                // console.log(i)
-            // $.ajax({
-            //     url: uploadUrl,
-            //     method:'POST',
-            //     data: data,
-            //     cache: false,
-            //     processData: false,
-            //     contentType: false,
-            //     success:function(data){
-            //         displayUploading(myFiles, false)
-            //         $.each(data.image,
-            //           function(index, value){
-            //             // console.log('wdaw')
-            //           imageContainer.append('<li class="ui-widget-content ui-corner-tr"><img src="'+ value.image_url + '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value='+i+'><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a></li>')
-            //           i++
-            //           })//eachfoto
-
-            //     var elementList = $("ul.gallery > li")
-            //     elementList.unbind()
-            //     deleteRotateItem(elementList)
-            //     if (data.count>8){
-            //         buttonImageUpload.attr('disabled', true)
-            //     }//if more than 8 already uploaded
-            //     },//success ajax-image-uploader
-            //     error:function(errorData){
-            //     }//error ajax-image-uploader
-            //     })//ajax-image-uploader
+                
+         
         })//change-buttonImageUpload
 
         formSubmit.submit(
@@ -230,53 +207,74 @@ $(document).ready(
         event.preventDefault()
         var createFormSubmitBtn = formSubmit.find("[type='submit']")
         var createFormSubmitBtnTxt = createFormSubmitBtn.text()
-        var formData = formSubmit.serialize()
+        var formData = new FormData();
+        // var files = $(this)[0].files;
+        // console.log(files)
+        // $.each(files, 
+        //     function(index, value){
+        //         formData.append('image', value)
+        //     })//each files
+        console.log(formData)
         var elements = $('#example-form-1 ul li')
         var keyArray = []
         var rotateArray = []
+        $.ajax({
+            url: action,
+            method: 'POST',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(data){
+                console.log('hi')
+            },
+            error: function(errorData){
+                console.log('error')
+            }
+        })//ajax
         // Activate Spinner
         displayCreating(createFormSubmitBtn, authenticityCheckBtn, "",true, currentPath)
-        $.each(elements,
-        function(index, value){
-            var attr = $(value).find("[name='qq-file-id']").val()
-            var rotatedImageTimes = $(value).find("[name='rotateTimes']").val()
-            keyArray.push(attr)  
-            rotateArray.push(rotatedImageTimes)
-        })//eacharray
-        $.ajax({
-        url: action,
-        method:'POST',
-        data: formData,
-        success: function(data){
-            $('.is-invalid').removeClass('is-invalid')
-            $('p').remove('.invalid-feedback')
-            if(data['error']) {
-            $.each(data['error'],
-                function(index, value){
-                    var btnText = createFormSubmitBtnTxt
-                    displayCreating(createFormSubmitBtn, authenticityCheckBtn, btnText,false, currentPath)
-                    if ($('.'+index).length==0){
-                        $('#id_' + index).addClass('is-invalid')
-                        $('#id_' + index).after("<p class='m-0 invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
-                    }//if  
-                })//each
-                }//if there are errors
-            else {
-              $.ajax({
-                url: action_order,
-                method:'POST',
-                data: {'data[]':keyArray, 'slug':data.slug, 'rotate[]':rotateArray},
-                success:function(data){
-                    },//success second ajax
-                error:function(errorData){
-                    }//error second ajax
-                })//ajax in ajax
-                window.location.href=data.url
-                    }//else
-                },//success
-        error:function(errorData){
-            }//error_1
-        })//ajax
+        // $.each(elements,
+        // function(index, value){
+        //     var attr = $(value).find("[name='qq-file-id']").val()
+        //     var rotatedImageTimes = $(value).find("[name='rotateTimes']").val()
+        //     keyArray.push(attr)  
+        //     rotateArray.push(rotatedImageTimes)
+        // })//eacharray
+        // $.ajax({
+        // url: action,
+        // method:'POST',
+        // data: formData,
+        // success: function(data){
+        //     $('.is-invalid').removeClass('is-invalid')
+        //     $('p').remove('.invalid-feedback')
+        //     if(data['error']) {
+        //     $.each(data['error'],
+        //         function(index, value){
+        //             var btnText = createFormSubmitBtnTxt
+        //             displayCreating(createFormSubmitBtn, authenticityCheckBtn, btnText,false, currentPath)
+        //             if ($('.'+index).length==0){
+        //                 $('#id_' + index).addClass('is-invalid')
+        //                 $('#id_' + index).after("<p class='m-0 invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
+        //             }//if  
+        //         })//each
+        //         }//if there are errors
+        //     else {
+        //       $.ajax({
+        //         url: action_order,
+        //         method:'POST',
+        //         data: {'data[]':keyArray, 'slug':data.slug, 'rotate[]':rotateArray},
+        //         success:function(data){
+        //             },//success second ajax
+        //         error:function(errorData){
+        //             }//error second ajax
+        //         })//ajax in ajax
+        //         window.location.href=data.url
+        //             }//else
+        //         },//success
+        // error:function(errorData){
+        //     }//error_1
+        // })//ajax
         })//submit
     }
 
