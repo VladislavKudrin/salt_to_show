@@ -120,3 +120,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# for live fixtures
+*.dump
+data/dumps
