@@ -468,242 +468,242 @@
   </style>
 </head>
 <body>
-  {% include 'languages/snippets/language_for_script.html' %}
-  {% include 'base/navbar_mobile.html' %}
-  {% include 'base/messages.html' %}
-  <div class='container-fluid ajax-search' style="height: 100%;">
+    {% include 'languages/snippets/language_for_script.html' %}
+    {% include 'base/navbar_mobile.html' %}
+    {% include 'base/messages.html' %}
+    <div class='container-fluid ajax-search' style="height: 100%;">
 
 
-    <!--First row - banner -->
-    <div class="row fluid middle-heading banner-mobile marketplace" style='padding-top: 35px;padding-left:10px;text-align:left;text-transform: uppercase;'>
-      <div class="col fluid" >
-        marketplace 
-      </div>
-    </div>
-
-    <div class="row fluid middle-heading banner-mobile" style='padding-top: 10px; padding-bottom: 0px; text-align:center;text-transform: uppercase;'>
-      <div class="col plus" >
-        <span style='width:10%;'>+</span>
-      </div>
-    </div>
-
-    <div id=banner-container class='middle-heading banner-mobile'>
-      <span id=flip>
-      </span>
-    </div>
-
-
-    <div class="row fluid middle-heading banner-mobile " style='text-align:center; padding-bottom:10px; padding-top: 0px;text-transform: uppercase;'>
-      <div class="col fluid" >
-        =
-      </div>
-    </div>
-
-    <div class="row fluid middle-heading banner-mobile salt" style='text-align:right; padding-bottom:45px; padding-right:10px; padding-top:0px;text-transform: uppercase;'>
-      <div class="col fluid" >
-        Salt
-      </div>
-    </div>
-
-
-
-    <!--Second row - BUY SELL -->
-    <div class="row fluid text-center sell-buy spacer">
-        <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
-          <div class="bg">
-          <a class="btn btn-light-home m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-color: transparent;">
-          <div class="jumbotron jumbotron text-center mb-2 mt-2" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden; ">
-            <div class="container">
-              <h1 class="middle-heading heading">SELL</h1>
-              <p class="" id="sell-small">{{ why_sell }}</p>
-            </div>
+        <!--First row - banner -->
+        <div class="row fluid middle-heading banner-mobile marketplace" style='padding-top: 35px;padding-left:10px;text-align:left;text-transform: uppercase;'>
+          <div class="col fluid" >
+            marketplace 
           </div>
-          </a>
         </div>
-        </div>
-        <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
-          <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block; border-color: transparent;">
-          <div class="jumbotron jumbotron text-center mb-2 mt-2" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
-            <div class="container">
-              <h1 class="middle-heading heading">BUY</h1>
-              <p class="" id="buy-small">{{ why_buy }}</p>
-            </div>
+
+        <div class="row fluid middle-heading banner-mobile" style='padding-top: 10px; padding-bottom: 0px; text-align:center;text-transform: uppercase;'>
+          <div class="col plus" >
+            <span style='width:10%;'>+</span>
           </div>
-          </a>
-        </div>
-      </div>
-
-
-
-
-
-    <div class="row fluid text-center">
-      <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
-                <div class="container mt-5"> 
-                <p class="heading">{% trans 'Why SALT?' %}</p>
-                <div class='row justify-content-center'>
-                <div class='col-auto' style='min-width: 40vw;'>
-                <a class="btn btn-outline-dark btn-block login" role="button" href="{% url 'about' %}">
-                <div>{% trans 'Learn more' %}</div></a>
-                </div>
-                  </div>
-                </div>
-
-      </div>
-    </div>
-
-
-
-
-      <!--Third row - Brands -->
-      <div class="row fluid text-center most-liked m-0" style='padding-bottom: 40px'>
-
-      <div class="container" style="max-width: 100%;">
-
-      <div class='row ' >
-          <div class="col-12 text-left trending-name">
-          <p class="heading ml-md-4">{{ popular_brands }}</p>
         </div>
 
-
-      <div class="scrolling-wrapper my-custom-scrollbar" id='my-custom-scrollbar' style='height:inherit;'>
-        {% for obj in brands %}
-          <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
-                  <a href="{% url 'products:list' %}brand={{ obj.id }}">
-                    <img data-src="{% static 'img/logos/'%}{{ obj }}.png" %}" width="640" height="480" alt={{obj}} class='card-brand my-auto'>
-                  </a>
-              </div>
-        {% endfor %}
-      </div>
-      </div>
-      </div>
-
-      </div>
-
-
-
-
-    <!--Fourth row - Liked -->
-    <div class="row fluid text-center most-liked m-0" style='padding-bottom: 80px'>
-    <div class="container" style="max-width: 100%;">
-    <div class='row' >
-        <div class="col-6 text-left trending-name">
-        <p class="heading ml-md-4">{{ trending }}</p>
-      </div>
-      <div class="col-6 mt-3 text-right trending-col">
-        <a href="{% url 'products:list' %}">
-          <span class="mr-auto small" id="read-more"> 
-              {{ see_all }}
-            <i class="fas fa-arrow-right pl-1"></i>
+        <div id=banner-container class='middle-heading banner-mobile'>
+          <span id=flip>
           </span>
-        </a>
-      </div>  
-    <div class="scrolling-wrapper my-custom-scrollbar" style='height:inherit;'>
-      {% for obj in liked %}
-        <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-          {% include 'products/snippets/card-trending.html' with instance=obj %}
-            </div>
-      {% endfor %}
-    </div>
-    </div>
-    </div>
-    </div>
+        </div>
+
+
+        <div class="row fluid middle-heading banner-mobile " style='text-align:center; padding-bottom:10px; padding-top: 0px;text-transform: uppercase;'>
+          <div class="col fluid" >
+            =
+          </div>
+        </div>
+
+        <div class="row fluid middle-heading banner-mobile salt" style='text-align:right; padding-bottom:45px; padding-right:10px; padding-top:0px;text-transform: uppercase;'>
+          <div class="col fluid" >
+            Salt
+          </div>
+        </div>
 
 
 
-
-
-
-
-    <!--Fifth row - Account /Login -->
-    <div class="row fluid text-center account">
-      <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
-          {% if request.user.is_authenticated %}
-              <div class="container mt-5"> 
-              {% if request.user.profile_foto %}
-              <a href="{{ request.user.get_absolute_url }}" role="button">
-              <p class="heading">{{ go_to_account }}</p>
-              <img data-src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
-              </a>
-              {% else %}
-              <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
-              <p class="heading">{{ go_to_account }}</p>
-              <i class="far fa-user fa-2x"></i>
-              </a>
-              {% endif %}
+        <!--Second row - BUY SELL -->
+        <div class="row fluid text-center sell-buy spacer">
+            <div class="col-6 fluid" style="padding-left: 0px; padding-right: 0px;">
+              <div class="bg">
+              <a class="btn btn-light-home m-0 p-0" role="button" href="{% url 'products:create' %}" style="display:block;border-color: transparent;">
+              <div class="jumbotron jumbotron text-center mb-2 mt-2" style="background:transparent; background-color:transparent; color:black;  overflow-x: hidden; overflow-y: hidden; ">
+                <div class="container">
+                  <h1 class="middle-heading heading">SELL</h1>
+                  <p class="" id="sell-small">{{ why_sell }}</p>
+                </div>
               </div>
-          {% else %}
-                <div class="container mt-5"> 
-                <p class="heading">{{ become_customer }}</p>
-                <div class='row justify-content-center'>
-                <div class='col-auto' style='min-width: 40vw;'>
-                <a class="btn btn-outline-dark btn-block login" role="button" href="{% url 'login' %}">
-                <div>{{ login_registration }}</div></a>
+              </a>
+            </div>
+            </div>
+            <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
+              <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block; border-color: transparent;">
+              <div class="jumbotron jumbotron text-center mb-2 mt-2" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
+                <div class="container">
+                  <h1 class="middle-heading heading">BUY</h1>
+                  <p class="" id="buy-small">{{ why_buy }}</p>
                 </div>
+              </div>
+              </a>
+            </div>
+          </div>
+
+
+
+
+
+        <div class="row fluid text-center">
+          <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
+                    <div class="container mt-5"> 
+                    <p class="heading">{% trans 'Why SALT?' %}</p>
+                    <div class='row justify-content-center'>
+                    <div class='col-auto' style='min-width: 40vw;'>
+                    <a class="btn btn-outline-dark btn-block login" role="button" href="{% url 'about' %}">
+                    <div>{% trans 'Learn more' %}</div></a>
+                    </div>
+                      </div>
+                    </div>
+
+          </div>
+        </div>
+
+
+
+
+          <!--Third row - Brands -->
+          <div class="row fluid text-center most-liked m-0" style='padding-bottom: 40px'>
+
+          <div class="container" style="max-width: 100%;">
+
+          <div class='row ' >
+              <div class="col-12 text-left trending-name">
+              <p class="heading ml-md-4">{{ popular_brands }}</p>
+            </div>
+
+
+          <div class="scrolling-wrapper my-custom-scrollbar" id='my-custom-scrollbar' style='height:inherit;'>
+            {% for obj in brands %}
+              <div class='card col-xs-1  col-sm-1  col-md-4 col-lg-3  position-relativ p-0'>
+                      <a href="{% url 'products:list' %}brand={{ obj.id }}">
+                        <img data-src="{% static 'img/logos/'%}{{ obj }}.png" %}" width="640" height="480" alt={{obj}} class='card-brand my-auto'>
+                      </a>
                   </div>
+            {% endfor %}
+          </div>
+          </div>
+          </div>
+
+          </div>
+
+
+
+
+        <!--Fourth row - Liked -->
+        <div class="row fluid text-center most-liked m-0" style='padding-bottom: 80px'>
+        <div class="container" style="max-width: 100%;">
+        <div class='row' >
+            <div class="col-6 text-left trending-name">
+            <p class="heading ml-md-4">{{ trending }}</p>
+          </div>
+          <div class="col-6 mt-3 text-right trending-col">
+            <a href="{% url 'products:list' %}">
+              <span class="mr-auto small" id="read-more"> 
+                  {{ see_all }}
+                <i class="fas fa-arrow-right pl-1"></i>
+              </span>
+            </a>
+          </div>  
+        <div class="scrolling-wrapper my-custom-scrollbar" style='height:inherit;'>
+          {% for obj in liked %}
+            <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+              {% include 'products/snippets/card-trending.html' with instance=obj %}
                 </div>
-          {% endif %}
-      </div>
+          {% endfor %}
+        </div>
+        </div>
+        </div>
+        </div>
+
+
+
+
+
+
+
+        <!--Fifth row - Account /Login -->
+        <div class="row fluid text-center account">
+          <div class="col fluid" style="padding-left: 0px; padding-right: 0px; height:200px">
+              {% if request.user.is_authenticated %}
+                  <div class="container mt-5"> 
+                  {% if request.user.profile_foto %}
+                  <a href="{{ request.user.get_absolute_url }}" role="button">
+                  <p class="heading">{{ go_to_account }}</p>
+                  <img data-src="{{ request.user.profile_foto.url }}" class="avatar" alt="..." style="width:60px; height: 60px">
+                  </a>
+                  {% else %}
+                  <a href="{{ request.user.get_absolute_url }}" id="navbarDropdown" role="button">
+                  <p class="heading">{{ go_to_account }}</p>
+                  <i class="far fa-user fa-2x"></i>
+                  </a>
+                  {% endif %}
+                  </div>
+              {% else %}
+                    <div class="container mt-5"> 
+                    <p class="heading">{{ become_customer }}</p>
+                    <div class='row justify-content-center'>
+                    <div class='col-auto' style='min-width: 40vw;'>
+                    <a class="btn btn-outline-dark btn-block login" role="button" href="{% url 'login' %}">
+                    <div>{{ login_registration }}</div></a>
+                    </div>
+                      </div>
+                    </div>
+              {% endif %}
+          </div>
+        </div>
+
+
+
+        <div class="row fluid text-center">
+        </div>
+
+
+
+
+        <!--Sixth row - Advantages -->
+         <div class="row fluid info" style='padding-top: 76px; '>
+          </div>
+
+        {% include 'base/footer.html' %}
     </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+        $(function () {
+          count = 0;
+          plus = $('.plus')
+          wordsArray = ["FAKES", "SELECTED BRANDS", "MINIMALISM" ];
+          setInterval(function () {
+            count++;
+            $("#flip").fadeOut(100, function () {
+              $(this).text(wordsArray[count % wordsArray.length]).fadeIn(100);
 
 
+        if ($('#flip:contains("MINIMALISM")').length > 0) {
+        $(this).css('background-color', '#5CDE5C');
+        plus.text('+')
+        } 
+        else if ($('#flip:contains("FAKES")').length > 0){
+        $(this).css('background-color', '#FF3333 ');
+        plus.text('−')
 
-    <div class="row fluid text-center">
-    </div>
-
-
-
-
-    <!--Sixth row - Advantages -->
-     <div class="row fluid info" style='padding-top: 76px; '>
-      </div>
-
-    {% include 'base/footer.html' %}
-  </div>
-  <script type="text/javascript">
-
-    $(document).ready(function () {
-    $(function () {
-      count = 0;
-      plus = $('.plus')
-      wordsArray = ["FAKES", "SELECTED BRANDS", "MINIMALISM" ];
-      setInterval(function () {
-        count++;
-        $("#flip").fadeOut(100, function () {
-          $(this).text(wordsArray[count % wordsArray.length]).fadeIn(100);
-
-
-    if ($('#flip:contains("MINIMALISM")').length > 0) {
-    $(this).css('background-color', '#5CDE5C');
-    plus.text('+')
-    } 
-    else if ($('#flip:contains("FAKES")').length > 0){
-    $(this).css('background-color', '#FF3333 ');
-    plus.text('−')
-
-    }
-    else{
-    $(this).css('background-color', '#0FADF4');
-    plus.text('+')
-    }
+        }
+        else{
+        $(this).css('background-color', '#0FADF4');
+        plus.text('+')
+        }
 
 
 
 
+            });
+          }, 1000);
         });
-      }, 1000);
-    });
-    });
-  </script>
-  {% block script %}{% endblock %}
-  <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
-  <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
-  <script src="{% static 'js/jsrender.min.js' %}"></script>
-  <script src='{% static "js/ecommerce.js" %}'></script>
-  <script src='{% static "js/csrf.ajax.js" %}'></script>
-  <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
-  <script defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
-  <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+        });
+    </script>
+    {% block script %}{% endblock %}
+    <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+    <script src="{% static 'js/jsrender.min.js' %}"></script>
+    <script src='{% static "js/ecommerce.js" %}'></script>
+    <script src='{% static "js/csrf.ajax.js" %}'></script>
+    <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
+    <script defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
+    <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
 </body>
 </html>
