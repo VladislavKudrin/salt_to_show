@@ -14,6 +14,7 @@ from datetime import datetime, timezone, timedelta
 from accounts.models import User
 
 from django.utils.translation import gettext as _
+from compression_middleware.decorators import compress_page
 
 
 from categories.models import Brand, Undercategory, Overcategory, Gender, Category
@@ -119,6 +120,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		if self.request.is_ajax():
 			return HttpResponse(errors, status=400, content_type='application/json')
 
+@compress_page
 def home_page(request):
 	qs = Product.objects.all().authentic()
 	mydict = {}
