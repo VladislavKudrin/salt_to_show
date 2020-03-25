@@ -673,7 +673,7 @@
         });
     </script>
     {% block script %}{% endblock %}
-      {% compress js %}
+      {% compress js inline %}
     <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
     <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
