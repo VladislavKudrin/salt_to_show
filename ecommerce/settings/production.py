@@ -331,7 +331,7 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
-
+COMPRESS_ROOT = STATIC_ROOT
 
 
 STATIC_URL = '/static/'

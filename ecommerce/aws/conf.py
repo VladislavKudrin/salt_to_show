@@ -9,6 +9,8 @@ AWS_USERNAME = 'envision-user'
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
+COMPRESS_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
+
 
 AWS_STORAGE_BUCKET_NAME = 'salt-bucket-eu'
 
@@ -17,6 +19,7 @@ S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_ROOT = MEDIA_URL
 STATIC_URL = S3_URL + 'static/'
+
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 two_months = datetime.timedelta(days=61)
@@ -29,7 +32,11 @@ AWS_HEADERS = {
 }
 AWS_QUERYSTRING_AUTH = False
 
-
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter',
+                        'compressor.filters.cssmin.CSSMinFilter'
+                       ]
+COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 
 
 
