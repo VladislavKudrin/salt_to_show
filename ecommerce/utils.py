@@ -162,7 +162,27 @@ def my_render(request, *args, **kwargs):
         args_list[0] = 'desktop/' + template_location
         args = tuple(args_list)
         return render(request, *args, **kwargs)
-        
+ 
+
+ # def my_render(request, *args, **kwargs):
+ #    template_location = args[0]
+ #    args_list = list(args)
+
+ #    if request.user_agent.is_mobile:
+ #        args_list[0] = 'mobile/' + template_location
+ #        args_list[1] = args_list[1]
+ #        args_list = args_list[:-1] # remove not needed context
+ #        args = tuple(args_list)
+ #        return render(request, *args, **kwargs)
+
+ #    else:
+ #        args_list[0] = 'desktop/' + template_location
+ #        args_list[1] = args_list[2]
+ #        args_list = args_list[:-1] # remove not needed context
+ #        args = tuple(args_list)
+ #        return render(request, *args, **kwargs)
+
+               
 # def create_brands(f):
 # #     # print(f.read())
 #     brand_list = []
