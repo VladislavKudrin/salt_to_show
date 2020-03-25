@@ -83,7 +83,6 @@ INSTALLED_APPS = [
     'betterforms',
     'django_extensions',
     'django_user_agents',
-    "compressor",
 
     #our apps
     'chat_ecommerce',
@@ -155,7 +154,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 AUTHENTICATION_BACKENDS = [

@@ -100,7 +100,6 @@ INSTALLED_APPS = [
     'betterforms',
     'django_extensions',
     'django_user_agents',
-    "compressor",
 
 
     #our apps
@@ -170,7 +169,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 AUTHENTICATION_BACKENDS = [
@@ -331,7 +329,7 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
-COMPRESS_ROOT = STATIC_ROOT
+
 
 
 STATIC_URL = '/static/'
