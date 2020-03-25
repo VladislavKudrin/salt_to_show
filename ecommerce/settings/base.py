@@ -165,8 +165,8 @@ AUTHENTICATION_BACKENDS = [
         ]
 
 MIDDLEWARE = [
-    'django_user_agents.middleware.UserAgentMiddleware',
     'compression_middleware.middleware.CompressionMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
