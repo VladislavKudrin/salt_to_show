@@ -11,11 +11,237 @@
   <title>SALT | Украинский Маркетплейс Нового Поколения</title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
-  <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   <style type="text/css">
+
+
+        /*fonts*/
+        /* noto-sans-regular - latin_cyrillic-ext_latin-ext_cyrillic */
+        @font-face {
+          font-family: 'Noto Sans';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Noto Sans'), local('NotoSans'),
+               url('static/fonts/noto-sans-v9-latin_cyrillic-ext_latin-ext_cyrillic-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+               url('static/fonts/noto-sans-v9-latin_cyrillic-ext_latin-ext_cyrillic-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+
+
+        /* open-sans-300 - latin_cyrillic-ext_latin-ext_cyrillic */
+        @font-face {
+          font-family: 'Open Sans';
+          font-style: normal;
+          font-weight: 300;
+          src: local('Open Sans Light'), local('OpenSans-Light'),
+               url('static/fonts/open-sans-v17-latin_cyrillic-ext_latin-ext_cyrillic-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+               url('static/fonts/open-sans-v17-latin_cyrillic-ext_latin-ext_cyrillic-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+
+        /* archivo-500 - latin */
+        @font-face {
+          font-family: 'Archivo';
+          font-style: normal;
+          font-weight: 500;
+          src: local('Archivo Medium'), local('Archivo-Medium'),
+               url('static/fonts/archivo-v6-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+               url('static/fonts/archivo-v6-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+
+        /* istok-web-regular - cyrillic_latin */
+        @font-face {
+          font-family: 'Istok Web';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Istok Web Regular'), local('IstokWeb-Regular'),
+               url('static/fonts/istok-web-v14-cyrillic_latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+               url('static/fonts/istok-web-v14-cyrillic_latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+
+        .heading{
+          font-family: 'Open Sans', sans-serif;
+          font-size: 30px;
+        }
+
+        .middle-heading {
+            font-size: 2.5rem !important;
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.2;
+        }
+
+        .sub-heading {
+            font-size: 24px !important;
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.2;
+        }
+
+        .sub-sub-heading {
+            font-size: 18px !important;
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.2;
+        }
+
+        .small{
+          font-size: 14px;
+        }
+
+        .tiny{
+          font-size: 10px !important;
+          color: black !important; 
+        }
+
+        .logo-font{
+          font-family: 'Archivo', 'Istok Web', sans-serif ;
+          font-size: 27px !important;
+          letter-spacing: 2px;
+        }
+
+        .logo-font-small{
+          font-family: 'Archivo', 'Istok Web', sans-serif ;
+          font-size: 20px !important;
+          letter-spacing: 1px;
+        }
+
+        .heading-black{
+            font-size: 2.5rem !important;
+            font-family: 'Helvetica' !important;
+        }
+
+        .uppercase-font{
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .field-name{
+            text-transform: uppercase;
+              font-weight: 600;
+              line-height: 25px;
+              font-family: 'Archivo', 'Istok Web', sans-serif; 
+              font-size: 12px;
+        }
+
+        .uppercase-title{
+            line-height: 1.2;
+               font-family: 'Archivo', 'Istok Web', sans-serif; 
+        }
+
+        .archivo{
+
+               font-family: 'Archivo', 'Istok Web', sans-serif;
+        }
+
+
+
+
+        /*card*/
+        .like-center {
+          position: absolute;
+          z-index: 1;
+          top: 28%;
+          left: 36%;
+        }
+
+        .like-center-trending {
+          position: absolute;
+          z-index: 1;
+          top: 28%;
+          left: 36%;
+        }
+
+        @media only screen and (min-width: 1500px) {
+
+        .like-center-trending {
+          position: absolute;
+          z-index: 1;
+          top: 28%;
+          left: 44% !important; /*The only difference is for large screens ... that's why new class*/
+        }
+
+        }
+
+
+        .card-img-top {
+            min-width: 250px;
+            max-height: 250px;
+            min-height: 250px;
+            object-fit: contain;
+            align-items: center;
+            padding-left:10px;
+            padding-right:10px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            margin-top: 10px !important;
+        /*    margin-bottom: 10px;*/
+        /*    margin-left: 10px;*/
+        /*    max-width: 275px;*/
+        }
+
+        .card-text{
+          word-wrap: break-word;
+        }
+
+        .card{
+          overflow: hidden;
+          display: flex;
+          border: none;
+        }
+
+        .card-body {
+          height: 80px;
+          object-fit: cover;
+          border-top: 1px solid #e8eaef;
+          margin-left: 10px;
+          margin-right:10px;
+        /*  width: 270px;*/
+        /*  padding-right: 10px;
+          padding-left: 10px;*/
+        }
+
+
+
+        .card-body-hidden {
+          height: 80px;
+          object-fit: cover;
+          border-top: 1px solid #e8eaef;
+          margin-left: 10px;
+          margin-right:10px;
+          padding-bottom: 7px;
+          padding-top: 10px;
+          margin-top: 10px !important;
+        /*  width: 270px;*/
+        /*  padding-right: 10px;
+          padding-left: 10px;*/
+
+        }
+        .like-center-hidden {
+          position: absolute;
+          z-index: 1;
+        /*  height: 292.5px;
+          width: 292.5px;*/
+        /*  margin-left: 30px;
+          margin-top: 30px;*/
+            top: 21%;
+            left: 34%;
+        }
+        .card-img-top-hidden {
+            min-width: 180px;
+            max-height: 150px;
+            min-height: 180px;
+            object-fit: contain;
+            align-items: center;
+            padding-left:10px;
+            padding-right:10px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+        /*    margin-bottom: 10px;*/
+        /*    margin-left: 10px;*/
+            max-width: 100%;
+        }
+
+
+
 
         .fa-heart {
           color : rgba(190, 45, 51, 0.74);
