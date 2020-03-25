@@ -13,15 +13,16 @@
 
   <title>SALT | Украинский Маркетплейс Нового Поколения</title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
-   {% compress css %}
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+     {% compress css %}
+
   <link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
    {% endcompress %}
-  {% compress js %}
+
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    {% endcompress %}
+
   <style type="text/css">
 
         .fa-heart {
@@ -672,6 +673,7 @@
         });
     </script>
     {% block script %}{% endblock %}
+      {% compress js %}
     <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
     <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
@@ -681,5 +683,6 @@
     <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
     <script defer src="{% static 'fontawesome/js/all.js' %}"></script>
     <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+        {% endcompress %}
 </body>
 </html>
