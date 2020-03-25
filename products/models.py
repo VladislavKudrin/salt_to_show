@@ -50,11 +50,13 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 				|Q(description__icontains=query)
 				)
 		return self.filter(lookups).distinct()
+
 	def filter_categories(self, lookup):
 		if len(lookup) == 1:
 			return self
 		else:
 			return self.filter(lookup)
+
 	def filter_undercategory_size(self, qs, list_brand=None, list_condition=None, list_category = None, list_undercategory = None, list_size=None, link_codiert=None):
 		arr=[]
 		if list_brand is not None:
@@ -134,7 +136,6 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 			qs = qs.filter(lookups_size)
 		return qs, link_codiert, arr
 
-
 	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
 		lookups_brand=(Q(category__iexact='nothing'))
 		for x in qs_brand:
@@ -162,6 +163,11 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 
 	def available(self):
 		return self.exclude(order__status='paid').exclude(order__status='shipped')
+
+	def payable(self):
+		threshold = date(2020, 3, 1) # not possible to buy items older than this 1th of March 
+		return self.filter(timestamp__gte=threshold)
+
 
 class ProductManager(models.Manager):
 	def get_queryset(self):
@@ -255,6 +261,9 @@ class ProductManager(models.Manager):
 
 	def fake(self):
 		return self.get_queryset().active().fake()
+
+	def payable(self):
+		return self.get_queryset().payable()
 
 	def price_to_region_price(self, user, price):
 		region_user = user.region

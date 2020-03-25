@@ -14,6 +14,7 @@ from datetime import datetime, timezone, timedelta
 from accounts.models import User
 
 from django.utils.translation import gettext as _
+from django.db.models import Count
 
 
 
@@ -120,71 +121,66 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		if self.request.is_ajax():
 			return HttpResponse(errors, status=400, content_type='application/json')
 
-def my_render(request, *args, **kwargs):
-    template_location = args[0]
-    args_list = list(args)
-    if request.user_agent.is_mobile:
-        args_list[0] = 'mobile/' + template_location
-        args = tuple(args_list)
-        return render(request, *args, **kwargs)
-    else:
-        args_list[0] = 'desktop/' + template_location
-        args = tuple(args_list)
-        return render(request, *args, **kwargs)
-
 def home_page(request):
 	template_name =  'home_page.html'
+	context = {}
+	context['kids_navbar'] = _('Kids')
+	context['new_navbar'] = _('New')
+	context['brand'] = _('Brand')
+	context['why_sell'] = _('Contribute to the sustainable clothes-circle.')
+	context['why_buy'] = _('Find your designer piece fast and safe.')
+	context['safe'] = _('Safe')
+	context['why_safe'] = _('Uploaded items are monitored 24/7/365. There are no fakes on SALT.')
+	context['modern'] = _('AI-Powered')
+	context['why_modern'] = _('We use Machine Learning to detect fakes in our catalogue.')
+	context['simple'] = _('Simple')
+	context['why_simple'] = _('Our intuitive design was made with love to simplicity and minimalism.')
+	context['read_more'] = _('Read more')
+	context['go_to_account'] = _('Go to your profile')
+	context['become_customer'] = _('Join our community')
+	context['login_registration'] = _('Login | Registration')
+	context['trending'] = _('Trending:')
+	context['see_all'] = _('See all')
+	context['popular_brands'] = _('Popular designers:')
+
 	if request.user_agent.is_mobile:
 		template = 'mobile/' + template_name
-		context = {}
+
+		# The top 4 products, in order by number of wishlist objects (=liked).
+		qs = Product.objects.authentic().available().payable()
+		most_liked = qs.annotate(num_likes=Count('wishes_products')).order_by('-num_likes')[:4] 
+		# print([i.num_likes for i in most_liked]) # for test
+		context['liked'] = most_liked
+
+		# Send 16 brands and according links
+		brands = [
+		'Gucci', 'Stone Island', 'Prada', 'Acne Studios', 
+		'Dolce & Gabbana', 'Yves Saint Laurent', 'Comme des Garcons', 'Burberry', 
+		'Versace',  'Armani', 'C.P. Company', 'Fendi'
+		]
+		context['brands'] = [Brand.objects.filter(brand_name=i).first() for i in brands]
+
 		return render(request, template, context)
+
 	else:
 		template = 'desktop/' + template_name
-		qs = Product.objects.all().authentic()
+		qs = Product.objects.authentic().available().payable()
 		mydict = {}
-		for obj in qs: 
-			mydict[obj] = Wishlist.objects.filter(product=obj).count()
-		sorted_ = sorted(mydict, key=mydict.get, reverse=True)
-		most_liked = sorted_[:50]
-		context = {}
+		most_liked = qs.annotate(num_likes=Count('wishes_products')).order_by('-num_likes')[:25] 
 		context['qs'] = qs
 		context['liked'] = most_liked
 		brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Armani', 'C.P. Company', 'Comme des Garcons', 'Calvin Klein', 'Balmain', 'Alexander Wang']
-		to_send = []
-		for i in brands: 
-			to_send.append(Brand.objects.filter(brand_name=i).first())
-		context['showed_brands_navbar'] = to_send
+		brands_to_send = [Brand.objects.filter(brand_name=i).first() for i in brands]
+		context['brands'] = brands_to_send
+		context['showed_brands_navbar'] = brands_to_send
 		context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
 		context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
 		context['fields_gender'] = Gender.objects.all()
 		context['fields_category'] = Category.objects.all()
 		context['fields_overcategory'] = Overcategory.objects.all()
 		context['fields_undercategory'] = Undercategory.objects.all()
-		context['barabek'] = 'eaten'
-		context['brands'] = to_send
-		#translation
-		context['kids_navbar'] = _('Kids')
-		context['new_navbar'] = _('New')
-		context['brand'] = _('Brand')
-		context['why_sell'] = _('Contribute to the sustainable clothes-circle.')
-		context['why_buy'] = _('Find your designer piece fast and safe.')
-		context['safe'] = _('Safe')
-		context['why_safe'] = _('Uploaded items are monitored 24/7/365. There are no fakes on SALT.')
-		context['modern'] = _('AI-Powered')
-		context['why_modern'] = _('We use Machine Learning to detect fakes in our catalogue.')
-		context['simple'] = _('Simple')
-		context['why_simple'] = _('Our intuitive design was made with love to simplicity and minimalism.')
-		context['read_more'] = _('Read more')
-		context['go_to_account'] = _('Go to your profile')
-		context['become_customer'] = _('Join our community')
-		context['login_registration'] = _('Login | Registration')
-		context['trending'] = _('Trending:')
-		context['see_all'] = _('See all')
-		context['popular_brands'] = _('Popular designers:')
 		return render(request, template, context)
 	    
-
-
 class MyCronJob(CronJobBase):
 	RUN_EVERY_MINS = 0.01 # every 2 hours
 	MIN_NUM_FAILURES = 1
@@ -231,9 +227,6 @@ class MyCronJob(CronJobBase):
 				html_message=html_,
 				fail_silently=False, 
 				)
-
-
-
 
 class NovaPoshtaAPI(CronJobBase):
 	RUN_EVERY_MINS = 1440 # 60*24 every 24 hours 
