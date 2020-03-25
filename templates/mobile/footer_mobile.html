@@ -1,0 +1,156 @@
+{% load static %}
+{% load i18n %}
+<head>
+  <style type="text/css">
+
+    .soc-seti {
+      display: flex;
+    }
+
+    .soc-seti .soc-set {
+      list-style: none;
+    }
+
+    .soc-seti .soc-set .a-soc {
+      width: 30px;
+      height: 30px;
+      background-color: #fff;
+      text-align: center;
+      line-height: 25px;
+      font-size: 15px;
+      display: block;
+      border-radius: 50% !important;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #fff;
+      z-index: 1;
+    }
+
+    .soc-seti .soc-set .a-soc .icon {
+      position: relative;
+      color: #262626;
+      transition: .5s;
+      z-index: 3;
+    }
+
+    .soc-seti .soc-set .a-soc:hover .icon {
+      color: #fff;
+      transform: rotateY(360deg);
+    }
+
+    .soc-seti .soc-set .a-soc:before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f00;
+      transition: .5s;
+      z-index: 2;
+    }
+
+    .soc-seti .soc-set .a-soc:hover:before {
+      top: 0;
+    }
+
+    .soc-seti .soc-set:nth-child(3) {
+      font-weight: bold;
+    }
+
+    .soc-seti .soc-set:nth-child(1) .a-soc:before{
+      background: #4a76a8;
+    }
+
+    .soc-seti .soc-set:nth-child(2) .a-soc:before{
+      background: linear-gradient(#e66465, #9198e5);
+      font-weight: bold;
+    }
+
+    .soc-seti .soc-set:nth-child(3) .a-soc:before {
+      background: #0077b5;
+    }
+
+    .soc-seti .soc-set:nth-child(4) .a-soc:before{
+      background: #3b5999;
+    }
+
+    .footer-style{
+      opacity: 0.6;
+      font-size: 12px;
+    }
+
+    .footer-style:hover{
+      opacity: 1;
+    }
+
+    .footer-logo {
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-footer {
+      padding: 0.275rem 0.5rem !important;
+      font-size: 12px;
+      border: 1px solid #212529;
+    }
+
+    .btn-footer:hover, .btn-footer:active, .btn-footer:focus  {
+      background-color: #212529;
+      color: white;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      display: flex;
+      justify-content: flex-start;
+    }
+  </style>
+</head>
+
+<footer class="page-footer" style="padding: 0 !important;">
+  <div class="container-fluid footer-container">
+    <div class="row footer-mobile">
+
+      <div class="col-12 text-center" style="padding: 1rem 0;">
+        <a href="{% url 'about' %}" class="btn btn-footer">{% trans 'Why SALT?' %}</a>
+      </div>
+
+      <div class="col-12 my-auto footer-links footer-style">
+        <a href='{% url "contact" %}' class="text-body mr-2 font">{% trans 'Contact' %}</a>
+        <a href='{% url "terms" %}' class="text-body mr-2 font">{% trans 'Terms' %}</a>
+        <a href='{% url "privacy" %}' class="text-body mr-2 font">{% trans 'Privacy' %}</a>
+        <a href='{% url "faq" %}#buy' class="text-body font">FAQ</a>
+      </div>
+
+      <div class="col-12 footer-style">
+        <div class="row">
+          <div class="col-6 footer-logo my-auto">
+            SALT © 2020
+          </div>
+          <div class="col-6 footer-social" style='padding-right: 0.2rem'>
+            <div class="soc-seti pt-1">
+              <li class="soc-set">
+                <a class="a-soc" href="https://vk.com/saltmarketplace"><i class="fab fa-vk icon"></i></a>
+              </li>
+              <li class="soc-set">
+                <a class="a-soc" href="https://www.instagram.com/saltish.co/"><i class="fab fa-instagram icon"></i></a>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
