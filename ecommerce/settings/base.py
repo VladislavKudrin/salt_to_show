@@ -165,6 +165,7 @@ AUTHENTICATION_BACKENDS = [
         ]
 
 MIDDLEWARE = [
+    'django_user_agents.middleware.UserAgentMiddleware',
     'compression_middleware.middleware.CompressionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -179,7 +180,7 @@ MIDDLEWARE = [
     #third party
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
-    'django_user_agents.middleware.UserAgentMiddleware',
+
 ]
 
 SOCIAL_AUTH_PIPELINE = (
