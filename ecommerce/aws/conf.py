@@ -38,6 +38,7 @@ COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter',
                        ]
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 
+COMPRESS_URL = "https:" + STATIC_URL
 
 
 # ----- TESTSERVER -----
