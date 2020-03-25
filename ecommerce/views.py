@@ -14,6 +14,8 @@ from datetime import datetime, timezone, timedelta
 from accounts.models import User
 
 from django.utils.translation import gettext as _
+from django.db.models import Count
+
 
 
 from categories.models import Brand, Undercategory, Overcategory, Gender, Category
@@ -120,29 +122,8 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 			return HttpResponse(errors, status=400, content_type='application/json')
 
 def home_page(request):
-	qs = Product.objects.all().authentic()
-	mydict = {}
-	for obj in qs: 
-		mydict[obj] = Wishlist.objects.filter(product=obj).count()
-	sorted_ = sorted(mydict, key=mydict.get, reverse=True)
-	most_liked = sorted_[:50]
+	template_name =  'home_page.html'
 	context = {}
-	context['qs'] = qs
-	context['liked'] = most_liked
-	brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Armani', 'C.P. Company', 'Comme des Garcons', 'Calvin Klein', 'Balmain', 'Alexander Wang']
-	to_send = []
-	for i in brands: 
-		to_send.append(Brand.objects.filter(brand_name=i).first())
-	context['showed_brands_navbar'] = to_send
-	context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
-	context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
-	context['fields_gender'] = Gender.objects.all()
-	context['fields_category'] = Category.objects.all()
-	context['fields_overcategory'] = Overcategory.objects.all()
-	context['fields_undercategory'] = Undercategory.objects.all()
-	context['barabek'] = 'eaten'
-	context['brands'] = to_send
-	#translation
 	context['kids_navbar'] = _('Kids')
 	context['new_navbar'] = _('New')
 	context['brand'] = _('Brand')
@@ -161,9 +142,45 @@ def home_page(request):
 	context['trending'] = _('Trending:')
 	context['see_all'] = _('See all')
 	context['popular_brands'] = _('Popular designers:')
-	return my_render(request, 'home_page.html', context)
 
+	if request.user_agent.is_mobile:
+		template = 'mobile/' + template_name
 
+		# The top 4 products, in order by number of wishlist objects (=liked).
+		qs = Product.objects.authentic().available().payable()
+		most_liked = qs.annotate(num_likes=Count('wishes_products')).order_by('-num_likes')[:4] 
+		# print([i.num_likes for i in most_liked]) # for test
+		context['liked'] = most_liked
+
+		# Send 16 brands and according links
+		brands = [
+		'Gucci', 'Stone Island', 'Prada', 'Acne Studios', 
+		'Dolce & Gabbana', 'Yves Saint Laurent', 'Comme des Garcons', 'Burberry', 
+		'Versace',  'Armani', 'C.P. Company', 'Fendi'
+		]
+		context['brands'] = [Brand.objects.filter(brand_name=i).first() for i in brands]
+
+		return render(request, template, context)
+
+	else:
+		template = 'desktop/' + template_name
+		qs = Product.objects.authentic().available().payable()
+		mydict = {}
+		most_liked = qs.annotate(num_likes=Count('wishes_products')).order_by('-num_likes')[:25] 
+		context['qs'] = qs
+		context['liked'] = most_liked
+		brands = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Armani', 'C.P. Company', 'Comme des Garcons', 'Calvin Klein', 'Balmain', 'Alexander Wang']
+		brands_to_send = [Brand.objects.filter(brand_name=i).first() for i in brands]
+		context['brands'] = brands_to_send
+		context['showed_brands_navbar'] = brands_to_send
+		context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
+		context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
+		context['fields_gender'] = Gender.objects.all()
+		context['fields_category'] = Category.objects.all()
+		context['fields_overcategory'] = Overcategory.objects.all()
+		context['fields_undercategory'] = Undercategory.objects.all()
+		return render(request, template, context)
+	    
 class MyCronJob(CronJobBase):
 	RUN_EVERY_MINS = 0.01 # every 2 hours
 	MIN_NUM_FAILURES = 1
@@ -210,9 +227,6 @@ class MyCronJob(CronJobBase):
 				html_message=html_,
 				fail_silently=False, 
 				)
-
-
-
 
 class NovaPoshtaAPI(CronJobBase):
 	RUN_EVERY_MINS = 1440 # 60*24 every 24 hours 
