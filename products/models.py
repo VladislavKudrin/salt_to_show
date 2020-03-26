@@ -11,6 +11,7 @@ from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 from datetime import date
+from django.utils.safestring import mark_safe
 
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
@@ -406,6 +407,10 @@ class ProductImage(models.Model):
 		# return image
 
 
+	def image_tag(self):
+		return mark_safe('<img src="%s" width="500" height="500" style="object-fit: contain;"" />' % (self.image.url))  # Get Image url
+
+	image_tag.short_description = 'Image'
 
 def image_pre_save_reciever(sender, instance, *args, **kwargs):
 	if not instance.unique_image_id:
