@@ -231,11 +231,17 @@
             </li>
 
 
-            <li class="nav-item pl-2 " style="display: inline-block;">                
-            <button class='btn pb-2 pt-0' id='sidebar-trigger' style="">
-                <img data-src="{% static 'icons/hamburger.png' %}"  style="width:20px; height: 20px;">
-        </button>
-        
+            <li class="nav-item pl-2 " style="display: inline-block;"> 
+              {% if request.user.is_authenticated %}               
+                <button class='btn pb-2 pt-0' id='sidebar-trigger' style="">
+                <img src="{% static 'icons/hamburger.png' %}"  style="width:20px; height: 20px;">
+              {% else %}
+                <button class='btn pb-1 pt-0' >
+                <a href="{% url 'login' %}" role="button">
+                  <span class='small_user' style='font-size: 8px'> <i class="far fa-user fa-2x"></i> </span>
+                </a>
+              {% endif %}
+            </button>
             </li>
     </ul>
 

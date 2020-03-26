@@ -56,9 +56,6 @@
             display: inline-block;
             position: relative;
             margin-top: 10px !important;
-        /*    margin-bottom: 10px;*/
-        /*    margin-left: 10px;*/
-        /*    max-width: 275px;*/
         }
 
         .card-text{
@@ -77,55 +74,7 @@
           border-top: 1px solid #e8eaef;
           margin-left: 10px;
           margin-right:10px;
-        /*  width: 270px;*/
-        /*  padding-right: 10px;
-          padding-left: 10px;*/
         }
-
-
-
-        .card-body-hidden {
-          height: 80px;
-          object-fit: cover;
-          border-top: 1px solid #e8eaef;
-          margin-left: 10px;
-          margin-right:10px;
-          padding-bottom: 7px;
-          padding-top: 10px;
-          margin-top: 10px !important;
-        /*  width: 270px;*/
-        /*  padding-right: 10px;
-          padding-left: 10px;*/
-
-        }
-        .like-center-hidden {
-          position: absolute;
-          z-index: 1;
-        /*  height: 292.5px;
-          width: 292.5px;*/
-        /*  margin-left: 30px;
-          margin-top: 30px;*/
-            top: 21%;
-            left: 34%;
-        }
-        .card-img-top-hidden {
-            min-width: 180px;
-            max-height: 150px;
-            min-height: 180px;
-            object-fit: contain;
-            align-items: center;
-            padding-left:10px;
-            padding-right:10px;
-            cursor: pointer;
-            display: inline-block;
-            position: relative;
-        /*    margin-bottom: 10px;*/
-        /*    margin-left: 10px;*/
-            max-width: 100%;
-        }
-
-
-
 
         .fa-heart {
           color : rgba(190, 45, 51, 0.74);
@@ -203,12 +152,7 @@
         }
 
         @media only screen and (max-width: 1200px) {
-        .flip-card-back {
-        transform : rotateY(180deg);
-        }
-        #safe-card, #ai-card {
-        margin-bottom : 15px;
-        }
+        
         }
         .bg {
         /*  background-image: url("../img/white_wall.png");*/
@@ -294,32 +238,11 @@
         font-size: 0.9em;
         }
 
-        .most-liked{
-        padding-left: 20px;
-        padding-right: 20px;
-        }
-
-        .flip-card-front, .flip-card-back{
-        font-size: 10px;
-        }
-
-        .flip-card{
-        width: 100px;
-        height: 100px;
-        }
 
         .card-font {
         font-size: 20px !important;
         }
-        .flip-card-front {
-        font-size: 10px;
-        }
-
-        .flip-card {
-        width: 100px;
-        height: 100px;
-        }
-
+     
         .spacer{
         padding-bottom: 0px !important;
         }
@@ -350,55 +273,6 @@
         }
         }
 
-        /*Flip-Cards */
-        .flip-card {
-        width: 200px;
-        height: 100px;
-        backface-visibility:hidden;
-        }
-
-        .flip-card-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        transition: transform 0.6s;
-        transform-style: preserve-3d;
-        -webkit-transition: transform 0.6s;
-        -webkit-transform-style: preserve-3d;
-        }
-
-        .flip-card-front, .flip-card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        -webkit-backface-visibility: hidden;
-        -moz-backface-visibility: hidden;
-        -o-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -webkit-transition: 0.6s;
-        -webkit-transform-style: preserve-3d;
-        -moz-transition: 0.6s;
-        -moz-transform-style: preserve-3d;
-        -o-transition: 0.6s;
-        -o-transform-style: preserve-3d;
-        -ms-transition: 0.6s;
-        -ms-transform-style: preserve-3d;
-        transition: 0.6s;
-        transform-style: preserve-3d;
-
-        }
-
-        .flip-card-front {
-        background-color: white;
-        color: black;
-        -webkit-transform: translate3d(0, 0, 0);
-        }
-
-        .flip-card-back {
-        background-color: white;
-        color: black;
-        } 
 
         .account {
 
@@ -783,6 +657,8 @@
     <script src='{% static "js/csrf.ajax.js" %}'></script>
     <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
     <script defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
+    {% if request.user.is_authenticated %}
     <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endif %}
 </body>
 </html>
