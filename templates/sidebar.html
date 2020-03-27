@@ -36,12 +36,12 @@
         {% else %}
         <a href="{{ request.user.get_absolute_url }}">
         	                                    {% if request.user|get_notif > 0 %}
-                        <div style='padding-left: 55px; padding-bottom: 0px'>
+                        <div style='padding-left: 34px; padding-bottom: 0px'>
                             <div class='notifications-sidebar'></div>
                         </div>
                     {% else %}
                     {% endif %}
-                   <img src="{% static 'img/user_noname.png' %}" class="avatar ml-2" alt="..." style="width:60px; height: 60px"></a>
+                    <i class="far fa-user fa-2x ml-2" ></i></a>
         {% endif %}
 		</li>
 	<li><a href='{% url "chat:inbox" %}'>
