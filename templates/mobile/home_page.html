@@ -6,17 +6,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, отсутствие фейков и безопасная покупка. Заходи и увидишь все сам_а.">
-
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
   <title>SALT | Украинский Маркетплейс Нового Поколения</title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+      <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WP2FC23');</script>
+    <!-- End Google Tag Manager -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link type="text/css" href="{% static 'css/fonts.css' %}" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   <style type="text/css">
-
-
 
         .card-homepage-img {
             min-width: 150px;
@@ -45,10 +49,6 @@
                 padding-top: 0px !important;
             }
         }
-
-
-
-
 
         .card-text{
           word-wrap: break-word;
@@ -96,7 +96,6 @@
 
         .hover-button {
         text-align: center;
-        /*color: #000;*/
         text-transform: uppercase;
         cursor: pointer;
         display: inline-block;
@@ -430,16 +429,18 @@
         text-overflow : ellipsis;
         white-space   : nowrap;
         }
-
   </style>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WP2FC23"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     {% include 'languages/snippets/language_for_script.html' %}
     {% include 'base/navbar_mobile.html' %}
     {% include 'base/messages.html' %}
 
     <div class='container-fluid ajax-search' style="margin-bottom: 2.3rem;">
-
 
         <!--First row - banner -->
         <div class="row fluid middle-heading banner-mobile marketplace" style='padding-top: 35px;padding-left:10px;text-align:left;text-transform: uppercase;'>
@@ -459,7 +460,6 @@
           </span>
         </div>
 
-
         <div class="row fluid middle-heading banner-mobile " style='text-align:center; padding-bottom:10px; padding-top: 0px;text-transform: uppercase;'>
           <div class="col fluid" >
             =
@@ -471,8 +471,6 @@
             Salt
           </div>
         </div>
-
-
 
         <!--Second row - BUY SELL -->
         <div class="row fluid text-center sell-buy spacer">
@@ -500,10 +498,7 @@
             </div>
           </div>
 
-
-
-
-        <!--Brands -->
+        <!--Third row - Brands -->
         <div class="row text-center m-0 pt-5" style='padding-bottom: 40px'>
             <div class="col-12 text-left trending-name">
                 <p class="heading ml-md-4">{{ popular_brands }}</p>
@@ -517,8 +512,7 @@
             {% endfor %}
         </div>
 
-
-        <!--Liked -->
+        <!--Fourth row - Liked -->
         <div class="row text-center m-0 pt-3" style='padding-bottom: 40px'>
             
             <div class="col-6 text-left trending-name">
@@ -546,11 +540,7 @@
                 </div>
             </a>
             {% endfor %}
-
         </div>
-
-
-
 
         <!--Fifth row - Account /Login -->
         <div class="row fluid text-center account">
@@ -583,18 +573,9 @@
           </div>
         </div>
 
-
-
-        <div class="row fluid text-center">
-        </div>
-
-
-
-
-        <!--Sixth row - Advantages -->
+        <!--padding  for footer-->
          <div class="row fluid info" style='padding-top: 76px; '>
-          </div>
-
+        </div>
         {% include 'mobile/footer_mobile.html' %}
     </div>
 
@@ -602,7 +583,6 @@
 
         $(document).ready(function () {
         $(function () {
-
 
           count = 0;
           plus = $('.plus')
@@ -627,10 +607,8 @@
         plus.text('+')
         }
 
-
             });
           }, 1000);
-
 
         });
         });

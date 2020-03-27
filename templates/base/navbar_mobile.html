@@ -45,7 +45,7 @@
     .btn-lang-display{
     font-size: 1em;
     display: flex;
-    padding:  2px 5px 1px 5px !important;;
+    padding:  1px 5px 0px 5px !important;;
     justify-content: center;
     text-align: center;
     color: #000; 
@@ -71,7 +71,8 @@
     }
 
 #search-button {
-    opacity: 0.85;
+    padding-top: .15rem!important;
+
 }
 
 #search-button:hover {
@@ -129,7 +130,7 @@
                 <button class='btn pb-2 pt-0' id='sidebar-trigger' style="">
                 <img src="{% static 'icons/hamburger.png' %}"  style="width:20px; height: 20px;">
               {% else %}
-                <button class='btn pb-1 pt-0' >
+                <button class='btn pt-0' >
                 <a href="{% url 'login' %}" role="button">
                   <span class='small_user' style='font-size: 8px'> <i class="far fa-user fa-2x"></i> </span>
                 </a>
