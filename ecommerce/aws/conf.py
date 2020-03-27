@@ -28,7 +28,7 @@ AWS_HEADERS = {
     'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
 }
 AWS_QUERYSTRING_AUTH = False
-
+AWS_IS_GZIPPED = True
 
 
 
