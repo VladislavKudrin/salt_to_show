@@ -72,19 +72,7 @@
         .fa-user {
           color : black;
         }
-        .wish-div a{
-          position         : absolute;
-          display          : inline-block;
-          visibility       : hidden;
-        /*    margin-left:100px;
-            padding:1px 1px;*/
-          background-color : transparent;
-          color            : black;
-        }
-        .wish-div:hover a {
-          visibility       : visible;
-          background-color : transparent;
-        }
+
         .heading{
         font-family: 'Open Sans', sans-serif;
         font-size: 30px;
@@ -609,6 +597,7 @@
 
         {% include 'mobile/footer_mobile.html' %}
     </div>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -641,19 +630,6 @@
 
             });
           }, 1000);
-
-
-
-     $('.wish-div').click(
-        function(e){
-          $targetCard = $(e.target)
-          if (e.target.tagName == 'IMG'){
-          linkCard = $targetCard.attr('link_for_click')
-          window.location.href = linkCard
-          }//if img
-        })//click card
-
-
 
 
         });
