@@ -614,16 +614,16 @@
         });
     </script>
     {% block script %}{% endblock %}
-    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
-    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
-    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
-    <script type="application/javascript" src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
-    <script type="application/javascript" defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
-    {% if request.user.is_authenticated %}
-    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
-    {% endif %}
+    <script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+    <script src="{% static 'js/jsrender.min.js' %}"></script>
+    <script src='{% static "js/ecommerce.js" %}'></script>
+    <script src='{% static "js/csrf.ajax.js" %}'></script>
+    <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
+    <script defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
+
+    <script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+
 </body>
 </html>
