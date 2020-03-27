@@ -158,7 +158,7 @@ def home_page(request):
 		'Dolce & Gabbana', 'Yves Saint Laurent', 'Comme des Garcons', 'Burberry', 
 		'Versace',  'Armani', 'C.P. Company', 'Fendi'
 		]
-		context['brands'] = [Brand.objects.filter(brand_name=i).first() for i in brands]
+		context['brands'] = Brand.objects.filter(brand_name__in=brands)
 
 		return render(request, template, context)
 

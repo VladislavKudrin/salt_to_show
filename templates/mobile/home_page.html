@@ -1,5 +1,5 @@
 {% load static %}
-{% load for_loop_extras %}
+{% load home_page %}
 {% load i18n %}
 <!DOCTYPE html>
 <html>
@@ -17,46 +17,38 @@
   <style type="text/css">
 
 
-        /*card*/
-        .like-center {
-          position: absolute;
-          z-index: 1;
-          top: 28%;
-          left: 36%;
-        }
 
-        .like-center-trending {
-          position: absolute;
-          z-index: 1;
-          top: 28%;
-          left: 36%;
-        }
-
-        @media only screen and (min-width: 1500px) {
-
-        .like-center-trending {
-          position: absolute;
-          z-index: 1;
-          top: 28%;
-          left: 44% !important; /*The only difference is for large screens ... that's why new class*/
-        }
-
-        }
-
-
-        .card-img-top {
-            min-width: 250px;
-            max-height: 250px;
-            min-height: 250px;
+        .card-homepage-img {
+            min-width: 150px;
+            max-height: 150px;
+            min-height: 150px;
+            max-width: 150px;
             object-fit: contain;
             align-items: center;
-            padding-left:10px;
-            padding-right:10px;
             cursor: pointer;
             display: inline-block;
-            position: relative;
-            margin-top: 10px !important;
         }
+      
+         .card-homepage-info {
+            font-size: 13px;
+            font-weight: 600;
+            padding-top: 10px;
+        }  
+
+     /*   for iphone 5/5SE*/
+        @media screen and (device-aspect-ratio: 40/71) {
+            .card-homepage-img {
+                padding-left:10px;
+                padding-right:10px;
+            }
+            .card-homepage-info {
+                padding-top: 0px !important;
+            }
+        }
+
+
+
+
 
         .card-text{
           word-wrap: break-word;
@@ -71,9 +63,7 @@
         .card-body {
           height: 80px;
           object-fit: cover;
-          border-top: 1px solid #e8eaef;
-          margin-left: 10px;
-          margin-right:10px;
+          border: 1px solid #e8eaef;
         }
 
         .fa-heart {
@@ -446,6 +436,14 @@
           color : rgba(190, 45, 51, 0.74);
           opacity: 0.5;
         }
+
+        .one-line{
+        display       : inline-block;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+        white-space   : nowrap;
+        }
+
   </style>
 </head>
 <body>
@@ -533,37 +531,36 @@
         </div>
 
 
-
-
-
-        <!--Fourth row - Liked -->
-        <div class="row fluid text-center most-liked m-0" style='padding-bottom: 80px'>
-        <div class="container" style="max-width: 100%;">
-        <div class='row' >
+        <!--Liked -->
+        <div class="row text-center m-0 pt-5" style='padding-bottom: 40px'>
+            
             <div class="col-6 text-left trending-name">
-            <p class="heading ml-md-4">{{ trending }}</p>
-          </div>
-          <div class="col-6 mt-3 text-right trending-col">
-            <a href="{% url 'products:list' %}">
-              <span class="mr-auto small" id="read-more"> 
-                  {{ see_all }}
-                <i class="fas fa-arrow-right pl-1"></i>
-              </span>
-            </a>
-          </div>  
-        <div class="scrolling-wrapper my-custom-scrollbar" style='height:inherit;'>
-          {% for obj in liked %}
-            <div class='card col-xs-12  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-              {% include 'products/snippets/card-trending.html' with instance=obj %}
+                <p class="heading ml-md-4">{{ trending }}</p>
+            </div>
+
+            <div class="col-6 mt-3 text-right trending-col">
+                <a href="{% url 'products:list' %}">
+                  <span class="mr-auto small" id="read-more"> 
+                      {{ see_all }}
+                    <i class="fas fa-arrow-right pl-1"></i>
+                  </span>
+                </a>
+            </div> 
+
+            {% for instance in liked %}
+            <a class='col-6 pl-0 pr-0 pb-2 pt-2' href="{{ instance.get_absolute_url }}">
+                {% if instance.thumbnail %}{% with instance.thumbnail.all|first as thumbnail %}
+                <img class="card-homepage-img" data-src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
+                {% endwith %}{% endif %}
+                <div class='row m-0 card-homepage-info'>
+                    <div class='col-4 p-0 one-line text-left' style='padding-left: .75rem!important' >{{ instance.size.size }}</div>
+                    <div class='col-4 p-0 one-line text-center'>{{ instance.brand }}</div>
+                    <div class='col-4 p-0 one-line text-right' style='padding-right: .75rem!important'>{{ instance.price|to_user_currency:request }}</div>
                 </div>
-          {% endfor %}
-        </div>
-        </div>
-        </div>
-        </div>
+            </a>
+            {% endfor %}
 
-
-
+        </div>
 
 
 
@@ -617,6 +614,8 @@
 
         $(document).ready(function () {
         $(function () {
+
+
           count = 0;
           plus = $('.plus')
           wordsArray = ["FAKES", "SELECTED BRANDS", "MINIMALISM" ];
@@ -641,10 +640,23 @@
         }
 
 
-
-
             });
           }, 1000);
+
+
+
+     $('.wish-div').click(
+        function(e){
+          $targetCard = $(e.target)
+          if (e.target.tagName == 'IMG'){
+          linkCard = $targetCard.attr('link_for_click')
+          window.location.href = linkCard
+          }//if img
+        })//click card
+
+
+
+
         });
         });
     </script>
