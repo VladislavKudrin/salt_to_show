@@ -196,7 +196,6 @@
         bottom     : 0;
         left       : 0;
         padding    : 10px 0px;
-        border-top : 1px solid #e8eaef;
         }
         * {
         border-radius : 0 !important;
@@ -532,7 +531,7 @@
 
 
         <!--Liked -->
-        <div class="row text-center m-0 pt-5" style='padding-bottom: 40px'>
+        <div class="row text-center m-0 pt-3" style='padding-bottom: 40px'>
             
             <div class="col-6 text-left trending-name">
                 <p class="heading ml-md-4">{{ trending }}</p>
@@ -661,16 +660,16 @@
         });
     </script>
     {% block script %}{% endblock %}
-    <script type="text/js" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
-    <script type="text/js" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
-    <script type="text/js" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
-    <script type="text/js" src="{% static 'js/jsrender.min.js' %}"></script>
-    <script type="text/js" src='{% static "js/ecommerce.js" %}'></script>
-    <script type="text/js" src='{% static "js/csrf.ajax.js" %}'></script>
-    <script type="text/js" src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
-    <script type="text/js" defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all_salt.js' %}"></script>
     {% if request.user.is_authenticated %}
-    <script type="text/js" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
     {% endif %}
 </body>
 </html>
