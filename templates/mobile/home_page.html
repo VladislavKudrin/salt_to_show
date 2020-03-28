@@ -425,14 +425,7 @@
   </style>
 </head>
 <body>
-
-
-    <!--     Languages and regions -->
-
-    {% include 'languages/snippets/language_for_script.html' %}
-    {% include 'base/navbar_mobile.html' %}
-    {% include 'base/messages.html' %}
-
+    {% include 'mobile/navbar_mobile.html' %}
     <div class='container-fluid ajax-search' style="margin-bottom: 2.3rem;">
 
         <!--First row - banner -->
@@ -566,7 +559,7 @@
           </div>
         </div>
 
-        <!--padding  for footer-->
+        <!--Footer (+ padding for it-->
          <div class="row fluid info" style='padding-top: 76px; '>
         </div>
         {% include 'mobile/footer_mobile.html' %}
@@ -610,14 +603,13 @@
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<!--     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-150733918-1');
-    </script> -->
+    </script>
     <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
     <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
     <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
