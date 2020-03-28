@@ -634,7 +634,7 @@
 </head>
 <body>
 
-    <!--     Languagers and regions -->
+    <!--     Languages and regions -->
     {% include 'languages/snippets/language_for_script.html' %}
     {% if request.user.is_authenticated %}
     <input type="hidden" id='region_input' name="region" value="{{ request.user.region }}">
