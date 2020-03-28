@@ -207,7 +207,7 @@ $(document).ready(
         event.preventDefault()
         var createFormSubmitBtn = formSubmit.find("[type='submit']")
         var createFormSubmitBtnTxt = createFormSubmitBtn.text()
-        var formData = new FormData();
+        var formData = new FormData(this);
         // var files = $(this)[0].files;
         // console.log(files)
         // $.each(files, 

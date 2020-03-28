@@ -5,9 +5,35 @@ from PIL import Image
 from django.core.files import File
 from django.db.models.signals import post_save
 
-from products.models import get_filename_ext
+
 from ecommerce.utils import random_string_generator, unique_image_id_generator
 
+from imagekit import ImageSpec, register
+from imagekit.processors import Transpose, Thumbnail 
+
+class Thumbnail(ImageSpec):
+    processors=[Transpose(), Thumbnail(600, 600, crop=False)]
+    format='JPEG'
+    options={'quality': 100}
+
+
+
+class Rotate_90(ImageSpec):
+    processors=[Transpose(Transpose.ROTATE_90)]
+    format='JPEG'
+    options={'quality': 100}
+
+
+class Rotate_180(ImageSpec):
+    processors=[Transpose(Transpose.ROTATE_180)]
+    format='JPEG'
+    options={'quality': 100}
+
+
+class Rotate_270(ImageSpec):
+    processors=[Transpose(Transpose.ROTATE_270)]
+    format='JPEG'
+    options={'quality': 100}
 
 
 class UploadManager(models.Manager):

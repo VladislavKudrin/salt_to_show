@@ -1,23 +1,30 @@
+import re
+
 from django.http import JsonResponse
 from django import forms
 from django.contrib import messages
-from PIL import Image
 from django.core.files.base import ContentFile
-from io import BytesIO
 from django.core.validators import validate_image_file_extension
 from django.conf import settings
 from django.utils.translation import gettext as _
 
+
+
+
+from betterforms.multiform import MultiModelForm
+from image_uploader.models import UploadedFile, Thumbnail, Rotate_90, Rotate_180, Rotate_270
+from image_uploader.validators import validate_file_extension
+from imagekit.processors import Transpose
+from django.core.files import File
+
+
+
+from addresses.forms import AddressForm
+from accounts.forms import UserDetailChangeForm
+from billing.forms import CardForm
 from .models import Product, ImageOrderUtil, ProductImage
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from ecommerce.utils import random_string_generator
-from image_uploader.models import UploadedFile
-from image_uploader.validators import validate_file_extension
-import re
-from addresses.forms import AddressForm
-from accounts.forms import UserDetailChangeForm
-from betterforms.multiform import MultiModelForm
-from billing.forms import CardForm
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label=_('Brand'), required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill'}))
@@ -200,7 +207,15 @@ class ImageForm(ProductCreateForm):
 		self.fields['image'].label = _("Images*")
 	def clean_image(self):
 		form_id = self.request.POST.get('form_id')
-		print(self.request.FILES.getlist('image'))
+		# rotated_image_file = spec_instance.generate()
+		for idx, img in enumerate(self.request.FILES.getlist('image')):
+			if idx == 1 or 2 or 3:
+				spec_instance = Rotate_270(source=img)
+				img = File(spec_instance.generate(), name=str(idx)+'.jpg')
+			print('fist')
+			product = Product.objects.get(id=20)
+			image = ProductImage.objects.create(image=img, product=product,image_order=idx+1)
+
 		# cleaned_images = UploadedFile.objects.filter(form_id=form_id)
 		# if self.request.user.is_admin:
 		# 	return cleaned_images
@@ -246,7 +261,6 @@ class ImageForm(ProductCreateForm):
 						slug=product.slug,
 						image_order=idx+1
 										)
-				UploadedFile.objects.delete_uploaded_files(form_id)
 		return product
 		
 class UploadFileForm(forms.Form):
@@ -300,16 +314,15 @@ class ProductUpdateForm(ProductCreateForm):
 			product.save()
 		return product
 
+
+
+
+
 class CheckoutMultiForm(MultiModelForm): #https://django-betterforms.readthedocs.io/en/latest/multiform.html#working-with-modelforms
     form_classes = {
     'address_form' : AddressForm,
     'card_form': CardForm,
     }  
-
-
-
-
-
 
 
 

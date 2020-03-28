@@ -1,23 +1,23 @@
-from io import BytesIO
-from PIL import Image
-from django.core.files import File
+import random
+import os
 
 from django.conf import settings
 from django.db.models import Q
-import random
-import os
 from django.db import models
-from ecommerce.utils import unique_slug_generator, unique_image_id_generator
+
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 from datetime import date
 
 
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill, Transpose
+from imagekit import processors 
+from django.core.files import File
 
+
+from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
-
+from image_uploader.models import Thumbnail
 
 
 class ImageOrderUtil(models.Model):
@@ -415,9 +415,14 @@ pre_save.connect(image_pre_save_reciever,sender=ProductImage)
 
 class ProductThumbnailManager(models.Manager):
 	def new_or_get(self, product, image):
+		name, ext = get_filename_ext(str(image.file))
 		obj = self.model.objects.filter(product=product)
+		spec_instance = Thumbnail(source=image)
+		image = File(spec_instance.generate(), name=name+ext)
 		if obj.exists():
-			obj.update(thumbnail=image)
+			obj = obj.first()
+			obj.thumbnail = image
+			obj.save()
 		else: 
 			ProductThumbnail.objects.create(product=product, thumbnail=image)
 
@@ -425,9 +430,7 @@ class ProductThumbnail(models.Model):
 	product = models.ForeignKey(Product, default=None, related_name='thumbnail')
 	thumbnail = ProcessedImageField(upload_to=upload_image_path,
                                            processors=[
-                                           ResizeToFill(600, 600),
-                                           Transpose(),
-                                           ],
+                                           processors.Thumbnail(600, 600, crop=False)],
                                            format='JPEG',
                                            options={'quality': 100}, null=True)
 	objects = ProductThumbnailManager()
