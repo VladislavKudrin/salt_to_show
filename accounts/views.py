@@ -179,6 +179,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		
 		# THERE ARE ONLY NOT CONFIRMED EMAIL ACTIVATION
 		elif not_confirmed_activation_exists and not confirmed_activation_exists:
+			next_path = 'login'
 			msg_confirm_mail = _("Email not confirmed. ") + form.cleaned_data.get('msg')
 			messages.add_message(form.request, messages.WARNING, mark_safe(msg_confirm_mail))
 			return redirect(next_path)
