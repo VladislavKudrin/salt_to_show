@@ -3,7 +3,7 @@
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
 
-<div class="btn-group" style='padding-bottom: 0.15rem !important'>
+<div class="btn-group">
     <button type="button" class="btn btn-lang-display buy-sell" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <small class=''>{% if LANGUAGE_CODE|upper == 'UK' %}UA{% else %}{{ LANGUAGE_CODE|upper }}{% endif %}</small>
     </button>

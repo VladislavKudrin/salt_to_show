@@ -41,7 +41,6 @@ var style = {
   base: {
     color: '#32325d',
     lineHeight: '24px',
-    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
     fontSmoothing: 'antialiased',
     fontSize: '16px',
     '::placeholder': {

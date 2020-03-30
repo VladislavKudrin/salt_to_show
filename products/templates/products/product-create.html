@@ -155,15 +155,6 @@ select{
 <form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create_order="{% url 'products:handle_image_create_sort' %}"{% if object %} action_url_update="{% url 'products:update' slug=object.slug %}" {% endif %} action_url_create="{% url 'products:create' %}"action_url="{% url 'products:handle_image_sort' %}" image_upload_url="{% url 'image_uploader:image_upload_url' %}"image_delete_url="{% url 'image_uploader:image_delete_url' %}" image_rotate_url="{% url 'image_uploader:image_rotate_url' %}" > {% csrf_token %}
       <input type="hidden" id='form_id' name="form_id" value='{{ form_id }}'>
         <input type="hidden" id='language' name="language" value='EN'>
-<!-- 
-  <div style=' 
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      font-weight: bold;
-      line-height: 50px;
-       font-family: Helvetica; 
-      font-size: 14px;'>    
- -->
 <div class="placic-style">
   {{form.title|as_crispy_field}}
 </div>
