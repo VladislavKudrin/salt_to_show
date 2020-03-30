@@ -46,9 +46,15 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 
 class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 	queryset = Product.objects.all()
-	template_name = "products/detail.html"
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile:  # a certain check
+			return ['products/mobile/product_detail.html']
+		else:
+			return ['products/desktop/product_detail.html']
 
 	def get_object(self, *args, **kwargs):
+
 		slug = self.kwargs.get("slug")
 
 		# For admins to be able to view not active items
