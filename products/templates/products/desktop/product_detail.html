@@ -1,0 +1,826 @@
+{% extends "base_no_footer.html" %}
+{% load i18n %}
+{% load static %}
+{% load sass_tags %}
+{% load for_loop_extras %}
+{% load checked_time %}
+{% block content %}
+
+<head>
+<link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+<input type="hidden" id='language_pref' name="language_pref" value="{{ request.session.language }}">
+
+<style type="text/css">
+	.flag-report {
+		display: flex;
+		justify-content: flex-end;
+		padding-right: 25%;
+	}
+
+	.username-text {
+		overflow: hidden; 
+		white-space: nowrap; 
+		text-overflow: ellipsis;
+	}
+
+	.zoomImg{
+		cursor: zoom-in!important;
+	}
+	.zoomedInCursor{
+		cursor: zoom-out!important;
+	}
+
+	.user-input{
+		font-size: 12px;
+	}
+
+
+	.b-description_readmore_button{
+		font-weight: 600;
+		font-size: 20px !important;
+	}
+
+
+
+	#published-line {
+		line-height: 1;
+	}
+
+
+	html, body {
+	    max-width: 100%;
+	}
+
+	#onhover:hover {
+		text-decoration: underline;
+	}
+
+	.hidden {
+	    display:none;
+	}
+
+	#more {
+		display: none;
+	}
+
+	.avatar-pdv{
+		width: 50px;
+	    height: 50px;
+	    object-fit: cover;
+	    border-radius: 100% !important;
+	}
+
+
+	/*Flip-Cards */
+	.flip-card {
+	  width: 200px;
+	  height: 20px;
+	  backface-visibility:hidden;
+	}
+
+	.flip-card-inner {
+	  position: relative;
+	  width: 100%;
+	  height: 100%;
+	/*  text-align: center;*/
+	/*  padding-left: 40px;*/
+	  transition: transform 0.6s;
+	  transform-style: preserve-3d;
+	  -webkit-transition: transform 0.6s;
+	  -webkit-transform-style: preserve-3d;
+	}
+
+	.flip-card-back {
+		text-align: center;
+	}
+
+	.flip-card-front, .flip-card-back {
+	  position: absolute;
+	  width: 100%;
+	  height: 100%;
+
+	  -webkit-backface-visibility: hidden;
+	  -moz-backface-visibility: hidden;
+	  -o-backface-visibility: hidden;
+	  backface-visibility: hidden;
+
+	  -webkit-transition: 0.6s;
+	  -webkit-transform-style: preserve-3d;
+
+	  -moz-transition: 0.6s;
+	  -moz-transform-style: preserve-3d;
+
+	  -o-transition: 0.6s;
+	  -o-transform-style: preserve-3d;
+
+	  -ms-transition: 0.6s;
+	  -ms-transform-style: preserve-3d;
+
+	  transition: 0.6s;
+	  transform-style: preserve-3d;
+
+	}
+
+	.flip-card-front {
+	  background-color: white;
+	  color: black;
+	  -webkit-transform: translate3d(0, 0, 0);
+	}
+
+	.flip-card-back {
+	  background-color: white;
+	  color: black;
+	} 
+
+
+	.morecontent span {
+		display: none;
+	}
+
+
+	.b-description_readmore_ellipsis:after {    
+	  content: '';
+	  display: inline-block;
+	  position: absolute;
+	  bottom: 0;
+	  right: 0;
+	  width: 75%;
+	  height: 20px;    
+	  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 65%);
+	} 
+
+	.b-description_readmore_button {
+	    font-size: 11px;
+	    /* display: inline-block; */
+	    /* width: 100px; */
+	    /* border: 1px solid black; */
+	    /* padding: 4px 0; */
+	    cursor: pointer;
+	    text-align: center;
+	 }
+
+	 .b-description_readmore_button:hover {
+	 	color: gray;
+	 }
+
+	p { 
+	    margin-block-end: 0em !important;
+	}
+
+
+	/*For not popping up...*/
+	.fixed-top, .sticky-top{
+	    padding-bottom: 0!important;
+	    margin-bottom: :0!important;
+	}
+
+	/* for django messages be not on top */
+	.alert-success {
+	    top: 50px;
+	}
+
+	@media only screen and (max-width: 1600px) {
+		.authenticity-text {
+			padding-top: 12%;
+		}
+	}
+
+	@media only screen and (min-width: 1600px) {
+		.authenticity-text {
+			padding-top: 5%	;
+		}
+	}
+
+	@media only screen and (min-width: 700px) {
+		#mobile {
+			visibility: hidden;
+			display: none;
+		}
+	}
+
+	@media only screen and (max-width: 700px) {
+		.alert-success {
+	    top: 100px;
+	}
+
+		html, body {
+	    max-width: 100%;
+	    overflow-x: hidden;
+		}
+
+		img {
+			max-width: 320px !important;
+			max-height: 240px !important;
+		}
+
+		#desktop, #left-section-desktop, #right-section-desktop, #image-scroll {
+			visibility: hidden;
+			display: none;
+		}
+
+		.alert-success {
+	    top: 70px !important;
+		}
+		
+	}
+
+	._rotate-right {
+	    transform: rotate(270deg);
+	}
+
+	.underline{
+		text-decoration: underline;
+	}
+
+</style>
+</head>
+
+
+
+<div id="desktop" class="row" style="position: absolute; left: 25%; right: 25%; margin-top: 50px; margin-bottom: 20px;">
+	<div class="col">
+		{% for image in images %}
+		<div class="row">
+			<div class="col mb-3" style="display: flex; justify-content: center;">
+				<img class='for_zoom' data-src="{{ image.image.url }}" style="max-width: 648px; max-height: 486px; object-fit: scale-down;" alt="...">
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+
+JOPA
+
+
+<div id="left-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 3%; right: 80%;">
+
+	<div class="col-12  pb-3 user-input" > 
+		<a class='underline' href="{{ object.sex.get_absolute_url }}">{% trans object.sex.gender_eng %}</a>
+		<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
+		<a class='underline' href="{{ object.category.get_absolute_url }}">{% trans object.category.category_eng %}</a>
+		<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
+		<a class='underline' href="{{ object.undercategory.get_absolute_url }}">{% trans object.undercategory.undercategory_eng %}
+	</a>
+	</div>
+	<div class="col-12 pb-3 uppercase-title" >{{ object.title }}</div>
+
+
+	<div class="col-6 field-name">{{ size }}</div>
+	<div class="col-6  my-auto user-input" style=' padding-bottom:1px'>{{ object.size.size }}</div>
+	<div class="col-6 field-name">{{ condition }}</div>
+	<div class="col-6  my-auto user-input" style=' padding-bottom:4px'>{% trans object.condition.condition_eng %}</div>
+	<div class="col-12 field-name">{{ description }}</div>
+	<div class="col-12  b-description_readmore js-description_readmore user-input" style='overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
+
+
+</div>
+
+
+
+
+<div id="right-section-desktop" class="row" style="position: fixed; margin-top: 150px; left: 80%; right: 3%;">
+	<div class="col-9  archivo">{{ object.brand }}</div>
+	<div class="col-3 text-center" style="font-size: 12px; ">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-9 pb-3 archivo">{{ object.price|to_user_currency:request }}</div>
+	<div class="col-3 pb-3 text-center my-auto archivo" style="font-size: 12px; ">{{ likes }}</div>
+	<div class="col-12 pb-2">
+		{% if not object.is_paid %}
+			{% if request.user.is_authenticated and request.user == object.user %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% elif request.user.is_authenticated and request.user.is_admin %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% else %}
+				{% include 'accounts/snippets/begin-chat.html' %} 
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% endif %}
+		{% endif %}
+	</div>
+
+	
+
+	<div class="col-9 my-auto">
+		<div class="flip-card" style="width: 100%">
+			{% if object.authentic == 'authentic' %}
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-font archivo pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
+		                <div class="flip-card-back">
+			                <div class="row">
+				            	<div class="col my-auto text-left" style="line-height: 1"><span class='user-input'>{{ verified }} {{ object.timestamp| print_timestamp }}</span></div>
+
+			              	</div>
+		            	</div>
+		        </div>
+
+
+		    {% elif object.authentic == 'fake' %}
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
+		                <div class="flip-card-back">
+			                <div class="row">
+				            	<div class="col my-auto text-left" style="line-height: 1"><span class='user-input'>{{ checked_on }} {{ object.timestamp| print_timestamp }}</span></div>
+
+			              	</div>
+		            	</div>
+		        </div>
+
+		    {% else %}
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-font pt-1"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
+		                <div class="flip-card-back">
+			                <div class="row">
+				            	<div class="col my-auto text-left" style="line-height: 1"><span class='user-input'>{{ to_be_approved }}</span></div>
+
+			              	</div>
+		            	</div>
+		        </div>
+	        {% endif %}
+
+       	</div>
+	</div>
+
+
+	<div class="col-1 my-auto share pl-0" title="Share">
+   	<i class="fas fa-share-alt"></i>
+   </div>
+
+
+	<div class="col-1 my-auto pl-2" title="Report">
+		{% include 'products/snippets/product-report.html' with product=object report=report %}  
+   	</div>
+
+<div class='container share-to-hide pl-0 pr-0' style='display:none'>
+	<div class='col-12 share-icons pt-2' style='display: flex; flex-direction: row;justify-content: space-between;'>
+
+
+			<a href="http://twitter.com/share?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Twitter">
+			<i class="fab fa-twitter"></i>
+			</a>
+
+			<a href="whatsapp://send?text={{request.build_absolute_uri}}" target="_blank" title="Share with Whatsapp">
+			<i class="fab fa-whatsapp-square"></i>
+			</a>
+
+			<a href="https://telegram.me/share/url?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Telegram">
+			<i class="fab fa-telegram-plane"></i>
+			</a>
+
+			<a href="http://vk.com/share.php?url={{request.build_absolute_uri}}&amp;title={{object.title}}&amp;comment={{object.decription}}" target="_blank" title="Share on VK">
+			<i class="fab fa-vk"></i>
+			</a>
+
+			<a href="http://www.facebook.com/share.php?u={{request.build_absolute_uri}}&amp;t={{object.title}}" target="_blank" title="Share on Facebook">
+			<i class="fab fa-facebook"></i>
+			</a>
+
+			<a href="https://www.facebook.com/dialog/send&amp;link={{request.build_absolute_uri}}" target="_blank" title="Share with Messenger">
+			<i class="fab fa-facebook-messenger"></i>
+			</a>
+
+		</div>
+</div>
+
+	
+
+
+
+	<div class="col-12 pb-2 authenticity-text" >
+		<div class="row">
+			<div class="col-8 my-auto">
+				<div class="row">
+					<div class="col-12 pr-0" style="display: flex; align-items: center;">
+						<span class="user-input text username-text">{{ object.user.username }}</span>
+					</div>
+					<div class="col-1 pr-3">
+						<i class="fas fa-map-marker-alt"></i>
+					</div>
+					<div class="col-7 pl-0 pr-0" style="display: flex; align-items: center;">
+						<span class='user-input text'>{{ region }}</span>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-4 pl-2 text-right">
+				{% if object.user.profile_foto %}
+					<a href='{{ object.user.get_absolute_url }}'><img  data-src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
+				{% else %}
+					<a href='{{ object.user.get_absolute_url }}'><img data-src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
+				{% endif %}
+			</div>
+
+		
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+
+				<div id="published-line">
+					<span class='user-input text'>{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }} 
+					</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<div id="mobile" class='row'>
+	<div class='col-12' style="display: flex; justify-content: center; margin-top: 120px;">
+		{% if object.images.all %}
+		<div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
+			<ol class="carousel-indicators"></ol>
+			<div class="carousel-inner" style='min-height: 240px'>
+			{% for image in images %}
+				{% if image.image_order == 1 %}
+					<div class="carousel-item active" class="carousel slide" data-interval="false">
+						<img data-src="{{ image.image.url }}" alt="...">
+					</div>
+				{% endif %}
+			{% endfor %}
+
+			{% for image in images %}
+				{% if not image.image_order == 1 %}
+					<div class="carousel-item" data-interval="false">
+						<img data-src="{{ image.image.url }}" alt="...">
+					</div>
+				{% endif %}
+			{% endfor %}
+			</div>
+		</div>
+			<div class="arrows">
+				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="position: absolute; height: 50px; top: 35%;">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" style="position: absolute; height: 50px; top: 35%;">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+				</a>
+			</div>
+		{% endif %}
+	</div>
+</div>
+
+
+
+<div id="mobile" class="row mx-5 mt-3">
+	<div class="col-12  pb-3 user-input" > 
+		<a class='underline' href="{{ object.sex.get_absolute_url }}">{% trans object.sex.gender_eng %}</a>
+			<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
+			<a class='underline' href="{{ object.category.get_absolute_url }}">{% trans object.category.category_eng %}</a>
+			<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
+			<a class='underline' href="{{ object.undercategory.get_absolute_url }}">{% trans object.undercategory.undercategory_eng %}
+		</a>
+	</div>
+	<div class="col-10 brand">{{ object.brand }}</div>
+	<div class="col-2  text-center pl-1" style="font-size: 12px;">{% include 'accounts/wish-list-update-detail.html' with product=object %}</div>
+	<div class="col-10 pb-3 brand">{{ object.price|to_user_currency:request }}</div>
+	<div class="col-2 pb-3 pl-1  text-center my-auto" style="font-size: 12px; ">{{ likes }}</div>
+	<div class="col-12 pb-2">
+		{% if not object.is_paid %}
+			{% if request.user.is_authenticated and request.user == object.user %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+			{% elif request.user.is_authenticated and request.user.is_admin %}
+				{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% else %}
+				{% include 'accounts/snippets/begin-chat.html' %} 
+				{% include 'products/snippets/buy.html' with btn_title='Contact seller' %} 
+			{% endif %}
+		{% endif %}
+	</div>
+
+
+
+
+
+		
+		<div class="col-8 uppercase-font">
+			<div class="flip-card-2" style="width: 100%;">
+				{% if object.authentic == 'authentic' %}
+			        <div class=" flip-card-2-inner">
+						<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ authentic }}</span></div>
+			        </div>
+			    {% elif object.authentic == 'fake' %}
+			        <div class=" flip-card-2-inner">
+						<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ fake }}</span></div>
+			        </div>
+			    {% else %}
+			        <div class=" flip-card-2-inner">
+						<div class="flip-card-2-front text-left"><i class="fas fa-shield-alt fa-1x my-auto"></i><span> {{ ai_checked }}</span></div>
+			        </div>
+			    {% endif %}
+	       	</div>
+		</div>
+
+		<div class="col-2 share" title="Share"><i class="fas fa-share-alt"></i></div>
+
+
+
+		<div class="col-2">
+			<div class="flip-card" style="width: 100%;">
+		        <div class=" flip-card-inner">
+					<div class="flip-card-front my-auto uppercase-font text-right">{% include 'products/snippets/product-report.html' with product=object %} 
+					</div>
+		        </div>
+		    </div>
+	    </div>
+
+
+<div class='container share-to-hide pl-0 pr-0' style='display:none'>
+	<div class='col-12 share-icons pt-2' style='display: flex; flex-direction: row;justify-content: space-between;'>
+
+
+			<a href="http://twitter.com/share?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Twitter">
+			<i class="fab fa-twitter"></i>
+			</a>
+
+			<a href="whatsapp://send?text={{request.build_absolute_uri}}" target="_blank" title="Share with Whatsapp">
+			<i class="fab fa-whatsapp-square"></i>
+			</a>
+
+			<a href="https://telegram.me/share/url?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Telegram">
+			<i class="fab fa-telegram-plane"></i>
+			</a>
+
+			<a href="http://vk.com/share.php?url={{request.build_absolute_uri}}&amp;title={{object.title}}&amp;comment={{object.decription}}" target="_blank" title="Share on VK">
+			<i class="fab fa-vk"></i>
+			</a>
+
+			<a href="http://www.facebook.com/share.php?u={{request.build_absolute_uri}}&amp;t={{object.title}}" target="_blank" title="Share on Facebook">
+			<i class="fab fa-facebook"></i>
+			</a>
+
+			<a href="https://www.facebook.com/dialog/send&amp;link={{request.build_absolute_uri}}" target="_blank" title="Share with Messenger">
+			<i class="fab fa-facebook-messenger"></i>
+			</a>
+
+		</div>
+</div>
+
+		<div class="col-12 pt-3 pb-3 uppercase-title" >{{ object.title }}</div>
+	<div class="col-3 field-name uppercase">{{ size }}</div>
+	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:1px'>{{ object.size.size }}</div>
+	<div class="col-3 field-name uppercase">{{ condition }}</div>
+	<div class="col-9  my-auto text-right" style='font-size: 12px; padding-bottom:4px'>{% trans object.condition.contition_eng %}</div>
+	<div class="col-12 field-name uppercase">{{ description }}</div>
+	<div class="col-12  b-description_readmore js-description_readmore" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
+
+	<div class="col-12 pt-3 pb-1">
+		<div class="row">
+			<div class="col-8">
+				<div class="row">
+					<div class="col-12 pr-0 username-text">{{ object.user.username }}</div>
+					<div class="col-1 pr-3">
+						<i class="fas fa-map-marker-alt"></i>
+					</div>
+					<div class="col-7 pl-0" style="display: flex; align-items: center;">
+						<span class='user-input text'>{{ region }}</span>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-4 text-right">
+				{% if object.user.profile_foto %}
+					<a href='{{ object.user.get_absolute_url }}'><img  data-src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
+				{% else %}
+					<a href='{{ object.user.get_absolute_url }}'><img data-src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+		<div id="published-line" class="col-8 my-auto">
+			<span class='user-input text'>{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
+			</span>
+		</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="{% static 'js/jquery.morelines.js' %}"></script>
+<script src="{% static 'js/jquery.zoom.js' %}"></script>
+<script type="text/javascript">
+  $('.for_zoom').wrap('<span style="display:inline-block"></span>').css('display', 'block').parent().
+  zoom({
+  	on:'click',
+  	onZoomIn:function(){
+  		$(this).addClass('zoomedInCursor')
+  	},//onZoomIn
+  	onZoomOut:function(){
+  		$(this).removeClass('zoomedInCursor')
+  	}//onZoomOut
+  });//zoom
+
+
+  // console.log($('.zoomImg').css('opacity'))
+  // if($('.zoomImg').css('opacity')==1){
+  // 	console.log('zoomed')
+  // }//if zoomed
+
+$(document).ready(function(){
+
+  $(".share").click(function(){
+
+    $(".share-to-hide").toggle();
+
+  });
+});
+
+
+
+$('.js-description_readmore').moreLines({
+  linecount: 3,
+  // default CSS classes
+  baseclass: 'b-description', 
+  basejsclass: 'js-description',
+  classspecific: '_readmore',
+
+  // custom text
+  buttontxtmore: "+", 
+  buttontxtless: "-",
+
+  // animation speed in milliseconds
+  animationspeed: 250
+  
+});
+
+// $(document).ready(function(){
+// $('child').hover(function(){
+// 	$(this).removeClass('fas fa-flag');
+// 	    // $(this).text("Report?");
+// }, function() {
+//         $(this).addClass('fas fa-flag');
+//         // $(this).text("HUI");
+// });
+// })
+
+// $(document).ready(function(){
+// 	$(".childik").hover(function(){
+// 		$(this).removeClass("fas fa-flag");
+// 		$(this).text("Report?");
+
+// 	}, function(){
+// 		$(this).addClass("fas fa-flag");
+// 		$(this).text("");
+// 	});
+// });
+
+
+// $('.wrapper').hover(
+//        function(){
+//         $(this).children('child').removeClass('fas fa-flag');
+//     },
+//        function(){
+//         $(this).children('child').addClass('fas fa-flag');
+//     }
+// );
+
+
+
+
+
+
+	var currentPath = window.location.href
+	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 1200)){
+		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
+	} else {
+		$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');		
+	}
+
+
+
+// var currentPath = window.location.href
+
+
+// // 	if ((currentPath.indexOf("products/view") != -1)){
+// // 		console.log('IF FIRS')
+// // 	$('.navbar').addClass('fixed-top').removeClass('sticky-top');
+// // }
+
+// $(document).ready(function() {
+
+// var win = $(window);
+
+
+
+// 	// } else if (($(document).scrollTop() >= 60) )  { // desktop
+// 	// 	console.log('ELIIF')
+// 	// 	$('.navbar').addClass('fixed-top').removeClass('sticky-top bg-white');	
+// 	// } else {
+// 	// 	console.log('ELSE')
+// 	// 	$('.navbar').addClass('fixed-top').removeClass('sticky-top');	
+// 	// }
+
+
+// win.scroll(function() {
+// 	if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 1200)){
+// 		console.log('IF')
+// 	$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
+// 	} else if (($(document).scrollTop() >= 60) )  { // desktop
+// 		console.log('ELIIF')
+// 		$('.navbar').addClass('fixed-top').removeClass('sticky-top bg-white');	
+// 	} else {
+// 		console.log('ELSE')
+// 		$('.navbar').addClass('fixed-top').removeClass('sticky-top');	
+// 	}
+// })
+
+
+
+// });
+
+
+// $(document).ready(function() {
+// 	var showChar = 130;
+// 	var ellipsestext = "...";
+// 	var moretext = "more";
+// 	var lesstext = "less";
+// 	$('.more').each(function() {
+// 		var content = $(this).html();
+
+// 		if(content.length > showChar) {
+
+// 			var c = content.substr(0, showChar);
+// 			var h = content.substr(showChar-4, content.length - showChar);
+
+// 			var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+// 			$(this).html(html);
+// 		}
+
+// 	});
+
+// 	$(".morelink").click(function(){
+// 		if($(this).hasClass("less")) {
+// 			$(this).removeClass("less");
+// 			$(this).html(moretext);
+// 		} else {
+// 			$(this).addClass("less");
+// 			$(this).html(lesstext);
+// 		}
+// 		$(this).parent().prev().toggle();
+// 		$(this).prev().toggle();
+// 		return false;
+// 	});
+// });
+
+	// $(function() {
+
+	//   var minimized_elements = $('div.minimize');
+
+	//   minimized_elements.each(function() {
+	//     var t = $(this).html();
+	//     if (t.length < 200) return;
+
+
+
+	    // $(this).html(
+	    //   t.slice(0, 200) + '<a href="#" class="more" style="font-weight:bold; text-decoration: underline;"> more</a>' +
+	    //   '<span style="display:none;">' + t.slice(200, t.length) + ' <a href="#" class="less" style="font-weight:bold; text-decoration: underline;"> less</a></span>'
+	    // );
+
+
+	//   });
+
+	//   $('a.more', minimized_elements).click(function(event) {
+	//     event.preventDefault();
+	//     $(this).hide().prev().hide();
+	//     $(this).next().show();
+	//   });
+
+	//   $('a.less', minimized_elements).click(function(event) {
+	//     event.preventDefault();
+	//     $(this).parent().hide().prev().show().prev().show();
+	//   });
+
+	// });
+
+
+
+// 	$('.hover').mouseover(function() {
+//     $('.text').css("visibility","visible");
+// });
+
+// $('.hover').mouseout(function() {
+//   $('.text').css("visibility","hidden");
+// });
+
+
+
+</script>	
+
+{% endblock %}
