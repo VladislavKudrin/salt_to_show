@@ -37,24 +37,16 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 		request = self.request
 		views = request.user.objectviewed_set.by_model(Product, model_queryset=False)
 		return views
-		
-	def get_context_data(self, *args, **kwargs): 
-		context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)  
-		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-		context['cart']=cart_obj
-		return context
 
 class ProductDetailSlugView(ObjectViewedMixin, DetailView):
-	queryset = Product.objects.all()
 
 	def get_template_names(self):
-		if self.request.user_agent.is_mobile:  # a certain check
+		if self.request.user_agent.is_mobile: 
 			return ['products/mobile/product_detail.html']
 		else:
 			return ['products/desktop/product_detail.html']
 
 	def get_object(self, *args, **kwargs):
-
 		slug = self.kwargs.get("slug")
 
 		# For admins to be able to view not active items
@@ -69,8 +61,8 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 					instance = qs.first()
 				except:
 					raise Http404("Hmm")
-				#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 				return instance
+		# normal case
 		try:
 			instance = Product.objects.get(slug=slug, active=True)
 		except Product.DoesNotExist:
@@ -84,22 +76,19 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs) 
-		new_all_=[]
 		request = self.request
 		user = request.user
 		product = self.get_object()
+		slug = self.kwargs.get('slug')
+		images = ProductImage.objects.filter(slug=slug).order_by('image_order')
+		context['images'] = images
+		context['object_condition'] = product.condition.condition_eng
+		context['region'] = product.user.region
 		wishes = Wishlist.objects.filter(product=product).count() #counting all likes for a product
 		context['likes'] = wishes
-		context['region'] = product.user.region
-		slug = self.kwargs.get('slug')
-		all_ = ProductImage.objects.all().filter(slug=slug)
-		for idx, image in enumerate(all_):
-			new_all_.append(all_.filter(slug=slug,image_order=idx+1).first())
-		context['images'] = new_all_
 		context['report'] = _('Report?')
 		context['size'] = _('Size:')
 		context['condition'] = _('Condition:')
-		context['object_condition'] = product.condition.condition_eng
 		context['description'] = _('Description:')
 		context['btn_title'] = _('Contact seller')
 		context['authentic'] = _('Authentic')
@@ -147,8 +136,6 @@ def image_update_view(request):
 			image.update(image_order=idx+1)
 		ProductThumbnail.objects.create_update_thumbnail(product=image.first().product)
 	return redirect('home')
-
-
 
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
@@ -277,7 +264,7 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 	template_name = 'products/user-list.html'
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.by_user(request.user).order_by('-timestamp').active()
+		return Product.objects.by_user(request.user).order_by('-timestamp').active().available()
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(AccountProductListView, self).get_context_data(*args,**kwargs)
@@ -428,12 +415,13 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 	template_name = 'products/fake-list.html'
 
 	def get_queryset(self, *args, **kwargs):
-		return Product.objects.fake().active()
+		return Product.objects.fake()
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
+		user = self.request.user
 		context['title'] = 'Detected fakes:'
-
+		return context
 
 class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
 	form_class = CheckoutMultiForm
@@ -495,12 +483,6 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		return redirect("payment:pay_view")
 		# return redirect("accounts:user-update")
 
-	# def form_invalid(self, form):
-	# 	if self.request.is_ajax():
-	# 		print('INVALID AJAX')
-	# 	print('INVALID')
-	# 	return redirect("payment:pay_view")
-
 	def get_context_data(self, *args, **kwargs):
 		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)
 		context['title'] = _('Update your details')
@@ -525,7 +507,6 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 
 
 
-
 # class ProductUserDeleteView(LoginRequiredMixin, DeleteView):
 # 	template_name = 'products/product-delete.html'
 # 	model = Product
@@ -546,39 +527,6 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 # 		#object_viewed_signal.send(instance.__class__, instance=instance, request=request)
 # 		return instance
 	
-
-
-
-# @login_required
-# def wishlistupdate(request):
-# 	product_id=request.POST.get('product_id')
-# 	user = request.user
-# 	if product_id is not None:
-# 		try:
-# 			product_obj = Product.objects.get(id=product_id)
-# 		except Product.DoesNotExist:
-# 			print("Show message to user!")
-# 			return redirect("products:wish-list")
-# 		# cart_obj, new_obj = User.objects.get_or_create(request)
-# 		if product_obj in user.wishes.all():
-# 			user.wishes.remove(product_obj)
-# 			added = False
-# 		else:
-# 			user.wishes.add(product_obj)
-# 			added = True
-# 		#request.session['cart_items']=cart_obj.products.count()
-# 		if request.is_ajax():
-# 			print("Ajax request YES")
-# 			json_data={
-# 				"added": added,
-# 				"removed": not added,
-# 				#"wishes":cart_obj.products.count()
-# 			}
-# 			return JsonResponse(json_data, status=200)
-# 	return redirect("products:wish-list")
-
-# def product_reported(request):
-# 	return render(request, 'products/product-report.html', {})
 
 
 
