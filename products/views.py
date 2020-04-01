@@ -432,8 +432,8 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(FakeProductsListView, self).get_context_data(*args,**kwargs)
-		context['title'] = 'Detected fakes:'
-
+		context['title'] = 'Detected fakes so far:'
+		return context
 
 class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
 	form_class = CheckoutMultiForm
