@@ -24,7 +24,6 @@ from categories.models import Size, Brand, Undercategory, Overcategory, Gender, 
 from accounts.models import Wishlist
 from .models import Product, ProductImage, ProductThumbnail, ReportedProduct
 from .forms import *
-from image_uploader.models import unique_form_id_generator
 from addresses.models import Address
 from billing.models import BillingProfile, Card
 from orders.models import Order
@@ -118,37 +117,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 		redirect_url = next_ + 'messages/' + username
 		return redirect(redirect_url)
 
-def image_create_order(request):
-	if request.POST:
-		data = request.POST.getlist('data[]')
-		slug = request.POST.get('slug')
-		rotated = request.POST.getlist('rotate[]')
-		images = ProductImage.objects.filter(slug=slug).order_by('pk')
-		array = numpy.array(data)
-		array = array.astype(numpy.int)
-		array = array + 1
-		for img in images:
-			min_ = min(array)
-			index_of_min = numpy.where(array==min(array))[0][0].item()
-			number = index_of_min + 1
-			img.image_order=number
-			array[index_of_min]=max(array)+1
-			img.save()
-		ProductThumbnail.objects.create_update_thumbnail(product=images.first().product)
-	return redirect('home')
-
-def image_update_view(request):
-	if request.POST:
-		data = request.POST.getlist('data[]')
-		rotated = request.POST.getlist('rotate[]')
-		for idx, image_key in enumerate(data):
-			image = ProductImage.objects.filter(unique_image_id=image_key)
-			image.first().rotate_image(image = image.first().image, rotated_x = rotated[idx])
-			image.update(image_order=idx+1)
-		ProductThumbnail.objects.create_update_thumbnail(product=image.first().product)
-	return redirect('home')
-
-
 
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
@@ -158,7 +126,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		if form.is_valid():
 			return self.form_valid(form)
 		else:
-	
 			return self.form_invalid(form)
 
 	def get(self, request, *args, **kwargs):
@@ -183,7 +150,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 
 		brands = Brand.objects.all()
 		brand_arr = []
-		form_id = unique_form_id_generator()
 		for brand in brands:
 			brand_arr.append(str(brand))
 		if request.is_ajax():
@@ -222,7 +188,6 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		'form': product_form,
 		'button': pgettext('Upload_Item_create', 'Create'),
 		'title': _('Add a new item'),
-		'form_id': form_id
 		}
 
 		context['overcategories'] = Overcategory.objects.all()
@@ -238,17 +203,8 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		request = self.request
 		product = form.save()
 		url = product.get_absolute_url()
-
 		base_url = getattr(settings, 'BASE_URL', 'https://www.saltysalt.co')
 		path = "{base}{path}".format(base=base_url, path=url)
-
-		#Message after upload
-		subject = _('New item upload')
-		message = _('New product was uploaded. Please verify authenticity: \n {} \n Product Title: {} \n Product Description: \n {}'.format(path, product.title, product.description))
-		from_email = settings.DEFAULT_FROM_EMAIL
-		to_email = settings.DEFAULT_FROM_EMAIL
-		send_mail(subject, message, from_email, [to_email], fail_silently=False)
-
 		msg = _('Your item was checked by AI. Within next 24 hours the check will be confirmed by our moderator team and your item will be published')
 
 		messages.add_message(request, messages.SUCCESS, msg)
@@ -346,7 +302,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 	def form_valid(self, form):
 		request = self.request
-		print('Valid?')
 		product = form.save()
 		url = product.get_absolute_url()
 		if self.request.is_ajax():	

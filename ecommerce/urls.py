@@ -14,14 +14,12 @@ from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 
 
 
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('language_pref.urls')),
     url(r'^$', home_page, name = 'home'),
     url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
     # url(r'^upload/', include('django_file_form.urls')),
-    url(r'^upload/', include('image_uploader.urls', namespace="image_uploader")),
     url(r'^login/$', RegisterLoginView.as_view(), name='login'),
     url(r'^social-auth/', include('social_django.urls', namespace="social")),
     url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
@@ -60,6 +58,10 @@ urlpatterns = [
     url(r'^faq/$', FAQPageView.as_view(), name='faq'),
 ]
 
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#        url(r'^__debug__/', include(debug_toolbar.urls)),] + urlpatterns
 
 
 
