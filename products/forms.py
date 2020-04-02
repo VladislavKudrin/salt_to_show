@@ -12,13 +12,12 @@ from django.utils.translation import gettext as _
 
 
 from betterforms.multiform import MultiModelForm
-from image_uploader.models import UploadedFile, Thumbnail, Rotate_90, Rotate_180, Rotate_270
 from image_uploader.validators import validate_file_extension
 from imagekit.processors import Transpose
 from django.core.files import File
 
 
-
+from image_uploader.utils import rotate_image
 from addresses.forms import AddressForm
 from accounts.forms import UserDetailChangeForm
 from billing.forms import CardForm
@@ -83,8 +82,6 @@ class ProductCreateForm(forms.ModelForm):
 		self.fields['national_shipping'].widget.attrs['step'] = 1
 		self.fields['price'].widget.attrs['class'] = 'labels-placement'
 		self.fields['national_shipping'].widget.attrs['class'] = 'labels-placement'
-
-
 		if request.user.is_admin:
 			self.fields['price'].initial = 123
 			self.fields['national_shipping'].initial = 123
@@ -206,16 +203,14 @@ class ImageForm(ProductCreateForm):
 		super(ImageForm, self).__init__(request, *args, **kwargs)
 		self.fields['image'].label = _("Images*")
 	def clean_image(self):
-		form_id = self.request.POST.get('form_id')
-		# rotated_image_file = spec_instance.generate()
-		for idx, img in enumerate(self.request.FILES.getlist('image')):
-			if idx == 1 or 2 or 3:
-				spec_instance = Rotate_270(source=img)
-				img = File(spec_instance.generate(), name=str(idx)+'.jpg')
-			print('fist')
-			product = Product.objects.get(id=20)
-			image = ProductImage.objects.create(image=img, product=product,image_order=idx+1)
-
+		images = self.request.FILES.getlist('image')
+		rotateTimes = self.request.POST.getlist('rotateTimes')
+		cleaned_images = []
+		for idx, image in enumerate(images):
+			if rotateTimes[idx] != 0:
+				img = rotate_image(image, rotateTimes[idx])
+				cleaned_images.append(img)
+		return cleaned_images
 		# cleaned_images = UploadedFile.objects.filter(form_id=form_id)
 		# if self.request.user.is_admin:
 		# 	return cleaned_images
@@ -246,15 +241,8 @@ class ImageForm(ProductCreateForm):
 		if commit:
 			product.save()
 			images = self.cleaned_data['image']
-			array_rotate = self.request.POST.getlist('rotateTimes')
-			array_qq_id = self.request.POST.getlist('qq-file-id')
-			qs_rotate = {}
 			if images:
-				for idx, i in enumerate(array_qq_id):
-					qs_rotate[i] = array_rotate[idx]
 				for idx, file in enumerate(images):
-					this_rotate = qs_rotate.get(str(file.file_id))
-					file = UploadedFile.objects.rotate_image(image = file.uploaded_file.file, rotated_x = this_rotate)
 					obj = ProductImage.objects.create(
 						product=product,
 						image=file,
@@ -296,6 +284,27 @@ class ProductUpdateForm(ProductCreateForm):
 		self.fields['condition'].widget.attrs['condition'] = condition.condition
 		self.initial['price']=price
 
+	def clean_image(self):
+		pass
+
+	def clean(self):
+		images = ProductImage.objects.filter(slug=self.slug)
+		#doesnt work with just order by, because we change instances and queryset changes too
+		keyArray = self.request.POST.getlist('keyArray')
+		rotate_arr = self.request.POST.getlist('rotateTimes')
+		if len(keyArray) > 0:
+			img_dict = {}
+			for image in images:
+				img_dict[str(image.image_order)] = image
+			for idx, order in enumerate(keyArray):
+				img = img_dict.get(order)
+				rotate = int(rotate_arr[idx])
+				if rotate != 0:
+					image = rotate_image(image = img.image, rotated_x = rotate)
+					img.image = image
+				img.image_order = idx + 1
+				img.save()
+				
 	def save(self, commit=True):
 		product                   = Product.objects.get(slug=self.slug)
 		product.title             = self.cleaned_data['title']

@@ -56,25 +56,17 @@ $(document).ready(
 //Product Create
     var authenticityCheckBtn = $('#btn_authenticity_check').html()
     var currentPath = window.location.href
+    var ImgDict = new Object()
+    var fileCollection = new Array();
+    var image_iteration_index = 0
     if (currentPath.indexOf("create") != -1){
         var languageOption = $('#language').val()
         var galleryUpdate = $('#gallery')
         var formSubmit = $('#example-form-1')
         var action = formSubmit.attr("action_url_create")
         var action_order = formSubmit.attr("action_url_create_order")
-        // console.log(action_order)
         var buttonImageUpload = $('.image-upload-button')
         var imagesUploadLimit = $('#images-upload-limit')
-        // buttonImageUpload.hide()
-        // if (languageOption=='RU'){
-        //     buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Выбрать</label>')
-        // }//if rus
-        // else if (languageOption=='UA'){
-        //     buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Вибрати</label>')
-        // }//if rus
-        // else {
-        //     buttonImageUpload.parent().prepend('<label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">Browse</label>')
-        // }//if not rus
         var errorTooManyImages = $('#error_too_many_images').html()
         var uploadUrl = formSubmit.attr('image_upload_url')
         var deleteImageUrl = formSubmit.attr('image_delete_url')
@@ -89,52 +81,22 @@ $(document).ready(
     function deleteRotateItem(item){
         item.on("click", 
         function(event){
-            console.log('rotate')
             var $item = $(this),
             $target = $(event.target);
-            if ($target.is("a.ui-icon-trash")) {
-                event.preventDefault()
-                var deleteData = $item.find("[name='qq-file-id']").val()
-                $.ajax({
-                    url: deleteImageUrl,
-                    method:'POST',
-                    data: {'data':deleteData, 'form_id':formId.val()},
-                    success:function(data){
-                       $item.remove()
-                       if (data.count<=8){
-                        buttonImageUpload.attr('disabled', false)
-                       } //enabelbtniflessthan8
-                    },//success
-                    error:function(errorData){
-
-                    }//error
-                })//ajax for delete
+        if ($target.is("a.ui-icon-trash")) {
+            event.preventDefault()
+            var deleteData = parseInt($item.find("[name='qq-file-id']").val())
+            if (fileCollection.length > 0){
+                $item.remove()
+            }//if filecollection exists
         }//if trash
         if ($target.is("svg.rotateItem")) {
-            // console.log('here')
                 event.preventDefault()
                 var rotatedTimes = $item.find("[name='rotateTimes']").val()
                 rotatedTimes = parseInt(rotatedTimes) + 1
                 $item.find("[name='rotateTimes']").val(rotatedTimes)
                 var grad = 90 * rotatedTimes
                 $item.children('img').css('transform', 'rotate('+grad+'deg)')
-                // var deleteData = $item.find("[name='qq-file-id']").val()
-                // $.ajax({
-                //     url: rotateImageUrl,
-                //     method:'POST',
-                //     data: {'data':deleteData, 'form_id':formId.val()},
-                //     success:function(data){
-                //         
-                //         console.log('1')
-                //        // $item.remove()
-                //        // if (data.count<=8){
-                //        //  buttonImageUpload.attr('disabled', false)
-                //        // } //enabelbtniflessthan8
-                //     },//success
-                //     error:function(errorData){
-
-                //     }//error
-                // })//ajax for rotate
         }//if rotate
         })//onclicktrash
     }//deleteItem
@@ -142,14 +104,15 @@ $(document).ready(
 
 
         function displayUploading(doUpload, where_to_put=null, how_many_files=null){
-            console.log(doUpload)
+            var imagesAlreadyUploadedCount = $('ul#customSort li').length
             if(doUpload){
                 for (var i = 0; i < how_many_files; i++){
-                    where_to_put.append("<i id='spinner_upload_"+ i +"' class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner' style='font-size: 1.5em;'></i>")
+                    id = i
+                    where_to_put.append("<i id='spinner_upload_"+ id +"' class='ml-3 mb-3 fa-2x fas fa-spin fa-spinner' style='font-size: 1.5em;'></i>")
                 };
             }//doUpload
             else{
-                console.log('#spinner_upload_'+where_to_put)
+
                 $('#spinner_upload_'+where_to_put).remove();
             }//ifnotdoUpload
         }//displayUploading
@@ -163,61 +126,67 @@ $(document).ready(
             function(evt) {
                 $('#id_image').removeClass('is-invalid')
                 $('p.image').remove('.invalid-feedback')
-                var files = $(this)[0].files;
-                if (files.length > imagesUploadLimit.val()){
+                $("#customSort").sortable( "option", "disabled", true );
+                var imagesAlreadyUploadedCount = $('ul#customSort li').length
+                var files = evt.target.files;
+                if (files.length > imagesUploadLimit.val() | files.length + imagesAlreadyUploadedCount > imagesUploadLimit.val()){
                     if ($('.image').length==0){
                         $('#id_image').addClass('is-invalid')
                         $('#id_image').after('<p style="position:relative!important" class="invalid-feedback image"><strong>' + errorTooManyImages +' '+ imagesUploadLimit.val() + '</strong></p>')//if more than 8 one time
+                        $("#customSort").sortable( "option", "disabled", false );
                     return console.log('hellow')
                     }//if nothing under images errors
                 }//ifmorethan8
                 buttonImageUpload.attr('disabled', true);
                 displayUploading(true, imageContainer, files.length);
-                for (var i = 0, f; f = files[i]; i++) {
-                    var new_i = 0
-                    var reader = new FileReader();
+                $.each(files, function(i, file){
+                    var reader = new FileReader;
+                    reader.readAsDataURL(file);
                     reader.onload = (function(theFile){
-                        return function(e){
-                            var li = document.createElement('li');
-                            li.setAttribute('class', 'ui-widget-content ui-corner-tr');
-                            li.innerHTML = ['<img src="',
-                            e.target.result, 
-                            '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value=',
-                            i,
-                            '><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a>'].join('');
-                            
-                            document.getElementById('customSort').insertBefore(li, null);
-                            displayUploading(false, new_i);
-                            new_i += 1
-                            var elementList = $("ul.gallery > li")  
-                            elementList.unbind()
-                            deleteRotateItem(elementList)
-                        };//render thumbnail
-                    })(f)//onload
-                    reader.readAsDataURL(f);
-                }//for images
+                        var li = document.createElement('li');
+                        fileCollection.push(files[i])
+                        li.setAttribute('class', 'ui-widget-content ui-corner-tr');
+                        li.innerHTML = ['<img src="',
+                        theFile.target.result, 
+                        '"style="object-fit:contain;height:100px;padding: 0.2em;align-items:center;"><input type="hidden" id="qq-file-id" name="qq-file-id" value=',
+                        image_iteration_index,
+                        '><a class="ui-icon ui-icon-trash trash-custom-ecommerce" href="#"></a><a class="ui-icon-rotate rotateItem" style="cursor: pointer;"><i class="rotateItem fas fa-xs fa-sync-alt" style="padding: 0.2em;width: 2em;height: 1.3em;"></i><input type="hidden" name="rotateTimes" value="0"></a>'].join('');
+                        document.getElementById('customSort').insertBefore(li, null);
+                        displayUploading(false, i);
+                        image_iteration_index+=1
+                        var elementList = $("ul.gallery > li")
+                        elementList.unbind()
+                        deleteRotateItem(elementList)
+                    })//onload
+                })//each
+                
                 buttonImageUpload.attr('disabled', false);
-                
-                
-         
-        })//change-buttonImageUpload
+                 $("#customSort").sortable( "option", "disabled", false );
+            })//change-buttonImageUpload            
+        
 
         formSubmit.submit(
         function(event){
         event.preventDefault()
-        var createFormSubmitBtn = formSubmit.find("[type='submit']")
-        var createFormSubmitBtnTxt = createFormSubmitBtn.text()
-        var formData = new FormData(this);
-        // var files = $(this)[0].files;
-        // console.log(files)
-        // $.each(files, 
-        //     function(index, value){
-        //         formData.append('image', value)
-        //     })//each files
-        console.log(formData)
-        var elements = $('#example-form-1 ul li')
         var keyArray = []
         var rotateArray = []
+        var elements = $('#example-form-1 ul li')      
+        $.each(elements,
+        function(index, value){
+            var attr = $(value).find("[name='qq-file-id']").val()
+            var rotatedImageTimes = $(value).find("[name='rotateTimes']").val()
+            rotateArray.push(rotatedImageTimes)
+            keyArray.push(attr)  
+        })//eacharray
+        var formData = new FormData(this);
+        formData.delete('image')
+        $.each(keyArray, 
+            function(index, value){
+                formData.append('image', fileCollection[value])      
+            })//each files
+        var createFormSubmitBtn = formSubmit.find("[type='submit']")
+        var createFormSubmitBtnTxt = createFormSubmitBtn.text()
+        displayCreating(createFormSubmitBtn, authenticityCheckBtn, "",true, currentPath)
         $.ajax({
             url: action,
             method: 'POST',
@@ -226,55 +195,27 @@ $(document).ready(
             processData: false,
             contentType: false,
             success: function(data){
-                console.log('hi')
+                $('.is-invalid').removeClass('is-invalid')
+                $('p').remove('.invalid-feedback')
+                if(data['error']) {
+                    $.each(data['error'],
+                        function(index, value){
+                            var btnText = createFormSubmitBtnTxt
+                            displayCreating(createFormSubmitBtn, authenticityCheckBtn, btnText,false, currentPath)
+                            if ($('.'+index).length==0){
+                                $('#id_' + index).addClass('is-invalid')
+                                $('#id_' + index).after("<p class='m-0 invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
+                            }//if  
+                        })//each
+                        }//if there are errors
+                else {
+                    window.location.href=data.url
+                }
             },
             error: function(errorData){
                 console.log('error')
             }
         })//ajax
-        // Activate Spinner
-        displayCreating(createFormSubmitBtn, authenticityCheckBtn, "",true, currentPath)
-        // $.each(elements,
-        // function(index, value){
-        //     var attr = $(value).find("[name='qq-file-id']").val()
-        //     var rotatedImageTimes = $(value).find("[name='rotateTimes']").val()
-        //     keyArray.push(attr)  
-        //     rotateArray.push(rotatedImageTimes)
-        // })//eacharray
-        // $.ajax({
-        // url: action,
-        // method:'POST',
-        // data: formData,
-        // success: function(data){
-        //     $('.is-invalid').removeClass('is-invalid')
-        //     $('p').remove('.invalid-feedback')
-        //     if(data['error']) {
-        //     $.each(data['error'],
-        //         function(index, value){
-        //             var btnText = createFormSubmitBtnTxt
-        //             displayCreating(createFormSubmitBtn, authenticityCheckBtn, btnText,false, currentPath)
-        //             if ($('.'+index).length==0){
-        //                 $('#id_' + index).addClass('is-invalid')
-        //                 $('#id_' + index).after("<p class='m-0 invalid-feedback "+index+"'><strong>"+value+"</strong></p>")  
-        //             }//if  
-        //         })//each
-        //         }//if there are errors
-        //     else {
-        //       $.ajax({
-        //         url: action_order,
-        //         method:'POST',
-        //         data: {'data[]':keyArray, 'slug':data.slug, 'rotate[]':rotateArray},
-        //         success:function(data){
-        //             },//success second ajax
-        //         error:function(errorData){
-        //             }//error second ajax
-        //         })//ajax in ajax
-        //         window.location.href=data.url
-        //             }//else
-        //         },//success
-        // error:function(errorData){
-        //     }//error_1
-        // })//ajax
         })//submit
     }
 
@@ -300,8 +241,8 @@ $(document).ready(
                 $item.find("[name='rotateTimes']").val(rotatedTimes)
                 var grad = 90 * rotatedTimes
                 $item.children('img').css('transform', 'rotate('+grad+'deg)')
-        }//if rotate
-        })//onclicktrash
+                }//if rotate
+             })//onclicktrash
         }//deleteItem
         var formSubmit = $('#example-form-1')
         var elementList = $("ul.gallery > li")
@@ -311,7 +252,7 @@ $(document).ready(
         formSubmit.submit(
         function(event){
         event.preventDefault()
-        var formData = formSubmit.serialize()
+        var formData = new FormData(this);
         var formCreate = $('#customSort')
         var galleryUpdate = $('#gallery')
         var rotateArray = []
@@ -324,14 +265,15 @@ $(document).ready(
         $.each(elements,
         function(index, value){
             var val = ($(value)).find("[name = 'image-id']")
-            keyArray.push(val.val())
-            var rotatedImageTimes = $(value).find("[name='rotateTimes']").val()
-            rotateArray.push(rotatedImageTimes)
+            formData.append('keyArray', val.val())
         })//each
         $.ajax({
         url: action_update,
         method:'POST',
         data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
         success: function(data){
             $('.is-invalid').removeClass('is-invalid')
             $('p').remove('.invalid-feedback')
@@ -357,23 +299,7 @@ $(document).ready(
                 }//if there are errors
             else {
                 var url = data.url
-                $.ajax({
-                url: action,
-                method:'POST',
-                data: {'data[]':keyArray, 'rotate[]':rotateArray},
-                success: function(data){
-                    window.location.href=url
-                },//success
-                error: function(errorData){
-                // $.alert({
-                // title: 'OOps!',
-                // content: 'Simple alert!',
-                // theme: "modern"
-                // });
-                console.log('some error');
-                }//error
-                })//ajax in ajax
-
+                window.location.href=url
                     }//else
                 },//success
         error:function(errorData){

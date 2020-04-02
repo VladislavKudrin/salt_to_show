@@ -380,26 +380,13 @@ class ProductImage(models.Model):
 	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	image_order 	= models.DecimalField(decimal_places=0, max_digits=20, default=1)
 	slug			= models.SlugField(default=None, null=True, blank=False)
-	unique_image_id = models.CharField(max_length = 120, default=None, unique = True, blank=False, null=True)
 	def __str__(self):
 		return self.product.title + str(self.image_order)
 
 	def to_thumbnail(self):
 		ProductThumbnail.objects.new_or_get(product=self.product, image=self.image)
 
-	def rotate_image(self, image, rotated_x=0):
-		if rotated_x:
-			int_rotated = int(rotated_x)
-			if int_rotated != 0 or int_rotated%4 != 0:
-				im = Image.open(image)
-				image_rotated = im.rotate(-90*int_rotated, expand=True)
-				img_io = BytesIO()
-				image_rotated.save(img_io, im.format)
-				new_image = File(img_io, name=str(image))
-				self.image = new_image
-				self.save()
-		# 	return new_image
-		# return image
+
 
 def product_image_post_save(sender, created, instance, *args, **kwargs):
 	if instance.image_order == 1:
@@ -407,11 +394,7 @@ def product_image_post_save(sender, created, instance, *args, **kwargs):
 
 post_save.connect(product_image_post_save, sender=ProductImage)
 
-def image_pre_save_reciever(sender, instance, *args, **kwargs):
-	if not instance.unique_image_id:
-		instance.unique_image_id = unique_image_id_generator(instance, 'product_image')
 
-pre_save.connect(image_pre_save_reciever,sender=ProductImage)
 
 class ProductThumbnailManager(models.Manager):
 	def new_or_get(self, product, image):
@@ -456,18 +439,6 @@ class ReportedProduct(models.Model):
 
 	def __str__(self):
 		return self.product.title
-		
-# def product_create_post_save_reciever(sender, request, instance, *args, **kwargs):
-# 	if request.user.is_authenticated():
-# 		user = request.user
-# 		instance.user = user
-# 	else:
-# 		instance.delete()
-# 		raise ValidationError("You need to be Logged In")
-
-
-# post_save.connect(product_create_post_save_reciever, sender= Product)
-
 
 
 
