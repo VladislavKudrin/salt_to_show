@@ -11,6 +11,9 @@ from datetime import date
 from django.utils.safestring import mark_safe
 
 
+
+from io import BytesIO
+from PIL import Image
 from imagekit.models import ProcessedImageField
 from imagekit import processors 
 from django.core.files import File
@@ -18,7 +21,6 @@ from django.core.files import File
 
 from ecommerce.utils import unique_slug_generator, unique_image_id_generator
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
-from image_uploader.models import Thumbnail
 
 
 class ImageOrderUtil(models.Model):
@@ -394,7 +396,7 @@ class ProductImage(models.Model):
 		return self.product.title + str(self.image_order)
 
 	def to_thumbnail(self):
-		ProductThumbnail.objects.new_or_get(product=self.product, image=self.image)
+		ProductThumbnail.objects.new_or_update(product=self.product, image=self.image)
 
 	def image_tag(self):
 		return mark_safe('<img src="%s" width="500" height="500" style="object-fit: contain;"" />' % (self.image.url))  # Get Image url
@@ -411,17 +413,31 @@ post_save.connect(product_image_post_save, sender=ProductImage)
 
 
 class ProductThumbnailManager(models.Manager):
-	def new_or_get(self, product, image):
-		name, ext = get_filename_ext(str(image.file))
+	def new_or_update(self, product, image):
 		obj = self.model.objects.filter(product=product)
-		spec_instance = Thumbnail(source=image)
-		image = File(spec_instance.generate(), name=name+ext)
-		if obj.exists():
-			obj = obj.first()
-			obj.thumbnail = image
-			obj.save()
-		else: 
-			ProductThumbnail.objects.create(product=product, thumbnail=image)
+		with Image.open(image) as first_image_pil:
+			im_io = BytesIO() 
+			size = settings.IMAGES_THUMBNAIL_SIZE
+			first_image_pil.thumbnail(size)
+			first_image_pil.save(im_io, first_image_pil.format , quality=settings.IMAGES_QUALITY_THUMBNAIL_PRECENTAGE) 
+			new_image = File(im_io, name=product.slug+'.'+first_image_pil.format)	
+			if obj.exists():
+				if obj.count() == 1:
+					thumbnail=obj.first()
+					thumbnail.thumbnail.delete()
+					thumbnail.thumbnail = new_image
+					thumbnail.save()
+				else: 
+					obj.delete()
+					ProductThumbnail.objects.create(
+							product=product,
+							thumbnail=new_image,
+											)
+			else:
+				ProductThumbnail.objects.create(
+							product=product,
+							thumbnail=new_image,
+											)
 
 class ProductThumbnail(models.Model):
 	product = models.ForeignKey(Product, default=None, related_name='thumbnail')

@@ -15,3 +15,8 @@ def rotate_image(image=None, rotated_x=0):
 					image_rotated.save(img_io, im.format)
 					image = File(img_io, name=str(image))
 		return image
+
+
+
+
+
