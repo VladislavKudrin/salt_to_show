@@ -1,4 +1,6 @@
 import datetime
+from django.conf import settings
+
 AWS_ACCESS_KEY_ID = "AKIA2R5PIZK6M3HVE26S"
 AWS_SECRET_ACCESS_KEY = "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"
 AWS_FILE_EXPIRE = 200
@@ -9,7 +11,7 @@ AWS_USERNAME = 'envision-user'
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
-if TESTSERVER == 'True':
+if settings.TESTSERVER == 'True':
 	AWS_STORAGE_BUCKET_NAME = 'salt-staging'
 else:
 	AWS_STORAGE_BUCKET_NAME = 'salt-bucket-eu'
