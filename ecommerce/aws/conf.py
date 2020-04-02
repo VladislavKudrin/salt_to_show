@@ -9,8 +9,10 @@ AWS_USERNAME = 'envision-user'
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
-
-AWS_STORAGE_BUCKET_NAME = 'salt-bucket-eu'
+if TESTSERVER == 'True':
+	AWS_STORAGE_BUCKET_NAME = 'salt-staging'
+else:
+	AWS_STORAGE_BUCKET_NAME = 'salt-bucket-eu'
 
 S3DIRECT_REGION = 'eu-central-1'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
