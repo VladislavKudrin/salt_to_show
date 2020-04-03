@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.db.models import Q
 from django.template.loader import get_template
@@ -9,13 +9,12 @@ from django.utils.translation import gettext as _
 from .models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from products.models import Product
 from .forms import TranslateForm
-from ecommerce.utils import my_render
-
+from ecommerce.utils import custom_render
 
 class CategoryFilterView(ListView):
 
 	def post(self, request, *args, **kwargs):
-		return my_render(request, "products", "product-list", {})
+		return custom_render(request, "products", "product-list", {})
 
 	def get(self, request, *args, **kwargs):
 		context={}
@@ -198,8 +197,7 @@ class CategoryFilterView(ListView):
 		context['condition'] = _('Condition')
 		context['brand'] = _('Brand')
 		context['price'] = _('Price')
-		return my_render(request, "products", "product-list", context)
-
+		return custom_render(request, "products", "product-list", context)
 
 def translation_view(request):
 	context = {}

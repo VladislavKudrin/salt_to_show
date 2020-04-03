@@ -11,13 +11,23 @@
   <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
   <title>SALT | {{ object.title }} </title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link type="text/css" href="{% static 'css/fonts_home.css' %}" rel="stylesheet">
-  <link type="text/css" href="{% static 'css/buttons.css' %}" rel="stylesheet">
-  <link type="text/css" href="{% static 'css/card.css' %}" rel="stylesheet">
-  <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+ 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'css/buttons.css' %}" rel="stylesheet" type="text/css">
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+
   <style type="text/css">
 			.username-text {
 				overflow: hidden; 
@@ -188,7 +198,7 @@
   </style>
 </head>
 <body>
-    {% include 'mobile/navbar_mobile.html' %}
+    {% include 'mobile/navbar.html' %}
     <div class='container-fluid' style="margin-bottom: 2.3rem;">
 
 
@@ -248,7 +258,7 @@
 					<div class="col-2 detail-likes">
 						<div class="row">
 							<div class="col-12 text-center pl-0">
-								{% include 'accounts/wish-list-update-detail.html' with product=object %}
+								{% include 'accounts/snippets/wish-list-update-detail.html' with product=object %}
 							</div>
 							<div class="col-12 text-center pl-0">{{ likes }}</div>
 						</div>
@@ -358,8 +368,10 @@
 	        <!--Footer (+ padding for it-->
          <div class="row fluid info" style='padding-top: 76px; '>
         </div>
-        {% include 'mobile/footer_mobile.html' %}
+        {% include 'mobile/footer.html' %}
     </div>
+        {% block script %}{% endblock %}
+    {% include 'base/js.html' %}
 	<script type="application/javascript" src="{% static 'js/jquery.morelines.js' %}"></script>
 	<script type="application/javascript" src="{% static 'js/jquery.zoom.js' %}"></script>
 	<script type="text/javascript">
@@ -418,8 +430,8 @@
       gtag('config', 'UA-150733918-1');
     </script>
     <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
-    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
     <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
     <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
     {% if request.user.is_authenticated %}
     <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+
+<head>
+  <style type="text/css">
+    .asteriskField {
+      display: none;
+    }
+
+    .contact-form {
+      width: 60%;
+      margin-left: 20%;
+    }
+  </style>
+</head>
+
+
+
+  <div class='container-fluid'>
+    <div class='row'>
+        <div class='col-xs-12 col-md-7 mx-auto'>
+          <div class='text-center'>
+            <p class="heading">{{ title }}</p>
+          </div>
+          <form class ='contact-form' method = 'POST' action='{% url "contact" %}'> {% csrf_token %}
+            <input type="hidden" name="popchik" value="{{ user_email }}">
+            <input type="hidden" name="contact_lan" value="{{ request.session.language }}">
+            <input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
+            <div style='display: none' id='contactSubmitted'>{{ submitted }}</div>
+             {{ form|crispy }}
+             <button type="submit" class="btn btn-block button-black hover-button large-button">{{ button }}</button>
+          </form>
+          <br>
+        </div>  
+    </div>
+    <!-- <div class="row">
+      <div class='col text-center'>
+        <p class="heading text-center">Контактные данные</p>
+        <p>Телефон: +4915226789201</p>
+        <p>Мэйл: info@saltish.co</p>
+      </div>
+    </div> -->
+  </div>
+
+{% endblock %}
+
+
+
+

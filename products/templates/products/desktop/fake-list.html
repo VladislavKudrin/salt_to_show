@@ -16,12 +16,12 @@
 <div class="container">
 
 	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
-	  		{% include "sidebar.html" %}
+	  		{% include "base/sidebar.html" %}
 	</div> 
 
 	<div class='row'>
 		<div class='col-12'>
-			<p class="heading" id="products-by-user" >{% trans 'My Items:' %}</p>
+			<p class="heading" >{{ title }}</p>
 		</div>
 	</div>
 
@@ -31,7 +31,9 @@
 
 	{% for obj in object_list %}
 		<div class='col-xs-12 card-full text-center  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-			{% include 'products/snippets/card-my-items.html' with instance=obj %}
+
+			{% include 'products/snippets/card-fake.html' with instance=obj %}
+
 			{% if forloop.counter|divisibleby:4 %}
 				</div>
 				</div>
@@ -48,7 +50,7 @@
 
 <div class = "row pagination justify-content-center">
 	<div class = "col-auto">
-		{% paginate using "pagination_custom.html" %}
+		{% paginate using "base/pagination_custom.html" %}
 	</div>
 </div>
 

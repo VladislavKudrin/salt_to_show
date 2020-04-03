@@ -7,30 +7,29 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.urls import reverse
-
 from django_cron import CronJobBase, Schedule
 from chat_ecommerce.models import Notification
 from datetime import datetime, timezone, timedelta
 from accounts.models import User
-
 from django.utils.translation import gettext as _
 from django.db.models import Count
-
-
 
 from categories.models import Brand, Undercategory, Overcategory, Gender, Category
 from .mixins import RequestFormAttachMixin
 from .forms import ContactForm
 from products.models import Product
 from accounts.models import Wishlist
-from .utils import get_data_from_novaposhta_api, my_render
+from .utils import get_data_from_novaposhta_api, custom_render
 
-
-def test_page(request):
-	return render(request, "categories/slidebar.html", {})
 
 class AboutPageView(TemplateView):
-	template_name = 'base/about_us.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/about-us.html']
+		else:
+			return ['desktop/about-us.html']
+
 	def get_context_data(self, *args, **kwargs):
 		context=super(AboutPageView, self).get_context_data(*args, **kwargs)
 		context['bazar'] = _('Bazar')
@@ -44,26 +43,49 @@ class AboutPageView(TemplateView):
 		return context
 
 class PrivacyPageView(TemplateView):
-	template_name = 'base/privacy.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/privacy.html']
+		else:
+			return ['desktop/privacy.html']
+
 	def get_context_data(self, *args, **kwargs):
 		context=super(PrivacyPageView, self).get_context_data(*args, **kwargs)
 		return context
 
 class TermsPageView(TemplateView):
-	template_name = 'base/terms.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/terms.html']
+		else:
+			return ['desktop/terms.html']
+
 	def get_context_data(self, *args, **kwargs):
 		context=super(TermsPageView, self).get_context_data(*args, **kwargs)
 		return context
 
 class FAQPageView(TemplateView):
-	template_name = 'base/faq.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/faq.html']
+		else:
+			return ['desktop/faq.html']
 	def get_context_data(self, *args, **kwargs):
 		context=super(FAQPageView, self).get_context_data(*args, **kwargs)
 		return context
 
 class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	form_class = ContactForm
-	template_name = 'contact/contact.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/contact.html']
+		else:
+			return ['desktop/contact.html']
+
 	def post(self, request, *args, **kwargs):
 		order_id = request.POST.get('order_id_report')
 		if order_id:
@@ -122,7 +144,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 			return HttpResponse(errors, status=400, content_type='application/json')
 
 def home_page(request):
-	template_name =  'home_page.html'
+	template_name =  'home-page.html'
 	context = {}
 	context['kids_navbar'] = _('Kids')
 	context['new_navbar'] = _('New')
@@ -229,7 +251,7 @@ class MyCronJob(CronJobBase):
 				)
 
 class NovaPoshtaAPI(CronJobBase):
-	RUN_EVERY_MINS = 1440 # 60*24 every 24 hours 
+	RUN_EVERY_MINS = 2880 # 60*24 every 48 hours 
 	# RUN_EVERY_MINS = 2 # for testing
 	MIN_NUM_FAILURES = 1
 	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)

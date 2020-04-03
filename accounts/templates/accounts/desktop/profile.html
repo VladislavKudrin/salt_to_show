@@ -19,7 +19,7 @@
 		<div class="container-fluid">
 			<div class='row'>
 				<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll;">
-				  		{% include "sidebar.html" %}
+				  		{% include "base/sidebar.html" %}
 				</div>
 
 			<div class='col-12 text-center'>
@@ -78,7 +78,7 @@
 
 <div class = "row pagination justify-content-center">
 	<div class = "col-auto">
-		{% paginate using "pagination_custom.html" %}
+		{% paginate using "base/pagination_custom.html" %}
 	</div>
 </div>
 

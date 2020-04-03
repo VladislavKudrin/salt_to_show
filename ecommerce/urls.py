@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, RedirectView
 from billing.views import payment_method_view, payment_method_createview
 from addresses.views import *
 from accounts.views import RegisterLoginView, WishListView, wishlistupdate, region_init
-from .views import home_page, test_page, ContactPageView, AboutPageView, PrivacyPageView, TermsPageView, FAQPageView
+from .views import home_page, ContactPageView, AboutPageView, PrivacyPageView, TermsPageView, FAQPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
 

@@ -1,0 +1,364 @@
+{% extends "base_no_footer.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<head>
+<style type="text/css">
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#inbox-text {
+	height: 85vh;
+}
+
+@media only screen and (max-width: 768px) { 
+
+
+ .col-to-hide{
+ 	display: none
+ }
+
+ 
+  .avatar-not-skipped {
+  	margin: 0 auto;
+  	width:40px;
+  }
+  .username-skip{
+  	text-align: left!important;
+  }
+  #input-row{
+  	width: 100%!important;
+  }
+  .back-to-chatlist{
+  	text-align: left!important;
+  	display: inline-block!important;
+
+  }
+  .dialogs-username{
+  	text-align: left!important
+  }
+  .arrow-select-chat{
+	display: inline-block!important
+}
+#chat-items{
+	height: 95%!important
+}
+
+}
+
+.dialogs-username {
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}
+
+.my-custom-scrollbar {
+  position: absolute;
+  padding-right: 20px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
+
+.avatar-small{
+	width:40px; 
+	height: 40px;
+}
+
+/*#table-scroll .my-custom-scrollbar {
+  position: relative;
+  width: 250px;
+  height: 90%;
+  border: 0;  
+}*/
+
+#chat-items{
+	position: relative;
+/*	overflow:scroll;*/
+/*	max-height: 80%;
+	min-height: 100%;*/
+	margin-bottom: 0px;
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 130px); 
+
+}
+
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+body {
+    overflow:hidden;
+    padding-bottom: 0;
+    margin-bottom:0;
+}
+
+html {
+	padding-bottom: 0;
+    margin-bottom:0;
+}
+
+#dialogs{
+/*	max-height: 80%;
+	min-height: 100%;*/
+/*    overflow: auto;*/
+	width: 320px;
+	padding-right: 0px;
+/*	overflow: scroll;*/
+	margin-bottom: 0;
+	position: relative;
+
+    height:auto;
+    overflow:auto;
+	max-height: calc(100vh - 130px); 
+
+}
+
+#dialogs-inbox{
+	height: 100%;
+	/*min-height: 900px;*/
+	width: 320px;
+	padding-right: 0px;
+	overflow:scroll;
+	margin-bottom: 0;
+	position: relative;
+	
+
+}
+
+
+#dialog{
+	height:70px;
+/*	display: flex;
+    align-items: center;*/
+}
+
+#dialog:hover{
+	background-color: #f2f2f2;
+}
+
+#input-row{
+	background-color: #efefef;
+	height: 60px;
+}
+
+.fa-paper-plane{
+	color: #9da3a5;
+}
+
+.rounder-form{
+	border-radius: 25px !important;
+}
+
+#chat-message{
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+/*	text-align: left;*/
+}
+
+button:focus {
+ 	outline:0 !important;
+}
+
+
+*:focus {
+	outline:none !important;
+}
+
+.btn:focus {
+	outline:none !important;
+}
+
+.avatar-chat{
+	width:50px; 
+	height: 50px;
+}
+
+.avatar-me{
+	width:40px; 
+	height: 40px;
+}
+
+
+.active {
+	background-color: #e9ebeb;
+}
+
+.row-dialog {
+	height: 70px;
+}
+
+.backgroundy{
+	background-color: black;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #cf6369;
+  border-radius: 50% !important;
+  display: inline-block;
+}
+
+.row-dialog {
+	height: 70px;
+}
+
+.back-to-chatlist{
+	display: none
+}
+.row-avatar-arrow{
+	text-align: right!important;
+}
+.arrow-select-chat{
+	display: none
+}
+</style>
+</head>
+
+
+<div class='container-fluid m-0 p-0'>
+	<div class='row'>
+
+
+		<div class='col-12 col-md-3' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
+			<div class='row' style='height: 54px; background-color: #efefef;'>
+				<div class='col text-center my-auto'>
+					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
+					{% if request.user.profile_foto %}
+						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2" alt="...">
+					{% else %}
+						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
+					{% endif %}
+					</a>
+				</div>
+			</div>
+			<div class='row alldialogs'>
+				<ul id='dialogs' class='my-custom-scrollbar' style="width: 100%">
+					{% for obj in chats %}
+						{% if request.user != obj.first %}
+							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+							
+								<div class='row row-dialog my-auto mx-auto'>
+									<div class='col-4 my-auto'>
+										{% if obj.first.profile_foto %}
+											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
+										{% endif %}
+									</div>
+									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
+										{{ obj.first.username }}
+
+
+										{% if threads_with_unred %}
+										{% for noti in threads_with_unred %}
+										{% if noti == obj %}
+										<span class="dot" id="{{ obj.id }}"></span>
+											
+										{% endif %}
+										{% endfor %}
+										{% endif %}
+										<span class='obj_id_s' id="{{ obj.id }}"></span>
+
+									</div>
+									<div class="col-4 my-auto text-right arrow-select-chat">
+										<i class="fas fa-lg fa-chevron-right"></i>
+									</div>
+								</div>
+							
+							</a></li>
+						{% else %}
+							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
+								<div class='row row-dialog my-auto mx-auto'>
+									<div class='col-4 my-auto'>
+										{% if obj.second.profile_foto %}
+											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
+										{% endif %}
+									</div>
+									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
+										{{ obj.second.username }}
+										{% if threads_with_unred %}
+										{% for noti in threads_with_unred %}
+										{% if noti == obj %}
+											<span class="dot" id="{{ obj.id }}"></span>
+										{% endif %}
+										{% endfor %}
+										{% endif %}
+											<span class='obj_id_s' id="{{ obj.id }}"></span>
+									</div>
+									<div class="col-4 my-auto text-right arrow-select-chat">
+										<i class="fas fa-lg fa-chevron-right"></i>
+									</div>
+								</div>
+							</a></li>
+						{% endif %}
+					{% empty %}
+						<div class='row text-center align-items-center p-2' style='height: 70vh;'>
+							<div class='col ' style="color:#aeacac; font-size: 17px">
+							{{ no_dialogs }}
+							</div>
+						</div>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+                  
+                   
+<div class='col-7 heading col-to-hide col-md-9' style="color:#aeacac; background-image: url('{% static 'img/worn_dots.png' %}')">
+	<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
+	</div>
+	<div id="inbox-text" class='row text-center align-items-center'>
+		<div class='col'>
+			{% trans 'Please select a chat to start conversation' %}
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
+</script>
+<script>
+
+//this makes the current link containing li of class "active"
+$(document).ready(function ($) {
+    var url = window.location.href;
+    var activePage = url;
+    console.log(activePage)
+    $('#dialog a').each(function () {
+        var linkPage = this.href;
+        if (activePage == linkPage) {
+            $(this).closest("li").addClass("active");
+            console.log('active')
+        }
+    });
+});
+
+//Scrolling
+const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
+const ps = new PerfectScrollbar('.my-custom-scrollbar', {
+    wheelSpeed: 1,
+    wheelPropagation: false,
+    swipeEasing: true,
+    suppressScrollX: true,
+    // minScrollbarLength: 10,
+    // maxScrollbarLength: 10
+
+});
+
+$('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
+
+// var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
+
+
+
+</script>
+{% endblock %}

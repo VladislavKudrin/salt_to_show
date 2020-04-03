@@ -7,6 +7,7 @@ from django.urls import reverse_lazy, reverse
 
 
 from ecommerce.mixins import RequestFormAttachMixin
+from ecommerce.utils import custom_render
 from billing.models import BillingProfile
 from billing.forms import FeedbackForm
 from .models import Order, Transaction
@@ -19,7 +20,7 @@ from django.core.urlresolvers import reverse
 User = get_user_model()
 
 class OrderListView(LoginRequiredMixin, View):
-	template_name = "orders/order_list.html"
+
 	def get(self, *args, **kwargs):
 		tab = self.request.GET.get('tab')
 		context = {}
@@ -38,9 +39,16 @@ class OrderListView(LoginRequiredMixin, View):
 		context['orders_refunded'] = orders_refunded.distinct()
 		context['orders_completed'] = orders_completed.distinct()
 
-		return render(self.request, self.template_name, context)
+		return custom_render(self.request, 'orders', 'order-list', context)
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['orders/mobile/order-detail.html']
+		else:
+			return ['orders/desktop/order-detail.html']
+
 	def get_object(self):
 		qs = Order.objects.by_request(self.request).filter(
 			order_id = self.kwargs.get('order_id')

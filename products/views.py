@@ -16,7 +16,7 @@ from django.utils.translation import pgettext
 from django.core.mail import send_mail
 from django.utils.safestring import mark_safe
 
-from ecommerce.utils import add_message, stay_where_you_are
+from ecommerce.utils import add_message, stay_where_you_are, custom_render
 from ecommerce.mixins import RequestFormAttachMixin
 from analitics.mixins import ObjectViewedMixin
 from carts.models import Cart
@@ -31,6 +31,12 @@ from orders.models import Order
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
 	template_name = "products/user-history.html"
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['products/mobile/user-history.html']
+		else:
+			return ['products/desktop/user-history.html']
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
@@ -108,7 +114,7 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
 class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	form_class = ImageForm
-	template_name = 'products/product-create.html'
+
 	def post(self, request, *args, **kwargs):
 		form = self.get_form()
 		if form.is_valid():
@@ -186,7 +192,8 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		context['conditions'] = Condition.objects.all()
 		context['sizes'] = Size.objects.all()
 		context['images_upload_limit'] = settings.IMAGES_UPLOAD_LIMIT
-		return render(request, 'products/product-create.html', context)
+		return custom_render(request, 'products', 'product-create', context)
+
 	def form_valid(self, form):
 		request = self.request
 		product = form.save()
@@ -218,7 +225,13 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 		return render(self.request, 'products/product-create.html', context)
 
 class AccountProductListView(LoginRequiredMixin, ListView):
-	template_name = 'products/user-list.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['products/mobile/my-items-list.html']
+		else:
+			return ['products/desktop/my-items-list.html']
+
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
 		return Product.objects.by_user(request.user).order_by('-timestamp').active().available()
@@ -230,7 +243,13 @@ class AccountProductListView(LoginRequiredMixin, ListView):
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = ProductUpdateForm
-	template_name = 'products/product-create.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['products/mobile/product-create.html']
+		else:
+			return ['products/desktop/product-create.html']
+
 	def post(self, request, *args, **kwargs):
 		form = self.get_form()
 		if form.is_valid():
@@ -308,8 +327,14 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
 	form_class = ProductCreateForm
-	template_name = 'products/product-delete.html'
 	success_url = '/products/'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['products/mobile/product-delete.html']
+		else:
+			return ['products/desktop/product-delete.html']
+
 	def get_object(self, *args, **kwargs):
 		request = self.request
 		slug = self.kwargs.get('slug')
@@ -368,7 +393,12 @@ def product_report(request):
 	return HttpResponseRedirect(previous)
 
 class FakeProductsListView(LoginRequiredMixin, ListView):
-	template_name = 'products/fake-list.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['products/mobile/fake-list.html']
+		else:
+			return ['products/desktop/fake-list.html']
 
 	def get_queryset(self, *args, **kwargs):
 		return Product.objects.fake()
@@ -380,7 +410,12 @@ class FakeProductsListView(LoginRequiredMixin, ListView):
 
 class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView): 
 	form_class = CheckoutMultiForm
-	template_name='products/checkout.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['products/mobile/checkout.html']
+		else:
+			return ['products/desktop/checkout.html']
 
 
 	def get(self, request, *args, **kwargs):

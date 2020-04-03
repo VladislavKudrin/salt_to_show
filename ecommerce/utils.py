@@ -152,7 +152,7 @@ def stay_where_you_are(request):
 
  
 
-def my_render(request, *args, **kwargs):
+def custom_render(request, *args, **kwargs):
     args_list = list(args)
 
     if request.user_agent.is_mobile:

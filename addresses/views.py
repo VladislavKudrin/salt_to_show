@@ -20,11 +20,6 @@ class AddressCreateView(LoginRequiredMixin, CreateView):
         instance.save()
         return super(AddressCreateView, self).form_valid(form)
 
-    # def get_queryset(self):
-
-    #     return Address.objects.filter(billing_profile=billing_profile)
-
-
 class AddressListView(LoginRequiredMixin, ListView):
     template_name = 'addresses/list.html'
 
@@ -32,7 +27,6 @@ class AddressListView(LoginRequiredMixin, ListView):
         request = self.request
         billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
         return Address.objects.filter(billing_profile=billing_profile)
-
 
 class AddressUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'addresses/update.html'
@@ -43,10 +37,6 @@ class AddressUpdateView(LoginRequiredMixin, UpdateView):
         request = self.request
         billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
         return Address.objects.filter(billing_profile=billing_profile)
-
-
-
-
 
 def checkout_address_create_view(request):
 	form = AddressCheckoutForm(request.POST or None)

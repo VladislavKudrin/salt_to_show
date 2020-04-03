@@ -21,7 +21,7 @@ from addresses.models import Address
 from addresses.forms import AddressForm
 from billing.models import BillingProfile, Card
 from billing.forms import CardForm
-from ecommerce.utils import add_message
+from ecommerce.utils import add_message, custom_render
 
 
 def region_init(request):
@@ -84,11 +84,6 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 			if confirm_qs.count()==1:
 				obj = confirm_qs.first()
 				obj.activate()
-				# if request.session.get('language')=='RU':
-				# 	messages.add_message(request, messages.SUCCESS, 'Ты на сайте')
-				# elif request.session.get('language')=='UA':
-				# 	messages.add_message(request, messages.SUCCESS, 'Ти на сайті')
-				# else:
 				messages.add_message(request, messages.SUCCESS, _("You're in"))
 				email = qs.first().user.email
 				password = qs.first().user.password
@@ -137,8 +132,14 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 	error_css_class = 'error'
 	form_class = RegisterLoginForm
 	success_url = '/'
-	template_name = 'accounts/register.html'
 	default_next='/'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['accounts/mobile/register-login.html']
+		else:
+			return ['accounts/desktop/register-login.html']
+
 	def get(self, request, *args, **kwargs):
 		if request.user.is_authenticated():
 			return redirect('home')
@@ -202,6 +203,12 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 class ProfileView(DetailView):
 	template_name = 'accounts/profile.html'
 
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['accounts/mobile/profile.html']
+		else:
+			return ['accounts/desktop/profile.html']
+
 	def get_context_data(self, *args, **kwargs):
 		username = self.kwargs.get('username')
 		user  = User.objects.filter_by_username(username=username)
@@ -224,7 +231,12 @@ class ProfileView(DetailView):
 		return User.objects.filter_by_username(username=username)
 
 class WishListView(LoginRequiredMixin, ListView):
-	template_name = 'accounts/wish-list.html'
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['accounts/mobile/wishlist.html']
+		else:
+			return ['accounts/desktop/wishlist.html']
 
 	def get_queryset(self, *args, **kwargs):
 		user = self.request.user
@@ -275,11 +287,12 @@ def wishlistupdate(request):
 			}
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
+
 class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
-	template_name='accounts/account-update-view.html'
+
 	def get(self, request, *args, **kwargs):
-		
-		return render(self.request, self.template_name, self.get_context_data())
+		return custom_render(self.request, "accounts", "account-settings", self.get_context_data())
+
 	def get_success_url(self):
 		return reverse("accounts:user-update")
 
@@ -292,13 +305,9 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
 		billing_profile, created = BillingProfile.objects.new_or_get(self.request)
 		card, created = Card.objects.new_or_get(billing_profile)
 		return card
+
 	def get_context_data(self, *args, **kwargs):
 		context = {}
-		# if self.request.POST:
-		# 	context['user_form'] = UserDetailChangeForm(data=self.request.POST, request=self.request, prefix='user_form', instance=self.get_object())
-		# 	context['address_form'] = AddressForm(data=self.request.POST, request=self.request, prefix='address_form', instance=self.get_address())
-		# 	context['card_form'] = CardForm(data=self.request.POST, request=self.request, prefix='card_form', instance=self.get_card())
-		# else:
 		context['user_form'] = UserDetailChangeForm(self.request, prefix='user_form', instance=self.get_object())
 		context['address_form'] = AddressForm(self.request, prefix='address_form', instance=self.get_address())
 		context['card_form'] = CardForm(self.request, prefix='card_form', instance=self.get_card())
@@ -308,19 +317,17 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
 		context['save_btn'] = _('Save')
 		context['logout_btn'] = _('Logout')
 		return context
+
 	def get_object(self):
 		self.object = self.request.user
 		return self.request.user
+
 	def form_valid(self, user_form, address_form, card_form):
 		user_form.save(commit=True)
 		address_form.save(commit=True)
 		card_form.save(commit=True)
 		return(HttpResponseRedirect(self.get_success_url()))
-	# def form_invalid(self, user_form, address_form, card_form):
-	# 	return self.render_to_response(
-	# 		self.get_context_data(user_form=user_form,
-	# 								address_form=address_form,
-	# 								card_form=card_form))
+
 	def post(self, request, *args, **kwargs):
 		user_form = UserDetailChangeForm(data=self.request.POST, files=self.request.FILES, request=self.request, prefix='user_form', instance=self.get_object())
 		address_form = AddressForm(data=self.request.POST, request=self.request, prefix='address_form', instance=self.get_address())

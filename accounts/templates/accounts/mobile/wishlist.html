@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<head>
+<style type="text/css">
+
+   #trigger {
+    visibility: hidden; 
+    display: none; 
+  } 
+
+
+</style>
+</head>
+
+<div class="container">
+	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll;">
+	  		{% include "base/sidebar.html" %}
+	</div> 
+
+	<div class='row'>
+		<div class='col-12'>
+			<p class="heading" id="products-by-user">{% trans 'Wishlist:' %}</p>
+		</div>
+	</div>
+
+<div class='row'>
+	{% if wishes|length > 0 %}
+	{% for obj in wishes %}
+		<div class='col-xs-12 card-full text-center  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+			{% include 'products/snippets/card.html' with instance=obj %}
+			{% if forloop.counter|divisibleby:4 %}
+				</div>
+				</div>
+				<div class='row'>
+				<div class='col-12'>
+				</div>
+			{% else %}
+				</div>
+			{% endif %}
+
+
+	{% endfor %}
+</div>
+</div>
+
+
+
+
+
+
+
+	{% else %}
+
+<div class='col mx-auto'>
+	<div class="heading text-center" style='color:#aeacac;'>{% trans 'No items yet' %}</div>
+</div>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+{% endblock %}
