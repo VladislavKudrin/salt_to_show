@@ -19,7 +19,6 @@ class CategoryFilterView(ListView):
 
 	def get(self, request, *args, **kwargs):
 		context={}
-		words_for_undercategory = {'T-ShirtsAndPolos': 'salt', 'TopsAndBody': 'pepper', 'Shirts': 'cardamom', 'Sweaters': 'anise', 'SweatshirtsAndHoodies': 'cinnamon', 'Jeans': 'coriander', 'Shorts': 'cumin', 'Sweatpants': 'marinade', 'Pants': 'curry', 'Rocks': 'fennel', 'Sneakers': 'garam', 'CasualShoes': 'ginger', 'Boots': 'nutmeg', 'Sandals': 'paprika', 'HighHeels': 'turmeric', 'BugsAndLuggage': 'spice', 'Belts': 'mace', 'Scarves': 'chili', 'Hats': 'cloves', 'JewerlyAndWatches': 'garlic', 'Wallets': 'oregano', 'SocksAndUnderwear': 'rosemary', 'Sunglasses': 'thyme', 'Miscellaneous': 'vanilla', 'HeavyJacketsAndParkas': 'basil', 'LeatherJackets': 'chives', 'Coats': 'dill', 'JeansJackets': 'mint', 'LightJackets': 'sage', 'Dresses': 'fenugreek', 'Overalls': 'parsley'}
 		items_per_page = 32
 		link_codiert = ''
 		link = self.kwargs.get('filter')
@@ -103,6 +102,7 @@ class CategoryFilterView(ListView):
 			page_continue = True
 			context={}
 			if request.GET:
+				print(request.GET)
 				data_brand = request.GET.getlist('brand')
 				data_sort = request.GET.get('sort')
 				data_price = request.GET.getlist('price')
