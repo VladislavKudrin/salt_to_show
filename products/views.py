@@ -41,9 +41,9 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
 	def get_template_names(self):
 		if self.request.user_agent.is_mobile: 
-			return ['products/mobile/product_detail.html']
+			return ['products/mobile/product-detail.html']
 		else:
-			return ['products/desktop/product_detail.html']
+			return ['products/desktop/product-detail.html']
 
 	def get_object(self, *args, **kwargs):
 		slug = self.kwargs.get("slug")

@@ -15,7 +15,7 @@ from ecommerce.utils import my_render
 class CategoryFilterView(ListView):
 
 	def post(self, request, *args, **kwargs):
-		return my_render(request, "products", "list", {})
+		return my_render(request, "products", "product-list", {})
 
 	def get(self, request, *args, **kwargs):
 		context={}
@@ -198,7 +198,7 @@ class CategoryFilterView(ListView):
 		context['condition'] = _('Condition')
 		context['brand'] = _('Brand')
 		context['price'] = _('Price')
-		return my_render(request, "products", "list", context)
+		return my_render(request, "products", "product-list", context)
 
 
 def translation_view(request):
