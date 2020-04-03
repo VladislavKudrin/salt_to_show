@@ -168,7 +168,6 @@ def my_render(request, *args, **kwargs):
         args_list = args_list[:-1] # remove doubles context
         args = tuple(args_list)
         return render(request, *args, **kwargs)
-        return render(request, *args, **kwargs)
 
 
 
