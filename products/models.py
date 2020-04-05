@@ -126,6 +126,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 					else: 
 						link_codiert = link_codiert+"{id_undercategory}".format(id_undercategory=int(id_))+'+'
 			qs = qs.filter(lookups_undercategory)
+			print(qs.count(), 'halloblin')
 		if list_size is not None:
 			print(list_size)
 			lookups_size=(Q(title__iexact='qwerty123'))
@@ -251,6 +252,7 @@ class ProductManager(models.Manager):
 		if data_undercategory:
 			qs_undercat, link_codiert, instance_undercategory = Product.objects.filter_undercategory_size(qs=qs, list_undercategory=data_undercategory, link_codiert = link_codiert)
 			context['undercategory_instance']=instance_undercategory
+			print(qs_undercat.count(), 'ehrere')
 		if data_undercategory and data_category:
 			qs = qs_cat.union(qs_undercat)
 		elif data_category and not data_undercategory:

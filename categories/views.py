@@ -101,7 +101,6 @@ class CategoryFilterView(ListView):
 			page_continue = True
 			context={}
 			if request.GET:
-				print(request.GET)
 				data_brand = request.GET.getlist('brand')
 				data_sort = request.GET.get('sort')
 				data_price = request.GET.getlist('price')
@@ -111,6 +110,15 @@ class CategoryFilterView(ListView):
 				data_undercategory = request.GET.getlist('undercategory')
 				data_size = request.GET.getlist('size')
 				data_condition = request.GET.getlist('condition')
+				if data_undercategory:
+					queryset = Product.objects.select_related('undercategory').filter(undercategory__id__in=data_undercategory)
+				elif data_gender:
+					queryset = Product.objects.select_related('sex').filter(sex__id__in=data_gender)
+				elif data_overcategory:
+					queryset = Product.objects.select_related('overcategory').filter(overcategory__id__in=data_overcategory)
+
+
+				print(queryset.count(), 'my_method nr 2')
 				qs, link_codiert, con = Product.objects.filter_from_link_or_ajax(
 					qs=qs, 
 					list_brand = data_brand, 
@@ -123,6 +131,7 @@ class CategoryFilterView(ListView):
 					list_size=data_size,
 					user = request.user
 					)
+				print(qs.count(), 'here1')
 				if data_sort == 'high':
 					qs=qs.order_by('price')
 				elif data_sort == 'low':
