@@ -169,5 +169,9 @@ def custom_render(request, *args, **kwargs):
         args = tuple(args_list)
         return render(request, *args, **kwargs)
 
-
+def price_to_region(user, price):
+    region_user = user.region
+    if region_user:
+        price = round((int(price)/region_user.currency_mult),6)
+    return price
 

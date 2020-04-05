@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from .models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from products.models import Product
 from .forms import TranslateForm
-from ecommerce.utils import custom_render
+from ecommerce.utils import custom_render, price_to_region
 
 class CategoryFilterView(ListView):
 
@@ -94,51 +94,55 @@ class CategoryFilterView(ListView):
 		except EmptyPage:
 				# If page is out of range (e.g. 9999), deliver last page of results.
 			qs_for_link = paginator.page(paginator.num_pages)
-		qs = Product.objects.all().authentic().available().order_by('-timestamp')
-		qs_cat={}
-		qs_undercat={}
+		queryset = Product.objects.all().authentic().available().order_by('-timestamp')
 		if request.is_ajax():
 			page_continue = True
 			context={}
 			if request.GET:
-				data_brand = request.GET.getlist('brand')
-				data_sort = request.GET.get('sort')
-				data_price = request.GET.getlist('price')
 				data_overcategory = request.GET.get('overcategory')
 				data_gender = request.GET.get('gender')
 				data_category = request.GET.getlist('category')
 				data_undercategory = request.GET.getlist('undercategory')
+				data_brand = request.GET.getlist('brand')
+				data_price = request.GET.getlist('price')
 				data_size = request.GET.getlist('size')
 				data_condition = request.GET.getlist('condition')
+				data_sort = request.GET.get('sort')
 				if data_undercategory:
 					queryset = Product.objects.select_related('undercategory').filter(undercategory__id__in=data_undercategory)
 				elif data_gender:
 					queryset = Product.objects.select_related('sex').filter(sex__id__in=data_gender)
 				elif data_overcategory:
 					queryset = Product.objects.select_related('overcategory').filter(overcategory__id__in=data_overcategory)
-
-
-				print(queryset.count(), 'my_method nr 2')
-				qs, link_codiert, con = Product.objects.filter_from_link_or_ajax(
-					qs=qs, 
-					list_brand = data_brand, 
-					list_condition = data_condition,
-					list_price=data_price,
-					list_overcategory=data_overcategory,
-					list_gender = data_gender, 
-					list_category = data_category, 
-					list_undercategory=data_undercategory, 
-					list_size=data_size,
-					user = request.user
-					)
-				print(qs.count(), 'here1')
-				if data_sort == 'high':
-					qs=qs.order_by('price')
-				elif data_sort == 'low':
-					qs=qs.order_by('-price')
 				else:
-					qs=qs.order_by('-timestamp')
-				object_list = qs.authentic().available()
+					queryset = Product.objects.all()
+				if data_size:
+					queryset = queryset.select_related('size').filter(size__id__in=data_size)
+				if data_brand:
+					queryset = queryset.select_related('brand').filter(brand__id__in=data_brand)
+				if data_condition:
+					queryset = queryset.select_related('condition').filter(condition__id__in=data_condition)
+				if data_price:
+					price_min = data_price[0]
+					price_max = data_price[1]
+					if request.user.is_authenticated():
+						if price_min:
+							price_min = price_to_region(user=user, price = price_min)
+						if price_max:
+							price_max = price_to_region(user=user, price = price_max)
+					if not price_min and price_max:
+						queryset = queryset.filter(price__lte=price_max)
+					elif not price_max and price_min:
+						queryset = queryset.filter(price__gte=price_min)
+					elif price_max and price_min:
+						queryset = queryset.filter(price__range=(price_min, price_max))
+				if data_sort == 'high':
+					queryset=queryset.order_by('price')
+				elif data_sort == 'low':
+					queryset=queryset.order_by('-price')
+				else:
+					queryset=queryset.order_by('-timestamp')
+				object_list = queryset.authentic().available()
 				paginator = Paginator(object_list, items_per_page) 
 				page = request.GET.get('page')
 				try:
@@ -150,19 +154,16 @@ class CategoryFilterView(ListView):
 						# If page is out of range (e.g. 9999), deliver last page of results.
 					object_list = paginator.page(paginator.num_pages)
 				empty_price = all(minmax is '' for minmax in request.GET.getlist('price'))
-				if len(request.GET)==1 and empty_price:
-					link_codiert = 'all'
 				if page:
 					if int(page) > paginator.num_pages:
 						page_continue = False
 				context['object_list']=object_list
 			else:
-				context['object_list']=qs
+				context['object_list']=queryset
 			html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
 			json_data={
 			'html':html_,
 			'link':link_codiert,
-			'count_items':qs.count(),
 			'count_pages': page_continue
 			}
 			return JsonResponse(json_data)
@@ -174,10 +175,7 @@ class CategoryFilterView(ListView):
 		fields_condition = Condition.objects.all()
 		fields_brand = Brand.objects.all()
 		brands_navbar_init = ['Gucci', 'Stone Island', 'Chanel', 'Prada', 'Louis Vuitton', 'Dolce & Gabbana', 'Yves Saint Laurent', 'Fendi', 'Burberry', 'Givenchy', 'Versace', 'Balenciaga', 'Giorgio Armani', 'C.P. Company', 'Calvin Klein', 'Balmain', 'Alexander Wang', 'Boss']
-		brand_navbar_lookups = (Q(brand_name__iexact='nothing'))
-		for brand in brands_navbar_init:
-			brand_navbar_lookups = brand_navbar_lookups|(Q(brand_name__iexact=brand))
-		context['showed_brands_navbar'] = Brand.objects.filter(brand_navbar_lookups)
+		context['showed_brands_navbar'] = Brand.objects.filter(brand_name__in=brands_navbar_init)
 		context['gender_navbar_adults'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Adults'))
 		context['gender_navbar_kids'] = Gender.objects.filter(gender_for=Overcategory.objects.get(overcategory='Kids'))
 		context['object_list']=qs_for_link
