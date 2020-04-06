@@ -144,6 +144,7 @@ class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 		if request.user.is_authenticated():
 			return redirect('home')
 		return super(RegisterLoginView, self).get(request, *args,**kwargs)
+		
 	def get_context_data(self, *args, **kwargs):
 		context = super(RegisterLoginView, self).get_context_data(*args,**kwargs)
 		context['title'] = _('Login | Register')
