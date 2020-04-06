@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load for_loop_extras %}
+{% block content %}
+
+<head>
+<style type="text/css">
+
+.forgot-psswrd {
+	opacity: 0.8;
+}
+
+.forgot-psswrd:hover {
+	opacity: 1;
+} 
+
+body{
+	
+}
+
+
+</style>
+</head>
+
+
+
+<div class="container-fluid">
+	<div class='row'>
+        <div class="mx-auto col-xs-12 col-md-7">
+            <div class="text-center">
+
+				<p class='heading'>{{ title }}</p>
+				<form method = 'POST'> {% csrf_token %}
+					<div class="col-12 col-md-12 pl-0 pr-0">
+						{{form.email|as_crispy_field}}
+					</div>
+					<div class='row'> 
+						<div class="col-11 col-md-11 pr-0 " id='pw'>
+							{{form.password|as_crispy_field}}
+						</div> 
+						<div class="col-1 col-md-1 pl-1 pb-3 my-auto " id='pw'>
+							<div onclick="showpassword(this);" style="font-size:15px">
+								<i class="eye fa fa-eye-slash"></i> 
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn button-black hover-button large-button btn-block">OK</button><br>
+				</form>
+
+				<p class="heading">{{ or_option }}</p>
+		        <a href="{% url 'social:begin' 'google-oauth2' %}{{ request.build_absolute_uri|to_next_path }}"> <button class="btn button-white large-button hover-button btn-block">
+					 <img data-src="{% static 'icons/google.png' %}" class="avatar" style="width:20px; height: 20px">
+		        </button>
+		        </a>
+        		<br><small><a href='{% url "password_reset" %}'>{{ password_forgot }}</a></small>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+
+function showpassword(button) {
+	if ($('.eye').hasClass('fa-eye-slash')) {
+		document.getElementById("id_password").type='text';
+		$('.eye').removeClass('fa-eye-slash').addClass('fa-eye');
+	}
+	else{
+		document.getElementById("id_password").type='password';
+		$('.eye').removeClass('fa-eye').addClass('fa-eye-slash');
+	}
+}
+
+
+// function reveal()
+// {
+// if(document.getElementById('box').checked)
+//    {document.getElementById("id_password").type='text';}
+// else
+// document.getElementById("id_password").type='password';
+// }
+
+
+
+
+</script>	
+
+{% endblock %}

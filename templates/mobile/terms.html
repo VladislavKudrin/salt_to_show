@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<head>
+	<style type="text/css">
+	.container-terms{
+		width:70%;
+	}
+
+	/*For mobile */
+	@media only screen and (max-width: 767px) {
+	.container-terms{
+		width:90%;
+	}
+	}		
+	</style>
+</head>
+
+<body>
+
+{% blocktrans %}
+<div class="container container-terms">
+	<p class="heading text-center">Terms of use</p>
+	<p>This User Agreement (hereinafter the Agreement) governs the relationship between the owner of saltish.co (hereinafter SALT or Administration) on the one hand and the user of the site on the other.</p>
+	<p>SALT is not a media site.</p>
+	<p>By using the site, you agree to the terms of this agreement.</p>
+	<p>
+	  <br>
+	</p>
+	<p class="sub-heading">1. Subject of Agreement</p>
+	<p class="sub-sub-heading">1.1 The administration gives the user the right to post on the site the following information:</p>
+	<p>- Text information;</p>
+	<p>- Photos</p>
+	<p>- Links to materials posted on other sites</p>
+	<p>
+	  <br>
+	</p>
+	<p class="sub-heading">2. Rights and obligations of the parties</p>
+	<p class="sub-sub-heading">2.1 User has the right:</p>
+	<p> - search for information on the site; </p>
+<p> - receive information on the site; </p>
+<p> - create information for the site; </p>
+<p> - distribute information on the site; </p>
+<p> - copy information to other sites with an indication of the source; </p>
+<p> - use the site information for commercial purposes without special permission. </p>
+	<p>
+	  <br>
+	</p>
+	<p class="sub-sub-heading">2.2 The administration has the right: </p>
+<p> - at your own discretion and the need to create, modify, cancel the rules; </p>
+<p> - restrict access to any information on the site; </p>
+<p> - create, modify, delete information; </p>
+<p> - delete accounts. </p>
+	<p>
+	  <br>
+	</p>
+	<p class="sub-sub-heading">2.3 User agrees: </p>
+<p> - ensure the accuracy of the information provided; </p>
+<p> - update the Personal Data provided during registration, if changed; </p>
+<p> - do not disrupt the website; </p>
+<p> - do not create multiple accounts on the Site if in fact they belong to the same person; </p>
+<p> - do not commit actions aimed at misleading other Users; </p>
+<p> - do not register an account on behalf of or in place of another person, with the exception of cases provided for by the legislation of the Russian Federation; </p>
+<p> - do not use scripts (programs) for the automated collection of information and / or interaction with the Site and its Services. </p>
+<p>
+	  <br>
+	</p>
+	<p class="sub-sub-heading">2.4 Administration undertakes: </p>
+<p> - maintain the site’s performance unless it is impossible for reasons beyond the Administration’s control; </p>
+<p> - implement comprehensive protection of the User account. </p>
+<p>
+	  <br>
+	</p>
+	<p class="sub-heading">3. Responsibility of the parties </p>
+<p> - The user is personally responsible for the information he disseminates. </p>
+	<p>
+	  <br>
+	</p>
+	<p class="sub-heading">4. Terms of the Agreement </p>
+<p> This Agreement shall enter into force upon registration on the site. </p>
+<p> The agreement ceases to be valid when a new version appears. </p>
+<p> At any change to this agreement, the administration will notify users in a way convenient for it.</p>
+</div>
+{% endblocktrans %}
+
+</body>
+
+{% endblock %}

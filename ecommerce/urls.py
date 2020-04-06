@@ -8,10 +8,9 @@ from django.views.generic import TemplateView, RedirectView
 from billing.views import payment_method_view, payment_method_createview
 from addresses.views import *
 from accounts.views import RegisterLoginView, WishListView, wishlistupdate, region_init
-from .views import home_page, test_page, ContactPageView, AboutPageView, PrivacyPageView, TermsPageView, FAQPageView
+from .views import home_page, ContactPageView, AboutPageView, PrivacyPageView, TermsPageView, FAQPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
-
 
 
 
@@ -21,7 +20,6 @@ urlpatterns = [
     url(r'^$', home_page, name = 'home'),
     url(r'^messages/', include('chat_ecommerce.urls', namespace='chat')),
     # url(r'^upload/', include('django_file_form.urls')),
-    url(r'^upload/', include('image_uploader.urls', namespace="image_uploader")),
     url(r'^login/$', RegisterLoginView.as_view(), name='login'),
     url(r'^social-auth/', include('social_django.urls', namespace="social")),
     url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
@@ -60,6 +58,10 @@ urlpatterns = [
     url(r'^faq/$', FAQPageView.as_view(), name='faq'),
 ]
 
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#        url(r'^__debug__/', include(debug_toolbar.urls)),] + urlpatterns
 
 
 

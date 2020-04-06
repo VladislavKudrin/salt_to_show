@@ -1,0 +1,172 @@
+/* montserrat-regular - latin_cyrillic-ext_cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat Regular'), local('Montserrat-Regular'),
+       url('../fonts/montserrat-v14-latin_cyrillic-ext_cyrillic-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/montserrat-v14-latin_cyrillic-ext_cyrillic-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-500 - latin_cyrillic-ext_cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Montserrat Medium'), local('Montserrat-Medium'),
+       url('../fonts/montserrat-v14-latin_cyrillic-ext_cyrillic-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/montserrat-v14-latin_cyrillic-ext_cyrillic-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-600 - latin_cyrillic-ext_cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Montserrat SemiBold'), local('Montserrat-SemiBold'),
+       url('../fonts/montserrat-v14-latin_cyrillic-ext_cyrillic-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/montserrat-v14-latin_cyrillic-ext_cyrillic-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* archivo-500 - latin */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Archivo Medium'), local('Archivo-Medium'),
+       url('../fonts/archivo-v6-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/archivo-v6-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* istok-web-regular - cyrillic_latin */
+@font-face {
+  font-family: 'Istok Web';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Istok Web Regular'), local('IstokWeb-Regular'),
+       url('../fonts/istok-web-v14-cyrillic_latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/istok-web-v14-cyrillic_latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+
+/*ONLY MOBILE*/
+@media only screen and (max-width: 768px) { 
+  .heading{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  }
+
+  .middle-heading {
+      font-size: 22px !important;
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.2;
+      font-weight: 400;
+  }
+
+  .sub-heading {
+    font-size: 18px !important;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.2;
+  }
+
+  .sub-sub-heading {
+    font-size: 17px !important;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.2;
+  }
+
+  .small{
+    font-size: 12px;
+  }
+}
+
+
+/*ONLY DESKTOP*/
+@media only screen and (min-width: 768px) { 
+  .small{
+    font-size: 14px;
+  }
+
+  .heading{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+  }
+
+  .middle-heading {
+    font-size: 2.5rem !important;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  .sub-heading {
+    font-size: 24px !important;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.2;
+  }
+
+  .sub-sub-heading {
+    font-size: 18px !important;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.2;
+  }
+
+}
+
+
+/*BOTH*/
+.montserrat{
+font-family: 'Montserrat', sans-serif;
+}
+
+.archivo{
+font-family: 'Archivo', 'Istok Web', sans-serif;
+}
+
+.banner-font {
+  font-size: 22px !important;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+
+
+.tiny{
+font-size: 10px !important;
+color: black !important; 
+}
+
+.logo-font{
+font-family: 'Archivo', 'Istok Web', sans-serif ;
+font-size: 27px !important;
+letter-spacing: 2px;
+}
+
+.logo-font-small{
+  font-family: 'Archivo', 'Istok Web', sans-serif ;
+  font-size: 20px !important;
+  letter-spacing: 1px;
+}
+
+.heading-black{
+  font-size: 2.5rem !important;
+}
+
+.uppercase-font{
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.field-name{
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 25px;
+  font-family: 'Archivo', 'Istok Web', sans-serif; 
+  font-size: 12px;
+}
+
+.uppercase-title{
+  line-height: 1.2;
+     font-family: 'Archivo', 'Istok Web', sans-serif; 
+}
+
+

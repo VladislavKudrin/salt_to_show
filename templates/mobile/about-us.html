@@ -1,0 +1,370 @@
+{% extends "base_no_footer.html" %}
+{% load static %}
+{% url 'products:create' as products_create_url %}
+{% url 'products:list' as product_list_url %}
+{% block content %}
+
+<head>
+<style type="text/css">
+
+html, body {
+/*  max-width: 100%;*/
+  /*height: 100%;*/
+/*  overflow-x: hidden;*/
+}
+
+p span 
+{
+    display: block;
+}
+
+
+.has-stripe {
+  color: white;
+  margin-bottom: 10%;
+  position: relative;
+  z-index: 0;
+}
+
+.has-stripe::after {
+  content: ''; 
+  background-color: black;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transform: skewY(3deg);
+}
+
+.has-stripe-2 {
+  color: white;
+  margin-top: 10%;
+  margin-bottom: 15%;
+  position: relative;
+  z-index: 0;
+}
+
+.has-stripe-2::after {
+  content: ''; 
+  background-color: black;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transform: skewY(-3deg);
+}
+
+.about-page-bazar{
+  font-family: 'Archivo', sans-serif ;
+  font-size: 7vh !important;
+  text-transform: uppercase;
+  font-weight: 100;
+}
+
+.letter{
+  font-family: 'Archivo', sans-serif ;
+  font-size: 13vh !important;
+  padding-right: 5vw;
+}
+
+
+/*Flying text*/
+.fly-in-text {
+    list-style: none;
+    font-family: 'Archivo', sans-serif ;
+  font-size: 13vh !important;
+    position: absolute;
+/*    left: 75%;*/
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.fly-in-text li {
+    display: inline-block;
+    color: black;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+.fly-in-text li:last-child {
+    margin-right: 0;
+}
+.fly-in-text.hidden li {
+    opacity: 0;
+}
+.fly-in-text.hidden li:nth-child(1) { transform: translateX(0px) translateY(-400px); }
+.fly-in-text.hidden li:nth-child(2) { transform: translateX(0px) translateY(-250px); }
+.fly-in-text.hidden li:nth-child(3) { transform: translateX(0px) translateY(-100px); }
+
+
+.first-block{
+  height: 50vw;
+}
+
+.back-elements{
+  display: flex;
+  justify-content:
+  flex-end;
+  position:
+  fixed; top: 70vh;
+}
+
+.second-block{
+height: 40vw;
+}
+
+.dimmed-white{
+  color:#c7c4c4
+}
+
+.third-block{
+  height: 40vw;
+  background-color: white;
+}
+
+.fourth-block{
+  height: 40vw;
+  background-color: white;
+}
+
+.bazar-column{
+  display: flex; justify-content: center;
+}
+
+.slogan{
+  padding-right: 5vw;
+}
+
+.heading-black{
+  padding-bottom: 2vw;
+  font-weight: 100;
+    padding-left: 6vw;
+
+}
+
+.description{
+  font-size: 1.15em;
+  padding-right: 6vw;
+  padding-left: 6vw;
+  line-height: 1.7;
+}
+
+.bazar{
+  opacity: 0.5;
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+
+
+
+.has-stripe {
+  margin-bottom: 15%;
+}
+
+.has-stripe-2 {
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
+
+.about-page-bazar{
+  font-size: 1.5em !important;
+}
+
+.letter{
+  font-size: 3em !important;
+  padding-right: 7%;
+}
+
+.fly-in-text {
+    font-size: 3em !important;
+/*    top: 10% !important;*/
+    right: 0%;
+}
+
+.fly-in-text li:last-child {
+    margin-right: ;
+}
+
+.first-block{
+  height: 90vh;
+}
+
+.back-elements{
+  top: 80%;
+}
+
+.second-block{
+  height: 90vh;
+}
+
+
+.third-block{
+  height: 90vh;
+}
+
+.fourth-block{
+  height: 90vh;
+/*  margin-bottom: 10vh !important ;*/
+}
+
+.slogan{
+  padding-right: 5vw;
+}
+
+.heading-black{
+  padding-bottom: 2vw;
+}
+
+.description{
+  font-size: 0.8em;
+  padding-top: 1vh;
+  text-align: center !important;
+}
+
+.heading-black{
+  font-size: 1.3em !important;
+  font-weight: 100;
+}
+
+.col-about{
+  margin: 0px !important;
+  padding-right: 4vw;
+  padding-left: 4vw;
+  justify-content: center;
+}
+
+p {
+  padding: 0px !important;
+}
+
+.icon{
+  font-size: 3em;
+}
+} 
+
+
+</style>
+</head>
+
+
+
+<div class="row">
+  <div class="col">
+
+
+
+    <div class="row fluid my-auto first-block">
+      <div class="col-12 bazar-column">
+        <div class=" my-auto about-page-bazar">
+        <span class='bazar strike'>{{ bazar }}</span>   {{marketplace}}
+        </div>
+      </div>
+
+      <div class="col-12 back-elements">
+      <span class="lead letter">S</span>
+            <ul class="fly-in-text hidden text-right">
+              <li> S</li>
+              <li> A</li>
+              <li> L</li>                           
+        </ul>
+      </div>
+
+    </div>
+
+
+    <div class="row fluid text-center">
+    <div class="col fluid">
+
+
+    <div id="safe" class="row fluid pt-5 pb-5 has-stripe second-block dimmed-white">
+    <div class="col-xs-12 col-md-3 fluid my-auto">
+    <i class="icon my-auto fas fa-user-shield fa-5x"></i>
+    </div>
+    <div class="col-xs-12 col-md-9 my-auto col-about">
+    <p class="my-auto slogan">
+    <span class='text-left  heading-black' >{{ authentic_slogan }}</span>
+    <span class='text-left description'>{{ authentic_text }}</span>
+    </p>
+    </div>
+    </div>
+
+
+    <div id="ai" class=" row fluid pt-5 pb-5 third-block">
+    <div class="col-xs-12 col-md-3 fluid my-auto">
+    <i class="icon fas fa-brain fa-5x"></i>
+    </div> 
+    <div class="col-xs-12 col-md-9 my-auto slogan col-about">
+    <p class="my-auto slogan" >
+    <span class='text-left heading-black'> {{ai_slogan}}</span>
+    <span class='text-left description'> {{ai_text}}</span>
+    </p>
+    </div>
+    </div>
+
+
+    <div id="simple" class="row  fluid pt-5  has-stripe-2 fourth-block dimmed-white">
+    <div class="col-xs-12 col-md-3 fluid my-auto">
+    <i class="icon fas fa-hand-holding-heart fa-5x"></i>
+    </div>
+    <div class="col-xs-12 col-md-9 my-auto col-about">
+    <p class=" my-auto slogan ">
+    <span class='text-left heading-black'>{{ minimalism_slogan}}</span>
+    <span class='text-left description'>{{ minimalism_text }} </span>
+    </p>
+    </div>
+    </div>
+
+
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+
+$(window).on('scroll', function() {
+   var st = $(this).scrollTop();
+   var wh = $(document).height() - $(window).height();
+   var perc = (st*100)/wh
+// console.log('The percentage is '+perc);
+  if (perc >= 25 && perc < 50) {
+      $('.letter').text('A');
+      $('.fly-in-text').addClass('hidden');
+    }
+  else if (perc >= 52 && perc < 80) {
+      $('.letter').text('L');
+    $('.fly-in-text').addClass('hidden');
+    }
+
+  else if (perc >= 85 && perc < 100) {
+    $('.letter').text('T');
+    $('.fly-in-text').addClass('hidden');
+    }
+
+  else if (perc >= 98) {
+    $('.letter').text('T');
+    $('.fly-in-text').removeClass('hidden');
+    }
+
+   else if (perc <= 25) {
+     $('.letter').text('S'); 
+        $('.fly-in-text').addClass('hidden'); 
+    }
+});
+
+</script>
+
+
+{% endblock %}

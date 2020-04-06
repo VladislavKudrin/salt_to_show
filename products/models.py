@@ -1,20 +1,26 @@
-from io import BytesIO
-from PIL import Image
-from django.core.files import File
+import random
+import os
 
 from django.conf import settings
 from django.db.models import Q
-import random
-import os
 from django.db import models
-from ecommerce.utils import unique_slug_generator, unique_image_id_generator
+
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 from datetime import date
 from django.utils.safestring import mark_safe
 
-from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
+
+from io import BytesIO
+from PIL import Image
+from imagekit.models import ProcessedImageField
+from imagekit import processors 
+from django.core.files import File
+
+
+from ecommerce.utils import unique_slug_generator, unique_image_id_generator
+from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
 
 class ImageOrderUtil(models.Model):
@@ -372,14 +378,11 @@ CURRENCY_CHOICES = {
 			"грн" : "UAH"	
 				}
 def product_post_save_reciever(sender, created, instance, *args, **kwargs):
-	if not created:
-		product = ProductThumbnail.objects.filter(product=instance)
-		if not product.exists():
-			ProductThumbnail.objects.create_update_thumbnail(product=instance)
-	else: # to save original currency 
+	if created: # to save original currency 
 		products = Product.objects.filter(id=instance.id)
 		user = instance.user
 		products.update(currency_original=CURRENCY_CHOICES.get(user.region.currency))
+
 
 
 post_save.connect(product_post_save_reciever, sender=Product)
@@ -389,70 +392,74 @@ class ProductImage(models.Model):
 	image			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	image_order 	= models.DecimalField(decimal_places=0, max_digits=20, default=1)
 	slug			= models.SlugField(default=None, null=True, blank=False)
-	unique_image_id = models.CharField(max_length = 120, default=None, unique = True, blank=False, null=True)
 	def __str__(self):
 		return self.product.title + str(self.image_order)
-	def rotate_image(self, image, rotated_x=0):
-		if rotated_x:
-			int_rotated = int(rotated_x)
-			if int_rotated != 0 or int_rotated%4 != 0:
-				im = Image.open(image)
-				image_rotated = im.rotate(-90*int_rotated, expand=True)
-				img_io = BytesIO()
-				image_rotated.save(img_io, im.format)
-				new_image = File(img_io, name=str(image))
-				self.image = new_image
-				self.save()
-		# 	return new_image
-		# return image
 
+	def to_thumbnail(self):
+		ProductThumbnail.objects.new_or_update(product=self.product, image=self.image)
 
 	def image_tag(self):
 		return mark_safe('<img src="%s" width="500" height="500" style="object-fit: contain;"" />' % (self.image.url))  # Get Image url
 
 	image_tag.short_description = 'Image'
 
-def image_pre_save_reciever(sender, instance, *args, **kwargs):
-	if not instance.unique_image_id:
-		instance.unique_image_id = unique_image_id_generator(instance, 'product_image')
 
-pre_save.connect(image_pre_save_reciever,sender=ProductImage)
+def product_image_post_save(sender, created, instance, *args, **kwargs):
+	if instance.image_order == 1:
+		instance.to_thumbnail()
+
+post_save.connect(product_image_post_save, sender=ProductImage)
+
+
 
 class ProductThumbnailManager(models.Manager):
-	def create_update_thumbnail(self, product):
-		first_image_model = ProductImage.objects.filter(slug=product.slug, image_order=1).first()
-		first_image = first_image_model.image
-		first_image_pil = Image.open(first_image)
-		im_io = BytesIO() 
-		size = settings.IMAGES_THUMBNAIL_SIZE
-		first_image_pil.thumbnail(size)
-		first_image_pil.save(im_io, first_image_pil.format , quality=settings.IMAGES_QUALITY_THUMBNAIL_PRECENTAGE) 
-		new_image = File(im_io, name=product.slug+'.'+first_image_pil.format)
-		thumb_exists = ProductThumbnail.objects.filter(product=product)
-		if thumb_exists.exists():
-			existing_thumb = thumb_exists.first()
-			existing_thumb.thumbnail.delete()
-			existing_thumb.thumbnail = new_image
-			existing_thumb.save()
-		else:
-			ProductThumbnail.objects.create(
-						product=product,
-						thumbnail=new_image,
-										)
-
+	def new_or_update(self, product, image):
+		obj = self.model.objects.filter(product=product)
+		with Image.open(image) as first_image_pil:
+			im_io = BytesIO() 
+			size = settings.IMAGES_THUMBNAIL_SIZE
+			first_image_pil.thumbnail(size)
+			first_image_pil.save(im_io, first_image_pil.format , quality=settings.IMAGES_QUALITY_THUMBNAIL_PRECENTAGE) 
+			new_image = File(im_io, name=product.slug+'.'+first_image_pil.format)	
+			if obj.exists():
+				if obj.count() == 1:
+					thumbnail=obj.first()
+					thumbnail.thumbnail.delete()
+					thumbnail.thumbnail = new_image
+					thumbnail.save()
+				else: 
+					obj.delete()
+					ProductThumbnail.objects.create(
+							product=product,
+							thumbnail=new_image,
+											)
+			else:
+				ProductThumbnail.objects.create(
+							product=product,
+							thumbnail=new_image,
+											)
 
 class ProductThumbnail(models.Model):
 	product = models.ForeignKey(Product, default=None, related_name='thumbnail')
-	thumbnail = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+	thumbnail = ProcessedImageField(upload_to=upload_image_path,
+                                           processors=[
+                                           processors.Thumbnail(600, 600, crop=False)],
+                                           format='JPEG',
+                                           options={'quality': 100}, null=True)
 	objects = ProductThumbnailManager()
 	def __str__(self):
 		return self.product.slug + ' thumbnail'
 
-# def thumbnail_post_save_reciever(sender, created, instance, *args, **kwargs):
-# 	if created:
 
 
-# post_save.connect(thumbnail_post_save_reciever,sender=ProductThumbnail)
+
+
+
+
+
+
+
+
 
 class ReportedProduct(models.Model):
 	user    	= models.ForeignKey(User, related_name='reporter')
@@ -462,18 +469,6 @@ class ReportedProduct(models.Model):
 
 	def __str__(self):
 		return self.product.title
-		
-# def product_create_post_save_reciever(sender, request, instance, *args, **kwargs):
-# 	if request.user.is_authenticated():
-# 		user = request.user
-# 		instance.user = user
-# 	else:
-# 		instance.delete()
-# 		raise ValidationError("You need to be Logged In")
-
-
-# post_save.connect(product_create_post_save_reciever, sender= Product)
-
 
 
 

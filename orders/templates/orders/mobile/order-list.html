@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load for_loop_extras %}
+{% load i18n %}
+<head>
+	
+	<style type="text/css">
+		table {
+		  table-layout: fixed;
+		  width: 100%;
+		  border-collapse: collapse;
+		}
+
+		thead th:nth-child(1) {
+		  width: 35%;
+		}
+
+		thead th:nth-child(2) {
+		  width: 35%;
+		}
+
+		thead th:nth-child(3) {
+		  width: 35%;
+		}
+
+		thead th:nth-child(4) {
+		  width: 35%;
+		}
+
+		th {
+		  padding: 0em 0.5em;
+		  /*text-align: center;
+		  vertical-align: middle;*/
+		}
+
+		td {
+		  padding: 0.5em;
+		  /*text-align: center;
+		  vertical-align: middle;*/
+		}
+
+		thead {
+		  background-color: black;
+		  color: white;
+		}
+
+		thead th{
+		  border-right: 1px solid white;
+		}
+
+		tbody td {
+		  border: 1px solid lightgray;
+		  background-color: white;
+		}
+
+		.orders-heading {
+			font-size: 14px;
+			font-weight: bold;
+		}
+
+		.order-received {
+			color: white;
+			background-color: black;
+		}
+
+		.order-received:hover {
+			color: white;
+			cursor: auto !important;
+		}
+
+		.orders-link {
+			color: gray !important;
+		}
+
+		.orders-link:hover {
+			border-color: #e8eaef #e8eaef black ! important;
+		}
+
+		.orders-link.active {
+			color: black !important;
+			border-color: black black white !important;
+		}
+
+		.orders-tabs {
+			border-bottom: 1px solid black !important;
+		}
+
+		@media only screen and (max-width: 768px) {
+			.container {
+				width: 100% !important;
+			}
+		}
+
+
+
+	</style>
+
+</head>
+
+<body>
+
+<div class="container" style="width: 70%;">
+
+	
+	<div class='row'>
+		<div class='col-12'>
+			<p class="heading">{% trans 'Orders:' %}</p>
+		</div>
+	</div>
+
+
+	<ul class="nav nav-tabs orders-tabs" id="myTab" role="tablist">
+	  <li class="nav-item">
+	    <a class="nav-link orders-link tab {% if tab == 'buy' %}active{% endif %}{% if not tab %}show active{% endif %}" id="buy-tab" data-toggle="tab" href="#buy" role="tab" aria-controls="buy" aria-selected="true">{% trans 'Purchases' %}</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link orders-link tab {% if tab == 'sold' %}active{% endif %}" id="sold-tab" data-toggle="tab" href="#sold" role="tab" aria-controls="sold" aria-selected="false">{% trans 'Sales' %}</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link orders-link tab {% if tab == 'completed' %}active{% endif %}" id="completed-tab" data-toggle="tab" href="#completed" role="tab" aria-controls="completed" aria-selected="false">{% trans 'Archive' %}</a>
+	  </li>
+	</ul>
+
+
+	<div class="tab-content" id="myTabContent">
+	  <div class="tab-pane fade {% if tab == 'buy' %}show active{% endif %}{% if not tab %}show active{% endif %}" id="buy" role="tabpanel" aria-labelledby="buy-tab">
+		{% include 'orders/snippets/order_list/order_buy.html' %}
+		</div>
+
+	  <div class="tab-pane fade {% if tab == 'sold' %}show active{% endif %}" id="sold" role="tabpanel" aria-labelledby="sold-tab">{% include 'orders/snippets/order_list/order_sold.html' %}
+	  </div>
+	  <div class="tab-pane fade {% if tab == 'completed' %}show active{% endif %}" id="completed" role="tabpanel" aria-labelledby="completed-tab">{% include 'orders/snippets/order_list/order_completed.html' %}
+	  </div>
+	</div> 
+
+</div> 
+	
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var link = window.location.href
+	var tab = $(".tab")
+	tab.click(function(e){
+		$target=$(e.target)
+		link = '?tab=' + $target.attr('aria-controls')
+		window.history.replaceState( {} , 'title', link)
+
+	})//tab click 
+
+	
+	// 	var order_button = document.querySelector(".order-button")
+	// if (order_button){
+	// 	order_button.onclick = function() {
+ //    	order_button.innerHTML = '✔';
+ //    	order_button.className += " order-received";
+ //    	order_button.classList.remove("button-white");
+	// 		};
+	// }
+
+</script>
+
+</body>
+
+{% endblock %}

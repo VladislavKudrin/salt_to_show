@@ -6,7 +6,12 @@ from django.http import JsonResponse
 from django.utils.translation import gettext as _
 
 class SearchProductView(ListView):
-	template_name = "search/view.html"
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['search/mobile/search-view.html']
+		else:
+			return ['search/desktop/search-view.html']
 
 	def get(self, request, *args, **kwargs):
 		if request.is_ajax():

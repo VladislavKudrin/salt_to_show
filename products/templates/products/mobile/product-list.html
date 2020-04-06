@@ -1,0 +1,225 @@
+{% load i18n %}
+{% load static %}
+{% load for_loop_extras %}
+{% load checked_time %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | {{ object.title }} </title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link type="text/css" href="{% static 'css/fonts_home.css' %}" rel="stylesheet">
+  <link type="text/css" href="{% static 'css/buttons.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/sol.css' %}">
+  <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/selectize.default.css' %}" rel="stylesheet" type="text/css">
+  <link type="text/css" href="{% static 'css/card.css' %}" rel="stylesheet">
+  <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<style type="text/css">
+ 
+	#slider_filters .ps__rail-x { 
+		display: none !important; 
+	}
+
+
+	 #trigger {
+	 	visibility: hidden;
+	 	display: none;
+	 }
+
+
+	.trenn{
+		margin: 0px;
+	}
+	.custom-select{
+		width: 25% !important;
+
+	}
+	#btn-filters{
+		font-size: 0.875rem;
+	/*	width: 40%;
+	*/	border: 1px solid #ced4da;
+		background-color: white;
+	}
+	#btn-filters:hover{
+		background-color: none;
+	}
+	/*[hide='false']{
+
+	}*/
+	#result-text{
+		font-size: 13pt;
+	}
+	.hide{
+		display: none
+	}
+	.custom-select{
+			margin-top:2px;
+		}
+
+	@media only screen and (max-width: 768px) {
+		.filters-desktop {
+			visibility: hidden;
+			display: none;
+		}
+
+		.custom-select {
+			width: 85% !important;
+		}
+
+		#btn-filters {
+			width: 60% !important;
+			padding: 4px;
+		}
+		.sticky-offset{
+		background-color: white;
+
+	}
+		#slider_filters{
+			position: fixed!important;
+			z-index: 1500;
+	}
+	#btn-filters{
+		font-size: 1rem;
+	/*	width: 40%;
+	*/	border: none!important;
+		background-color: white;
+	}
+
+		#nav_categories{
+			display: none
+		}
+
+	}
+	@media only screen and (min-width: 768px) {
+		.filters-mobile {
+			visibility: hidden;
+			display: none;
+		}
+		.sticky-offset{
+		background-color: white;
+	}
+	#upArrow{
+		visibility: hidden;
+		display: none;
+	}
+	}
+
+
+	nav{
+		margin-bottom: 0px!important;
+	}
+
+	.crossed {
+	     background: 
+	         linear-gradient(to top right,
+	             rgba(0,0,0,0) 0%,
+	             rgba(0,0,0,0) calc(50% - 0.8px),
+	             rgba(0,0,0,1) 50%,
+	             rgba(0,0,0,0) calc(50% + 0.8px),
+	             rgba(0,0,0,0) 100%);
+
+	}
+
+	button[data-toggle='collapse']{
+	    transition: color 0.01s cubic-bezier(0.05, 1.03, 1, 1),background-color 0.01s cubic-bezier(0.05, 1.03, 1, 1),border-color 0.01s cubic-bezier(0.05, 1.03, 1, 1),box-shadow 0.01s cubic-bezier(0.05, 1.03, 1, 1);
+	    transition-property: color, background-color, border-color, box-shadow;
+	    transition-duration: 0.01s, 0.01s, 0.01s, 0.01s;
+	    transition-timing-function: cubic-bezier(0.05, 1.03, 1, 1), cubic-bezier(0.05, 1.03, 1, 1), cubic-bezier(0.05, 1.03, 1, 1), cubic-bezier(0.05, 1.03, 1, 1);
+	    transition-delay: 0s, 0s, 0s, 0s;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	    /* display: none; <- Crashes Chrome on hover */
+	    -webkit-appearance: none;
+	    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+	}
+
+	input[type=number] {
+	    -moz-appearance:textfield; /* Firefox */
+	}
+</style>
+</head>
+<body>
+    {% include 'mobile/navbar.html' %}
+    <div class='container-fluid' style="margin-bottom: 2.3rem;">
+		<input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
+		<div class="sticky-top sticky-offset" id='sticky-offset' style="z-index: 1000">
+		<hr class="trenn mb-2">
+		<div class="row m-0">
+			<div class="col-6 col-md-6 text-left p-0">
+				<button hidden class="btn" hide='true' id='btn-filters' hide_text = '{{ hide_filters }}' show_text = '{{ show_filters }}'>
+
+					<i id="filter-icon" class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
+				</button>
+			</div>
+			<div class='col-6 col-md-6 text-right p-0'>
+				<select class='input-for-filters custom-select custom-select-sm' name='sort' form='form_checkboxes'>
+				    <option value="" disabled selected>{{ sort_by }}</option>
+					<option value='new'>{{ new }}</option>
+					<option value='high'>{{ price_to_high }}</option>
+					<option value='low'>{{ price_to_low }}</option>
+				</select>
+			</div>	
+		</div>
+		<hr class="trenn mt-2">
+		</div>
+		<div class="container-fluid">
+			<div class='row'>
+				<div hidden class='col-3 custom-box position-sticky my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: hidden; overflow-x: hidden; ">
+					{% include 'categories/snippets/filter-box.html' with instance=obj %}
+				</div>
+				<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
+					{% include 'products/snippets/languages/product_lists_cont.html' %}
+				</div>
+				<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" onclick='{$("html, body").animate({ scrollTop: 0 }, "slow")}' style="z-index: 2000; top:90%; left: 85%; cursor: pointer"></i>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(
+			function(){
+				$('body').css('min-height',$(window).outerHeight(true) +50+ 'px')
+				var topNavbar = $('.navbar-mb').outerHeight(true)
+				var topFilterbar = $('.sticky-offset').outerHeight(true) 
+				$('.sticky-offset').css('top', topNavbar + 'px')
+
+				if (!($(window).width() < 768)){
+						$('#slider_filters').css('top',topNavbar+topFilterbar+'px')
+				}//if mobile
+	</script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+	<script type="application/javascript" src="{% static 'js/jquery.morelines.js' %}"></script>
+	<script type="application/javascript" src="{% static 'js/jquery.zoom.js' %}"></script>
+	<script src='{% static "js/categories.js" %}'></script>
+	<script src="{% static 'js/sol.js' %}"></script>
+	<script src="{% static 'js/selectize.js' %}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-150733918-1');
+    </script>
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    {% if request.user.is_authenticated %}
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endif %}
+</body>
+</html>
+
+
+

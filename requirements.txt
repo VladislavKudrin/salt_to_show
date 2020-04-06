@@ -29,7 +29,6 @@ django-compression-middleware==0.4.1
 django-compressor==2.2
 django-crispy-forms==1.7.2
 django-cron==0.5.1
-django-debug-toolbar==2.2
 django-extensions==2.2.5
 django-imagekit==4.0.2
 django-model-utils==3.1.2
@@ -75,6 +74,7 @@ s3transfer==0.2.0
 six==1.12.0
 social-auth-app-django==3.1.0
 social-auth-core==3.1.0
+sorl-thumbnail==12.6.3
 sqlparse==0.3.1
 stripe==2.26.0
 Twisted==19.2.0

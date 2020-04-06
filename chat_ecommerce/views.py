@@ -22,7 +22,13 @@ def set_chat_timezone(request):
     print('wtf')
 
 class InboxView(LoginRequiredMixin, ListView):
-    template_name = 'chat_ecommerce/inbox.html'
+
+    def get_template_names(self):
+        if self.request.user_agent.is_mobile: 
+            return ['chat_ecommerce/mobile/inbox.html']
+        else:
+            return ['chat_ecommerce/desktop/inbox.html']
+
     def get_queryset(self):
         return Thread.objects.by_recent_message(self.request.user)
 
@@ -43,8 +49,13 @@ class InboxView(LoginRequiredMixin, ListView):
 
 
 class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
-    template_name = 'chat_ecommerce/thread.html'
     form_class = ComposeForm
+
+    def get_template_names(self):
+        if self.request.user_agent.is_mobile: 
+            return ['chat_ecommerce/mobile/thread.html']
+        else:
+            return ['chat_ecommerce/desktop/thread.html']
 
     def get_success_url(self):
         return self.request.path

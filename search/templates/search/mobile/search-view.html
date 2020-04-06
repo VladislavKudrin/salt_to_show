@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style type="text/css">
+/*.span {
+  color: red;
+}
+
+
+html, body {*/
+/*    max-width: 100%;*/
+/*    overflow-x: hidden;
+}*/
+
+/*@media only screen and (min-width: 200px) { 
+}
+	.bla{
+		width: 1500px;
+	}
+*/
+
+a:hover {
+    color: black !important;
+}
+
+</style>
+
+<div class="container">
+
+<div class='row'>
+{% if object_list|length > 0 %}
+	{% for obj in object_list %}
+		<div class='col-xs-12 card-full text-center  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
+			{% include 'products/snippets/card.html' with instance=obj %}
+			{% if forloop.counter|divisibleby:4 %}
+				</div>
+				</div>
+				<div class='row'>
+				<div class='col-12'>
+				</div>
+			{% else %}
+				</div>
+			{% endif %}
+
+	{% endfor %}
+</div>
+</div>
+
+<div class = "row pagination justify-content-center">
+	<div class = "col-auto">
+	</div>
+</div>
+
+{% else %}
+
+<div class='col mx-auto'>
+	<div class="heading text-center" style='color:#aeacac;'>{{ emptiness }}</div>
+</div>
+
+
+	{% endif %}
+
+</div>
+
+
+{% endblock %}
