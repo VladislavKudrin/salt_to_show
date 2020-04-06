@@ -8,7 +8,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import pgettext
 
 from marketing.models import MarketingPreference
-from .models import EmailActivation, GuestEmail, Region
+from .models import EmailActivation, Region
 from ecommerce.utils import alphanumeric
 from django import forms
 
@@ -64,26 +64,6 @@ class UserAdminChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
-
-class GuestForm(forms.ModelForm):
-	# email = forms.EmailField()
-    class Meta:
-        model = GuestEmail
-        fields = [
-            'email'
-        ]
-    def __init__(self, request, *args, **kwargs):
-        self.request = request
-        super(GuestForm,self).__init__(*args,**kwargs)
-
-    def save(self, commit=True):
-        # Save the provided password in hashed format
-        obj = super(GuestForm, self).save(commit=False)
-        if commit:
-            obj.save()
-            request = self.request
-            request.session['guest_email_id'] = obj.id
-        return obj
 
 class RegisterLoginForm(forms.ModelForm):
     class Meta:

@@ -4,23 +4,23 @@ from django.db import models
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.db.models.signals import pre_save, post_save
-from django.contrib.auth.models import (
-		AbstractBaseUser, BaseUserManager
-
-)
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
 import random
 import os
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.translation import gettext as _ 
-
 from ecommerce.utils import unique_key_generator, random_string_generator_username
 from products.models import Product
-#send_mail(subject, message, from_email, recipient_list, html_message)
-
 
 DEFAULT_ACTIVATION_DAYS = getattr(settings, "DEFAULT_ACTIVATION_DAYS", 7)
+
+LANGUAGE_CHOISES = (
+	('ru', 'RU'),
+	('ua', 'UA'),
+	('en', 'EN')
+	)
 
 def get_filename_ext(filepath):
 	base_name = os.path.basename(filepath)
@@ -95,8 +95,6 @@ class UserManager(BaseUserManager):
 			)
 		return user
 
-
-
 class Region(models.Model):
 	region        = models.CharField(max_length=120, blank=True, null=True)
 	region_code   = models.CharField(max_length=120, blank=True, null=True)
@@ -116,23 +114,14 @@ class User(AbstractBaseUser):
 	profile_foto = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	wishes       = models.ManyToManyField(Product, related_name='users', blank=True)
 	region       = models.ForeignKey(Region, related_name='users_region', blank=True, null=True)
+	bio 		 = models.TextField(blank=True, null=True, max_length=155) # like in insta
 	
 	USERNAME_FIELD = 'email'
-	#email and password by default
-
 	REQUIRED_FIELDS = []#additional required field
-
-
 	objects=UserManager()
 
 	def __str__(self):
 		return self.email
-
-
-
-	# def begin_chat_url(self):
-	# 	return redirect()
-
 
 	def get_absolute_url(self):
 		return reverse('accounts:profile', kwargs={"username":self.username})
@@ -163,26 +152,11 @@ class User(AbstractBaseUser):
 	def is_admin(self):
 		return self.admin
 
-# def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
-# 	if created:
-# 		billing_profile = Billing_profile.
-
-
-# post_save.connect(post_save_language_pref, sender=LanguagePreference)
-
-
-LANGUAGE_CHOISES = (
-	('ru', 'RU'),
-	('ua', 'UA'),
-	('en', 'EN')
-	)
 class LanguagePreference(models.Model):
 	user     = models.ForeignKey(User, related_name='language')
 	language = models.CharField(max_length=120, default='en', choices=LANGUAGE_CHOISES)
 	def __str__(self):
 		return str(self.user)
-
-
 
 class WishlistQuerySet(models.query.QuerySet):
 	def available(self):
@@ -202,8 +176,6 @@ class Wishlist(models.Model):
 
 
 	objects = WishlistManager()
-
-
 
 class EmailActivationQuerySet(models.query.QuerySet):
 	def confirmable(self):
@@ -243,7 +215,6 @@ class EmailActivationManager(models.Manager):
 			).filter(
 				activated=True
 			)
-
 	
 class EmailActivation(models.Model):
 	user            = models.ForeignKey(User)
@@ -310,12 +281,10 @@ class EmailActivation(models.Model):
 				return sent_mail
 			return False
 
-
 def pre_save_email_activation(sender, instance, *args, **kwargs):
 	if not instance.activated and not instance.forced_expired:
 		if not instance.key:
 			instance.key = unique_key_generator(instance)
-
 pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 	
 def post_save_language_pref(sender, instance, created, *args, **kwargs):
@@ -328,35 +297,7 @@ def post_save_language_pref(sender, instance, created, *args, **kwargs):
 				obj.send_activation()
 			else:
 				EmailActivation.objects.create(user=instance.user, email=instance.user.email, activated=True)
-
-
 post_save.connect(post_save_language_pref, sender=LanguagePreference)
-
-# def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
-# 	if created:
-# 		obj = EmailActivation.objects.create(user=instance, email=instance.email)
-# 		obj.send_activation()
-# 		instance.save()
-
-# post_save.connect(post_save_user_create_reciever, sender=User)
-
-
-class GuestEmail(models.Model):
-	email     = models.EmailField()
-	active    = models.BooleanField(default=True)
-	timestamp = models.DateTimeField(auto_now_add=True)
-	update    = models.DateTimeField(auto_now=True)
-
-	def __str__(self):
-		return self.email
-
-# class Profile(models.Model):
-# 	user 					= models.OneToOneField(User)
-# 	full_name 				= models.CharField(max_length=255, blank=True, null=True)
-# 	profile_foto			= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-	
-# 	def __str__(self):
-# 		return self.user.username
 
 
 		

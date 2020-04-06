@@ -3,8 +3,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
  
-from accounts.forms import RegisterLoginForm, GuestForm
-from accounts.models import GuestEmail
+from accounts.forms import RegisterLoginForm
 from addresses.models import Address
 from addresses.forms import AddressForm, AddressCheckoutForm
 
@@ -85,7 +84,6 @@ def checkout_home(request):
 		return redirect("carts:home")
 
 	login_form = RegisterLoginForm(request=request)
-	guest_form = GuestForm(request=request)
 	address_form = AddressCheckoutForm()
 	billing_address_id = request.session.get("billing_address_id", None)
 	shipping_address_id = request.session.get("shipping_address_id", None)
@@ -131,7 +129,6 @@ def checkout_home(request):
 		"object": order_obj,
 		"billing_profile": billing_profile,
 		"login_form": login_form,
-		"guest_form": guest_form,
 		"address_form": address_form,
 		"address_qs": address_qs,
 		"has_card": has_card,
