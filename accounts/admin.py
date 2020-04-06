@@ -1,24 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-
-from .models import GuestEmail, EmailActivation, Wishlist, LanguagePreference, Region
+from .models import EmailActivation, Wishlist, LanguagePreference, Region
 
 User = get_user_model()
 
 admin.site.register(Wishlist)
 
 class UserAdmin(BaseUserAdmin):
-    # The forms to add and change user instances
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
-
-    # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin
-    # that reference specific fields on auth.User.
     list_display = ('email', 'admin', 'timestamp')
     list_filter = ('admin', 'staff', 'is_active')
     fieldsets = (
@@ -37,28 +29,14 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email', 'full_name')
     ordering = ('email',)
     filter_horizontal = ()
-
-
 admin.site.register(User, UserAdmin)
-
-# Remove Group Model from admin. We're not using it.
-admin.site.unregister(Group)
 
 class EmailActivationAdmin(admin.ModelAdmin):
     search_fields = ['email']
     class Meta:
         model = EmailActivation
-
-
 admin.site.register(EmailActivation, EmailActivationAdmin)
 
-class GuestEmailAdmin(admin.ModelAdmin):
-	search_fields = ['email']
-	class Meta:
-		model = User
-
-
-admin.site.register(GuestEmail, GuestEmailAdmin)
 
 class LanguagePreferenceAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'language']
@@ -69,7 +47,3 @@ class LanguagePreferenceAdmin(admin.ModelAdmin):
 admin.site.register(LanguagePreference, LanguagePreferenceAdmin)
 
 admin.site.register(Region)
-
-# admin.site.register(Profile)
-
-# admin.site.register(Region)

@@ -188,20 +188,25 @@
 
 
 
-                  
-
-                  
-                  
-
 
 
     <ul class="m-0 p-0" id='buttons'>
+
+
+          {% if request.user.is_authenticated %}  
+            {% if request.user.admin %}  
+              <a href='{% url "logout" %}' style='color:red' role="button" aria-pressed="true">*</a>
+            {% endif %}
+          {% endif %}
 
         <li style='display: inline;' class='pl-2'>
             <button id="search-button" class="btn pr-0" type="button" data-toggle="collapse" data-target="#collapseSearchbar" aria-expanded="false" aria-controls="collapseSearchbar" >
                 <i class="fa fa-search fa-1x" style=""></i>
             </button>
         </li> 
+
+
+
 
         <li class="hover-button buy-sell pl-2" style='font-size: 1.2em; position:relative; display: inline;'>
         {% include 'base/language-controll.html' %}

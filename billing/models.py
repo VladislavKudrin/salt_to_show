@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.core.urlresolvers import reverse
-from accounts.models import GuestEmail
 import stripe
 from django.core.validators import RegexValidator
 
@@ -39,10 +38,10 @@ class BillingProfileManager(models.Manager):
 		if user.is_authenticated():
 			obj, created = self.model.objects.get_or_create(
 														user=user, email=user.email)
-		elif guest_email_id is not None:
-			email_obj = GuestEmail.objects.get(id=guest_email_id)
-			obj, created = self.model.objects.get_or_create(
-														email=email_obj.email)
+		# elif guest_email_id is not None:
+		# 	email_obj = GuestEmail.objects.get(id=guest_email_id)
+		# 	obj, created = self.model.objects.get_or_create(
+		# 												email=email_obj.email)
 		else: 
 			pass
 		return obj, created

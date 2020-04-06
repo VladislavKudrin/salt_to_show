@@ -1,90 +1,84 @@
-{% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% load for_loop_extras %}
-{% block content %}
+{% load to_next_path %}
 
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | {% trans 'Login' %}</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
+		.forgot-psswrd {
+			opacity: 0.8;
+		}
 
-.forgot-psswrd {
-	opacity: 0.8;
-}
-
-.forgot-psswrd:hover {
-	opacity: 1;
-} 
-
-body{
-	
-}
-
-
-</style>
+		.forgot-psswrd:hover {
+			opacity: 1;
+		} 
+  </style>
 </head>
-
-
-
-<div class="container-fluid">
-	<div class='row'>
-        <div class="mx-auto col-xs-12 col-md-7">
-            <div class="text-center">
-
-				<p class='heading'>{{ title }}</p>
-				<form method = 'POST'> {% csrf_token %}
-					<div class="col-12 col-md-12 pl-0 pr-0">
-						{{form.email|as_crispy_field}}
-					</div>
-					<div class='row'> 
-						<div class="col-11 col-md-11 pr-0 " id='pw'>
-							{{form.password|as_crispy_field}}
-						</div> 
-						<div class="col-1 col-md-1 pl-1 pb-3 my-auto " id='pw'>
-							<div onclick="showpassword(this);" style="font-size:15px">
-								<i class="eye fa fa-eye-slash"></i> 
+<body>
+    {% include 'mobile/navbar.html' %}
+	<div class='container-fluid' style="margin-bottom: 2.3rem;">
+			<div class='row pt-4'>
+		        <div class="mx-auto col-xs-12 col-md-7">
+		            <div class="text-center">
+						<p class='heading'>{{ title }}</p>
+						<form method = 'POST'> {% csrf_token %}
+							<div class="col-12 col-md-12 pl-0 pr-0">
+								{{form.email|as_crispy_field}}
 							</div>
-						</div>
+							<div class='row'> 
+								<div class="col-11 col-md-11 pr-0 " id='pw'>
+									{{form.password|as_crispy_field}}
+								</div> 
+								<div class="col-1 col-md-1 pl-1 pb-3 my-auto " id='pw'>
+									<div onclick="showpassword(this);" style="font-size:15px">
+										<i class="eye fa fa-eye-slash"></i> 
+									</div>
+								</div>
+							</div>
+							<button type="submit" class="btn button-black hover-button large-button btn-block">OK</button>
+						</form>
+						<small><a href='{% url "password_reset" %}'>{{ password_forgot }}</a></small>
+						<p class="heading pt-2">{{ or_option }}</p>
+				        <a href="{% url 'social:begin' 'google-oauth2' %}{{ request.build_absolute_uri|to_next_path }}"> <button class="btn button-white large-button hover-button btn-block">
+							 <img src="{% static 'icons/google.png' %}" class="avatar" style="width:20px; height: 20px">
+				        </button>
+				        </a>
 					</div>
-					<button type="submit" class="btn button-black hover-button large-button btn-block">OK</button><br>
-				</form>
-
-				<p class="heading">{{ or_option }}</p>
-		        <a href="{% url 'social:begin' 'google-oauth2' %}{{ request.build_absolute_uri|to_next_path }}"> <button class="btn button-white large-button hover-button btn-block">
-					 <img data-src="{% static 'icons/google.png' %}" class="avatar" style="width:20px; height: 20px">
-		        </button>
-		        </a>
-        		<br><small><a href='{% url "password_reset" %}'>{{ password_forgot }}</a></small>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
-
-<script type="text/javascript">
-
-
-function showpassword(button) {
-	if ($('.eye').hasClass('fa-eye-slash')) {
-		document.getElementById("id_password").type='text';
-		$('.eye').removeClass('fa-eye-slash').addClass('fa-eye');
-	}
-	else{
-		document.getElementById("id_password").type='password';
-		$('.eye').removeClass('fa-eye').addClass('fa-eye-slash');
-	}
-}
-
-
-// function reveal()
-// {
-// if(document.getElementById('box').checked)
-//    {document.getElementById("id_password").type='text';}
-// else
-// document.getElementById("id_password").type='password';
-// }
-
-
-
-
-</script>	
-
-{% endblock %}
+    </div>
+    {% include 'mobile/footer.html' %}
+	<script type="text/javascript">
+		function showpassword(button) {
+			if ($('.eye').hasClass('fa-eye-slash')) {
+				document.getElementById("id_password").type='text';
+				$('.eye').removeClass('fa-eye-slash').addClass('fa-eye');
+			}
+			else{
+				document.getElementById("id_password").type='password';
+				$('.eye').removeClass('fa-eye').addClass('fa-eye-slash');
+			}
+		}
+	</script>	
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-150733918-1');
+    </script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+</body>
+</html>
