@@ -28,21 +28,8 @@
 		font-size: 12px;
 	}
 
-
-	.b-description_readmore_button{
-		font-weight: 600;
-		font-size: 20px !important;
-	}
-
-
-
 	#published-line {
 		line-height: 1;
-	}
-
-
-	html, body {
-	    max-width: 100%;
 	}
 
 	.hidden {
@@ -60,11 +47,17 @@
 	    border-radius: 100% !important;
 	}
 
-
 	.morecontent span {
 		display: none;
 	}
 
+	.b-description_readmore_button{
+		font-weight: 600;
+		font-size: 20px !important;
+	    cursor: pointer;
+	    text-align: center;
+	    margin-left: 4rem;
+	}
 
 	.b-description_readmore_ellipsis:after {    
 	  content: '';
@@ -75,17 +68,7 @@
 	  width: 75%;
 	  height: 20px;    
 	  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 65%);
-	} 
-
-	.b-description_readmore_button {
-	    font-size: 11px;
-	    /* display: inline-block; */
-	    /* width: 100px; */
-	    /* border: 1px solid black; */
-	    /* padding: 4px 0; */
-	    cursor: pointer;
-	    text-align: center;
-	 }
+	}
 
 	 .b-description_readmore_button:hover {
 	 	color: gray;
@@ -94,7 +77,6 @@
 	p { 
 	    margin-block-end: 0em !important;
 	}
-
 
 	/*For not popping up...*/
 	.fixed-top, .sticky-top{
@@ -107,49 +89,25 @@
 	    top: 50px;
 	}
 
-	@media only screen and (max-width: 1600px) {
-		.authenticity-text {
-			padding-top: 12%;
-		}
+	html, body {
+		max-width: 100%;
+		overflow-x: hidden;
 	}
 
-	@media only screen and (min-width: 1600px) {
-		.authenticity-text {
-			padding-top: 5%	;
-		}
+	img {
+		max-width: 320px !important;
+		max-height: 240px !important;
 	}
 
-
-	@media only screen and (max-width: 700px) {
-		.alert-success {
-	    top: 100px;
-	}
-
-		html, body {
-	    max-width: 100%;
-	    overflow-x: hidden;
-		}
-
-		img {
-			max-width: 320px !important;
-			max-height: 240px !important;
-		}
-
-		.alert-success {
-	    top: 70px !important;
-		}
-		
+	.alert-success {
+		top: 70px !important;
 	}
 
 	._rotate-right {
 	    transform: rotate(270deg);
 	}
 
-	.underline{
-		text-decoration: underline;
-	}
-
-	#onhover:hover {
+	.underline, .underline:hover{
 		text-decoration: underline;
 	}
 
@@ -176,6 +134,10 @@
 	.uppercase-font {
 		text-transform: uppercase;
 		font-size: 12px;
+	}
+
+	.carousel-control-next, .carousel-control-prev {
+		opacity: 1;
 	}
 
 </style>
@@ -205,11 +167,11 @@
 			</div>
 		</div>
 		<div class="arrows">
-			<a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev" style="position: absolute; top: 50%; bottom: 50%;">
+			<a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev" style="position: absolute; top: 40%; bottom: 50%; left: 1%;">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			<span class="sr-only">Previous</span>
 			</a>
-			<a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next" style="position: absolute; top: 50%; bottom: 50%;">
+			<a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next" style="position: absolute; top: 40%; bottom: 50%; right: 1%;">
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
 			<span class="sr-only">Next</span>
 			</a>
