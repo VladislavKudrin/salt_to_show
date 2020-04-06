@@ -29,6 +29,10 @@
 
 
   <style type="text/css">
+			html, body {
+			    max-width: 100%;
+			}
+
 			.username-text {
 				overflow: hidden; 
 				white-space: nowrap; 
@@ -47,28 +51,8 @@
 			}
 
 
-			.b-description_readmore_button{
-				font-weight: 600;
-				font-size: 20px !important;
-			}
-
-
-
 			#published-line {
 				line-height: 1;
-			}
-
-
-			html, body {
-			    max-width: 100%;
-			}
-
-			.hidden {
-			    display:none;
-			}
-
-			#more {
-				display: none;
 			}
 
 			.avatar-pdv{
@@ -77,37 +61,6 @@
 			    object-fit: cover;
 			    border-radius: 100% !important;
 			}
-
-
-			.morecontent span {
-				display: none;
-			}
-
-
-			.b-description_readmore_ellipsis:after {    
-			  content: '';
-			  display: inline-block;
-			  position: absolute;
-			  bottom: 0;
-			  right: 0;
-			  width: 75%;
-			  height: 20px;    
-			  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 65%);
-			} 
-
-			.b-description_readmore_button {
-			    font-size: 11px;
-			    /* display: inline-block; */
-			    /* width: 100px; */
-			    /* border: 1px solid black; */
-			    /* padding: 4px 0; */
-			    cursor: pointer;
-			    text-align: center;
-			 }
-
-			 .b-description_readmore_button:hover {
-			 	color: gray;
-			 }
 
 			p { 
 			    margin-block-end: 0em !important;
@@ -122,52 +75,19 @@
 
 			/* for django messages be not on top */
 			.alert-success {
-			    top: 50px;
+		    top: 70px !important;
 			}
 
-			@media only screen and (max-width: 1600px) {
-				.authenticity-text {
-					padding-top: 12%;
-				}
-			}
-
-			@media only screen and (min-width: 1600px) {
-				.authenticity-text {
-					padding-top: 5%	;
-				}
-			}
-
-
-			@media only screen and (max-width: 700px) {
-				.alert-success {
-			    top: 100px;
-			}
-
-				html, body {
-			    max-width: 100%;
-			    overflow-x: hidden;
-				}
-
-				img {
-					max-width: 320px !important;
-					max-height: 240px !important;
-				}
-
-				.alert-success {
-			    top: 70px !important;
-				}
-				
+			img {
+				max-width: 320px !important;
+				max-height: 240px !important;
 			}
 
 			._rotate-right {
 			    transform: rotate(270deg);
 			}
 
-			.underline{
-				text-decoration: underline;
-			}
-
-			#onhover:hover {
+			.underline {
 				text-decoration: underline;
 			}
 
@@ -179,9 +99,11 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 				overflow: hidden;
+				text-decoration: underline;
+				font-size: 14px;
 			}
 
-			.share svg {
+			.location svg, .share svg {
 				width: 12px !important;
 				height: 14px;
 			}
@@ -195,6 +117,7 @@
 				text-transform: uppercase;
 				font-size: 12px;
 			}
+
   </style>
 </head>
 <body>
@@ -203,14 +126,22 @@
 
 
 		<div class='row'>
-			<div class='col' style="display: flex; justify-content: center; margin-top: 80px;">
+			<div class="col-12 pb-2 user-input" style="margin-top: 80px;"> 
+				<a class='underline' href="{{ object.sex.get_absolute_url }}">{% trans object.sex.gender_eng %}</a>
+					<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
+					<a class='underline' href="{{ object.category.get_absolute_url }}">{% trans object.category.category_eng %}</a>
+					<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
+					<a class='underline' href="{{ object.undercategory.get_absolute_url }}">{% trans object.undercategory.undercategory_eng %}
+				</a>
+			</div>
+			<div class='col' style="display: flex; justify-content: center;">
 				{% if object.images.all %}
 				<div id="carouselIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
 					<div class="carousel-inner" style='min-height: 240px'>
 						{% for image in images %}
 							{% if image.image_order == 1 %}
 								<div class="carousel-item active" class="carousel slide" data-interval="false">
-									<img data-src="{{ image.image.url }}" alt="...">
+									<img class="pdv-img" data-src="{{ image.image.url }}" alt="...">
 								</div>
 							{% endif %}
 						{% endfor %}
@@ -218,7 +149,7 @@
 						{% for image in images %}
 							{% if not image.image_order == 1 %}
 								<div class="carousel-item" data-interval="false">
-									<img data-src="{{ image.image.url }}" alt="...">
+									<img class="pdv-img" data-src="{{ image.image.url }}" alt="...">
 								</div>
 							{% endif %}
 						{% endfor %}
@@ -238,21 +169,15 @@
 			</div>
 		</div>
 
-		<div class="row mt-3">
-			<div class="col-12 pb-3 user-input" > 
-				<a class='underline' href="{{ object.sex.get_absolute_url }}">{% trans object.sex.gender_eng %}</a>
-					<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
-					<a class='underline' href="{{ object.category.get_absolute_url }}">{% trans object.category.category_eng %}</a>
-					<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
-					<a class='underline' href="{{ object.undercategory.get_absolute_url }}">{% trans object.undercategory.undercategory_eng %}
-				</a>
-			</div>
-			<div class="col-12 pb-3">
+		<div class="row mt-4">
+			<div class="col-12 pb-4">
 				<div class="row">
 					<div class="col-10">
 						<div class="row">
 							<div class="col-12 brand-name">{{ object.brand }}</div>
-							<div class="col-12">{{ object.price|to_user_currency:request }}</div>
+							<div class="col-12" style="font-size: 14px;">
+								{{ object.price|to_user_currency:request }}
+							</div>
 						</div>
 					</div>
 					<div class="col-2 detail-likes">
@@ -265,7 +190,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12 pb-3">
+			<div class="col-12 pb-0">
 				{% if not object.is_paid %}
 					{% if request.user.is_authenticated and request.user == object.user %}
 						{% include 'products/snippets/logged-user-update-card.html' with instance=object %}
@@ -280,7 +205,7 @@
 			</div>
 			<div class="col-12">
 				<div class="row">
-					<div class="col-8 pt-1 uppercase-font">
+					<div class="col-8 uppercase-font" style="padding-top: 0.15rem;">
 						{% if object.authentic == 'authentic' %}
 							<i class="fas fa-shield-alt fa-1x"></i><span> {{ authentic }}</span>
 					    {% elif object.authentic == 'fake' %}
@@ -330,49 +255,56 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-12 pt-3 pb-3 uppercase-title" >{{ object.title }}</div>
+			<div class="col-12 pt-4 pb-4 uppercase-title" style="font-weight: bold; font-size: 14px;">{{ object.title }}</div>
+
 			<div class="col-4 field-name uppercase">{{ size }}</div>
 			<div class="col-8  my-auto" style='font-size: 12px; padding-bottom:1px'>{{ object.size.size }}</div>
 			<div class="col-4 field-name uppercase">{{ condition }}</div>
 			<div class="col-8  my-auto" style='font-size: 12px; padding-bottom:4px'>{% trans object.condition.condition_eng %}</div>
-			<div class="col-4 field-name uppercase">{{ description }}</div>
-			<div class="col-8 my-auto b-description_readmore js-description_readmore" style='font-size: 12px; overflow-wrap: break-word;'>{{ object.description|linebreaks }}</div>
-			<div class="col-12 pt-3 pb-2">
+			<div class="col-4 field-name uppercase">Доставка:</div>
+			<div class="col-8  my-auto" style='font-size: 12px; padding-bottom:4px'>100 грн</div>
+
+			<div class="col-12 pt-4">
+				<span class="field-name uppercase" style="font-weight: bold;">{{ description }}</span>
+				<span class="my-auto" style='font-size: 12px; overflow-wrap: break-word; line-height: 1.25;'>{{ object.description|linebreaks }}</span>
+			</div>
+
+			<div id="published-line" class="col-12 pt-3">
+				<span class='user-input text' style="color: gray;">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
+				</span>
+			</div>
+
+
+			<div class="col-12 pt-4">
 				<div class="row">
-					<div class="col-8">
+					<div class="col-3 pr-0">
+						{% if object.user.profile_foto %}
+							<a href='{{ object.user.get_absolute_url }}'><img  data-src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv" alt="..." ></a>
+						{% else %}
+							<a href='{{ object.user.get_absolute_url }}'><img data-src="{% static 'img/user_noname.png' %}" class="avatar-pdv" ></a>
+						{% endif %}
+					</div>
+					<div class="col-9 pl-0">
 						<div class="row">
-							<div class="col-12 pr-0 username-text">{{ object.user.username }}</div>
-							<div class="col-1 pr-3">
-								<i class="fas fa-map-marker-alt"></i>
-							</div>
-							<div class="col-7 pl-0" style="display: flex; align-items: center;">
-								<span class='user-input text'>{{ region }}</span>
+							<div class="col-12 pl-0 username-text">{{ object.user.username }}</div>
+							<div class="col-12 pl-0" style="display: flex; align-items: center;">
+								<span class="location"><i class="fas fa-map-marker-alt"></i></span>
+								<span class='user-input pl-1'>{{ region }}</span>
 							</div>
 						</div>
 					</div>
-					<div class="col-4 text-center">
-						{% if object.user.profile_foto %}
-							<a href='{{ object.user.get_absolute_url }}'><img  data-src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv  ml-2" alt="..." ></a>
-						{% else %}
-							<a href='{{ object.user.get_absolute_url }}'><img data-src="{% static 'img/user_noname.png' %}" class="avatar-pdv ml-2" ></a>
-						{% endif %}
-					</div>
 				</div>
 			</div>
-			<div id="published-line" class="col my-auto">
+<!-- 			<div id="published-line" class="col-12 pt-4">
 				<span class='user-input text'>{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
 				</span>
-			</div>
+			</div> -->
 		</div>
 
-	        <!--Footer (+ padding for it-->
-         <div class="row fluid info" style='padding-top: 76px; '>
-        </div>
         {% include 'mobile/footer.html' %}
     </div>
         {% block script %}{% endblock %}
     {% include 'base/js.html' %}
-	<script type="application/javascript" src="{% static 'js/jquery.morelines.js' %}"></script>
 	<script type="application/javascript" src="{% static 'js/jquery.zoom.js' %}"></script>
 	<script type="text/javascript">
 
@@ -392,24 +324,6 @@
 		  $(".share").click(function(){
 		    $(".share-to-hide").toggle();
 		  });
-		});
-
-
-
-		$('.js-description_readmore').moreLines({
-		  linecount: 3,
-		  // default CSS classes
-		  baseclass: 'b-description', 
-		  basejsclass: 'js-description',
-		  classspecific: '_readmore',
-
-		  // custom text
-		  buttontxtmore: "+", 
-		  buttontxtless: "-",
-
-		  // animation speed in milliseconds
-		  animationspeed: 250
-		  
 		});
 
 		var currentPath = window.location.href

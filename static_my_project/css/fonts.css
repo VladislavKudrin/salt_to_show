@@ -158,15 +158,15 @@ letter-spacing: 2px;
 
 .field-name{
   text-transform: uppercase;
-  font-weight: 600;
+  /*font-weight: 600;*/
   line-height: 25px;
-  font-family: 'Archivo', 'Istok Web', sans-serif; 
+  font-family: 'Montserrat', 'Istok Web', sans-serif; 
   font-size: 12px;
 }
 
 .uppercase-title{
   line-height: 1.2;
-     font-family: 'Archivo', 'Istok Web', sans-serif; 
+     font-family: 'Montserrat', 'Istok Web', sans-serif; 
 }
 
 

@@ -542,6 +542,9 @@ html,body{
   font-size : 15px;
   color     : black;
 }*/
+.carousel-control-next:focus, .carousel-control-prev:focus {
+  opacity: 0.5;
+}
 
 .carousel-control-next-icon, .carousel-control-prev-icon {
   display: inline-block;

@@ -5,7 +5,7 @@
 
 		{% if request.user != object.user and request.user.region.region_code == 'ua' and object.is_payable %}
 
-		<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
+		<a href="{% url 'products:checkout' object.id %}" class="btn pdv button-black btn-block">{% trans 'Купить безопасно' %}</a>
 
 		{% endif %} 
 	{% endif %}
@@ -13,7 +13,7 @@
 	{% if not object.order.is_paid %}
 		{% if object.is_payable %}
 
-		<a href="{% url 'products:checkout' object.id %}" class="btn hover-button button-black medium-button btn-block">{% trans 'Купить безопасно' %}</a>
+		<a href="{% url 'products:checkout' object.id %}" class="btn pdv button-black btn-block">{% trans 'Купить безопасно' %}</a>
 
 		{% endif %} 
 	{% endif %} 
