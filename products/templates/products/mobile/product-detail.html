@@ -1,6 +1,8 @@
 {% load i18n %}
 {% load static %}
-{% load for_loop_extras %}
+{% load to_user_currency %}
+{% load generalize %}
+{% load format_decimal %}
 {% load checked_time %}
 
 <!DOCTYPE html>
@@ -14,9 +16,8 @@
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 	<style type="text/css">
@@ -24,26 +25,11 @@
 		    max-width: 100%;
 		}
 
-		.username-text {
-			overflow: hidden; 
-			white-space: nowrap; 
-			text-overflow: ellipsis;
-		}
-
 		.zoomImg{
 			cursor: zoom-in!important;
 		}
 		.zoomedInCursor{
 			cursor: zoom-out!important;
-		}
-
-		.user-input{
-			font-size: 12px;
-		}
-
-
-		#published-line {
-			line-height: 1;
 		}
 
 		.avatar-pdv{
@@ -82,15 +68,10 @@
 			text-decoration: underline;
 		}
 
-		.detail-likes {
-			font-size: 12px;
-		}
-
-		.brand-name {
+		.medium-ellipsis {
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			overflow: hidden;
-			text-decoration: underline;
 			font-size: 14px;
 		}
 
@@ -103,11 +84,6 @@
 			width: 16px;
 			height: 16px;
 		}
-
-		.uppercase-font {
-			text-transform: uppercase;
-			font-size: 12px;
-		}
 	</style>
 </head>
 <body>
@@ -116,7 +92,7 @@
 
 
 		<div class='row'>
-			<div class="col-12 pb-2 user-input" style="margin-top: 80px;"> 
+			<div class="col-12 pb-2 small" style="margin-top: 80px;"> 
 				<a class='underline' href="{{ object.sex.get_absolute_url }}">{% trans object.sex.gender_eng %}</a>
 					<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
 					<a class='underline' href="{{ object.category.get_absolute_url }}">{% trans object.category.category_eng %}</a>
@@ -164,13 +140,11 @@
 				<div class="row">
 					<div class="col-10">
 						<div class="row">
-							<div class="col-12 brand-name">{{ object.brand }}</div>
-							<div class="col-12" style="font-size: 14px;">
-								{{ object.price|to_user_currency:request }}
-							</div>
+							<div class="col-12 medium-ellipsis underline">{{ object.brand }}</div>
+							<div class="col-12" style="font-size: 14px;">{{ object.price|to_user_currency:request }}</div>
 						</div>
 					</div>
-					<div class="col-2 detail-likes">
+					<div class="col-2 small">
 						<div class="row">
 							<div class="col-12 text-center pl-0">
 								{% include 'accounts/snippets/wish-list-update-detail.html' with product=object %}
@@ -195,7 +169,7 @@
 			</div>
 			<div class="col-12">
 				<div class="row">
-					<div class="col-8 uppercase-font" style="padding-top: 0.15rem;">
+					<div class="col-8 field-name" style="padding-top: 0.15rem;">
 						{% if object.authentic == 'authentic' %}
 							<i class="fas fa-shield-alt fa-1x"></i><span> {{ authentic }}</span>
 					    {% elif object.authentic == 'fake' %}
@@ -206,20 +180,16 @@
 					</div>
 					<div class="col-4">
 						<div class="row">
-							<div class="col-12">
-								<div class="row">
-									<div class="col-6 text-right pr-0 share" title="Share"><i class="fas fa-external-link-alt"></i></div>
-									<div class="col-6">
-										{% include 'products/snippets/product-report.html' with product=object %}
-									</div>
-								</div>
+							<div class="col-6 text-right pr-0 share" title="Share"><i class="fas fa-external-link-alt"></i></div>
+							<div class="col-6">
+								{% include 'products/snippets/product-report.html' with product=object %}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class='container share-to-hide pl-0 pr-0' style='display:none'>
-				<div class='col-12 share-icons pt-2' style='display: flex; flex-direction: row;justify-content: space-between;'>
+				<div class='col-12 share-icons pt-2' style='display: flex; flex-direction: row; justify-content: space-between;'>
 					<a href="http://twitter.com/share?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Twitter">
 					<i class="fab fa-twitter"></i></a>
 					<a href="whatsapp://send?text={{request.build_absolute_uri}}" target="_blank" title="Share with Whatsapp">
@@ -236,22 +206,22 @@
 					<a onclick="copyUrl()"><i class="fas fa-copy"></i></a>
 				</div>
 			</div>
-			<div class="col-12 pt-4 pb-4 uppercase-title" style="font-weight: bold; font-size: 14px;">{{ object.title }}</div>
+			<div class="col-12 pt-4 pb-4 small-line-height" style="font-weight: bold; font-size: 14px;">{{ object.title }}</div>
 
-			<div class="col-4 field-name uppercase">{{ size }}</div>
-			<div class="col-8  my-auto" style='font-size: 12px; padding-bottom:1px'>{{ object.size.size }}</div>
-			<div class="col-4 field-name uppercase">{{ condition }}</div>
-			<div class="col-8  my-auto" style='font-size: 12px; padding-bottom:4px'>{% trans object.condition.condition_eng %}</div>
-			<div class="col-4 field-name uppercase">Доставка:</div>
-			<div class="col-8  my-auto" style='font-size: 12px; padding-bottom:4px'>100 грн</div>
+			<div class="col-4 field-name">{{ size }}</div>
+			<div class="col-8 my-auto small">{{ object.size.size }}</div>
+			<div class="col-4 field-name">{{ condition }}</div>
+			<div class="col-8 my-auto small">{% trans object.condition.condition_eng %}</div>
+			<div class="col-4 field-name">{% trans 'Shipping:' %}</div>
+			<div class="col-8 my-auto small">{{ object.national_shipping|format_decimal }} грн</div>
 
 			<div class="col-12 pt-4">
-				<span class="field-name uppercase" style="font-weight: bold;">{{ description }}</span>
-				<span class="my-auto" style='font-size: 12px; overflow-wrap: break-word; line-height: 1.25;'>{{ object.description|linebreaks }}</span>
+				<span class="field-name" style="font-weight: bold;">{{ description }}</span>
+				<span class="my-auto small small-line-height" style='overflow-wrap: break-word;'>{{ object.description|linebreaks }}</span>
 			</div>
 
-			<div id="published-line" class="col-12 pt-3">
-				<span class='user-input text' style="color: gray;">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
+			<div class="col-12 pt-3">
+				<span class='small' style="color: gray;">{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
 				</span>
 			</div>
 
@@ -267,25 +237,20 @@
 					</div>
 					<div class="col-9 pl-0">
 						<div class="row">
-							<div class="col-12 pl-0 username-text">{{ object.user.username }}</div>
+							<div class="col-12 pl-0 medium-ellipsis">{{ object.user.username }}</div>
 							<div class="col-12 pl-0" style="display: flex; align-items: center;">
 								<span class="location"><i class="fas fa-map-marker-alt"></i></span>
-								<span class='user-input pl-1'>{{ region }}</span>
+								<span class='small pl-1'>{{ region }}</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-<!-- 			<div id="published-line" class="col-12 pt-4">
-				<span class='user-input text'>{{ posted }} {{ object.timestamp|timesince|generalize }} {{ ago }}
-				</span>
-			</div> -->
 		</div>
 
         {% include 'mobile/footer.html' %}
     </div>
-        {% block script %}{% endblock %}
-    {% include 'base/js.html' %}
+	   
 	<script type="application/javascript" src="{% static 'js/jquery.zoom.js' %}"></script>
 	<script type="text/javascript">
 
@@ -314,12 +279,7 @@
 		  });
 		});
 
-		var currentPath = window.location.href
-		if ((currentPath.indexOf("products/view") != -1) && ($(window).width() < 1200)){
-			$('.sticky-top').addClass('fixed-top').removeClass('sticky-top');
-		} else {
-			$('.sticky-top').addClass('fixed-top').removeClass('sticky-top bg-white');		
-		}
+
 	</script>	
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>

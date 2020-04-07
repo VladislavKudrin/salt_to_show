@@ -7,7 +7,7 @@
 {% block content %}
 
 <head>
-<link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
 <input type="hidden" id='language_pref' name="language_pref" value="{{ request.session.language }}">
 
 <style type="text/css">
@@ -260,7 +260,7 @@
 		<a class='underline' href="{{ object.undercategory.get_absolute_url }}">{% trans object.undercategory.undercategory_eng %}
 	</a>
 	</div>
-	<div class="col-12 pb-3 uppercase-title" >{{ object.title }}</div>
+	<div class="col-12 pb-3 small-line-height" >{{ object.title }}</div>
 
 
 	<div class="col-6 field-name">{{ size }}</div>
