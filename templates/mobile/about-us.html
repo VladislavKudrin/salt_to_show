@@ -1,370 +1,303 @@
-{% extends "base_no_footer.html" %}
 {% load static %}
-{% url 'products:create' as products_create_url %}
-{% url 'products:list' as product_list_url %}
-{% block content %}
-
+{% load i18n %}
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | {% trans 'Why SALT?' %}</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link type="text/css" href="{% static 'css/all.css' %}" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
 
-html, body {
-/*  max-width: 100%;*/
-  /*height: 100%;*/
-/*  overflow-x: hidden;*/
-}
+    p{
+      margin-bottom: 1.5rem !important;
+    }
+    .about-page-bazar{
+      font-size: 1.5em !important;
+      text-transform: uppercase;
+      font-weight: 100;
+      font-weight: bold;
+    }
 
-p span 
-{
-    display: block;
-}
+    .letter{
+      font-family: 'Archivo', sans-serif ;
+      font-size: 3em !important;
+      padding-right: 25px;
+    }
 
-
-.has-stripe {
-  color: white;
-  margin-bottom: 10%;
-  position: relative;
-  z-index: 0;
-}
-
-.has-stripe::after {
-  content: ''; 
-  background-color: black;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  transform: skewY(3deg);
-}
-
-.has-stripe-2 {
-  color: white;
-  margin-top: 10%;
-  margin-bottom: 15%;
-  position: relative;
-  z-index: 0;
-}
-
-.has-stripe-2::after {
-  content: ''; 
-  background-color: black;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  transform: skewY(-3deg);
-}
-
-.about-page-bazar{
-  font-family: 'Archivo', sans-serif ;
-  font-size: 7vh !important;
-  text-transform: uppercase;
-  font-weight: 100;
-}
-
-.letter{
-  font-family: 'Archivo', sans-serif ;
-  font-size: 13vh !important;
-  padding-right: 5vw;
-}
+    /*Flying text*/
+    .fly-in-text {
+        list-style: none;
+        font-family: 'Archivo', sans-serif ;
+        font-size: 3em !important;
+        position: absolute;
+        top: 50%;
+        right: 0%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+    .fly-in-text li {
+        display: inline-block;
+        color: black;
+        opacity: 1;
+        transition: all 0.3s ease;
+    }
+    .fly-in-text li:last-child {
+        margin-right: 0;
+    }
+    .fly-in-text.hidden li {
+        opacity: 0;
+    }
+    .fly-in-text.hidden li:nth-child(1) { transform: translateX(0px) translateY(-400px); }
+    .fly-in-text.hidden li:nth-child(2) { transform: translateX(0px) translateY(-250px); }
+    .fly-in-text.hidden li:nth-child(3) { transform: translateX(0px) translateY(-100px); }
 
 
-/*Flying text*/
-.fly-in-text {
-    list-style: none;
-    font-family: 'Archivo', sans-serif ;
-  font-size: 13vh !important;
-    position: absolute;
-/*    left: 75%;*/
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-}
-.fly-in-text li {
-    display: inline-block;
-    color: black;
-    opacity: 1;
-    transition: all 0.3s ease;
-}
-.fly-in-text li:last-child {
-    margin-right: 0;
-}
-.fly-in-text.hidden li {
-    opacity: 0;
-}
-.fly-in-text.hidden li:nth-child(1) { transform: translateX(0px) translateY(-400px); }
-.fly-in-text.hidden li:nth-child(2) { transform: translateX(0px) translateY(-250px); }
-.fly-in-text.hidden li:nth-child(3) { transform: translateX(0px) translateY(-100px); }
+    .back-elements{
+      display: flex;
+      justify-content:
+      flex-end;
+      position:
+      fixed;
+      top: 80%;
+    }
+
+    .first-block{
+      height: 170vw;
+      margin-bottom: 15%;
+    }
 
 
-.first-block{
-  height: 50vw;
-}
+      .second-block {
+      height: 160vw;
+      color: white;
+      margin-bottom: 15%;
+      position: relative;
+      z-index: 0;
+    }
 
-.back-elements{
-  display: flex;
-  justify-content:
-  flex-end;
-  position:
-  fixed; top: 70vh;
-}
+    .second-block::after {
+      content: ''; 
+      background-color: black;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      transform: skewY(3deg);
+    }
 
-.second-block{
-height: 40vw;
-}
+    .third-block{
+      height: 160vw;
+      background-color: white;
+      margin-bottom: 30%;
+    }
 
-.dimmed-white{
-  color:#c7c4c4
-}
+    .fourth-block {
+      height: 200vw;
+      background-color: white;
+      color: white;
+      margin-top: 15%;
+      margin-bottom: 25%;
+      position: relative;
+      z-index: 0;
+    }
 
-.third-block{
-  height: 40vw;
-  background-color: white;
-}
+    .fourth-block::after {
+      content: ''; 
+      background-color: black;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      transform: skewY(-3deg);
+    }
 
-.fourth-block{
-  height: 40vw;
-  background-color: white;
-}
+    .dimmed-white{
+      color:#c7c4c4
+    }
 
-.bazar-column{
-  display: flex; justify-content: center;
-}
+    .bazar-column{
+      display: flex; justify-content: center;
+    }
 
-.slogan{
-  padding-right: 5vw;
-}
+    .slogan{
+      padding-right: 5vw;
+    }
 
-.heading-black{
-  padding-bottom: 2vw;
-  font-weight: 100;
-    padding-left: 6vw;
+    .description{
+      padding-right: 10vw;
+      padding-left: 10vw;
+      padding-top: 1vh;
+    }
 
-}
+    .bazar{
+      opacity: 0.5;
+    }
 
-.description{
-  font-size: 1.15em;
-  padding-right: 6vw;
-  padding-left: 6vw;
-  line-height: 1.7;
-}
+    .slogan{
+      padding-right: 5vw;
+    }
 
-.bazar{
-  opacity: 0.5;
-}
+    .col-about{
+      margin: 0px !important;
+      padding-right: 4vw;
+      padding-left: 4vw;
+      justify-content: center;
+    }
 
+    .icon{
+      font-size: 2em;
+    } 
 
+    .white{
+      background-color: white;
+    }
 
+    .heading{
+      line-height: initial;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
+    .main-text{
+    font-size: 1.05em;
+    }
 
+    /*    FOR Iphone 5 and other small phones*/
+    @media screen and (max-width: 370px) {
+      .about-page-bazar{
+      font-size: 1em !important;
+      }
 
+      .letter{
+      font-size: 2em !important;
+      }
 
-@media only screen and (max-width: 768px) {
+      .main-text{
+      font-size: 0.9em;
+      line-height: 1.5;
 
+      }
 
+      .fly-in-text {
 
-.has-stripe {
-  margin-bottom: 15%;
-}
+      font-size: 2em !important;
+      padding-right: 4px;
+      }
 
-.has-stripe-2 {
-  margin-top: 15%;
-  margin-bottom: 15%;
-}
-
-.about-page-bazar{
-  font-size: 1.5em !important;
-}
-
-.letter{
-  font-size: 3em !important;
-  padding-right: 7%;
-}
-
-.fly-in-text {
-    font-size: 3em !important;
-/*    top: 10% !important;*/
-    right: 0%;
-}
-
-.fly-in-text li:last-child {
-    margin-right: ;
-}
-
-.first-block{
-  height: 90vh;
-}
-
-.back-elements{
-  top: 80%;
-}
-
-.second-block{
-  height: 90vh;
-}
-
-
-.third-block{
-  height: 90vh;
-}
-
-.fourth-block{
-  height: 90vh;
-/*  margin-bottom: 10vh !important ;*/
-}
-
-.slogan{
-  padding-right: 5vw;
-}
-
-.heading-black{
-  padding-bottom: 2vw;
-}
-
-.description{
-  font-size: 0.8em;
-  padding-top: 1vh;
-  text-align: center !important;
-}
-
-.heading-black{
-  font-size: 1.3em !important;
-  font-weight: 100;
-}
-
-.col-about{
-  margin: 0px !important;
-  padding-right: 4vw;
-  padding-left: 4vw;
-  justify-content: center;
-}
-
-p {
-  padding: 0px !important;
-}
-
-.icon{
-  font-size: 3em;
-}
-} 
-
-
-</style>
+      .heading{
+      font-size: 1.2em;
+      }
+    }
+  </style>
 </head>
-
-
-
-<div class="row">
-  <div class="col">
-
-
-
-    <div class="row fluid my-auto first-block">
-      <div class="col-12 bazar-column">
-        <div class=" my-auto about-page-bazar">
-        <span class='bazar strike'>{{ bazar }}</span>   {{marketplace}}
+<body>
+  {% include 'mobile/navbar.html' %}
+  <div class='container-fluid' style="margin-bottom: 2.3rem;">
+    <div class="row  first-block">
+        <div class="col-12 bazar-column">
+          <div class="my-auto about-page-bazar">
+            <span class='bazar strike'>{{ bazar }}</span>   {{marketplace}}
+          </div>
         </div>
+        <div class="col-12 back-elements">
+        <span class="lead letter">S</span>
+          <ul class="fly-in-text hidden text-right">
+                <li> S</li>
+                <li> A</li>
+                <li> L</li>                           
+          </ul>
+        </div>
+    </div>
+    <div class="row  pt-5 pb-5 second-block dimmed-white" id="safe">
+      <div class="col-12 description">
+        <p class="heading ">
+          <span>{{ authentic_slogan }} </span>
+          <span><i class="icon my-auto fas fa-user-shield "></i></span>
+        </p>
+        <p class='main-text'>
+        {% blocktrans %}
+        What makes SALT different from others? Well, we have a zero-fake-policy here. No one loves fakes, and we understand that. That’s why SALT exists - the first marketplace for designer clothes, where it is being constantly monitored. Really monitored. <a style="text-decoration: underline;" class='dimmed-white' href="https://www.saltish.co/products/fakelist/">Here</a> you can check out the list of fakes that we filtered. Therefore, on SALT you can be 100% sure that you are buying a nice authentic piece.
+        {% endblocktrans %}
+      </p>
+    </div>
+    </div>
+    <div class="row  pt-5 pb-5  third-block" id="safe">
+      <div class="col-12 description white">
+        <p class="heading white">{{ai_slogan}} <i class="icon my-auto fas fa-brain white"></i></p>
+        <p class='main-text'>
+        {% blocktrans %}
+        SALT has two-factor product verification (sounds awesome, right?). In simple words, each item is checked exactly two times. The first one happens right after uploading. Just in a few seconds, our AI-model assigns a label to the product - fake or authentic. The model thinks fast and improves itself with each item (neural nets and all that). And the second step is a thorough manual check performed by our experts. Thanks to the two-factor verification of all items, no fake will get to SALT.
+        {% endblocktrans %}
+        </p>
       </div>
-
-      <div class="col-12 back-elements">
-      <span class="lead letter">S</span>
-            <ul class="fly-in-text hidden text-right">
-              <li> S</li>
-              <li> A</li>
-              <li> L</li>                           
-        </ul>
-      </div>
-
     </div>
-
-
-    <div class="row fluid text-center">
-    <div class="col fluid">
-
-
-    <div id="safe" class="row fluid pt-5 pb-5 has-stripe second-block dimmed-white">
-    <div class="col-xs-12 col-md-3 fluid my-auto">
-    <i class="icon my-auto fas fa-user-shield fa-5x"></i>
-    </div>
-    <div class="col-xs-12 col-md-9 my-auto col-about">
-    <p class="my-auto slogan">
-    <span class='text-left  heading-black' >{{ authentic_slogan }}</span>
-    <span class='text-left description'>{{ authentic_text }}</span>
-    </p>
-    </div>
-    </div>
-
-
-    <div id="ai" class=" row fluid pt-5 pb-5 third-block">
-    <div class="col-xs-12 col-md-3 fluid my-auto">
-    <i class="icon fas fa-brain fa-5x"></i>
-    </div> 
-    <div class="col-xs-12 col-md-9 my-auto slogan col-about">
-    <p class="my-auto slogan" >
-    <span class='text-left heading-black'> {{ai_slogan}}</span>
-    <span class='text-left description'> {{ai_text}}</span>
-    </p>
-    </div>
-    </div>
-
-
-    <div id="simple" class="row  fluid pt-5  has-stripe-2 fourth-block dimmed-white">
-    <div class="col-xs-12 col-md-3 fluid my-auto">
-    <i class="icon fas fa-hand-holding-heart fa-5x"></i>
-    </div>
-    <div class="col-xs-12 col-md-9 my-auto col-about">
-    <p class=" my-auto slogan ">
-    <span class='text-left heading-black'>{{ minimalism_slogan}}</span>
-    <span class='text-left description'>{{ minimalism_text }} </span>
-    </p>
-    </div>
-    </div>
-
-
+    <div class="row  pt-5 pb-5 fourth-block dimmed-white" id="simple">
+      <div class="col-12 description">
+        <p class="heading ">{{ minimalism_slogan}} <i class="icon fas fa-hand-holding-heart"></i></p>
+        <p class='main-text'>
+        {% blocktrans %}
+        Simplicity is our core concept. And this applies not only to minimalistic design and user-friendly interface. We want to make shopping as enjoyable as possible. Therefore, on SALT there is no and never will be annoying ads and paid promotion. Why? The idea of SALT is very simple - here clothes get a second chance. The item finds its new owner without harming the environment. SALT only serves as a modest intermediary in this deal.
+        {% endblocktrans %}
+        </p>
     </div>
     </div>
   </div>
-</div>
+  <script>
+    $(window).on('scroll', function() {
+       var st = $(this).scrollTop();
+       var wh = $(document).height() - $(window).height();
+       var perc = (st*100)/wh
+    // console.log('The percentage is '+perc);
+      if (perc >= 25 && perc < 50) {
+          $('.letter').text('A');
+          $('.fly-in-text').addClass('hidden');
+        }
+      else if (perc >= 52 && perc < 80) {
+          $('.letter').text('L');
+        $('.fly-in-text').addClass('hidden');
+        }
 
+      else if (perc >= 85 && perc < 100) {
+        $('.letter').text('T');
+        $('.fly-in-text').addClass('hidden');
+        }
 
+      else if (perc >= 98) {
+        $('.letter').text('T');
+        $('.fly-in-text').removeClass('hidden');
+        }
 
-
-
-<script>
-
-$(window).on('scroll', function() {
-   var st = $(this).scrollTop();
-   var wh = $(document).height() - $(window).height();
-   var perc = (st*100)/wh
-// console.log('The percentage is '+perc);
-  if (perc >= 25 && perc < 50) {
-      $('.letter').text('A');
-      $('.fly-in-text').addClass('hidden');
-    }
-  else if (perc >= 52 && perc < 80) {
-      $('.letter').text('L');
-    $('.fly-in-text').addClass('hidden');
-    }
-
-  else if (perc >= 85 && perc < 100) {
-    $('.letter').text('T');
-    $('.fly-in-text').addClass('hidden');
-    }
-
-  else if (perc >= 98) {
-    $('.letter').text('T');
-    $('.fly-in-text').removeClass('hidden');
-    }
-
-   else if (perc <= 25) {
-     $('.letter').text('S'); 
-        $('.fly-in-text').addClass('hidden'); 
-    }
-});
-
-</script>
-
-
-{% endblock %}
+       else if (perc <= 25) {
+         $('.letter').text('S'); 
+            $('.fly-in-text').addClass('hidden'); 
+        }
+    });
+  </script>
+  <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-150733918-1');
+  </script>
+  <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+  <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+  <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+  {% if request.user.is_authenticated %}
+  <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+  {% endif %}
+</body>
+</html>

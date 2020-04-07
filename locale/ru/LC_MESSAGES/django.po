@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-22 17:53+0000\n"
-"PO-Revision-Date: 2020-03-22 18:53+0100\n"
+"POT-Creation-Date: 2020-04-07 16:34+0000\n"
+"PO-Revision-Date: 2020-04-07 18:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -29,63 +29,94 @@ msgstr ""
 "Такого мейла не существует или он уже активирован. Хочешь <a href={link}"
 ">зарегистрироваться</a>?"
 
-#: accounts/forms.py:99
+#: accounts/forms.py:79
 msgid "Min 8 characters, digits + numbers"
 msgstr "Минимум 8 символов и цифр"
 
-#: accounts/forms.py:100
+#: accounts/forms.py:80
 msgid "Your Email"
 msgstr "Твой Email"
 
-#: accounts/forms.py:103
+#: accounts/forms.py:83
 #, python-brace-format
 msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
 msgstr ""
 "<a href={resend_link}> (Кликни, чтобы выслать подтверждение еще раз)</a>."
 
-#: accounts/forms.py:160 accounts/forms.py:178
+#: accounts/forms.py:142
+msgid ""
+"Use this space to talk about your personal style but hold the personal "
+"contact details"
+msgstr "Расскажи здесь о себе (не указывай контактной информации)"
+
+#: accounts/forms.py:148 accounts/forms.py:163
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
 
-#: accounts/forms.py:169
+#: accounts/forms.py:155
 msgid "Email"
 msgstr "Твой Email"
 
-#: accounts/forms.py:170
+#: accounts/forms.py:156
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:174
+#: accounts/forms.py:159
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Обновить"
 
-#: accounts/forms.py:175
+#: accounts/forms.py:160
 msgid "Region"
 msgstr "Регион"
 
-#: accounts/forms.py:181
+#: accounts/forms.py:166
 msgid "Recieve marketing email?"
 msgstr "Получать рассылку?"
 
-#: accounts/forms.py:193
+#: accounts/forms.py:180
 msgid "You must select a region"
 msgstr "Выбери регион"
 
-#: accounts/models.py:299
+#: accounts/models.py:270
 msgid "1-Click Account Verification"
 msgstr "Активация аккаунта одним кликом"
 
-#: accounts/templates/accounts/profile.html:52
+#: accounts/templates/accounts/desktop/account-settings.html:110
+#: accounts/templates/accounts/mobile/account-settings.html:106
+msgid "Profile Settings"
+msgstr "Настройки профиля"
+
+#: accounts/templates/accounts/desktop/profile.html:52
+#: accounts/templates/accounts/mobile/profile.html:110
 msgid "Items:"
 msgstr "Айтемы:"
 
-#: accounts/templates/accounts/profile.html:89
-#: accounts/templates/accounts/wish-list.html:57
-#: products/templates/products/user-history.html:65
-#: products/templates/products/user-list.html:59
+#: accounts/templates/accounts/desktop/profile.html:89
+#: accounts/templates/accounts/desktop/wishlist.html:57
+#: accounts/templates/accounts/mobile/profile.html:140
+#: accounts/templates/accounts/mobile/wishlist.html:57
+#: products/templates/products/desktop/fake-list.html:61
+#: products/templates/products/desktop/my-items-list.html:59
+#: products/templates/products/desktop/user-history.html:65
+#: products/templates/products/mobile/fake-list.html:61
+#: products/templates/products/mobile/my-items-list.html:59
+#: products/templates/products/mobile/user-history.html:65
 msgid "No items yet"
 msgstr "Пока что здесь пусто"
+
+#: accounts/templates/accounts/desktop/wishlist.html:24
+#: accounts/templates/accounts/mobile/wishlist.html:24
+msgid "Wishlist:"
+msgstr "Избранное:"
+
+#: accounts/templates/accounts/mobile/profile.html:95
+msgid "Bio:"
+msgstr "Био:"
+
+#: accounts/templates/accounts/mobile/register-login.html:12
+msgid "Login"
+msgstr ""
 
 #: accounts/templates/accounts/snippets/begin-chat.html:7
 #: accounts/templates/accounts/snippets/begin-chat.html:23
@@ -98,10 +129,11 @@ msgstr "Обновить профиль"
 #: accounts/templates/accounts/snippets/begin-chat.html:27
 #: accounts/templates/accounts/snippets/begin-chat.html:29
 #: templates/base/footer.html:129 templates/base/footer.html:157
+#: templates/mobile/footer.html:129
 msgid "Contact"
 msgstr "Написать"
 
-#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:78
+#: accounts/templates/accounts/snippets/form.html:12 ecommerce/views.py:99
 msgid "Submit"
 msgstr "Отправить"
 
@@ -113,64 +145,60 @@ msgstr "Выбери свой регион"
 msgid "Save changes"
 msgstr "Сохранить"
 
-#: accounts/templates/accounts/wish-list.html:24
-msgid "Wishlist:"
-msgstr "Избранное:"
-
-#: accounts/views.py:92 accounts/views.py:196 ecommerce/utils.py:92
+#: accounts/views.py:87 accounts/views.py:200 ecommerce/utils.py:92
 msgid "You're in"
 msgstr "Ты на сайте"
 
-#: accounts/views.py:101
+#: accounts/views.py:96
 #, python-brace-format
 msgid ""
 "Your email has already been confirmed. Do you need to <a href="
 "\"{link}\">reset your password</a>?"
 msgstr "Твой Мейл уже активирован. Хочешь <a href={link}>сбросить пароль</a>?"
 
-#: accounts/views.py:119
+#: accounts/views.py:114
 msgid "Activation link was sent. Check your Email!"
 msgstr "Активация отправлена. Проверь почту!"
 
-#: accounts/views.py:148
+#: accounts/views.py:150
 msgid "Login | Register"
 msgstr "Войти | Зарегистрироваться"
 
-#: accounts/views.py:149
+#: accounts/views.py:151
 msgid "Or"
 msgstr "Или"
 
-#: accounts/views.py:150
+#: accounts/views.py:152
 msgid "Forgot password?"
 msgstr "Забыл_а пароль?"
 
-#: accounts/views.py:176
+#: accounts/views.py:178
 msgid "Please check your email to confirm your account. "
 msgstr "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. "
 
-#: accounts/views.py:182
+#: accounts/views.py:185
 msgid "Email not confirmed. "
 msgstr "Мейл не подтвержден. "
 
-#: accounts/views.py:188
+#: accounts/views.py:192
 msgid "The password seems to be wrong. Try again!"
 msgstr "Неверный пароль. Попробуй еще раз!"
 
-#: accounts/views.py:304 products/views.py:500
+#: accounts/views.py:316 products/views.py:478
 msgid "Update your details"
 msgstr "Обновить аккаунт"
 
-#: accounts/views.py:305 products/views.py:501
+#: accounts/views.py:317 products/views.py:479
 #: templates/registration/password_change_form.html:26
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: accounts/views.py:306 products/views.py:332
+#: accounts/views.py:318 products/views.py:301
 #: templates/registration/password_change_form.html:31
 msgid "Save"
 msgstr "Сохранить"
 
-#: accounts/views.py:307
+#: accounts/views.py:319
 msgid "Logout"
 msgstr "Выйти"
 
@@ -239,83 +267,84 @@ msgstr ""
 "\n"
 
 #: categories/templates/categories/snippets/filter-box.html:325
-#: products/forms.py:59
+#: products/forms.py:65
 msgid "Select a brand"
 msgstr "Выбери бренд"
 
-#: categories/views.py:263 ecommerce/views.py:146
+#: categories/views.py:182 ecommerce/views.py:146
 msgid "Kids"
 msgstr "Дети"
 
-#: categories/views.py:264 ecommerce/views.py:147
+#: categories/views.py:183 ecommerce/views.py:147
 msgid "New"
 msgstr "Свежее"
 
-#: categories/views.py:265
+#: categories/views.py:184
 msgid "Hide Filters"
 msgstr "Спрятать фильтры"
 
-#: categories/views.py:266
+#: categories/views.py:185
 msgid "Show Filters"
 msgstr "Показать фильтры"
 
-#: categories/views.py:267
+#: categories/views.py:186
 msgid "Found"
 msgstr "Найдено"
 
-#: categories/views.py:268
+#: categories/views.py:187
 msgid "Items"
 msgstr "Айтемов"
 
-#: categories/views.py:269
+#: categories/views.py:188
 msgid "Sort by"
 msgstr "Сортировать по"
 
-#: categories/views.py:270
+#: categories/views.py:189
 msgid "New first"
 msgstr "Сначала новые"
 
-#: categories/views.py:271
+#: categories/views.py:190
 msgid "Low price first"
 msgstr "Сначала дешевые"
 
-#: categories/views.py:272
+#: categories/views.py:191
 msgid "High price first"
 msgstr "Сначала дорогие"
 
-#: categories/views.py:273 products/forms.py:60
+#: categories/views.py:192 products/forms.py:66
 msgid "Gender"
 msgstr "Гендер"
 
-#: categories/views.py:274
+#: categories/views.py:193
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:275 products/forms.py:61
+#: categories/views.py:194 products/forms.py:67
 msgid "Category"
 msgstr "Категория"
 
-#: categories/views.py:276
+#: categories/views.py:195
 msgid "All"
 msgstr "Все"
 
-#: categories/views.py:277 products/forms.py:62
+#: categories/views.py:196 products/forms.py:68
 msgid "Size"
 msgstr "Размер"
 
-#: categories/views.py:278 products/forms.py:63
+#: categories/views.py:197 products/forms.py:69
 msgid "Condition"
 msgstr "Состояние"
 
-#: categories/views.py:279 ecommerce/views.py:148 products/forms.py:23
+#: categories/views.py:198 ecommerce/views.py:148 products/forms.py:29
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:280
+#: categories/views.py:199
 msgid "Price"
 msgstr "Цена"
 
-#: chat_ecommerce/templates/chat_ecommerce/inbox.html:318
+#: chat_ecommerce/templates/chat_ecommerce/desktop/inbox.html:318
+#: chat_ecommerce/templates/chat_ecommerce/mobile/inbox.html:318
 msgid "Please select a chat to start conversation"
 msgstr "Выберите собеседника, чтобы начать диалог"
 
@@ -331,98 +360,43 @@ msgstr "Номер заказа: "
 msgid "Only alphanumeric characters are allowed"
 msgstr "Юзернейм должен содержать только латинские символы или цифры"
 
-#: ecommerce/views.py:34
+#: ecommerce/views.py:35
 msgid "Bazar"
 msgstr "Базар"
 
-#: ecommerce/views.py:35
+#: ecommerce/views.py:36
 msgid "Marketplace"
 msgstr "Маркетплейс"
 
-#: ecommerce/views.py:36
-msgid "No counterfeit"
-msgstr "Без фейков"
-
 #: ecommerce/views.py:37
-#, python-format
-msgid ""
-"What makes SALT different from others? Well, we have a zero-fake-policy "
-"here. Fakes make online shopping unbearable. The countterfeit industry in "
-"fashion is valued around $600 billion. While someone makes tons of money, "
-"the quality of shopping for the customer is deteriorating. But we love "
-"shopping. Probably even more than you. So we set up a very simple goal - to "
-"make shopping as pleasant and safe as possible. Therefore, on SALT you can "
-"be %s%% sure that you are buying a nice authentic piece."
-msgstr ""
-"То, что отличает нас от других: на SALT нет и никогда не будет фейков. Фейки "
-"никто не любит, и мы это понимаем. Именно поэтому и существует SALT - первая "
-"торговая площадка брендовой одежды, на которой за этим следят. По-настоящему "
-"следят. Нами движет очень простая цель сделать шопинг максимально приятным и "
-"безопасным. Поэтому на SALT ты можешь быть на %s%% уверен_а, что всегда "
-"приобретаешь оригинальную вещь."
+msgid "No counterfeit"
+msgstr "Здесь нет фейков"
 
 #: ecommerce/views.py:38
 msgid "2-step-verification"
 msgstr "Двухфакторная верификация"
 
 #: ecommerce/views.py:39
-msgid ""
-"SALT has two-factor product verification (sounds awesome, right?). In simple "
-"words, each item is checked exactly two times. The first one happens right "
-"after uploading. Just in a few seconds, our AI-model assigns a label to the "
-"product - fake or authentic. The model thinks fast and improves itself with "
-"each loaded item (neural networks and all that). And the second step is a "
-"thorough manual check performed by our experienced experts. Thanks to the "
-"two-factor verification of all items, no fake will get to SALT."
-msgstr ""
-"На SALT действует двухфакторная верификация продукта (звучит круто, "
-"правда?). Простыми словами, каждый айтем проверяется ровно два раза. Первый "
-"– сразу после загрузки. За считанные секунды наш ИИ опознает подделки. "
-"Модель совершенствуется с каждым загруженным айтемом (нейронные сети и все "
-"такое). А второй шаг – это тщательный мануальный чек, который выполняют наши "
-"опытные эксперты. Благодаря двухфакторной верификации продукта на SALT не "
-"пройдет ни один фейк."
-
-#: ecommerce/views.py:40
 msgid "Less is more"
 msgstr "Лучше меньше, да лучше"
 
-#: ecommerce/views.py:41
-msgid ""
-"Simplicity is our core concept. And it's not only limited in minimalistic "
-"design and intuitive interface of SALT. We want both buyers and sellers to "
-"feel respected. Therefore, there is no and never will be annoying ads and "
-"paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT "
-"is a community where designer and streetwear clothes take their second "
-"chance. The item finds its new owner without harming the environment. SALT "
-"acts as a modest mediator in this straightforward, but essential deal."
-msgstr ""
-"Простота – это наш основной концепт. И это касается не только "
-"минималистичного дизайна и интуитивного интерфейса. Мы хотим, чтобы наших "
-"покупателей и продавцов уважали. Поэтому на SALT нет и никогда не будет "
-"назойливой рекламы и платного продвижения. Никаких баннеров, всплывающих "
-"окон и премиум-аккаунтов. SALT – это коммьюнити, где дизайнерская и уличная "
-"мода приобретает второй шанс. Вещь находит своего нового владельца без вреда "
-"окружающей среде. SALT при этом лишь выполняет скромную роль посредника в "
-"этой незамысловатой сделке."
-
-#: ecommerce/views.py:77
+#: ecommerce/views.py:98
 msgid "Contact us"
 msgstr "Напиши нам"
 
-#: ecommerce/views.py:79
+#: ecommerce/views.py:100
 msgid "Sending...."
 msgstr "Отправка…."
 
-#: ecommerce/views.py:106
+#: ecommerce/views.py:127
 msgid "Thank you, your report has been sended"
 msgstr "Спасибо, твоя жалоба была отправлена"
 
-#: ecommerce/views.py:107 ecommerce/views.py:114
+#: ecommerce/views.py:128 ecommerce/views.py:135
 msgid "Success"
 msgstr "Готово!"
 
-#: ecommerce/views.py:113
+#: ecommerce/views.py:134
 msgid "Thank you"
 msgstr "Спасибо. Мы свяжемся с тобой в ближайшее время!"
 
@@ -504,6 +478,26 @@ msgstr "неизвестная ошибка"
 #: orders/models.py:186
 msgid "Order Error"
 msgstr "Ошибка заказа"
+
+#: orders/templates/orders/desktop/order-list.html:107
+#: orders/templates/orders/mobile/order-list.html:107
+msgid "Orders:"
+msgstr "Заказы:"
+
+#: orders/templates/orders/desktop/order-list.html:114
+#: orders/templates/orders/mobile/order-list.html:114
+msgid "Purchases"
+msgstr "Покупки"
+
+#: orders/templates/orders/desktop/order-list.html:117
+#: orders/templates/orders/mobile/order-list.html:117
+msgid "Sales"
+msgstr "Продажи"
+
+#: orders/templates/orders/desktop/order-list.html:120
+#: orders/templates/orders/mobile/order-list.html:120
+msgid "Archive"
+msgstr "Архив"
 
 #: orders/templates/orders/emails/inform_about_order.html:2
 #, python-format
@@ -882,22 +876,6 @@ msgstr ""
 "Спасибо за то, что ты с нами!\n"
 "SALT\n"
 
-#: orders/templates/orders/order_list.html:108
-msgid "Orders:"
-msgstr "Заказы:"
-
-#: orders/templates/orders/order_list.html:115
-msgid "Purchases"
-msgstr "Покупки"
-
-#: orders/templates/orders/order_list.html:118
-msgid "Sales"
-msgstr "Продажи"
-
-#: orders/templates/orders/order_list.html:121
-msgid "Archive"
-msgstr "Архив"
-
 #: orders/templates/orders/snippets/order_complete_form.html:19
 msgid "Received"
 msgstr "Получено"
@@ -964,116 +942,122 @@ msgstr "Покупатель:"
 msgid "Report"
 msgstr "Пожаловаться"
 
-#: products/forms.py:55
+#: products/forms.py:61
 msgid "Some keywords about your item"
 msgstr "Пара слов про айтем"
 
-#: products/forms.py:56
+#: products/forms.py:62
 msgid "Describe your item in details"
 msgstr "Подробно опиши айтем"
 
-#: products/forms.py:71
+#: products/forms.py:77
 msgid "Price in "
 msgstr "Цена в "
 
-#: products/forms.py:72
+#: products/forms.py:78
 msgid "Shipping price in "
 msgstr "Цена доставки "
 
-#: products/forms.py:96
+#: products/forms.py:100
 msgid "Please, select a gender"
 msgstr "— Выбери гендер —"
 
-#: products/forms.py:109
+#: products/forms.py:113
 msgid "Please, select a valid category"
 msgstr "Выбери подходящую категорию"
 
-#: products/forms.py:126
+#: products/forms.py:130
 msgid "Please, select a valid size"
 msgstr "Выбери подходящий размер"
 
-#: products/forms.py:138
+#: products/forms.py:142
 msgid "Please, select a condition"
 msgstr "— Выбери состояние —"
 
-#: products/forms.py:152
+#: products/forms.py:156
 msgid "Please, select existing brand"
 msgstr "— Выбери существующий бренд —"
 
-#: products/forms.py:176
+#: products/forms.py:180
 msgid "Please, make it shorter. # of lines to be removed:"
 msgstr "Сделай короче. Убери # строк :"
 
-#: products/forms.py:180
+#: products/forms.py:184
 msgid "Please, make it shorter. # of characters to be removed:"
 msgstr "Сделай короче. Убери # символов :"
 
-#: products/forms.py:200
+#: products/forms.py:204
 msgid "Images*"
 msgstr "Фото"
 
-#: products/forms.py:207
-msgid "Upload at least 4 images"
-msgstr "Загрузи как минимум 4 фото"
-
-#: products/forms.py:212
-msgid "Not enough photos. Minimal amount - 4"
-msgstr "Недостаточно фотографий. Минимальное колличество - 4"
-
-#: products/forms.py:217
-msgid "Too many files, max. amount 8"
-msgstr "Слишком много фотографий. Максимальное колличество - 8"
-
-#: products/templates/products/checkout.html:193
+#: products/templates/products/desktop/checkout.html:193
+#: products/templates/products/mobile/checkout.html:193
 msgid "Price:"
 msgstr "Цена:"
 
-#: products/templates/products/checkout.html:205
+#: products/templates/products/desktop/checkout.html:205
+#: products/templates/products/mobile/checkout.html:205
 msgid "To pay:"
 msgstr "К оплате:"
 
-#: products/templates/products/product-create.html:174
+#: products/templates/products/desktop/my-items-list.html:24
+#: products/templates/products/mobile/my-items-list.html:24
+msgid "My Items:"
+msgstr "Мои айтемы:"
+
+#: products/templates/products/desktop/product-create.html:165
+#: products/templates/products/mobile/product-create.html:165
 msgid ""
 "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co если твоего бренда нет в списке."
 
-#: products/templates/products/product-create.html:283
+#: products/templates/products/desktop/product-create.html:274
+#: products/templates/products/mobile/product-create.html:274
 msgid "Photos*"
 msgstr "Фото"
 
-#: products/templates/products/product-create.html:288
+#: products/templates/products/desktop/product-create.html:279
+#: products/templates/products/mobile/product-create.html:279
 msgid "Browse"
 msgstr "Выбрать"
 
-#: products/templates/products/product-create.html:293
+#: products/templates/products/desktop/product-create.html:284
+#: products/templates/products/mobile/product-create.html:284
 msgid "Too many images. Should be less than"
 msgstr "Залей меньше фото. Их должно быть не больше"
 
-#: products/templates/products/product-create.html:294
+#: products/templates/products/desktop/product-create.html:285
+#: products/templates/products/mobile/product-create.html:285
 msgid "Authenticity check..."
 msgstr "Проверка на оригинальность…"
+
+#: products/templates/products/desktop/user-history.html:31
+#: products/templates/products/mobile/user-history.html:31
+msgid "Viewed items:"
+msgstr "Недавно просмотренное:"
 
 #: products/templates/products/snippets/buy.html:8
 #: products/templates/products/snippets/buy.html:16
 msgid "Купить безопасно"
 msgstr ""
 
-#: products/templates/products/snippets/card-my-items.html:19
-msgctxt "card_my_items_approved"
-msgid "Approved"
-msgstr "На сайте"
-
+#: products/templates/products/snippets/card-fake.html:14
 #: products/templates/products/snippets/card-my-items.html:52
 #: products/views.py:101
 msgid "Fake"
 msgstr "Фейк"
+
+#: products/templates/products/snippets/card-my-items.html:19
+msgctxt "card_my_items_approved"
+msgid "Approved"
+msgstr "На сайте"
 
 #: products/templates/products/snippets/card-my-items.html:87
 msgid "Pending"
 msgstr "Проверяется"
 
 #: products/templates/products/snippets/logged-user-update-card.html:7
-#: products/views.py:331
+#: products/views.py:300
 msgid "Update"
 msgstr "Редактировать"
 
@@ -1081,23 +1065,15 @@ msgstr "Редактировать"
 msgid "Delete"
 msgstr "Удалить"
 
-#: products/templates/products/user-history.html:31
-msgid "Viewed items:"
-msgstr "Недавно просмотренное:"
-
-#: products/templates/products/user-list.html:24
-msgid "My Items:"
-msgstr "Мои айтемы:"
-
-#: products/views.py:93
+#: products/views.py:94
 msgid "Report?"
 msgstr "Пожаловаться?"
 
-#: products/views.py:94
+#: products/views.py:95
 msgid "Size:"
 msgstr "Размер:"
 
-#: products/views.py:95
+#: products/views.py:96
 msgid "Condition:"
 msgstr "Состояние:"
 
@@ -1137,44 +1113,26 @@ msgstr "Загружено"
 msgid "ago"
 msgstr "назад"
 
-#: products/views.py:164 products/views.py:168
+#: products/views.py:131 products/views.py:135
 msgid "Only customers in Ukraine are eligible to sell (as for now)"
 msgstr ""
 "Пока только юзеры из Украины могут заливать айтемы на продажу (мы работаем "
 "над другими регионами)"
 
-#: products/views.py:174
+#: products/views.py:141
 msgid "Please add card information to add an item!"
 msgstr "Добавь реквизиты карты, чтобы начать загружать вещи"
 
-#: products/views.py:217 products/views.py:264
+#: products/views.py:183 products/views.py:221
 msgctxt "Upload_Item_create"
 msgid "Create"
 msgstr "Залить"
 
-#: products/views.py:218 products/views.py:265
+#: products/views.py:184 products/views.py:222
 msgid "Add a new item"
 msgstr "Залить новый айтем"
 
-#: products/views.py:240
-msgid "New item upload"
-msgstr "Залили новый айтем"
-
-#: products/views.py:241
-msgid ""
-"New product was uploaded. Please verify authenticity: \n"
-" {} \n"
-" Product Title: {} \n"
-" Product Description: \n"
-" {}"
-msgstr ""
-"Залили новый продукт. Оригинал или нет? Верифицируй! \n"
-" {} \n"
-" Product Title: {} \n"
-" Product Description: \n"
-" {}"
-
-#: products/views.py:246
+#: products/views.py:203
 msgid ""
 "Your item was checked by AI. Within next 24 hours the check will be "
 "confirmed by our moderator team and your item will be published"
@@ -1182,20 +1140,20 @@ msgstr ""
 "Твой айтем проверен Иcкусственным Интеллектом. В течение 24 часов проверку "
 "подтвердит модератор и айтем будет выставлен на продажу"
 
-#: products/views.py:415
+#: products/views.py:389
 msgid "Thank you. We have already received your report."
 msgstr "Спасибо. Мы уже получили твою жалобу."
 
-#: products/views.py:418
+#: products/views.py:392
 msgid "Thank you. We will check this item manually."
 msgstr "Спасибо. Мы проверим айтем мануально."
 
 #: search/templates/search/snippets/search-form.html:60
-#: templates/base/navbar.html:268 templates/base/navbar_mobile.html:161
+#: templates/base/navbar.html:285 templates/mobile/navbar.html:228
 msgid "Search"
 msgstr "Поиск"
 
-#: search/views.py:32
+#: search/views.py:37
 msgid "Oops... No results for your query. Try another one!"
 msgstr "Ой… Ничего не найдено. Попробуй поискать что-нибудь другое!"
 
@@ -1207,15 +1165,67 @@ msgstr "Ой … Что-то пошло не так. Мы оповещены и 
 msgid "Oops ... This page doesn't exist! :("
 msgstr "Ой … Tакой страницы не существует! :("
 
-#: templates/base/faq.html:86 templates/base/faq.html:98
+#: templates/base/footer.html:128 templates/base/footer.html:156
+msgid "About"
+msgstr "О нас"
+
+#: templates/base/footer.html:130 templates/base/footer.html:158
+#: templates/mobile/footer.html:130
+msgid "Terms"
+msgstr "Оферта"
+
+#: templates/base/footer.html:131 templates/base/footer.html:159
+#: templates/mobile/footer.html:131
+msgid "Privacy"
+msgstr "Прайваси"
+
+#: templates/base/navbar.html:368 templates/desktop/navbar.html:243
+msgctxt "account_dropdown_home "
+msgid "Home"
+msgstr "Аккаунт"
+
+#: templates/base/navbar.html:372 templates/base/sidebar.html:50
+#: templates/desktop/navbar.html:247 templates/mobile/navbar.html:134
+msgid "Messages"
+msgstr "Сообщения"
+
+#: templates/base/navbar.html:382 templates/base/sidebar.html:61
+#: templates/desktop/navbar.html:257 templates/mobile/navbar.html:145
+msgid "My orders"
+msgstr "Заказы"
+
+#: templates/base/navbar.html:383 templates/base/sidebar.html:62
+#: templates/desktop/navbar.html:258 templates/mobile/navbar.html:146
+msgid "My items"
+msgstr "Мои айтемы"
+
+#: templates/base/navbar.html:384 templates/base/sidebar.html:63
+#: templates/desktop/navbar.html:259 templates/mobile/navbar.html:147
+msgid "Wishlist"
+msgstr "Избранное"
+
+#: templates/base/navbar.html:385 templates/base/sidebar.html:64
+#: templates/desktop/navbar.html:260 templates/mobile/navbar.html:148
+msgctxt "account_dropdown_history"
+msgid "History"
+msgstr "Просмотренное"
+
+#: templates/base/navbar.html:386 templates/base/sidebar.html:65
+#: templates/desktop/navbar.html:261 templates/mobile/navbar.html:149
+msgid "Settings"
+msgstr "Настройки"
+
+#: templates/desktop/faq.html:86 templates/desktop/faq.html:98
+#: templates/mobile/faq.html:86 templates/mobile/faq.html:98
 msgid "BUYERS"
 msgstr "ПОКУПАТЕЛЯМ"
 
-#: templates/base/faq.html:87 templates/base/faq.html:142
+#: templates/desktop/faq.html:87 templates/desktop/faq.html:142
+#: templates/mobile/faq.html:87 templates/mobile/faq.html:142
 msgid "SELLERS"
 msgstr "ПРОДАВЦАМ"
 
-#: templates/base/faq.html:104
+#: templates/desktop/faq.html:104 templates/mobile/faq.html:104
 msgid ""
 "There is a secure purchase system on SALT. That means that the seller "
 "receives payment only after the buyer confirms the successful delivery of "
@@ -1225,11 +1235,11 @@ msgstr ""
 "получает оплату только после того, как покупатель подтвердит успешную "
 "доставку айтема."
 
-#: templates/base/faq.html:106
+#: templates/desktop/faq.html:106 templates/mobile/faq.html:106
 msgid "I want to buy an item on SALT. Hmm ... How do I do this?"
 msgstr "Я хочу купить вещь на SALT. Хмм… Как же мне это сделать?"
 
-#: templates/base/faq.html:107
+#: templates/desktop/faq.html:107 templates/mobile/faq.html:107
 msgid ""
 "\n"
 "- Choose on the item you want to purchase and click on BUY SECURE\n"
@@ -1247,11 +1257,11 @@ msgstr ""
 "MasterCard), и все - вещь куплена!\n"
 "\n"
 
-#: templates/base/faq.html:114
+#: templates/desktop/faq.html:114 templates/mobile/faq.html:114
 msgid "Payment completed. What's next?"
 msgstr "Оплата совершена. Что дальше?"
 
-#: templates/base/faq.html:115
+#: templates/desktop/faq.html:115 templates/mobile/faq.html:115
 msgid ""
 "\n"
 "- The seller receives a notification of the purchase and shippment data for "
@@ -1266,11 +1276,11 @@ msgstr ""
 "по номеру ТТН\n"
 "- Когда товар доставлен, подтверди получение в разделе ЗАКАЗЫ\n"
 
-#: templates/base/faq.html:121
+#: templates/desktop/faq.html:121 templates/mobile/faq.html:121
 msgid "When am I gonna receive the item? I can't wait!"
 msgstr "Когда мне придет товар? Жду не дождусь!"
 
-#: templates/base/faq.html:122
+#: templates/desktop/faq.html:122 templates/mobile/faq.html:122
 msgid ""
 "\n"
 "- For the residents of Ukraine, delivery is carried out through Nova Posta\n"
@@ -1286,11 +1296,11 @@ msgstr ""
 "- Рассчитать сроки доставки можно здесь: https://novaposhta.ua/ru/"
 "onlineorder/estimatedate\n"
 
-#: templates/base/faq.html:128
+#: templates/desktop/faq.html:128 templates/mobile/faq.html:128
 msgid "Is SALT free?"
 msgstr "Ваш сервис бесплатный?"
 
-#: templates/base/faq.html:129
+#: templates/desktop/faq.html:129 templates/mobile/faq.html:129
 #, python-format
 msgid ""
 "\n"
@@ -1303,12 +1313,12 @@ msgstr ""
 "style=“text-decoration: underline” href=“https://www.saltish.co/about/"
 "#safe”>безопасно</a>\n"
 
-#: templates/base/faq.html:133
+#: templates/desktop/faq.html:133 templates/mobile/faq.html:133
 msgid ""
 "I received the item, but ... it does not match the description. What do I do?"
 msgstr "Мне пришла вещь, но… она не соответствует описанию. Как быть?"
 
-#: templates/base/faq.html:134
+#: templates/desktop/faq.html:134 templates/mobile/faq.html:134
 msgid ""
 "\n"
 "- In the ORDERS section, click on REPORT and we will contact you within 24 "
@@ -1322,11 +1332,11 @@ msgstr ""
 "- Если вещь действительно не соответствует описанию, мы вернем тебе деньги "
 "за покупку на указанную карту\n"
 
-#: templates/base/faq.html:145
+#: templates/desktop/faq.html:145 templates/mobile/faq.html:145
 msgid "I found a nice item in my closet. How to sell it on SALT?"
 msgstr "Завалялся модненький айтем. Как продать его на SALT?"
 
-#: templates/base/faq.html:146
+#: templates/desktop/faq.html:146 templates/mobile/faq.html:146
 msgid ""
 "\n"
 "- First, enter your card details in the profile settings (so that customers "
@@ -1346,11 +1356,11 @@ msgstr ""
 "- После (успешной) двухфакторной верификации он будет виден для всех в общем "
 "каталоге\n"
 
-#: templates/base/faq.html:153
+#: templates/desktop/faq.html:153 templates/mobile/faq.html:153
 msgid "Someone purchased my item. When will I get the money?"
 msgstr "Мою вещичку купили. Когда я получу деньги?"
 
-#: templates/base/faq.html:154
+#: templates/desktop/faq.html:154 templates/mobile/faq.html:154
 msgid ""
 "\n"
 "- Don’t worry - the money has already been debited from the buyer's card\n"
@@ -1372,11 +1382,11 @@ msgstr ""
 "- В случае, если покупатель не подтверждает получение (или не связался с "
 "нами) по прошествии 7 дней, денежки переводятся тебе на карту автоматически\n"
 
-#: templates/base/faq.html:162
+#: templates/desktop/faq.html:162 templates/mobile/faq.html:162
 msgid "What is the SALT commission for each transaction?"
 msgstr "Какая комиссия SALT с каждой сделки?"
 
-#: templates/base/faq.html:163
+#: templates/desktop/faq.html:163 templates/mobile/faq.html:163
 msgid ""
 "\n"
 "- As for now - none. We will keep this platform free for as long as "
@@ -1386,55 +1396,7 @@ msgstr ""
 "- Пока что никакой! Мы делаем все на чистом энтузиазме и будем держать эту "
 "платформу бесплатной как можно дольше\n"
 
-#: templates/base/footer.html:128 templates/base/footer.html:156
-msgid "About"
-msgstr "О нас"
-
-#: templates/base/footer.html:130 templates/base/footer.html:158
-msgid "Terms"
-msgstr "Оферта"
-
-#: templates/base/footer.html:131 templates/base/footer.html:159
-msgid "Privacy"
-msgstr "Прайваси"
-
-#: templates/base/navbar.html:345 templates/base/navbar_desktop.html:239
-msgctxt "account_dropdown_home "
-msgid "Home"
-msgstr "Аккаунт"
-
-#: templates/base/navbar.html:349 templates/base/navbar_desktop.html:243
-#: templates/sidebar.html:50
-msgid "Messages"
-msgstr "Сообщения"
-
-#: templates/base/navbar.html:359 templates/base/navbar_desktop.html:253
-#: templates/sidebar.html:61
-msgid "My orders"
-msgstr "Заказы"
-
-#: templates/base/navbar.html:360 templates/base/navbar_desktop.html:254
-#: templates/sidebar.html:62
-msgid "My items"
-msgstr "Мои айтемы"
-
-#: templates/base/navbar.html:361 templates/base/navbar_desktop.html:255
-#: templates/sidebar.html:63
-msgid "Wishlist"
-msgstr "Избранное"
-
-#: templates/base/navbar.html:362 templates/base/navbar_desktop.html:256
-#: templates/sidebar.html:64
-msgctxt "account_dropdown_history"
-msgid "History"
-msgstr "Просмотренное"
-
-#: templates/base/navbar.html:363 templates/base/navbar_desktop.html:257
-#: templates/sidebar.html:65
-msgid "Settings"
-msgstr "Настройки"
-
-#: templates/base/privacy.html:24
+#: templates/desktop/privacy.html:24 templates/mobile/privacy.html:24
 msgid ""
 "\n"
 "<div class=\"container container-privacy\">\n"
@@ -1716,7 +1678,7 @@ msgstr ""
 "доступе находится в Интернете по адресу https://www.saltish.co/privacy/. </"
 "p></div>\n"
 
-#: templates/base/terms.html:23
+#: templates/desktop/terms.html:23 templates/mobile/terms.html:23
 msgid ""
 "\n"
 "<div class=\"container container-terms\">\n"
@@ -1872,10 +1834,6 @@ msgstr ""
 "<p>При любом изменении данного соглашения, администрация будет оповещать "
 "пользователей удобным для нее способом.</p>\n"
 "</div>\n"
-
-#: templates/forms/helper_text.html:3
-msgid "* marked fields are required"
-msgstr "* отмечены поля, обязательные к заполнению"
 
 #: templates/languages/trans_custom/translation_custom.html:5
 msgid "Adults"
@@ -2077,13 +2035,76 @@ msgstr "Оплачено"
 msgid "Shipped"
 msgstr "Доставлено"
 
-#: templates/mobile/home_page.html:522
+#: templates/mobile/about-us.html:9 templates/mobile/footer.html:125
 msgid "Why SALT?"
 msgstr "Почему SALT?"
 
-#: templates/mobile/home_page.html:526
-msgid "Learn more"
-msgstr "Узнай больше"
+#: templates/mobile/about-us.html:228
+#, python-format
+msgid ""
+"\n"
+"        What makes SALT different from others? Well, we have a zero-fake-"
+"policy here. No one loves fakes, and we understand that. That’s why SALT "
+"exists - the first marketplace for designer clothes, where it is being "
+"constantly monitored. Really monitored. <a style=\"text-decoration: "
+"underline;\" class='dimmed-white' href=\"https://www.saltish.co/products/"
+"fakelist/\">Here</a> you can check out the list of fakes that we filtered. "
+"Therefore, on SALT you can be 100%% sure that you are buying a nice "
+"authentic piece.\n"
+"        "
+msgstr ""
+"\n"
+"        То, что отличает нас от других: на SALT нет и никогда не будет "
+"фейков. Фейки никто не любит, и мы это понимаем. Именно поэтому и существует "
+"SALT - первая торговая площадка брендовой одежды, на которой за этим следят. "
+"По-настоящему следят. <a style=\"text-decoration: underline;\" class='dimmed-"
+"white' href=\"https://www.saltish.co/products/fakelist/\">Вот здесь</a> "
+"можно посмотреть список фейков, которые мы отфильтровали. На SALT ты всегда "
+"можешь быть на 100%% уверен_а, что приобретаешь оригинальную вещь.\n"
+"        "
+
+#: templates/mobile/about-us.html:238
+msgid ""
+"\n"
+"        SALT has two-factor product verification (sounds awesome, right?). "
+"In simple words, each item is checked exactly two times. The first one "
+"happens right after uploading. Just in a few seconds, our AI-model assigns a "
+"label to the product - fake or authentic. The model thinks fast and improves "
+"itself with each item (neural nets and all that). And the second step is a "
+"thorough manual check performed by our experts. Thanks to the two-factor "
+"verification of all items, no fake will get to SALT.\n"
+"        "
+msgstr ""
+"\n"
+"        На SALT действует двухфакторная верификация продукта (звучит круто, "
+"правда?). Простыми словами, каждый айтем проверяется ровно два раза. Первый "
+"– сразу после загрузки. За считанные секунды наш Искусственный Интеллект "
+"опознает подделки. Модель совершенствуется с каждым загруженным айтемом "
+"(нейронные сети и все такое). А второй шаг – это тщательный мануальный чек, "
+"который выполняют наши опытные эксперты. Благодаря двухфакторной верификации "
+"продукта на SALT не пройдет ни один фейк.\n"
+"        "
+
+#: templates/mobile/about-us.html:248
+msgid ""
+"\n"
+"        Simplicity is our core concept. And this applies not only to "
+"minimalistic design and user-friendly interface. We want to make shopping as "
+"enjoyable as possible. Therefore, on SALT there is no and never will be "
+"annoying ads and paid promotion. Why? The idea of SALT is very simple - here "
+"clothes get a second chance. The item finds its new owner without harming "
+"the environment. SALT only serves as a modest intermediary in this deal.\n"
+"        "
+msgstr ""
+"\n"
+"        Простота – наш основной концепт. И это касается не только "
+"минималистичного дизайна и удобного интерфейса. Мы хотим сделать шопинг "
+"максимально приятным. Поэтому на SALT нет и никогда не будет назойливой "
+"рекламы и платного продвижения. Ведь зачем? Идея SALT очень простая - тут "
+"одежда приобретает второй шанс. Вещь находит своего нового владельца без "
+"вреда окружающей среде. SALT при этом лишь выполняет скромную роль "
+"посредника в этой сделке.\n"
+"        "
 
 #: templates/registration/activation-error.html:17
 msgid "Activation Error"
@@ -2304,6 +2325,54 @@ msgstr "Сбросить пароль"
 msgctxt "password_reset"
 msgid "Submit"
 msgstr "Сбросить"
+
+#, python-format
+#~ msgid ""
+#~ "What makes SALT different from others? Well, we have a zero-fake-policy "
+#~ "here. Fakes make online shopping unbearable. The countterfeit industry in "
+#~ "fashion is valued around $600 billion. While someone makes tons of money, "
+#~ "the quality of shopping for the customer is deteriorating. But we love "
+#~ "shopping. Probably even more than you. So we set up a very simple goal - "
+#~ "to make shopping as pleasant and safe as possible. Therefore, on SALT you "
+#~ "can be %s%% sure that you are buying a nice authentic piece."
+#~ msgstr ""
+#~ "То, что отличает нас от других: на SALT нет и никогда не будет фейков. "
+#~ "Фейки никто не любит, и мы это понимаем. Именно поэтому и существует SALT "
+#~ "- первая торговая площадка брендовой одежды, на которой за этим следят. "
+#~ "По-настоящему следят. Нами движет очень простая цель сделать шопинг "
+#~ "максимально приятным и безопасным. Поэтому на SALT ты можешь быть на %s%% "
+#~ "уверен_а, что всегда приобретаешь оригинальную вещь."
+
+#~ msgid "Upload at least 4 images"
+#~ msgstr "Загрузи как минимум 4 фото"
+
+#~ msgid "Not enough photos. Minimal amount - 4"
+#~ msgstr "Недостаточно фотографий. Минимальное колличество - 4"
+
+#~ msgid "Too many files, max. amount 8"
+#~ msgstr "Слишком много фотографий. Максимальное колличество - 8"
+
+#~ msgid "New item upload"
+#~ msgstr "Залили новый айтем"
+
+#~ msgid ""
+#~ "New product was uploaded. Please verify authenticity: \n"
+#~ " {} \n"
+#~ " Product Title: {} \n"
+#~ " Product Description: \n"
+#~ " {}"
+#~ msgstr ""
+#~ "Залили новый продукт. Оригинал или нет? Верифицируй! \n"
+#~ " {} \n"
+#~ " Product Title: {} \n"
+#~ " Product Description: \n"
+#~ " {}"
+
+#~ msgid "* marked fields are required"
+#~ msgstr "* отмечены поля, обязательные к заполнению"
+
+#~ msgid "Learn more"
+#~ msgstr "Узнай больше"
 
 #~ msgid "Delete Order"
 #~ msgstr "Удалить заказ"

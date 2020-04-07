@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{% static 'css/ribbon-gallery.min.css' %}" rel="stylesheet" type="text/css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -108,6 +109,10 @@
 			text-transform: uppercase;
 			font-size: 12px;
 		}
+
+		.ribbon-gallery{
+			min-height: 240px;
+		}
 	</style>
 </head>
 <body>
@@ -116,7 +121,7 @@
 
 
 		<div class='row'>
-			<div class="col-12 pb-2 user-input" style="margin-top: 80px;"> 
+			<div class="col-12 pb-4 user-input" style="margin-top: 80px;"> 
 				<a class='underline' href="{{ object.sex.get_absolute_url }}">{% trans object.sex.gender_eng %}</a>
 					<svg class="-arrow  _rotate-right" height="5px" width="10px" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.16667L8.83333 0L5 3.83333L1.16667 0L0 1.16667L5 6.16667L10 1.16667Z" fill="black"></path></svg>
 					<a class='underline' href="{{ object.category.get_absolute_url }}">{% trans object.category.category_eng %}</a>
@@ -124,37 +129,12 @@
 					<a class='underline' href="{{ object.undercategory.get_absolute_url }}">{% trans object.undercategory.undercategory_eng %}
 				</a>
 			</div>
-			<div class='col' style="display: flex; justify-content: center;">
+			<div class="ribbon-gallery"> 
+				<!-- https://www.jqueryscript.net/gallery/mobile-swiper-lightbox-ribbon.html -->
 				{% if object.images.all %}
-				<div id="carouselIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
-					<div class="carousel-inner" style='min-height: 240px'>
-						{% for image in images %}
-							{% if image.image_order == 1 %}
-								<div class="carousel-item active" class="carousel slide" data-interval="false">
-									<img class="pdv-img" data-src="{{ image.image.url }}" alt="...">
-								</div>
-							{% endif %}
-						{% endfor %}
-
-						{% for image in images %}
-							{% if not image.image_order == 1 %}
-								<div class="carousel-item" data-interval="false">
-									<img class="pdv-img" data-src="{{ image.image.url }}" alt="...">
-								</div>
-							{% endif %}
-						{% endfor %}
-					</div>
-				</div>
-				<div class="arrows">
-					<a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev" style="position: absolute; top: 50%; bottom: 50%;">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-					</a>
-					<a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next" style="position: absolute; top: 50%; bottom: 50%;">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-					</a>
-				</div>
+				{% for image in images %}
+				<img class="pdv-img" data-src="{{ image.image.url }}" alt="...">
+				{% endfor %}
 				{% endif %}
 			</div>
 		</div>
@@ -334,6 +314,7 @@
     <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
     <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
     <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/ribbon-gallery.min.js" %}'></script>
     <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
     {% if request.user.is_authenticated %}
     <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>

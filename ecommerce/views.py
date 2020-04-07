@@ -35,11 +35,8 @@ class AboutPageView(TemplateView):
 		context['bazar'] = _('Bazar')
 		context['marketplace'] = _('Marketplace')
 		context['authentic_slogan'] = _('No counterfeit')
-		context['authentic_text'] = _("What makes SALT different from others? Well, we have a zero-fake-policy here. Fakes make online shopping unbearable. The countterfeit industry in fashion is valued around $600 billion. While someone makes tons of money, the quality of shopping for the customer is deteriorating. But we love shopping. Probably even more than you. So we set up a very simple goal - to make shopping as pleasant and safe as possible. Therefore, on SALT you can be %s%% sure that you are buying a nice authentic piece.") % 100
 		context['ai_slogan'] = _('2-step-verification')
-		context['ai_text'] = _("SALT has two-factor product verification (sounds awesome, right?). In simple words, each item is checked exactly two times. The first one happens right after uploading. Just in a few seconds, our AI-model assigns a label to the product - fake or authentic. The model thinks fast and improves itself with each loaded item (neural networks and all that). And the second step is a thorough manual check performed by our experienced experts. Thanks to the two-factor verification of all items, no fake will get to SALT.")
 		context['minimalism_slogan'] = _('Less is more')
-		context['minimalism_text'] = _("Simplicity is our core concept. And it's not only limited in minimalistic design and intuitive interface of SALT. We want both buyers and sellers to feel respected. Therefore, there is no and never will be annoying ads and paid promotion on SALT. No banners, paid pop-ups or premium accounts. SALT is a community where designer and streetwear clothes take their second chance. The item finds its new owner without harming the environment. SALT acts as a modest mediator in this straightforward, but essential deal.")
 		return context
 
 class PrivacyPageView(TemplateView):
