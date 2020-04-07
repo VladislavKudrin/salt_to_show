@@ -126,14 +126,22 @@ class UserDetailChangeForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control labels-placement', 'disabled':'true'}), required=False)
     subscribed = forms.BooleanField(required=False)
     profile_foto = forms.FileField(required=False, widget=forms.FileInput(attrs={'class':'avatar-upload-button','id':'avatar_custom'} ))
-    
+
     class Meta:
         model = User
         fields = [
                 'username',
                 'region',
                 'profile_foto',
+                'bio',
                     ]
+        widgets = {
+          'bio': forms.Textarea(attrs={
+                'rows':4,
+                'cols':15,
+                'placeholder':_('Use this space to talk about your personal style but hold the personal contact details')
+            }),
+        }
 
     def get_region_choices(self):
         region_choices = [(e.region, e.region) for e in Region.objects.all()] #currently available options
@@ -143,13 +151,10 @@ class UserDetailChangeForm(forms.ModelForm):
 
     def __init__(self, request, *args, **kwargs):
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
-        # self.helper = FormHelper()
-        # self.helper.form_show_labels = False 
         self.request = request
         self.fields['email'].label = _('Email')
         self.fields['username'].label = _('Username')
         self.fields['username'].validators = [alphanumeric]
-        # self.fields['profile_foto'].label = _('Profile photo')
         self.fields['profile_foto'].label = False
         self.fields['profile_foto'].widget.attrs['label_for_btn'] = pgettext('profile_update','Update')
         self.fields['region'].label = _('Region')
@@ -161,6 +166,8 @@ class UserDetailChangeForm(forms.ModelForm):
         self.fields['subscribed'].label = _('Recieve marketing email?')
         self.fields['subscribed'].initial=request.user.marketing.subscribed
         self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
+        self.fields['bio'].label = False
+
 
     def clean_subscribed(self):
         marketing_pref = MarketingPreference.objects.filter(user=self.request.user)

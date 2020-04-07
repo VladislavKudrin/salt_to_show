@@ -124,7 +124,7 @@ class User(AbstractBaseUser):
 		return self.email
 
 	def get_absolute_url(self):
-		return reverse('accounts:profile', kwargs={"username":self.username})
+		return reverse('profile', kwargs={"username":self.username})
 
 	def get_full_name(self):
 		if self.full_name:

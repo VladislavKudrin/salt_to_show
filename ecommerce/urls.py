@@ -7,7 +7,7 @@ from django.contrib.auth.views import LogoutView
 from django.views.generic import TemplateView, RedirectView
 from billing.views import payment_method_view, payment_method_createview
 from addresses.views import *
-from accounts.views import RegisterLoginView, WishListView, wishlistupdate, region_init
+from accounts.views import RegisterLoginView, WishListView, wishlistupdate, region_init, ProfileView
 from .views import home_page, ContactPageView, AboutPageView, PrivacyPageView, TermsPageView, FAQPageView
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailChimpWebhookView
@@ -54,6 +54,8 @@ urlpatterns = [
     url(r'^privacy/$', PrivacyPageView.as_view(), name='privacy'),
     url(r'^terms/$', TermsPageView.as_view(), name='terms'),
     url(r'^faq/$', FAQPageView.as_view(), name='faq'),
+    url(r'^users/(?P<username>[\w.@+-]+)/$', ProfileView.as_view(), name='profile'), 
+
 ]
 
 # if settings.DEBUG:

@@ -4,6 +4,18 @@
 
 	@media only screen and (max-width: 768px){
 
+	  .pdv {
+	    text-align: center;
+	    text-transform: uppercase;
+	    cursor: pointer;
+	    display: inline-block;
+	    font-family: 'Montserrat', 'Istok Web', sans-serif !important;
+	    font-size: 14px;
+	    padding: 10px 10px;
+	    background-size: 2500px;
+	    transition: none;
+	  }
+
 	  .hover-button {
 	  text-align: center;
 	  /*color: #000;*/
@@ -130,12 +142,27 @@
 	.hidden-button-outline:focus {
 	   outline: none; 
 	}
-
 	}
 
 	/* button hover effects for desktop */
 
 	@media only screen and (min-width: 768px){
+
+	  .pdv {
+	    text-align: center;
+	    text-transform: uppercase;
+	    cursor: pointer;
+	    display: inline-block;
+	    font-family: 'Montserrat', 'Istok Web', sans-serif !important;
+	    font-size: 12px;
+	    padding: 6px 12px;
+	    background-size: 2500px;
+	    -webkit-transition: background 250ms ease-out;
+	    -moz-transition: background 250ms ease-out;
+	    -ms-transition: background 250ms ease-out;
+	    -o-transition: background 250ms ease-out;
+	    transition: background 250ms ease-out;
+	  }
 
 	.hover-button {
 	  text-align: center;
@@ -287,7 +314,6 @@
 
 	.report-btn {
 	  padding: 0px 1rem !important;
-
 	}
 
 	}
@@ -454,15 +480,15 @@
 
 	.field-name{
 	  text-transform: uppercase;
-	  font-weight: 600;
+	  /*font-weight: 600;*/
 	  line-height: 25px;
-	  font-family: 'Archivo', 'Istok Web', sans-serif; 
+	  font-family: 'Montserrat', 'Istok Web', sans-serif; 
 	  font-size: 12px;
 	}
 
 	.uppercase-title{
 	  line-height: 1.2;
-	     font-family: 'Archivo', 'Istok Web', sans-serif; 
+	     font-family: 'Montserrat', 'Istok Web', sans-serif; 
 	}
 
 /*CARD*/

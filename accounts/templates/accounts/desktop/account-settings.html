@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %} 
 {% load static %}
+{% load i18n %} 
 {% block content %}
 
 <head>
@@ -91,6 +92,10 @@
     padding-right: 0px !important;
 }
 
+textarea{
+  font-size: 12px !important;
+}
+
 </style>
 </head>
 
@@ -102,7 +107,7 @@
 <div class='container settings-container' style="width:70%">
   <div class="row">
 
-    <p class="col-12 text-center heading">Обновить инфу</p>
+    <p class="col-12 text-center heading">{% trans 'Profile Settings' %}</p>
     <div class="col-12 labels-placement" style="padding-bottom: 1rem;">
       <div class="row">
         <div class="col-xs-6 col-md-4   text-center">
@@ -123,6 +128,7 @@
             <div style="padding-top: 0.5rem;">
               {{user_form.subscribed|as_crispy_field}}
             </div>
+          {{user_form.bio|as_crispy_field}}
         </div>
       </div>
     </div>

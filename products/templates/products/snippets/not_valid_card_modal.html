@@ -68,7 +68,9 @@
                     <input type="text" name="holder" 
                     {% if request.user.is_authenticated %}
                       {% if request.user.billing_profile.card %}
-                         value="{{ request.user.billing_profile.default_card.holder }}"
+                          {% if request.user.billing_profile.default_card.holder %}
+                            value="{{ request.user.billing_profile.default_card.holder }}"
+                          {% endif %}
                       {% endif %}
                     {% endif %}
                     >
@@ -79,7 +81,9 @@
                     <input type="text" name="number" maxlength="16"
                     {% if request.user.is_authenticated %}
                       {% if request.user.billing_profile.card %}
-                        value="{{ request.user.billing_profile.default_card.number }}"
+                          {% if request.user.billing_profile.default_card.number %}
+                            value="{{ request.user.billing_profile.default_card.number }}"
+                          {% endif %}
                       {% endif %}
                     {% endif %}
                     >

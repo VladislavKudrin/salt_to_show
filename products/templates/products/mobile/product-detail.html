@@ -6,119 +6,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
-  <title>SALT | {{ object.title }} </title>
-  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
-  
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+	<title>SALT | {{ object.title }} </title>
+	<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
- 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-	<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
-	<link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
-	<link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
-	<link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
-	<link href="{% static 'css/buttons.css' %}" rel="stylesheet" type="text/css">
-
-
+	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+	<style type="text/css">
+		html, body {
+		    max-width: 100%;
+		}
+
+		.username-text {
+			overflow: hidden; 
+			white-space: nowrap; 
+			text-overflow: ellipsis;
+		}
+
+		.zoomImg{
+			cursor: zoom-in!important;
+		}
+		.zoomedInCursor{
+			cursor: zoom-out!important;
+		}
+
+		.user-input{
+			font-size: 12px;
+		}
 
 
-  <style type="text/css">
-			html, body {
-			    max-width: 100%;
-			}
+		#published-line {
+			line-height: 1;
+		}
 
-			.username-text {
-				overflow: hidden; 
-				white-space: nowrap; 
-				text-overflow: ellipsis;
-			}
+		.avatar-pdv{
+			width: 50px;
+		    height: 50px;
+		    object-fit: cover;
+		    border-radius: 100% !important;
+		}
 
-			.zoomImg{
-				cursor: zoom-in!important;
-			}
-			.zoomedInCursor{
-				cursor: zoom-out!important;
-			}
-
-			.user-input{
-				font-size: 12px;
-			}
+		p { 
+		    margin-block-end: 0em !important;
+		}
 
 
-			#published-line {
-				line-height: 1;
-			}
+		/*For not popping up...*/
+		.fixed-top, .sticky-top{
+		    padding-bottom: 0!important;
+		    margin-bottom: :0!important;
+		}
 
-			.avatar-pdv{
-				width: 50px;
-			    height: 50px;
-			    object-fit: cover;
-			    border-radius: 100% !important;
-			}
+		/* for django messages be not on top */
+		.alert-success {
+	    top: 70px !important;
+		}
 
-			p { 
-			    margin-block-end: 0em !important;
-			}
+		img {
+			max-width: 320px !important;
+			max-height: 240px !important;
+		}
 
+		._rotate-right {
+		    transform: rotate(270deg);
+		}
 
-			/*For not popping up...*/
-			.fixed-top, .sticky-top{
-			    padding-bottom: 0!important;
-			    margin-bottom: :0!important;
-			}
+		.underline {
+			text-decoration: underline;
+		}
 
-			/* for django messages be not on top */
-			.alert-success {
-		    top: 70px !important;
-			}
+		.detail-likes {
+			font-size: 12px;
+		}
 
-			img {
-				max-width: 320px !important;
-				max-height: 240px !important;
-			}
+		.brand-name {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			text-decoration: underline;
+			font-size: 14px;
+		}
 
-			._rotate-right {
-			    transform: rotate(270deg);
-			}
+		.location svg, .share svg {
+			width: 12px !important;
+			height: 14px;
+		}
 
-			.underline {
-				text-decoration: underline;
-			}
+		.submit-span-wishlist button svg {
+			width: 16px;
+			height: 16px;
+		}
 
-			.detail-likes {
-				font-size: 12px;
-			}
-
-			.brand-name {
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				overflow: hidden;
-				text-decoration: underline;
-				font-size: 14px;
-			}
-
-			.location svg, .share svg {
-				width: 12px !important;
-				height: 14px;
-			}
-
-			.submit-span-wishlist button svg {
-				width: 16px;
-				height: 16px;
-			}
-
-			.uppercase-font {
-				text-transform: uppercase;
-				font-size: 12px;
-			}
-
-  </style>
+		.uppercase-font {
+			text-transform: uppercase;
+			font-size: 12px;
+		}
+	</style>
 </head>
 <body>
     {% include 'mobile/navbar.html' %}
@@ -218,7 +208,7 @@
 						<div class="row">
 							<div class="col-12">
 								<div class="row">
-									<div class="col-6 text-right pr-0 share" title="Share"><i class="fas fa-share-alt"></i></div>
+									<div class="col-6 text-right pr-0 share" title="Share"><i class="fas fa-external-link-alt"></i></div>
 									<div class="col-6">
 										{% include 'products/snippets/product-report.html' with product=object %}
 									</div>
@@ -231,28 +221,19 @@
 			<div class='container share-to-hide pl-0 pr-0' style='display:none'>
 				<div class='col-12 share-icons pt-2' style='display: flex; flex-direction: row;justify-content: space-between;'>
 					<a href="http://twitter.com/share?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Twitter">
-					<i class="fab fa-twitter"></i>
-					</a>
-
+					<i class="fab fa-twitter"></i></a>
 					<a href="whatsapp://send?text={{request.build_absolute_uri}}" target="_blank" title="Share with Whatsapp">
-					<i class="fab fa-whatsapp-square"></i>
-					</a>
-
+					<i class="fab fa-whatsapp-square"></i></a>
 					<a href="https://telegram.me/share/url?url={{request.build_absolute_uri}}&amp;text={{object.title}}" target="_blank" title="Share on Telegram">
-					<i class="fab fa-telegram-plane"></i>
-					</a>
-
+					<i class="fab fa-telegram-plane"></i></a>
 					<a href="http://vk.com/share.php?url={{request.build_absolute_uri}}&amp;title={{object.title}}&amp;comment={{object.decription}}" target="_blank" title="Share on VK">
-					<i class="fab fa-vk"></i>
-					</a>
-
+					<i class="fab fa-vk"></i></a>
 					<a href="http://www.facebook.com/share.php?u={{request.build_absolute_uri}}&amp;t={{object.title}}" target="_blank" title="Share on Facebook">
-					<i class="fab fa-facebook"></i>
-					</a>
-
+					<i class="fab fa-facebook"></i></a>
 					<a href="https://www.facebook.com/dialog/send&amp;link={{request.build_absolute_uri}}" target="_blank" title="Share with Messenger">
-					<i class="fab fa-facebook-messenger"></i>
-					</a>
+					<i class="fab fa-facebook-messenger"></i></a>
+					<input hidden type="text" value="{{request.build_absolute_uri}}" id="currentUrl">
+					<a onclick="copyUrl()"><i class="fas fa-copy"></i></a>
 				</div>
 			</div>
 			<div class="col-12 pt-4 pb-4 uppercase-title" style="font-weight: bold; font-size: 14px;">{{ object.title }}</div>
@@ -319,7 +300,14 @@
 			}//onZoomOut
 		});//zoom
 
-
+		function copyUrl() {
+		var copyText = document.getElementById("currentUrl");
+		copyText.select();
+		copyText.setSelectionRange(0, 99999)
+		document.execCommand("copy");
+		alert("Copied: " + copyText.value);
+		}
+		
 		$(document).ready(function(){
 		  $(".share").click(function(){
 		    $(".share-to-hide").toggle();
