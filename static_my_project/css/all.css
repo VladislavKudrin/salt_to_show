@@ -480,15 +480,12 @@
 
 	.field-name{
 	  text-transform: uppercase;
-	  /*font-weight: 600;*/
-	  line-height: 25px;
 	  font-family: 'Montserrat', 'Istok Web', sans-serif; 
 	  font-size: 12px;
 	}
 
-	.uppercase-title{
-	  line-height: 1.2;
-	     font-family: 'Montserrat', 'Istok Web', sans-serif; 
+	.small-line-height{
+	  line-height: 1.25;
 	}
 
 /*CARD*/
