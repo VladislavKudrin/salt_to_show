@@ -1,5 +1,7 @@
 {% load static %}
 {% load sass_tags %}
+{% load compress %}
+
 <!--  Bootstrap CSS --> 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
@@ -10,7 +12,7 @@
 
 <!-- Custom Stripe Styling -->
 <!-- 	<link rel="stylesheet" href="{% static 'css/stripe-custom-style.css' %}">  -->
-
+{% compress css %}
 	<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
 
 	<link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
@@ -20,20 +22,23 @@
 	<link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
 
 	<link href="{% static 'css/buttons.css' %}" rel="stylesheet" type="text/css">
-<!-- Star Rating -->
-	
+{% endcompress %}
+<!-- Star Rating -->	
 <!-- Perfect Scrollbar -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.css" rel="stylesheet">
 
  <!-- OptionjQuery -->
+{% compress css %}
 	<link rel="stylesheet" href="{% static 'css/sol.css' %}">
-
+{% endcompress %}
 <!-- Fontawesome -->
+{% compress css %}
 	<link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet" type="text/css">
-
+{% endcompress %}
 <!-- Selectize -->
+{% compress css %}
   <link href="{% static 'css/selectize.default.css' %}" rel="stylesheet" type="text/css">
-
+{% endcompress %}
 
 
 

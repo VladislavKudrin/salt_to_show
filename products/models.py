@@ -19,7 +19,7 @@ from imagekit import processors
 from django.core.files import File
 
 
-from ecommerce.utils import unique_slug_generator, unique_image_id_generator
+from ecommerce.utils import unique_slug_generator, price_to_region
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
 
@@ -78,6 +78,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		return self.filter(timestamp__gte=threshold)
 
 
+
 class ProductManager(models.Manager):
 	def get_queryset(self):
 		return ProductQuerySet(self.model, using=self._db)
@@ -94,10 +95,6 @@ class ProductManager(models.Manager):
 		if qs.count() == 1:
 			return qs.first()
 		return None
-	def filter_undercategory_size(self, qs, list_brand=None, list_condition=None, list_category = None, list_undercategory = None, list_size=None, link_codiert=None):
-		return self.get_queryset().filter_undercategory_size(qs, list_brand, list_condition, list_category, list_undercategory, list_size, link_codiert)
-	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
-		return self.get_queryset().by_category_gender(query_category, query_gender, query_size, qs_brand)
 	def search(self, query):
 		return self.get_queryset().active().search(query)
 	def authentic(self):
@@ -108,6 +105,93 @@ class ProductManager(models.Manager):
 
 	def payable(self):
 		return self.get_queryset().payable()
+
+	def get_categoried_queryset(self, request, json_data=None):
+		context = {}
+		if not json_data:
+			data_overcategory = request.GET.get('overcategory')
+			data_gender = request.GET.get('gender')
+			data_category = request.GET.getlist('category')
+			data_undercategory = request.GET.getlist('undercategory')
+			data_brand = request.GET.getlist('brand')
+			data_price = request.GET.getlist('price')
+			data_size = request.GET.getlist('size')
+			data_condition = request.GET.getlist('condition')
+			data_sort = request.GET.get('sort')
+		else:
+			data_overcategory = json_data.get('overcategory')
+			data_gender = json_data.get('gender')
+			data_category = json_data.get('category')
+			data_undercategory = json_data.get('undercategory')
+			data_brand = json_data.get('brand')
+			data_price = json_data.get('price')
+			data_size = json_data.get('size')
+			data_condition = json_data.get('condition')
+			data_sort = json_data.get('sort')
+			context = {
+				'overcategory_instance' :data_overcategory,
+				'gender_instance'       :data_gender,
+				'category_instance'     :data_category,
+				'undercategory_instance':data_undercategory,
+				'brand_instance'        :data_brand,
+				'size_instance'         :data_size,
+				'condition_instance'    :data_condition,
+				'price_min'             :data_price[0],
+				'price_max'             :data_price[1]
+			}
+			if data_undercategory:
+				context['actual_undercategory_instances'] = Undercategory.objects.select_related('undercategory_for').filter(id__in=data_undercategory)
+				context['actual_size_instances'] = Size.objects.filter(id__in=data_size)
+		link_json = {
+			'undercategory':data_undercategory,
+			'gender'       :data_gender,
+			'overcategory' :data_overcategory,
+			'size'         :data_size,
+			'brand'        :data_brand,
+			'condition'    :data_condition,
+			'price'        :data_price
+			}
+		if data_undercategory:
+			queryset = Product.objects.select_related('undercategory').filter(undercategory__id__in=data_undercategory)
+		elif data_gender:
+			queryset = Product.objects.select_related('sex').filter(sex__id__in=data_gender)
+		elif data_overcategory:
+			queryset = Product.objects.select_related('overcategory').filter(overcategory__id__in=data_overcategory)
+		else:
+			queryset = Product.objects.all()
+		if data_size:
+			queryset = queryset.select_related('size').filter(size__id__in=data_size)
+		if data_brand:
+			queryset = queryset.select_related('brand').filter(brand__id__in=data_brand)
+		if data_condition:
+			queryset = queryset.select_related('condition').filter(condition__id__in=data_condition)
+		if data_price:
+			price_min = data_price[0]
+			price_max = data_price[1]
+			if request.user.is_authenticated():
+				if price_min:
+					price_min = price_to_region(user=request.user, price = price_min)
+				if price_max:
+					price_max = price_to_region(user=request.user, price = price_max)
+			if not price_min and price_max:
+				queryset = queryset.filter(price__lte=price_max)
+			elif not price_max and price_min:
+				queryset = queryset.filter(price__gte=price_min)
+			elif price_max and price_min:
+				queryset = queryset.filter(price__range=(price_min, price_max))
+		#filters
+		#sort
+		if data_sort == 'high':
+			queryset=queryset.order_by('price')
+		elif data_sort == 'low':
+			queryset=queryset.order_by('-price')
+		else:
+			queryset=queryset.order_by('-timestamp')
+		#sort
+		if not json_data:		
+			return queryset, link_json
+		else:
+			return queryset, link_json, context 
 
 User=settings.AUTH_USER_MODEL
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Size, Brand, Undercategory, Category, Gender, Overcategory, Condition
+from .models import Size, Brand, Undercategory, Category, Gender, Overcategory, Condition, FilterUrlShortener
 
 class Undercategory_tab(admin.TabularInline):
 	model = Undercategory
@@ -49,6 +49,7 @@ admin.site.register(Overcategory, OvercategoryAdmin)
 
 admin.site.register(Brand)
 admin.site.register(Condition)
+admin.site.register(FilterUrlShortener)
 
 
 

@@ -1,6 +1,7 @@
 	{% load static %}
 	{% include 'base/js_templates.html' %}
-
+{% load compress %}
+{% compress js file base %}
 <!-- Lazy Loading Images  -->
 	<script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
 	<script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
@@ -15,7 +16,9 @@
 <!-- ecommerce Custom JS -->
 	<script src='{% static "js/categories.js" %}'></script>
 <!-- ecommerce Custom JS -->
+
 	<script src='{% static "js/images_upload_create.js" %}'></script>
+
 
   	<script src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
 <!-- Star Rating -->
@@ -31,7 +34,6 @@
 
 <!-- Seelectize -->
 	<script src="{% static 'js/selectize.js' %}"></script>
-
-
+{% endcompress %}
     
 

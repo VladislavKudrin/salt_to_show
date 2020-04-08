@@ -3,7 +3,9 @@ from django.db.models.signals import post_save
 from django.core.urlresolvers import reverse
 
 
+from django.db.models.signals import pre_save
 
+from .utils import unique_slug_url_shortener_generator
 
 
 
@@ -76,8 +78,30 @@ class Condition(models.Model):
 		return self.condition
 
 
+class FilterUrlShortenerManager(models.Manager):
+	def new_or_get(self, json_data):
+		qs=self.get_queryset().filter(json_data=json_data)
+		if qs.count()==1:
+			new_obj = False
+			url_obj=qs.first()
+			shorted_slug = url_obj.shorted_slug
+		else:
+			new_obj = True
+			url_obj=FilterUrlShortener.objects.create(json_data=json_data)
+			shorted_slug = url_obj.shorted_slug
+		return url_obj, new_obj
+
+class FilterUrlShortener(models.Model):
+	json_data    = models.TextField(blank=False)
+	shorted_slug = models.SlugField(default=None, unique = True, blank=True)
+	objects      = FilterUrlShortenerManager()
 
 
+def filter_url_shortener_pre_save_reciever(sender, instance, *args, **kwargs):
+	if not instance.shorted_slug:
+		instance.shorted_slug = unique_slug_url_shortener_generator(instance)
 
+
+pre_save.connect(filter_url_shortener_pre_save_reciever,sender=FilterUrlShortener)
 
 
