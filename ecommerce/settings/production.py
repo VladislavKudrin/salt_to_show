@@ -166,7 +166,8 @@ SASS_PROCESSOR_INCLUDE_DIRS = (
 )
 
 SASS_PROCESSOR_INCLUDE_FILE_PATTERN = r'^.+\.scss$'
-
+COMPRESS_OFFLINE = True
+COMPRESS_ENABLED = True
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
