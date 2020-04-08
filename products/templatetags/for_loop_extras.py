@@ -2,8 +2,20 @@ from django import template
 from datetime import datetime
 from django.conf import settings
 from django.shortcuts import redirect
+
+from categories.models import Undercategory
+
 register = template.Library()
 
+
+
+
+
+@register.filter
+def stringify(value):
+	if value is not None:
+		value = str(value)
+	return value
 
 
 @register.filter

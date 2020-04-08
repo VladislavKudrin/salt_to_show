@@ -50,17 +50,6 @@ def unique_order_id_generator(instance):
     return order_new_id
 
 
-def unique_image_id_generator(instance, image_type):
-    size = random.randint(30,45)
-    key = random_string_generator(size=size)
-    Klass = instance.__class__
-    if image_type == 'uploaded_image':
-        qs_exists = Klass.objects.filter(uploaded_file=key).exists()
-    else:
-        qs_exists = Klass.objects.filter(unique_image_id=key).exists()
-    if qs_exists:
-        return unique_slug_generator(instance)
-    return key
 
 
 
@@ -169,5 +158,9 @@ def custom_render(request, *args, **kwargs):
         args = tuple(args_list)
         return render(request, *args, **kwargs)
 
-
+def price_to_region(user, price):
+    region_user = user.region
+    if region_user:
+        price = round((int(price)/region_user.currency_mult),6)
+    return price
 

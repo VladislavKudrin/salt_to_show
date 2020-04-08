@@ -19,7 +19,7 @@ from imagekit import processors
 from django.core.files import File
 
 
-from ecommerce.utils import unique_slug_generator, unique_image_id_generator
+from ecommerce.utils import unique_slug_generator, price_to_region
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
 
@@ -63,117 +63,20 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 			return self
 		else:
 			return self.filter(lookup)
-
-	def filter_undercategory_size(self, qs, list_brand=None, list_condition=None, list_category = None, list_undercategory = None, list_size=None, link_codiert=None):
-		arr=[]
-		if list_brand is not None:
-			lookups_brand=(Q(title__iexact='qwerty123'))
-			if link_codiert is not None:
-				link_codiert = link_codiert+"brand="
-			for i, id_ in enumerate(list_brand):
-				print(id_)
-				brand = Brand.objects.get(id=int(id_))
-				arr.append(brand)
-				lookups_brand = lookups_brand|(Q(brand=brand))
-				if link_codiert:
-					if i+1 == len(list_brand):
-						link_codiert = link_codiert+"{id_brand}".format(id_brand=int(id_))+'&'
-					else: 
-						link_codiert = link_codiert+"{id_brand}".format(id_brand=int(id_))+'+'
-			qs = qs.filter(lookups_brand)
-		if list_condition is not None:
-			print(list_condition)
-			print(qs)
-			lookups_condition=(Q(title__iexact='qwerty123'))
-			if link_codiert is not None:
-				link_codiert = link_codiert+"condition="
-			for i, id_ in enumerate(list_condition):
-				condition = Condition.objects.get(id=int(id_))
-				arr.append(condition)
-				lookups_condition = lookups_condition|(Q(condition=condition))
-				if link_codiert:
-					if i+1 == len(list_condition):
-						link_codiert = link_codiert+"{id_condition}".format(id_condition=int(id_))+'&'
-					else: 
-						link_codiert = link_codiert+"{id_condition}".format(id_condition=int(id_))+'+'
-			qs = qs.filter(lookups_condition)
-			print(qs)
-		if list_category is not None:
-			lookups_category=(Q(title__iexact='qwerty123'))
-			if link_codiert:
-				link_codiert = link_codiert+"category="
-			for i, id_ in enumerate(list_category):
-				category = Category.objects.get(id=int(id_))
-				arr.append(category)
-				lookups_category = lookups_category|(Q(category=category))
-				if link_codiert:
-					if i+1 == len(list_category):
-						link_codiert = link_codiert+"{id_category}".format(id_category=int(id_))+'&'
-					else: 
-						link_codiert = link_codiert+"{id_category}".format(id_category=int(id_))+'+'
-			qs = qs.filter(lookups_category)
-		if list_undercategory is not None:
-			lookups_undercategory=(Q(title__iexact='qwerty123'))
-			if link_codiert:
-				link_codiert = link_codiert+"undercategory="
-			for i, id_ in enumerate(list_undercategory):
-				undercategory = Undercategory.objects.get(id=int(id_))
-				arr.append(undercategory)
-				lookups_undercategory = lookups_undercategory|(Q(undercategory=undercategory))
-				if link_codiert:
-					if i+1 == len(list_undercategory):
-						link_codiert = link_codiert+"{id_undercategory}".format(id_undercategory=int(id_))+'&'
-					else: 
-						link_codiert = link_codiert+"{id_undercategory}".format(id_undercategory=int(id_))+'+'
-			qs = qs.filter(lookups_undercategory)
-		if list_size is not None:
-			print(list_size)
-			lookups_size=(Q(title__iexact='qwerty123'))
-			if link_codiert:
-				link_codiert = link_codiert+"size="
-			for i, id_ in enumerate(list_size):
-				size = Size.objects.get(id=int(id_))
-				arr.append(size)
-				lookups_size = lookups_size|(Q(size=size))
-				if link_codiert:
-					if i+1 == len(list_size):
-						link_codiert = link_codiert+"{id_size}".format(id_size=int(id_))
-					else: 
-						link_codiert = link_codiert+"{id_size}".format(id_size=int(id_))+'+'
-			qs = qs.filter(lookups_size)
-		return qs, link_codiert, arr
-
-	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
-		lookups_brand=(Q(category__iexact='nothing'))
-		for x in qs_brand:
-			lookups_brand=lookups_brand|(Q(brand=x))
-		filtered_brand = self.filter(lookups_brand)
-		lookups_gender=(Q(category__iexact='nothing'))
-		for x in query_gender:
-			lookups_gender=lookups_gender|(Q(sex__iexact=x))
-		filtered_gender = self.filter(lookups_gender)
-		lookups_category=(Q(category__iexact='nothing'))
-		for x in query_category:
-			lookups_category=lookups_category|(Q(category__iexact=x))
-		filtered_category = self.filter(lookups_category)
-		lookups_size=(Q(category__iexact='nothing'))
-		for x in query_size:
-			lookups_size=lookups_size|(Q(size=x))
-		x_b = self.filter_categories(lookups_brand).filter_categories(lookups_gender).filter_categories(lookups_category).filter_categories(lookups_size)
-		return(x_b)
-
+			
 	def authentic(self):
 		return self.filter(authentic='authentic')
 
 	def fake(self):
 		return self.filter(authentic='fake')
 
-	def available(self):
+	def available(self):#do the prefetch related and see if it makes sense
 		return self.exclude(order__status='paid').exclude(order__status='shipped')
 
 	def payable(self):
 		threshold = date(2020, 3, 1) # not possible to buy items older than this 1th of March 
 		return self.filter(timestamp__gte=threshold)
+
 
 
 class ProductManager(models.Manager):
@@ -192,77 +95,8 @@ class ProductManager(models.Manager):
 		if qs.count() == 1:
 			return qs.first()
 		return None
-	def filter_undercategory_size(self, qs, list_brand=None, list_condition=None, list_category = None, list_undercategory = None, list_size=None, link_codiert=None):
-		return self.get_queryset().filter_undercategory_size(qs, list_brand, list_condition, list_category, list_undercategory, list_size, link_codiert)
-	def by_category_gender(self, query_category, query_gender, query_size, qs_brand):
-		return self.get_queryset().by_category_gender(query_category, query_gender, query_size, qs_brand)
 	def search(self, query):
 		return self.get_queryset().active().search(query)
-	def filter_from_link_or_ajax(self, qs, linked=False, list_brand=None, list_condition=None, list_price=None,list_overcategory=None,list_gender = None, list_category = None, list_undercategory=None, list_size=None, user=None):
-		context={}
-		link_codiert=''
-		data_brand = list_brand
-		if data_brand:
-			qs, link_codiert, instance_brand = Product.objects.filter_undercategory_size(qs=qs, list_brand=data_brand, link_codiert=link_codiert)
-			context['brand_instance']=instance_brand
-		data_condition = list_condition
-		if data_condition:
-			qs, link_codiert, instance_condition = Product.objects.filter_undercategory_size(qs=qs, list_condition=data_condition, link_codiert=link_codiert)
-			context['condition_instance']=instance_condition
-		data_price = list_price
-		if data_price:
-			price_min = data_price[0]
-			price_max = data_price[1]
-			context['price_min']=price_min
-			context['price_max']=price_max
-			if user:
-				if user.is_authenticated():
-					if price_min:
-						price_min = Product.objects.price_to_region_price(user=user, price = price_min)
-					if price_max:
-						price_max = Product.objects.price_to_region_price(user=user, price = price_max)
-			if not price_min and price_max:
-				qs = qs.filter(price__lte=price_max)
-				link_codiert = link_codiert + "price=+{price}".format(price=data_price[1])+'&'
-			elif not price_max and price_min:
-				qs = qs.filter(price__gte=price_min)
-				link_codiert = link_codiert + "price={price}+".format(price=data_price[0])+'&'
-			elif price_max and price_min:
-				lookups_price = Q(price__gte=price_min)&Q(price__lte=price_max)
-				qs = qs.filter(lookups_price)
-				link_codiert = link_codiert + "price={price_min}+{price_max}".format(price_min=data_price[0], price_max=data_price[1])+'&'
-		data_overcategory = list_overcategory
-		if data_overcategory:
-			overcategory_instance = Overcategory.objects.get(id=int(data_overcategory))
-			context['overcategory_instance']=overcategory_instance
-			qs = qs.filter(overcategory=overcategory_instance)
-			link_codiert = link_codiert + "overcategory={id_overcategory}".format(id_overcategory=int(data_overcategory)) + '&'
-		data_gender = list_gender
-		if data_gender:
-			gender_instance = Gender.objects.get(id=int(data_gender))
-			context['gender_instance']=gender_instance
-			qs = qs.filter(sex=gender_instance)
-			link_codiert = link_codiert + "gender={id_gender}".format(id_gender=int(data_gender)) + '&'
-		data_category = list_category
-		if data_category:
-			qs_cat, link_codiert, instance_category = Product.objects.filter_undercategory_size(qs=qs, list_category=data_category, link_codiert = link_codiert)
-			context['category_instance']=instance_category
-		data_undercategory = list_undercategory
-		if data_undercategory:
-			qs_undercat, link_codiert, instance_undercategory = Product.objects.filter_undercategory_size(qs=qs, list_undercategory=data_undercategory, link_codiert = link_codiert)
-			context['undercategory_instance']=instance_undercategory
-		if data_undercategory and data_category:
-			qs = qs_cat.union(qs_undercat)
-		elif data_category and not data_undercategory:
-			qs=qs_cat
-		elif data_undercategory and not data_category:
-			qs=qs_undercat
-		data_size = list_size
-		if data_size:
-			qs, link_codiert, instance_size = Product.objects.filter_undercategory_size(qs=qs, list_size=data_size, link_codiert=link_codiert)
-			context['size_instance']=instance_size
-		return qs, link_codiert, context
-
 	def authentic(self):
 		return self.get_queryset().active().authentic()
 
@@ -272,12 +106,92 @@ class ProductManager(models.Manager):
 	def payable(self):
 		return self.get_queryset().payable()
 
-	def price_to_region_price(self, user, price):
-		region_user = user.region
-		if region_user:
-			price = round((int(price)/region_user.currency_mult),6)
-		return price
-
+	def get_categoried_queryset(self, request, json_data=None):
+		context = {}
+		if not json_data:
+			data_overcategory = request.GET.get('overcategory')
+			data_gender = request.GET.get('gender')
+			data_category = request.GET.getlist('category')
+			data_undercategory = request.GET.getlist('undercategory')
+			data_brand = request.GET.getlist('brand')
+			data_price = request.GET.getlist('price')
+			data_size = request.GET.getlist('size')
+			data_condition = request.GET.getlist('condition')
+			data_sort = request.GET.get('sort')
+		else:
+			data_overcategory = json_data.get('overcategory')
+			data_gender = json_data.get('gender')
+			data_category = json_data.get('category')
+			data_undercategory = json_data.get('undercategory')
+			data_brand = json_data.get('brand')
+			data_price = json_data.get('price')
+			data_size = json_data.get('size')
+			data_condition = json_data.get('condition')
+			data_sort = json_data.get('sort')
+			context = {
+				'overcategory_instance' :data_overcategory,
+				'gender_instance'       :data_gender,
+				'category_instance'     :data_category,
+				'undercategory_instance':data_undercategory,
+				'brand_instance'        :data_brand,
+				'size_instance'         :data_size,
+				'condition_instance'    :data_condition,
+				'price_min'             :data_price[0],
+				'price_max'             :data_price[1]
+			}
+			if data_undercategory:
+				context['actual_undercategory_instances'] = Undercategory.objects.select_related('undercategory_for').filter(id__in=data_undercategory)
+				context['actual_size_instances'] = Size.objects.filter(id__in=data_size)
+		link_json = {
+			'undercategory':data_undercategory,
+			'gender'       :data_gender,
+			'overcategory' :data_overcategory,
+			'size'         :data_size,
+			'brand'        :data_brand,
+			'condition'    :data_condition,
+			'price'        :data_price
+			}
+		if data_undercategory:
+			queryset = Product.objects.select_related('undercategory').filter(undercategory__id__in=data_undercategory)
+		elif data_gender:
+			queryset = Product.objects.select_related('sex').filter(sex__id__in=data_gender)
+		elif data_overcategory:
+			queryset = Product.objects.select_related('overcategory').filter(overcategory__id__in=data_overcategory)
+		else:
+			queryset = Product.objects.all()
+		if data_size:
+			queryset = queryset.select_related('size').filter(size__id__in=data_size)
+		if data_brand:
+			queryset = queryset.select_related('brand').filter(brand__id__in=data_brand)
+		if data_condition:
+			queryset = queryset.select_related('condition').filter(condition__id__in=data_condition)
+		if data_price:
+			price_min = data_price[0]
+			price_max = data_price[1]
+			if request.user.is_authenticated():
+				if price_min:
+					price_min = price_to_region(user=request.user, price = price_min)
+				if price_max:
+					price_max = price_to_region(user=request.user, price = price_max)
+			if not price_min and price_max:
+				queryset = queryset.filter(price__lte=price_max)
+			elif not price_max and price_min:
+				queryset = queryset.filter(price__gte=price_min)
+			elif price_max and price_min:
+				queryset = queryset.filter(price__range=(price_min, price_max))
+		#filters
+		#sort
+		if data_sort == 'high':
+			queryset=queryset.order_by('price')
+		elif data_sort == 'low':
+			queryset=queryset.order_by('-price')
+		else:
+			queryset=queryset.order_by('-timestamp')
+		#sort
+		if not json_data:		
+			return queryset, link_json
+		else:
+			return queryset, link_json, context 
 
 User=settings.AUTH_USER_MODEL
 

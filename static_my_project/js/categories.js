@@ -563,7 +563,7 @@ $('#brand-select').searchableOptionList({
                 $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('checked',false)
                 $('#'+$target.attr('data_for_category')+'-size-checkbox').find("[active='false']").find('input').prop('disabled',false)
                 $target.parent().find("[name='undercategory']").prop('checked', true)
-                $target.parent().find("[name='undercategory']").prop('disabled', true)
+                // $target.parent().find("[name='undercategory']").prop('disabled', true)
             }//if all checked
             else{
                 $('#'+$target.attr('data_for_category')+'-size-checkbox > div').hide()
