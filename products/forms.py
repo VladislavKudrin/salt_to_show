@@ -23,7 +23,7 @@ from accounts.forms import UserDetailChangeForm
 from billing.forms import CardForm
 from .models import Product, ImageOrderUtil, ProductImage
 from categories.models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
-from ecommerce.utils import random_string_generator
+from ecommerce.utils import random_string_generator, price_to_region
 
 class ProductCreateForm(forms.ModelForm):
 	brand = forms.CharField(label=_('Brand'), required=True, widget=forms.TextInput(attrs={"class":'form-control brandautofill'}))
@@ -189,7 +189,7 @@ class ProductCreateForm(forms.ModelForm):
 		price = data.get('price')
 		self.cleaned_data['price_original'] = price
 		user = self.request.user
-		price = Product.objects.price_to_region_price(price = price, user = user)
+		price = price_to_region(price = price, user = user)
 		return price
 
 	# def clean_national_shipping(self):
