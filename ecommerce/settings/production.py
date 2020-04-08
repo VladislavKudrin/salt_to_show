@@ -14,6 +14,7 @@ import os
 from django.contrib.messages import constants as messages
 
 TESTSERVER = os.environ.get('TESTSERVER')
+LIVE = os.environ.get('LIVE')
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
