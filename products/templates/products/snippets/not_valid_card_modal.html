@@ -142,10 +142,11 @@ $(document).ready(function(){
           data: modalFormData,
           success: function(data){
             validErrorSpan.hide()
+            $('.errorsModalCard').remove()
             if(data['error']) {
               $.each(data['error'],
                         function(index, value){
-                          validErrorSpan.html(value)
+                          validErrorSpan.append("<p class='errorsModalCard'>"+ value + "</p>")
                           validErrorSpan.show()
                         })//each
                 }//if errors
