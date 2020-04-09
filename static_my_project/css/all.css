@@ -1,5 +1,13 @@
 /*BUTTONS */
 
+.middle-btn-mob {
+	font-size: 12px;
+	padding: 6px 12px;
+	text-transform: uppercase;
+	display: inline-block;
+	font-family: 'Montserrat', 'Istok Web', sans-serif !important;
+}
+
 	/* button no hover effects for mobile */
 
 	@media only screen and (max-width: 768px){
