@@ -1,280 +1,341 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %} 
 {% load static %}
-{% block content %}
 {% load i18n %} 
+{% load crispy_forms_tags %}
+{% load compress %}
 
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | Settings </title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  {% compress css %}
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/selectize.default.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
+    .credit label{
+      display:flex; 
+      font-size:12px; 
+      color:white; 
+      opacity:.4; 
+      margin-bottom: 0px; 
+      padding-top: 5px;
+    }
 
-.change-ava{
-  min-width:155px;
-}
+    .credit input{
+      background:transparent;
+      border:none;
+      border-bottom:1px solid transparent;
+      color:#dbdce0; transition: 
+      border-bottom .4s; 
+      width:100% !important;
+    }
 
-#trigger {
-    visibility: hidden; 
-    display: none; 
-  } 
+    .credit input:focus{
+      border-bottom:1px solid white !important; 
+      outline:none;
+    }
 
+    .credit{
+      background:#16181a; 
+      border-radius:14px !important; 
+      max-width: 340px; 
+      min-height: 204px;
+      margin: 10px auto 40px auto;
+      padding:40px 30px 10px 30px; 
+      box-shadow: 2px 10px 40px black; 
+      line-height: normal;
+    }
 
-@media only screen and (max-width: 768px) {
-  .col-form-label  {
-    font-size: 13px;
-  }
-  .settings-btn {
-    width: 100% !important;
-  }
-  .settings-container {
-    width: 100% !important;
-  }
-}
+    .logo-card{
+      max-width:50px; 
+      margin-top: -50px;
+    }
 
-.credit label{
-  display:flex; 
-  font-size:12px; 
-  color:white; 
-  opacity:.4; 
-  margin-bottom: 0px; 
-  padding-top: 5px;
-}
-
-.credit input{
-  background:transparent;
-  border:none;
-  border-bottom:1px solid transparent;
-  color:#dbdce0; transition: 
-  border-bottom .4s; 
-  width:100% !important;
-}
-
-.credit input:focus{
-  border-bottom:1px solid #1abc9c; 
-  outline:none;
-}
-
-.credit{
-  background:#16181a; 
-  border-radius:14px !important; 
-  max-width: 340px; 
-  min-height: 204px;
-  margin: 10px auto 40px auto;
-  padding:40px 30px 10px 30px; 
-  box-shadow: 2px 10px 40px black; 
-  line-height: normal;
-}
-
-.logo-card{
-  max-width:50px; 
-  margin-top: -50px;
-}
-
-.hidden
-{
-   display: none
-}
-
-  .selectize-control.single .selectize-input, .selectize-dropdown.single {
-    border-color: #000000;
-}
+      .selectize-control.single .selectize-input, .selectize-dropdown.single {
+        border-color: #000000;
+    }
 
 
-.selectize-control.single .selectize-input{
-  background-image: linear-gradient(to bottom, #ffffff, #ffffff);
-}
+    .selectize-control.single .selectize-input{
+      background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+    }
 
-.option .selected .active:hover{
-  background-color: transparent;
-}
+    .option .selected .active:hover{
+      background-color: transparent;
+    }
 
+    .item{
+      display: inline !important;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
 
-.selectize-control.plugin-remove_button [data-value] {
-    position: relative;
-    padding-right: 0px !important;
-}
+    .selectize-input {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 8px 20px 8px 8px;
 
-</style>
+    }
+
+      .selectize-control.single .selectize-input:after {
+        right: 5px;
+    }
+
+    .selectize-control.plugin-remove_button [data-value] {
+        position: relative;
+        padding-right: 0px !important;
+    }
+  </style>
 </head>
-
-
-
-
-<form action="" method="POST" role="form" enctype='multipart/form-data' class='account-update-form hidden'>
-{% csrf_token %}
-<div class='container settings-container' style="width:70%">
-  <div class="row">
-
-    <p class="col-12 text-center heading">{% trans 'Profile Settings' %}</p>
-    <div class="col-12 labels-placement" style="padding-bottom: 1rem;">
-      <div class="row">
-        <div class="col-xs-6 col-md-4   text-center">
-          {% if object.profile_foto %}
-          <img data-src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
-          {% else %}
-          <img data-src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:92px; height: 92px; margin-bottom: 1rem;">
-          {% endif %}
-          {{user_form.profile_foto|as_crispy_field}} 
-        </div>
-        <div class="col-xs-6 col-md-4  ">
-          {{user_form.username|as_crispy_field}}
-          {{user_form.email|as_crispy_field}}
-          {{user_form.bio|as_crispy_field}}
-          <a href='{% url "password_change" %}' class="btn hover-button button-white medium-button" role="button" aria-pressed="true" style="margin-bottom: 1rem;">{{ password_btn }}</a>
-        </div>
-        <div class="col-xs-12 col-md-4  ">
-          {{user_form.region|as_crispy_field}}
-            <div style="padding-top: 0.5rem;">
-              {{user_form.subscribed|as_crispy_field}}
-            </div>
-        </div>
-      </div>
-    </div>
-
-
-{% if request.user.region.region_code == 'ua' %}
-
-<p class="col-12 text-center heading" style="border-top: 1px solid gray; padding-top: 1rem;">Адрес</p>
-
-        <div class="col-xs-12 col-md-12 labels-placement " style='min-height:150px'>
-          <div class="row address-info ">
-            <div class="col-xs-12 col-md-12 ">
+<body>
+  {% include 'mobile/navbar.html' %}
+  <div class='container-fluid' style="margin-bottom: 2.3rem;">
+    <div class="row">
+      <div class='col'>
+        <form action="" method="POST" role="form" enctype='multipart/form-data' class='account-update-form'>
+          {% csrf_token %}
+          <p class="col-12 text-center heading pt-4">{% trans 'Profile Settings' %}</p>
+          <div class="col-12">
             <div class="row">
-              <div class="col-12" style="padding-bottom: .75rem">
-                <span class=''> {{address_form.post_office}} </span>
-                  {% if address_form.post_office.errors %}
-                      {% for error in address_form.post_office.errors %}
-                        <div class='post-office-errors'>{{ error|escape }}</div>
-                      {% endfor %}
-                  {% endif %}
-              </div>  
-            </div>
-            </div>
-            <div class="col-xs-12 col-md-12  ">
-            <div class="row">
-              <div class="col-12">
-                {{address_form.name|as_crispy_field}}
-              </div>   
-            </div>
-            </div>
-            <div class="col-xs-12 col-md-12  ">
-            <div class="row">
-              <div class="col-12">
-                {{address_form.phone|as_crispy_field}}
-              </div>   
-            </div>
+              <div class="col-xs-6 col-md-4 text-center">
+                {% if object.profile_foto %}
+                  <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
+                {% else %}
+                  <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:92px; height: 92px; margin-bottom: 1rem;">
+                {% endif %}
+                {{user_form.profile_foto|as_crispy_field}} 
+              </div>
+              <div class="col-xs-6 col-md-4  ">
+                {{user_form.username|as_crispy_field}}
+                {{user_form.email|as_crispy_field}}
+                {{user_form.bio|as_crispy_field}}
+                <a href='{% url "password_change" %}' class="btn middle-btn-mob button-black medium-button" role="button" aria-pressed="true" style="margin-bottom: 1rem;">{{ password_btn }}</a>
+              </div>
+              <div class="col-xs-12 col-md-4  ">
+                {{user_form.region|as_crispy_field}}
+                <div style="padding-top: 0.5rem;">
+                  {{user_form.subscribed|as_crispy_field}}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-<p class="col-12 text-center heading" style="border-top: 1px solid gray; padding-top: 1rem;">Данные для переводов</p>
-<div class="col-12">
-  <div class="credit">
-    <img data-src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
-    <img data-src="https://seeklogo.net/wp-content/uploads/2011/08/mastercard-logo.png" class="logo-card">
-     <div class="row">
+          {% if request.user.region.region_code == 'ua' %}
+            <p class="col-12 text-center heading pt-5">Адрес</p>
+            <div class="col-xs-12 col-md-12 labels-placement" style='min-height:150px; padding-top: 0 !important;'>
+              <div class="row address-info ">
+                <div class="col-xs-12 col-md-12 ">
+                  <div class="row">
+                    <div class="col-12" style="padding-bottom: .75rem">
+                      <span class=''> {{address_form.post_office}} </span>
+                        {% if address_form.post_office.errors %}
+                            {% for error in address_form.post_office.errors %}
+                              <div class='post-office-errors'>{{ error|escape }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>  
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-12  ">
+                  <div class="row">
+                    <div class="col-12">
+                      {{address_form.name|as_crispy_field}}
+                    </div>   
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-12  ">
+                  <div class="row">
+                    <div class="col-12">
+                      {{address_form.phone|as_crispy_field}}
+                    </div>   
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      <div class="col-12 pb-3">
-        <label>ФИО:</label>
-        <div class=''>
-        {{card_form.holder}}
-        </div>
+            <p class="col-12 text-center heading pt-5" >Данные для переводов</p>
+            <div class="col-12">
+              <div class="credit">
+                <img data-src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
+                <img data-src="https://seeklogo.net/wp-content/uploads/2011/08/mastercard-logo.png" class="logo-card">
+                <div class="row">
+                  <div class="col-12 pb-3">
+                    <label>ФИО:</label>
+                    <div class=''>
+                      {{card_form.holder}}
+                    </div>
+                  </div>
+                  <div class="col-12 ">
+                    <label>Номер карты:</label>
+                    <div class="">
+                      {{card_form.number}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="col-12 text-center pt-4">
+            <button type="submit" class="mt-3 btn button-black middle-btn-mob large-button btn-block settings-btn" style='width:50%'>{{ save_btn }}</button>
+            <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger middle-btn-mob large-button btn-block settings-btn" style='width:50%' role="button" aria-pressed="true">{{ logout_btn }}</a>
+          </div>
+          </div>
+        </form>
       </div>
-
-      <div class="col-12 ">
-          <label>Номер карты:</label>
-        <div class="">
-        {{card_form.number}}
-        </div>
-      </div>
-
-
     </div>
+    {% include 'mobile/footer.html' %}
   </div>
-</div>
-{% endif %}
 
+  <script>
+    // Labels and placeholders for accounts settings and checkout
+    var inputs = [
+    "#id_user_form-username", 
+    "#id_user_form-email", 
+    "#id_user_form-region", 
+    "#id_address_form-name", 
+    "#id_address_form-additional_line", 
+    "#id_address_form-street", 
+    "#id_address_form-city", 
+    "#id_address_form-number", 
+    "#id_address_form-postal_code", 
+    "#id_address_form-state", 
+    "#id_address_form-country", 
+    "#id_address_form-post_office", 
+    "#id_address_form-phone",
+    "#id_title",
+    "#id_brand",
+    "#id_title",
+    "#id_sex",
+    "#id_undercategory",
+    "#id_condition",
+    "#id_size",
+    "#id_price",
+    "#id_shipping_price",
+    "#id_description",
+    "#id_email",
+    "#id_content",
+    "#id_national_shipping",
+    "#id_region",
+    "#id_old_password",
+    "#id_new_password1",
+    "#id_new_password2",
+    ]
 
+    jQuery.each(inputs, function(index, item) {
+        var item_val = $(item).val()
+        var input_str = 'input'+item
+        var css_small = {"font-size": "10px", "padding-top": "1px"}
+        var css_big = {"font-size": "14px", "padding-top": "calc(.375rem + 1px)"}
 
+        // for prefilled fields
+        if (item_val){
+          $("label[for='" + $(item).attr('id') + "']").css(css_small);
+        }
 
-    <div class="col-12 text-center" style='border-top: 1px solid gray; padding-top: 1rem'>
-        <button type="submit" class="mt-3 btn button-black hover-button large-button btn-block settings-btn" style='width:50%'>{{ save_btn }}</button>
-        <a href='{% url "logout" %}' class="mt-3 btn btn-outline-danger hover-button large-button btn-block settings-btn" style='width:50%' role="button" aria-pressed="true">{{ logout_btn }}</a>
-    </div>
-
-  </div>
-</div>
-</form>
-
-
-
-
-
-
-
-
-<script>
-
-
-
-$(document).ready(
-  function(){
-
-
-// nice fadout effect
-$(".account-update-form").removeClass("hidden");
-$(".account-update-form").fadeTo(200, 0);
-$(".account-update-form").fadeTo(2000, 100);
-
-
-// selectize 
-
-sel = $('#id_address_form-post_office').selectize({
-  create: false,
-  persist: false,
-  maxOptions: 400,
-
-});
-
-user_post_office = $('#user_post_office').val()
-if (user_post_office){
-  sel[0].selectize.setValue(user_post_office)
-}
-
-
-$('.selectize-input input').focus(function(){
-  sel[0].selectize.clear()
-})
-
-
-
-})
-
-
-
-
-  var currentPath = window.location.href
-  if (currentPath.indexOf("details") != -1){
-
-      var languageOption = $('#language').val()
-      var avatar = $('.avatar-upload-button')
-      console.log(languageOption)
-      avatar.hide()
-      avatar.parent().prepend('<label for="avatar_custom" class="bt  hover-button button-white medium-button m-0">' + avatar.attr('label_for_btn') + '</label>')
-      $(".avatar-upload-button").change(function (){
-          var fieldVal = event.target.files[0].name;
-          if (fieldVal != undefined || fieldVal != ""){
-            if ($(".filepath")[0]) {
-              $(".filepath").text(fieldVal);
-            }
-            else{
-              avatar.parent().append("<small><span class='filepath'>" + fieldVal + "</span></small>")
-            }
-          }
+        // on focus
+        $(item).focus(function() {
+          $("label[for='" + $(this).attr('id') + "']").css(css_small);
         });
-  };
 
-</script>
+        // if fields were touched
+        $(item).blur(function() {
+          var input_str_val = $(input_str).val()
+          // if fields were filled out
+          if ( input_str_val ) {
+            $("label[for='" + $(this).attr('id') + "']").css(css_small);
+          };
+          // if fields were left blank
+          if ( input_str_val == '' ) {
+            $("label[for='" + $(this).attr('id') + "']").css(css_big);
+          };
 
-{% endblock %}
+        });
+    });
+
+
+
+    $(document).ready(
+      function(){
+
+    // selectize 
+
+    sel = $('#id_address_form-post_office').selectize({
+      create: false,
+      persist: false,
+      maxOptions: 400,
+
+    });
+
+    user_post_office = $('#user_post_office').val()
+    if (user_post_office){
+      sel[0].selectize.setValue(user_post_office)
+    }
+
+
+    $('.selectize-input input').focus(function(){
+      sel[0].selectize.clear()
+    })
+
+
+    })
+
+
+
+      var currentPath = window.location.href
+      if (currentPath.indexOf("details") != -1){
+
+          var languageOption = $('#language').val()
+          var avatar = $('.avatar-upload-button')
+          console.log(languageOption)
+          avatar.hide()
+          avatar.parent().prepend('<label for="avatar_custom" class="btn middle-btn-mob button-black medium-button m-0">' + avatar.attr('label_for_btn') + '</label>')
+          $(".avatar-upload-button").change(function (){
+              var fieldVal = event.target.files[0].name;
+              if (fieldVal != undefined || fieldVal != ""){
+                if ($(".filepath")[0]) {
+                  $(".filepath").text(fieldVal);
+                }
+                else{
+                  avatar.parent().append("<small><span class='filepath'>" + fieldVal + "</span></small>")
+                }
+              }
+            });
+      };
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-150733918-1');
+  </script>
+  {% compress js file base %} 
+  <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+  <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+  <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+  <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/selectize.js' %}"></script>
+  {% endcompress %}
+  {% if request.user.is_authenticated %}
+    {% compress js file base %} 
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
+  {% endif %}
+</body>
+</html>
 
 
 
