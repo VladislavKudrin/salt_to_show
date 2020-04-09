@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <style type="text/css">
   .credit label{
   display:flex; 
@@ -42,15 +44,32 @@
 {
    display: none
 }
+
+#add_card_modal{
+  top: 15%;
+}
+
+.modal-header, .modal-footer{
+  border-bottom: none;
+  border-top: none;
+}
+
+.close{
+  font-weight: normal;
+}
+
+.fade{
+  transition: none;
+}
+
 </style>
 
 
-<!-- Modal -->
 <div class="modal fade" id="add_card_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Please add valid card to sell an item</h5>
+        <span class="modal-title" id="exampleModalLongTitle">{% trans 'Please add valid card before selling item. This is needed to transfer you money in case of successful transaction' %}</span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -63,7 +82,7 @@
               <img data-src="https://seeklogo.net/wp-content/uploads/2011/08/mastercard-logo.png" class="logo-card">
               <div class="row">
                 <div class="col-12 pb-3">
-                  <label>ФИО:</label>
+                  <label>{% trans 'Name:' %}</label>
                   <div class=''>
                     <input type="text" name="holder" 
                     {% if request.user.is_authenticated %}
@@ -77,7 +96,7 @@
                   </div>
                 </div>
                 <div class="col-12 ">
-                  <label>Номер карты:</label>
+                  <label>{% trans 'Card number:' %}</label>
                     <input type="text" name="number" maxlength="16"
                     {% if request.user.is_authenticated %}
                       {% if request.user.billing_profile.card %}
@@ -93,8 +112,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-dark">Save changes</button>
+          <button type="button" class="btn " data-dismiss="modal">{% trans 'Close' %}</button>
+          <button type="submit" class="btn hover-button button-black medium-button m-0">{% trans 'Save' %}</button>
         </div>
       </form>
     </div>
