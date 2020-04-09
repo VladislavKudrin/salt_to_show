@@ -18,7 +18,6 @@ from imagekit.models import ProcessedImageField
 from imagekit import processors 
 from django.core.files import File
 
-
 from ecommerce.utils import unique_slug_generator, price_to_region
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
 
@@ -173,12 +172,18 @@ class ProductManager(models.Manager):
 					price_min = price_to_region(user=request.user, price = price_min)
 				if price_max:
 					price_max = price_to_region(user=request.user, price = price_max)
+			else:
+				if price_min:
+					price_min = price_to_region(price = price_min)
+				if price_max:
+					price_max = price_to_region(price = price_max)
 			if not price_min and price_max:
 				queryset = queryset.filter(price__lte=price_max)
 			elif not price_max and price_min:
 				queryset = queryset.filter(price__gte=price_min)
 			elif price_max and price_min:
 				queryset = queryset.filter(price__range=(price_min, price_max))
+
 		#filters
 		#sort
 		if data_sort == 'high':

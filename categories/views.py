@@ -1,5 +1,7 @@
 import json
 
+
+from django.conf import settings
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.db.models import Q
@@ -11,7 +13,7 @@ from django.utils.translation import gettext as _
 from .models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition, FilterUrlShortener
 from products.models import Product
 from .forms import TranslateForm
-from ecommerce.utils import custom_render, price_to_region
+from ecommerce.utils import custom_render
 
 
 
@@ -107,6 +109,7 @@ class CategoryFilterView(ListView):
 		context['condition'] = _('Condition')
 		context['brand'] = _('Brand')
 		context['price'] = _('Price')
+		context['default_currency'] = settings.DEFAULT_CURRENCY
 		return custom_render(request, "products", "product-list", context)
 
 def translation_view(request):

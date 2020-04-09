@@ -2,18 +2,19 @@ import random
 import string
 import os
 from .settings import BASE_DIR
-from categories.models import Brand
 from django.utils.text import slugify
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
 from django.contrib import messages
 import requests
+from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.files import File
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.shortcuts import render
+
 
 
 
@@ -158,9 +159,17 @@ def custom_render(request, *args, **kwargs):
         args = tuple(args_list)
         return render(request, *args, **kwargs)
 
-def price_to_region(user, price):
-    region_user = user.region
-    if region_user:
-        price = round((int(price)/region_user.currency_mult),6)
+def price_to_region(price, user=None):
+    default_currency = settings.DEFAULT_CURRENCY
+    if user is not None:
+        region_user = user.region
+        if region_user:
+            price = round((int(price)/region_user.currency_mult),6)
+    else:
+        from accounts.models import Region
+        region_user = Region.objects.filter(currency=default_currency)
+        if region_user.exists():
+            region_user = region_user.first()
+            price = round((int(price)/region_user.currency_mult),6)
     return price
 

@@ -346,13 +346,13 @@ hr{
           <div class="row ml-2 mr-2 mt-2">
             <div class="col-6 text-center">
             <div class="input-group input-group-sm mb-3" style="border: 1px solid #DDD;">
-                     <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}${% endif %}</div>
+                     <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
                 <input type="number" style="border: none;" min='0' placeholder="min"  {% if price_min %} value='{{ price_min }}'{% endif %} name='price' class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
             <div class="col-6 text-center">
                <div class="input-group input-group-sm mb-3" style="border: 1px solid #DDD;">
-                      <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}${% endif %}</div>
+                      <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
                 <input type="number" style="border: none;" name='price' min='0' placeholder="max" {% if price_max %} value='{{ price_max }}'{% endif %}class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
