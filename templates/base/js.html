@@ -2,6 +2,10 @@
 	{% include 'base/js_templates.html' %}
 {% load compress %}
 {% compress js file base %}
+
+<!-- Fontawesome -->
+	<script defer src="{% static 'fontawesome//js/all.js' %}"></script>
+	
 <!-- Lazy Loading Images  -->
 	<script src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
 	<script src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
@@ -28,8 +32,7 @@
 <!-- MobileTouch -->
 	<script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
 
-<!-- Fontawesome -->
-	<script defer src="{% static 'fontawesome//js/all.js' %}"></script>
+
 
 <!-- Seelectize -->
 	<script src="{% static 'js/selectize.js' %}"></script>
