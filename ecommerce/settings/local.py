@@ -37,6 +37,8 @@ DEBUG = True
 
 TESTMODE = True
 
+DEFAULT_CURRENCY = 'грн'
+
 ALLOWED_HOSTS = ['*']
 
 EMAIL_HOST = 'smtp.gmail.com'

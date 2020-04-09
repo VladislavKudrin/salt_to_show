@@ -54,6 +54,9 @@ DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
 ALLOWED_REGIONS = 'ua'
 
 
+DEFAULT_CURRENCY = 'грн'
+
+
 if TESTSERVER == 'True':
     BASE_URL = 'https://www.salt-testserver.herokuapp.com'
     BASE_URL_WITHOUT_WWW = 'https://salt-testserver.herokuapp.com'
