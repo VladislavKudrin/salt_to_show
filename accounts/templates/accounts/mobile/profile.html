@@ -2,6 +2,7 @@
 {% load pagination_tags %}
 {% load i18n %}	
 {% load crispy_forms_tags %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,9 @@
   <title>SALT | {{ object.username }}</title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  {% compress css %}
   <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   <style type="text/css">
@@ -161,9 +164,6 @@
 		alert("Copied: " + copyText.value);
 		}
 	</script>
-    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -171,12 +171,19 @@
       gtag('js', new Date());
       gtag('config', 'UA-150733918-1');
     </script>
+	{% compress js file base %}	
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
     <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
     <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
     <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    {% endcompress %}
     {% if request.user.is_authenticated %}
+    {% compress js file base %}	
     <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
     {% endif %}
 </body>
 </html>

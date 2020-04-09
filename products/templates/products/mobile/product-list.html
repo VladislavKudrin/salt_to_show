@@ -2,6 +2,7 @@
 {% load static %}
 {% load for_loop_extras %}
 {% load checked_time %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,7 @@
   <title>SALT | {{ object.title }} </title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  {% compress css %}
   <link type="text/css" href="{% static 'css/fonts_home.css' %}" rel="stylesheet">
   <link type="text/css" href="{% static 'css/buttons.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/sol.css' %}">
@@ -19,6 +21,7 @@
   <link href="{% static 'css/selectize.default.css' %}" rel="stylesheet" type="text/css">
   <link type="text/css" href="{% static 'css/card.css' %}" rel="stylesheet">
   <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 <style type="text/css">
@@ -196,6 +199,14 @@
 						$('#slider_filters').css('top',topNavbar+topFilterbar+'px')
 				}//if mobile
 	</script>
+	 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-150733918-1');
+    </script>
+	{% compress js file base %}	
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
@@ -204,19 +215,15 @@
 	<script src='{% static "js/categories.js" %}'></script>
 	<script src="{% static 'js/sol.js' %}"></script>
 	<script src="{% static 'js/selectize.js' %}"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-150733918-1');
-    </script>
     <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
     <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
     <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
     <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    {% endcompress %}
     {% if request.user.is_authenticated %}
+    {% compress js file base %}	
     <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
     {% endif %}
 </body>
 </html>
