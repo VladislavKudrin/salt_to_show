@@ -199,17 +199,17 @@
        {% csrf_token %}
             <input type="hidden" id='form_id' name="form_id" value='{{ form_id }}'>
               <input type="hidden" id='language' name="language" value='EN'>
-      <div class="placic-style space">
+      <div class="space">
         {{form.title|as_crispy_field}}
       </div>
         <div class="row">
-          <div class="col-12 col-md-6 placic-style space">
+          <div class="col-12 col-md-6 space">
             {{form.brand|as_crispy_field}}
         <div class="tiny">
               {% trans 'Email info@saltish.co if the brand you are trying to add does not exist.' %}
           </div>
         </div>
-          <div class="col-12 col-md-6 placic-style space">
+          <div class="col-12 col-md-6 space">
             {{form.sex|as_crispy_field}}
             <input class='input-gender' type="hidden" readonly name="sex" value='{% if request.user.is_admin %}1{% endif %}'>
             <div class="dropdown-custom">
@@ -245,7 +245,7 @@
 
 
         <div class="row ">
-          <div class="col-12 col-md-6 placic-style space">
+          <div class="col-12 col-md-6 space">
             {{form.undercategory|as_crispy_field}}
             <input class='input-undercategory' type="hidden" readonly name="undercategory" value='{% if request.user.is_admin %}1{% endif %}'>
             <div class="dropdown-custom">
@@ -261,7 +261,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6 placic-style space">
+          <div class="col-12 col-md-6 space">
             {{ form.size|as_crispy_field }}
             <input class='input-size' type="hidden" readonly name="size" value='{% if request.user.is_admin %}154{% endif %}'>
             <div class="dropdown-custom">
@@ -289,7 +289,7 @@
 
 
         <div class="row">
-          <div class="col-12 col-md-6 placic-style space">
+          <div class="col-12 col-md-6 space">
             {{form.condition|as_crispy_field}}
             <input class='input-condition' type="hidden" readonly name="condition" value='{% if request.user.is_admin %}1{% endif %}'>
             <div class="dropdown-custom">
@@ -342,7 +342,7 @@
       </div>
       </div>
 
-      <div class="placic-style space">
+      <div class= space">
         {{form.description|as_crispy_field}} 
       </div>
        
