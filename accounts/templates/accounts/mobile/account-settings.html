@@ -108,9 +108,9 @@
             <div class="row">
               <div class="col-xs-6 col-md-4 text-center">
                 {% if object.profile_foto %}
-                  <img src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
+                  <img data-src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
                 {% else %}
-                  <img src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:92px; height: 92px; margin-bottom: 1rem;">
+                  <img data-src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:92px; height: 92px; margin-bottom: 1rem;">
                 {% endif %}
                 {{user_form.profile_foto|as_crispy_field}} 
               </div>
@@ -195,7 +195,6 @@
     </div>
     {% include 'mobile/footer.html' %}
   </div>
-
   <script>
     // Labels and placeholders for accounts settings and checkout
     var inputs = [
@@ -320,6 +319,7 @@
     gtag('config', 'UA-150733918-1');
   </script>
   {% compress js file base %} 
+  <script type="application/javascript" src="{% static 'js/selectize.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
@@ -327,13 +327,8 @@
   <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
   <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
   <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
-  <script type="application/javascript" src="{% static 'js/selectize.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
   {% endcompress %}
-  {% if request.user.is_authenticated %}
-    {% compress js file base %} 
-    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
-    {% endcompress %}
-  {% endif %}
 </body>
 </html>
 

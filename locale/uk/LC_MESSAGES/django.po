@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-09 10:49+0000\n"
-"PO-Revision-Date: 2020-04-09 12:51+0200\n"
+"POT-Creation-Date: 2020-04-09 22:06+0000\n"
+"PO-Revision-Date: 2020-04-10 00:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -84,13 +84,13 @@ msgid "Profile Settings"
 msgstr "Налаштування профiлю"
 
 #: accounts/templates/accounts/desktop/profile.html:52
-#: accounts/templates/accounts/mobile/profile.html:110
+#: accounts/templates/accounts/mobile/profile.html:113
 msgid "Items:"
 msgstr "Айтеми:"
 
 #: accounts/templates/accounts/desktop/profile.html:89
 #: accounts/templates/accounts/desktop/wishlist.html:57
-#: accounts/templates/accounts/mobile/profile.html:140
+#: accounts/templates/accounts/mobile/profile.html:143
 #: accounts/templates/accounts/mobile/wishlist.html:57
 #: products/templates/products/desktop/fake-list.html:61
 #: products/templates/products/desktop/my-items-list.html:59
@@ -106,11 +106,11 @@ msgstr "Поки що тут пусто"
 msgid "Wishlist:"
 msgstr "Улюблене:"
 
-#: accounts/templates/accounts/mobile/profile.html:95
+#: accounts/templates/accounts/mobile/profile.html:98
 msgid "Bio:"
 msgstr "Бio:"
 
-#: accounts/templates/accounts/mobile/register-login.html:12
+#: accounts/templates/accounts/mobile/register-login.html:13
 msgid "Login"
 msgstr ""
 
@@ -141,7 +141,7 @@ msgstr "Вибрати регіон"
 msgid "Save changes"
 msgstr "Зберегти зміни"
 
-#: accounts/views.py:87 accounts/views.py:200 ecommerce/utils.py:81
+#: accounts/views.py:87 accounts/views.py:200 ecommerce/utils.py:82
 msgid "You're in"
 msgstr "Ти на сайті"
 
@@ -191,7 +191,7 @@ msgid "Change password"
 msgstr "Змінити пароль"
 
 #: accounts/views.py:318
-#: products/templates/products/snippets/not_valid_card_modal.html:120
+#: products/templates/products/snippets/not_valid_card_modal.html:117
 #: products/views.py:301 templates/registration/password_change_form.html:31
 msgid "Save"
 msgstr "Зберегти"
@@ -273,59 +273,59 @@ msgstr ""
 msgid "Select a brand"
 msgstr "Обери бренд"
 
-#: categories/views.py:96
+#: categories/views.py:98
 msgid "Hide Filters"
 msgstr "Сховати фільтри"
 
-#: categories/views.py:97
+#: categories/views.py:99
 msgid "Show Filters"
 msgstr "Показати фільтри"
 
-#: categories/views.py:98
+#: categories/views.py:100
 msgid "Sort by"
 msgstr "Сортувати по"
 
-#: categories/views.py:99
+#: categories/views.py:101
 msgid "New first"
 msgstr "Спочатку новi"
 
-#: categories/views.py:100
+#: categories/views.py:102
 msgid "Low price first"
 msgstr "Спочатку дешеві"
 
-#: categories/views.py:101
+#: categories/views.py:103
 msgid "High price first"
 msgstr "Спочатку дорогі"
 
-#: categories/views.py:102 products/forms.py:66
+#: categories/views.py:104 products/forms.py:66
 msgid "Gender"
 msgstr "Стать"
 
-#: categories/views.py:103
+#: categories/views.py:105
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:104 products/forms.py:67
+#: categories/views.py:106 products/forms.py:67
 msgid "Category"
 msgstr "Категорiя"
 
-#: categories/views.py:105
+#: categories/views.py:107
 msgid "All"
 msgstr "Усi"
 
-#: categories/views.py:106 products/forms.py:68
+#: categories/views.py:108 products/forms.py:68
 msgid "Size"
 msgstr "Рoзмiр"
 
-#: categories/views.py:107 products/forms.py:69
+#: categories/views.py:109 products/forms.py:69
 msgid "Condition"
 msgstr "Стан"
 
-#: categories/views.py:108 ecommerce/views.py:148 products/forms.py:29
+#: categories/views.py:110 ecommerce/views.py:148 products/forms.py:29
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:109
+#: categories/views.py:111
 msgid "Price"
 msgstr "Цiна"
 
@@ -342,7 +342,7 @@ msgstr "Твій месседж"
 msgid "Order Id: "
 msgstr "ID замовлення "
 
-#: ecommerce/utils.py:84
+#: ecommerce/utils.py:85
 msgid "Only alphanumeric characters are allowed"
 msgstr "Юзернейм повинен містити тільки латинські символи або цифри"
 
@@ -881,7 +881,7 @@ msgid "Rate the order:"
 msgstr "Оцініть замовлення:"
 
 #: orders/templates/orders/snippets/order_feedback.html:46
-#: products/templates/products/snippets/not_valid_card_modal.html:119
+#: products/templates/products/snippets/not_valid_card_modal.html:116
 msgid "Close"
 msgstr "Закрити"
 
@@ -999,28 +999,26 @@ msgid "My Items:"
 msgstr "Мої айтеми:"
 
 #: products/templates/products/desktop/product-create.html:165
-#: products/templates/products/mobile/product-create.html:165
+#: products/templates/products/mobile/product-create.html:177
 msgid ""
 "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co якщо твій бажаний бренд відсутній."
 
 #: products/templates/products/desktop/product-create.html:274
-#: products/templates/products/mobile/product-create.html:274
 msgid "Photos*"
 msgstr "Фотографії *"
 
 #: products/templates/products/desktop/product-create.html:279
-#: products/templates/products/mobile/product-create.html:279
 msgid "Browse"
 msgstr "Вибрати"
 
 #: products/templates/products/desktop/product-create.html:284
-#: products/templates/products/mobile/product-create.html:284
+#: products/templates/products/mobile/product-create.html:287
 msgid "Too many images. Should be less than"
 msgstr "Забагато фото. Повинно бути менше ніж"
 
 #: products/templates/products/desktop/product-create.html:285
-#: products/templates/products/mobile/product-create.html:285
+#: products/templates/products/mobile/product-create.html:288
 msgid "Authenticity check..."
 msgstr "Перевірка аутентичності ..."
 
@@ -1029,7 +1027,11 @@ msgstr "Перевірка аутентичності ..."
 msgid "Viewed items:"
 msgstr "Нещодавно переглянуте:"
 
-#: products/templates/products/mobile/product-detail.html:194
+#: products/templates/products/mobile/product-create.html:283
+msgid "Browse photos"
+msgstr "Обери фото"
+
+#: products/templates/products/mobile/product-detail.html:198
 msgid "Shipping:"
 msgstr "Доставка:"
 
@@ -1062,7 +1064,7 @@ msgstr "Редагувати"
 msgid "Delete"
 msgstr "Видалити"
 
-#: products/templates/products/snippets/not_valid_card_modal.html:75
+#: products/templates/products/snippets/not_valid_card_modal.html:72
 msgid ""
 "Please add valid card before selling item. This is needed to transfer you "
 "money in case of successful transaction"
@@ -1070,11 +1072,11 @@ msgstr ""
 "Будь ласка, вкажи свої реквізити. Це необхідно для переказу коштів за "
 "проданий товар."
 
-#: products/templates/products/snippets/not_valid_card_modal.html:88
+#: products/templates/products/snippets/not_valid_card_modal.html:85
 msgid "Name:"
 msgstr "Ім’я та прізвище:"
 
-#: products/templates/products/snippets/not_valid_card_modal.html:102
+#: products/templates/products/snippets/not_valid_card_modal.html:99
 msgid "Card number:"
 msgstr "Номер картки:"
 
@@ -1226,7 +1228,7 @@ msgstr "Переглянуте"
 msgid "Settings"
 msgstr "Налаштування"
 
-#: templates/desktop/about-us.html:296 templates/mobile/about-us.html:228
+#: templates/desktop/about-us.html:296 templates/mobile/about-us.html:232
 #, python-format
 msgid ""
 "\n"
@@ -1250,7 +1252,7 @@ msgstr ""
 "бути на 100%% впевнена_ий, що здобуваєш оригінальну річ.\n"
 "        "
 
-#: templates/desktop/about-us.html:313 templates/mobile/about-us.html:238
+#: templates/desktop/about-us.html:313 templates/mobile/about-us.html:242
 msgid ""
 "\n"
 "        SALT has two-factor product verification (sounds awesome, right?). "
@@ -1272,7 +1274,7 @@ msgstr ""
 "продукту на SALT не пройде жоден фейк.\n"
 "        "
 
-#: templates/desktop/about-us.html:330 templates/mobile/about-us.html:248
+#: templates/desktop/about-us.html:330 templates/mobile/about-us.html:252
 msgid ""
 "\n"
 "        Simplicity is our core concept. And this applies not only to "
@@ -2149,7 +2151,7 @@ msgstr "Сплачено"
 msgid "Shipped"
 msgstr "Доставлено"
 
-#: templates/mobile/about-us.html:9 templates/mobile/footer.html:125
+#: templates/mobile/about-us.html:11 templates/mobile/footer.html:125
 msgid "Why SALT?"
 msgstr "Чому SALT?"
 
@@ -2428,9 +2430,6 @@ msgstr "Підтвердити"
 
 #~ msgid "Cannot change email"
 #~ msgstr "Не можна змінити мейл"
-
-#~ msgid "Profile photo"
-#~ msgstr "Фото профілю"
 
 #~ msgid "Content"
 #~ msgstr "Зміст"
