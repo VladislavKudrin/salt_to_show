@@ -18,19 +18,23 @@ class CardForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super(CardForm, self).__init__(*args, **kwargs)
         self.request=request
-    # def clean_number(self):
-    #     number = self.cleaned_data.get('number')
-    #     if len(str(number)) != 16:
-    #         print('smaller')
-    #         msg = ("""This email does not exist or already acivated. Would you like to <a href=""")
-    #         raise forms.ValidationError((msg))
-    #     return number
 
-    # 
+
+
+class CardModalForm(CardForm):
+    def clean_number(self):
+        number = self.cleaned_data.get('number')
+        if len(str(number)) != 16:
+            msg = ("Enter a valid card number")
+            raise forms.ValidationError((msg))
+        return number
+
+    
+
+
 
 RATING_CHOICES = [x * 0.5 for x in range(11)]
 class FeedbackForm(forms.ModelForm):
-    # rating = forms.ChoiceField(widget=forms.RadioSelect, choices=RATING_CHOICES)
     order_id = forms.CharField(required=False, widget=forms.TextInput(attrs={"style":"display:none"}))
     class Meta:
         model = Feedback

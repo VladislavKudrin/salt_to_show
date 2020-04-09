@@ -23,7 +23,7 @@ LIQPAY_PRIV_KEY = getattr(settings, "LIQPAY_PRIVATE_KEY", "sandbox_tLSKnsdkFbQgI
 LIQPAY_PUB_KEY =  getattr(settings, "LIQPAY_PUBLIC_KEY", 'sandbox_i6955995458')
 PAY_USER_SECRET_KEY = getattr(settings, "PAY_USER_SECRET_KEY", '')
 from .models import BillingProfile, Card
-from .forms import CardForm
+from .forms import CardForm, CardModalForm
 from ecommerce.utils import stay_where_you_are
 from orders.models import Order, Transaction, Payout
 from analitics.utils import get_client_ip
@@ -34,12 +34,25 @@ def card_modal_update(request):
     if request.POST:
         billing_profile, created = BillingProfile.objects.new_or_get(request)
         card, created = Card.objects.new_or_get(billing_profile=billing_profile)
-        form = CardForm(request=request, data=request.POST, instance=card)
-        if form.is_valid():
-            card = form.save() 
-            if card.is_valid_card():
-                return redirect('products:create')
-        return stay_where_you_are(request)
+        form = CardModalForm(request=request, data=request.POST, instance=card)
+        if request.is_ajax():
+            if form.is_valid():
+                card = form.save() 
+                json_data={
+                'url': reverse('products:create')
+                }
+                return JsonResponse(json_data)
+            else:
+                json_data={
+                'error':form.errors
+                }
+                return JsonResponse(json_data)
+        else: 
+            if form.is_valid():
+                card = form.save() 
+                if card.is_valid_card():
+                    return redirect('products:create')
+            return stay_where_you_are(request)
 
 
 class PayView(TemplateView):
