@@ -25,7 +25,7 @@ class CardModalForm(CardForm):
     def clean_number(self):
         number = self.cleaned_data.get('number')
         if len(str(number)) != 16:
-            msg = ("Enter a valid card number")
+            msg = _("Enter a valid card number")
             raise forms.ValidationError((msg))
         return number
 

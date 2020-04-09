@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-09 09:17+0000\n"
-"PO-Revision-Date: 2020-04-09 11:23+0200\n"
+"POT-Creation-Date: 2020-04-09 10:49+0000\n"
+"PO-Revision-Date: 2020-04-09 12:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -191,7 +191,7 @@ msgid "Change password"
 msgstr "Змінити пароль"
 
 #: accounts/views.py:318
-#: products/templates/products/snippets/not_valid_card_modal.html:116
+#: products/templates/products/snippets/not_valid_card_modal.html:120
 #: products/views.py:301 templates/registration/password_change_form.html:31
 msgid "Save"
 msgstr "Зберегти"
@@ -207,6 +207,10 @@ msgstr "Ім’я та прізвище"
 #: addresses/forms.py:53
 msgid "Phone"
 msgstr "Телефон"
+
+#: billing/forms.py:28
+msgid "Enter a valid card number"
+msgstr "Введіть коректне значення."
 
 #: billing/templates/billing/emails/payback_failure.html:2
 #, python-format
@@ -877,7 +881,7 @@ msgid "Rate the order:"
 msgstr "Оцініть замовлення:"
 
 #: orders/templates/orders/snippets/order_feedback.html:46
-#: products/templates/products/snippets/not_valid_card_modal.html:115
+#: products/templates/products/snippets/not_valid_card_modal.html:119
 msgid "Close"
 msgstr "Закрити"
 
@@ -1058,7 +1062,7 @@ msgstr "Редагувати"
 msgid "Delete"
 msgstr "Видалити"
 
-#: products/templates/products/snippets/not_valid_card_modal.html:72
+#: products/templates/products/snippets/not_valid_card_modal.html:75
 msgid ""
 "Please add valid card before selling item. This is needed to transfer you "
 "money in case of successful transaction"
@@ -1066,11 +1070,11 @@ msgstr ""
 "Будь ласка, вкажи свої реквізити. Це необхідно для переказу коштів за "
 "проданий товар."
 
-#: products/templates/products/snippets/not_valid_card_modal.html:85
+#: products/templates/products/snippets/not_valid_card_modal.html:88
 msgid "Name:"
 msgstr "Ім’я та прізвище:"
 
-#: products/templates/products/snippets/not_valid_card_modal.html:99
+#: products/templates/products/snippets/not_valid_card_modal.html:102
 msgid "Card number:"
 msgstr "Номер картки:"
 
