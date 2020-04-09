@@ -37,6 +37,9 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+
+DEFAULT_CURRENCY = 'грн'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'info@saltish.co' 
 EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
