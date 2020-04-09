@@ -185,7 +185,13 @@
             </li> 
 
             <li class="nav-item pl-2">
-                  <small><a id="" class="hover-button buy-sell" role="button" href="{{ products_create_url }}">Sell</a></small>
+                  <small><a id="" class="hover-button buy-sell" role="button" 
+                    {% if request.user.is_authenticated %}
+                    {% if not request.user.billing_profile.default_card.is_valid_card %} 
+                    data-toggle="modal" data-target="#add_card_modal" disabled="true"
+                    {% endif %}
+                    {% endif %} 
+                    href="{{ products_create_url }}">Sell</a></small>
             </li>      
              
             <li class="nav-item pl-2">
@@ -273,3 +279,6 @@
     </div>
 
 </nav>
+
+<!-- Modal card -->
+{% include 'products/snippets/not_valid_card_modal.html' %}

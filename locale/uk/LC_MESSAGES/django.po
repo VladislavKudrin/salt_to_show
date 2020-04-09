@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-07 17:39+0000\n"
-"PO-Revision-Date: 2020-04-07 19:38+0200\n"
+"POT-Creation-Date: 2020-04-09 09:17+0000\n"
+"PO-Revision-Date: 2020-04-09 11:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -141,7 +141,7 @@ msgstr "Вибрати регіон"
 msgid "Save changes"
 msgstr "Зберегти зміни"
 
-#: accounts/views.py:87 accounts/views.py:200 ecommerce/utils.py:92
+#: accounts/views.py:87 accounts/views.py:200 ecommerce/utils.py:81
 msgid "You're in"
 msgstr "Ти на сайті"
 
@@ -190,8 +190,9 @@ msgstr "Оновити аккаунт"
 msgid "Change password"
 msgstr "Змінити пароль"
 
-#: accounts/views.py:318 products/views.py:301
-#: templates/registration/password_change_form.html:31
+#: accounts/views.py:318
+#: products/templates/products/snippets/not_valid_card_modal.html:116
+#: products/views.py:301 templates/registration/password_change_form.html:31
 msgid "Save"
 msgstr "Зберегти"
 
@@ -268,75 +269,59 @@ msgstr ""
 msgid "Select a brand"
 msgstr "Обери бренд"
 
-#: categories/views.py:182 ecommerce/views.py:146
-msgid "Kids"
-msgstr "Діти"
-
-#: categories/views.py:183 ecommerce/views.py:147
-msgid "New"
-msgstr "Свiже"
-
-#: categories/views.py:184
+#: categories/views.py:96
 msgid "Hide Filters"
 msgstr "Сховати фільтри"
 
-#: categories/views.py:185
+#: categories/views.py:97
 msgid "Show Filters"
 msgstr "Показати фільтри"
 
-#: categories/views.py:186
-msgid "Found"
-msgstr "Знайдено"
-
-#: categories/views.py:187
-msgid "Items"
-msgstr "Айтеми"
-
-#: categories/views.py:188
+#: categories/views.py:98
 msgid "Sort by"
 msgstr "Сортувати по"
 
-#: categories/views.py:189
+#: categories/views.py:99
 msgid "New first"
 msgstr "Спочатку новi"
 
-#: categories/views.py:190
+#: categories/views.py:100
 msgid "Low price first"
 msgstr "Спочатку дешеві"
 
-#: categories/views.py:191
+#: categories/views.py:101
 msgid "High price first"
 msgstr "Спочатку дорогі"
 
-#: categories/views.py:192 products/forms.py:66
+#: categories/views.py:102 products/forms.py:66
 msgid "Gender"
 msgstr "Стать"
 
-#: categories/views.py:193
+#: categories/views.py:103
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:194 products/forms.py:67
+#: categories/views.py:104 products/forms.py:67
 msgid "Category"
 msgstr "Категорiя"
 
-#: categories/views.py:195
+#: categories/views.py:105
 msgid "All"
 msgstr "Усi"
 
-#: categories/views.py:196 products/forms.py:68
+#: categories/views.py:106 products/forms.py:68
 msgid "Size"
 msgstr "Рoзмiр"
 
-#: categories/views.py:197 products/forms.py:69
+#: categories/views.py:107 products/forms.py:69
 msgid "Condition"
 msgstr "Стан"
 
-#: categories/views.py:198 ecommerce/views.py:148 products/forms.py:29
+#: categories/views.py:108 ecommerce/views.py:148 products/forms.py:29
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:199
+#: categories/views.py:109
 msgid "Price"
 msgstr "Цiна"
 
@@ -353,7 +338,7 @@ msgstr "Твій месседж"
 msgid "Order Id: "
 msgstr "ID замовлення "
 
-#: ecommerce/utils.py:95
+#: ecommerce/utils.py:84
 msgid "Only alphanumeric characters are allowed"
 msgstr "Юзернейм повинен містити тільки латинські символи або цифри"
 
@@ -396,6 +381,14 @@ msgstr "Готово!"
 #: ecommerce/views.py:134
 msgid "Thank you"
 msgstr "Дякуємо! Ми зв’яжемося з тобою найближчим часом"
+
+#: ecommerce/views.py:146
+msgid "Kids"
+msgstr "Діти"
+
+#: ecommerce/views.py:147
+msgid "New"
+msgstr "Свiже"
 
 #: ecommerce/views.py:149
 msgid "Contribute to the sustainable clothes-circle."
@@ -884,6 +877,7 @@ msgid "Rate the order:"
 msgstr "Оцініть замовлення:"
 
 #: orders/templates/orders/snippets/order_feedback.html:46
+#: products/templates/products/snippets/not_valid_card_modal.html:115
 msgid "Close"
 msgstr "Закрити"
 
@@ -1064,6 +1058,22 @@ msgstr "Редагувати"
 msgid "Delete"
 msgstr "Видалити"
 
+#: products/templates/products/snippets/not_valid_card_modal.html:72
+msgid ""
+"Please add valid card before selling item. This is needed to transfer you "
+"money in case of successful transaction"
+msgstr ""
+"Будь ласка, вкажи свої реквізити. Це необхідно для переказу коштів за "
+"проданий товар."
+
+#: products/templates/products/snippets/not_valid_card_modal.html:85
+msgid "Name:"
+msgstr "Ім’я та прізвище:"
+
+#: products/templates/products/snippets/not_valid_card_modal.html:99
+msgid "Card number:"
+msgstr "Номер картки:"
+
 #: products/views.py:94
 msgid "Report?"
 msgstr "Скарга?"
@@ -1146,7 +1156,7 @@ msgid "Thank you. We will check this item manually."
 msgstr "Дякуємо. Ми перевіримо цей айтем особисто."
 
 #: search/templates/search/snippets/search-form.html:60
-#: templates/base/navbar.html:285 templates/mobile/navbar.html:228
+#: templates/base/navbar.html:282 templates/mobile/navbar.html:234
 msgid "Search"
 msgstr "Пошук"
 
@@ -1176,39 +1186,39 @@ msgstr "Умови"
 msgid "Privacy"
 msgstr "Прайвасi"
 
-#: templates/base/navbar.html:368 templates/desktop/navbar.html:243
+#: templates/base/navbar.html:365 templates/desktop/navbar.html:249
 msgctxt "account_dropdown_home "
 msgid "Home"
 msgstr "Аккаунт"
 
-#: templates/base/navbar.html:372 templates/base/sidebar.html:50
-#: templates/desktop/navbar.html:247 templates/mobile/navbar.html:134
+#: templates/base/navbar.html:369 templates/base/sidebar.html:50
+#: templates/desktop/navbar.html:253 templates/mobile/navbar.html:134
 msgid "Messages"
 msgstr "Повідомлення"
 
-#: templates/base/navbar.html:382 templates/base/sidebar.html:61
-#: templates/desktop/navbar.html:257 templates/mobile/navbar.html:145
+#: templates/base/navbar.html:379 templates/base/sidebar.html:61
+#: templates/desktop/navbar.html:263 templates/mobile/navbar.html:145
 msgid "My orders"
 msgstr "Мої ордери"
 
-#: templates/base/navbar.html:383 templates/base/sidebar.html:62
-#: templates/desktop/navbar.html:258 templates/mobile/navbar.html:146
+#: templates/base/navbar.html:380 templates/base/sidebar.html:62
+#: templates/desktop/navbar.html:264 templates/mobile/navbar.html:146
 msgid "My items"
 msgstr "Мої айтеми"
 
-#: templates/base/navbar.html:384 templates/base/sidebar.html:63
-#: templates/desktop/navbar.html:259 templates/mobile/navbar.html:147
+#: templates/base/navbar.html:381 templates/base/sidebar.html:63
+#: templates/desktop/navbar.html:265 templates/mobile/navbar.html:147
 msgid "Wishlist"
 msgstr "Улюблене"
 
-#: templates/base/navbar.html:385 templates/base/sidebar.html:64
-#: templates/desktop/navbar.html:260 templates/mobile/navbar.html:148
+#: templates/base/navbar.html:382 templates/base/sidebar.html:64
+#: templates/desktop/navbar.html:266 templates/mobile/navbar.html:148
 msgctxt "account_dropdown_history"
 msgid "History"
 msgstr "Переглянуте"
 
-#: templates/base/navbar.html:386 templates/base/sidebar.html:65
-#: templates/desktop/navbar.html:261 templates/mobile/navbar.html:149
+#: templates/base/navbar.html:383 templates/base/sidebar.html:65
+#: templates/desktop/navbar.html:267 templates/mobile/navbar.html:149
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -2361,6 +2371,12 @@ msgstr "Відновити пароль"
 msgctxt "password_reset"
 msgid "Submit"
 msgstr "Підтвердити"
+
+#~ msgid "Found"
+#~ msgstr "Знайдено"
+
+#~ msgid "Items"
+#~ msgstr "Айтеми"
 
 #, python-format
 #~ msgid ""
