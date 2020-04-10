@@ -144,7 +144,8 @@ class UserDetailChangeForm(forms.ModelForm):
         }
 
     def get_region_choices(self):
-        region_choices = [(e.region, e.region) for e in Region.objects.all()] #currently available options
+        t = Region.objects.values_list('region', flat=True)
+        region_choices = list(zip(t, t))
         region_choices.append(tuple(('default', _('-- Please select your region --')))) #append default value
         return region_choices
 

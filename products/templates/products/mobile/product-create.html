@@ -1,318 +1,331 @@
-{% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% load static %}
-{% load i18n %}
-{% block content %}
 {% url 'products:create' as product_create_url %}
+{% load i18n %}
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | {{ object.title }} </title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  {% compress css %}
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
 
-  @media only screen and (min-width: 768px) {
-    .price-col{
-      padding-top: 0.5%;
-      padding-right: 0.5%;
-    }
-    .shipping-col{
-      padding-top: 0.5%;
-      padding-left: 0.5%;
-    }
-  }
-
-  .form-group{
-    margin-top: 2%;
-  }
-  .background-black{
-    background-color: black;
-    color:white;
-  }
-  .overcategory-gender{
-    display: none
-  }
-  .overcategories > div:hover{
-    background-color: black;
-  }
-  .overcategories > div > p{
-    margin: 0px;
-  }
-  .overcategories > div:hover p{
-    color: white;
-  }
-  .active-gender{
-    background-color: white;
-    border-width: 1px !important;
-    border-left: solid;
-  }
-  .active-gender > div > div:hover p{
-    color: white;
-  }
-  .active-gender > div > div:hover{
-    background-color: black;
-  }
-  .categories > div:hover{
-    background-color: black;
-  }
-  .categories > div > p{
-    margin: 0px;
-  }
-  .categories > div:hover p{
-    color: white;
-  }
-  .category-undercategory{
-    display: none;
-  }
-  .active-undercategory{
-    background-color: white;
-    border-width: 1px !important;
-    border-left: solid;
-  }
-  .active-undercategory > div > div:hover p{
-    color: white;
-  }
-  .active-undercategory > div > div:hover{
-    background-color: black;
-  }
-  .active-size > div > div:hover p{
-    color: white;
-  }
-  .active-size > div > div:hover{
-    background-color: black;
-  }
-  .category-size{
-    display: none;
-  }
-  .active-condition > div:hover p{
-    color: white;
-  }
-  .active-condition > div:hover{
-    background-color: black;
-  }
-  .invalid-feedback{
-    position: absolute!important;
-  }
-  .dropdown-custom {
-  float: left;
-  overflow: hidden;
-  }
-  #div_id_sex{
-    margin-bottom: 0px
-  }
-  #div_id_undercategory, #div_id_size, #div_id_condition, #div_id_condition,   #div_id_price, #div_id_shipping_price  
-  {
-    margin-bottom: 0px
-  }
-
-
-  .image-upload-button{
-    display: none;
-  }
-  #div_id_description{
-    margin-top: 0px
-  }
-  .dropdown-content {
-  cursor: pointer;
-  font-size: 11pt;
-  display: none;
-  position: absolute;
-  background-color: white;
-  border-width: 1px !important;
-  border-top: 0px !important;
-  border: solid;
-  border-color: black;
-  width: 315px;
-  z-index: 1;
-}
-  .show{
-    display: block
-  }
-  input:read-only{
-    background-color: white !important;
-    cursor:pointer;
-  }
-select{
-  border-radius: 0 !important;
-  -webkit-appearance: none;
-}
-
-.pd-bot{
-  padding-bottom: 1%;
-}
-
-#div_id_brand{
-  margin-bottom: 0px;
-}
+      .form-group{
+        margin-top: 2%;
+        margin-bottom: 0%;
+      }
+        
+      .background-black{
+        background-color: black;
+        color:white;
+      }
+      .overcategory-gender{
+        display: none
+      }
+      .overcategories > div:hover{
+        background-color: black;
+      }
+      .overcategories > div > p{
+        margin: 0px;
+      }
+      .overcategories > div:hover p{
+        color: white;
+      }
+      .active-gender{
+        background-color: white;
+        border-width: 1px !important;
+        border-left: solid;
+      }
+      .active-gender > div > div:hover p{
+        color: white;
+      }
+      .active-gender > div > div:hover{
+        background-color: black;
+      }
+      .categories > div:hover{
+        background-color: black;
+      }
+      .categories > div > p{
+        margin: 0px;
+      }
+      .categories > div:hover p{
+        color: white;
+      }
+      .category-undercategory{
+        display: none;
+      }
+      .active-undercategory{
+        background-color: white;
+        border-width: 1px !important;
+        border-left: solid;
+      }
+      .active-undercategory > div > div:hover p{
+        color: white;
+      }
+      .active-undercategory > div > div:hover{
+        background-color: black;
+      }
+      .active-size > div > div:hover p{
+        color: white;
+      }
+      .active-size > div > div:hover{
+        background-color: black;
+      }
+      .category-size{
+        display: none;
+      }
+      .active-condition > div:hover p{
+        color: white;
+      }
+      .active-condition > div:hover{
+        background-color: black;
+      }
+      .invalid-feedback{
+        position: absolute!important;
+      }
+      .dropdown-custom {
+      float: left;
+      overflow: hidden;
+      }
+      #div_id_sex{
+        margin-bottom: 0px
+      }
+      #div_id_undercategory, #div_id_size, #div_id_condition, #div_id_condition,   #div_id_price, #div_id_shipping_price  
+      {
+        margin-bottom: 0px
+      }
 
 
+      .image-upload-button{
+        display: none;
+      }
+      #div_id_description{
+        margin-top: 0px
+      }
+      .dropdown-content {
+      cursor: pointer;
+      font-size: 11pt;
+      display: none;
+      position: absolute;
+      background-color: white;
+      border-width: 1px !important;
+      border-top: 0px !important;
+      border: solid;
+      border-color: black;
+      width: 315px;
+      z-index: 1;
+      }
 
+        .show{
+          display: block
+        }
+
+        .btn-group {
+          display: inline-block !important;
+        }
+
+        input:read-only{
+          background-color: white !important;
+          cursor:pointer;
+        }
+      select{
+        border-radius: 0 !important;
+        -webkit-appearance: none;
+      }
+
+      .pd-bot{
+        padding-bottom: 1%;
+      }
+
+      #div_id_brand{
+        margin-bottom: 0px;
+      }
+
+      .space{
+        margin-bottom: 2%;
+      }
 </style>
 </head>
-<input type="hidden" id='images-upload-limit' readonly name="images-upload-limit" value='{{ images_upload_limit }}'>
-<div class="container-fluid">
- <div class="row">
-
-  <div class='col-xs-12 col-md-7 mx-auto'>
-  {% if title %}<p class="heading text-center">{{ title }}</p>{% endif %}
-  
-<form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create="{% url 'products:create' %}" > {% csrf_token %}
-      <input type="hidden" id='form_id' name="form_id" value='{{ form_id }}'>
+<body>
+    {% include 'mobile/navbar.html' %}
+    <div class='container-fluid' style="margin-bottom: 2.3rem;">
+      <input type="hidden" id='images-upload-limit' readonly name="images-upload-limit" value='{{ images_upload_limit }}'>
+      <div class="row mt-4">
+      <div class='col-xs-12 col-md-7 mx-auto'>
+      {% if title %}<p class="heading text-center">{{ title }}</p>{% endif %}
+      <form method = 'POST' enctype='multipart/form-data' id="example-form-1" action_url_create="{% url 'products:create' %}" >
+        {% csrf_token %}
+        <input type="hidden" id='form_id' name="form_id" value='{{ form_id }}'>
         <input type="hidden" id='language' name="language" value='EN'>
-<div class="placic-style">
-  {{form.title|as_crispy_field}}
-</div>
-  <div class="row">
-    <div class="col-12 col-md-6 placic-style">
-      {{form.brand|as_crispy_field}}
-  <div class="tiny">
-        {% trans 'Email info@saltish.co if the brand you are trying to add does not exist.' %}
-    </div>
-  </div>
-    <div class="col-12 col-md-6 placic-style">
-      {{form.sex|as_crispy_field}}
-      <input class='input-gender' type="hidden" readonly name="sex" value='{% if request.user.is_admin %}1{% endif %}'>
-      <div class="dropdown-custom">
-        <div class="dropdown-content" id='dropdown-box'>
-          <div class='row m-0'>
-            <div class='col-6 overcategories p-0'>
-              {% for overcategory in overcategories %}
-                <div class='col-12 overcategories-class' initial_update='{{ overcategory.overcategory }}' value='{{ overcategory.overcategory }}'>
-                  <p value='{{ overcategory.overcategory }}'>{% trans overcategory.overcategory_eng %}</p>
-                </div>
-              {% endfor %}
-            </div>
-            <div class='col-6 active-gender p-0'>
-              {% for overcategory in overcategories %}
-                <div class='{{ overcategory.overcategory }} overcategory-gender'>
-                  {% for gender in genders %}
-                    {% if overcategory == gender.gender_for %}
-                      <div class='col-12 gender-class' overcategory_for_size='{{ overcategory.overcategory }}' gender-for-cat='{% trans gender.gender_eng %}' value='{{ gender.id }}'>
-                        <p overcategory_for_size='{{ overcategory.overcategory }}' class='mb-0' value='{{ gender.id }}'>{% trans gender.gender_eng %}</p>
-                      </div>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-              {% endfor %}
-            </div>
-          </div>
+        <div class="space">
+        {{form.title|as_crispy_field}}
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row ">
-    <div class="col-12 col-md-6 placic-style">
-      {{form.undercategory|as_crispy_field}}
-      <input class='input-undercategory' type="hidden" readonly name="undercategory" value='{% if request.user.is_admin %}1{% endif %}'>
-      <div class="dropdown-custom">
-        <div class="dropdown-content" id='dropdown-box'>
-          <div class='row m-0'>
-            <div class='col-6 categories p-0'>
-
-            </div>
-            <div class='col-6 active-undercategory p-0'>
-
-            </div>
-          </div>
+        <div class="row">
+          <div class="col-12 col-md-6 space">
+            {{form.brand|as_crispy_field}}
+        <div class="tiny">
+          {% trans 'Email info@saltish.co if the brand you are trying to add does not exist.' %}
         </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 placic-style">
-      {{ form.size|as_crispy_field }}
-      <input class='input-size' type="hidden" readonly name="size" value='{% if request.user.is_admin %}154{% endif %}'>
-      <div class="dropdown-custom">
-        <div class="dropdown-content" id='dropdown-box'>
-          <div class='row m-0'>
-              <div class='col-12 active-size p-0'>
-                {% for category in categories_all %}
-                  <div class='{{ category }}-size category-size'>
-                    {% for size in sizes %}
-                      {% if category.category == size.size_for %}
-                      <div class='{{ size.size_type }}_sizes col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}' {% if not request.path == product_create_url and not size.size_type == object.size.size_type %}hidden='hidden'{% endif %}  for_black_size='{{ size.size }}-{{ category }}'>
-                        <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size.size }}</p>
+        </div>
+        <div class="col-12 col-md-6 space">
+            {{form.sex|as_crispy_field}}
+            <input class='input-gender' type="hidden" readonly name="sex" value='{% if request.user.is_admin %}1{% endif %}'>
+            <div class="dropdown-custom">
+              <div class="dropdown-content" id='dropdown-box'>
+                <div class='row m-0'>
+                  <div class='col-6 overcategories p-0 space'>
+                    {% for overcategory in overcategories %}
+                      <div class='col-12 overcategories-class' initial_update='{{ overcategory.overcategory }}' value='{{ overcategory.overcategory }}'>
+                        <p value='{{ overcategory.overcategory }}'>{% trans overcategory.overcategory_eng %}</p>
                       </div>
-                      {% endif %}
                     {% endfor %}
                   </div>
-                {% endfor %}
+                  <div class='col-6 active-gender p-0 space'>
+                    {% for overcategory in overcategories %}
+                      <div class='{{ overcategory.overcategory }} overcategory-gender'>
+                        {% for gender in genders %}
+                          {% if overcategory == gender.gender_for %}
+                            <div class='col-12 gender-class' overcategory_for_size='{{ overcategory.overcategory }}' gender-for-cat='{% trans gender.gender_eng %}' value='{{ gender.id }}'>
+                              <p overcategory_for_size='{{ overcategory.overcategory }}' class='mb-0' value='{{ gender.id }}'>{% trans gender.gender_eng %}</p>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
               </div>
+            </div>
+        </div>
+        </div>
+        <div class="row ">
+          <div class="col-12 col-md-6 space">
+            {{form.undercategory|as_crispy_field}}
+            <input class='input-undercategory' type="hidden" readonly name="undercategory" value='{% if request.user.is_admin %}1{% endif %}'>
+            <div class="dropdown-custom">
+              <div class="dropdown-content" id='dropdown-box'>
+                <div class='row m-0'>
+                  <div class='col-6 categories p-0'>
+
+                  </div>
+                  <div class='col-6 active-undercategory p-0'>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 space">
+            {{ form.size|as_crispy_field }}
+            <input class='input-size' type="hidden" readonly name="size" value='{% if request.user.is_admin %}154{% endif %}'>
+            <div class="dropdown-custom">
+              <div class="dropdown-content" id='dropdown-box'>
+                <div class='row m-0'>
+                    <div class='col-12 active-size p-0'>
+                      {% for category in categories_all %}
+                        <div class='{{ category }}-size category-size'>
+                          {% for size in sizes %}
+                            {% if category.category == size.size_for %}
+                            <div class='{{ size.size_type }}_sizes col-12 size-class' id_for_fk ='{{ size.id }}' value='{{ size.size }}' {% if not request.path == product_create_url and not size.size_type == object.size.size_type %}hidden='hidden'{% endif %}  for_black_size='{{ size.size }}-{{ category }}'>
+                              <p class='mb-0 text-center' id_for_fk ='{{ size.id }}' value='{{ size.size }}'>{{ size.size }}</p>
+                            </div>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      {% endfor %}
+                    </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="row">
+          <div class="col-12 col-md-6 space">
+            {{form.condition|as_crispy_field}}
+            <input class='input-condition' type="hidden" readonly name="condition" value='{% if request.user.is_admin %}1{% endif %}'>
+            <div class="dropdown-custom">
+              <div class="dropdown-content" id='dropdown-box'>
+                <div class="row m-0">
+                  <div class="col-12 active-condition p-0">
+                    {% for condition in conditions %}
+                      <div class='col-12 condition-class' id_for_fk ='{{ condition.id }}' value='{% trans condition.condition_eng %}' activated='{{ condition.condition }}'>
+                        <p class='mb-0 text-center' id_for_fk ='{{ condition.id }}' value='{% trans condition.condition_eng %}'>{% trans condition.condition_eng %}</p>
+                      </div>
+                    {% endfor %}
+                  </div>            
+                </div>    
+              </div>
+            </div>
+          </div>
 
-  <div class="row">
-    <div class="col-12 col-md-6 placic-style">
-      {{form.condition|as_crispy_field}}
-      <input class='input-condition' type="hidden" readonly name="condition" value='{% if request.user.is_admin %}1{% endif %}'>
-      <div class="dropdown-custom">
-        <div class="dropdown-content" id='dropdown-box'>
-          <div class="row m-0">
-            <div class="col-12 active-condition p-0">
-              {% for condition in conditions %}
-                <div class='col-12 condition-class' id_for_fk ='{{ condition.id }}' value='{% trans condition.condition_eng %}' activated='{{ condition.condition }}'>
-                  <p class='mb-0 text-center' id_for_fk ='{{ condition.id }}' value='{% trans condition.condition_eng %}'>{% trans condition.condition_eng %}</p>
-                </div>
-              {% endfor %}
-            </div>            
-          </div>    
+
+          <div class="col-12 col-md-3 price-col space">
+            {{form.price|as_crispy_field}}
+          </div>
+
+          <div class="col-12 col-md-3 shipping-col space">
+            {{form.national_shipping|as_crispy_field}}
+          </div>
+        </div> 
+        <div class="row">
+        <div class="col-12 col-md-12 mt-2 space">
+        {% if request.path == product_create_url %}
+        <label for="image_custom" class="btn btn-block middle-btn-mob button-white">{% trans 'Browse photos' %}</label>
+        {% endif %}   
+        {{form.image}}
+        {% include 'products/snippets/images-upload.html' with object=object %}
+        <div style='display: none' id='error_too_many_images'>{% trans 'Too many images. Should be less than'  %}</div>
+        <div style='display: none' id='btn_authenticity_check'>{% trans 'Authenticity check...'  %}</div>
+        <div class='row ml-1'>
+          <div class="ui-widget ui-helper-clearfix custom-upload-file-ajax-temp">
+            <ul id='customSort' class="mb-1 gallery ui-helper-reset ui-helper-clearfix temp-images">
+            </ul>
+          </div>
         </div>
-      </div>
+        <div class>
+          <input type="hidden" name='image' id='id_image' class='form-control'>
+        </div> 
+        </div>
+        </div>
+        <div class="space">
+        {{form.description|as_crispy_field}} 
+        </div>
+        <button type="submit" value="Submit" class="btn pdv button-black btn-block" style='margin-top: 3%;'>{{ button }}</button>
+        </div>
+      </form>
+        </div>
+       </div>
+      {% include 'mobile/footer.html' %}
     </div>
-
-
-    <div class="col-12 col-md-3 price-col">
-      {{form.price|as_crispy_field}}
-    </div>
-
-    <div class="col-12 col-md-3 shipping-col">
-      {{form.national_shipping|as_crispy_field}}
-    </div>
-
-
-  </div> 
-  <div class="row">
-    <div class="col-12 col-md-12 mt-2">
-  <span style="color: #778; padding-left: 0.85em; font-size: 14px;">{% trans 'Photos*' %}</span>
-
-
-
-    {% if request.path == product_create_url %}
-      <label for="image_custom" class="btn btn-block hover-button button-white large-button prod-create-browse">{% trans 'Browse' %}</label>
-    {% endif %} 
-      
-  {{form.image}}
-  {% include 'products/snippets/images-upload.html' with object=object %}
-  <div style='display: none' id='error_too_many_images'>{% trans 'Too many images. Should be less than'  %}</div>
-  <div style='display: none' id='btn_authenticity_check'>{% trans 'Authenticity check...'  %}</div>
-  <div class='row ml-1'>
-    <div class="ui-widget ui-helper-clearfix custom-upload-file-ajax-temp">
-      <ul id='customSort' class="mb-1 gallery ui-helper-reset ui-helper-clearfix temp-images">
-      </ul>
-    </div>
-  </div>
-  <div class>
-    <input type="hidden" name='image' id='id_image' class='form-control'>
-  </div> 
-
-</div>
-</div>
-
-<div class="placic-style">
-  {{form.description|as_crispy_field}} 
-</div>
- 
-  <button type="submit" value="Submit" class="btn button-black hover-button large-button btn-block">{{ button }}</button>
-  </div>
-
-
-
-</form>
-
-
-  </div>
- </div>
-</div>
-
-
-
-{% endblock %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-150733918-1');
+     </script>
+    {% compress js file base %} 
+    <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/categories.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/images_upload_create_slug.js" %}'></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
+</body>
+</html>
 
