@@ -153,34 +153,37 @@ class UserDetailChangeForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super(UserDetailChangeForm, self).__init__(*args, **kwargs)
         self.request = request
+        user = request.user
+
         self.fields['email'].label = _('Email')
         self.fields['username'].label = _('Username')
-        self.fields['username'].validators = [alphanumeric]
-        self.fields['profile_foto'].label = False
-        self.fields['profile_foto'].widget.attrs['label_for_btn'] = pgettext('profile_update','Update')
         self.fields['region'].label = _('Region')
-        self.initial['region'] = request.user.region
+        self.fields['subscribed'].label = _('Recieve marketing email?')
+
+
+
+        self.fields['username'].validators = [alphanumeric]
+        self.fields['profile_foto'].widget.attrs['label_for_btn'] = pgettext('profile_update','Update')
+
+        self.initial['region'] = user.region
         if self.initial['region'] is None: 
             self.initial['region'] = ('default', _('-- Please select your region --'))
         self.fields['region'].choices = self.get_region_choices()
-        self.fields['email'].initial=request.user.email
-        self.fields['subscribed'].label = _('Recieve marketing email?')
-        self.fields['subscribed'].initial=request.user.marketing.subscribed
+        self.fields['email'].initial= user.email
+
+        self.fields['subscribed'].initial= user.marketing.subscribed
         self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
         self.fields['bio'].label = False
 
 
     def clean_subscribed(self):
-        marketing_pref = MarketingPreference.objects.filter(user=self.request.user)
-        subscribed_user = self.cleaned_data.get('subscribed')
-        marketing_pref.update(subscribed=subscribed_user)
+        MarketingPreference.objects.filter(user=self.request.user).update(subscribed=self.cleaned_data.get('subscribed'))
 
     def clean_region(self):
         data = self.cleaned_data['region']
         if data == 'default' or data == '':
             raise forms.ValidationError(_("You must select a region"))
-        clean_data = Region.objects.filter(region=data)
-        return clean_data.first()
+        return Region.objects.filter(region=data).first()
 
 
 
