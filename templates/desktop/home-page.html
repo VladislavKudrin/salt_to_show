@@ -1,6 +1,7 @@
 {% load static %}
 {% load for_loop_extras %}
-{% load i18n %} 
+{% load i18n %}
+{% load compress %} 
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,10 +20,12 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>
+  {% compress css %}
   <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/buttons.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
   <style type="text/css">
     .fa-heart {
       color : rgba(190, 45, 51, 0.74);
@@ -632,6 +635,7 @@
     });
   </script>
   {% block script %}{% endblock %}
+  {% compress js file base %}
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
@@ -639,5 +643,6 @@
   <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
   <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
   <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+  {% endcompress %}
 </body>
 </html>

@@ -15,7 +15,7 @@ class ProductImageInline(admin.TabularInline):
 		model=ProductImage
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ['__str__','get_absolute_url_admin', 'user', 'authentic', 'timestamp', 'slug']
+	list_display = ['__str__','get_absolute_url_admin', 'user', 'authentic', 'timestamp', 'slug', 'price']
 	inlines = [
 	ProductImageInline,
 	]

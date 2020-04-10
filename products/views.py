@@ -421,7 +421,6 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 	def get(self, request, *args, **kwargs):
 		product = self.get_product()
 		if product is not None:
-			print(product.is_paid)
 			if product.is_paid or not product.is_active or not product.is_payable or not product.is_authentic:
 				return redirect('products:list')
 		return super(ProductCheckoutView,self).get(request, *args, **kwargs)
@@ -435,7 +434,11 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 	def get_object(self):
 		product_id = self.kwargs.get('product_id')
 		user = self.request.user
-		if user.region.region_code == 'ua':
+		try:
+			self.region = user.region.region_code
+		except:
+			self.region = 'no region'
+		if self.region == 'ua' or self.region == 'no region':
 			if product_id.isdigit():
 				product_obj = Product.objects.filter(id=product_id).active().first()
 				if product_obj is not None:
@@ -479,6 +482,7 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		context['password_btn'] = _('Change password')
 		context['buy_btn'] = ('Перейти к оплате')
 		context['product'] = self.product
+		context['region'] = self.region
 		if self.get_address() is not None:
 			context['user_post_office'] = self.get_address().post_office
 		return context
