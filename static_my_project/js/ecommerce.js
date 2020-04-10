@@ -16,45 +16,17 @@ $(document).ready(
               data:{location: location},
               success: function(data){
                   $(document.body).append(data.html)
-                  $('#modal_region').modal({
+                  $('#modal-region').modal({
                               keyboard: false,
                               backdrop: 'static',
                               focus:true
                             })
-                  $('#modal_region').modal('show')
+                  $('#modal-region').modal('show')
                  
                   }//success_first
 
               })//ajax
     }//if region none
-
-
-// Card Modal Initialization
-    var regionInput = $('#region_input')
-    var urlRegion = '/region-init/'
-    if (regionInput.val() == 'None'){
-    var location = window.location.href
-    $.ajax({
-              url: urlRegion,
-              data:{location: location},
-              success: function(data){
-                  $(document.body).append(data.html)
-                  $('#modal_region').modal({
-                              keyboard: false,
-                              backdrop: 'static',
-                              focus:true
-                            })
-                  $('#modal_region').modal('show')
-                 
-                  }//success_first
-
-              })//ajax
-    }//if region none
-
-
-
-
-
 
 
 
