@@ -78,7 +78,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	form_class = ContactForm
 
 	def get_template_names(self):
-		if self.request.user_agent.is_mobile: 
+		if self.request.user_agent.is_mobile:
 			return ['mobile/contact.html']
 		else:
 			return ['desktop/contact.html']
@@ -89,7 +89,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 			request.session['order_id'] = order_id
 			context = self.get_context_data()
 			context['form'] = ContactForm(request, order_id)
-			return render(self.request, self.template_name, context)
+			return render(self.request, self.get_template_names(), context)
 		else:
 			return super(ContactPageView, self).post(request, *args, **kwargs)
 	def get_context_data(self, *args, **kwargs):
