@@ -31,7 +31,7 @@
 </style>
 </head>
 
-
+{% if region != 'no region' %}
 <input type="hidden" id="user_post_office" value="{{ user_post_office }}">
 <form action="" method="POST" role="form" enctype='multipart/form-data' class='checkout-form hidden ' action_url="{% url 'products:checkout' product.id %}">
   {% csrf_token %}
@@ -220,7 +220,7 @@
   </div>
 </form>
 
-
+{% endif %}
 
 <script>
 
