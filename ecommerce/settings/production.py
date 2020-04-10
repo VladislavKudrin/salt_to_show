@@ -386,7 +386,7 @@ PAGINATION_SETTINGS = {
 
 FAILED_RUNS_CRONJOB_EMAIL_PREFIX = "[Server check]: "
 CRON_CLASSES = [
-    "ecommerce.views.MyCronJob",
+    "ecommerce.views.MessagesNotifications",
     "ecommerce.views.NovaPoshtaAPI",
     'django_cron.cron.FailedRunsNotificationCronJob',
     # ...

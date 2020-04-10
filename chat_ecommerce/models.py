@@ -3,9 +3,8 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 from datetime import datetime, date, timezone
-
 from products.models import Product
-
+from django.utils.timezone import now
 
 class ThreadManager(models.Manager):
     # def by_user(self, user): 
@@ -69,9 +68,6 @@ class ThreadManager(models.Manager):
                     return obj, True
                 return None, False
 
-            
-
-
 class Thread(models.Model):
     first         = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_first')
     second        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_second')
@@ -106,6 +102,9 @@ class Notification(models.Model):
     user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message     = models.ForeignKey(ChatMessage, on_delete=models.CASCADE)
     read        = models.BooleanField(default=False)
+    sent        = models.BooleanField(default=False)
+    created_at  = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at  = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return f'{self.id}'
