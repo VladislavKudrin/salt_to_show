@@ -174,6 +174,7 @@ class UserDetailChangeForm(forms.ModelForm):
         self.fields['subscribed'].initial= user.marketing.subscribed
         self.fields['subscribed'].widget.attrs['class']='custom-checkbox'
         self.fields['bio'].label = False
+        self.fields['profile_foto'].label = False
 
 
     def clean_subscribed(self):
