@@ -1,40 +1,29 @@
-
 {% load i18n %}
 {% blocktrans %}
-<p>Hey,</p> 
-
-
 <div style="text-align: center; padding-bottom: 16px; font-family: sans-serif; padding: 32px 32px;">
   <a href="https://www.saltish.co/" style="text-decoration: none; color: black; font-size: 36px">SALT</a>
 </div>
 
-<div style="background-color: #eaeaea4f; font-family: sans-serif;text-align: center; padding: 32px 32px;">
+<div style="background-color: #eaeaea4f; font-size: 20px; font-family: sans-serif;text-align: center; padding: 32px 32px;">
 
+	<p>Hey!</p> 
 
-		<div style="font-size: 20px; text-align: left !important;">
-			<p>Please activate your account for {{ email }} by clicking the link below:</p>
+	<p>Please activate your account for {{ email }} by clicking the link below:</p>
+	<p><a href='{{ path }}'>{{ path }}</a></p>
+	<p>Once you activate, you can login!</p>
 
-			<p><a href='{{ path }}'>{{ path }}</a></p>
-
-			<p>Once you activate, you can login!</p>
-
-			<p>Thank you,
-			<br> SALT</p>
-		</div>
-
-
+	<p>Thank you!</p>
+	<p>SALT</p>
 
 
 	<div>
 		<a href="https://vk.com/saltmarketplace" ><img style='width: 20px; height: 20px; margin: 0 4px;' src="https://image.flaticon.com/icons/png/512/2175/2175348.png"></a>
 		<a href="https://www.instagram.com/saltish.co/" ><img style='width: 20px; height: 20px; margin: 0 4px;' src="https://image.flaticon.com/icons/png/512/2175/2175198.png"></a>
-		<a href="https://www.linkedin.com/company/saltish-co/about/"" ><img style='width: 20px; height: 20px; margin: 0 4px;' src="https://image.flaticon.com/icons/png/512/2168/2168311.png"></a>
 	</div>
 
 </div>
-
-<p>SALT</p>
-
 {% endblocktrans %}
+
+
 
 

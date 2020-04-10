@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-09 22:06+0000\n"
-"PO-Revision-Date: 2020-04-10 00:07+0200\n"
+"POT-Creation-Date: 2020-04-10 16:12+0000\n"
+"PO-Revision-Date: 2020-04-10 18:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -45,32 +45,32 @@ msgid ""
 "contact details"
 msgstr "Розкажи тут про себе (але не вказуй контактну інформацію)"
 
-#: accounts/forms.py:148 accounts/forms.py:163
+#: accounts/forms.py:149 accounts/forms.py:170
 msgid "-- Please select your region --"
 msgstr "— Вибери свій регіон —"
 
-#: accounts/forms.py:155
+#: accounts/forms.py:158
 msgid "Email"
 msgstr "Твій мейл"
 
-#: accounts/forms.py:156
+#: accounts/forms.py:159
 msgid "Username"
 msgstr "Юзернейм"
-
-#: accounts/forms.py:159
-msgctxt "profile_update"
-msgid "Update"
-msgstr "Оновити"
 
 #: accounts/forms.py:160
 msgid "Region"
 msgstr "Регіон"
 
-#: accounts/forms.py:166
+#: accounts/forms.py:161
 msgid "Recieve marketing email?"
 msgstr "Отримувати розсилку?"
 
-#: accounts/forms.py:180
+#: accounts/forms.py:166
+msgctxt "profile_update"
+msgid "Update"
+msgstr "Оновити"
+
+#: accounts/forms.py:185
 msgid "You must select a region"
 msgstr "Потрібно вибрати регіон"
 
@@ -181,11 +181,11 @@ msgstr "Мейл не підтверджений. "
 msgid "The password seems to be wrong. Try again!"
 msgstr "Невірний пароль. Спробуй ще раз!"
 
-#: accounts/views.py:316 products/views.py:478
+#: accounts/views.py:316 products/views.py:481
 msgid "Update your details"
 msgstr "Оновити аккаунт"
 
-#: accounts/views.py:317 products/views.py:479
+#: accounts/views.py:317 products/views.py:482
 #: templates/registration/password_change_form.html:26
 msgid "Change password"
 msgstr "Змінити пароль"
@@ -999,7 +999,7 @@ msgid "My Items:"
 msgstr "Мої айтеми:"
 
 #: products/templates/products/desktop/product-create.html:165
-#: products/templates/products/mobile/product-create.html:177
+#: products/templates/products/mobile/product-create.html:179
 msgid ""
 "Email info@saltish.co if the brand you are trying to add does not exist."
 msgstr "Напиши на info@saltish.co якщо твій бажаний бренд відсутній."
@@ -1013,12 +1013,12 @@ msgid "Browse"
 msgstr "Вибрати"
 
 #: products/templates/products/desktop/product-create.html:284
-#: products/templates/products/mobile/product-create.html:287
+#: products/templates/products/mobile/product-create.html:289
 msgid "Too many images. Should be less than"
 msgstr "Забагато фото. Повинно бути менше ніж"
 
 #: products/templates/products/desktop/product-create.html:285
-#: products/templates/products/mobile/product-create.html:288
+#: products/templates/products/mobile/product-create.html:290
 msgid "Authenticity check..."
 msgstr "Перевірка аутентичності ..."
 
@@ -1027,7 +1027,7 @@ msgstr "Перевірка аутентичності ..."
 msgid "Viewed items:"
 msgstr "Нещодавно переглянуте:"
 
-#: products/templates/products/mobile/product-create.html:283
+#: products/templates/products/mobile/product-create.html:285
 msgid "Browse photos"
 msgstr "Обери фото"
 
@@ -2197,12 +2197,9 @@ msgstr ""
 "SALT\n"
 "\n"
 
-#: templates/registration/emails/verify.html:3
+#: templates/registration/emails/verify.html:2
 #, python-format
 msgid ""
-"\n"
-"<p>Hey,</p> \n"
-"\n"
 "\n"
 "<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
 "serif; padding: 32px 32px;\">\n"
@@ -2210,23 +2207,18 @@ msgid ""
 "black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=\"background-color: #eaeaea4f; font-family: sans-serif;text-"
-"align: center; padding: 32px 32px;\">\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
 "\n"
+"\t<p>Hey!</p> \n"
 "\n"
-"\t\t<div style=\"font-size: 20px; text-align: left !important;\">\n"
-"\t\t\t<p>Please activate your account for %(email)s by clicking the link "
-"below:</p>\n"
+"\t<p>Please activate your account for %(email)s by clicking the link below:</"
+"p>\n"
+"\t<p><a href='%(path)s'>%(path)s</a></p>\n"
+"\t<p>Once you activate, you can login!</p>\n"
 "\n"
-"\t\t\t<p><a href='%(path)s'>%(path)s</a></p>\n"
-"\n"
-"\t\t\t<p>Once you activate, you can login!</p>\n"
-"\n"
-"\t\t\t<p>Thank you,\n"
-"\t\t\t<br> SALT</p>\n"
-"\t\t</div>\n"
-"\n"
-"\n"
+"\t<p>Thank you!</p>\n"
+"\t<p>SALT</p>\n"
 "\n"
 "\n"
 "\t<div>\n"
@@ -2236,61 +2228,41 @@ msgid ""
 "\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
 "20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
 "png/512/2175/2175198.png\"></a>\n"
-"\t\t<a href=\"https://www.linkedin.com/company/saltish-co/about/\"\" ><img "
-"style='width: 20px; height: 20px; margin: 0 4px;' src=\"https://image."
-"flaticon.com/icons/png/512/2168/2168311.png\"></a>\n"
 "\t</div>\n"
 "\n"
 "</div>\n"
-"\n"
-"<p>SALT</p>\n"
-"\n"
 msgstr ""
 "\n"
-"<p>Салют!</p> \n"
-"\n"
-"\n"
-"<div style=“text-align: center; padding-bottom: 16px; font-family: sans-"
-"serif; padding: 32px 32px;”>\n"
-"  <a href=“https://www.saltish.co/“ style=“text-decoration: none; color: "
-"black; font-size: 36px”>SALT</a>\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
 "</div>\n"
 "\n"
-"<div style=“background-color: #eaeaea4f; font-family: sans-serif;text-align: "
-"center; padding: 32px 32px;”>\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
 "\n"
+"\t<p>Салют!</p> \n"
 "\n"
-"\t\t<div style=“font-size: 20px; text-align: left !important;”>\n"
-"\t\t\t<p>Будь ласка, активуй свій аккаунт для %(email)s , натиснувши ссылку "
-"нижче:</p>\n"
+"\t<p>Будь ласка, активуй свій аккаунт %(email)s , натиснувши ссилку нижче:</"
+"p>\n"
+"\t<p><a href='%(path)s'>%(path)s</a></p>\n"
+"\t<p>Після активації ти зможеш увійти.</p>\n"
 "\n"
-"\t\t\t<p><a href=‘%(path)s’>%(path)s</a></p>\n"
-"\n"
-"\t\t\t<p>Після активації ти зможеш увійти!</p>\n"
-"\n"
-"\t\t\t<p>Дякуємо!\n"
-"\t\t\t<br> SALT</p>\n"
-"\t\t</div>\n"
-"\n"
-"\n"
+"\t<p>Дякуємо, що ти з нами!</p>\n"
+"\t<p>SALT</p>\n"
 "\n"
 "\n"
 "\t<div>\n"
-"\t\t<a href=“https://vk.com/saltmarketplace” ><img style=‘width: 20px; "
-"height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
-"png/512/2175/2175348.png”></a>\n"
-"\t\t<a href=“https://www.instagram.com/saltish.co/“ ><img style=‘width: "
-"20px; height: 20px; margin: 0 4px;’ src=“https://image.flaticon.com/icons/"
-"png/512/2175/2175198.png”></a>\n"
-"\t\t<a href=“https://www.linkedin.com/company/saltish-co/about/“” ><img "
-"style=‘width: 20px; height: 20px; margin: 0 4px;’ src=“https://image."
-"flaticon.com/icons/png/512/2168/2168311.png”></a>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
 "\t</div>\n"
 "\n"
 "</div>\n"
-"\n"
-"<p>SALT</p>\n"
-"\n"
 
 #: templates/registration/emails/verify.txt:2
 #, python-format
