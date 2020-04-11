@@ -36,6 +36,7 @@ class CategoryFilterView(ListView):
 			shortener = shortener.first()
 			json_data = json.loads(shortener.json_data)
 			queryset, link_json, context = Product.objects.get_categoried_queryset(request=request, json_data=json_data)
+			queryset=queryset.authentic().available()
 		else:
 			queryset = Product.objects.all().authentic().available().order_by('-timestamp')
 		paginator = Paginator(queryset, items_per_page) # Show 25 contacts per page

@@ -49,7 +49,13 @@ admin.site.register(Overcategory, OvercategoryAdmin)
 
 admin.site.register(Brand)
 admin.site.register(Condition)
-admin.site.register(FilterUrlShortener)
+
+
+class FilterUrlShortenerAdmin(admin.ModelAdmin):
+    search_fields = ('shorted_slug',)
+
+admin.site.register(FilterUrlShortener, FilterUrlShortenerAdmin)
+
 
 
 
