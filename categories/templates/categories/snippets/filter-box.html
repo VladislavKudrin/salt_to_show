@@ -157,7 +157,7 @@ hr{
         </div>
       </div>
     </button>
-    <div class="collapse {% if overcategory_instance %} show {% endif %}" id="overcategory_collaplse">
+    <div class="collapse {% if overcategory_instance or gender_instance or undercategory_instance %} show {% endif %}" id="overcategory_collaplse">
       {% for overcategory in fields_overcategory %}
       <div class=" ml-3 custom-control custom-checkbox">
         <input type="checkbox" {% if overcategory.id|stringify in overcategory_instance %} checked {% endif %}class="custom-control-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
@@ -169,7 +169,7 @@ hr{
     </div>
   </div>
   <div class="col-12" id='gender-filter-box'>
-    <div id='title_gender' {% if overcategory_instance %} style="display: block" {% endif %}>
+    <div id='title_gender' {% if overcategory_instance or gender_instance or undercategory_instance %} style="display: block" {% endif %}>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#gender_collaplse" aria-expanded="true" aria-controls="gender_collaplse">
         <div class="row">
@@ -182,7 +182,7 @@ hr{
         </div>
       </button>
     </div>
-    <div class="collapse {% if gender_instance %} show {% endif %}" id="gender_collaplse" >
+    <div class="collapse {% if gender_instance or undercategory_instance %} show {% endif %}" id="gender_collaplse" >
       {% for overcategory in fields_overcategory %}
         <div id='{{ overcategory }}-gender-checkbox'{% if overcategory.id|stringify in overcategory_instance %} style="display: block" {% endif %} >
           {% for gender in fields_gender %}
@@ -200,7 +200,7 @@ hr{
     </div>
   </div>
   <div class="col-12" id='category-filter-box'>
-    <div id='title_category'{% if gender_instance %} style="display: block" {% endif %}>
+    <div id='title_category'{% if gender_instance or undercategory_instance %} style="display: block" {% endif %}>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#category_collaplse" aria-expanded="true" aria-controls="category_collaplse">
       <div class="row">

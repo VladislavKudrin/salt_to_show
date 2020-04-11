@@ -91,17 +91,20 @@ class FilterUrlShortenerManager(models.Manager):
 			shorted_slug = url_obj.shorted_slug
 		return url_obj, new_obj
 
-class FilterUrlShortener(models.Model):
-	json_data    = models.TextField(blank=False)
-	shorted_slug = models.SlugField(default=None, unique = True, blank=True)
-	objects      = FilterUrlShortenerManager()
+# class FilterUrlShortener(models.Model):
+# 	json_data    = models.TextField(blank=False)
+# 	shorted_slug = models.SlugField(default=None, unique = True, blank=True)
+# 	objects      = FilterUrlShortenerManager()
+
+# 	def __str__(self):
+# 		return self.shorted_slug
 
 
-def filter_url_shortener_pre_save_reciever(sender, instance, *args, **kwargs):
-	if not instance.shorted_slug:
-		instance.shorted_slug = unique_slug_url_shortener_generator(instance)
+# def filter_url_shortener_pre_save_reciever(sender, instance, *args, **kwargs):
+# 	if not instance.shorted_slug:
+# 		instance.shorted_slug = unique_slug_url_shortener_generator(instance)
 
 
-pre_save.connect(filter_url_shortener_pre_save_reciever,sender=FilterUrlShortener)
+# pre_save.connect(filter_url_shortener_pre_save_reciever,sender=FilterUrlShortener)
 
 
