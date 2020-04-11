@@ -289,10 +289,13 @@ def wishlistupdate(request):
 			return JsonResponse(json_data, status=200)
 	return redirect("accounts:wish-list")
 
-class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
+class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 
-	def get(self, request, *args, **kwargs):
-		return custom_render(self.request, "accounts", "account-settings", self.get_context_data())
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['accounts/mobile/account-settings.html']
+		else:
+			return ['accounts/desktop/account-settings.html']
 
 	def get_success_url(self):
 		return reverse("accounts:user-update")
@@ -317,6 +320,9 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
 		context['password_btn'] = _('Change password')
 		context['save_btn'] = _('Save')
 		context['logout_btn'] = _('Logout')
+		if kwargs.get('form') is not None:
+			prefix = kwargs.get('form').prefix
+			context[prefix] = kwargs.get('form')
 		return context
 
 	def get_object(self):
@@ -328,6 +334,15 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
 		address_form.save(commit=True)
 		card_form.save(commit=True)
 		return(HttpResponseRedirect(self.get_success_url()))
+	def form_invalid(self, user_form, address_form, card_form):
+		if user_form.errors:
+			return super().form_invalid(user_form)
+		if address_form.errors:
+			return super().form_invalid(address_form)
+		if card_form.errors:	
+			return super().form_invalid(card_form)
+
+
 
 	def post(self, request, *args, **kwargs):
 		user_form = UserDetailChangeForm(data=self.request.POST, files=self.request.FILES, request=self.request, prefix='user_form', instance=self.get_object())
@@ -335,4 +350,6 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, View):
 		card_form = CardForm(data=self.request.POST, request=self.request, prefix='card_form', instance=self.get_card())
 		if user_form.is_valid() and address_form.is_valid() and card_form.is_valid():
 			return self.form_valid(user_form, address_form, card_form)
+		else:
+			return self.form_invalid(user_form, address_form, card_form)
 		return HttpResponseRedirect(self.get_success_url())

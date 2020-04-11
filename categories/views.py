@@ -10,9 +10,10 @@ from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import gettext as _
 
-from .models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition, FilterUrlShortener
+from .models import Size, Brand, Undercategory, Overcategory, Gender, Category, Condition
 from products.models import Product
 from .forms import TranslateForm
+from .utils import link_to_data
 from ecommerce.utils import custom_render
 
 
@@ -31,11 +32,9 @@ class CategoryFilterView(ListView):
 		items_per_page = 32
 		link_codiert = ''
 		link = self.kwargs.get('filter')
-		shortener = FilterUrlShortener.objects.filter(shorted_slug=link)
-		if shortener.exists():
-			shortener = shortener.first()
-			json_data = json.loads(shortener.json_data)
-			queryset, link_json, context = Product.objects.get_categoried_queryset(request=request, json_data=json_data)
+		if link is not None:
+			linked_data = link_to_data(link)
+			queryset, context = Product.objects.get_categoried_queryset(request=request, linked_data=linked_data)
 			queryset=queryset.authentic().available()
 		else:
 			queryset = Product.objects.all().authentic().available().order_by('-timestamp')
@@ -54,10 +53,7 @@ class CategoryFilterView(ListView):
 			context={}
 			if request.GET:
 				#getting queryset and link as json
-				queryset, link_json = Product.objects.get_categoried_queryset(request=request)
-				#creating or getting shortener
-				link, created = FilterUrlShortener.objects.new_or_get(json.dumps(link_json))
-
+				queryset, link_codiert = Product.objects.get_categoried_queryset(request=request)
 				queryset = queryset.authentic().available()
 				paginator = Paginator(queryset, items_per_page) 
 				page = request.GET.get('page')
@@ -80,7 +76,7 @@ class CategoryFilterView(ListView):
 				html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
 			json_data={
 			'html':html_,
-			'link':link.shorted_slug,
+			'link':link_codiert,
 			'count_pages': page_continue
 			}
 			return JsonResponse(json_data)

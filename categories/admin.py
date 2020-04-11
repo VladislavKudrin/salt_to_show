@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Size, Brand, Undercategory, Category, Gender, Overcategory, Condition, FilterUrlShortener
+from .models import Size, Brand, Undercategory, Category, Gender, Overcategory, Condition
 
 class Undercategory_tab(admin.TabularInline):
 	model = Undercategory
@@ -51,10 +51,10 @@ admin.site.register(Brand)
 admin.site.register(Condition)
 
 
-class FilterUrlShortenerAdmin(admin.ModelAdmin):
-    search_fields = ('shorted_slug',)
+# class FilterUrlShortenerAdmin(admin.ModelAdmin):
+#     search_fields = ('shorted_slug',)
 
-admin.site.register(FilterUrlShortener, FilterUrlShortenerAdmin)
+# admin.site.register(FilterUrlShortener, FilterUrlShortenerAdmin)
 
 
 

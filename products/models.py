@@ -20,6 +20,7 @@ from django.core.files import File
 
 from ecommerce.utils import unique_slug_generator, price_to_region
 from categories.models import Size, Brand, Undercategory, Gender, Category, Overcategory, Condition
+from categories.utils import build_link_categories
 
 
 class ImageOrderUtil(models.Model):
@@ -105,9 +106,9 @@ class ProductManager(models.Manager):
 	def payable(self):
 		return self.get_queryset().payable()
 
-	def get_categoried_queryset(self, request, json_data=None):
+	def get_categoried_queryset(self, request, linked_data=None):
 		context = {}
-		if not json_data:
+		if not linked_data:
 			data_overcategory = request.GET.get('overcategory')
 			data_gender = request.GET.get('gender')
 			data_category = request.GET.getlist('category')
@@ -117,16 +118,20 @@ class ProductManager(models.Manager):
 			data_size = request.GET.getlist('size')
 			data_condition = request.GET.getlist('condition')
 			data_sort = request.GET.get('sort')
+			link_codiert = build_link_categories(request)
+		elif linked_data == 'all':
+			queryset = Product.objects.all()
+			return queryset, context
 		else:
-			data_overcategory = json_data.get('overcategory')
-			data_gender = json_data.get('gender')
-			data_category = json_data.get('category')
-			data_undercategory = json_data.get('undercategory')
-			data_brand = json_data.get('brand')
-			data_price = json_data.get('price')
-			data_size = json_data.get('size')
-			data_condition = json_data.get('condition')
-			data_sort = json_data.get('sort')
+			data_overcategory = linked_data.get('overcategory') or None
+			data_gender = linked_data.get('gender') or None
+			data_category = linked_data.get('category') or None
+			data_undercategory = linked_data.get('undercategory') or None
+			data_brand = linked_data.get('brand') or None
+			data_price = linked_data.get('price') or None
+			data_size = linked_data.get('size') or None
+			data_condition = linked_data.get('condition') or None
+			data_sort = linked_data.get('sort') or None
 			context = {
 				'overcategory_instance' :data_overcategory,
 				'gender_instance'       :data_gender,
@@ -135,21 +140,16 @@ class ProductManager(models.Manager):
 				'brand_instance'        :data_brand,
 				'size_instance'         :data_size,
 				'condition_instance'    :data_condition,
-				'price_min'             :data_price[0],
-				'price_max'             :data_price[1]
 			}
+			try:
+				context['price_min'] = data_price[0]
+				context['price_max'] = data_price[1]
+			except:
+				pass
 			if data_undercategory:
 				context['actual_undercategory_instances'] = Undercategory.objects.select_related('undercategory_for').filter(id__in=data_undercategory)
-				context['actual_size_instances'] = Size.objects.filter(id__in=data_size)
-		link_json = {
-			'undercategory':data_undercategory,
-			'gender'       :data_gender,
-			'overcategory' :data_overcategory,
-			'size'         :data_size,
-			'brand'        :data_brand,
-			'condition'    :data_condition,
-			'price'        :data_price
-			}
+			if data_size:
+				context['actual_size_instances'] = Size.objects.select_related('size_type').filter(id__in=data_size)
 		if data_undercategory:
 			queryset = Product.objects.select_related('undercategory').filter(undercategory__id__in=data_undercategory)
 		elif data_gender:
@@ -193,10 +193,10 @@ class ProductManager(models.Manager):
 		else:
 			queryset=queryset.order_by('-timestamp')
 		#sort
-		if not json_data:		
-			return queryset, link_json
+		if not linked_data:		
+			return queryset, link_codiert
 		else:
-			return queryset, link_json, context 
+			return queryset, context 
 
 User=settings.AUTH_USER_MODEL
 
