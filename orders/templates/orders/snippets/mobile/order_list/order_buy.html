@@ -1,0 +1,86 @@
+{% load i18n %}
+{% load format_decimal %}
+
+{% for object in orders_buy %}
+	<div class='row' style="border-bottom: 1px solid lightgray; padding-bottom: 1rem;">
+		<div class='col-12 mb-3'>
+			<div class="row">
+				<div class="col-5 pr-2">
+					{% include 'products/snippets/card-order.html' with instance=object.product %}
+				</div>
+				<div class="col-7 pl-0" style="display: flex; align-items: center;">
+					<div class="row">
+						<div class="col-12 mb-2" style="display: grid; font-weight: bold;">
+							<span class="field-name small-ellipsis">{{ object.product.title }}</span>
+						</div>
+						<div class="col-12 pb-1">
+							<span class="field-name">{% trans 'Status:' %}</span>
+							<span>{% trans object.get_status %}</span>
+						</div>
+						<div class="col-12 pb-1">
+							<span class="field-name">{% trans 'Total:' %}</span>
+							<span>{{ object.total|format_decimal }} {{ object.product.currency_original }}</span>
+						</div>
+						<div class="col-12" style="display: flex;">
+							<span class="field-name" style="padding-right: 0.2rem;">{% trans 'Seller:' %}</span>
+							<span style="display: grid;"><a class="small-ellipsis" href="{{ object.product.user.get_absolute_url }}">{{ object.product.user.username }}</a></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='col-12' style="font-size: 12px;">
+			<div class="row">
+				<div class="col-12 mb-3">
+					<span class="field-name" style="font-weight: bold;">{% trans 'Tracking:' %}</span>
+					{% if object.track_number %}
+						<span>{{ object.track_number }}</span>
+					{% else %}
+						<span>{% trans 'not shipped yet' %}</span>
+					{% endif %}	
+				</div>
+
+
+				<div class="col-12">
+					<div class="row">
+						<div class="col-4">
+							{% include 'orders/snippets/mobile/order_begin_chat.html' with object=object %}
+						</div>
+						<div class="col-4">
+							{% if object.get_status != 'Created' %}
+								{% include 'orders/snippets/mobile/order_complete_form.html' %}
+							{% else %}
+								{% include 'orders/snippets/mobile/order_created_remove_form.html' %}
+							{% endif %}
+						</div>
+						<div class="col-4">
+							{% include 'orders/snippets/mobile/report_button.html' %}
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="row">
+		<div class="col mt-3" style="text-transform: uppercase;">
+			{% trans 'No orders yet' %}
+		</div>
+	</div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

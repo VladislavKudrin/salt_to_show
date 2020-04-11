@@ -1,0 +1,38 @@
+{% load i18n %}
+
+<form id='delete-order-form' method="POST" action="{% url 'orders:delete_order' %}">{% csrf_token %}
+	<input type="hidden" name="order_id" value="{{ object.order_id }}">
+	<button type="submit" class="delete-order-btn btn btn-outline-danger tiny-btn-mob btn-block" style="border: 1px solid black;">
+	{% trans 'Cancel order' %}
+	</button>
+</form>
+
+<script type="text/javascript">
+	
+var deleteBtn = $('.delete-order-btn')
+deleteBtn.click(function(e){
+	e.preventDefault()
+	$target = $(e.target)
+	var formDelete = $target.parent()
+	var actionEndpoint = formDelete.attr('action')
+	var data = formDelete.serialize()
+	$.ajax({
+      url: actionEndpoint,
+      data: data,
+      method: 'POST',
+      success: function(data){
+      		var containerForm = formDelete.parent().parent().parent().parent().parent().parent()
+      		containerForm.remove()
+              }, //success
+      error: function(errorData){
+          console.log(errorData);
+            }//error
+      })//ajax
+})//click delteBtn
+
+
+
+
+
+</script>
+
