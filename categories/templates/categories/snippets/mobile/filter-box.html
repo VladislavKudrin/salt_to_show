@@ -9,7 +9,7 @@
 
     @media only screen and (max-width: 768px) { 
       .pd-bt {
-        padding-bottom: 20% !important;
+        padding-bottom: 40% !important;
       }
     }
 
@@ -143,11 +143,31 @@
       color: #6b757d;
     }
 
+        .sol-inner-container, .sol-label-text, .sol-selected-display-item-text{
+      font-size: 14px !important;
+    }
+
+    .sol-container.sol-active .sol-inner-container, .custom-select:focus{
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      border-color: black;
+    }
+
+    .sol-container.sol-active .sol-selection-container{
+      border-top: 1px solid black !important;
+    }
+
+    .sol-no-results{
+      font-size: 14px;
+      font-style: normal;
+    }
+
+
 
 </style>
 <form method ='GET'  id='form_checkboxes' action='{% url "products:list" %}'>
 <div id='filter-boxes'>
-  <div class="col-12 mt-2" id='overcategory-filter-box'>  
+  <div class="col-12" id='overcategory-filter-box'>  
     <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#overcategory_collaplse" aria-expanded="true" aria-controls="overcategory_collaplse">
       <div class="row">
         <div class="col-6 text-left">
@@ -158,7 +178,7 @@
         </div>
       </div>
     </button>
-    <div class="collapse {% if overcategory_instance or gender_instance or undercategory_instance %} show {% endif %}" id="overcategory_collaplse">
+    <div class="collapse {% if overcategory_instance %} show {% endif %}" id="overcategory_collaplse">
       {% for overcategory in fields_overcategory %}
       <div class=" ml-3 custom-control custom-checkbox">
         <input type="checkbox" {% if overcategory.id|stringify in overcategory_instance %} checked {% endif %}class="custom-control-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
@@ -170,7 +190,7 @@
     </div>
   </div>
   <div class="col-12" id='gender-filter-box'>
-    <div id='title_gender' {% if overcategory_instance or gender_instance or undercategory_instance %} style="display: block" {% endif %}>
+    <div id='title_gender' {% if overcategory_instance %} style="display: block" {% endif %}>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#gender_collaplse" aria-expanded="true" aria-controls="gender_collaplse">
         <div class="row">
@@ -183,7 +203,7 @@
         </div>
       </button>
     </div>
-    <div class="collapse {% if gender_instance or undercategory_instance %} show {% endif %}" id="gender_collaplse" >
+    <div class="collapse {% if gender_instance %} show {% endif %}" id="gender_collaplse" >
       {% for overcategory in fields_overcategory %}
         <div id='{{ overcategory }}-gender-checkbox'{% if overcategory.id|stringify in overcategory_instance %} style="display: block" {% endif %} >
           {% for gender in fields_gender %}
@@ -201,7 +221,7 @@
     </div>
   </div>
   <div class="col-12" id='category-filter-box'>
-    <div id='title_category'{% if gender_instance or undercategory_instance %} style="display: block" {% endif %}>
+    <div id='title_category'{% if gender_instance %} style="display: block" {% endif %}>
       <hr/>
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#category_collaplse" aria-expanded="true" aria-controls="category_collaplse">
       <div class="row">
@@ -330,7 +350,7 @@
         </select>
       </div>
     </div>
-  <div class="col-12 pd-bt" id='price-filter-box'>
+  <div class="col-12" id='price-filter-box'>
       <hr/> 
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#price_collapse" aria-expanded="true" aria-controls="price_collapse">
       <div class="row">
@@ -361,9 +381,27 @@
         </div>
       </div>
     </div>
+
+      
+
+<div class=' col pd-bt text-center'>
+  <hr/>
+  <select class='input-for-filters custom-select custom-select-sm' name='sort' form='form_checkboxes'>
+            <option value="" disabled selected>{{ sort_by }}</option>
+          <option value='new'>{{ new }}</option>
+          <option value='high'>{{ price_to_high }}</option>
+          <option value='low'>{{ price_to_low }}</option>
+        </select>
+</div>
+
+
+
+
 </div> 
 </form>
 
+
+  
 
 
 

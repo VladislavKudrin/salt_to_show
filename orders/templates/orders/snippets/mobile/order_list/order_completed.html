@@ -1,0 +1,67 @@
+{% load i18n %}
+{% load format_decimal %}
+
+{% for object in orders_completed %}
+	<div class='row' style="border-bottom: 1px solid lightgray; padding-bottom: 1rem;">
+		<div class='col-12'>
+			<div class="row">
+				<div class="col-5 pr-2" style="display: flex; align-items: center;">
+					{% include 'products/snippets/card-order.html' with instance=object.product %}
+				</div>
+				<div class="col-7 pl-0" style="display: flex; align-items: center;">
+					<div class="row">
+						<div class="col-12 mb-2" style="display: grid; font-weight: bold;">
+							<span class="field-name small-ellipsis">{{ object.product.title }}</span>
+						</div>
+						<div class="col-12 pb-1">
+							<span class="field-name">{% trans 'Status:' %}</span>
+							<span>{% trans object.get_status %}</span>
+						</div>
+						<div class="col-12 pb-1">
+							<span class="field-name">{% trans 'Total:' %}</span>
+							<span>{{ object.total|format_decimal }} {{ object.product.currency_original }}</span>
+						</div>
+						{% if request.user ==  object.billing_profile.user %}
+							<div class="col-12" style="display: flex;">
+								<span class="field-name" style="padding-right: 0.2rem;">{% trans 'Seller:' %}</span>
+								<span style="display: grid;"><a class="small-ellipsis" href="{{ object.product.user.get_absolute_url }}">{{ object.product.user.username }}</a></span>
+							</div>
+						{% else %}
+							<div class="col-12" style="display: flex;">
+								<span class="field-name" style="padding-right: 0.2rem;">{% trans 'Buyer:' %}</span>
+								<span style="display: grid;"><a class="small-ellipsis" href="{{ object.billing_profile.user.get_absolute_url }}">{{ object.billing_profile.user.username }}</a></span>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+
+				{% if request.user ==  object.product.user %}
+				<div class="col-12 mt-3">
+
+					<a data-toggle="collapse" href="#transaction_guideline" aria-expanded="false" aria-controls="transaction_guideline">
+			  			<span style="text-transform: uppercase; font-weight: bold;">{% trans 'When I get my money?' %}</span>
+			  			<i class="fas fa-angle-down"></i>
+			  		</a>
+
+					<div class="row">
+					  <div class="col">
+					    <div class="collapse" id="transaction_guideline">
+					    	{% blocktrans %}
+					        The buyer confirmed receipt of the item and was satisfied, so the money will be transferred to your card within 24 hours. Congratulations on the successful deal!
+					        {% endblocktrans %}
+					    </div>
+					  </div>
+					</div>
+				</div>
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="row">
+		<div class="col mt-4" style="text-transform: uppercase;">
+			{% trans 'No orders yet' %}
+		</div>
+	</div>
+{% endfor %}

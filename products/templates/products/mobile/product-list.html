@@ -10,7 +10,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
-  <title>SALT | {{ object.title }} </title>
+  <title>SALT | Shop </title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   {% compress css %}
@@ -73,7 +73,8 @@
 		}
 
 		.custom-select {
-			width: 85% !important;
+			width: 50% !important;
+			margin: 5%;
 		}
 
 		#btn-filters {
@@ -154,37 +155,27 @@
     {% include 'mobile/navbar.html' %}
     <div class='container-fluid' style="margin-bottom: 2.3rem;">
 		<input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
-		<div class="sticky-top sticky-offset" id='sticky-offset' style="z-index: 1000">
-		<hr class="trenn mb-2">
-		<div class="row m-0">
-			<div class="col-6 col-md-6 text-left p-0">
-				<button hidden class="btn" hide='true' id='btn-filters' hide_text = '{{ hide_filters }}' show_text = '{{ show_filters }}'>
 
-					<i id="filter-icon" class="fas fa-sliders-h mr-2"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
-				</button>
-			</div>
-			<div class='col-6 col-md-6 text-right p-0'>
-				<select class='input-for-filters custom-select custom-select-sm' name='sort' form='form_checkboxes'>
-				    <option value="" disabled selected>{{ sort_by }}</option>
-					<option value='new'>{{ new }}</option>
-					<option value='high'>{{ price_to_high }}</option>
-					<option value='low'>{{ price_to_low }}</option>
-				</select>
-			</div>	
-		</div>
-		<hr class="trenn mt-2">
-		</div>
-		<div class="container-fluid">
+
+	
+			<button hidden class="btn" hide='true' id='btn-filters' hide_text = '{{ hide_filters }}' show_text = '{{ show_filters }}'>
+				<i id="filter-icon" class="fas fa-sliders-h" style="z-index: 1000; position:fixed; bottom: 3%; left:47%; font-size: 2em"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
+			</button>
+
+
+		
 			<div class='row' style='justify-content: center;'>
-				<div hidden class='col-3 custom-box position-sticky my-custom-scrollbar' id='slider_filters' style="height: 90%; background-color: rgb(255,255,255); overflow-y: scroll; overflow-x: hidden; ">
-					{% include 'categories/snippets/filter-box.html' with instance=obj %}
+				<div hidden class='col-3 p-0 custom-box position-sticky my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; overflow-x: hidden; z-index: 500; ">
+					{% include 'categories/snippets/mobile/filter-box.html' with instance=obj %}
 				</div>
-				<div hidden class='col-9 position-relative' id='container-filters-update' style="padding-top: 2%">
-					{% include 'products/snippets/languages/product_lists_cont.html' %}
+				<div hidden class='col-9 p-0 position-relative' id='container-filters-update' style="padding-top: 2%">
+					{% include 'products/snippets/mobile/card-product-list.html' %}
 				</div>
-				<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" onclick='{$("html, body").animate({ scrollTop: 0 }, "slow")}' style="z-index: 2000; top:90%; left: 85%; cursor: pointer"></i>
+				<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" onclick='{$("html, body").animate({ scrollTop: 0 }, "slow")}' style="z-index: 100;bottom: 3%;cursor: pointer;right: 10%;"></i>
 			</div>
-		</div>
+		
+
+
 	</div>
 
 	<script>
@@ -210,8 +201,6 @@
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
-	<script type="application/javascript" src="{% static 'js/jquery.morelines.js' %}"></script>
-	<script type="application/javascript" src="{% static 'js/jquery.zoom.js' %}"></script>
 	<script src='{% static "js/categories.js" %}'></script>
 	<script src="{% static 'js/sol.js' %}"></script>
 	<script src="{% static 'js/selectize.js' %}"></script>

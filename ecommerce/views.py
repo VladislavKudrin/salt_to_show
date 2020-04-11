@@ -78,7 +78,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 	form_class = ContactForm
 
 	def get_template_names(self):
-		if self.request.user_agent.is_mobile: 
+		if self.request.user_agent.is_mobile:
 			return ['mobile/contact.html']
 		else:
 			return ['desktop/contact.html']
@@ -89,7 +89,7 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 			request.session['order_id'] = order_id
 			context = self.get_context_data()
 			context['form'] = ContactForm(request, order_id)
-			return render(self.request, self.template_name, context)
+			return render(self.request, self.get_template_names(), context)
 		else:
 			return super(ContactPageView, self).post(request, *args, **kwargs)
 	def get_context_data(self, *args, **kwargs):
@@ -200,52 +200,65 @@ def home_page(request):
 		context['fields_undercategory'] = Undercategory.objects.all()
 		return render(request, template, context)
 	    
-class MyCronJob(CronJobBase):
-	RUN_EVERY_MINS = 0.01 # every 2 hours
+class MessagesNotifications(CronJobBase):
+	RUN_EVERY_MINS = 1 # everysecond
 	MIN_NUM_FAILURES = 1
 	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-	code = 'my_app.my_cron_job'    # a unique code
+	code = 'messages'    # a unique code
 
-	def do(self):
-		now = datetime.now(timezone.utc)
-		time_from = now - timedelta(hours=8)
-		# time_from = now # for testing 
-		unread_notif = Notification.objects.filter(read=False, message__timestamp__lte=time_from)
-		
-
-		# ---- USER QUERYSET TO SEND EMAIL NOTIFICATIONS -----
-		list_of_ids = []
-		for i in unread_notif.values('user').distinct():
-			my_id = list(i.values())[0]
-			list_of_ids.append(my_id)
-		users = User.objects.filter(pk__in=list_of_ids)
-
-		# ----  SEND EMAIL NOTIFICATIONS -----
+	def send_notifications(
+		self,
+		user,
+		amount,
+		last_message_text, 
+		last_message_from, 
+		last_message_timestamp):
+		email = user.email 
 		subject = 'У тебя есть новые сообщения'
 		from_email = settings.DEFAULT_FROM_EMAIL
 		context = {}
+		context['number_of_notif'] = amount
+		context['last_message_text'] = last_message_text
+		context['last_message_from'] = last_message_from
+		context['last_message_timestamp'] = last_message_timestamp	
+		txt_ = get_template("registration/emails/notif.txt").render(context)
+		html_ = get_template("registration/emails/notif.html").render(context)
+		sent_mail=send_mail(
+			subject,
+			txt_,
+			from_email,
+			[email],
+			html_message=html_,
+			fail_silently=False, 
+			)
+		if sent_mail == 1: 
+			return True
+		return False
 
-		for user in users:
-			email = user.email
-			notif = unread_notif.filter(user=user)
-			context['number_of_notif'] = notif.count()
-			last_message = notif.last().message
+	def do(self):
+		# ALL 
+		unread_notif = Notification.objects.filter(read=False, sent=False) # all not read, not sent
+		# LIST OF USERS
+		list_of_ids = unread_notif.values_list('user', flat=True).distinct()
+		users = User.objects.filter(pk__in=list_of_ids)
+
+		# NOTIFICATIONS BY USER
+		for user in users: 
+			notifications = unread_notif.filter(user=user)
+			amount = notifications.count()
+			# LAST MESSAGE
+			last_message = notifications.last().message
 			last_message_text = last_message.message
 			last_message_from = last_message.user.username
 			last_message_timestamp = last_message.user.timestamp
-			context['last_message_text'] = last_message_text
-			context['last_message_from'] = last_message_from
-			context['last_message_timestamp'] = last_message_timestamp
-			txt_ = get_template("registration/emails/notif.txt").render(context)
-			html_ = get_template("registration/emails/notif.html").render(context)
-			sent_mail=send_mail(
-				subject,
-				txt_,
-				from_email,
-				[email],
-				html_message=html_,
-				fail_silently=False, 
-				)
+			# SEND EMAIL
+			sent = self.send_notifications(user, amount, last_message_text, last_message_from, last_message_timestamp)
+			if sent: 
+				notifications.update(sent=True)
+			else: 
+				print('Was not sent')
+
+
 
 class NovaPoshtaAPI(CronJobBase):
 	RUN_EVERY_MINS = 2880 # 60*24 every 48 hours 

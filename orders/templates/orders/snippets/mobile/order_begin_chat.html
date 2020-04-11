@@ -1,0 +1,8 @@
+{% load i18n %}
+{% load get_chat_options %}
+
+{% if request.user ==  object.billing_profile.user %}
+	<a href="/messages/{{ object.product.user.username }}"><button class="btn tiny-btn-mob button-black btn-block">{% trans 'Contact seller' %}</button></a>
+{% else %}
+	<a href="/messages/{{ object.billing_profile.user.username }}"><button class="btn tiny-btn-mob button-black btn-block">{% trans 'Contact buyer' %}</button></a>
+{% endif %}

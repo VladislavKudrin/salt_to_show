@@ -70,7 +70,10 @@ class CategoryFilterView(ListView):
 					if int(page) > paginator.num_pages:
 						page_continue = False				
 			context['object_list']=queryset
-			html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
+			if request.user_agent.is_mobile:
+				html_ = get_template("products/snippets/mobile/card-product-list.html").render(request = request, context=context)
+			else: 
+				html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
 			json_data={
 			'html':html_,
 			'link':link_codiert,

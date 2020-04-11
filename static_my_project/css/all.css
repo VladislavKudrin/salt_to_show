@@ -8,6 +8,23 @@
 	font-family: 'Montserrat', 'Istok Web', sans-serif !important;
 }
 
+.tiny-btn-mob {
+	font-size: 9px;
+	padding: 5px 5px;
+	font-weight: 500;
+	text-transform: uppercase;
+	display: inline-block;
+	font-family: 'Montserrat', 'Istok Web', sans-serif !important;
+	height: 2.5rem;
+}
+
+.small-ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 12px;
+}
+
 	/* button no hover effects for mobile */
 
 	@media only screen and (max-width: 768px){
@@ -530,12 +547,12 @@
 	    min-height: 250px;
 	    object-fit: contain;
 	    align-items: center;
-	    padding-left:10px;
-	    padding-right:10px;
+/*	    padding-left:10px;
+	    padding-right:10px;*/
 	    cursor: pointer;
 	    display: inline-block;
 	    position: relative;
-	    margin-top: 10px !important;
+	    margin-top: 1rem !important;
 	/*    margin-bottom: 10px;*/
 	/*    margin-left: 10px;*/
 	/*    max-width: 275px;*/
