@@ -1,0 +1,6 @@
+{% load i18n %}
+
+<form method="POST" action="{% url 'contact' %}">{% csrf_token %}
+	<input type="hidden" name="order_id_report" value="{{ object.order_id }}">
+	<button title="{% trans 'Report a problem' %}" class="btn report-btn tiny-btn-mob button-black btn-block" type="submit">{% trans 'Report a problem' %}</button>
+</form>

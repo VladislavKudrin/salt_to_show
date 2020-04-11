@@ -58,6 +58,23 @@
 				</div>
 
 				<div class="col-12 mb-3">
+			  		<a data-toggle="collapse" href="#shipping_guideline" aria-expanded="false" aria-controls="shipping_guideline">
+			  			<span style="text-transform: uppercase; font-weight: bold;">{% trans 'How to ship' %}</span>
+			  			<!-- <i class="fas fa-angle-down"></i> -->
+			  		</a>
+
+					<div class="row">
+					  <div class="col">
+					    <div class="collapse" id="shipping_guideline">
+					    	{% blocktrans %}
+					 		<b>Ship</b> item within 24 hours to the specified address <b>with prepaid delivery</b> (since the buyer has already paid the full amount, including delivery). After it is sent, do not forget to <b>add tracking</b>. After successful delivery, the money will be transferred to your card ({{seller_card}}).
+					    	{% endblocktrans %}
+					    </div>
+					  </div>
+					</div>
+				</div>
+
+				<div class="col-12 mb-3">
 					{% if object.get_status == 'Paid' %}
 							 {% include 'orders/snippets/order_sold_form.html' %}
 					{% endif %}

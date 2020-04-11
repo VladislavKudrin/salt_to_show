@@ -1,0 +1,36 @@
+{% load static %}
+{% load home_page %}
+
+<style type="text/css">
+	.card-list-img {
+	    min-width: 150px;
+	    max-height: 150px;
+	    min-height: 150px;
+	    max-width: 150px;
+	    object-fit: contain;
+	    align-items: center;
+	    cursor: pointer;
+	    display: inline-block;
+	}
+	 .card-list-info {
+	    font-size: 12px;
+	    font-weight: 600;
+	    padding-top: 10px;
+	}  
+</style>
+
+
+<div class="row text-center m-0" style='padding-bottom: 40px'>
+	{% for obj in object_list %}
+		<a class='col-6 pl-0 pr-0 pb-2 pt-2' href="{{ obj.get_absolute_url }}">
+	    	{% if obj.thumbnail %}{% with obj.thumbnail.all|first as thumbnail %}
+	    	<img class="card-list-img" data-src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
+	    	{% endwith %}{% endif %}
+		    <div class='row m-0 card-list-info'>
+		        <div class='col-4 p-0 one-line text-left' style='padding-left: .75rem!important' >{{ obj.size.size }}</div>
+		        <div class='col-4 p-0 one-line text-center'>{{ obj.brand }}</div>
+		        <div class='col-4 p-0 one-line text-right' style='padding-right: .75rem!important'>{{ obj.price|to_user_currency:request }}</div>
+		    </div>
+		</a>
+	{% endfor %}
+</div>
