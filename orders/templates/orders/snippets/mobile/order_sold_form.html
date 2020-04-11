@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load crispy_forms_tags %} 
+
+<style type="text/css">
+	#div_id_track_number{
+		margin-bottom: 0px!important;
+	}
+</style>
+
+<form method="POST" action="{% url 'orders:track_order' %}">{% csrf_token %}
+	<div class="row">
+		<div class="col-12 mb-1" style="display: flex; align-items: center;">
+			<span class="field-name" style="font-weight: bold;">{% trans 'Add tracking:' %}</span>
+		</div>
+		<div class="col input-group">	
+			<div class="input-group">
+				<input type="hidden" name="order_id" value="{{ object.order_id }}">
+			  	<input type="text" id="track_number" name="track_number" value="{% if object.track_number %}{{ object.track_number }}{% else %} {% endif %}" style="width: 84%; border: 1px solid gray; padding: 0.3rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+
+		  			<button type="submit" class="input-group-append btn middle-btn-mob button-black input-group-append" style="border: 1px solid black;opacity: 1;">Ok</button>
+
+			</div>
+		</div>
+	</div>
+</form>
+
+
+
+
+			
