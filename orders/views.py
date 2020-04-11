@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 
 from ecommerce.mixins import RequestFormAttachMixin
 from ecommerce.utils import custom_render
-from billing.models import BillingProfile
+from billing.models import BillingProfile, Card
 from billing.forms import FeedbackForm
 from .models import Order, Transaction
 from .forms import OrderTrackForm
@@ -32,12 +32,17 @@ class OrderListView(LoginRequiredMixin, View):
 		orders_completed_buy = Order.objects.by_request(self.request).filter(status='shipped')
 		orders_refunded = orders_refunded_buy | orders_refunded_sell
 		orders_completed = orders_completed_buy | orders_completed_sell
+		orders_paid = orders_sold.filter(status='paid')
 		context['form'] = FeedbackForm(self.request)
 		context['tab'] = tab
-		context['orders_sold'] = orders_sold.filter(status='paid')
+		context['orders_sold'] = orders_paid
 		context['orders_buy'] = orders_buy
 		context['orders_refunded'] = orders_refunded.distinct()
 		context['orders_completed'] = orders_completed.distinct()
+
+		# for displaying seller's card
+		seller_card = Card.objects.filter(billing_profile=self.request.user.billing_profile).first()
+		context['seller_card'] = '***' + str(seller_card.number[12:])
 
 		return custom_render(self.request, 'orders', 'order-list', context)
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-10 16:12+0000\n"
-"PO-Revision-Date: 2020-04-10 18:20+0200\n"
+"POT-Creation-Date: 2020-04-11 19:48+0000\n"
+"PO-Revision-Date: 2020-04-11 22:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -70,7 +70,7 @@ msgctxt "profile_update"
 msgid "Update"
 msgstr "Оновити"
 
-#: accounts/forms.py:185
+#: accounts/forms.py:186
 msgid "You must select a region"
 msgstr "Потрібно вибрати регіон"
 
@@ -268,64 +268,65 @@ msgstr ""
 "\n"
 "\n"
 
-#: categories/templates/categories/snippets/filter-box.html:325
+#: categories/templates/categories/snippets/filter-box.html:326
+#: categories/templates/categories/snippets/mobile/filter-box.html:346
 #: products/forms.py:65
 msgid "Select a brand"
 msgstr "Обери бренд"
 
-#: categories/views.py:98
+#: categories/views.py:101
 msgid "Hide Filters"
 msgstr "Сховати фільтри"
 
-#: categories/views.py:99
+#: categories/views.py:102
 msgid "Show Filters"
 msgstr "Показати фільтри"
 
-#: categories/views.py:100
+#: categories/views.py:103
 msgid "Sort by"
 msgstr "Сортувати по"
 
-#: categories/views.py:101
+#: categories/views.py:104
 msgid "New first"
 msgstr "Спочатку новi"
 
-#: categories/views.py:102
+#: categories/views.py:105
 msgid "Low price first"
 msgstr "Спочатку дешеві"
 
-#: categories/views.py:103
+#: categories/views.py:106
 msgid "High price first"
 msgstr "Спочатку дорогі"
 
-#: categories/views.py:104 products/forms.py:66
+#: categories/views.py:107 products/forms.py:66
 msgid "Gender"
 msgstr "Стать"
 
-#: categories/views.py:105
+#: categories/views.py:108
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:106 products/forms.py:67
+#: categories/views.py:109 products/forms.py:67
 msgid "Category"
 msgstr "Категорiя"
 
-#: categories/views.py:107
+#: categories/views.py:110
 msgid "All"
 msgstr "Усi"
 
-#: categories/views.py:108 products/forms.py:68
+#: categories/views.py:111 products/forms.py:68
 msgid "Size"
 msgstr "Рoзмiр"
 
-#: categories/views.py:109 products/forms.py:69
+#: categories/views.py:112 products/forms.py:69
 msgid "Condition"
 msgstr "Стан"
 
-#: categories/views.py:110 ecommerce/views.py:148 products/forms.py:29
+#: categories/views.py:113 ecommerce/views.py:148 products/forms.py:29
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:111
+#: categories/views.py:114
 msgid "Price"
 msgstr "Цiна"
 
@@ -473,22 +474,22 @@ msgid "Order Error"
 msgstr "Помилка замовлення"
 
 #: orders/templates/orders/desktop/order-list.html:107
-#: orders/templates/orders/mobile/order-list.html:107
+#: orders/templates/orders/mobile/order-list.html:48
 msgid "Orders:"
 msgstr "Ордери:"
 
 #: orders/templates/orders/desktop/order-list.html:114
-#: orders/templates/orders/mobile/order-list.html:114
+#: orders/templates/orders/mobile/order-list.html:54
 msgid "Purchases"
 msgstr "Покупки"
 
 #: orders/templates/orders/desktop/order-list.html:117
-#: orders/templates/orders/mobile/order-list.html:117
+#: orders/templates/orders/mobile/order-list.html:57
 msgid "Sales"
 msgstr "Продажі"
 
 #: orders/templates/orders/desktop/order-list.html:120
-#: orders/templates/orders/mobile/order-list.html:120
+#: orders/templates/orders/mobile/order-list.html:60
 msgid "Archive"
 msgstr "Архів"
 
@@ -868,6 +869,151 @@ msgstr ""
 "Дякуємо за те, що ти з нами!\n"
 "SALT\n"
 
+#: orders/templates/orders/snippets/mobile/order_begin_chat.html:5
+#: products/views.py:98
+msgid "Contact seller"
+msgstr "Написати продавцю"
+
+#: orders/templates/orders/snippets/mobile/order_begin_chat.html:7
+msgid "Contact buyer"
+msgstr "Написати покупцевi"
+
+#: orders/templates/orders/snippets/mobile/order_complete_form.html:19
+msgid "Received order"
+msgstr "Айтем отримано!"
+
+#: orders/templates/orders/snippets/mobile/order_created_remove_form.html:6
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:79
+msgid "Cancel order"
+msgstr "Скасувати"
+
+#: orders/templates/orders/snippets/mobile/order_feedback.html:25
+#: orders/templates/orders/snippets/order_feedback.html:25
+msgid "Rate the order:"
+msgstr "Оцініть замовлення:"
+
+#: orders/templates/orders/snippets/mobile/order_feedback.html:46
+#: orders/templates/orders/snippets/order_feedback.html:46
+#: products/templates/products/snippets/not_valid_card_modal.html:116
+msgid "Close"
+msgstr "Закрити"
+
+#: orders/templates/orders/snippets/mobile/order_feedback.html:47
+#: orders/templates/orders/snippets/order_feedback.html:47
+msgid "Send feedback"
+msgstr "Відправити фідбек"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_buy.html:17
+#: orders/templates/orders/snippets/mobile/order_list/order_completed.html:17
+#: orders/templates/orders/snippets/mobile/order_list/order_refunded.html:24
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:27
+#: orders/templates/orders/snippets/order_list/order_buy.html:24
+#: orders/templates/orders/snippets/order_list/order_completed.html:22
+#: orders/templates/orders/snippets/order_list/order_refunded.html:24
+#: orders/templates/orders/snippets/order_list/order_sold.html:38
+msgid "Status:"
+msgstr "Статус:"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_buy.html:21
+#: orders/templates/orders/snippets/mobile/order_list/order_completed.html:21
+#: orders/templates/orders/snippets/mobile/order_list/order_refunded.html:28
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:31
+#: orders/templates/orders/snippets/order_list/order_buy.html:28
+#: orders/templates/orders/snippets/order_list/order_completed.html:26
+#: orders/templates/orders/snippets/order_list/order_refunded.html:28
+#: orders/templates/orders/snippets/order_list/order_sold.html:42
+msgid "Total:"
+msgstr "Усього:"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_buy.html:25
+#: orders/templates/orders/snippets/mobile/order_list/order_completed.html:26
+#: orders/templates/orders/snippets/order_list/order_buy.html:54
+msgid "Seller:"
+msgstr "Продавець:"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_buy.html:35
+#: orders/templates/orders/snippets/order_list/order_buy.html:42
+#: orders/templates/orders/snippets/order_sold_form.html:12
+msgid "Tracking:"
+msgstr "Трекiнг:"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_buy.html:39
+msgid "not shipped yet"
+msgstr "поки що не вiдправлено"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_buy.html:68
+#: orders/templates/orders/snippets/mobile/order_list/order_completed.html:64
+#: orders/templates/orders/snippets/mobile/order_list/order_refunded.html:52
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:96
+#: orders/templates/orders/snippets/order_list/order_buy.html:85
+#: orders/templates/orders/snippets/order_list/order_completed.html:65
+#: orders/templates/orders/snippets/order_list/order_refunded.html:52
+#: orders/templates/orders/snippets/order_list/order_sold.html:115
+msgid "No orders yet"
+msgstr "Поки що тут пусто"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_completed.html:31
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:35
+#: orders/templates/orders/snippets/order_list/order_sold.html:86
+msgid "Buyer:"
+msgstr "Покупець:"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_completed.html:42
+#: orders/templates/orders/snippets/order_list/order_completed.html:40
+msgid "When I get my money?"
+msgstr "Коли я отримаю грошi?"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_completed.html:49
+msgid ""
+"\n"
+"\t\t\t\t\t        The buyer confirmed receipt of the item and was satisfied, "
+"so the money will be transferred to your card within 24 hours. "
+"Congratulations on the successful deal!\n"
+"\t\t\t\t\t        "
+msgstr ""
+"\n"
+"\t\t\t\t\t        Покупець підтвердив отримання айтема і залишився "
+"задоволений, тому гроші переведуться тобі на карту протягом 24 годин. "
+"Вітаємо з успішною операцією!\n"
+"\t\t\t\t\t        "
+
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:46
+#: orders/templates/orders/snippets/order_list/order_sold.html:52
+msgid "Address:"
+msgstr "Адрес:"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:52
+#: orders/templates/orders/snippets/order_list/order_sold.html:62
+msgid "How to ship"
+msgstr "Як відправити?"
+
+#: orders/templates/orders/snippets/mobile/order_list/order_sold.html:59
+#: orders/templates/orders/snippets/order_list/order_sold.html:69
+#, python-format
+msgid ""
+"\n"
+"\t\t\t\t\t \t\t<b>Ship</b> item within 24 hours to the specified address "
+"<b>with prepaid delivery</b> (since the buyer has already paid the full "
+"amount, including delivery). After it is sent, do not forget to <b>add "
+"tracking</b>. After successful delivery, the money will be transferred to "
+"your card (%(seller_card)s).\n"
+"\t\t\t\t\t    \t"
+msgstr ""
+"\n"
+"\t\t\t\t\t \t\t<b>Відправ</b> айтем протягом 24 годин на вказану адресу "
+"<b>без накладної плати</b> так як покупець вже сплатив повну суму з "
+"урахуванням доставки). Як відправиш, не забудь додати трекінг </ b>. Після "
+"успішної доставки гроші будуть переведені на твою картку (%(seller_card)s).\n"
+"\t\t\t\t\t    \t"
+
+#: orders/templates/orders/snippets/mobile/order_sold_form.html:13
+msgid "Add tracking:"
+msgstr "Добав трекiнг:"
+
+#: orders/templates/orders/snippets/mobile/report_button.html:5
+msgid "Report a problem"
+msgstr "Написати в підтримку"
+
 #: orders/templates/orders/snippets/order_complete_form.html:19
 msgid "Received"
 msgstr "Отримано"
@@ -876,60 +1022,23 @@ msgstr "Отримано"
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: orders/templates/orders/snippets/order_feedback.html:25
-msgid "Rate the order:"
-msgstr "Оцініть замовлення:"
-
-#: orders/templates/orders/snippets/order_feedback.html:46
-#: products/templates/products/snippets/not_valid_card_modal.html:116
-msgid "Close"
-msgstr "Закрити"
-
-#: orders/templates/orders/snippets/order_feedback.html:47
-msgid "Send feedback"
-msgstr "Відправити фідбек"
-
-#: orders/templates/orders/snippets/order_list/order_buy.html:24
-#: orders/templates/orders/snippets/order_list/order_completed.html:22
-#: orders/templates/orders/snippets/order_list/order_refunded.html:24
-#: orders/templates/orders/snippets/order_list/order_sold.html:38
-msgid "Status:"
-msgstr "Статус:"
-
-#: orders/templates/orders/snippets/order_list/order_buy.html:28
-#: orders/templates/orders/snippets/order_list/order_completed.html:26
-#: orders/templates/orders/snippets/order_list/order_refunded.html:28
-#: orders/templates/orders/snippets/order_list/order_sold.html:42
-msgid "Total:"
-msgstr "Усього:"
-
 #: orders/templates/orders/snippets/order_list/order_buy.html:32
 msgid "Report:"
 msgstr "Скарга:"
 
-#: orders/templates/orders/snippets/order_list/order_buy.html:42
-#: orders/templates/orders/snippets/order_sold_form.html:12
-msgid "Tracking:"
-msgstr "Трекiнг:"
-
-#: orders/templates/orders/snippets/order_list/order_buy.html:54
-msgid "Seller:"
-msgstr "Продавець:"
-
-#: orders/templates/orders/snippets/order_list/order_buy.html:85
-#: orders/templates/orders/snippets/order_list/order_completed.html:44
-#: orders/templates/orders/snippets/order_list/order_refunded.html:52
-#: orders/templates/orders/snippets/order_list/order_sold.html:98
-msgid "No orders yet"
-msgstr "Поки що тут пусто"
-
-#: orders/templates/orders/snippets/order_list/order_sold.html:52
-msgid "Address:"
-msgstr "Адрес:"
-
-#: orders/templates/orders/snippets/order_list/order_sold.html:69
-msgid "Buyer:"
-msgstr "Покупець:"
+#: orders/templates/orders/snippets/order_list/order_completed.html:47
+msgid ""
+"\n"
+"\t\t\t\t\t\t        The buyer confirmed receipt of the item and was "
+"satisfied, so the money will be transferred to your card within 24 hours. "
+"Congratulations on the successful deal!\n"
+"\t\t\t\t\t\t        "
+msgstr ""
+"\n"
+"\t\t\t\t\t\t        Покупець підтвердив отримання айтема і залишився "
+"задоволений, тому гроші переведуться тобі на карту протягом 24 годин. "
+"Вітаємо з успішною операцією!\n"
+"\t\t\t\t\t\t        "
 
 #: orders/templates/orders/snippets/report_button.html:10
 msgid "Report"
@@ -1095,10 +1204,6 @@ msgstr "Стан:"
 #: products/views.py:97
 msgid "Description:"
 msgstr "Опис:"
-
-#: products/views.py:98
-msgid "Contact seller"
-msgstr "Зв’язатися с продавцем"
 
 #: products/views.py:99
 msgid "Authentic"
@@ -2141,7 +2246,7 @@ msgstr "Нормальний стан"
 
 #: templates/languages/trans_custom/translation_custom.html:115
 msgid "Created"
-msgstr "Створений"
+msgstr "Не оплачено"
 
 #: templates/languages/trans_custom/translation_custom.html:117
 msgid "Paid"
