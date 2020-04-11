@@ -204,7 +204,7 @@ class MessagesNotifications(CronJobBase):
 	RUN_EVERY_MINS = 1 # everysecond
 	MIN_NUM_FAILURES = 1
 	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-	code = 'my_app.my_cron_job'    # a unique code
+	code = 'messages'    # a unique code
 
 	def send_notifications(
 		self,
