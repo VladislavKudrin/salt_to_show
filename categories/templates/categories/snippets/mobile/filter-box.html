@@ -330,26 +330,6 @@
         {% endfor %}
       </div>
     </div>
-  <div class="col-12" id='condition-filter-box'>
-      <hr/>
-      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#brand_collapse" aria-expanded="true" aria-controls="brand_collapse">
-      <div class="row">
-        <div class="col-6 text-left">
-          {{ brand }}
-        </div>
-        <div class="col-6 text-right">
-          <i class="fa-fw ml-5" aria-hidden="false"></i>
-        </div>
-      </div>
-      </button>
-      <div class="collapse {% if brand_instance %} show {% endif %}" id="brand_collapse">
-        <select class='ml-5 mt-3 mb-3' id="brand-select" name="brand" multiple="multiple" brand_placeholder_trans="{% trans 'Select a brand' %}">
-          {% for brand in fields_brand %}
-            <option {% if brand.id|stringify in brand_instance %} selected {% endif %} value="{{ brand.id }}">{{ brand.brand_name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
   <div class="col-12" id='price-filter-box'>
       <hr/> 
       <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#price_collapse" aria-expanded="true" aria-controls="price_collapse">
