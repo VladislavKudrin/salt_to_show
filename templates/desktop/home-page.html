@@ -403,7 +403,13 @@
         </div>
         </div>
         <div class="col-6 " style="padding-left: 0px; padding-right: 0px;">
-          <a class="btn btn-dark-home m-0 p-0" role="button" href="{% url 'products:list' %}" style="display:block; border-color: transparent;">
+          <a class="btn btn-dark-home m-0 p-0" role="button"
+          {% if request.user.is_authenticated %}
+            {% if not request.user.billing_profile.default_card.is_valid_card %} 
+              data-toggle="modal" data-target="#add_card_modal" disabled="true"
+            {% endif %}
+          {% endif %}  
+          href="{% url 'products:list' %}" style="display:block; border-color: transparent;">
           <div class="jumbotron jumbotron text-center mb-2 mt-2" style="background:transparent; background-color:transparent; color:white;  overflow-x: hidden; ">
             <div class="container">
               <h1 class="middle-heading heading">BUY</h1>
