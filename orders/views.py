@@ -41,8 +41,9 @@ class OrderListView(LoginRequiredMixin, View):
 		context['orders_completed'] = orders_completed.distinct()
 
 		# for displaying seller's card
-		seller_card = Card.objects.filter(billing_profile=self.request.user.billing_profile).first()
-		context['seller_card'] = '***' + str(seller_card.number[12:])
+		seller_card = Card.objects.filter(billing_profile=self.request.user.billing_profile).first().number
+		if seller_card is not None:
+			context['seller_card'] = '***' + str(seller_card[12:])
 
 		return custom_render(self.request, 'orders', 'order-list', context)
 
