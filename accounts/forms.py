@@ -91,14 +91,16 @@ class RegisterLoginForm(forms.ModelForm):
             # Method inherited from BaseForm
             self.add_error('password', error)
         return self.cleaned_data.get('password')
-
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        return email.lower()
 
     def save(self, commit=True):
         request = self.request
         data = self.cleaned_data
         email = data.get("email")
         password = data.get("password")
-        user_objects = User.objects.filter(email=email)
+        user_objects = User.objects.filter(email__iexact=email)
         if not user_objects.exists(): 
             username = User.objects.check_username(username=email.split("@")[0])
             User.objects.create_user(email=email, username=username, password=password, is_active=False)
