@@ -7,6 +7,7 @@ from django.core.validators import RegexValidator
 
 
 
+
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_1l8zkhQ1TSie6osuv340q2gy00sykrXaRe")
 STRIPE_PUB_KEY =  getattr(settings, "STRIPE_PUB_KEY", 'pk_test_QZ1Bl6pNnSFwcWXaPOFaC2dx009AMrZvdk')
 User=settings.AUTH_USER_MODEL
@@ -168,8 +169,16 @@ class Card(models.Model):
 		if self.holder == '' or self.number == '':
 			return False 
 		if self.number is not None:
-			if len(str(self.number)) != 16:
+			if len(self.number) != 16:
 				return False
+			if not self.number.isdigit():
+				return False
+		if self.holder is not None:
+			if len(self.holder.split(' ')) < 2:
+				return False
+			for word in self.holder.split(' '):
+				if not word.isalpha():
+					return False
 		return valid
 
 class ChargeManager(models.Manager):

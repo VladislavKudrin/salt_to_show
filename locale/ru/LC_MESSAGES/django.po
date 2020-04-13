@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-11 19:48+0000\n"
-"PO-Revision-Date: 2020-04-11 22:09+0200\n"
+"POT-Creation-Date: 2020-04-13 13:43+0000\n"
+"PO-Revision-Date: 2020-04-13 15:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -43,38 +43,38 @@ msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
 msgstr ""
 "<a href={resend_link}> (Кликни, чтобы выслать подтверждение еще раз)</a>."
 
-#: accounts/forms.py:142
+#: accounts/forms.py:144
 msgid ""
 "Use this space to talk about your personal style but hold the personal "
 "contact details"
 msgstr "Расскажи здесь о себе (не указывай контактной информации)"
 
-#: accounts/forms.py:149 accounts/forms.py:170
+#: accounts/forms.py:151 accounts/forms.py:172
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
 
-#: accounts/forms.py:158
+#: accounts/forms.py:160
 msgid "Email"
 msgstr "Твой Email"
 
-#: accounts/forms.py:159
+#: accounts/forms.py:161
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:160
+#: accounts/forms.py:162
 msgid "Region"
 msgstr "Регион"
 
-#: accounts/forms.py:161
+#: accounts/forms.py:163
 msgid "Recieve marketing email?"
 msgstr "Получать рассылку?"
 
-#: accounts/forms.py:166
+#: accounts/forms.py:168
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Обновить"
 
-#: accounts/forms.py:186
+#: accounts/forms.py:188
 msgid "You must select a region"
 msgstr "Выбери регион"
 
@@ -184,22 +184,22 @@ msgstr "Мейл не подтвержден. "
 msgid "The password seems to be wrong. Try again!"
 msgstr "Неверный пароль. Попробуй еще раз!"
 
-#: accounts/views.py:316 products/views.py:481
+#: accounts/views.py:319 products/views.py:481
 msgid "Update your details"
 msgstr "Обновить аккаунт"
 
-#: accounts/views.py:317 products/views.py:482
+#: accounts/views.py:320 products/views.py:482
 #: templates/registration/password_change_form.html:26
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: accounts/views.py:318
+#: accounts/views.py:321
 #: products/templates/products/snippets/not_valid_card_modal.html:117
 #: products/views.py:301 templates/registration/password_change_form.html:31
 msgid "Save"
 msgstr "Сохранить"
 
-#: accounts/views.py:319
+#: accounts/views.py:322
 msgid "Logout"
 msgstr "Выйти"
 
@@ -211,7 +211,11 @@ msgstr "Имя и фамилия"
 msgid "Phone"
 msgstr "Телефон"
 
-#: billing/forms.py:28
+#: billing/forms.py:37
+msgid "Enter a valid name"
+msgstr "Введи вверное имя"
+
+#: billing/forms.py:44
 msgid "Enter a valid card number"
 msgstr "Введи правильный номер карты"
 
@@ -272,64 +276,63 @@ msgstr ""
 "\n"
 
 #: categories/templates/categories/snippets/filter-box.html:326
-#: categories/templates/categories/snippets/mobile/filter-box.html:346
 #: products/forms.py:65
 msgid "Select a brand"
 msgstr "Выбери бренд"
 
-#: categories/views.py:101
+#: categories/views.py:98
 msgid "Hide Filters"
 msgstr "Спрятать фильтры"
 
-#: categories/views.py:102
+#: categories/views.py:99
 msgid "Show Filters"
 msgstr "Показать фильтры"
 
-#: categories/views.py:103
+#: categories/views.py:100
 msgid "Sort by"
 msgstr "Сортировать по"
 
-#: categories/views.py:104
+#: categories/views.py:101
 msgid "New first"
 msgstr "Сначала новые"
 
-#: categories/views.py:105
+#: categories/views.py:102
 msgid "Low price first"
 msgstr "Сначала дешевые"
 
-#: categories/views.py:106
+#: categories/views.py:103
 msgid "High price first"
 msgstr "Сначала дорогие"
 
-#: categories/views.py:107 products/forms.py:66
+#: categories/views.py:104 products/forms.py:66
 msgid "Gender"
 msgstr "Гендер"
 
-#: categories/views.py:108
+#: categories/views.py:105
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:109 products/forms.py:67
+#: categories/views.py:106 products/forms.py:67
 msgid "Category"
 msgstr "Категория"
 
-#: categories/views.py:110
+#: categories/views.py:107
 msgid "All"
 msgstr "Все"
 
-#: categories/views.py:111 products/forms.py:68
+#: categories/views.py:108 products/forms.py:68
 msgid "Size"
 msgstr "Размер"
 
-#: categories/views.py:112 products/forms.py:69
+#: categories/views.py:109 products/forms.py:69
 msgid "Condition"
 msgstr "Состояние"
 
-#: categories/views.py:113 ecommerce/views.py:148 products/forms.py:29
+#: categories/views.py:110 ecommerce/views.py:148 products/forms.py:29
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:114
+#: categories/views.py:111
 msgid "Price"
 msgstr "Цена"
 
@@ -348,7 +351,15 @@ msgstr "Номер заказа: "
 
 #: ecommerce/utils.py:85
 msgid "Only alphanumeric characters are allowed"
-msgstr "Юзернейм должен содержать только латинские символы или цифры"
+msgstr "Допустимы только латинские символы или цифры"
+
+#: ecommerce/utils.py:86
+msgid "Only letters and spaces are allowed"
+msgstr "Допустимы только латинские символы или пробелы"
+
+#: ecommerce/utils.py:87
+msgid "Only digit characters allowed."
+msgstr "Допустимы только цифры."
 
 #: ecommerce/views.py:35
 msgid "Bazar"
@@ -478,22 +489,22 @@ msgid "Order Error"
 msgstr "Ошибка заказа"
 
 #: orders/templates/orders/desktop/order-list.html:107
-#: orders/templates/orders/mobile/order-list.html:48
+#: orders/templates/orders/mobile/order-list.html:46
 msgid "Orders:"
 msgstr "Заказы:"
 
 #: orders/templates/orders/desktop/order-list.html:114
-#: orders/templates/orders/mobile/order-list.html:54
+#: orders/templates/orders/mobile/order-list.html:52
 msgid "Purchases"
 msgstr "Покупки"
 
 #: orders/templates/orders/desktop/order-list.html:117
-#: orders/templates/orders/mobile/order-list.html:57
+#: orders/templates/orders/mobile/order-list.html:55
 msgid "Sales"
 msgstr "Продажи"
 
 #: orders/templates/orders/desktop/order-list.html:120
-#: orders/templates/orders/mobile/order-list.html:60
+#: orders/templates/orders/mobile/order-list.html:58
 msgid "Archive"
 msgstr "Архив"
 
@@ -1096,6 +1107,18 @@ msgstr "Сделай короче. Убери # символов :"
 #: products/forms.py:204
 msgid "Images*"
 msgstr "Фото"
+
+#: products/forms.py:214
+msgid "Upload at least 4 images"
+msgstr "Загрузи как минимум 4 фото"
+
+#: products/forms.py:216
+msgid "Not enough photos. Minimal amount - 4"
+msgstr "Недостаточно фотографий. Минимальное колличество - 4"
+
+#: products/forms.py:218
+msgid "Too many files, max. amount 8"
+msgstr "Слишком много фотографий. Максимальное колличество - 8"
 
 #: products/templates/products/desktop/checkout.html:193
 #: products/templates/products/mobile/checkout.html:193
@@ -2445,15 +2468,6 @@ msgstr "Сбросить"
 #~ "По-настоящему следят. Нами движет очень простая цель сделать шопинг "
 #~ "максимально приятным и безопасным. Поэтому на SALT ты можешь быть на %s%% "
 #~ "уверен_а, что всегда приобретаешь оригинальную вещь."
-
-#~ msgid "Upload at least 4 images"
-#~ msgstr "Загрузи как минимум 4 фото"
-
-#~ msgid "Not enough photos. Minimal amount - 4"
-#~ msgstr "Недостаточно фотографий. Минимальное колличество - 4"
-
-#~ msgid "Too many files, max. amount 8"
-#~ msgstr "Слишком много фотографий. Максимальное колличество - 8"
 
 #~ msgid "New item upload"
 #~ msgstr "Залили новый айтем"

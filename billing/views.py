@@ -34,7 +34,7 @@ def card_modal_update(request):
     if request.POST:
         billing_profile, created = BillingProfile.objects.new_or_get(request)
         card, created = Card.objects.new_or_get(billing_profile=billing_profile)
-        form = CardModalForm(request=request, data=request.POST, instance=card)
+        form = CardModalForm(data=request.POST, instance=card)
         if request.is_ajax():
             if form.is_valid():
                 card = form.save() 
