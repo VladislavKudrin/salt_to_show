@@ -169,7 +169,9 @@
 					{% include 'categories/snippets/mobile/filter-box.html' with instance=obj %}
 				</div>
 				<div hidden class='col-9 p-0 position-relative' id='container-filters-update' style="padding-top: 2%">
+					<div class="row text-center m-0" style='padding-bottom: 40px'>
 					{% include 'products/snippets/mobile/card-product-list.html' %}
+				    </div>
 				</div>
 				<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" onclick='{$("html, body").animate({ scrollTop: 0 }, "slow")}' style="z-index: 100;bottom: 3%;cursor: pointer;right: 10%;"></i>
 			</div>

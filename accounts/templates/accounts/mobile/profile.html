@@ -99,7 +99,6 @@
 			{{object.bio|linebreaks}}
 			{% endif %}
 			</div>	
-			
 		</div>
 
 		<div class="row">
@@ -114,41 +113,29 @@
 			</div>
 		</div>
 
-		<div class="container">
-			<div class='row'>
-			{% autopaginate products %}
-			{% if products|length > 0 %}
-				{% for obj in products %}
-				<div class='col-xs-12 card-full text-center  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-				{% include 'products/snippets/card.html' with instance=obj %}
-				{% if forloop.counter|divisibleby:4 %}
-					</div>
-					</div>
-					<div class='row'>
-					<div class='col-12'>
-					</div>
-				{% else %}
-					</div>
-				{% endif %}
-				{% endfor %}
-				</div>
-				</div>
-				<div class = "row pagination justify-content-center">
+		{% autopaginate products %}
+		{% if products|length > 0 %}
+
+			{% include 'products/snippets/mobile/card-general.html' with object_list=products %}
+
+			<div class = "row pagination justify-content-center">
 				<div class = "col-auto">
 				{% paginate using "base/pagination_custom.html" %}
 				</div>
-				</div>
-			{% else %}
-				<div class='col mx-auto'>
-					<div class="heading text-center" style='color:#aeacac;'>{% trans 'No items yet' %}</div>
-				</div>
-			{% endif %}
+			</div>
 
-		<!--Footer (+ padding for it-->
-		<div class="row fluid info" style='padding-top: 76px; '>
-		</div>
+		{% else %}
+			<div class='col mx-auto'>
+				<div class="heading text-center" style='color:#aeacac;'>{% trans 'No items yet' %}</div>
+			</div>
+		{% endif %}
+
 		{% include 'mobile/footer.html' %}
 	</div>
+
+
+
+
 	<script type='application/javascript'>
 		$(document).ready(function(){
 		$(".share").click(function(){
