@@ -315,6 +315,12 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-150733918-1');
+
+        $('input, select, textarea').on('focus blur', function(event) {
+        $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 10 : 1));
+      });
+
+
      </script>
     {% compress js file base %} 
     <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
