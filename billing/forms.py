@@ -3,6 +3,9 @@ from .models import BillingProfile, Card, Feedback
 from orders.models import Order
 from django.utils.translation import gettext as _ 
 
+from ecommerce.utils import numeric, alphaSpaces
+
+
 class CardForm(forms.ModelForm):
     class Meta:
         model = Card
@@ -22,6 +25,19 @@ class CardForm(forms.ModelForm):
 
 
 class CardModalForm(CardForm):
+    holder = forms.CharField(required=True, max_length=100, validators=[alphaSpaces])
+    number = forms.CharField(required=True, max_length=16, validators=[numeric])
+
+    def __init__(self, *args, **kwargs):
+        super(CardForm, self).__init__(*args, **kwargs)
+
+    def clean_holder(self):
+        holder = self.cleaned_data.get('holder')
+        if len(holder.split(' ')) < 2:
+            msg = _("Enter a valid name")
+            raise forms.ValidationError((msg))
+        return holder
+
     def clean_number(self):
         number = self.cleaned_data.get('number')
         if len(str(number)) != 16:

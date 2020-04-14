@@ -91,4 +91,4 @@ class AddressCheckoutForm(forms.ModelForm):
             'post_office'        
         ]
     def save(self, commit=True):
-        print('WOWA')
+        pass
