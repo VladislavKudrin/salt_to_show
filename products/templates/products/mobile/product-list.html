@@ -8,7 +8,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
   <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
   <title>SALT | Shop </title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
@@ -66,55 +66,34 @@
 			margin-top:2px;
 		}
 
-	@media only screen and (max-width: 768px) {
-		.filters-desktop {
-			visibility: hidden;
-			display: none;
-		}
-
-		.custom-select {
-			width: 50% !important;
-			margin: 5%;
-		}
-
-		#btn-filters {
-			width: 60% !important;
-			padding: 4px;
-		}
-		.sticky-offset{
-		background-color: white;
-
+	.custom-select {
+		width: 50% !important;
+		margin: 5%;
 	}
-		#slider_filters{
-			position: fixed!important;
-			z-index: 1500;
+
+	#btn-filters {
+		width: 60% !important;
+		padding: 4px;
 	}
+
+	.sticky-offset{
+	background-color: white;
+
+}
+	#slider_filters{
+		position: fixed!important;
+		z-index: 1500;
+}
+
 	#btn-filters{
 		font-size: 1rem;
-	/*	width: 40%;
-	*/	border: none!important;
+		border: none!important;
 		background-color: white;
 	}
 
-		#nav_categories{
-			display: none
-		}
-
+	#nav_categories{
+		display: none
 	}
-	@media only screen and (min-width: 768px) {
-		.filters-mobile {
-			visibility: hidden;
-			display: none;
-		}
-		.sticky-offset{
-		background-color: white;
-	}
-	#upArrow{
-		visibility: hidden;
-		display: none;
-	}
-	}
-
 
 	nav{
 		margin-bottom: 0px!important;
@@ -153,44 +132,24 @@
 </head>
 <body>
     {% include 'mobile/navbar.html' %}
+
     <div class='container-fluid' style="margin-bottom: 2.3rem;">
 		<input type="hidden" name="language" id='language' value='{{ request.session.language }}'>
-
-
-	
 			<button hidden class="btn" hide='true' id='btn-filters' hide_text = '{{ hide_filters }}' show_text = '{{ show_filters }}'>
 				<i id="filter-icon" class="fas fa-sliders-h" style="z-index: 1000; position:fixed; bottom: 3%; left:47%; font-size: 2em"></i><span id='text-for-hide-show'>{{ hide_filters }}</span>
 			</button>
-
-
-		
 			<div class='row' style='justify-content: center;'>
 				<div hidden class='col-3 p-0 custom-box position-sticky my-custom-scrollbar' id='slider_filters' style="height: 100%; background-color: rgb(255,255,255); overflow-y: scroll; overflow-x: hidden; z-index: 500; ">
 					{% include 'categories/snippets/mobile/filter-box.html' with instance=obj %}
 				</div>
-				<div hidden class='col-9 p-0 position-relative' id='container-filters-update' style="padding-top: 2%">
-					<div class="row text-center m-0" style='padding-bottom: 40px'>
+				<div hidden class='col p-0 position-relative' id='container-filters-update' style="padding-top: 2%">
 					{% include 'products/snippets/mobile/card-product-list.html' %}
-				    </div>
 				</div>
 				<i class="fas fa-2x fa-arrow-circle-up position-fixed" id="upArrow" onclick='{$("html, body").animate({ scrollTop: 0 }, "slow")}' style="z-index: 100;bottom: 3%;cursor: pointer;right: 10%;"></i>
 			</div>
-		
-
-
 	</div>
 
 	<script>
-		$(document).ready(
-			function(){
-				$('body').css('min-height',$(window).outerHeight(true) +50+ 'px')
-				var topNavbar = $('.navbar-mb').outerHeight(true)
-				var topFilterbar = $('.sticky-offset').outerHeight(true) 
-				$('.sticky-offset').css('top', topNavbar + 'px')
-
-				if (!($(window).width() < 768)){
-						$('#slider_filters').css('top',topNavbar+topFilterbar+'px')
-				}//if mobile
 	</script>
 	 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
     <script>

@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from products.models import Product
 from django.views.generic import ListView
@@ -6,6 +5,7 @@ from django.http import JsonResponse
 from django.utils.translation import gettext as _
 
 class SearchProductView(ListView):
+	qs = Product.objects.authentic().available().payable() 
 
 	def get_template_names(self):
 		if self.request.user_agent.is_mobile: 
@@ -16,14 +16,10 @@ class SearchProductView(ListView):
 	def get(self, request, *args, **kwargs):
 		if request.is_ajax():
 			query=request.GET.get('q')
-			filtered_products = []
-			all_ = Product.objects.all().authentic().available()
-			all_products= []
-			for x in all_:
-				all_products.append(x.title)
+			all_products_titles= list(self.qs.order_by('-timestamp').values_list('title', flat=True).distinct())
 			json_data={
 				"query": query,
-				"filtered_products": all_products,
+				"filtered_products": all_products_titles,
 			}
 			return JsonResponse(json_data, status=200)
 		return super(SearchProductView, self).get(request, *args, **kwargs)
@@ -38,9 +34,7 @@ class SearchProductView(ListView):
 		return context
 
 	def get_queryset(self, *args, **kwargs):
-		request = self.request
-		method_dict=request.GET
-		query=method_dict.get('q', None)
+		query=self.request.GET.get('q', None)
 		if query is not None:
-			return Product.objects.search(query).order_by('-timestamp').authentic().available()
-		return Product.objects.authentic().available()
+			return self.qs.search(query).order_by('-timestamp')
+		return self.qs.order_by('-timestamp')

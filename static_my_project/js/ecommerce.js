@@ -309,11 +309,12 @@ $(document).ready(
       var deleteComfirmFormTemplate = $.templates("#delete-product-confirm-form")
       $.confirm({
     title: titleConfirm,
-    content: '' + deleteTemplateHtml,
+    // content: '' + deleteTemplateHtml,
+    content: '', 
     buttons: {
         formSubmit: {
             text: btnText,
-            btnClass: 'btn btn-dark',
+            btnClass: 'btn pdv button-black btn-block',
             action: function () {
                 $.ajax({
                     url: actionEndpoint,
@@ -327,6 +328,7 @@ $(document).ready(
                         buttons:{
                           confirm: { 
                             text: 'Ok',
+                            btnClass: 'btn pdv button-black btn-block',
                             action: function(){
                             window.location.href=next_url
                           }},
@@ -345,6 +347,7 @@ $(document).ready(
         },//formSubmit
         cancel: {
           text:cancelText,
+          btnClass: 'btn pdv btn-block btn-outline-danger',
           action: function (){
 
           }//action cancel

@@ -1,394 +1,227 @@
-{% extends "base.html" %}
 {% load crispy_forms_tags %} 
 {% load static %}
-{% load for_loop_extras %}
 {% load checked_time %}
-{% block content %}
+{% load format_decimal %}
 {% load i18n %}
+{% load compress %}
 
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | Checkout </title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/selectize.default.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
+    .selectize-control.single .selectize-input, .selectize-dropdown.single {
+      border-color: #000000;
+    }
 
-  .selectize-control.single .selectize-input, .selectize-dropdown.single {
-    border-color: #000000;
-}
+
+    .selectize-control.single .selectize-input{
+    background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+    }
+
+    .option .selected .active:hover{
+    background-color: transparent;
+    }
 
 
-.selectize-control.single .selectize-input{
-  background-image: linear-gradient(to bottom, #ffffff, #ffffff);
-}
+    .selectize-control.plugin-remove_button [data-value] {
+      position: relative;
+      padding-right: 0px !important;
 
-.option .selected .active:hover{
-  background-color: transparent;
-}
-
-
-.selectize-control.plugin-remove_button [data-value] {
-    position: relative;
-    padding-right: 0px !important;
-}
-
-</style>
+    }
+    .selectize-control{
+      padding-left: 9px;
+    }
+    
+  </style>
 </head>
+<body>
+    {% include 'mobile/navbar.html' %}
+    <div class='container-fluid' style="margin-bottom: 2.3rem; margin-top: 1.7rem">
+      <div class="row">
+        <input type="hidden" id="user_post_office" value="{{ user_post_office }}">
+        <form action="" method="POST" role="form" enctype='multipart/form-data' class='checkout-form' action_url="{% url 'products:checkout' product.id %}">{% csrf_token %}
+
+      
+          <p class="col-12 text-center heading pb-4" style="">Безопасная покупка</p>
+
+          <div class='col p-0 pt-5 mx-auto'>
+            {% include 'products/snippets/card-checkout.html' with instance=product %}
+          </div>
 
 
-<input type="hidden" id="user_post_office" value="{{ user_post_office }}">
-<form action="" method="POST" role="form" enctype='multipart/form-data' class='checkout-form hidden ' action_url="{% url 'products:checkout' product.id %}">
-  {% csrf_token %}
-  <div class='container checkout-container'>
-    <div class="row">
-      {% if request.user.region.region_code == 'ua' %}
-        <p class="col-12 text-center heading pb-4" style="">Безопасная покупка</p>
-        <div class='col-xs-12  text-center col-md-2 col-lg-3  p-0 mx-auto'>
-          {% include 'products/snippets/card-checkout.html' with instance=product %}
-        </div>
-        <div class="col-xs-12 col-md-8 labels-placement " style='min-height:150px'>
-          <div class="row address-info ">
-            <p class="col-12" style="">Адрес получателя:</p>
-            <div class="col-xs-12 col-md-12 ">
-            <div class="row">
-              <div class="col-12" style="padding-bottom: .75rem">
-                <span class=''> {{form.address_form.post_office}} </span>
-                  {% if form.address_form.post_office.errors %}
-                      {% for error in form.address_form.post_office.errors %}
-                        <div class='post-office-errors'>{{ error|escape }}</div>
-                      {% endfor %}
-                  {% endif %}
-              </div>  
+          <div class="col pt-5 buyer-protection" style="padding-bottom: 1rem; padding-top: 1rem;">
+            <div class='row' style='padding-bottom: 2rem!important'>
+            <div class='col-3 col-md-2 icons-buyer-protection' style='    '>
+              <div class=''>
+                <img data-src="{% static 'icons/authentic2.png' %}" class="double-shield">
+              </div>
             </div>
+            <div class='col-9 col-md-9  p-0'>
+              <div>
+                <strong>100% защита покупателя</strong></div>
+                <div>Каждая транзакция на SALT защищена</div>
+              </div>
             </div>
-            <div class="col-xs-12 col-md-12  ">
-            <div class="row">
-              <div class="col-12">
-                {{form.address_form.name|as_crispy_field}}
-              </div>   
+            <div class='row' style='padding-bottom: 2rem!important'>
+              <div class='col-3 col-md-2 icons-buyer-protection' style=''>
+                <div class=''>
+                  <img data-src="{% static 'icons/novaposhta.png' %}" class="novaposhta">
+                </div>
+              </div>
+              <div class='col-9 col-md-9 p-0'>
+                <div><strong>Доставка и проверка в отделении Новой Почты</strong></div>
+                <div>Возврат средств если товар не подошел или не пришел</div>
+              </div>
             </div>
-            </div>
-            <div class="col-xs-12 col-md-12  ">
-            <div class="row">
-              <div class="col-12">
-                {{form.address_form.phone|as_crispy_field}}
-              </div>   
-            </div>
+            <div class='row pb-0'>
+              <div class='col-3 col-md-2 icons-buyer-protection' style=''>
+                <div class=''>
+                  <img data-src="{% static 'icons/authentic.png' %}" class="authentic">
+                </div>
+              </div>
+              <div class='col-9 col-md-9 p-0'>
+                <div><strong>Только оригинальные айтемы</strong></div>
+                <div>Каждый айтем на SALT проверяется на подлинность</div>
+              </div>
             </div>
           </div>
-        </div>
-      {% else %}
-          <p class="col-12 text-center heading" style="border-top: 1px solid gray; padding-top: 1rem;">Адрес получателя</p>
 
-          <div class="col-12 labels-placement" style="padding-bottom: 1rem;">
-            <div class="row">
 
-              <div class="col-xs-12 col-md-6">
+          <div class="col pt-5" style='min-height:150px'>
+              <div class="row address-info hidden">
+                <p class="col-12" style="">Адрес получателя:</p>
+                <div class="col-xs-12 col-md-12 ">
                 <div class="row">
-
+                  <div class="col-12 labels-placement" style="padding-bottom: .75rem">
+                    <span class=''> {{form.address_form.post_office}} </span>
+                      {% if form.address_form.post_office.errors %}
+                          {% for error in form.address_form.post_office.errors %}
+                            <div class='post-office-errors'>{{ error|escape }}</div>
+                          {% endfor %}
+                      {% endif %}
+                  </div>  
+                </div>
+                </div>
+                <div class="col-xs-12 col-md-12  ">
+                <div class="row">
                   <div class="col-12">
                     {{form.address_form.name|as_crispy_field}}
-                  </div>        
-                
-                  <div class="col-8">
-                    {{form.address_form.street|as_crispy_field}} 
-                  </div>       
-               
-                  <div class="col-4">
-                    {{form.address_form.number|as_crispy_field}}
-                  </div>
-
+                  </div>   
+                </div>
+                </div>
+                <div class="col-xs-12 col-md-12  ">
+                <div class="row">
+                  <div class="col-12">
+                    {{form.address_form.phone|as_crispy_field}}
+                  </div>   
+                </div>
                 </div>
               </div>
+          </div>
 
-              <div class="col-xs-12 col-md-6">
-                <div class="row">
 
-                  <div class="col-12">
-                    {{form.address_form.additional_line|as_crispy_field}}
-                  </div>        
-                
-                  <div class="col-8">
-                    {{form.address_form.city|as_crispy_field}} 
-                  </div>       
-               
-                  <div class="col-4">
-                    {{form.address_form.postal_code|as_crispy_field}}
-                  </div>
+          <div class="col pt-5" style="padding-bottom: 1rem; padding-top: 1rem;">
+            <div class='row' style='color: #737373;border-bottom: 1px dashed #e1e1e1;padding-bottom: 0.75em;font-size: 0.9em;'>
+              <div class="col-12 space-between">
 
-                </div>
+                <span>{% trans 'Price:' %}</span>
+                <span>{{ product.price_original }} {{ product.currency_original }}</span>
               </div>
+              <div class="col-12 space-between">
+                <span>Shipping price:</span>
+                <span>{{ product.national_shipping|format_decimal }} {{ product.currency_original }}</span>
 
-              <div class="col-xs-12 col-md-6">
-                <div class="row">
-
-                  <div class="col-12">
-                    {{form.address_form.country|as_crispy_field}}
-                  </div>  
-
-                </div>
-              </div>  
-
-
-                
-              <div class="col-xs-12 col-md-6">
-                <div class="row">
-
-                  <div class="col-12">
-                    {{form.address_form.state|as_crispy_field}}
-                  </div>  
-                  
-                </div>
-              </div> 
-
-              <div class="col-xs-12 col-md-6">
-                <div class="row">
-
-                  <div class="col-12">
-                    {{form.address_form.post_office|as_crispy_field}}
-                  </div>  
-                  
-                </div>
-              </div> 
-
+              </div>
             </div>
+            <div class='row' style='padding-top: 0.5em; font-weight: 600;'>
+                <div class="col-12 space-between">
+
+                  <span>{% trans 'To pay:' %}</span>
+                  <span>{{ product.make_total|format_decimal }} {{ product.currency_original }}</span>
+                </div>
+            </div>  
+            <div class='row'>
+              <div class="col-12 text-center" style=''>
+                <button type="submit" class="mt-3 btn button-black hover-button large-button btn-block checkout-btn" style='width:100%;'>{{ buy_btn }}</button>
+              </div>
+              <div class="col-12 text-center" style='padding-top: 1rem'>
+                <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/liqpay.svg' %}" class="liqpay"></div>
+                <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/privat2.svg' %}" class="privat"></div>
+                <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/visa2.png' %}" class="visa"></div>
+                <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/mastercard.svg' %}" class="mastercard"></div>
+              </div>
           </div>
-      {% endif %}
-      <div class="col-xs-12 col-md-6 pt-3 buyer-protection " style="padding-bottom: 1rem; padding-top: 1rem; border-top: 1px solid gray">
-        <div class='row' style='padding-bottom: 2rem!important'>
-        <div class='col-3 col-md-2 icons-buyer-protection' style='    '>
-          <div class=''>
-            <img data-src="{% static 'icons/authentic2.png' %}" class="double-shield">
-          </div>
-        </div>
-        <div class='col-9 col-md-9  p-0'>
-          <div>
-            <strong>100% защита покупателя</strong></div>
-            <div>Каждая транзакция на SALT защищена</div>
-          </div>
-        </div>
-        <div class='row' style='padding-bottom: 2rem!important'>
-          <div class='col-3 col-md-2 icons-buyer-protection' style=''>
-            <div class=''>
-              <img data-src="{% static 'icons/novaposhta.png' %}" class="novaposhta">
-            </div>
-          </div>
-          <div class='col-9 col-md-9 p-0'>
-            <div><strong>Доставка и проверка в отделении Новой Почты</strong></div>
-            <div>Возврат средств если товар не подошел или не пришел</div>
-          </div>
-        </div>
-        <div class='row pb-0'>
-          <div class='col-3 col-md-2 icons-buyer-protection' style=''>
-            <div class=''>
-              <img data-src="{% static 'icons/authentic.png' %}" class="authentic">
-            </div>
-          </div>
-          <div class='col-9 col-md-9 p-0'>
-            <div><strong>Только оригинальные айтемы</strong></div>
-            <div>Каждый айтем на SALT проверяется на подлинность</div>
-          </div>
-        </div>
+
+
+        </form>
       </div>
-      <div class="col-xs-12 col-md-6 pt-3 " style="padding-bottom: 1rem; padding-top: 1rem; border-top: 1px solid gray">
-        <div class='row' style='color: #737373;border-bottom: 1px dashed #e1e1e1;padding-bottom: 0.75em;font-size: 0.9em;'>
-          <div class="col-12 space-between">
+      {% include 'mobile/footer.html' %}
+    </div>
+    <script>
 
-            <span>{% trans 'Price:' %}</span>
-            <span>{{ product.price_original }} {{ product.currency_original }}</span>
-          </div>
-          <div class="col-12 space-between">
-            <span>{% trans 'Shipping price:' %}</span>
-            <span>{{ product.national_shipping|format_decimal }} {{ product.currency_original }}</span>
+      $(document).ready(
+        function(){
 
-          </div>
-        </div>
-        <div class='row' style='padding-top: 0.5em; font-weight: 600;'>
-            <div class="col-12 space-between">
-
-              <span>{% trans 'To pay:' %}</span>
-              <span>{{ product.make_total|format_decimal }} {{ product.currency_original }}</span>
-            </div>
-        </div>  
-        <div class='row'>
-          <div class="col-12 text-center" style=''>
-            <button type="submit" class="mt-3 btn button-black hover-button large-button btn-block checkout-btn" style='width:100%;'>{{ buy_btn }}</button>
-          </div>
-          <div class="col-12 text-center" style='padding-top: 1rem'>
-            <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/liqpay.svg' %}" class="liqpay"></div>
-            <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/privat2.svg' %}" class="privat"></div>
-            <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/visa2.png' %}" class="visa"></div>
-            <div class='payment-icon p-0 p-xl-3'><img data-src="{% static 'icons/mastercard.svg' %}" class="mastercard"></div>
-          </div>
-      </div>
-  </div>
-</form>
+      // nice fadout effect
+      $(".address-info").removeClass("hidden");
+      $(".address-info").fadeTo(200, 0);
+      $(".address-info").fadeTo(2000, 100);
 
 
+      // selectize 
+      sel = $('#id_address_form-post_office').selectize({
+        create: false,
+        persist: false,
+        maxOptions: 400,
 
-<script>
+      });
 
-$(document).ready(
-  function(){
-
-
-// nice fadout effect
-$(".checkout-form").removeClass("hidden");
-$(".checkout-form").fadeTo(200, 0);
-$(".checkout-form").fadeTo(2000, 100);
-
-
-// selectize 
-
-sel = $('#id_address_form-post_office').selectize({
-  create: false,
-  persist: false,
-  maxOptions: 400,
-
-});
-
-user_post_office = $('#user_post_office').val()
-if (user_post_office){
-  sel[0].selectize.setValue(user_post_office)
-}
+      user_post_office = $('#user_post_office').val()
+      if (user_post_office){
+        sel[0].selectize.setValue(user_post_office)
+      }
 
 
-$('.selectize-input input').focus(function(){
-  sel[0].selectize.clear()
-})
+      $('.selectize-input input').focus(function(){
+        sel[0].selectize.clear()
+      })
 
-
-
-})
-
-
-// Trying to disable one of the options
-
-  // $("#delete").attr("hidden",true);
-
-  // console.log($('option:contains("Обери відділення Нової Пошти")').attr('hidden', 'true'))
-  // // sel[0].selectize.removeOption('Обери відділення Нової Пошти');
-  // // sel[0].selectize.updateOption('Обери відділення Нової Пошти', {disable: false});
-  // // sel1[0].selectize.removeOption('Обери відділення Нової Пошти');
-  // // sel1[0].selectize.refreshOptions();
-
-  // // $('.selectize-dropdown').click(() => {
-  // //   sel[0].selectize.removeOption('Обери відділення Нової Пошти');
-  // // });
-
-  // // options = $('#id_address_form-post_office')[0].selectize.options;
-  // // // console.log(Object.keys(options)[0])
-  // def = $(".option:contains('Обери відділення Нової Пошти')")
-  // console.log(def.attr("hidden",true))
-  // console.log(def.attr("disabled",true))
-
-  // // // $.each(options, function(key, value) {
-  // // //       console.log(key)
-  // // // });
-
-  // // sel[0].selectize.updateOption('Обери відділення Нової Пошти', {name: 'Обери відділення Нової Пошти', disable: true});
-
-// Мусор аджаксовский
-
-
-  //var checkoutForm = $('.checkout-form')
-  //var urlCheckout = checkoutForm.attr("action_url")
-  //var sss = $.ajax({
-  //url: urlCheckout,
-  // method:'GET',
-  // global: false,
-    // async:false,
-    // success: function(data){
-    //   tags = data;
-    //   console.log(tags)
-    //   return tags
-    // },//success
-    // error: function(errorData){
-    // console.log('hmmm');
-    // }//error
-    // }).responseText//ajax
-  //console.log(sss)
-
-  // var checkoutForm = $('.checkout-form')
-  // var urlCheckout = checkoutForm.attr("action_url")
-  // $.ajax({
-  //     url: urlCheckout,
-  //     method:'GET',
-  //     success: function(data){
-  //       offices = data.post_offices;
-
-  //       data_structured = []
-  //       $.each( offices, function( key, val ) {
-  //         data_structured.push({
-  //           title:   val,
-  //           id: key
-  //         });
-  //       });
-  //       console.log(data_structured)
-
-
-
-  //       $('#id_address_form-city').selectize()[0].selectize.destroy();
-  //       $('#id_address_form-city').selectize({
-  //           valueField: 'id',
-  //           labelField: 'title',
-  //           maxOptions: 400,
-  //           searchField: 'title',
-  //           options: data_structured,
-  //           create: false
-  //       });
-
-
-  //     },//success
-  //     error: function(errorData){
-  //     console.log('hmmm', errorData);
-  //     }//error
-  //     })//ajax
+      })
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-150733918-1');
+    </script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/selectize.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+</body>
+</html>
 
 
 
 
-  // var checkoutForm = $('.checkout-form')
-  // var urlCheckout = checkoutForm.attr("action_url")
-  // $.ajax({
-  //     url: urlCheckout,
-  //     method:'GET',
-  //     success: function(data){
-  //       offices = data.post_offices;
 
-  //       data_structured = []
-  //       $.each( offices, function( key, val ) {
-  //         data_structured.push({
-  //           title:   val,
-  //           id: key
-  //         });
-  //       });
-  //       console.log(data_structured)
-
-
-
-  //       $('#id_address_form-city').selectize()[0].selectize.destroy();
-  //       $('#id_address_form-city').selectize({
-  //           valueField: 'id',
-  //           labelField: 'title',
-  //           maxOptions: 400,
-  //           searchField: 'title',
-  //           options: data_structured,
-  //           create: false
-  //       });
-
-
-  //     },//success
-  //     error: function(errorData){
-  //     console.log('hmmm', errorData);
-  //     }//error
-  //     })//ajax
-
-
-
-
-  // })
-
-
-</script>
-
-{% endblock %}
 
 
 

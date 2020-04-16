@@ -1,29 +1,33 @@
 /*BUTTONS */
 
-.middle-btn-mob {
-	font-size: 12px;
-	padding: 6px 12px;
-	text-transform: uppercase;
-	display: inline-block;
-	font-family: 'Montserrat', 'Istok Web', sans-serif !important;
-}
+	.middle-btn-mob {
+		font-size: 12px;
+		padding: 6px 12px;
+		text-transform: uppercase;
+		display: inline-block;
+		font-family: 'Montserrat', 'Istok Web', sans-serif !important;
+	}
 
-.tiny-btn-mob {
-	font-size: 9px;
-	padding: 5px 5px;
-	font-weight: 500;
-	text-transform: uppercase;
-	display: inline-block;
-	font-family: 'Montserrat', 'Istok Web', sans-serif !important;
-	height: 2.5rem;
-}
+	.tiny-btn-mob {
+		font-size: 9px !important;
+		padding: 5px 5px !important;
+		font-weight: 500 !important;
+		text-transform: uppercase !important;
+		display: inline-block !important;
+		font-family: 'Montserrat', 'Istok Web', sans-serif !important;
+		height: 2.5rem !important;
+	}
 
-.small-ellipsis {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-	font-size: 12px;
-}
+	.btn-confirm-small{
+		width: 50%;
+	}
+
+	.small-ellipsis {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		font-size: 12px;
+	}
 
 	/* button no hover effects for mobile */
 
@@ -35,10 +39,11 @@
 	    cursor: pointer;
 	    display: inline-block;
 	    font-family: 'Montserrat', 'Istok Web', sans-serif !important;
-	    font-size: 14px;
-	    padding: 10px 10px;
+	    font-size: 14px !important;
+	    padding: 10px 10px !important;
 	    background-size: 2500px;
 	    transition: none;
+	    font-weight: normal !important;
 	  }
 
 	  .hover-button {
@@ -547,15 +552,10 @@
 	    min-height: 250px;
 	    object-fit: contain;
 	    align-items: center;
-/*	    padding-left:10px;
-	    padding-right:10px;*/
 	    cursor: pointer;
 	    display: inline-block;
 	    position: relative;
 	    margin-top: 1rem !important;
-	/*    margin-bottom: 10px;*/
-	/*    margin-left: 10px;*/
-	/*    max-width: 275px;*/
 	}
 
 	.card-text{
@@ -622,6 +622,12 @@
 	}		
 
 /*MAIN (navbar+footer etc)*/
+
+
+	.main-wrapper{
+		margin-bottom: 2.3rem; margin-top: 1.7rem;
+	}
+
 
 	.error
 	.hidden
@@ -1006,11 +1012,13 @@
 	}*/
 	.badge-status {
 	  position  : absolute;
-	  right     : 5%;
+	  right     : 6%;
 	  z-index   : 1;
 	  font-size : 11px !important;
 	  border    : 1px solid white;
+	  border-radius: 5px !important;
 	}
+
 	.one-line{
 	  display       : inline-block;
 	  overflow      : hidden;

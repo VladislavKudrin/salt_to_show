@@ -45,7 +45,7 @@
                 </div>
 
 
-      {% elif instance.authentic == 'fake' %}
+{% elif instance.authentic == 'fake' %}
         {% if instance.thumbnail %}
   {% with instance.thumbnail.all|first as thumbnail %}
       <div class='wish-div my-auto ' style='justify-content: flex-start; display: flex;'>
@@ -79,7 +79,7 @@
 
 
 
-      {% else %}
+{% else %}
         {% if instance.thumbnail %}
   {% with instance.thumbnail.all|first as thumbnail %}
   

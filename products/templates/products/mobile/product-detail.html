@@ -92,6 +92,16 @@
 		.ribbon-gallery{
 			min-height: 240px;
 		}
+
+		.jconfirm-buttons{
+			float: none !important;
+		}
+
+		.jconfirm-title-c, .jconfirm-content-pane{
+			display: flex !important;
+			justify-content: center !important;
+		}
+
 	</style>
 </head>
 <body>
@@ -261,10 +271,19 @@
 		    $(".share-to-hide").toggle();
 		  });
 		});
-
-
 	</script>
-
+   	{% verbatim %}
+	<script id='delete-product-confirm-form' type='text/x-jsrender'>
+		<form class='delete-product-confirm-form' method='POST' action='{{:action_url}}' data-endpoint='{{:data_endpoint}}' next_url='{{:next_url}}' class="form">
+		 <div class="form-group">
+		  <input type="text" placeholder="{{:placeholder_text}}" class=" form-control" required />
+		  <input type='hidden' class='title' name='product_title' value='{{:product_title}}' />
+		  <input type='hidden' name='product_id' value='{{:product_id}}' />
+		  <input type='hidden' name='user_product' value='{{:user}}' />
+		</div>
+		</form>	
+		</script>
+	{% endverbatim %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

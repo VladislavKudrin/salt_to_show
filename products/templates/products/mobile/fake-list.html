@@ -1,78 +1,68 @@
-{% extends "base.html" %}
-{% load for_loop_extras %}
+{% load static %}
 {% load pagination_tags %}
-{% load i18n %}
-{% block content %}
+{% load i18n %}	
+{% load compress %}
 
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
-
-
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | Wishlist </title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  {% compress css %}
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
+ </style>
 </head>
+<body>
+	{% include 'mobile/navbar.html' %}
+	<div class='container-fluid main-wrapper'> 
 
-
-
-<div class="container">
-
-	<div hidden class='col-5 col-md-2 custom-box' id='slider' style="background-color: rgb(255,255,255); overflow: scroll; ">
-	  		{% include "base/sidebar.html" %}
-	</div> 
-
-	<div class='row'>
-		<div class='col-12'>
-			<p class="heading" >{{ title }}</p>
+		<div class='row'>
+			<div class='col-12'>
+				<p class="heading" id="products-by-user" >{{ title }}</p>
+			</div>
 		</div>
+
+		{% if object_list|length > 0 %}
+		{% autopaginate object_list %}
+			{% include 'products/snippets/mobile/card-fake.html' with object_list=object_list %}
+			<div class = "row pagination justify-content-center">
+				<div class = "col-auto">
+				{% paginate using "base/pagination_custom.html" %}
+				</div>
+			</div>
+		{% else %}
+			<div class='col mx-auto'>
+				<div class="heading text-center" style='color:#aeacac;'>{% trans 'No items yet' %}</div>
+			</div>
+		{% endif %}
+		{% include 'mobile/footer.html' %}
 	</div>
 
-<div class='row'>
-	{% autopaginate object_list %}
-	{% if object_list|length > 0 %}
-
-	{% for obj in object_list %}
-		<div class='col-xs-12 card-full text-center  col-sm-6  col-md-6 col-lg-3  position-relativ p-0'>
-
-			{% include 'products/snippets/card-fake.html' with instance=obj %}
-
-			{% if forloop.counter|divisibleby:4 %}
-				</div>
-				</div>
-				<div class='row'>
-				<div class='col-12'>
-				</div>
-			{% else %}
-				</div>
-			{% endif %}
-
-	{% endfor %}
-</div>
-</div>
-
-<div class = "row pagination justify-content-center">
-	<div class = "col-auto">
-		{% paginate using "base/pagination_custom.html" %}
-	</div>
-</div>
-
-
-{% else %}
-
-<div class='col mx-auto'>
-	<div class="heading text-center" style='color:#aeacac;'>{% trans 'No items yet' %}</div>
-</div>
-
-
-	{% endif %}
-
-</div>
-
-
-
-
-<script type="text/javascript">
-
-</script>
-
-{% endblock %}
-
+ <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-150733918-1');
+    </script>
+	{% compress js file base %}	
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
+</body>
+</html>
 

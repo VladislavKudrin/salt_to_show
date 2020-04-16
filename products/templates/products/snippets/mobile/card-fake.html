@@ -1,0 +1,60 @@
+{% load static %}
+{% load to_user_currency %}
+{% load i18n %}
+
+<style type="text/css">
+  
+  .card-list-img {
+    min-width: 162px;
+    max-height: 162px;
+    min-height: 162px;
+    max-width: 162px;
+    object-fit: contain;
+    align-items: center;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 5px !important;
+  }
+
+  .card-list-info {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 0.5em 1.5em;  /*OR 1 em to be even*/
+  }  
+
+  .product-col{
+    padding: 0.5rem 0;
+  }
+
+  .badge-secondary {
+    background-color: #808080a8 !important;
+  }
+
+  /*   for iphone 5/5SE*/
+  @media screen and (device-aspect-ratio: 40/71) {
+  .card-list-img {
+    min-width: 150px;
+    max-height: 150px;
+    min-height: 150px;
+    max-width: 150px;
+    }
+  }
+
+</style>
+
+
+<div class="row text-center">
+  {% for obj in object_list %}
+    <div class='col-6 product-col'>
+        {% if obj.thumbnail %}{% with obj.thumbnail.all|first as thumbnail %}
+          <span class="badge badge-pill badge-danger badge-status my-auto">{% trans 'Fake' %}</span>
+          <img class="card-list-img" data-src="{{ thumbnail.thumbnail.url }}"  alt="..." onerror=this.src="{% static 'img/Oops.png' %}">
+        {% endwith %}{% endif %}
+        <div class='row m-0 card-list-info'>
+          <div class='col-9 p-0 one-line text-left' style='padding-right: .5rem !important'>{{ obj.brand }}</div>
+            <div class='col-3 p-0 one-line text-right' style=''>{{ obj.size.size }}</div>
+            <div class='col-6 p-0 one-line text-left' style=''>{{ obj.price|to_user_currency:request }}</div>
+        </div>
+    </div>
+  {% endfor %}
+</div>

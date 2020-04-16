@@ -55,6 +55,7 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 	def search(self,query):
 		lookups=(Q(title__icontains=query)
 				|Q(description__icontains=query)
+				|Q(brand__brand_name__icontains=query)
 				)
 		return self.filter(lookups).distinct()
 

@@ -258,8 +258,6 @@ class MessagesNotifications(CronJobBase):
 			else: 
 				print('Was not sent')
 
-
-
 class NovaPoshtaAPI(CronJobBase):
 	RUN_EVERY_MINS = 2880 # 60*24 every 48 hours 
 	# RUN_EVERY_MINS = 2 # for testing

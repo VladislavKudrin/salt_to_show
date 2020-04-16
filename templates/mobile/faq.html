@@ -1,84 +1,94 @@
-{% extends "base.html" %}
-{% load i18n %}
 {% load static %}
-{% block content %}
+{% load i18n %} 
+{% load crispy_forms_tags %}
+{% load compress %}
 
+<!DOCTYPE html>
+<html>
 <head>
-<style type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | Terms </title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  {% compress css %}
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
+		.list-group-item.active {
+		    z-index: 2;
+		    color: #fff !important;
+		    background-color: black;
+		    border-color: black;
+		}
 
-/*body {
-  position: relative !important;;
-}*/
-
-.list-group-item.active {
-    z-index: 2;
-    color: #fff !important;
-    background-color: black;
-    border-color: black;
-}
-
-.list-group-item {
-    position: relative;
-    display: block;
-    padding: 1rem 1.25rem;
-    margin-bottom: -1px;
-    border: none;
-    color: black;
-}
+		.list-group-item {
+		    position: relative;
+		    display: block;
+		    padding: 1rem 1.25rem;
+		    margin-bottom: -1px;
+		    border: none;
+		    color: black;
+		}
 
 
-.list-group-item-action:hover {
-color:black;
-}
+		.list-group-item-action:hover {
+		color:black;
+		}
 
-.faq-side {
-	padding-left: 3rem;
-}
+		.faq-side {
+			padding-left: 3rem;
+		}
 
-/*For mobile */
-@media only screen and (max-width: 767px) {
-	.faq-side {
-		visibility: hidden;
-		display: none;
-	}
+		/*For mobile */
+		@media only screen and (max-width: 767px) {
+			.faq-side {
+				visibility: hidden;
+				display: none;
+			}
 
-	.faq-text {
-		padding-left: 2rem !important;
-		padding-right: 2rem !important;
-	}
+			.faq-text {
+				padding-left: 2rem !important;
+				padding-right: 2rem !important;
+			}
 
-	.faq-sub-heading {
-		padding-top: 3rem !important;
-	}
-}
+			.faq-sub-heading {
+				padding-top: 3rem !important;
+			}
+		}
 
-/*For tablets*/
-@media only screen and (min-width: 767px) and (max-width: 1025px) {
-	.faq-side {
-		padding-left: 0 !important;
-	}
+		/*For tablets*/
+		@media only screen and (min-width: 767px) and (max-width: 1025px) {
+			.faq-side {
+				padding-left: 0 !important;
+			}
 
-	.faq-sub-heading {
-		padding-top: 5rem !important;
-	}
-	.faq-text {
-		padding-left: 6.5rem !important;
-		padding-right: 2rem !important;
-	}
+			.faq-sub-heading {
+				padding-top: 5rem !important;
+			}
+			.faq-text {
+				padding-left: 6.5rem !important;
+				padding-right: 2rem !important;
+			}
 
-}
-p {
-  white-space: pre-wrap;
-/*  font-family: monospace;*/
-}
-
-</style>
+		}
+		p {
+		  white-space: pre-wrap;
+		/*  font-family: monospace;*/
+		}
+  </style>
 </head>
+<body>
+     {% include 'mobile/navbar.html' %}
+     <div class='container-fluid main-wrapper'>
 
 
 
 <div class="container-fluid">
-<div class='row'>
+<div class='row' style='overflow-wrap: break-word;'>
 
 
 <div class='col-2 pl-5 faq-side'> 
@@ -173,22 +183,41 @@ p {
 </div>
 
 
-<script type="text/javascript">
+
+    {% include 'mobile/footer.html' %}
+  	</div>
+	<script type="text/javascript">
 
 
-    // $('.list-group-item').click(function(event) {
-    //     event.preventDefault();
-    //     $($(this).attr('href'))[0].scrollIntoView();
-    //     scrollBy(0, -offset);
-    // });
+	// $('.list-group-item').click(function(event) {
+	//     event.preventDefault();
+	//     $($(this).attr('href'))[0].scrollIntoView();
+	//     scrollBy(0, -offset);
+	// });
 
-$('body').scrollspy({ target: '#list-example', offset: 82})
-
-
-
-
-</script>
+	$('body').scrollspy({ target: '#list-example', offset: 82})
 
 
 
-{% endblock %}
+
+	</script>
+ 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-150733918-1');
+    </script>
+    {% include 'base/js.html' %}
+    {% compress js file base %} 
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    {% endcompress %}
+    {% if request.user.is_authenticated %}
+    {% compress js file base %} 
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
+    {% endif %}
+</body>
+</html>
