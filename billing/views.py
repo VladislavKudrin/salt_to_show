@@ -53,7 +53,9 @@ def card_modal_update(request):
                 if card.is_valid_card():
                     return redirect('products:create')
             return stay_where_you_are(request)
-
+CURRENCY_ORIGINAL_TRANSFORMED = {
+    'грн':'UAH'
+} 
 
 class PayView(TemplateView):
     template_name = 'billing/pay.html'
@@ -70,7 +72,7 @@ class PayView(TemplateView):
             "action"                : "p2p",
             "version"               : "3",
             "amount"                : str(order.total),
-            "currency"              : order.product.currency_original,
+            "currency"              : CURRENCY_ORIGINAL_TRANSFORMED.get(order.product.currency_original),
             "description"           : address,
             "receiver_card"         : "5168742220852416",
             "language"              : translation.get_language(),

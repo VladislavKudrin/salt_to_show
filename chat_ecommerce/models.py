@@ -99,7 +99,7 @@ class ChatMessage(models.Model):
         return f'{self.message}'
 
 class Notification(models.Model):
-    user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = 'notification')
     message     = models.ForeignKey(ChatMessage, on_delete=models.CASCADE)
     read        = models.BooleanField(default=False)
     sent        = models.BooleanField(default=False)

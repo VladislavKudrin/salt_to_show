@@ -1,5 +1,6 @@
 {% load i18n %}
-
+{% load card_tags %}
+{% get_user_card as user_card %}
 <style type="text/css">
   .credit label{
   display:flex; 
@@ -85,12 +86,8 @@
                   <label>{% trans 'Name:' %}</label>
                   <div class=''>
                     <input type="text" name="holder" 
-                    {% if request.user.is_authenticated %}
-                      {% if request.user.billing_profile.card %}
-                          {% if request.user.billing_profile.default_card.holder %}
-                            value="{{ request.user.billing_profile.default_card.holder }}"
-                          {% endif %}
-                      {% endif %}
+                    {% if user_card is not None %}
+                      value="{{ user_card.number }}"
                     {% endif %}
                     >
                   </div>
@@ -98,12 +95,8 @@
                 <div class="col-12 ">
                   <label>{% trans 'Card number:' %}</label>
                     <input type="text" name="number" maxlength="16"
-                    {% if request.user.is_authenticated %}
-                      {% if request.user.billing_profile.card %}
-                          {% if request.user.billing_profile.default_card.number %}
-                            value="{{ request.user.billing_profile.default_card.number }}"
-                          {% endif %}
-                      {% endif %}
+                    {% if user_card is not None %}
+                      value="{{ user_card.holder }}"
                     {% endif %}
                     >
                 </div>

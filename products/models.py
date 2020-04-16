@@ -146,10 +146,10 @@ class ProductManager(models.Manager):
 				context['price_max'] = data_price[1]
 			except:
 				pass
-			if data_undercategory:
-				context['actual_undercategory_instances'] = Undercategory.objects.select_related('undercategory_for').filter(id__in=data_undercategory)
-			if data_size:
-				context['actual_size_instances'] = Size.objects.select_related('size_type').filter(id__in=data_size)
+			# if data_undercategory:
+			# 	context['actual_undercategory_instances'] = Undercategory.objects.select_related('undercategory_for').filter(id__in=data_undercategory)
+			# if data_size:
+			# 	context['actual_size_instances'] = Size.objects.select_related('size_type').filter(id__in=data_size)
 		if data_undercategory:
 			queryset = Product.objects.select_related('undercategory').filter(undercategory__id__in=data_undercategory)
 		elif data_gender:
@@ -293,18 +293,7 @@ def product_pre_save_reciever(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
-CURRENCY_CHOICES = {
-			"грн" : "UAH"	
-				}
-def product_post_save_reciever(sender, created, instance, *args, **kwargs):
-	if created: # to save original currency 
-		products = Product.objects.filter(id=instance.id)
-		user = instance.user
-		products.update(currency_original=CURRENCY_CHOICES.get(user.region.currency))
 
-
-
-post_save.connect(product_post_save_reciever, sender=Product)
 
 class ProductImage(models.Model):
 	product 		= models.ForeignKey(Product, default=None, related_name='images')

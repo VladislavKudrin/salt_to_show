@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-13 13:43+0000\n"
+"POT-Creation-Date: 2020-04-15 14:25+0000\n"
 "PO-Revision-Date: 2020-04-13 16:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -84,13 +84,13 @@ msgid "Profile Settings"
 msgstr "Налаштування профiлю"
 
 #: accounts/templates/accounts/desktop/profile.html:52
-#: accounts/templates/accounts/mobile/profile.html:113
+#: accounts/templates/accounts/mobile/profile.html:112
 msgid "Items:"
 msgstr "Айтеми:"
 
 #: accounts/templates/accounts/desktop/profile.html:89
 #: accounts/templates/accounts/desktop/wishlist.html:57
-#: accounts/templates/accounts/mobile/profile.html:143
+#: accounts/templates/accounts/mobile/profile.html:129
 #: accounts/templates/accounts/mobile/wishlist.html:57
 #: products/templates/products/desktop/fake-list.html:61
 #: products/templates/products/desktop/my-items-list.html:59
@@ -191,7 +191,7 @@ msgid "Change password"
 msgstr "Змінити пароль"
 
 #: accounts/views.py:321
-#: products/templates/products/snippets/not_valid_card_modal.html:117
+#: products/templates/products/snippets/not_valid_card_modal.html:110
 #: products/views.py:301 templates/registration/password_change_form.html:31
 msgid "Save"
 msgstr "Зберегти"
@@ -277,59 +277,59 @@ msgstr ""
 msgid "Select a brand"
 msgstr "Обери бренд"
 
-#: categories/views.py:98
+#: categories/views.py:99
 msgid "Hide Filters"
 msgstr "Сховати фільтри"
 
-#: categories/views.py:99
+#: categories/views.py:100
 msgid "Show Filters"
 msgstr "Показати фільтри"
 
-#: categories/views.py:100
+#: categories/views.py:101
 msgid "Sort by"
 msgstr "Сортувати по"
 
-#: categories/views.py:101
+#: categories/views.py:102
 msgid "New first"
 msgstr "Спочатку новi"
 
-#: categories/views.py:102
+#: categories/views.py:103
 msgid "Low price first"
 msgstr "Спочатку дешеві"
 
-#: categories/views.py:103
+#: categories/views.py:104
 msgid "High price first"
 msgstr "Спочатку дорогі"
 
-#: categories/views.py:104 products/forms.py:66
+#: categories/views.py:105 products/forms.py:66
 msgid "Gender"
 msgstr "Стать"
 
-#: categories/views.py:105
+#: categories/views.py:106
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:106 products/forms.py:67
+#: categories/views.py:107 products/forms.py:67
 msgid "Category"
 msgstr "Категорiя"
 
-#: categories/views.py:107
+#: categories/views.py:108
 msgid "All"
 msgstr "Усi"
 
-#: categories/views.py:108 products/forms.py:68
+#: categories/views.py:109 products/forms.py:68
 msgid "Size"
 msgstr "Рoзмiр"
 
-#: categories/views.py:109 products/forms.py:69
+#: categories/views.py:110 products/forms.py:69
 msgid "Condition"
 msgstr "Стан"
 
-#: categories/views.py:110 ecommerce/views.py:148 products/forms.py:29
+#: categories/views.py:111 ecommerce/views.py:148 products/forms.py:29
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:111
+#: categories/views.py:112
 msgid "Price"
 msgstr "Цiна"
 
@@ -905,7 +905,7 @@ msgstr "Оцініть замовлення:"
 
 #: orders/templates/orders/snippets/mobile/order_feedback.html:46
 #: orders/templates/orders/snippets/order_feedback.html:46
-#: products/templates/products/snippets/not_valid_card_modal.html:116
+#: products/templates/products/snippets/not_valid_card_modal.html:109
 msgid "Close"
 msgstr "Закрити"
 
@@ -1120,6 +1120,13 @@ msgstr "Забагато фотографій, макс. кількість 8"
 msgid "Price:"
 msgstr "Цiна:"
 
+#: products/templates/products/desktop/checkout.html:197
+#: products/templates/products/mobile/checkout.html:197
+#, fuzzy
+#| msgid "Shipping price in "
+msgid "Shipping price:"
+msgstr "Введи ціну у "
+
 #: products/templates/products/desktop/checkout.html:205
 #: products/templates/products/mobile/checkout.html:205
 msgid "To pay:"
@@ -1196,7 +1203,7 @@ msgstr "Редагувати"
 msgid "Delete"
 msgstr "Видалити"
 
-#: products/templates/products/snippets/not_valid_card_modal.html:72
+#: products/templates/products/snippets/not_valid_card_modal.html:73
 msgid ""
 "Please add valid card before selling item. This is needed to transfer you "
 "money in case of successful transaction"
@@ -1204,11 +1211,11 @@ msgstr ""
 "Будь ласка, вкажи свої реквізити. Це необхідно для переказу коштів за "
 "проданий товар."
 
-#: products/templates/products/snippets/not_valid_card_modal.html:85
+#: products/templates/products/snippets/not_valid_card_modal.html:86
 msgid "Name:"
 msgstr "Ім’я та прізвище:"
 
-#: products/templates/products/snippets/not_valid_card_modal.html:99
+#: products/templates/products/snippets/not_valid_card_modal.html:96
 msgid "Card number:"
 msgstr "Номер картки:"
 

@@ -194,7 +194,7 @@
             <span>{{ product.price_original }} {{ product.currency_original }}</span>
           </div>
           <div class="col-12 space-between">
-            <span>Shipping price:</span>
+            <span>{% trans 'Shipping price:' %}</span>
             <span>{{ product.national_shipping|format_decimal }} {{ product.currency_original }}</span>
 
           </div>

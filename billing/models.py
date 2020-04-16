@@ -80,6 +80,7 @@ class BillingProfile(models.Model):
 			return default_cards.first()
 		return None
 
+
 	def count_feedbacks(self):
 		feedbacks = Feedback.objects.filter(to_user=self)
 		return feedbacks.count()
@@ -104,20 +105,11 @@ class BillingProfile(models.Model):
 
 
 
-def billing_profile_created_reciever(sender, instance, created, *args, **kwargs):
-	if created:
-		billing_profile = instance
-		card = Card.objects.new_or_get(billing_profile=billing_profile)
-	# if not instance.customer_id and instance.email:
-	# 	# print("API REQUEST")
-	# 	customer = stripe.Customer.create(email = instance.email)
-	# 	# print(customer)
-	# 	instance.customer_id = customer.id
-post_save.connect(billing_profile_created_reciever, sender=BillingProfile)
-
 def user_created_reciever(sender, instance, created, *args, **kwargs):
 	if created and instance.email:
-		BillingProfile.objects.get_or_create(user=instance, email=instance.email)
+		billing_profile = BillingProfile.objects.get_or_create(user=instance, email=instance.email)
+		card = Card.objects.new_or_get(billing_profile=billing_profile)
+
 post_save.connect(user_created_reciever, sender=User)
 
 

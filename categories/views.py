@@ -32,69 +32,70 @@ class CategoryFilterView(ListView):
 		items_per_page = 32
 		link_codiert = ''
 		link = self.kwargs.get('filter')
-		if link is not None:
-			linked_data = link_to_data(link)
-			queryset, context = Product.objects.get_categoried_queryset(request=request, linked_data=linked_data)
-			queryset=queryset.authentic().available()
-		else:
-			queryset = Product.objects.all().authentic().available().order_by('-timestamp')
-		paginator = Paginator(queryset, items_per_page) # Show 25 contacts per page
-		page = request.GET.get('page')
-		try:
-			queryset = paginator.page(page)
-		except PageNotAnInteger:
-			# If page is not an integer, deliver first page.
-			queryset = paginator.page(1)
-		except EmptyPage:
-				# If page is out of range (e.g. 9999), deliver last page of results.
-			queryset = paginator.page(paginator.num_pages)
+		# if link is not None:
+		# 	linked_data = link_to_data(link)
+		# 	queryset, context = Product.objects.get_categoried_queryset(request=request, linked_data=linked_data)
+		# 	queryset=queryset.authentic().available()
+		# else:
+		# 	queryset = Product.objects.all().authentic().available().order_by('-timestamp')
+		# paginator = Paginator(queryset, items_per_page) # Show 25 contacts per page
+		# page = request.GET.get('page')
+		# try:
+		# 	queryset = paginator.page(page)
+		# except PageNotAnInteger:
+		# 	# If page is not an integer, deliver first page.
+		# 	queryset = paginator.page(1)
+		# except EmptyPage:
+		# 		# If page is out of range (e.g. 9999), deliver last page of results.
+		# 	queryset = paginator.page(paginator.num_pages)
 		if request.is_ajax():
 			page_continue = True
 			context={}
 			if request.GET:
+				print('hallo')
 				#getting queryset and link as json
-				queryset, link_codiert = Product.objects.get_categoried_queryset(request=request)
-				queryset = queryset.authentic().available()
-				paginator = Paginator(queryset, items_per_page) 
-				page = request.GET.get('page')
-				try:
-					queryset = paginator.page(page)
-				except PageNotAnInteger:
-					# If page is not an integer, deliver first page.
-					queryset = paginator.page(1)
-				except EmptyPage:
-						# If page is out of range (e.g. 9999), deliver last page of results.
-					queryset = paginator.page(paginator.num_pages)
-				empty_price = all(minmax is '' for minmax in request.GET.getlist('price'))
-				if page:
-					if int(page) > paginator.num_pages:
-						page_continue = False				
-			context['object_list']=queryset
-			if request.user_agent.is_mobile:
-				html_ = get_template("products/snippets/mobile/card-product-list.html").render(request = request, context=context)
-			else: 
-				html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
-			json_data={
-			'html':html_,
-			'link':link_codiert,
-			'count_pages': page_continue
-			}
-			return JsonResponse(json_data)
-		fields_overcategory = Overcategory.objects.all()	
-		fields_gender = Gender.objects.all().select_related('gender_for')
-		fields_category = Category.objects.all().select_related('category_for')
-		fields_undercategory = Undercategory.objects.all().select_related('undercategory_for')
-		fields_size = Size.objects.all().select_related('size_type')
-		fields_condition = Condition.objects.all()
-		fields_brand = Brand.objects.all()
-		context['fields_category']=fields_category
-		context['fields_gender']=fields_gender
-		context['fields_overcategory']=fields_overcategory
-		context['fields_undercategory']=fields_undercategory
-		context['fields_size']=fields_size
-		context['fields_condition']=fields_condition  
-		context['fields_brand']=fields_brand
-		context['object_list']=queryset
+			# 	queryset, link_codiert = Product.objects.get_categoried_queryset(request=request)
+			# 	queryset = queryset.authentic().available()
+			# 	paginator = Paginator(queryset, items_per_page) 
+			# 	page = request.GET.get('page')
+			# 	try:
+			# 		queryset = paginator.page(page)
+			# 	except PageNotAnInteger:
+			# 		# If page is not an integer, deliver first page.
+			# 		queryset = paginator.page(1)
+			# 	except EmptyPage:
+			# 			# If page is out of range (e.g. 9999), deliver last page of results.
+			# 		queryset = paginator.page(paginator.num_pages)
+			# 	empty_price = all(minmax is '' for minmax in request.GET.getlist('price'))
+			# 	if page:
+			# 		if int(page) > paginator.num_pages:
+			# 			page_continue = False				
+			# context['object_list']=queryset
+			# if request.user_agent.is_mobile:
+			# 	html_ = get_template("products/snippets/mobile/card-product-list.html").render(request = request, context=context)
+			# else: 
+			# 	html_ = get_template("products/snippets/languages/product_lists_cont.html").render(request = request, context=context)
+			# json_data={
+			# 'html':html_,
+			# 'link':link_codiert,
+			# 'count_pages': page_continue
+			# }
+			# return JsonResponse(json_data)
+		# fields_overcategory = Overcategory.objects.all()	
+		# fields_gender = Gender.objects.all().select_related('gender_for')
+		# fields_category = Category.objects.all().select_related('category_for')
+		# fields_undercategory = Undercategory.objects.all().select_related('undercategory_for')
+		# fields_size = Size.objects.all().select_related('size_type')
+		# fields_condition = Condition.objects.all()
+		# fields_brand = Brand.objects.all()
+		# context['fields_category']=fields_category
+		# context['fields_gender']=fields_gender
+		# context['fields_overcategory']=fields_overcategory
+		# context['fields_undercategory']=fields_undercategory
+		# context['fields_size']=fields_size
+		# context['fields_condition']=fields_condition  
+		# context['fields_brand']=fields_brand
+		# context['object_list']=queryset
 		context['hide_filters'] = _('Hide Filters')
 		context['show_filters'] = _('Show Filters')
 		context['sort_by'] = _('Sort by')

@@ -13,6 +13,11 @@
 {% load i18n %}
 {% load notifications %}
 {% load static %}
+{% load card_tags %}
+{% load chat_tags %}
+
+{% count_user_notifications as notif_number %}
+{% get_user_card as user_card %}
 
 
 <style type="text/css">
@@ -262,11 +267,9 @@
 
         <li class="pl-1" style="display: inline;">
           <a id="" class="hover-button buy-sell ml-0" role="button" 
-          {% if request.user.is_authenticated %}
-            {% if not request.user.billing_profile.default_card.is_valid_card %} 
+            {% if not user_card.is_valid_card %} 
               data-toggle="modal" data-target="#add_card_modal" disabled="true"
             {% endif %}
-          {% endif %} 
           href="{{ products_create_url }}">Sell</a> 
         </li>
 
