@@ -1,356 +1,360 @@
-{% extends "base_no_footer.html" %}
-{% load static %}
 {% load msg_time %}
-{% load for_loop_extras %}
+{% load static %}
+{% load checked_time %}
+{% load to_user_currency %}
+{% load format_decimal %}
+{% load i18n %}
+{% load compress %}
 
-{% block content %}
-
+<!DOCTYPE html>
+<html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | Chat </title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  {% compress css %}
+  <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/selectize.default.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/themes-base-jquery-ui.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
+
+		.btn {
+			padding-left: 6px !important;
+		}
+
+	  .avatar-not-skipped {
+	  	margin: 0 auto;
+	  	width:40px;
+	  }
+	  .username-skip{
+	  	text-align: left!important;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	  }
+	  #dialog_list{
+	  	display: none
+	  }
+	  #input-row{
+	  	width: 100%!important;
+	  }
+	  .back-to-chatlist{
+	  	text-align: left!important;
+	  	display: inline-block!important;
+
+	  }
+	  .dialogs-username{
+	  	text-align: left!important
+	  }
+	  .arrow-select-chat{
+		display: inline-block!important
+	}
+
+	#websocket-form{
+		padding-top:0px;
+	}
+
+	body {
+	    padding-bottom: 0;
+	    margin-bottom:0;
+	}
+
+	html {
+		padding-bottom: 0;
+	    margin-bottom:0;
+	}
+
+	#dialogs{
+		width: 320px;
+		padding-right: 0px;
+	/*	overflow: scroll;*/
+		margin-bottom: 0;
+		position: relative;
+
+	    height:auto;
+	    overflow:auto;
+		max-height: calc(100vh - 130px); 
+
+	}
+
+	#dialog{
+		height:70px;
+	/*	display: flex;
+	    align-items: center;*/
+
+	}
+
+	#dialog:hover{
+		background-color: #f2f2f2;
+	}
+
+	#input-row{
+		background-color: #efefef;
+		height: 60px;
+	}
+
+	.fa-paper-plane{
+		color: #9da3a5;
+	}
+
+
+	#chat-message{
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	/*	text-align: left;*/
+	}
 
-<style type="text/css">
-
-/*html, body {margin: 0; height: 100%; overflow: hidden}*/
-
-
-
-@media only screen and (max-width: 768px) { 
-
-.btn {
-	padding-left: 6px !important;
-}
-
-
-
-  .avatar-not-skipped {
-  	margin: 0 auto;
-  	width:40px;
-  }
-  .username-skip{
-  	text-align: left!important;
-  }
-  #dialog_list{
-  	display: none
-  }
-  #input-row{
-  	width: 100%!important;
-  }
-  .back-to-chatlist{
-  	text-align: left!important;
-  	display: inline-block!important;
-
-  }
-  .dialogs-username{
-  	text-align: left!important
-  }
-  .arrow-select-chat{
-	display: inline-block!important
-}
-#chat-items{
-	height: 82%!important
-}
-}
-
-.my-custom-scrollbar {
-  position: absolute;
-  padding-right: 20px;
-  padding-left: 0px;
-  margin-bottom: 0px;
-}
-
-#websocket-form{
-	padding-top:0px;
-}
-
-
-/*#table-scroll .my-custom-scrollbar {
-  position: relative;
-  width: 250px;
-  height: 90%;
-  border: 0;  
-}*/
-
-#chat-items{
-	position: relative;
-/*	overflow:scroll;*/
-/*	max-height: 80%;
-	min-height: 100%;*/
-	margin-bottom: 0px;
-
-    height:auto;
-    overflow:auto;
-	max-height: calc(100vh - 190px); 
-
-}
-
-body {
-    /*overflow:hidden;*/
-    padding-bottom: 0;
-    margin-bottom:0;
-}
-
-html {
-	padding-bottom: 0;
-    margin-bottom:0;
-}
-
-#dialogs{
-/*	max-height: 80%;
-	min-height: 100%;*/
-/*    overflow: auto;*/
-	width: 320px;
-	padding-right: 0px;
-/*	overflow: scroll;*/
-	margin-bottom: 0;
-	position: relative;
-
-    height:auto;
-    overflow:auto;
-	max-height: calc(100vh - 130px); 
-
-}
+	button:focus {
+	 	outline:0 !important;
+	}
 
-#dialog{
-	height:70px;
-/*	display: flex;
-    align-items: center;*/
 
-}
+	*:focus {
+		outline:none !important;
+	}
 
-#dialog:hover{
-	background-color: #f2f2f2;
-}
+	.btn:focus {
+		outline:none !important;
+	}
+
+	.avatar-chat{
+		width:50px; 
+		height: 50px;
+	}
+
+	.avatar-small{
+		width:40px; 
+		height: 40px;
+
+	}
+
+	#dialog:hover{
+		background-color: #f2f2f2;
+	}
 
-#input-row{
-	background-color: #efefef;
-	height: 60px;
-}
+	#input-row{
+		background-color: #efefef;
+		height: 60px;
+	}
 
-.fa-paper-plane{
-	color: #9da3a5;
-}
+	.fa-paper-plane{
+		color: #9da3a5;
+	}
 
 
-#chat-message{
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-/*	text-align: left;*/
-}
-
-button:focus {
- 	outline:0 !important;
-}
-
-
-*:focus {
-	outline:none !important;
-}
-
-.btn:focus {
-	outline:none !important;
-}
-
-.avatar-chat{
-	width:50px; 
-	height: 50px;
-}
-
-.avatar-small{
-	width:40px; 
-	height: 40px;
-
-}
-
-#dialog:hover{
-	background-color: #f2f2f2;
-}
-
-#input-row{
-	background-color: #efefef;
-	height: 60px;
-}
-
-.fa-paper-plane{
-	color: #9da3a5;
-}
-
-
-#chat-message{
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-/*	text-align: left;*/
-}
-
-button:focus {
- 	outline:0 !important;
-}
-
-
-*:focus {
-	outline:none !important;
-}
-
-.btn:focus {
-	outline:none !important;
-}
-
-.avatar-chat{
-	width:50px; 
-	height: 50px;
-}
-
-.avatar-small{
-	width:40px; 
-	height: 40px;
-}
-
-
-.active {
-	background-color: #e9ebeb;
-}
-
-.row-dialog {
-	height: 70px;
-
-}
-
-.backgroundy{
-	background-color: black;
-}
-
-.blacky{
-	background-color: #f2f2f2;
-}
-
-.rounder-form{
-	border-bottom-left-radius: 25px !important;
-	border-top-left-radius: 25px !important;
-	border-top-right-radius: 25px !important;
-	border-bottom-right-radius: 25px !important;
-}
-
-.rounder-msg-cloud-right{
-	border-bottom-left-radius: 25px !important;
-	border-top-left-radius: 25px !important;
-	border-top-right-radius: 25px !important;
-	border-bottom-right-radius: 0px !important;
-}
-
-.rounder-msg-cloud-left{
-	border-bottom-left-radius: 0px !important;
-	border-top-left-radius: 25px !important;
-	border-top-right-radius: 25px !important;
-	border-bottom-right-radius: 25px !important;
-}
-
-.msg-cloud{
-	background-color: #f2f2f2;
-	display:inline-block; 
-	max-width:inherit; 
-	max-width: 75%;
-	line-height: 1;
-}
-
-.timestamp {
-	font-size: xx-small;
-}
-
-.dialogs-username {
-	overflow: hidden; 
-	white-space: nowrap; 
-	text-overflow: ellipsis;
-/*	border-bottom: 0.75px solid #e1e6e6;*/
-/*	box-shadow: 0px 1px 0px 0px #000;*/
-}
-
-
-
-.active {
-	background-color: #e9ebeb;
-}
-
-.row-dialog {
-	height: 70px;
-}
-
-.back-to-chatlist{
-	display: none
-}
-.row-avatar-arrow{
-	text-align: right!important;
-}
-.arrow-select-chat{
-	display: none
-}
-/*.chat-border:after{
-	content:'';
-	position: absolute;
-	width: 75%;
-	left:25%;
-	height:20%;
-	border-bottom: 0.75px solid #e1e6e6 !important;
-}*/
-.backgroundy{
-	background-color: black;
-}
-
-.blacky{
-	background-color: #f2f2f2;
-}
-
-.rounder-form{
-	border-bottom-left-radius: 25px !important;
-	border-top-left-radius: 25px !important;
-	border-top-right-radius: 25px !important;
-	border-bottom-right-radius: 25px !important;
-}
-
-.rounder-msg-cloud-right{
-	border-bottom-left-radius: 25px !important;
-	border-top-left-radius: 25px !important;
-	border-top-right-radius: 25px !important;
-	border-bottom-right-radius: 0px !important;
-}
-
-.rounder-msg-cloud-left{
-	border-bottom-left-radius: 0px !important;
-	border-top-left-radius: 25px !important;
-	border-top-right-radius: 25px !important;
-	border-bottom-right-radius: 25px !important;
-}
-
-.msg-cloud{
-	background-color: #f2f2f2;
-/*	display:inline-block; 
-	max-width:inherit; 
-	max-width: 75%;*/
-	display: inline-block;
-	max-width: 75%;
-	overflow-wrap: break-word;
-}
-
-.dot {
-  height: 8px;
-  width: 8px;
-  background-color: #cf6369;
-  border-radius: 50% !important;
-  display: inline-block;
-}
-
-.dot_blue {
-  height: 8px;
-  width: 8px;
-  background-color: blue;
-  border-radius: 50% !important;
-  display: inline-block;
-}
-
-</style>
+	#chat-message{
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	/*	text-align: left;*/
+	}
+
+	button:focus {
+	 	outline:0 !important;
+	}
+
+
+	*:focus {
+		outline:none !important;
+	}
+
+	.btn:focus {
+		outline:none !important;
+	}
+
+	.avatar-chat{
+		width:50px; 
+		height: 50px;
+	}
+
+	.avatar-small{
+		width:40px; 
+		height: 40px;
+	}
+
+
+	.active {
+		background-color: #e9ebeb;
+	}
+
+	.row-dialog {
+		height: 70px;
+
+	}
+
+	.backgroundy{
+		background-color: black;
+	}
+
+	.blacky{
+		background-color: #f2f2f2;
+	}
+
+	.rounder-form{
+		border-bottom-left-radius: 25px !important;
+		border-top-left-radius: 25px !important;
+		border-top-right-radius: 25px !important;
+		border-bottom-right-radius: 25px !important;
+	}
+
+	.rounder-msg-cloud-right{
+		border-bottom-left-radius: 25px !important;
+		border-top-left-radius: 25px !important;
+		border-top-right-radius: 25px !important;
+		border-bottom-right-radius: 0px !important;
+	}
+
+	.rounder-msg-cloud-left{
+		border-bottom-left-radius: 0px !important;
+		border-top-left-radius: 25px !important;
+		border-top-right-radius: 25px !important;
+		border-bottom-right-radius: 25px !important;
+	}
+
+	.msg-cloud{
+		background-color: #f2f2f2;
+		display:inline-block; 
+		max-width:inherit; 
+		max-width: 75%;
+		line-height: 1;
+	}
+
+	.timestamp {
+		font-size: xx-small;
+	}
+
+	.dialogs-username {
+		overflow: hidden; 
+		white-space: nowrap; 
+		text-overflow: ellipsis;
+	}
+
+
+
+	.active {
+		background-color: #e9ebeb;
+	}
+
+	.row-dialog {
+		height: 70px;
+	}
+
+	.back-to-chatlist{
+		display: none
+	}
+	.row-avatar-arrow{
+		text-align: right!important;
+	}
+	.arrow-select-chat{
+		display: none
+	}
+
+	.backgroundy{
+		background-color: black;
+	}
+
+	.blacky{
+		background-color: #f2f2f2;
+	}
+
+	.rounder-form{
+		border-bottom-left-radius: 25px !important;
+		border-top-left-radius: 25px !important;
+		border-top-right-radius: 25px !important;
+		border-bottom-right-radius: 25px !important;
+	}
+
+	.rounder-msg-cloud-right{
+		border-bottom-left-radius: 25px !important;
+		border-top-left-radius: 25px !important;
+		border-top-right-radius: 25px !important;
+		border-bottom-right-radius: 0px !important;
+	}
+
+	.rounder-msg-cloud-left{
+		border-bottom-left-radius: 0px !important;
+		border-top-left-radius: 25px !important;
+		border-top-right-radius: 25px !important;
+		border-bottom-right-radius: 25px !important;
+	}
+
+	.msg-cloud{
+		background-color: #f2f2f2;
+	/*	display:inline-block; 
+		max-width:inherit; 
+		max-width: 75%;*/
+		display: inline-block;
+		max-width: 75%;
+		overflow-wrap: break-word;
+	}
+
+	.dot {
+	  height: 8px;
+	  width: 8px;
+	  background-color: #cf6369;
+	  border-radius: 50% !important;
+	  display: inline-block;
+	}
+
+	.dot_blue {
+	  height: 8px;
+	  width: 8px;
+	  background-color: blue;
+	  border-radius: 50% !important;
+	  display: inline-block;
+	}
+
+	.today{
+		font-size: 10px; text-transform: uppercase; padding-right: 5px
+		}
+
+	.hr-today{
+		margin-bottom: 0.2rem; width: 82%;display: inline-block;
+	}
+
+
+	#chat-items{
+		padding-left: 15px;
+	  	padding-right: 15px;
+	  	padding-bottom: 23px;
+		position: relative;
+		margin-bottom: 0px;
+	    height:auto;
+	    overflow:auto;
+		max-height: calc(100vh - 25vh); 
+		min-height: calc(100vh - 25vh); 
+	}
+
+	/*	Large phones :*/
+	@media screen and (min-height: 668px) {
+		#chat-items{
+		max-height: calc(100vh - 20vh); 
+		min-height: calc(100vh - 20vh); 
+		padding-bottom: 30px;
+	}
+	}
+
+	/*	iPhone 5:*/
+	@media screen and (max-width: 370px) {
+		#chat-items{
+		max-height: calc(100vh - 29vh); 
+		min-height: calc(100vh - 29vh); 
+	}
+	}
+
+ </style>
 </head>
-
-<div class='container-fluid m-0 p-0'>
-
+<body>
+	{% include 'mobile/navbar.html' %}
+	<div class='container-fluid'> 
 	<div class='row'>
-		<div class='col-12 col-md-3' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
+		<div class='col-12' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
@@ -363,7 +367,7 @@ button:focus {
 				</div>
 			</div>
 			<div class='row alldialogs'>
-				<ul id='dialogs' class='my-custom-scrollbar' style="width: 100%">
+				<ul id='dialogs'  style="width: 100%">
 					{% for obj in chats %}
 						{% if request.user != obj.first %}
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
@@ -472,17 +476,11 @@ button:focus {
 				</ul>
 			</div>
 		</div>
-
-
-
-
-
-		<div class='col-12 col-md-9' id='chat_list_mobile'>
+		<div class='col-12' id='chat_list_mobile'>
 			<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
-
 				<div class='col text-center my-auto'>
 						{% if request.user != object.first %}
-<!-- THATS FOR THE FIRST USER IN THREAD -->
+								<!-- THATS FOR THE FIRST USER IN THREAD -->
 								<div class='row justify-content-center'>
 
 									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
@@ -531,7 +529,7 @@ button:focus {
 								</div>
 						
 						{% else %}
-<!-- THATS FOR THE SECOND USER -->
+						<!-- THATS FOR THE SECOND USER -->
 								<div class='row justify-content-center'>
 									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
 									<div class="row row-avatar-arrow">
@@ -582,14 +580,25 @@ button:focus {
 						{% endif %}
 					</div>
 				</div>
+			
+
+
+
+
+
 			<div class='row '>
-				<div class='col pr-0'>
-					<ul id='chat-items' class='my-custom-scrollbar' >
+				<div class='col p-0'>
+					<ul id='chat-items'  >
 							{% for msg in chat_messages_ordered %}
 								<li>
 									<div class='row'>
 									<div class="col {% if msg.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
 
+											<input type="hidden" name="first_message_today" value="{{ msg.is_today }}" readonly="true">
+											<div hidden>
+												<span class='today'>{% trans 'Today' %}</span>
+												<hr class='hr-today'>
+											</div>
 
 
 										{% if msg.user == request.user %}
@@ -602,6 +611,7 @@ button:focus {
 											</div>
 
 										{% else %}
+
 
 											<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>
 											{{ msg.message }}<br>
@@ -617,257 +627,73 @@ button:focus {
 
 								</li>
 							{% endfor %}
-						</ul>
-
+					</ul>
 				</div>
 			</div>
 
-					<div class='row'>
-						<form id='websocket-form' method='POST'> {% csrf_token %}
-							<div class='row' id='input-row' style='position: fixed;bottom: 0; width:77%; margin-left:0px;' >
-								<div class='col-10 col-md-11 my-auto pr-0'>
-									{{ form }}
-									</div>
-								<div class='col-2 col-md-1 my-auto pl-0' >
-									<button type='submit' class='btn'>
-									<i class="fas fa-paper-plane fa-2x"></i>
-									</button>
-								</div>
+			<div class='row'>
+				<form id='websocket-form' method='POST'>
+				 {% csrf_token %}
+					<div class='row' id='input-row' style='position: fixed;bottom: 0; width:77%; margin-left:0px;' >
+						<div class='col-10 col-md-11 my-auto pr-0'>
+							{{ form }}
 							</div>
-						</form>
+						<div class='col-2 col-md-1 my-auto pl-0' >
+							<button type='submit' class='btn'>
+							<i class="fas fa-paper-plane fa-2x"></i>
+							</button>
+						</div>
 					</div>
-
-
+				</form>
+			</div>
 		</div>
-
 	</div>
+	</div>
+	<script>
 
-</div>
-
-{% endblock %}
-
-
-
-
-
-
-
-
-
-{% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js">
-
-</script>
-<script>
-
-
-// adds to the current li class 'active' and it becomes gray
-$(document).ready(function ($) {
-
-		$.each($('.timestamp'), 
-            function(index, value){
-            myDate = new Date(($(value).html()));
-			var day = days[ myDate.getDay()];
-			var hour = (myDate.getHours()<10?'0':'') + myDate.getHours();
-			var min = (myDate.getMinutes()<10?'0':'') + myDate.getMinutes();
-			var date = day + ' '+ hour.toString() + ':' + min.toString()
-			$(this).html(date)
-            })//each-displayfilesupload
-		
-	window.scrollTo(0,document.body.scrollHeight);
-	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
-    var url = window.location.href;
-    var activePage = url;
-
-    $('#dialog a').each(function () {
-        var linkPage = this.href;
-        if (activePage == linkPage) {
-            $(this).closest("li").addClass("active");
-        }
-    });
-});
-
-//finds all ids containing in a class
-function storeid(){
-    var className = document.getElementsByClassName('obj_id_s');
-    var classnameCount = className.length;
-    var IdStore = new Array();
-    for(var j = 0; j < classnameCount; j++){
-        IdStore.push(className[j].id);
-    }
-    arr = IdStore.map(Number);
-    // console.log(arr)
-}
-
-
-var loc = window.location
-var formData = $("#websocket-form")
-var msgInput = $("#id_message")
-
-
-
-
-
-
-var wsStart = 'ws://'
-if (loc.protocol == 'https:'){
-	wsStart = 'wss://'
-}
-var endpoint = wsStart + loc.host + loc.pathname
-
-var socket = new ReconnectingWebSocket(endpoint)
-var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-
-
-socket.onmessage = function(e) {
-
-	// var dialogs = $('#dialogs')
-	// var size_dialogs = $('#dialogs li').length
-	// var dialogss = $('.obj_id_s')
-	// threads 
-	// threads_ids_with_unred = {}
-	var active = document.querySelector(".active .obj_id_s")
-	storeid();
-	// console.log(arr) // ids of all threads / array 
-	var chatDataMsg = JSON.parse(e.data)
-	var username = chatDataMsg.username
-	var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
-	found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append
-	if (typeof found !== 'undefined' && found.length > 0) {
-		for (var i = 0; i < found.length; i++) {
-	    matched_id = found[i] // find element by its id 
-	    unread_thread = document.getElementById(String(matched_id))
-		    if (unread_thread===active){
-		    	console.log('I am not marking active element, I am not stupid')
-		    }
-		    else if (unread_thread.classList.contains('dot') === true) {
-		    	console.log('I am not marking since it is already marked')
-		    }
-		    else{
-		    	console.log("Marking with  dot")
-		    	unread_thread.classList.add("dot");
-		    }
+		// Input autofocus
+		var messageForm = $("#id_message")
+		var currentPath = window.location.href
+		if (currentPath.indexOf("messages") != -1){
+			messageForm.focus();
 		}
-	}
-	else{
-		var active = document.querySelector(".active .obj_id_s")
-		Array.from(document.getElementsByClassName("dot")).forEach(
-		function(element, index, array) {
-		if (element === active){
-			// console.log('I am UNMARKIN active element, I am not stupid')
-			element.classList.remove("dot")
-    	}
-    }
-);
-	}
-	var now = new Date()
-	var day = days[ now.getDay()];
-	var hour = (now.getHours()<10?'0':'') + now.getHours();
-	var min = (now.getMinutes()<10?'0':'') + now.getMinutes();
-	var date = day + ' '+ hour.toString() + ':' + min.toString()
-	var opponent_username = chatDataMsg.opponent_username
-	var req = chatDataMsg.req
-	var chatHolder = $('#chat-items')
-	var opponent = document.getElementsByClassName("opponent")[0].id
-	if (opponent === opponent_username){
-
-		// console.log('pulling right')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><span class='timestamp'>" + date + "</span></div></div></div></li>");
-	// console.log(req)
-	}
-	else{
-		var chatHolder = $('#chat-items')
-		// console.log('pulling left')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><span class='timestamp'>" + date + "</span></div></div></div></li>")
-
-	}
-	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
-
-}
 
 
+		// Today separator 
+		inputs = $('input[name=first_message_today]')
+		jQuery.each(inputs, function(index, item) {
+			if (item.value=='True') {
+				var firstTodayInput = $(item)
+				var next = firstTodayInput.next()
+				next.attr("hidden",false);
+				return false;
+			}
+		});
 
-socket.onopen = function(e) {
-	console.log('Websocket Opened')
-	// var chatDataMsg = JSON.parse(e.data)
-	// var backend_data = JSON.parse(e.data)
-	// var req = backend_data.req
-	// console.log(req)
-
-
-	// var url = window.location.href;
-	// console.log(url)
-	// if url contains 
-	// storeid();
-	// console.log(arr) // ids of all threads / array 
-	// console.log('open', e)
-	// var chatDataMsg = JSON.parse(e.data)
-	// console.log(chatDataMsg)
-	// var username = chatDataMsg.username
-	// var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
-	// found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append some shit 
-	// console.log(found)
-	// for (var i = 0; i < found.length; i++) {
- //    // Iterate over numeric indexes from 0 to 5, as everyone expects.
- //    console.log(found[i]);
- //    unredik = found[i]
- //    // find element by its id 
- //    var unred = $(`#${unredik}`)
- //    console.log(unred)
- //    // // unred.append("<div class='col' style='background-color:blue'></div>");
- //    // unred.classList.add('.fa heart');
- //    document.getElementById("32").className="dot_blue";
- //    console.log(unred)
-
-	// }
-	
-
-	// document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
-	// console.log('open', e)
-	formData.submit(function(event){
-		event.preventDefault()
-		var msgText = msgInput.val()
-		var finalData = {
-			'message':msgText,
-			// 'current_url': url
-		}
-		//var formDataSerialized = formData.serialize()
-		socket.send(JSON.stringify(finalData))
-		formData[0].reset()
-	})//submit
-}//onopen
-
-socket.onerror = function(e) {
-	console.log('error', e)
-}//onerror
-
-socket.onclose = function(e) {
-	console.log('close', e)
-}//onclose
+		//go to the bottom 
+		var chat = document.getElementById('chat-items')
+		chat.scrollTop = chat.scrollHeight; 
 
 
-//PerfectScrollbar
-const myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
-const ps = new PerfectScrollbar('.my-custom-scrollbar', {
-    wheelSpeed: 1,
-    wheelPropagation: false,
-    swipeEasing: true,
-    // suppressScrollX: true,
-    // minScrollbarLength: 10,
-    // maxScrollbarLength: 10
-
-});
-
-$('.my-custom-scrollbar').each(function(){ const ps = new PerfectScrollbar($(this)[0]); });
-
-// var scrollbarY = myCustomScrollbar.querySelector('.ps.ps--active-y>.ps__scrollbar-y-rail');
-
-var btnBackListChat = $('.btn-back-to-list')
-btnBackListChat.click(
-	function(e){
-		$('#dialog_list').attr('style', 'display:block!important')
-		$('#chat_list_mobile').attr('style', 'display:none!important')
-	})//click btn
-
-</script>
-{% endblock %}
+		// buttons back 
+		var btnBackListChat = $('.btn-back-to-list')
+		btnBackListChat.click(
+			function(e){
+				$('#dialog_list').attr('style', 'display:block!important')
+				$('#chat_list_mobile').attr('style', 'display:none!important')
+			})//click btn
+	</script>
+ 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+	{% compress js file base %}	
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/ecommerce-mobile.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
+</body>
+</html>

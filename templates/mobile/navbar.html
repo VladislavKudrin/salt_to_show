@@ -94,6 +94,23 @@
   text-align: right;
   border-radius: 50% !important;
   }
+
+  #searchAutoComplete{
+  border:none;
+  width: 80px !important;
+  height: 30px;
+  margin-top: 1px; 
+  }
+
+  .search-btn{
+      font-size: 1em; 
+      padding: 7px 0px 0px 0px; 
+      color: #404040;
+  }
+
+  .search-btn:hover{
+      color: black !important;
+  }
 </style>
 
 <!-- Language stuff -->
@@ -153,15 +170,6 @@
 
 <!-- Navbar -->
 <nav class="navbar navbar-mb sticky-top navbar-expand-md navbar-light bg-white pb-1 pt-2 pl-4 pr-4">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav  mr-auto">
-            <li class="nav-item">
-                {% include 'search/snippets/search-form.html' %}
-            </li>
-        </ul>
-    </div>
-
-
     <ul id="navbar-mobile" class="navbar-nav">
             <li class="nav-item list-unstyled" style="display: inline-block;">
                  <a href="{% url 'home' %}">
@@ -170,8 +178,6 @@
                     </div>
                 </a>
             </li>
-
-
             <li class="nav-item pl-2 " style="display: inline-block;"> 
               {% if request.user.is_authenticated %}               
                 <button class='btn pb-2 pt-0' id='sidebar-trigger' style="">
@@ -186,27 +192,17 @@
             </li>
     </ul>
 
-
-
-
-
     <ul class="m-0 p-0" id='buttons'>
-
-
-          {% if request.user.is_authenticated %}  
+        {% if request.user.is_authenticated %}  
             {% if request.user.admin %}  
               <a href='{% url "logout" %}' style='color:red' role="button" aria-pressed="true">*</a>
             {% endif %}
-          {% endif %}
-
+       {% endif %}
         <li style='display: inline;' class='pl-2'>
             <button id="search-button" class="btn pr-0" type="button" data-toggle="collapse" data-target="#collapseSearchbar" aria-expanded="false" aria-controls="collapseSearchbar" >
                 <i class="fa fa-search fa-1x" style=""></i>
             </button>
         </li> 
-
-
-
 
         <li class="hover-button buy-sell pl-2" style='font-size: 1.2em; position:relative; display: inline;'>
         {% include 'base/language-controll.html' %}
@@ -225,18 +221,18 @@
         <li class="pl-2" style="display: inline;">
           <a id="" class=" hover-button buy-sell" role="button" href="{{ product_list_url }}">Buy</a>
         </li>
-
     </ul>
 
     <div class="collapse" id="collapseSearchbar" style="width: 100%;">
         <form action='{% url "search:query" %}' class="search-form form my-lg-0 ">
             <div class='input-group' style=''>
-                <input class="form-control" id='searchAutoComplete' type="text" style="height:30px; border-bottom: 1px solid black !important;" placeholder="{% trans 'Search' %}" name='q' value='{{ request.GET.q }}' aria-label="Search">
+                <input class="form-control pl-0" id='searchAutoComplete' type="text" style="height:30px; border-bottom: 1px solid black !important;" placeholder="{% trans 'Search' %}" name='q' value='{{ request.GET.q }}' aria-label="Search">
 
             </div>
         </form>
     </div>
 </nav>
+
 
 <!-- Messages -->
 {% include 'base/messages.html' %}
@@ -245,7 +241,9 @@
 {% include 'products/snippets/not_valid_card_modal.html' %}
 
 <script type="text/javascript">
+
   $(document).ready(function(){
+
   //sidebar the only one js 
   $("#sidebar-slider").slideReveal({
     trigger: $("#sidebar-trigger"),

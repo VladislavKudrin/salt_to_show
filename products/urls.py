@@ -6,9 +6,7 @@ from categories.views import CategoryFilterView
 urlpatterns = [
     url(r'^$', CategoryFilterView.as_view(), name='list'),
     url(r'^checkout/(?P<product_id>.+)/$', ProductCheckoutView.as_view(), name='checkout'),
-
     url(r'^fakelist/$', FakeProductsListView.as_view(), name='fake-list'),
-
     url(r'^create/$', ProductCreateView.as_view(), name='create'),
     url(r'^list/$', AccountProductListView.as_view(), name='user-list'),
     url(r'^delete/$', product_delete, name='delete'),

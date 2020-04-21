@@ -13,12 +13,12 @@
   <title>SALT | {{ object.title }} </title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   {% compress css %}
   <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/themes-base-jquery-ui.css' %}" rel="stylesheet" type="text/css">
   {% endcompress %}
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="application/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   <style type="text/css">
 
@@ -310,24 +310,12 @@
       {% include 'mobile/footer.html' %}
     </div>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-150733918-1');
-// console.log($('meta[name=viewport]')[0])
-      //   $('input, select, textarea').on('focus blur', function(event) {
-      //     // console.log($('meta[name=viewport]')[0])
-      //   $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 1 : 1));
-      // });
-
-
-     </script>
     {% compress js file base %} 
     <script src="{% static 'js/jquery.ui.touch-punch.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
     <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
-    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+
+    <script type="application/javascript" src='{% static "js/ecommerce-mobile.js" %}'></script>
     <script type="application/javascript" src='{% static "js/categories.js" %}'></script>
     <script type="application/javascript" src='{% static "js/images_upload_create_slug.js" %}'></script>
     <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>

@@ -98,6 +98,13 @@ class ChatMessage(models.Model):
     def __str__(self):
         return f'{self.message}'
 
+
+    @property
+    def is_today(self):
+        stamp = self.timestamp.date()
+        today = datetime.today().date()
+        return stamp == today
+
 class Notification(models.Model):
     user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message     = models.ForeignKey(ChatMessage, on_delete=models.CASCADE)

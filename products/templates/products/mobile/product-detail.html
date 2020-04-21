@@ -18,8 +18,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 	{% compress css %}
 	<link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
-	{% endcompress %}
-	{% compress css %}
+  	<link href="{% static 'css/themes-base-jquery-ui.css' %}" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="{% static 'css/ribbon-gallery.min.css' %}" rel="stylesheet" type="text/css">
 	{% endcompress %}
   	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -285,20 +284,14 @@
 		</script>
 	{% endverbatim %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-150733918-1');
-    </script>
-
 	{% compress js file base %}	
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
     <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
-    <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+    <script type="application/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/ecommerce-mobile.js" %}'></script>
     <script type="application/javascript" src='{% static "js/ribbon-gallery.min.js" %}'></script>
     <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
     {% endcompress %}

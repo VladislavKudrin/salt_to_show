@@ -71,8 +71,8 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 	def fake(self):
 		return self.filter(authentic='fake')
 
-	def available(self):#do the prefetch related and see if it makes sense
-		return self.exclude(order__status='paid').exclude(order__status='shipped')
+	def available(self):
+		return self.exclude(order__status__in=['paid', 'shipped', 'refunded'])
 
 	def payable(self):
 		threshold = date(2020, 3, 1) # not possible to buy items older than this 1th of March 

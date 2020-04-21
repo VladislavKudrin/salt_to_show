@@ -22,13 +22,6 @@
 		width: 50%;
 	}
 
-	.small-ellipsis {
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-		font-size: 12px;
-	}
-
 	/* button no hover effects for mobile */
 
 	@media only screen and (max-width: 768px){
@@ -400,6 +393,19 @@
 
 
 	/*ONLY MOBILE*/
+	.small-ellipsis {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		font-size: 12px;
+	}
+	
+	.ellipsis {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
 	@media only screen and (max-width: 768px) { 
 	  .heading{
 	  font-family: 'Montserrat', sans-serif;
@@ -622,7 +628,11 @@
 	}		
 
 /*MAIN (navbar+footer etc)*/
-
+		
+	 .collapsing {
+	    transition: height .1s ease !important;
+	    -webkit-transition: height .1s ease !important;
+	 }
 
 	.main-wrapper{
 		margin-bottom: 2.3rem; margin-top: 1.7rem;
@@ -921,11 +931,14 @@
 	  background : black;
 	}
 	.ui-menu-item {
-	  overflow      : hidden;
-	  max-width     : 260px;
-	  padding       : 4px !important;
-	  text-overflow : ellipsis;
-	  white-space   : nowrap;
+		overflow      : hidden;
+		max-width     : 327px;
+		padding-top: 4px !important;
+		padding-right: 4px !important;
+		padding-bottom: 4px !important;
+		padding-left: 0px !important;
+		text-overflow : ellipsis;
+		white-space   : nowrap;
 	}
 	/*a.ui-state-focus {
 	      background: yellow !important;
@@ -941,7 +954,7 @@
 	  border     : 1px black !important;
 	}
 	.ui-menu {
-	  max-height    : 200px !important;
+	  max-height    : 400px !important;
 	  background    : white !important;
 	  border-top    : 1px solid black !important;
 	  border-right  : 1px solid black !important;
@@ -1370,3 +1383,40 @@
 	.icons-buyer-protection{
 	  display:flex; justify-content: center; align-items: center; font-size : 20px;
 	}
+
+	.item{
+      display: inline !important;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .selectize-input:focus-within {
+      border-color: #000000 !important;
+    }
+
+
+    .selectize-control.single .selectize-input{
+      background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+    }
+
+    .option .selected .active:hover{
+      background-color: transparent;
+    }
+
+    .selectize-input {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 8px 20px 8px 8px;
+
+    }
+
+      .selectize-control.single .selectize-input:after {
+        right: 5px;
+    }
+
+    .selectize-control.plugin-remove_button [data-value] {
+        position: relative;
+        padding-right: 0px !important;
+    }s

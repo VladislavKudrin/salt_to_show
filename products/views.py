@@ -417,52 +417,49 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		else:
 			return ['products/desktop/checkout.html']
 
-
-	def get(self, request, *args, **kwargs):
-		product = self.get_product()
-		if product is not None:
-			if product.is_paid or not product.is_active or not product.is_payable or not product.is_authentic:
-				return redirect('products:list')
-		return super(ProductCheckoutView,self).get(request, *args, **kwargs)
-
-	def get_product(self):
+	def get_product(self): # product
+		qs = Product.objects.authentic().available().payable()
 		id_ = self.kwargs.get('product_id')
-		products = Product.objects.filter(id = id_)
-		if products.exists():
-			return products.first()
+		if id_.isdigit():
+			products = qs.filter(id=id_)
+			if products.exists():
+				return products.first()
 		return None
-	def get_object(self):
-		product_id = self.kwargs.get('product_id')
+
+	def get_object(self): # user
 		user = self.request.user
 		try:
 			self.region = user.region.region_code
 		except:
 			self.region = 'no region'
 		if self.region == 'ua' or self.region == 'no region':
-			if product_id.isdigit():
-				product_obj = Product.objects.filter(id=product_id).active().first()
-				if product_obj is not None:
-					if product_obj.user != user:
-						self.product = product_obj
-					else:
-						raise Http404("Product belongs to user")
-				else: 
-					raise Http404("Product with this id does not exist")
-			else: 
-				raise Http404("Some asshole put a non-digit to url")
-			return self.request.user
-		else:
-			raise Http404("This option is only available for users in Ukraine") 
-		
+			if self.get_product() is not None: 
+				product = self.get_product()
+				if product.user != user: 
+					self.product = self.get_product()
+					return user 
+		return None
+
+	def get(self, request, *args, **kwargs):
+		if self.get_object() is None:
+			msg_not_available = _("The item you want to buy is not available anymore. Check out the others!")
+			messages.add_message(request, messages.WARNING, mark_safe(msg_not_available))
+			return redirect("products:list")
+		return super(ProductCheckoutView,self).get(request, *args, **kwargs)
 
 	def get_address(self):
 		return Address.objects.filter(billing_profile__user=self.object).first()
 
-	def get_card(self):
-		return Card.objects.filter(billing_profile__user=self.object).first()
-
 	def get_success_url(self):
 		return reverse("accounts:user-update")
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)
+		context['title'] = _('Update your details')
+		context['password_btn'] = _('Change password')
+		context['buy_btn'] = ('Перейти к оплате')
+		context['product'] = self.product
+		return context
 
 	def form_valid(self, form):
 		billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(self.request)
@@ -472,20 +469,7 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		order, created = Order.objects.new_or_get(billing_profile, self.product)
 		order.shipping_address = address
 		order.save()
-		# self.request.session['order_id'] = order.order_id
 		return redirect("payment:pay_view")
-		# return redirect("accounts:user-update")
-
-	def get_context_data(self, *args, **kwargs):
-		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)
-		context['title'] = _('Update your details')
-		context['password_btn'] = _('Change password')
-		context['buy_btn'] = ('Перейти к оплате')
-		context['product'] = self.product
-		context['region'] = self.region
-		if self.get_address() is not None:
-			context['user_post_office'] = self.get_address().post_office
-		return context
 
 
 	def get_form_kwargs(self):

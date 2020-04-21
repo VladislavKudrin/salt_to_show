@@ -85,7 +85,7 @@ def add_message(backend, user, request, response, *args, **kwargs):
 alphanumeric = RegexValidator(r'^[0-9a-zA-Z_.-]+$', _('Only alphanumeric characters are allowed'))
 alphaSpaces = RegexValidator(r'^[a-zA-Zа-яА-ЯҐЄІЇґєії\'\`\’\-\. ]+$', _('Only letters and spaces are allowed'))
 numeric = RegexValidator(r'^[ 0-9]+$', _('Only digit characters allowed.'))
-phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'")
+phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_("Phone number must be entered in the format: '+380...'"))
 
 
 def get_data_from_novaposhta_api():

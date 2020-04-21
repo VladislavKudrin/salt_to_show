@@ -13,8 +13,9 @@
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   {% compress css %}
-  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/selectize.default.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/themes-base-jquery-ui.css' %}" rel="stylesheet" type="text/css">
   {% endcompress %}
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
@@ -57,43 +58,6 @@
       max-width:50px; 
       margin-top: -50px;
     }
-
-      .selectize-control.single .selectize-input, .selectize-dropdown.single {
-        border-color: #000000;
-    }
-
-
-    .selectize-control.single .selectize-input{
-      background-image: linear-gradient(to bottom, #ffffff, #ffffff);
-    }
-
-    .option .selected .active:hover{
-      background-color: transparent;
-    }
-
-    .item{
-      display: inline !important;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .selectize-input {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      padding: 8px 20px 8px 8px;
-
-    }
-
-      .selectize-control.single .selectize-input:after {
-        right: 5px;
-    }
-
-    .selectize-control.plugin-remove_button [data-value] {
-        position: relative;
-        padding-right: 0px !important;
-    }
   </style>
 </head>
 <body>
@@ -132,7 +96,7 @@
           {% if request.user.region.region_code == 'ua' %}
             <p class="col-12 text-center heading pt-5">Адрес</p>
             <div class="col-xs-12 col-md-12 labels-placement" style='min-height:150px; padding-top: 0 !important;'>
-              <div class="row address-info ">
+              <div class="row address-info hidden ">
                 <div class="col-xs-12 col-md-12 ">
                   <div class="row">
                     <div class="col-12" style="padding-bottom: .75rem">
@@ -266,24 +230,18 @@
     $(document).ready(
       function(){
 
+    $(".address-info").removeClass("hidden");
+    
     // selectize 
 
     sel = $('#id_address_form-post_office').selectize({
       create: false,
       persist: false,
-      maxOptions: 400,
+      maxOptions: 50,
 
     });
 
-    user_post_office = $('#user_post_office').val()
-    if (user_post_office){
-      sel[0].selectize.setValue(user_post_office)
-    }
-
-
-    $('.selectize-input input').focus(function(){
-      sel[0].selectize.clear()
-    })
+    
 
 
     })
@@ -312,19 +270,14 @@
       };
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-150733918-1');
-  </script>
   {% compress js file base %} 
   <script type="application/javascript" src="{% static 'js/selectize.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
-  <script type="application/javascript" src='{% static "js/ecommerce.js" %}'></script>
+  <script type="application/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script type="application/javascript" src='{% static "js/ecommerce-mobile.js" %}'></script>
   <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
   <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
   <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>

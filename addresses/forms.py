@@ -24,27 +24,23 @@ class AddressForm(forms.ModelForm):
 
     def get_latest_postoffices_ua(self):
         path = os.path.join(BASE_DIR, "static_my_project", 'post_offices_ua.txt')
-        post_offices = []
-        with open(path, 'r') as filehandle:
-            for line in filehandle:
-                line = line[:-1] # remove linebreak which is the last character of the string
-                post_offices.append(line)
-        return post_offices
+        f = open(path, 'r')
+        offices = [_('Choose Nova Poshta station')] + f.read().splitlines()
+        f.close()
+        return offices
 
-    def get_latest_postoffices_ru(self):
-        path = os.path.join(BASE_DIR, "static_my_project", 'post_offices_ru.txt')
-        post_offices = []
-        with open(path, 'r') as filehandle:
-            for line in filehandle:
-                line = line[:-1] # remove linebreak which is the last character of the string
-                post_offices.append(line)
-        return post_offices
-
+    # def get_latest_postoffices_ru(self):
+    #     path = os.path.join(BASE_DIR, "static_my_project", 'post_offices_ru.txt')
+    #     post_offices = []
+    #     with open(path, 'r') as filehandle:
+    #         for line in filehandle:
+    #             line = line[:-1] # remove linebreak which is the last character of the string
+    #             post_offices.append(line)
+    #     return post_offices
 
     def __init__(self, request, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
-        post_offices = ['Choose Nova Poshta station'] + self.get_latest_postoffices_ua()
-
+        post_offices = self.get_latest_postoffices_ua()
         self.request=request
         self.fields['post_office'] = forms.ChoiceField(choices=tuple([(name, name) for name in post_offices]))
         self.fields['name'].widget.attrs['class']='labels-placement'
@@ -61,15 +57,13 @@ class AddressForm(forms.ModelForm):
             self.fields['post_office'].required = False
 
 
-
     def clean_post_office(self):
         data_office = self.cleaned_data.get('post_office')
-        error_message = "Пожалуйста, выбери отделение"
+        error_message = _('Choose Nova Poshta station')
         if 'checkout' in self.request.path:
             if data_office is '' or data_office == 'Choose Nova Poshta station':
                 self.add_error('post_office', error_message)
         return data_office
-
 
 
 
