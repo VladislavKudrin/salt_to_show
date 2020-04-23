@@ -63,7 +63,10 @@ class BillingProfile(models.Model):
 		return Charge.objects.do(self, order_obj, card)
 
 	def get_cards(self):
-		return self.card.all()
+		try:
+			return self.card
+		except:
+			return None
 
 	def get_payment_method_url(self):
 		return reverse('billing-payment-method')
@@ -75,11 +78,10 @@ class BillingProfile(models.Model):
 
 	@property
 	def default_card(self):
-		default_cards = self.get_cards().filter(active=True, default=True)
-		if default_cards.exists():
-			return default_cards.first()
+		default_card = self.get_cards()
+		if default_card is not None:
+			return default_card
 		return None
-
 
 	def count_feedbacks(self):
 		feedbacks = Feedback.objects.filter(to_user=self)

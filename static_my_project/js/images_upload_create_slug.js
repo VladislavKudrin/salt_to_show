@@ -4,27 +4,7 @@ $(document).ready(
 
 
 
-// brand autofill for product create
-    var formSubmitBrand = $('#example-form-1')
-    var actionBrand = formSubmitBrand.attr("action_url_create")
-    $.ajax({
-        url: actionBrand,
-        method:'GET',
-        success: function(data){
-        var availableTags = data.brand 
-        $( ".brandautofill" ).autocomplete({
-          source: availableTags
-        });
-        },//success
-        error: function(errorData){
-        // $.alert({
-        // title: 'OOps!',
-        // content: 'Simple alert!',
-        // theme: "modern"
-        // });
-        console.log('some error');
-        }//error
-        })//ajax
+
 
 
 
@@ -77,7 +57,28 @@ $(document).ready(
         var formId = $('#form_id')
         var imagesTemplate = $.templates("#images-upload-update")
         var i = 0
-
+    // brand autofill for product create
+        var formSubmitBrand = $('#example-form-1')
+        var actionBrand = formSubmitBrand.attr("action_url_create")
+        $.ajax({
+            url: actionBrand,
+            method:'GET',
+            success: function(data){
+            var availableTags = data.brand 
+            $( ".brandautofill" ).autocomplete({
+              source: availableTags
+            });
+            },//success
+            error: function(errorData){
+            // $.alert({
+            // title: 'OOps!',
+            // content: 'Simple alert!',
+            // theme: "modern"
+            // });
+            console.log('some error');
+            }//error
+            })//ajax
+    //brand autofill
     function deleteRotateItem(item){
         item.on("click", 
         function(event){

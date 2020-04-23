@@ -9,10 +9,18 @@
 {% url 'products:create' as products_create_url %}
 {% url 'accounts:wish-list' as wish_list %}
 {% url 'categories:filter' as filter_url %}
-{% load for_loop_extras %}
+
 {% load i18n %}
-{% load notifications %}
 {% load static %}
+
+{% load for_loop_extras %}
+{% load card_tags %}
+{% load chat_tags %}
+
+{% get_user_card as user_card %}
+{% count_user_notifications as notif_number %}
+
+
 
 
 <style type="text/css">
@@ -185,12 +193,12 @@
             </li> 
 
             <li class="nav-item pl-2">
-                  <small><a id="" class="hover-button buy-sell" role="button" 
-                    {% if request.user.is_authenticated %}
-                    {% if not request.user.billing_profile.default_card.is_valid_card %} 
+                  <small><a id="" class="hover-button buy-sell" role="button"
+                {% if user_card is not None %} 
+                    {% if not user_card.is_valid_card %} 
                     data-toggle="modal" data-target="#add_card_modal" disabled="true"
                     {% endif %}
-                    {% endif %} 
+                {% endif %}
                     href="{{ products_create_url }}">Sell</a></small>
             </li>      
              
@@ -220,7 +228,7 @@
                 {% if request.user.profile_foto %}
                 <a class="nav-link dropdown m-0 p-0 test1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        {% if request.user|get_notif > 0 %}
+                        {% if notif_number > 0 %}
                             <div style='padding-left: 26px; padding-bottom: 0px'>
                                 <div class='notifications'></div>
                             </div>
@@ -233,7 +241,7 @@
                 {% else %}
 
                 <a class="nav-link dropdown mb-0 pb-1 pl-0 mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {% if request.user|get_notif > 0 %}
+                                        {% if notif_number > 0 %}
                             <div style='padding-left: 13px; padding-bottom: 0px'>
                                 <div class='notifications'></div>
                             </div>
@@ -252,9 +260,9 @@
                                 <div class='col-9 mx-auto m-0 p-0'>
                                     <div>{% trans 'Messages' %}</div>
                                 </div>
-                                {% if request.user|get_notif > 0 %}
+                                {% if notif_number > 0 %}
                                     <div class='col-3 my-auto text-right'>
-                                        <span style='font-size: 13px; font-weight: bold'>{{ request.user|get_notif }}</span>
+                                        <span style='font-size: 13px; font-weight: bold'>{{ notif_number }}</span>
                                      </div>
                                 {% else %}
                                 {% endif %}
