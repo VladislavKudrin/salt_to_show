@@ -9,6 +9,7 @@ register = template.Library()
 
 @register.filter
 def print_timestamp(timestamp):
+	print('Were here')
 	today_word = _('Today')
 	yesterday_word = _('Yesterday')
 
@@ -20,7 +21,7 @@ def print_timestamp(timestamp):
 	elif (today - stamp).days == 1:  
 		return timestamp.strftime(f"{yesterday_word} %H:%M").upper()
 	else: 
-		return timestamp.strftime("%d/%m %H:%M").upper()
+		return timestamp.strftime("%d.%m %H:%M").upper()
 
 
 	
