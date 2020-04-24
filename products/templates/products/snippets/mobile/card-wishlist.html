@@ -48,7 +48,7 @@
           <div class='col-9 p-0 one-line text-left' style='padding-right: .5rem !important'>{{ obj.brand }}</div>
             <div class='col-3 p-0 one-line text-right' style='padding-right: .2rem !important'>{{ obj.size.size }}</div>
             <div class='col-6 p-0 one-line text-left' style=''>{{ obj.price|to_user_currency:request }}</div>
-            <div class="col-6 p-0 text-right" style="font-size: 7px; padding-top: .2em !important; ">
+            <div class="col-6 p-0 text-right" style="font-size: 7px; padding-top: .2em !important; padding-right: .1rem !important ">
               <form class='form-product-ajax-wishlist-detail ml-auto' method='POST' action='{% url "accounts:wish-list-update" %}' data-endpoint='{% url "accounts:wish-list-update" %}' class="form"> {% csrf_token %}
                 <input type='hidden' name='product_id' value='{{ obj.id }}' />
                 <span class='submit-span-wishlist'>
