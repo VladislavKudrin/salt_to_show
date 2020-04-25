@@ -25,328 +25,317 @@
   <style type="text/css">
 
 		.btn {
-			padding-left: 6px !important;
+		padding-left: 6px !important;
 		}
 
-	  .avatar-not-skipped {
-	  	margin: 0 auto;
-	  	width:40px;
-	  }
-	  .username-skip{
-	  	text-align: left!important;
+		.avatar-not-skipped {
+			margin: 0 auto;
+			width:40px;
+		}
+		.username-skip{
+			text-align: left!important;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
-	  }
-	  #dialog_list{
-	  	display: none
-	  }
-	  #input-row{
-	  	width: 100%!important;
-	  }
-	  .back-to-chatlist{
-	  	text-align: left!important;
-	  	display: inline-block!important;
+		}
+		#dialog_list{
+			display: none
+		}
 
-	  }
-	  .dialogs-username{
-	  	text-align: left!important
-	  }
-	  .arrow-select-chat{
+		.back-to-chatlist{
+			text-align: left!important;
+			display: inline-block!important;
+
+		}
+		.dialogs-username{
+			text-align: left!important
+		}
+		.arrow-select-chat{
 		display: inline-block!important
-	}
+		}
 
-	#websocket-form{
+		#websocket-form{
 		padding-top:0px;
-	}
+		}
 
-	body {
-	    padding-bottom: 0;
-	    margin-bottom:0;
-	}
-
-	html {
+		body {
 		padding-bottom: 0;
-	    margin-bottom:0;
-	}
+		margin-bottom:0;
+		}
 
-	#dialogs{
+		html {
+		padding-bottom: 0;
+		margin-bottom:0;
+		}
+
+		#dialogs{
 		width: 320px;
 		padding-right: 0px;
-	/*	overflow: scroll;*/
+		/*	overflow: scroll;*/
 		margin-bottom: 0;
 		position: relative;
 
-	    height:auto;
-	    overflow:auto;
+		height:auto;
+		overflow:auto;
 		max-height: calc(100vh - 130px); 
 
-	}
+		}
 
-	#dialog{
+		#dialog{
 		height:70px;
-	/*	display: flex;
-	    align-items: center;*/
+		/*	display: flex;
+		align-items: center;*/
 
-	}
+		}
 
-	#dialog:hover{
+		#dialog:hover{
 		background-color: #f2f2f2;
-	}
+		}
 
-	#input-row{
-		background-color: #efefef;
-		height: 60px;
-	}
 
-	.fa-paper-plane{
+		.fa-paper-plane{
 		color: #9da3a5;
-	}
+		}
 
 
-	#chat-message{
+		#chat-message{
 		word-wrap: break-word;
 		overflow-wrap: break-word;
-	/*	text-align: left;*/
-	}
+		/*	text-align: left;*/
+		}
 
-	button:focus {
-	 	outline:0 !important;
-	}
+		button:focus {
+			outline:0 !important;
+		}
 
 
-	*:focus {
+		*:focus {
 		outline:none !important;
-	}
+		}
 
-	.btn:focus {
+		.btn:focus {
 		outline:none !important;
-	}
+		}
 
-	.avatar-chat{
+		.avatar-chat{
 		width:50px; 
 		height: 50px;
-	}
+		}
 
-	.avatar-small{
+		.avatar-small{
 		width:40px; 
 		height: 40px;
 
-	}
+		}
 
-	#dialog:hover{
+		#dialog:hover{
 		background-color: #f2f2f2;
-	}
+		}
 
-	#input-row{
-		background-color: #efefef;
-		height: 60px;
-	}
 
-	.fa-paper-plane{
+
+		.fa-paper-plane{
 		color: #9da3a5;
-	}
+		}
 
 
-	#chat-message{
+		#chat-message{
 		word-wrap: break-word;
 		overflow-wrap: break-word;
-	/*	text-align: left;*/
-	}
+		/*	text-align: left;*/
+		}
 
-	button:focus {
-	 	outline:0 !important;
-	}
+		button:focus {
+			outline:0 !important;
+		}
 
 
-	*:focus {
+		*:focus {
 		outline:none !important;
-	}
+		}
 
-	.btn:focus {
+		.btn:focus {
 		outline:none !important;
-	}
+		}
 
-	.avatar-chat{
+		.avatar-chat{
 		width:50px; 
 		height: 50px;
-	}
+		}
 
-	.avatar-small{
+		.avatar-small{
 		width:40px; 
 		height: 40px;
-	}
+		}
 
 
-	.active {
+		.active {
 		background-color: #e9ebeb;
-	}
+		}
 
-	.row-dialog {
+		.row-dialog {
 		height: 70px;
 
-	}
+		}
 
-	.backgroundy{
+		.backgroundy{
 		background-color: black;
-	}
+		}
 
-	.blacky{
+		.blacky{
 		background-color: #f2f2f2;
-	}
+		}
 
-	.rounder-form{
+		.rounder-form{
 		border-bottom-left-radius: 25px !important;
 		border-top-left-radius: 25px !important;
 		border-top-right-radius: 25px !important;
 		border-bottom-right-radius: 25px !important;
-	}
+		}
 
-	.rounder-msg-cloud-right{
+		.rounder-msg-cloud-right{
 		border-bottom-left-radius: 25px !important;
 		border-top-left-radius: 25px !important;
 		border-top-right-radius: 25px !important;
 		border-bottom-right-radius: 0px !important;
-	}
+		}
 
-	.rounder-msg-cloud-left{
+		.rounder-msg-cloud-left{
 		border-bottom-left-radius: 0px !important;
 		border-top-left-radius: 25px !important;
 		border-top-right-radius: 25px !important;
 		border-bottom-right-radius: 25px !important;
-	}
+		}
 
-	.msg-cloud{
+		.msg-cloud{
 		background-color: #f2f2f2;
 		display:inline-block; 
 		max-width:inherit; 
 		max-width: 75%;
 		line-height: 1;
-	}
+		}
 
-	.timestamp {
+		.timestamp {
 		font-size: xx-small;
-	}
+		}
 
-	.dialogs-username {
+		.dialogs-username {
 		overflow: hidden; 
 		white-space: nowrap; 
 		text-overflow: ellipsis;
-	}
+		}
 
 
 
-	.active {
+		.active {
 		background-color: #e9ebeb;
-	}
+		}
 
-	.row-dialog {
+		.row-dialog {
 		height: 70px;
-	}
+		}
 
-	.back-to-chatlist{
+		.back-to-chatlist{
 		display: none
-	}
-	.row-avatar-arrow{
+		}
+		.row-avatar-arrow{
 		text-align: right!important;
-	}
-	.arrow-select-chat{
+		}
+		.arrow-select-chat{
 		display: none
-	}
+		}
 
-	.backgroundy{
+		.backgroundy{
 		background-color: black;
-	}
+		}
 
-	.blacky{
+		.blacky{
 		background-color: #f2f2f2;
-	}
+		}
 
-	.rounder-form{
+		.rounder-form{
 		border-bottom-left-radius: 25px !important;
 		border-top-left-radius: 25px !important;
 		border-top-right-radius: 25px !important;
 		border-bottom-right-radius: 25px !important;
-	}
+		}
 
-	.rounder-msg-cloud-right{
+		.rounder-msg-cloud-right{
 		border-bottom-left-radius: 25px !important;
 		border-top-left-radius: 25px !important;
 		border-top-right-radius: 25px !important;
 		border-bottom-right-radius: 0px !important;
-	}
+		}
 
-	.rounder-msg-cloud-left{
+		.rounder-msg-cloud-left{
 		border-bottom-left-radius: 0px !important;
 		border-top-left-radius: 25px !important;
 		border-top-right-radius: 25px !important;
 		border-bottom-right-radius: 25px !important;
-	}
+		}
 
-	.msg-cloud{
+		.msg-cloud{
 		background-color: #f2f2f2;
-	/*	display:inline-block; 
+		/*	display:inline-block; 
 		max-width:inherit; 
 		max-width: 75%;*/
 		display: inline-block;
 		max-width: 75%;
 		overflow-wrap: break-word;
-	}
+		}
 
-	.dot {
-	  height: 8px;
-	  width: 8px;
-	  background-color: #cf6369;
-	  border-radius: 50% !important;
-	  display: inline-block;
-	}
+		.dot {
+		height: 8px;
+		width: 8px;
+		background-color: #cf6369;
+		border-radius: 50% !important;
+		display: inline-block;
+		}
 
-	.dot_blue {
-	  height: 8px;
-	  width: 8px;
-	  background-color: blue;
-	  border-radius: 50% !important;
-	  display: inline-block;
-	}
+		.dot_blue {
+		height: 8px;
+		width: 8px;
+		background-color: blue;
+		border-radius: 50% !important;
+		display: inline-block;
+		}
 
-	.today{
+		.today{
 		font-size: 10px; text-transform: uppercase; padding-right: 5px
 		}
 
-	.hr-today{
+		.hr-today{
 		margin-bottom: 0.2rem; width: 82%;display: inline-block;
-	}
+		}
 
 
-	#chat-items{
+		#chat-items{
 		padding-left: 15px;
-	  	padding-right: 15px;
-	  	padding-bottom: 23px;
+		padding-right: 15px;
+/*		padding-bottom: 23px;*/
 		position: relative;
 		margin-bottom: 0px;
-	    height:auto;
-	    overflow:auto;
-		max-height: calc(100vh - 25vh); 
-		min-height: calc(100vh - 25vh); 
-	}
+/*		height:auto;*/
+		overflow:auto;
+		height: calc(100vh - 22.4vh); 
+		}
 
-	/*	Large phones :*/
-	@media screen and (min-height: 668px) {
+		/*	Large phones :*/
+		@media screen and (min-height: 668px) {
 		#chat-items{
 		max-height: calc(100vh - 20vh); 
 		min-height: calc(100vh - 20vh); 
 		padding-bottom: 30px;
-	}
-	}
+		}
+		}
 
-	/*	iPhone 5:*/
-	@media screen and (max-width: 370px) {
+		/*	iPhone 5:*/
+		@media screen and (max-width: 370px) {
 		#chat-items{
 		max-height: calc(100vh - 29vh); 
 		min-height: calc(100vh - 29vh); 
-	}
-	}
-
+		}
+		}
  </style>
 </head>
 <body>
@@ -630,21 +619,27 @@
 				</div>
 			</div>
 
-			<div class='row'>
-				<form id='websocket-form' method='POST'>
-				 {% csrf_token %}
-					<div class='row' id='input-row' style='position: fixed;bottom: 0; width:77%; margin-left:0px;' >
-						<div class='col-10 col-md-11 my-auto pr-0'>
-							{{ form }}
-							</div>
-						<div class='col-2 col-md-1 my-auto pl-0' >
-							<button type='submit' class='btn'>
-							<i class="fas fa-paper-plane fa-2x"></i>
-							</button>
-						</div>
+
+
+			<form id='websocket-form' method='POST'>
+				<div class='row' style='background-color: #efefef;'>
+					{% csrf_token %}
+
+					<div class='col-10 my-auto pr-0'>
+						{{ form }}
 					</div>
-				</form>
-			</div>
+
+					<div class='col-2 my-auto'>
+						<button type='submit' class='btn' style='padding-left: 0rem !important'>
+							<i class="fas fa-paper-plane fa-2x"></i>
+						</button>
+					</div>
+
+				</div>
+			</form>	
+
+
+
 		</div>
 	</div>
 	</div>
