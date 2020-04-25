@@ -312,10 +312,8 @@
 		#chat-items{
 		padding-left: 15px;
 		padding-right: 15px;
-/*		padding-bottom: 23px;*/
 		position: relative;
 		margin-bottom: 0px;
-/*		height:auto;*/
 		overflow:auto;
 		height: calc(100vh - 22.4vh); 
 		}
@@ -340,16 +338,18 @@
 </head>
 <body>
 	{% include 'mobile/navbar.html' %}
+
+	{% with me=request.user my_url=request.user.get_absolute_url my_photo=request.user.profile_foto opposite_user_username=opposite_user.username opposite_user_url=opposite_user.get_absolute_url opposite_user_photo=opposite_user.profile_foto %}
+
 	<div class='container-fluid'> 
 	<div class='row'>
-		<div class='col-12' id='dialog_list' style='border-right: 0.75px solid #e1e6e6;'>
+	
+		<div id='dialog_list' class='col-12' style='border-right: 0.75px solid #e1e6e6;'>
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
-					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
-					{% if request.user.profile_foto %}
-						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2" alt="...">
-					{% else %}
-						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
+					<a href="{{ my_url  }}" style='text-decoration: none; color: inherit'>
+					{% if my_photo %} <img src="{{ my_photo.url }}"  class="avatar-small avatar  ml-2" alt="...">
+					{% else %} <img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
 					{% endif %}
 					</a>
 				</div>
@@ -357,93 +357,41 @@
 			<div class='row alldialogs'>
 				<ul id='dialogs'  style="width: 100%">
 					{% for obj in chats %}
-						{% if request.user != obj.first %}
-							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
-								<div class='row row-dialog my-auto mx-auto'>
-									<div class='col-4 col-md-3 my-auto'>
-										{% if obj.product %}
-											{% with obj.product.thumbnail.all|first as thumbnail %}
-												<img src="{{ thumbnail.thumbnail.url }}" class=" avatar-chat avatar avatar-skip">
-											{% endwith %}
-										{% else %}
-											{% if obj.first.profile_foto %}
-												<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
-											{% else %}
-												<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
-											{% endif %}
-										{% endif %}
-									</div>
-									{% if obj.product and request.user != obj.product.user %}
-										<div class='col-4 col-md-9 pl-md-0 text-left dialogs-username'>
-										<div class="row my-auto">
-											<div class="col-6 text-center">
-												<b>{{ obj.first.username }}</b>
-											</div>
-											<div class="col-6 text-right">
-												<small>{{ obj.product|to_user_currency:request }}</small>
-											</div>
-										</div>
-										<div class="row mt-2">
-											<div class="col-12 text-left my-auto">
-												<small>{{ obj.product.title }}</small>
-											</div>
-										</div>
-										<span class='obj_id_s' id="{{ obj.id }}"></span>
-										</div>
+						<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
+							<div class='row row-dialog my-auto mx-auto'>
+								<div class='col-4 col-md-3 my-auto'>
+									{% if obj.product %}
+										{% with obj.product.thumbnail.all|first as thumbnail %}
+											<img src="{{ thumbnail.thumbnail.url }}" class=" avatar-chat avatar avatar-skip">
+										{% endwith %}
 									{% else %}
-										<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
-											{{ obj.first.username }}
-											{% if threads_with_unred %}
-												{% for noti in threads_with_unred %}
-													{% if noti == obj %}
-														<span class="dot" id="{{ obj.id }}"></span>
-													{% endif %}
-												{% endfor %}
-											{% endif %}
-										<span class='obj_id_s' id="{{ obj.id }}"></span>
-										</div>
+										{% if opposite_user_photo %}
+											<img src="{{ opposite_user_photo.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
+										{% else %}
+											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
+										{% endif %}
 									{% endif %}
-									<div class="col-4 my-auto text-right arrow-select-chat">
-										<i class="fas fa-lg fa-chevron-right"></i>
-									</div>
 								</div>
-							</a></li>
-						{% else %}
-							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
-								<div class='row row-dialog my-auto mx-auto'>
-									<div class='col-4 col-md-3 my-auto'>
-										{% if obj.product %}
-											{% with obj.product.thumbnail.all|first as thumbnail %}
-												<img src="{{ thumbnail.thumbnail.url }}" class=" avatar-chat avatar avatar-skip">
-											{% endwith %}
-										{% else %}
-											{% if obj.second.profile_foto %}
-												<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
-											{% else %}
-												<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
-											{% endif %}
-										{% endif %}
-									</div>
-									{% if obj.product and request.user != obj.product.user %}
-										<div class='col-4 col-md-9 pl-md-0 text-left dialogs-username'>
-											<div class="row my-auto">
-												<div class="col-6 text-center">
-													<b>{{ obj.second.username }}</b>
-												</div>
-												<div class="col-6 text-right">
-													<small>{{ obj.product|to_user_currency:request }}</small>
-												</div>
-											</div>
-											<div class="row mt-2">
-												<div class="col-12 text-left my-auto">
-													<small>{{ obj.product.title }}</small>
-												</div>
-											</div>
-											<span class='obj_id_s' id="{{ obj.id }}"></span>
+								{% if obj.product and me != obj.product.user %}
+									<div class='col-4 col-md-9 pl-md-0 text-left dialogs-username'>
+									<div class="row my-auto">
+										<div class="col-6 text-center">
+											<b>{{ opposite_user_username }}</b>
 										</div>
-									{% else %}
+										<div class="col-6 text-right">
+											<small>{{ obj.product|to_user_currency:request }}</small>
+										</div>
+									</div>
+									<div class="row mt-2">
+										<div class="col-12 text-left my-auto">
+											<small>{{ obj.product.title }}</small>
+										</div>
+									</div>
+									<span class='obj_id_s' id="{{ obj.id }}"></span>
+									</div>
+								{% else %}
 									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
-										{{ obj.second.username }}
+										{{ opposite_user_username }}
 										{% if threads_with_unred %}
 											{% for noti in threads_with_unred %}
 												{% if noti == obj %}
@@ -453,196 +401,105 @@
 										{% endif %}
 									<span class='obj_id_s' id="{{ obj.id }}"></span>
 									</div>
-									{% endif %}
-									<div class="col-4 my-auto text-right arrow-select-chat">
-										<i class="fas fa-lg fa-chevron-right"></i>
-									</div>
+								{% endif %}
+								<div class="col-4 my-auto text-right arrow-select-chat">
+									<i class="fas fa-lg fa-chevron-right"></i>
 								</div>
-							</a></li>
-						{% endif %}
+							</div>
+						</a></li>
 					{% endfor %}
 				</ul>
 			</div>
 		</div>
-		<div class='col-12' id='chat_list_mobile'>
-			<div class='row opponent' id='{% if request.user != object.first %}{{ object.first.username }}{% else %}{{ object.second.username }}{% endif %}' style='height: 54px; background-color: #efefef;'>
-				<div class='col text-center my-auto'>
-						{% if request.user != object.first %}
-								<!-- THATS FOR THE FIRST USER IN THREAD -->
-								<div class='row justify-content-center'>
 
-									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
-									<div class="row row-avatar-arrow">
-									<div class="col-6 my-auto back-to-chatlist">
-									<button class="btn btn-back-to-list"><i class="fas fa-lg fa-chevron-left"></i></button>
-									</div>
-									<div class="col-6 col-md-12 foto-mobile">
-									{% if object.first.profile_foto %}
-										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
-											<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
-										</a>
-									{% else %}
-										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
-										</a>
-									{% endif %}
-									</div>
-									</div>
-									</div>
-
-									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
-									<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
-									{{ object.first.username }}
-									</a>
-									{% if object.product and request.user != object.product.user %}
-										<div style='float: right!important;'>
-											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
-												<input type="hidden" name="next" value="{{ request.path }}" readonly="true">
-												<input type="hidden" name="product" value="{{ object.product.id }}" readonly="true">
-												<input type="hidden" name="opponent" value="{{ object.first }}" readonly="true">
-												<button type="submit" class="btn btn-dark border-dark">Buy</button>
-											</form>
-											
-										</div>
-									{% elif object.product and request.user == object.product.user %}
-									<!-- Transaction initiated, but not confirmed -->
-										{% if object.transaction_thread.accepted == False %}
-											<div style='float: right!important;'>
-												<button class="btn btn-light border-dark">Sell</button>
-											</div>
-										{% endif %}
-									<!-- Transaction initiated, but not confirmed -->
-									{% endif %}
-									</div>
-								</div>
-						
-						{% else %}
-						<!-- THATS FOR THE SECOND USER -->
-								<div class='row justify-content-center'>
-									<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
-									<div class="row row-avatar-arrow">
-									<div class="col-6 my-auto back-to-chatlist">
-									<button class="btn btn-back-to-list"><i class="fas fa-lg fa-chevron-left"></i></button>
-									</div>
-									<div class="col-6 col-md-12 foto-mobile">
-									{% if object.second.profile_foto %}
-									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
-										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
-									</a>
-									{% else %}
-
-									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
-										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
-									</a>
-									{% endif %}
-									</div>
-									</div>
-									</div>
-
-									<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
-									<a href="{{ object.second.get_absolute_url }}" style='text-decoration: none; color: inherit'>
-									{{ object.second.username }}
-								    </a>
-									{% if object.product and request.user != object.product.user %}
-										<div style='float: right!important;'>
-											<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
-												<input type="hidden" name="next" value="{{ request.path }}" readonly="true">
-												<input type="hidden" name="product" value="{{ object.product.id }}" readonly="true">
-												<input type="hidden" name="opponent" value="{{ object.second }}" readonly="true">
-												<button type="submit" class="btn btn-dark border-dark">Buy</button>
-											</form>
-									
-										</div>
-									{% elif object.product and request.user == object.product.user %}
-									<!-- Transaction initiated, but not confirmed -->
-										{% if object.transaction_thread.accepted == False %}
-											<div style='float: right!important;'>
-												<button class="btn btn-light border-dark">Sell</button>
-											</div>
-										{% endif %}
-									<!-- Transaction initiated, but not confirmed -->
-									{% endif %}
-									</div>
-								</div>	
-						
-						{% endif %}
-					</div>
+		<div id='navbar-chat' class='col-12 p-0'>
+			<div class='navbar p-0' id='' style='width: 100%; background-color: #efefef;'>
+				<div class='col-6 col-md-5 text-right p-2 my-auto avatar-not-skipped'>
+				<div class="row row-avatar-arrow">
+				<div class="col-6 my-auto back-to-chatlist">
+				<button class="btn btn-back-to-list"><i class="fas fa-lg fa-chevron-left"></i></button>
 				</div>
-			
+				<div class="col-6 col-md-12 foto-mobile">
+					<a href="{{ opposite_user_url  }}" style='text-decoration: none; color: inherit'>
+					{% if opposite_user_photo %} <img src="{{ opposite_user_photo.url }}"  class="avatar-small avatar  ml-2 " alt="...">
+					{% else %} <img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
+					{% endif %}
+					</a>
+				</div>
+				</div>
+				</div>
 
+				<div class='col-6 col-md-7 text-left p-1 my-auto username-skip'>
+					<a href="{{ opposite_user_url  }}" style='text-decoration: none; color: inherit'>	
+					{{ opposite_user_username }}
+					</a>
+					{% if object.product and me != object.product.user %}
+						<div style='float: right!important;'>
+							<form method="POST" action="{% url 'orders:transaction_initiate' %}">{% csrf_token %}
+								<input type="hidden" name="next" value="{{ request.path }}" readonly="true">
+								<input type="hidden" name="product" value="{{ object.product.id }}" readonly="true">
+								<input type="hidden" name="opponent" value="{{ object }}" readonly="true">
+								<button type="submit" class="btn btn-dark border-dark">Buy</button>
+							</form>
+						</div>
+					{% elif object.product and me == object.product.user %}
+					<!-- Transaction initiated, but not confirmed -->
+						{% if object.transaction_thread.accepted == False %}
+							<div style='float: right!important;'>
+								<button class="btn btn-light border-dark">Sell</button>
+							</div>
+						{% endif %}
+					<!-- Transaction initiated, but not confirmed -->
+					{% endif %}
+				</div>
+			</div>
+		</div>
 
-
-
-
+		<div id='chat_list_mobile' class='col-12'>
 			<div class='row '>
 				<div class='col p-0'>
 					<ul id='chat-items'  >
-							{% for msg in chat_messages_ordered %}
-								<li>
-									<div class='row'>
+						{% for msg in chat_messages_ordered %}
+							<li>
+								<div class='row'>
 									<div class="col {% if msg.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
-
-											<input type="hidden" name="first_message_today" value="{{ msg.is_today }}" readonly="true">
-											<div hidden>
-												<span class='today'>{% trans 'Today' %}</span>
-												<hr class='hr-today'>
-											</div>
-
-
-										{% if msg.user == request.user %}
-
-											<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>
+										<input type="hidden" name="first_message_today" value="{{ msg.is_today }}" readonly="true">
+										<div hidden>
+											<span class='today'>{% trans 'Today' %}</span>
+											<hr class='hr-today'>
+										</div>
+										<div class='col-flex  mb-1 mt-1 p-2 pull-left msg-cloud {% if msg.user == request.user %}rounder-msg-cloud-right{% else %}rounder-msg-cloud-left{% endif %}'>
 											{{ msg.message }}<br>
-
 											<span class="timestamp"> {{ msg.timestamp|print_timestamp }}</span>
-
-											</div>
-
-										{% else %}
-
-
-											<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>
-											{{ msg.message }}<br>
-
-											<span class="timestamp"> {{ msg.timestamp|print_timestamp }}</span>
-											</div>
-
-										{% endif %}
-								
-					
+										</div>
 									</div>
 								</div>
-
-								</li>
-							{% endfor %}
+							</li>
+						{% endfor %}
 					</ul>
 				</div>
 			</div>
 
-
-
 			<form id='websocket-form' method='POST'>
-				<div class='row' style='background-color: #efefef;'>
-					{% csrf_token %}
-
-					<div class='col-10 my-auto pr-0'>
-						{{ form }}
-					</div>
-
-					<div class='col-2 my-auto'>
-						<button type='submit' class='btn' style='padding-left: 0rem !important'>
-							<i class="fas fa-paper-plane fa-2x"></i>
-						</button>
-					</div>
-
+			<div class='row' style='background-color: #efefef;'>
+				{% csrf_token %}
+				<div class='col-10 my-auto pr-0'>
+					{{ form }}
 				</div>
+				<div class='col-2 my-auto'>
+					<button type='submit' class='btn' style='padding-left: 0rem !important'>
+						<i class="fas fa-paper-plane fa-2x"></i>
+					</button>
+				</div>
+			</div>
 			</form>	
-
-
-
 		</div>
+
 	</div>
 	</div>
+
+	{% endwith %}
+
 	<script>
 
 		// Input autofocus

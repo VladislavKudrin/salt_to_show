@@ -16,8 +16,6 @@ from accounts.models import User
 from products.models import Product
 
 
-
-
 def set_chat_timezone(request):
     print('wtf')
 
@@ -44,9 +42,6 @@ class InboxView(LoginRequiredMixin, ListView):
         context['threads_with_unred'] = threads_with_unred
         context['chats'] = Thread.objects.by_recent_message(me)
         return context
-
-
-
 
 class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
     form_class = ComposeForm
@@ -87,6 +82,12 @@ class ThreadView(LoginRequiredMixin, FormMixin, DetailView):
         context['form'] = self.get_form()
         context['chat_messages_ordered'] = obj.chatmessage_set.all().order_by('pk')
         context['chats'] = Thread.objects.by_recent_message(self.request.user)
+
+        if self.request.user != self.get_object().first:
+            context['opposite_user'] = self.get_object().first
+        if self.request.user == self.get_object().first:
+            context['opposite_user'] = self.get_object().second
+
         if obj.product:
             print(obj.product, 'hi')
         # print(context['chats'])
