@@ -457,7 +457,7 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		context = super(ProductCheckoutView, self).get_context_data(*args,**kwargs)
 		context['title'] = _('Update your details')
 		context['password_btn'] = _('Change password')
-		context['buy_btn'] = ('Перейти к оплате')
+		context['buy_btn'] = _('Pay order')
 		context['product'] = self.product
 		return context
 
