@@ -13,6 +13,8 @@ from django.utils import timezone
 from django.utils.translation import gettext as _ 
 from ecommerce.utils import unique_key_generator, random_string_generator_username
 from products.models import Product
+from django.templatetags.static import static
+
 
 DEFAULT_ACTIVATION_DAYS = getattr(settings, "DEFAULT_ACTIVATION_DAYS", 7)
 
@@ -125,6 +127,12 @@ class User(AbstractBaseUser):
 
 	def get_absolute_url(self):
 		return reverse('profile', kwargs={"username":self.username})
+
+	def get_profile_photo(self):
+		if self.profile_foto:
+			return self.profile_foto.url
+		else: 
+			return static('img/user_noname.png')
 
 	def get_full_name(self):
 		if self.full_name:

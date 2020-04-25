@@ -1,0 +1,56 @@
+
+{% load static %}
+{% load to_user_currency %}
+
+
+							<li id='dialog' class="mr-0"><a href="{{ url }}" style='text-decoration: none; color: inherit'>
+								<div class='row row-dialog my-auto mx-auto'>
+									<div class='col-4 col-md-3 my-auto'>
+										{% if obj.product %}
+											{% with obj.product.thumbnail.all|first as thumbnail %}
+												<img src="{{ thumbnail.thumbnail.url }}" class=" avatar-chat avatar avatar-skip">
+											{% endwith %}
+										{% else %}
+											<img src="{{ photo }}"  class="avatar-chat avatar  avatar-skip" alt="...">
+										{% endif %}
+									</div>
+									{% if obj.product and request.user != obj.product.user %}
+										<div class='col-4 col-md-9 pl-md-0 text-left dialogs-username'>
+										<div class="row my-auto">
+											<div class="col-6 text-center">
+												<b>{{ username }}</b>
+											</div>
+											<div class="col-6 text-right">
+												<small>{{ obj.product|to_user_currency:request }}</small>
+											</div>
+										</div>
+										<div class="row mt-2">
+											<div class="col-12 text-left my-auto">
+												<small>{{ obj.product.title }}</small>
+											</div>
+										</div>
+										<span class='obj_id_s' id="{{ obj.id }}"></span>
+										</div>
+									{% else %}
+										<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
+											{{ username }}
+											{% if threads_with_unred %}
+												{% for noti in threads_with_unred %}
+													{% if noti == obj %}
+														<span class="dot" id="{{ obj.id }}"></span>
+													{% endif %}
+												{% endfor %}
+											{% endif %}
+										<span class='obj_id_s' id="{{ obj.id }}"></span>
+										</div>
+									{% endif %}
+									<div class="col-4 my-auto text-right arrow-select-chat">
+										<i class="fas fa-lg fa-chevron-right"></i>
+									</div>
+								</div>
+							</a>
+						</li>
+
+
+
+

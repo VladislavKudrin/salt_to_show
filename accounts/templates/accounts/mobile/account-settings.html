@@ -71,11 +71,7 @@
           <div class="col-12">
             <div class="row">
               <div class="col-xs-6 col-md-4 text-center">
-                {% if object.profile_foto %}
-                  <img data-src="{{ object.profile_foto.url }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
-                {% else %}
-                  <img data-src="{% static 'img/user_noname.png' %}" class="avatar"  style="width:92px; height: 92px; margin-bottom: 1rem;">
-                {% endif %}
+                  <img data-src="{{ object.get_profile_photo }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
                 {{user_form.profile_foto|as_crispy_field}} 
               </div>
               <div class="col-xs-6 col-md-4  ">

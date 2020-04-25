@@ -82,6 +82,7 @@ class Thread(models.Model):
         if self.product:
             return reverse('chat:chat-thread-product', kwargs={"username":self.first.username, "product_id":self.product.slug})
         return reverse('chat:chat-thread', kwargs={"username":self.first.username})
+        
     def get_absolute_url_second(self):
         if self.product:
             return reverse('chat:chat-thread-product', kwargs={"username":self.second.username, "product_id":self.product.slug})

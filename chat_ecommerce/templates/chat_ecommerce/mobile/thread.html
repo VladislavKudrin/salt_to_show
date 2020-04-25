@@ -339,7 +339,7 @@
 <body>
 	{% include 'mobile/navbar.html' %}
 
-	{% with me=request.user my_url=request.user.get_absolute_url my_photo=request.user.profile_foto opposite_user_username=opposite_user.username opposite_user_url=opposite_user.get_absolute_url opposite_user_photo=opposite_user.profile_foto %}
+	{% with me=request.user my_url=request.user.get_absolute_url my_photo=request.user.get_profile_photo opposite_user_username=opposite_user.username opposite_user_url=opposite_user.get_absolute_url opposite_user_photo=opposite_user.get_profile_photo %}
 
 	<div class='container-fluid'> 
 	<div class='row'>
@@ -348,65 +348,22 @@
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ my_url  }}" style='text-decoration: none; color: inherit'>
-					{% if my_photo %} <img src="{{ my_photo.url }}"  class="avatar-small avatar  ml-2" alt="...">
-					{% else %} <img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
-					{% endif %}
+						<img src="{{ my_photo }}" class="avatar-small avatar  ml-2" alt="...">
 					</a>
 				</div>
 			</div>
 			<div class='row alldialogs'>
-				<ul id='dialogs'  style="width: 100%">
+				<ul id='dialogs' class='my-custom-scrollbar' style="width: 100%">
 					{% for obj in chats %}
-						<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_first }}" style='text-decoration: none; color: inherit'>
-							<div class='row row-dialog my-auto mx-auto'>
-								<div class='col-4 col-md-3 my-auto'>
-									{% if obj.product %}
-										{% with obj.product.thumbnail.all|first as thumbnail %}
-											<img src="{{ thumbnail.thumbnail.url }}" class=" avatar-chat avatar avatar-skip">
-										{% endwith %}
-									{% else %}
-										{% if opposite_user_photo %}
-											<img src="{{ opposite_user_photo.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
-										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
-										{% endif %}
-									{% endif %}
-								</div>
-								{% if obj.product and me != obj.product.user %}
-									<div class='col-4 col-md-9 pl-md-0 text-left dialogs-username'>
-									<div class="row my-auto">
-										<div class="col-6 text-center">
-											<b>{{ opposite_user_username }}</b>
-										</div>
-										<div class="col-6 text-right">
-											<small>{{ obj.product|to_user_currency:request }}</small>
-										</div>
-									</div>
-									<div class="row mt-2">
-										<div class="col-12 text-left my-auto">
-											<small>{{ obj.product.title }}</small>
-										</div>
-									</div>
-									<span class='obj_id_s' id="{{ obj.id }}"></span>
-									</div>
-								{% else %}
-									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
-										{{ opposite_user_username }}
-										{% if threads_with_unred %}
-											{% for noti in threads_with_unred %}
-												{% if noti == obj %}
-													<span class="dot" id="{{ obj.id }}"></span>
-												{% endif %}
-											{% endfor %}
-										{% endif %}
-									<span class='obj_id_s' id="{{ obj.id }}"></span>
-									</div>
-								{% endif %}
-								<div class="col-4 my-auto text-right arrow-select-chat">
-									<i class="fas fa-lg fa-chevron-right"></i>
-								</div>
-							</div>
-						</a></li>
+						{% if me != obj.first %}			
+							{% with url=obj.get_absolute_url_first photo=obj.first.get_profile_photo	username=obj.first.username %}
+								{% include 'chat_ecommerce/mobile/alldialogs.html' %}
+							{% endwith %}
+						{% else %}			
+							{% with url=obj.get_absolute_url_second photo=obj.second.get_profile_photo username=obj.second.username %}
+								{% include 'chat_ecommerce/mobile/alldialogs.html' %}
+							{% endwith %}		
+						{% endif %}
 					{% endfor %}
 				</ul>
 			</div>
@@ -421,9 +378,7 @@
 				</div>
 				<div class="col-6 col-md-12 foto-mobile">
 					<a href="{{ opposite_user_url  }}" style='text-decoration: none; color: inherit'>
-					{% if opposite_user_photo %} <img src="{{ opposite_user_photo.url }}"  class="avatar-small avatar  ml-2 " alt="...">
-					{% else %} <img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
-					{% endif %}
+						<img src="{{ opposite_user_photo }}" class="avatar-small avatar  ml-2" alt="...">
 					</a>
 				</div>
 				</div>
@@ -462,13 +417,13 @@
 						{% for msg in chat_messages_ordered %}
 							<li>
 								<div class='row'>
-									<div class="col {% if msg.user == request.user %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
+									<div class="col {% if msg.user == me %}pull-right{% else %}pull-left{% endif %}" id='chat-message'>
 										<input type="hidden" name="first_message_today" value="{{ msg.is_today }}" readonly="true">
 										<div hidden>
 											<span class='today'>{% trans 'Today' %}</span>
 											<hr class='hr-today'>
 										</div>
-										<div class='col-flex  mb-1 mt-1 p-2 pull-left msg-cloud {% if msg.user == request.user %}rounder-msg-cloud-right{% else %}rounder-msg-cloud-left{% endif %}'>
+										<div class='col-flex  mb-1 mt-1 p-2 pull-left msg-cloud {% if msg.user == me %}rounder-msg-cloud-right{% else %}rounder-msg-cloud-left{% endif %}'>
 											{{ msg.message }}<br>
 											<span class="timestamp"> {{ msg.timestamp|print_timestamp }}</span>
 										</div>
@@ -532,6 +487,7 @@
 			function(e){
 				$('#dialog_list').attr('style', 'display:block!important')
 				$('#chat_list_mobile').attr('style', 'display:none!important')
+				$('#navbar-chat').attr('style', 'display:none!important')
 			})//click btn
 	</script>
  	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>

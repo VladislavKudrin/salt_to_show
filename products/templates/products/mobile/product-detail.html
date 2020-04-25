@@ -221,11 +221,9 @@
 			<div class="col-12 pt-4">
 				<div class="row">
 					<div class="col-3 pr-0">
-						{% if object.user.profile_foto %}
-							<a href='{{ object.user.get_absolute_url }}'><img  data-src="{{ object.user.profile_foto.url }}"  class=" avatar-pdv" alt="..." ></a>
-						{% else %}
-							<a href='{{ object.user.get_absolute_url }}'><img data-src="{% static 'img/user_noname.png' %}" class="avatar-pdv" ></a>
-						{% endif %}
+							<a href='{{ object.user.get_absolute_url }}'>
+								<img  data-src="{{ object.user.get_profile_photo }}"  class=" avatar-pdv" alt="..." >
+							</a>
 					</div>
 					<div class="col-9 pl-0">
 						<div class="row">

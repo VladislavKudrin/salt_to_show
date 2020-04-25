@@ -228,11 +228,7 @@ button:focus {
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
-					{% if request.user.profile_foto %}
-						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2" alt="...">
-					{% else %}
-						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
-					{% endif %}
+						<img src="{{ request.user.get_profile_photo }}"  class="avatar-small avatar  ml-2" alt="...">
 					</a>
 				</div>
 			</div>
@@ -244,11 +240,7 @@ button:focus {
 							
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-4 my-auto'>
-										{% if obj.first.profile_foto %}
-											<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
-										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
-										{% endif %}
+											<img src="{{ obj.first.get_profile_photo }}"  class="avatar-chat avatar  avatar-skip" alt="...">
 									</div>
 									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
 										{{ obj.first.username }}
@@ -275,11 +267,7 @@ button:focus {
 							<li id='dialog' class="mr-0"><a href="{{ obj.get_absolute_url_second }}" style='text-decoration: none;color: inherit;'>
 								<div class='row row-dialog my-auto mx-auto'>
 									<div class='col-4 my-auto'>
-										{% if obj.second.profile_foto %}
-											<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
-										{% else %}
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
-										{% endif %}
+											<img src="{{ obj.second.get_profile_photo }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
 									</div>
 									<div class='col-4 col-md-8 text-left my-auto dialogs-username'>
 										{{ obj.second.username }}

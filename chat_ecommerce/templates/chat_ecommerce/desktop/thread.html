@@ -354,11 +354,7 @@ button:focus {
 			<div class='row' style='height: 54px; background-color: #efefef;'>
 				<div class='col text-center my-auto'>
 					<a href="{{ request.user.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
-					{% if request.user.profile_foto %}
-						<img src="{{ request.user.profile_foto.url }}"  class="avatar-small avatar  ml-2" alt="...">
-					{% else %}
-						<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar">
-					{% endif %}
+						<img src="{{ request.user.get_profile_photo }}"  class="avatar-small avatar  ml-2" alt="...">
 					</a>
 				</div>
 			</div>
@@ -374,11 +370,7 @@ button:focus {
 												<img src="{{ thumbnail.thumbnail.url }}" class=" avatar-chat avatar avatar-skip">
 											{% endwith %}
 										{% else %}
-											{% if obj.first.profile_foto %}
-												<img src="{{ obj.first.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="...">
-											{% else %}
-												<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip"  >
-											{% endif %}
+												<img src="{{ obj.first.get_profile_photo }}"  class="avatar-chat avatar  avatar-skip" alt="...">
 										{% endif %}
 									</div>
 									{% if obj.product and request.user != obj.product.user %}
@@ -425,11 +417,8 @@ button:focus {
 												<img src="{{ thumbnail.thumbnail.url }}" class=" avatar-chat avatar avatar-skip">
 											{% endwith %}
 										{% else %}
-											{% if obj.second.profile_foto %}
-												<img src="{{ obj.second.profile_foto.url }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
-											{% else %}
-												<img src="{% static 'img/user_noname.png' %}" class=" avatar-chat avatar avatar-skip" >
-											{% endif %}
+												<img src="{{ obj.second.get_profile_photo }}"  class="avatar-chat avatar  avatar-skip" alt="..." >
+
 										{% endif %}
 									</div>
 									{% if obj.product and request.user != obj.product.user %}
@@ -491,15 +480,11 @@ button:focus {
 									<button class="btn btn-back-to-list"><i class="fas fa-lg fa-chevron-left"></i></button>
 									</div>
 									<div class="col-6 col-md-12 foto-mobile">
-									{% if object.first.profile_foto %}
-										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
-											<img src="{{ object.first.profile_foto.url }}"  class="avatar-small avatar  ml-2 " alt="...">
+
+										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
+											<img src="{{ object.first.get_profile_photo }}"  class="avatar-small avatar  ml-2 " alt="...">
 										</a>
-									{% else %}
-										<a href="{{ object.first.get_absolute_url  }}" style='text-decoration: none; color: inherit'>	
-											<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
-										</a>
-									{% endif %}
+
 									</div>
 									</div>
 									</div>
@@ -539,16 +524,11 @@ button:focus {
 									<button class="btn btn-back-to-list"><i class="fas fa-lg fa-chevron-left"></i></button>
 									</div>
 									<div class="col-6 col-md-12 foto-mobile">
-									{% if object.second.profile_foto %}
+				
 									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
-										<img src="{{ object.second.profile_foto.url }}"  class="avatar-small avatar ml-2 " alt="..." >
+										<img src="{{ object.second.get_profile_photo }}"  class="avatar-small avatar ml-2 " alt="..." >
 									</a>
-									{% else %}
-
-									<a href="{{ object.second.get_absolute_url  }}" style='text-decoration: none; color: inherit'>
-										<img src="{% static 'img/user_noname.png' %}" class=" avatar-small avatar "  >
-									</a>
-									{% endif %}
+									
 									</div>
 									</div>
 									</div>
