@@ -14,6 +14,9 @@ from django import forms
 from django.contrib.auth.forms import PasswordResetForm
 
 
+from django.contrib.auth.forms import PasswordChangeForm
+
+
 User = get_user_model()
 
 
@@ -190,10 +193,24 @@ class UserDetailChangeForm(forms.ModelForm):
             raise forms.ValidationError(_("You must select a region"))
         return Region.objects.filter(region=data).first()
 
+
 class PasswordResetForm(PasswordResetForm):
     email  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control labels-placement'}))
 
     def __init__(self,  *args, **kwargs):
         super(PasswordResetForm, self).__init__(*args, **kwargs)
         print(self.fields)
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
+
+    def __init__(self,  *args, **kwargs):
+        super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].label = _('Old password')
+        self.fields['new_password1'].label = _('New password')
+        self.fields['new_password1'].help_text = _('Min 8 characters, digits + numbers')
+        self.fields['new_password2'].label = _('Confirm password')
+
 
