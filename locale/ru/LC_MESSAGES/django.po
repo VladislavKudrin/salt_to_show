@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-25 13:19+0000\n"
-"PO-Revision-Date: 2020-04-25 15:09+0200\n"
+"POT-Creation-Date: 2020-04-26 16:49+0000\n"
+"PO-Revision-Date: 2020-04-26 19:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -20,7 +20,7 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: accounts/forms.py:29
+#: accounts/forms.py:33
 #, python-brace-format
 msgid ""
 "This email does not exist or already acivated. Would you like to <a href="
@@ -29,54 +29,66 @@ msgstr ""
 "Такого мейла не существует или он уже активирован. Хочешь <a href={link}"
 ">зарегистрироваться</a>?"
 
-#: accounts/forms.py:79
+#: accounts/forms.py:83 accounts/forms.py:211 accounts/forms.py:221
 msgid "Min 8 characters, digits + numbers"
 msgstr "Минимум 8 символов и цифр"
 
-#: accounts/forms.py:80
+#: accounts/forms.py:84
 msgid "Your Email"
 msgstr "Твой Email"
 
-#: accounts/forms.py:83
+#: accounts/forms.py:87
 #, python-brace-format
 msgid "Go to <a href='{resend_link}'>resend confirmation email</a>."
 msgstr ""
 "<a href={resend_link}> (Кликни, чтобы выслать подтверждение еще раз)</a>."
 
-#: accounts/forms.py:144
+#: accounts/forms.py:148
 msgid ""
 "Use this space to talk about your personal style but hold the personal "
 "contact details"
 msgstr "Расскажи здесь о себе (не указывай контактной информации)"
 
-#: accounts/forms.py:151 accounts/forms.py:172
+#: accounts/forms.py:155 accounts/forms.py:176
 msgid "-- Please select your region --"
 msgstr "— Выбери регион —"
 
-#: accounts/forms.py:160
+#: accounts/forms.py:164
 msgid "Email"
 msgstr "Твой Email"
 
-#: accounts/forms.py:161
+#: accounts/forms.py:165
 msgid "Username"
 msgstr "Юзернейм"
 
-#: accounts/forms.py:162
+#: accounts/forms.py:166
 msgid "Region"
 msgstr "Регион"
 
-#: accounts/forms.py:163
+#: accounts/forms.py:167
 msgid "Recieve marketing email?"
 msgstr "Получать рассылку?"
 
-#: accounts/forms.py:168
+#: accounts/forms.py:172
 msgctxt "profile_update"
 msgid "Update"
 msgstr "Обновить"
 
-#: accounts/forms.py:188
+#: accounts/forms.py:192
 msgid "You must select a region"
 msgstr "Выбери регион"
+
+#: accounts/forms.py:209
+msgid "Old password"
+msgstr "Старый пароль"
+
+#: accounts/forms.py:210 accounts/forms.py:220
+msgid "New password"
+msgstr "Новый пароль"
+
+#: accounts/forms.py:212 accounts/forms.py:222
+msgid "Confirm password"
+msgstr "Подтверди пароль"
 
 #: accounts/models.py:278
 msgid "1-Click Account Verification"
@@ -128,7 +140,7 @@ msgstr "Обновить профиль"
 #: accounts/templates/accounts/snippets/begin-chat.html:16
 #: accounts/templates/accounts/snippets/begin-chat.html:27
 #: accounts/templates/accounts/snippets/begin-chat.html:29
-#: templates/base/footer.html:129 templates/base/footer.html:157
+#: templates/base/footer.html:117 templates/base/footer.html:142
 #: templates/mobile/footer.html:129
 msgid "Contact"
 msgstr "Написать"
@@ -145,61 +157,63 @@ msgstr "Выбери свой регион"
 msgid "Save changes"
 msgstr "Сохранить"
 
-#: accounts/views.py:87 accounts/views.py:200 ecommerce/utils.py:82
+#: accounts/views.py:89 accounts/views.py:202 ecommerce/utils.py:82
 msgid "You're in"
 msgstr "Ты на сайте"
 
-#: accounts/views.py:96
+#: accounts/views.py:98
 #, python-brace-format
 msgid ""
 "Your email has already been confirmed. Do you need to <a href="
 "\"{link}\">reset your password</a>?"
 msgstr "Твой Мейл уже активирован. Хочешь <a href={link}>сбросить пароль</a>?"
 
-#: accounts/views.py:114
+#: accounts/views.py:116
 msgid "Activation link was sent. Check your Email!"
 msgstr "Активация отправлена. Проверь почту!"
 
-#: accounts/views.py:150
+#: accounts/views.py:152
 msgid "Login | Register"
 msgstr "Войти | Зарегистрироваться"
 
-#: accounts/views.py:151
+#: accounts/views.py:153
 msgid "Or"
 msgstr "Или"
 
-#: accounts/views.py:152
+#: accounts/views.py:154
 msgid "Forgot password?"
 msgstr "Забыл_а пароль?"
 
-#: accounts/views.py:178
+#: accounts/views.py:180
 msgid "Please check your email to confirm your account. "
 msgstr "Пожалуйста, проверь свою почту, чтобы подтвердить аккаунт. "
 
-#: accounts/views.py:185
+#: accounts/views.py:187
 msgid "Email not confirmed. "
 msgstr "Мейл не подтвержден. "
 
-#: accounts/views.py:192
+#: accounts/views.py:194
 msgid "The password seems to be wrong. Try again!"
 msgstr "Неверный пароль. Попробуй еще раз!"
 
-#: accounts/views.py:319 products/views.py:458
+#: accounts/views.py:321 products/views.py:458
 msgid "Update your details"
 msgstr "Обновить аккаунт"
 
-#: accounts/views.py:320 products/views.py:459
-#: templates/registration/password_change_form.html:26
+#: accounts/views.py:322 products/views.py:459
+#: templates/desktop/password_change_form.html:26
+#: templates/mobile/password_change_form.html:30
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: accounts/views.py:321
+#: accounts/views.py:323
 #: products/templates/products/snippets/not_valid_card_modal.html:117
-#: products/views.py:301 templates/registration/password_change_form.html:31
+#: products/views.py:301 templates/desktop/password_change_form.html:31
+#: templates/mobile/password_change_form.html:35
 msgid "Save"
 msgstr "Сохранить"
 
-#: accounts/views.py:322
+#: accounts/views.py:324
 msgid "Logout"
 msgstr "Выйти"
 
@@ -901,11 +915,11 @@ msgstr ""
 #: orders/templates/orders/snippets/mobile/order_begin_chat.html:5
 #: products/views.py:98
 msgid "Contact seller"
-msgstr "Связаться с продавцом"
+msgstr "Написать продавцу"
 
 #: orders/templates/orders/snippets/mobile/order_begin_chat.html:7
 msgid "Contact buyer"
-msgstr "Написать продавцу"
+msgstr "Написать покупателю"
 
 #: orders/templates/orders/snippets/mobile/order_complete_form.html:19
 msgid "Received order"
@@ -1358,10 +1372,8 @@ msgid ""
 msgstr "Айтем больше не доступен. Чекни другие! "
 
 #: products/views.py:460
-#, fuzzy
-#| msgid "My orders"
 msgid "Pay order"
-msgstr "Заказы"
+msgstr "Оплатить заказ"
 
 #: search/templates/search/snippets/search-form.html:60
 #: templates/base/navbar.html:282 templates/mobile/navbar.html:229
@@ -1380,16 +1392,16 @@ msgstr "Ой … Что-то пошло не так. Мы оповещены и 
 msgid "Oops ... This page doesn't exist! :("
 msgstr "Ой … Tакой страницы не существует! :("
 
-#: templates/base/footer.html:128 templates/base/footer.html:156
+#: templates/base/footer.html:116 templates/base/footer.html:141
 msgid "About"
 msgstr "О нас"
 
-#: templates/base/footer.html:130 templates/base/footer.html:158
+#: templates/base/footer.html:118 templates/base/footer.html:143
 #: templates/mobile/footer.html:130
 msgid "Terms"
 msgstr "Оферта"
 
-#: templates/base/footer.html:131 templates/base/footer.html:159
+#: templates/base/footer.html:119 templates/base/footer.html:144
 #: templates/mobile/footer.html:131
 msgid "Privacy"
 msgstr "Прайваси"
@@ -1496,6 +1508,25 @@ msgstr ""
 "вреда окружающей среде. SALT при этом лишь выполняет скромную роль "
 "посредника в этой сделке.\n"
 "        "
+
+#: templates/desktop/activation-form.html:17
+#: templates/mobile/activation-form.html:31
+msgid "Activation Error"
+msgstr "Ошибка активации"
+
+#: templates/desktop/activation-form.html:18
+#: templates/mobile/activation-form.html:32
+msgid "Please try again"
+msgstr "Попробуй еще раз"
+
+#: templates/desktop/activation-form.html:20
+msgid "Re-activate your Email below"
+msgstr "Повторная активация Мейла"
+
+#: templates/desktop/activation-form.html:27
+#: templates/mobile/activation-form.html:39
+msgid "Resend Activation"
+msgstr "Прислать активацию"
 
 #: templates/desktop/faq.html:86 templates/desktop/faq.html:98
 #: templates/mobile/faq.html:97 templates/mobile/faq.html:109
@@ -1677,6 +1708,53 @@ msgstr ""
 "\n"
 "- Пока что никакой! Мы делаем все на чистом энтузиазме и будем держать эту "
 "платформу бесплатной как можно дольше\n"
+
+#: templates/desktop/password_change_done.html:29
+#: templates/mobile/password_change_done.html:8
+msgid "Password changed successfully"
+msgstr "Пароль успешно изменен"
+
+#: templates/desktop/password_reset_complete.html:8
+#: templates/mobile/password_reset_complete.html:29
+msgid "Password reset complete"
+msgstr "Восстановление пароля прошло успешно"
+
+#: templates/desktop/password_reset_complete.html:9
+#: templates/mobile/password_reset_complete.html:30
+msgid "Login now"
+msgstr "Войти сейчас"
+
+#: templates/desktop/password_reset_confirm.html:16
+#: templates/mobile/password_reset_confirm.html:30
+msgid "Set your new password"
+msgstr "Укажи свой новый пароль"
+
+#: templates/desktop/password_reset_confirm.html:21
+#: templates/mobile/password_reset_confirm.html:35
+msgctxt "save_new_password"
+msgid "Submit"
+msgstr "Подтвердить"
+
+#: templates/desktop/password_reset_done.html:8
+#: templates/mobile/password_reset_done.html:29
+msgid "Almost there..."
+msgstr "Еще чуть-чуть…"
+
+#: templates/desktop/password_reset_done.html:9
+#: templates/mobile/password_reset_done.html:30
+msgid "Check your email to reset password"
+msgstr "Чекни свой мейл, чтобы восстановить пароль"
+
+#: templates/desktop/password_reset_form.html:18
+#: templates/mobile/password_reset_form.html:30
+msgid "Reset password"
+msgstr "Сбросить пароль"
+
+#: templates/desktop/password_reset_form.html:24
+#: templates/mobile/password_reset_form.html:36
+msgctxt "password_reset"
+msgid "Submit"
+msgstr "Сбросить"
 
 #: templates/desktop/privacy.html:24 templates/mobile/privacy.html:39
 msgid ""
@@ -2117,6 +2195,171 @@ msgstr ""
 "пользователей удобным для нее способом.</p>\n"
 "</div>\n"
 
+#: templates/emails/notif.html:27
+msgid "GO TO CHATS"
+msgstr "ПЕРЕЙТИ В ДИАЛОГИ"
+
+#: templates/emails/notif.txt:2
+msgid ""
+"\n"
+"Hey!\n"
+"\n"
+"\n"
+"You have new messages. Check them out!\n"
+"\n"
+"\n"
+"SALT\n"
+"\n"
+msgstr ""
+"\n"
+"Приветик,\n"
+"\n"
+"\n"
+"У тебя есть непрочитанные сообщения. Не забудь их чекнуть!\n"
+"\n"
+"\n"
+"SALT\n"
+"\n"
+
+#: templates/emails/password_reset.html:9
+#, python-format
+msgid ""
+"\n"
+"\t<p>Hey!</p> \n"
+"\n"
+"\t<p>Reset your password on %(domain)s for %(user)s:</p>\n"
+"\t"
+msgstr ""
+"\n"
+"\t<p>Привет!</p> \n"
+"\n"
+"\t<p>Перейди по ссылке, чтобы восстановить пароль на  %(domain)s для "
+"%(user)s:</p>\n"
+"\t"
+
+#: templates/emails/password_reset.html:18
+msgid ""
+"\n"
+"\t<p>Thank you!</p>\n"
+"\t<p>SALT</p>\n"
+"\t"
+msgstr ""
+"\n"
+"\t<p>Спасибо!</p>\n"
+"\t<p>SALT</p>\n"
+"\t"
+
+#: templates/emails/password_reset.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hello, \n"
+"\n"
+"Reset your password on %(domain)s for %(user)s:\n"
+msgstr ""
+"\n"
+"Привет, \n"
+"\n"
+"Сброс пароля на %(domain)s для %(user)s:\n"
+
+#: templates/emails/verify.html:2
+#, python-format
+msgid ""
+"\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
+"\n"
+"\t<p>Hey!</p> \n"
+"\n"
+"\t<p>Please activate your account for %(email)s by clicking the link below:</"
+"p>\n"
+"\t<p><a href='%(path)s'>%(path)s</a></p>\n"
+"\t<p>Once you activate, you can login!</p>\n"
+"\n"
+"\t<p>Thank you!</p>\n"
+"\t<p>SALT</p>\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+msgstr ""
+"\n"
+"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
+"serif; padding: 32px 32px;\">\n"
+"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
+"black; font-size: 36px\">SALT</a>\n"
+"</div>\n"
+"\n"
+"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
+"serif;text-align: center; padding: 32px 32px;\">\n"
+"\n"
+"\t<p>Салют!</p> \n"
+"\n"
+"\t<p>Пожалуйста, активируй свой аккаунт %(email)s , нажав на:</p>\n"
+"\t<p><a href='%(path)s'>%(path)s</a></p>\n"
+"\t<p>После этого ты сможешь зайти на сайт.</p>\n"
+"\n"
+"\t<p>Спасибо, что ты с нами!</p>\n"
+"\t<p>SALT</p>\n"
+"\n"
+"\n"
+"\t<div>\n"
+"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
+"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175348.png\"></a>\n"
+"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
+"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
+"png/512/2175/2175198.png\"></a>\n"
+"\t</div>\n"
+"\n"
+"</div>\n"
+
+#: templates/emails/verify.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hey, \n"
+"\n"
+"Please activate your account for %(email)s by clicking the link below:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"Once you activate, you can login!\n"
+"\n"
+"\n"
+"Thank you,\n"
+"SALT\n"
+"\n"
+msgstr ""
+"\n"
+"Привет, \n"
+"\n"
+"\n"
+"Пожалуйста, активируй %(email)s , нажав на:\n"
+"\n"
+"%(path)s\n"
+"\n"
+"После этого можешь пользоваться аккаунтом.\n"
+"\n"
+"\n"
+"Спасибо,\n"
+"\n"
+"SALT\n"
+
 #: templates/languages/trans_custom/translation_custom.html:5
 msgid "Adults"
 msgstr "Взрослые"
@@ -2321,197 +2564,9 @@ msgstr "Доставлено"
 msgid "Why SALT?"
 msgstr "Почему SALT?"
 
-#: templates/registration/activation-error.html:17
-msgid "Activation Error"
-msgstr "Ошибка активации"
-
-#: templates/registration/activation-error.html:18
-msgid "Please try again"
-msgstr "Попробуй еще раз"
-
-#: templates/registration/activation-error.html:20
-msgid "Re-activate your Email below"
-msgstr "Повторная активация Мейла"
-
-#: templates/registration/activation-error.html:27
-msgid "Resend Activation"
-msgstr "Прислать активацию"
-
-#: templates/registration/emails/notif.html:27
-msgid "GO TO CHATS"
-msgstr "ПЕРЕЙТИ В ДИАЛОГИ"
-
-#: templates/registration/emails/notif.txt:2
-msgid ""
-"\n"
-"Hey!\n"
-"\n"
-"\n"
-"You have new messages. Check them out!\n"
-"\n"
-"\n"
-"SALT\n"
-"\n"
-msgstr ""
-"\n"
-"Приветик,\n"
-"\n"
-"\n"
-"У тебя есть непрочитанные сообщения. Не забудь их чекнуть!\n"
-"\n"
-"\n"
-"SALT\n"
-"\n"
-
-#: templates/registration/emails/verify.html:2
-#, python-format
-msgid ""
-"\n"
-"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
-"serif; padding: 32px 32px;\">\n"
-"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
-"black; font-size: 36px\">SALT</a>\n"
-"</div>\n"
-"\n"
-"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
-"serif;text-align: center; padding: 32px 32px;\">\n"
-"\n"
-"\t<p>Hey!</p> \n"
-"\n"
-"\t<p>Please activate your account for %(email)s by clicking the link below:</"
-"p>\n"
-"\t<p><a href='%(path)s'>%(path)s</a></p>\n"
-"\t<p>Once you activate, you can login!</p>\n"
-"\n"
-"\t<p>Thank you!</p>\n"
-"\t<p>SALT</p>\n"
-"\n"
-"\n"
-"\t<div>\n"
-"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
-"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
-"png/512/2175/2175348.png\"></a>\n"
-"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
-"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
-"png/512/2175/2175198.png\"></a>\n"
-"\t</div>\n"
-"\n"
-"</div>\n"
-msgstr ""
-"\n"
-"<div style=\"text-align: center; padding-bottom: 16px; font-family: sans-"
-"serif; padding: 32px 32px;\">\n"
-"  <a href=\"https://www.saltish.co/\" style=\"text-decoration: none; color: "
-"black; font-size: 36px\">SALT</a>\n"
-"</div>\n"
-"\n"
-"<div style=\"background-color: #eaeaea4f; font-size: 20px; font-family: sans-"
-"serif;text-align: center; padding: 32px 32px;\">\n"
-"\n"
-"\t<p>Салют!</p> \n"
-"\n"
-"\t<p>Пожалуйста, активируй свой аккаунт %(email)s , нажав на:</p>\n"
-"\t<p><a href='%(path)s'>%(path)s</a></p>\n"
-"\t<p>После этого ты сможешь зайти на сайт.</p>\n"
-"\n"
-"\t<p>Спасибо, что ты с нами!</p>\n"
-"\t<p>SALT</p>\n"
-"\n"
-"\n"
-"\t<div>\n"
-"\t\t<a href=\"https://vk.com/saltmarketplace\" ><img style='width: 20px; "
-"height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
-"png/512/2175/2175348.png\"></a>\n"
-"\t\t<a href=\"https://www.instagram.com/saltish.co/\" ><img style='width: "
-"20px; height: 20px; margin: 0 4px;' src=\"https://image.flaticon.com/icons/"
-"png/512/2175/2175198.png\"></a>\n"
-"\t</div>\n"
-"\n"
-"</div>\n"
-
-#: templates/registration/emails/verify.txt:2
-#, python-format
-msgid ""
-"\n"
-"Hey, \n"
-"\n"
-"Please activate your account for %(email)s by clicking the link below:\n"
-"\n"
-"%(path)s\n"
-"\n"
-"Once you activate, you can login!\n"
-"\n"
-"\n"
-"Thank you,\n"
-"SALT\n"
-"\n"
-msgstr ""
-"\n"
-"Привет, \n"
-"\n"
-"\n"
-"Пожалуйста, активируй %(email)s , нажав на:\n"
-"\n"
-"%(path)s\n"
-"\n"
-"После этого можешь пользоваться аккаунтом.\n"
-"\n"
-"\n"
-"Спасибо,\n"
-"\n"
-"SALT\n"
-
-#: templates/registration/password_change_done.html:8
-msgid "Password changed successfully"
-msgstr "Пароль успешно изменен"
-
-#: templates/registration/password_reset_complete.html:8
-msgid "Password reset complete"
-msgstr "Восстановление пароля прошло успешно"
-
-#: templates/registration/password_reset_complete.html:9
-msgid "Login now"
-msgstr "Войти сейчас"
-
-#: templates/registration/password_reset_confirm.html:16
-msgid "Set your new password"
-msgstr "Укажи свой новый пароль"
-
-#: templates/registration/password_reset_confirm.html:21
-msgctxt "save_new_password"
-msgid "Submit"
-msgstr "Подтвердить"
-
-#: templates/registration/password_reset_done.html:8
-msgid "Almost there..."
-msgstr "Еще чуть-чуть…"
-
-#: templates/registration/password_reset_done.html:9
-msgid "Check your email to reset password"
-msgstr "Чекни свой мейл, чтобы восстановить пароль"
-
-#: templates/registration/password_reset_email.html:2
-#: templates/registration/password_reset_email.txt:2
-#, python-format
-msgid ""
-"\n"
-"Hello, \n"
-"\n"
-"Reset your password on %(domain)s for %(user)s:\n"
-msgstr ""
-"\n"
-"Привет, \n"
-"\n"
-"Сброс пароля на %(domain)s для %(user)s:\n"
-
-#: templates/registration/password_reset_form.html:18
-msgid "Reset password"
-msgstr "Сбросить пароль"
-
-#: templates/registration/password_reset_form.html:24
-msgctxt "password_reset"
-msgid "Submit"
-msgstr "Сбросить"
+#: templates/mobile/activation-form.html:34
+msgid "Re-activate your Email"
+msgstr "Повторная активация мейла"
 
 #~ msgid "Found"
 #~ msgstr "Найдено"

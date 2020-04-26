@@ -357,6 +357,8 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		return HttpResponseRedirect(self.get_success_url())
 
 class PasswordResetView(auth_views.PasswordResetView):
+	email_template_name = 'emails/password_reset.txt'
+	html_email_template_name = 'emails/password_reset.html'
 	form_class = PasswordResetForm
 	def get_template_names(self):
 		if self.request.user_agent.is_mobile: 

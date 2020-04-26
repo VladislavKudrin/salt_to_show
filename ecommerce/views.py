@@ -106,8 +106,8 @@ class ContactPageView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		'content':form.cleaned_data.get('content'),
 		'sender_email':self.request.user
 		}
-		txt_ = get_template("contact/email/contact_message.txt").render(context)
-		html_ = get_template("contact/email/contact_message.html").render(context)
+		txt_ = get_template("emails/contact_message.txt").render(context)
+		html_ = get_template("emails/contact_message.html").render(context)
 		subject = str(form.cleaned_data.get('email'))+' User Message'
 		from_email = settings.DEFAULT_FROM_EMAIL
 		recipient_list = [from_email]
@@ -221,8 +221,8 @@ class MessagesNotifications(CronJobBase):
 		context['last_message_text'] = last_message_text
 		context['last_message_from'] = last_message_from
 		context['last_message_timestamp'] = last_message_timestamp	
-		txt_ = get_template("registration/emails/notif.txt").render(context)
-		html_ = get_template("registration/emails/notif.html").render(context)
+		txt_ = get_template("emails/notif.txt").render(context)
+		html_ = get_template("emails/notif.html").render(context)
 		sent_mail=send_mail(
 			subject,
 			txt_,
