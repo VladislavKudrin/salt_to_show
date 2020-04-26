@@ -70,8 +70,8 @@
           <p class="col-12 text-center heading pt-4">{% trans 'Profile Settings' %}</p>
           <div class="col-12">
             <div class="row">
-              <div class="col-xs-6 col-md-4 text-center">
-                  <img data-src="{{ object.get_profile_photo }}"  class=" avatar  ml-2" alt="..." style="width:92px; height: 92px; margin-bottom: 1rem;">
+              <div class="col-xs-6 col-md-4 text-center" style=''>
+                  <img data-src="{{ object.get_profile_photo }}"  class=" avatar" alt="..." style="min-height: 80px; min-width:80px; width:80px; height: 80px; margin-bottom: 1rem;">
                 {{user_form.profile_foto|as_crispy_field}} 
               </div>
               <div class="col-xs-6 col-md-4  ">
@@ -162,32 +162,8 @@
     "#id_user_form-email", 
     "#id_user_form-region", 
     "#id_address_form-name", 
-    "#id_address_form-additional_line", 
-    "#id_address_form-street", 
-    "#id_address_form-city", 
-    "#id_address_form-number", 
-    "#id_address_form-postal_code", 
-    "#id_address_form-state", 
-    "#id_address_form-country", 
     "#id_address_form-post_office", 
     "#id_address_form-phone",
-    "#id_title",
-    "#id_brand",
-    "#id_title",
-    "#id_sex",
-    "#id_undercategory",
-    "#id_condition",
-    "#id_size",
-    "#id_price",
-    "#id_shipping_price",
-    "#id_description",
-    "#id_email",
-    "#id_content",
-    "#id_national_shipping",
-    "#id_region",
-    "#id_old_password",
-    "#id_new_password1",
-    "#id_new_password2",
     ]
 
     jQuery.each(inputs, function(index, item) {

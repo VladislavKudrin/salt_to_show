@@ -12,6 +12,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django.utils import translation
 from django.contrib import messages
+from django.contrib.auth import views as auth_views
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .models import EmailActivation, User, Wishlist, LanguagePreference
@@ -353,3 +354,18 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		else:
 			return self.form_invalid(user_form, address_form, card_form)
 		return HttpResponseRedirect(self.get_success_url())
+
+class PasswordResetView(auth_views.PasswordResetView):
+	form_class = PasswordResetForm
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/password_reset_form.html']
+		else:
+			return ['desktop/password_reset_form.html']
+
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/password_reset_done.html']
+		else:
+			return ['desktop/password_reset_done.html']

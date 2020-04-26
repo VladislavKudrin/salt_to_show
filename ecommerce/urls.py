@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'^accounts/$', RedirectView.as_view(url='/account')),
     url(r'^accounts/profile/$', RedirectView.as_view(url='/account')),
     url(r'^account/', include("accounts.urls",namespace='accounts')),
-    url(r'^accounts/', include("accounts.passwords.urls")),
+    url(r'^account/', include("accounts.passwords.urls")),
     url(r'^orders/', include("orders.urls", namespace='orders')),
     url(r'^billing/payment-method/$', payment_method_view, name='billing-payment-method'),
     url(r'^billing/payment-method/create/$', payment_method_createview, name='billing-payment-method-endpoint'),

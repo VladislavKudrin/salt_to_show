@@ -11,6 +11,8 @@ from marketing.models import MarketingPreference
 from .models import EmailActivation, Region
 from ecommerce.utils import alphanumeric
 from django import forms
+from django.contrib.auth.forms import PasswordResetForm
+
 
 User = get_user_model()
 
@@ -188,7 +190,10 @@ class UserDetailChangeForm(forms.ModelForm):
             raise forms.ValidationError(_("You must select a region"))
         return Region.objects.filter(region=data).first()
 
+class PasswordResetForm(PasswordResetForm):
+    email  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control labels-placement'}))
 
+    def __init__(self,  *args, **kwargs):
+        super(PasswordResetForm, self).__init__(*args, **kwargs)
+        print(self.fields)
 
-
- 
