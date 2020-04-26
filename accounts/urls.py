@@ -4,6 +4,9 @@ from django.views.generic import RedirectView
 from products.views import UserProductHistoryView
 from .views import *
 
+from django.contrib.auth import views as auth_views
+from .forms import CustomPasswordChangeForm
+
 
 
 urlpatterns = [
@@ -15,6 +18,7 @@ urlpatterns = [
     url(r'^email/confirm/(?P<key>[0-9A-Za-z]+)/$', AccountEmailActivateView.as_view(), name='email-activate'),
     url(r'^email/resend-activation/$', AccountEmailActivateView.as_view(), name='resend-activation'),  
     url(r'^details/$',AccountUpdateView.as_view(), name='user-update'),  
+    url(r'^password/change/$', auth_views.password_change, {'password_change_form': CustomPasswordChangeForm}),
 ]
 
 
