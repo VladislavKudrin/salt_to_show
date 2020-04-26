@@ -146,6 +146,16 @@ def stay_where_you_are(request):
 def custom_render(request, *args, **kwargs):
     args_list = list(args)
 
+    if len(args_list) == 2: 
+        if request.user_agent.is_mobile:
+            args_list[0] = 'mobile/' + args_list[0] + '.html'
+            args = tuple(args_list)
+            return render(request, *args, **kwargs)
+        else:
+            args_list[0] =  'desktop/' + args_list[0] + '.html'
+            args = tuple(args_list)
+            return render(request, *args, **kwargs)
+
     if request.user_agent.is_mobile:
         args_list[0] = args_list[0] + '/mobile/' + args_list[1] + '.html'
         args_list[1] = args_list[2]

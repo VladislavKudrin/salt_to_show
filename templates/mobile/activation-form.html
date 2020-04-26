@@ -24,18 +24,22 @@
 <body>
      {% include 'mobile/navbar.html' %}
      <div class='container-fluid main-wrapper'>
-    <div class='row'>
-        <div class='col-10 mx-auto'>
-            <div class='text-center'>
-                <p class="heading">{% trans 'Change password' %}</p>
+
+        <div class='row'>
+            <div class="col-10 mx-auto">
+                {% if key %}
+                <p class="heading text-center">{% trans 'Activation Error' %}</p>
+                <p class="heading text-center" >{% trans 'Please try again' %}</p>
+                {% else %}
+                    <p class="heading text-center" >{% trans 'Re-activate your Email' %}</p>
+                {% endif %}
+
+                <form method='POST' action=''>{% csrf_token %}
+                    {{ form|crispy }}
+                    <input class="btn button-black hover-button large-button btn-block" type='submit' value="{% trans 'Resend Activation' %}"/>
+                </form>
             </div>
-            <form class="psw_change" method='post' action=''>{% csrf_token %}
-            {{ form|crispy }}
-            <span style='margin-bottom: 0.8em;'></span>
-            <button type="submit" class='btn button-black hover-button large-button btn-block'>{% trans 'Save' %}</button>
-            </form>
         </div>
-    </div>
 
   {% include 'mobile/footer.html' %}
     </div>

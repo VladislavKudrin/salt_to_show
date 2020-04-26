@@ -11,10 +11,7 @@ from marketing.models import MarketingPreference
 from .models import EmailActivation, Region
 from ecommerce.utils import alphanumeric
 from django import forms
-from django.contrib.auth.forms import PasswordResetForm
-
-
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm, SetPasswordForm
 
 
 User = get_user_model()
@@ -22,10 +19,12 @@ User = get_user_model()
 
 class ReactivateEmailForm(forms.Form):
     error_css_class = 'error'
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":'form-control labels-placement'}))
+    
     def __init__(self, request, *args, **kwargs):
         super(ReactivateEmailForm, self).__init__(*args, **kwargs)
         self.request=request
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         user_objects = EmailActivation.objects.email_exists(email)
@@ -193,7 +192,6 @@ class UserDetailChangeForm(forms.ModelForm):
             raise forms.ValidationError(_("You must select a region"))
         return Region.objects.filter(region=data).first()
 
-
 class PasswordResetForm(PasswordResetForm):
     email  = forms.CharField(required=True, widget=forms.TextInput(attrs={"class":'form-control labels-placement'}))
 
@@ -201,16 +199,30 @@ class PasswordResetForm(PasswordResetForm):
         super(PasswordResetForm, self).__init__(*args, **kwargs)
         print(self.fields)
 
-class CustomPasswordChangeForm(PasswordChangeForm):
+class PasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
     new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
     new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
 
     def __init__(self,  *args, **kwargs):
-        super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
+        super(PasswordChangeForm, self).__init__(*args, **kwargs)
         self.fields['old_password'].label = _('Old password')
         self.fields['new_password1'].label = _('New password')
         self.fields['new_password1'].help_text = _('Min 8 characters, digits + numbers')
         self.fields['new_password2'].label = _('Confirm password')
+
+class SetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class":'form-control labels-placement'}))
+
+    def __init__(self,  *args, **kwargs):
+        super(SetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].label = _('New password')
+        self.fields['new_password1'].help_text = _('Min 8 characters, digits + numbers')
+        self.fields['new_password2'].label = _('Confirm password')
+
+
+
+
 
 

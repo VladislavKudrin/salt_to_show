@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.contrib.auth import views as auth_views
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
+from ecommerce.utils import custom_render
 from .models import EmailActivation, User, Wishlist, LanguagePreference
 from .forms import *
 from products.models import Product
@@ -101,7 +102,7 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 			'form': self.get_form(),
 			'key': key
 			}
-		return render(request, 'registration/activation-error.html', context)
+		return custom_render(request, "activation-form", context)
 
 	def post(self, request, *args, **kwargs):
 		#create form to activate an email
@@ -127,7 +128,7 @@ class AccountEmailActivateView(RequestFormAttachMixin, FormMixin, View):
 			'form': form,
 			'key': self.key
 		}
-		return render(self.request, 'registration/activation-error.html', context)
+		return custom_render(self.request, "activation-form", context)
 
 class RegisterLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 	error_css_class = 'error'
@@ -369,3 +370,36 @@ class PasswordResetDoneView(auth_views.PasswordResetDoneView):
 			return ['mobile/password_reset_done.html']
 		else:
 			return ['desktop/password_reset_done.html']
+
+class PasswordChangeView(auth_views.PasswordChangeView):
+	form_class = PasswordChangeForm
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/password_change_form.html']
+		else:
+			return ['desktop/password_change_form.html']
+
+class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/password_change_done.html']
+		else:
+			return ['desktop/password_change_done.html']
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+	form_class = SetPasswordForm
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/password_reset_confirm.html']
+		else:
+			return ['desktop/password_reset_confirm.html']
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['mobile/password_reset_complete.html']
+		else:
+			return ['desktop/password_reset_complete.html']
+
+
+
