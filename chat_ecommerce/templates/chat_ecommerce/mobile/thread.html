@@ -330,12 +330,12 @@
 		}*/
 
 		/*	iPhone 5:*/
-		@media screen and (max-width: 370px) {
+/*		@media screen and (max-width: 370px) {
 		#chat-items{
 		max-height: calc(100vh - 31vh); 
 		min-height: calc(100vh - 31vh); 
 		}
-		}
+		}*/
  </style>
 </head>
 <body>
@@ -461,10 +461,10 @@
 
 		// dynamically setting height to the messages container 
 		var navbar1 = $('#navbar-mobile').height(); 
-		var navbar2 = $('#dialog_list').height(); 
+		var navbar2 = $('#navbar-chat').height(); 
 		var form = $('#websocket-form').height();
 		var whole = $(window).height(); 
-		var needed =  whole - navbar1 - navbar2 - form + 34
+		var needed =  (whole - navbar1 - navbar2 - form - 17); 
         $('#chat-items').css('height', needed +'px');
 
 
