@@ -316,7 +316,7 @@
 		position: relative;
 		margin-bottom: 0px;
 		overflow:auto;
-		height: 60vh;
+		height: 138px;
 		}
 
 		/*	Large phones :*/
@@ -457,6 +457,16 @@
 	{% endwith %}
 
 	<script>
+
+		var navbar1 = $('#navbar-mobile').height(); 
+		var navbar2 = $('#dialog_list').height(); 
+		var form = $('#websocket-form').height();
+		var whole = $(window).height(); 
+		var needed =  whole - navbar1 - navbar2 - form
+        $('#chat-items').css('height', needed +'px');
+
+
+
 
 		// Input autofocus
 		var messageForm = $("#id_message")
