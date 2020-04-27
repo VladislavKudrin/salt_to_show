@@ -39,7 +39,8 @@
 		overflow: hidden;
 		}
 		#dialog_list{
-			display: none
+			display: none;
+			margin-top: 5%
 		}
 
 		.back-to-chatlist{
@@ -75,7 +76,7 @@
 		/*	overflow: scroll;*/
 		margin-bottom: 0;
 		position: relative;
-
+		padding-inline-start: 0px;
 		height:auto;
 		overflow:auto;
 		max-height: calc(100vh - 130px); 
@@ -316,23 +317,23 @@
 		position: relative;
 		margin-bottom: 0px;
 		overflow:auto;
-		height: 138px;
+
 		}
 
 		/*	Large phones :*/
 		@media screen and (min-height: 668px) {
 		#chat-items{
-		max-height: calc(100vh - 20vh); 
+/*		max-height: calc(100vh - 20vh); 
 		min-height: calc(100vh - 20vh); 
-		padding-bottom: 30px;
+		padding-bottom: 30px;*/
 		}
 		}
 
 		/*	iPhone 5:*/
 		@media screen and (max-width: 370px) {
 		#chat-items{
-		max-height: calc(100vh - 29vh); 
-		min-height: calc(100vh - 29vh); 
+/*		max-height: calc(100vh - 29vh); 
+		min-height: calc(100vh - 29vh); */
 		}
 		}
  </style>
@@ -458,13 +459,13 @@
 
 	<script>
 
+		// dynamically setting height to the messages container 
 		var navbar1 = $('#navbar-mobile').height(); 
 		var navbar2 = $('#dialog_list').height(); 
 		var form = $('#websocket-form').height();
 		var whole = $(window).height(); 
 		var needed =  whole - navbar1 - navbar2 - form + 34
         $('#chat-items').css('height', needed +'px');
-
 
 
 
