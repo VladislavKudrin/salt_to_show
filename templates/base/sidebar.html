@@ -1,6 +1,6 @@
 
 {% load static %}
-{% load notifications %}
+{% load chat_tags %}
 {% load i18n %}
 <style type="text/css">
 	.list-unstyled a:hover {
@@ -20,26 +20,25 @@
 
 {% block content %}
 
+{% count_user_notifications as notif_number %}
 <nav id='sidebar' class="navbar p-0 navbar-expand-lg navbar-light bg-white">
 <ul id="sidebar" class="skip list-unstyled components" style="position: relative; width: 100%;">
 	<li class="mt-3 mb-4">
 {% if request.user.profile_foto %}
         <a href="{{ request.user.get_absolute_url }}">
-                    {% if request.user|get_notif > 0 %}
+                    {% if notif_number > 0 %}
                         <div style='padding-left: 55px; padding-bottom: 0px'>
                             <div class='notifications-sidebar'></div>
                         </div>
-                    {% else %}
                     {% endif %}
 
         	<img src="{{ request.user.profile_foto.url }}"  class="avatar ml-2" alt="..." style="width:60px; height: 60px"></a>
         {% else %}
         <a href="{{ request.user.get_absolute_url }}">
-        	                                    {% if request.user|get_notif > 0 %}
+                    {% if notif_number > 0 %}
                         <div style='padding-left: 34px; padding-bottom: 0px'>
                             <div class='notifications-sidebar'></div>
                         </div>
-                    {% else %}
                     {% endif %}
                     <i class="far fa-user fa-2x ml-2" ></i></a>
         {% endif %}
@@ -50,9 +49,9 @@
 				{% trans 'Messages' %}
     
 			</div>
-            {% if request.user|get_notif > 0 %}
+            {% if notif_number > 0 %}
                 <div class='col-2 p-0 my-auto'>
-                    <span style='font-size: 14px; font-weight: bold; color: red'>{{ request.user|get_notif }}</span>
+                    <span style='font-size: 14px; font-weight: bold; color: red'>{{ notif_number }}</span>
                  </div>
             {% else %}
             {% endif %}

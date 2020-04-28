@@ -1,5 +1,9 @@
-{% load for_loop_extras %}
+{% load accounts_tags %}
 {% load i18n %}
+{% load for_loop_extras %}
+
+{% get_user_region as user_region %}
+
 <style type="text/css">
 
 
@@ -148,7 +152,7 @@
 <form method ='GET'  id='form_checkboxes' action='{% url "products:list" %}'>
 <div id='filter-boxes'>
   <div class="col-12 mt-2" id='overcategory-filter-box'>  
-    <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#overcategory_collaplse" aria-expanded="true" aria-controls="overcategory_collaplse">
+    <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#overcategory_collapse" aria-expanded="true" aria-controls="overcategory_collapse">
       <div class="row">
         <div class="col-6 text-left">
           {{ overcategory }}
@@ -158,10 +162,10 @@
         </div>
       </div>
     </button>
-    <div class="collapse {% if overcategory_instance or gender_instance or undercategory_instance %} show {% endif %}" id="overcategory_collaplse">
+    <div class="collapse" id="overcategory_collapse">
       {% for overcategory in fields_overcategory %}
       <div class=" ml-3 custom-control custom-checkbox">
-        <input type="checkbox" {% if overcategory.id|stringify in overcategory_instance %} checked {% endif %}class="custom-control-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
+        <input type="checkbox" class="custom-control-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
         <label class="custom-control-label" name='overcategory' for="customCheckOvercategory{{ forloop.counter|add:'1' }}"><small>
           {% trans overcategory.overcategory_eng|capfirst %}
         </small></label>
@@ -170,9 +174,9 @@
     </div>
   </div>
   <div class="col-12" id='gender-filter-box'>
-    <div id='title_gender' {% if overcategory_instance or gender_instance or undercategory_instance %} style="display: block" {% endif %}>
+    <div id='title_gender'>
       <hr/>
-      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#gender_collaplse" aria-expanded="true" aria-controls="gender_collaplse">
+      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#gender_collapse" aria-expanded="true" aria-controls="gender_collapse">
         <div class="row">
           <div class="col-6 text-left">
             {{ gender }}
@@ -183,13 +187,13 @@
         </div>
       </button>
     </div>
-    <div class="collapse {% if gender_instance or undercategory_instance %} show {% endif %}" id="gender_collaplse" >
+    <div class="collapse" id="gender_collapse" >
       {% for overcategory in fields_overcategory %}
-        <div id='{{ overcategory }}-gender-checkbox'{% if overcategory.id|stringify in overcategory_instance %} style="display: block" {% endif %} >
+        <div id='{{ overcategory }}-gender-checkbox' id2='{{ overcategory.id }}'>
           {% for gender in fields_gender %}
             {% if overcategory == gender.gender_for %}
               <div class=" ml-3 custom-control custom-checkbox">
-                <input type="checkbox" {% if gender.id|stringify in gender_instance %} checked {% endif %} class="custom-control-input input-for-filters radioGender" data_for_category="{{ gender.gender_for}}-{{ gender }}" id="customCheckGender{{ forloop.counter|add:'1' }}" name='gender' value='{{ gender.id }}'>
+                <input type="checkbox" class="custom-control-input input-for-filters radioGender" data_for_category="{{ gender.gender_for}}-{{ gender }}" id="customCheckGender{{ forloop.counter|add:'1' }}" name='gender' value='{{ gender.id }}' real_overcat_name='{{ gender.gender_for }}'>
                 <label class="custom-control-label" for="customCheckGender{{ forloop.counter|add:'1' }}"><small>
                 {% trans gender.gender_eng|capfirst|capfirst %}
           </small></label>
@@ -201,9 +205,9 @@
     </div>
   </div>
   <div class="col-12" id='category-filter-box'>
-    <div id='title_category'{% if gender_instance or undercategory_instance %} style="display: block" {% endif %}>
+    <div id='title_category'>
       <hr/>
-      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#category_collaplse" aria-expanded="true" aria-controls="category_collaplse">
+      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#category_collapse" aria-expanded="true" aria-controls="category_collapse">
       <div class="row">
         <div class="col-6 text-left">
           {{ category }}
@@ -214,23 +218,22 @@
       </div>
       </button>
     </div>
-    <div class="collapse {% if undercategory_instance or category_instance %} show {% endif %}" id="category_collaplse">
+    <div class="collapse" id="category_collapse">
       {% for gender in fields_gender %}
-        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-category-checkbox' {% if gender.id|stringify in gender_instance %} style="display: block" {% endif %}>
+        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-category-checkbox' id2='{{ gender.id }}'>
           {% for category in fields_category %}
             {% if gender == category.category_for %}
               <div class="ml-3 pl-0 custom-control custom-checkbox undercategory-for-check">
                 <small class="ml-2">
                 {% trans category.category_eng %}
-                </small><button type='button' class="btn btn-link {% if not category in category_arr %} collapsed {% endif %}" data-toggle="collapse" data-target="#collapse{{ category.id }}" aria-expanded="true" aria-controls="collapse{{ category.id }}"><i class="fa-w mb-2 unterhaupt" aria-hidden="false"></i></button>
-                <input type="checkbox" class="pl-5 text-right custom-control-input input-for-filters" id="customCheckCategory{{ forloop.counter|add:'1' }}"  name='category' {% if category.id|stringify in category_instance %} checked {% endif %} value='{{ category.id }}'data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size">
+                </small><button type='button' class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ category.id }}" aria-expanded="true" aria-controls="collapse{{ category.id }}"><i class="fa-w mb-2 unterhaupt" aria-hidden="false"></i></button>
+                <input type="checkbox" class="pl-5 text-right custom-control-input input-for-filters" id="customCheckCategory{{ forloop.counter|add:'1' }}"  name='category' value='{{ category.id }}'data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size">
                 <label class="mt-2 text-right custom-control-label mr-4" style="float: right; " for="customCheckCategory{{ forloop.counter|add:'1' }}"><small>{{ all }}</small></label>
-                <div id='collapse{{ category.id }}' class='collapse div1 {% if category.id|stringify in category_instance %} show {% endif %}{% for undercategory in actual_undercategory_instances %}
-                {% if undercategory.undercategory_for == category %} show {% endif %} {% endfor %}'>
+                <div id='collapse{{ category.id }}' class='collapse div1'>
                   {% for undercategory in fields_undercategory %}
                     {% if category == undercategory.undercategory_for %}
                       <div class="custom-control custom-checkbox">
-                        <input hidden type="checkbox" {% if undercategory.id|stringify in undercategory_instance %} checked {% endif %} {% if undercategory.undercategory_for.id|stringify in category_instance %} checked {% endif %} class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}'>
+                        <input hidden type="checkbox" class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}' category_for_size_linked='{{ category.id }}'>
                         <label class="custom-control-label undercategory_for_disabled_checkbox_lable ml-3" for="customCheckUndercategory{{ forloop.counter|add:'1' }}"><small>
                         {% trans undercategory.undercategory_eng|capfirst %}
               </small></label>
@@ -246,9 +249,9 @@
     </div>
   </div>
   <div class="col-12" id='size-filter-box'>
-    <div id='title_size'{% if gender_instance %} style="display: block" {% endif %}>
+    <div id='title_size'>
       <hr/>
-      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#size_collaplse" aria-expanded="true" aria-controls="size_collaplse">
+      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#size_collapse" aria-expanded="true" aria-controls="size_collapse">
       <div class="row">
         <div class="col-6 text-left">
           {{ size }}
@@ -259,22 +262,22 @@
       </div>
       </button>
     </div>
-    <div class="collapse {% if size_instance %} show {% endif %}" id="size_collaplse">
+    <div class="collapse" id="size_collapse">
       {% for gender in fields_gender %}
-        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-size-checkbox'{% if gender.id|stringify in gender_instance %} style="display: block"{% endif %}>
+        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-size-checkbox' id2='{{ gender.id }}'>
           {% for category in fields_category %}
             {% if gender == category.category_for %}
-              <div class="ml-3 pl-0 custom-control custom-checkbox size_for_initial"  active='false' id='{{ gender.gender_for }}-{{ gender }}-{{ category }}-size' activated=''>
+              <div class="ml-3 pl-0 custom-control custom-checkbox size_for_initial gendered_size_for_link"  active='false' id='{{ gender.gender_for }}-{{ gender }}-{{ category }}-size' activated='' category_for_size_linked='{{ category.id }}' gender_for_size_linked = '{{ gender.id }}'>
                 <small class="ml-2">
                   {% trans category.category_eng %}
-                </small><button type='button' class="{% if not category in category_arr %} collapsed {% endif %} btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class="fa-w mb-2 unterhaupt" aria-hidden="false"></i></button>
+                </small><button type='button' class="btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class="fa-w mb-2 unterhaupt" aria-hidden="false"></i></button>
                 <input type="checkbox" class="text-right custom-control-input input-for-filters" id="customCheckCategorySize{{ forloop.counter|add:'1' }}" name='category-size' value="{{ category.category }}">
                 <label class="mt-2 text-right custom-control-label mr-4" style="float: right;" for="customCheckCategorySize{{ forloop.counter|add:'1' }}"><small>{{ all }}</small></label>
-                <div id='collapse-size-{{ category.id }}' class='collapse {% if category.category_for.id|stringify in gender_instance %}{% for size in actual_size_instances %}{% if size.size_for == category.category %} show {% endif %} {% endfor %} {% endif %} div1'>
+                <div id='collapse-size-{{ category.id }}' class='collapse div1'>
                   {% for size in fields_size %}
                     {% if category.category == size.size_for %}
-                        <div class=" ml-3 custom-control custom-checkbox {{ size.size_type }}_size_input size_adults_kids" {% if overcategory_instance %}{% if size.size_type != category.category_for.gender_for %} style="display: none" {% endif %}{% endif %}{% if not overcategory_instance %} style="display: none" {% endif %}>
-                          <input hidden type="checkbox" class="custom-control-input input-for-filters" id="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}" {% if category.category_for.id|stringify in gender_instance %}{% if size.id|stringify in size_instance %} checked {% endif %} {% endif %} name='size' value='{{ size.id }}'>
+                        <div class=" ml-3 custom-control custom-checkbox {{ size.size_type }}_size_input size_adults_kids" style="display: none" id3='{{ size.size_type }}'>
+                          <input hidden type="checkbox" class="custom-control-input input-for-filters" id="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}" name='size' value='{{ size.id }}'>
                           <label class="custom-control-label size_for_disabled_checkbox_lable" for="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}"><small>{{ size.size }}</small></label>
                         </div>
                     {% endif %}
@@ -325,7 +328,7 @@
       <div class="collapse {% if brand_instance %} show {% endif %}" id="brand_collapse">
         <select class='ml-5 mt-3 mb-3' id="brand-select" name="brand" multiple="multiple" brand_placeholder_trans="{% trans 'Select a brand' %}">
           {% for brand in fields_brand %}
-            <option {% if brand.id|stringify in brand_instance %} selected {% endif %} value="{{ brand.id }}">{{ brand.brand_name }}</option>
+            <option {% if brand.id|stringify in brand_instance %} selected {% endif %}value="{{ brand.id }}">{{ brand.brand_name }}</option>
           {% endfor %}
         </select>
       </div>
@@ -347,13 +350,13 @@
           <div class="row ml-2 mr-2 mt-2">
             <div class="col-6 text-center">
             <div class="input-group input-group-sm mb-3" style="border: 1px solid #DDD;">
-                     <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
-                <input type="number" style="border: none;" min='0' placeholder="min"  {% if price_min %} value='{{ price_min }}'{% endif %} name='price' class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                     <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if user_region %}{{ user_region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
+                <input type="number" style="border: none;" min='0' placeholder="min" name='price' {% if price_min %} value='{{ price_min }}'{% endif %}class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
             <div class="col-6 text-center">
                <div class="input-group input-group-sm mb-3" style="border: 1px solid #DDD;">
-                      <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if request.user.is_authenticated and request.user.region %}{{ request.user.region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
+                      <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if user_region %}{{ user_region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
                 <input type="number" style="border: none;" name='price' min='0' placeholder="max" {% if price_max %} value='{{ price_max }}'{% endif %}class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
@@ -366,7 +369,57 @@
 
 
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    var url = (window.location.pathname).split('/')
+    var currentUrl = url.slice(-1)[0]
+    var urlParam = new URLSearchParams(currentUrl)
+    var overcategory_params = urlParam.get('overcategory')
+    var gender_params = urlParam.get('gender')
+    var undercategory_params = urlParam.get('undercategory')
+    var size_params = urlParam.get('size')
+    var condition_params = urlParam.get('condition')
+    var brand_params = urlParam.get('brand')
+    var price_params = urlParam.get('price')
+    if (overcategory_params != null){
+      $('#overcategory_collapse').addClass('show')
+      $('#overcategory_collapse').find("input[name='overcategory'][value='"+overcategory_params+"']").prop('checked', true)
+      $('#title_gender').show()
+      $('#gender_collapse').find("div[id2='"+overcategory_params+"']").show()
+    }//if overcategory
+    if (gender_params != null){
+      $('#gender_collapse').addClass('show')
+      $('#gender_collapse').find("input[name='gender'][value='"+gender_params+"']").prop('checked', true)
+      var realGenderName = $('#gender_collapse').find("input[name='gender'][value='"+gender_params+"']").attr('real_overcat_name')
+      $('#title_category').show()
+      $('#title_size').show()
+      $('#size_collapse').find("div[id2='"+gender_params+"']").show()
+      $('#size_collapse').find("div[id3='"+realGenderName+"']").show()
+      $('#category_collapse').find("div[id2='"+gender_params+"']").show()
+    }//if gender
+    if (undercategory_params != null){
+      undercategory_params = undercategory_params.split(' ')
+      $('.size_for_initial').hide()
+      $.each(undercategory_params, function(index, value){
+        $('#category_collapse').addClass('show')
+        $('#category_collapse').find("input[name='undercategory'][value='"+value+"']").parent().parent().addClass('show')
+        $('#category_collapse').find("input[name='undercategory'][value='"+value+"']").prop('checked', true)
+        var cat = $('#category_collapse').find("input[name='undercategory'][value='"+value+"']").attr('category_for_size_linked')
 
+        $('#size_collapse').find("div[category_for_size_linked='"+cat+"']").show()
+        $('.div1').find("div[category_for_size_linked='"+cat+"']").attr('active', true)
+      })
+    }//if undercategory
+    if (size_params != null){
+      size_params = size_params.split(' ')
+      $.each(size_params, function(index, value){
+        $('#size_collapse').addClass('show')
+        $('#size_collapse').find("input[name='size'][value='"+value+"']").parent().parent().addClass('show')
+        $('#size_collapse').find("input[name='size'][value='"+value+"']").prop('checked', true)
+      })
+    }//if size
+  })//doc ready
+</script>
 
 
 

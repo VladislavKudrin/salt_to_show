@@ -63,7 +63,10 @@ class BillingProfile(models.Model):
 		return Charge.objects.do(self, order_obj, card)
 
 	def get_cards(self):
-		return self.card.all()
+		try:
+			return self.card
+		except:
+			return None
 
 	def get_payment_method_url(self):
 		return reverse('billing-payment-method')
@@ -75,9 +78,9 @@ class BillingProfile(models.Model):
 
 	@property
 	def default_card(self):
-		default_cards = self.get_cards().filter(active=True, default=True)
-		if default_cards.exists():
-			return default_cards.first()
+		default_card = self.get_cards()
+		if default_card is not None:
+			return default_card
 		return None
 
 	def count_feedbacks(self):
@@ -104,20 +107,11 @@ class BillingProfile(models.Model):
 
 
 
-def billing_profile_created_reciever(sender, instance, created, *args, **kwargs):
-	if created:
-		billing_profile = instance
-		card = Card.objects.new_or_get(billing_profile=billing_profile)
-	# if not instance.customer_id and instance.email:
-	# 	# print("API REQUEST")
-	# 	customer = stripe.Customer.create(email = instance.email)
-	# 	# print(customer)
-	# 	instance.customer_id = customer.id
-post_save.connect(billing_profile_created_reciever, sender=BillingProfile)
-
 def user_created_reciever(sender, instance, created, *args, **kwargs):
 	if created and instance.email:
-		BillingProfile.objects.get_or_create(user=instance, email=instance.email)
+		billing_profile = BillingProfile.objects.get_or_create(user=instance, email=instance.email)
+		card = Card.objects.new_or_get(billing_profile=billing_profile)
+
 post_save.connect(user_created_reciever, sender=User)
 
 

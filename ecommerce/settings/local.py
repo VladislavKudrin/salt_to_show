@@ -84,7 +84,7 @@ INSTALLED_APPS = [
     'betterforms',
     'django_extensions',
     'django_user_agents',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'compressor',
 
 

@@ -35,9 +35,9 @@ class CategoryFilterView(ListView):
 		if link is not None:
 			linked_data = link_to_data(link)
 			queryset, context = Product.objects.get_categoried_queryset(request=request, linked_data=linked_data)
-			queryset=queryset.authentic().available()
+			queryset=queryset.authentic().available().prefetch_related('thumbnail')
 		else:
-			queryset = Product.objects.all().authentic().available().order_by('-timestamp')
+			queryset = Product.objects.select_related('brand').select_related('size').all().authentic().available().order_by('-timestamp').prefetch_related('thumbnail')
 		paginator = Paginator(queryset, items_per_page) # Show 25 contacts per page
 		page = request.GET.get('page')
 		try:
@@ -52,6 +52,7 @@ class CategoryFilterView(ListView):
 			page_continue = True
 			context={}
 			if request.GET:
+				print('hallo')
 				#getting queryset and link as json
 				queryset, link_codiert = Product.objects.get_categoried_queryset(request=request)
 				queryset = queryset.authentic().available()
