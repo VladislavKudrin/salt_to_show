@@ -1,6 +1,6 @@
 {% load accounts_tags %}
 {% load i18n %}
-
+{% load for_loop_extras %}
 
 {% get_user_region as user_region %}
 
@@ -302,10 +302,10 @@
         </div>
       </div>
       </button>
-      <div class="collapse" id="condition_collapse">
+      <div class="collapse {% if condition_instance %} show {% endif %}" id="condition_collapse">
         {% for condition in fields_condition %}
           <div class=" ml-3 custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input input-for-filters" id="customCheckCondition{{ forloop.counter|add:'1' }}" name='condition' value='{{ condition.id }}'>
+            <input type="checkbox" {% if condition.id|stringify in condition_instance %} checked {% endif %} class="custom-control-input input-for-filters" id="customCheckCondition{{ forloop.counter|add:'1' }}" name='condition' value='{{ condition.id }}'>
             <label class="custom-control-label" for="customCheckCondition{{ forloop.counter|add:'1' }}"><small>
               {% trans condition.condition_eng %}
               </small></label>
@@ -325,10 +325,10 @@
         </div>
       </div>
       </button>
-      <div class="collapse" id="brand_collapse">
+      <div class="collapse {% if brand_instance %} show {% endif %}" id="brand_collapse">
         <select class='ml-5 mt-3 mb-3' id="brand-select" name="brand" multiple="multiple" brand_placeholder_trans="{% trans 'Select a brand' %}">
           {% for brand in fields_brand %}
-            <option value="{{ brand.id }}">{{ brand.brand_name }}</option>
+            <option {% if brand.id|stringify in brand_instance %} selected {% endif %}value="{{ brand.id }}">{{ brand.brand_name }}</option>
           {% endfor %}
         </select>
       </div>
@@ -351,7 +351,7 @@
             <div class="col-6 text-center">
             <div class="input-group input-group-sm mb-3" style="border: 1px solid #DDD;">
                      <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if user_region %}{{ user_region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
-                <input type="number" style="border: none;" min='0' placeholder="min" name='price' class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="number" style="border: none;" min='0' placeholder="min" name='price' {% if price_min %} value='{{ price_min }}'{% endif %}class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
             <div class="col-6 text-center">
