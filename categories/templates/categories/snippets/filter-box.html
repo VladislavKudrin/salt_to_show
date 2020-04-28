@@ -152,7 +152,7 @@
 <form method ='GET'  id='form_checkboxes' action='{% url "products:list" %}'>
 <div id='filter-boxes'>
   <div class="col-12 mt-2" id='overcategory-filter-box'>  
-    <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#overcategory_collaplse" aria-expanded="true" aria-controls="overcategory_collaplse">
+    <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#overcategory_collapse" aria-expanded="true" aria-controls="overcategory_collapse">
       <div class="row">
         <div class="col-6 text-left">
           {{ overcategory }}
@@ -162,7 +162,7 @@
         </div>
       </div>
     </button>
-    <div class="collapse" id="overcategory_collaplse">
+    <div class="collapse" id="overcategory_collapse">
       {% for overcategory in fields_overcategory %}
       <div class=" ml-3 custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input input-for-filters radioOvercategorie" id="customCheckOvercategory{{ forloop.counter|add:'1' }}" data_for_gender="{{ overcategory }}" name='overcategory' value='{{ overcategory.id }}'>
@@ -176,7 +176,7 @@
   <div class="col-12" id='gender-filter-box'>
     <div id='title_gender'>
       <hr/>
-      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#gender_collaplse" aria-expanded="true" aria-controls="gender_collaplse">
+      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#gender_collapse" aria-expanded="true" aria-controls="gender_collapse">
         <div class="row">
           <div class="col-6 text-left">
             {{ gender }}
@@ -187,13 +187,13 @@
         </div>
       </button>
     </div>
-    <div class="collapse" id="gender_collaplse" >
+    <div class="collapse" id="gender_collapse" >
       {% for overcategory in fields_overcategory %}
-        <div id='{{ overcategory }}-gender-checkbox'>
+        <div id='{{ overcategory }}-gender-checkbox' id2='{{ overcategory.id }}'>
           {% for gender in fields_gender %}
             {% if overcategory == gender.gender_for %}
               <div class=" ml-3 custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input input-for-filters radioGender" data_for_category="{{ gender.gender_for}}-{{ gender }}" id="customCheckGender{{ forloop.counter|add:'1' }}" name='gender' value='{{ gender.id }}'>
+                <input type="checkbox" class="custom-control-input input-for-filters radioGender" data_for_category="{{ gender.gender_for}}-{{ gender }}" id="customCheckGender{{ forloop.counter|add:'1' }}" name='gender' value='{{ gender.id }}' real_overcat_name='{{ gender.gender_for }}'>
                 <label class="custom-control-label" for="customCheckGender{{ forloop.counter|add:'1' }}"><small>
                 {% trans gender.gender_eng|capfirst|capfirst %}
           </small></label>
@@ -207,7 +207,7 @@
   <div class="col-12" id='category-filter-box'>
     <div id='title_category'>
       <hr/>
-      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#category_collaplse" aria-expanded="true" aria-controls="category_collaplse">
+      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#category_collapse" aria-expanded="true" aria-controls="category_collapse">
       <div class="row">
         <div class="col-6 text-left">
           {{ category }}
@@ -218,9 +218,9 @@
       </div>
       </button>
     </div>
-    <div class="collapse" id="category_collaplse">
+    <div class="collapse" id="category_collapse">
       {% for gender in fields_gender %}
-        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-category-checkbox'>
+        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-category-checkbox' id2='{{ gender.id }}'>
           {% for category in fields_category %}
             {% if gender == category.category_for %}
               <div class="ml-3 pl-0 custom-control custom-checkbox undercategory-for-check">
@@ -233,7 +233,7 @@
                   {% for undercategory in fields_undercategory %}
                     {% if category == undercategory.undercategory_for %}
                       <div class="custom-control custom-checkbox">
-                        <input hidden type="checkbox" class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}'>
+                        <input hidden type="checkbox" class="custom-control-input input-for-filters" data_for_category="{{ gender.gender_for}}-{{ gender }}" data_for_size="{{ gender.gender_for }}-{{ gender }}-{{ category }}-size" id="customCheckUndercategory{{ forloop.counter|add:'1' }}" name='undercategory' value='{{ undercategory.id }}' category_for_size_linked='{{ category.id }}'>
                         <label class="custom-control-label undercategory_for_disabled_checkbox_lable ml-3" for="customCheckUndercategory{{ forloop.counter|add:'1' }}"><small>
                         {% trans undercategory.undercategory_eng|capfirst %}
               </small></label>
@@ -251,7 +251,7 @@
   <div class="col-12" id='size-filter-box'>
     <div id='title_size'>
       <hr/>
-      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#size_collaplse" aria-expanded="true" aria-controls="size_collaplse">
+      <button type='button' class="btn collapsed text-left mains-btn" data-toggle="collapse" data-target="#size_collapse" aria-expanded="true" aria-controls="size_collapse">
       <div class="row">
         <div class="col-6 text-left">
           {{ size }}
@@ -262,12 +262,12 @@
       </div>
       </button>
     </div>
-    <div class="collapse" id="size_collaplse">
+    <div class="collapse" id="size_collapse">
       {% for gender in fields_gender %}
-        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-size-checkbox'>
+        <div class='row' id='{{ gender.gender_for}}-{{ gender }}-size-checkbox' id2='{{ gender.id }}'>
           {% for category in fields_category %}
             {% if gender == category.category_for %}
-              <div class="ml-3 pl-0 custom-control custom-checkbox size_for_initial"  active='false' id='{{ gender.gender_for }}-{{ gender }}-{{ category }}-size' activated=''>
+              <div class="ml-3 pl-0 custom-control custom-checkbox size_for_initial gendered_size_for_link"  active='false' id='{{ gender.gender_for }}-{{ gender }}-{{ category }}-size' activated='' category_for_size_linked='{{ category.id }}' gender_for_size_linked = '{{ gender.id }}'>
                 <small class="ml-2">
                   {% trans category.category_eng %}
                 </small><button type='button' class="btn btn-link" data-toggle="collapse" data-target="#collapse-size-{{ category.id }}" aria-expanded="true" aria-controls="collapse-size-{{ category.id }}"><i class="fa-w mb-2 unterhaupt" aria-hidden="false"></i></button>
@@ -276,7 +276,7 @@
                 <div id='collapse-size-{{ category.id }}' class='collapse div1'>
                   {% for size in fields_size %}
                     {% if category.category == size.size_for %}
-                        <div class=" ml-3 custom-control custom-checkbox {{ size.size_type }}_size_input size_adults_kids">
+                        <div class=" ml-3 custom-control custom-checkbox {{ size.size_type }}_size_input size_adults_kids" style="display: none" id3='{{ size.size_type }}'>
                           <input hidden type="checkbox" class="custom-control-input input-for-filters" id="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}" name='size' value='{{ size.id }}'>
                           <label class="custom-control-label size_for_disabled_checkbox_lable" for="customCheckSize{{ gender.gender_for }}-{{ gender }}-{{ category }}-{{ forloop.counter|add:'1' }}"><small>{{ size.size }}</small></label>
                         </div>
@@ -351,7 +351,7 @@
             <div class="col-6 text-center">
             <div class="input-group input-group-sm mb-3" style="border: 1px solid #DDD;">
                      <div class="price-label" name='price' id="inputGroup-sizing-sm">{% if user_region %}{{ user_region.currency }}{% else %}{{ default_currency }}{% endif %}</div>
-                <input type="number" style="border: none;" min='0' placeholder="min"  {% if price_min %} value='{{ price_min }}'{% endif %} name='price' class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="number" style="border: none;" min='0' placeholder="min" name='price' class="form-control input-for-filters" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
             <div class="col-6 text-center">
@@ -369,7 +369,57 @@
 
 
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    var url = (window.location.pathname).split('/')
+    var currentUrl = url.slice(-1)[0]
+    var urlParam = new URLSearchParams(currentUrl)
+    var overcategory_params = urlParam.get('overcategory')
+    var gender_params = urlParam.get('gender')
+    var undercategory_params = urlParam.get('undercategory')
+    var size_params = urlParam.get('size')
+    var condition_params = urlParam.get('condition')
+    var brand_params = urlParam.get('brand')
+    var price_params = urlParam.get('price')
+    if (overcategory_params != null){
+      $('#overcategory_collapse').addClass('show')
+      $('#overcategory_collapse').find("input[name='overcategory'][value='"+overcategory_params+"']").prop('checked', true)
+      $('#title_gender').show()
+      $('#gender_collapse').find("div[id2='"+overcategory_params+"']").show()
+    }//if overcategory
+    if (gender_params != null){
+      $('#gender_collapse').addClass('show')
+      $('#gender_collapse').find("input[name='gender'][value='"+gender_params+"']").prop('checked', true)
+      var realGenderName = $('#gender_collapse').find("input[name='gender'][value='"+gender_params+"']").attr('real_overcat_name')
+      $('#title_category').show()
+      $('#title_size').show()
+      $('#size_collapse').find("div[id2='"+gender_params+"']").show()
+      $('#size_collapse').find("div[id3='"+realGenderName+"']").show()
+      $('#category_collapse').find("div[id2='"+gender_params+"']").show()
+    }//if gender
+    if (undercategory_params != null){
+      undercategory_params = undercategory_params.split(' ')
+      $('.size_for_initial').hide()
+      $.each(undercategory_params, function(index, value){
+        $('#category_collapse').addClass('show')
+        $('#category_collapse').find("input[name='undercategory'][value='"+value+"']").parent().parent().addClass('show')
+        $('#category_collapse').find("input[name='undercategory'][value='"+value+"']").prop('checked', true)
+        var cat = $('#category_collapse').find("input[name='undercategory'][value='"+value+"']").attr('category_for_size_linked')
 
+        $('#size_collapse').find("div[category_for_size_linked='"+cat+"']").show()
+        $('.div1').find("div[category_for_size_linked='"+cat+"']").attr('active', true)
+      })
+    }//if undercategory
+    if (size_params != null){
+      size_params = size_params.split(' ')
+      $.each(size_params, function(index, value){
+        $('#size_collapse').addClass('show')
+        $('#size_collapse').find("input[name='size'][value='"+value+"']").parent().parent().addClass('show')
+        $('#size_collapse').find("input[name='size'][value='"+value+"']").prop('checked', true)
+      })
+    }//if size
+  })//doc ready
+</script>
 
 
 

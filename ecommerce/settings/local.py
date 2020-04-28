@@ -84,7 +84,7 @@ INSTALLED_APPS = [
     'betterforms',
     'django_extensions',
     'django_user_agents',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'compressor',
 
 
@@ -189,7 +189,7 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
 

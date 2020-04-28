@@ -108,7 +108,7 @@ class ProductManager(models.Manager):
 		return self.get_queryset().payable()
 
 	def get_categoried_queryset(self, request, linked_data=None):
-		context = {}
+		context={}
 		if not linked_data:
 			data_overcategory = request.GET.get('overcategory')
 			data_gender = request.GET.get('gender')
@@ -125,75 +125,66 @@ class ProductManager(models.Manager):
 			return queryset, context
 		else:
 			data_overcategory = linked_data.get('overcategory') or None
-			# data_gender = linked_data.get('gender') or None
-			# data_category = linked_data.get('category') or None
-			# data_undercategory = linked_data.get('undercategory') or None
-			# data_brand = linked_data.get('brand') or None
-			# data_price = linked_data.get('price') or None
-			# data_size = linked_data.get('size') or None
-			# data_condition = linked_data.get('condition') or None
-			# data_sort = linked_data.get('sort') or None
+			data_gender = linked_data.get('gender') or None
+			data_category = linked_data.get('category') or None
+			data_undercategory = linked_data.get('undercategory') or None
+			data_brand = linked_data.get('brand') or None
+			data_price = linked_data.get('price') or None
+			data_size = linked_data.get('size') or None
+			data_condition = linked_data.get('condition') or None
+			data_sort = linked_data.get('sort') or None
 			context = {
-				'overcategory_instance' :data_overcategory,
-				# 'gender_instance'       :data_gender,
-				# 'category_instance'     :data_category,
-				# 'undercategory_instance':data_undercategory,
-				# 'brand_instance'        :data_brand,
-				# 'size_instance'         :data_size,
-				# 'condition_instance'    :data_condition,
+				'brand_instance'        :data_brand,
+				'condition_instance'    :data_condition
 			}
 			try:
 				context['price_min'] = data_price[0]
 				context['price_max'] = data_price[1]
 			except:
 				pass
-			# if data_undercategory:
-			# 	context['actual_undercategory_instances'] = Undercategory.objects.select_related('undercategory_for').filter(id__in=data_undercategory)
-			# if data_size:
-			# 	context['actual_size_instances'] = Size.objects.select_related('size_type').filter(id__in=data_size)
-		# if data_undercategory:
-		# 	queryset = Product.objects.select_related('undercategory').filter(undercategory__id__in=data_undercategory)
-		# elif data_gender:
-		# 	queryset = Product.objects.select_related('sex').filter(sex__id__in=data_gender)
-		# if data_overcategory:
-		queryset = Product.objects.select_related('overcategory').select_related('brand').select_related('size').all().filter(overcategory__id__in = data_overcategory)
+		if data_undercategory:
+			queryset = Product.objects.select_related('undercategory').select_related('brand').select_related('size').all().filter(undercategory__id__in=data_undercategory)
+		elif data_gender:
+			queryset = Product.objects.select_related('sex').select_related('brand').select_related('size').all().filter(sex__id__in=data_gender)
+		elif data_overcategory:
+			queryset = Product.objects.select_related('overcategory').select_related('brand').select_related('size').all().filter(overcategory__id__in = data_overcategory)
+		else:
+			queryset = Product.objects.select_related('brand').select_related('size').all()
 
-		# else:
-		# 	queryset = Product.objects.all()
-		# if data_size:
-		# 	queryset = queryset.select_related('size').filter(size__id__in=data_size)
-		# if data_brand:
-		# 	queryset = queryset.select_related('brand').filter(brand__id__in=data_brand)
-		# if data_condition:
-		# 	queryset = queryset.select_related('condition').filter(condition__id__in=data_condition)
-		# if data_price:
-		# 	price_min = data_price[0]
-		# 	price_max = data_price[1]
-		# 	if request.user.is_authenticated():
-		# 		if price_min:
-		# 			price_min = price_to_region(user=request.user, price = price_min)
-		# 		if price_max:
-		# 			price_max = price_to_region(user=request.user, price = price_max)
-		# 	else:
-		# 		if price_min:
-		# 			price_min = price_to_region(price = price_min)
-		# 		if price_max:
-		# 			price_max = price_to_region(price = price_max)
-		# 	if not price_min and price_max:
-		# 		queryset = queryset.filter(price__lte=price_max)
-		# 	elif not price_max and price_min:
-		# 		queryset = queryset.filter(price__gte=price_min)
-		# 	elif price_max and price_min:
-		# 		queryset = queryset.filter(price__range=(price_min, price_max))
+		if data_size:
+			queryset = queryset.filter(size__id__in=data_size)
+		if data_brand:
+			queryset = queryset.filter(brand__id__in=data_brand)
+		if data_condition:
+			queryset = queryset.select_related('condition').filter(condition__id__in=data_condition)
+		if data_price:
+			price_min = data_price[0]
+			price_max = data_price[1]
+			if request.user.is_authenticated():
+				if price_min:
+					price_min = price_to_region(user=request.user, price = price_min)
+				if price_max:
+					price_max = price_to_region(user=request.user, price = price_max)
+			else:
+				if price_min:
+					price_min = price_to_region(price = price_min)
+				if price_max:
+					price_max = price_to_region(price = price_max)
+			if not price_min and price_max:
+				queryset = queryset.filter(price__lte=price_max)
+			elif not price_max and price_min:
+				queryset = queryset.filter(price__gte=price_min)
+			elif price_max and price_min:
+				queryset = queryset.filter(price__range=(price_min, price_max))
 
-		# #filters
-		# #sort
-		# if data_sort == 'high':
-		# 	queryset=queryset.order_by('price')
-		# elif data_sort == 'low':
-		# 	queryset=queryset.order_by('-price')
-		# else:
-		# 	queryset=queryset.order_by('-timestamp')
+		#filters
+		#sort
+		if data_sort == 'high':
+			queryset=queryset.order_by('price')
+		elif data_sort == 'low':
+			queryset=queryset.order_by('-price')
+		else:
+			queryset=queryset.order_by('-timestamp')
 		#sort
 		if not linked_data:		
 			return queryset, link_codiert

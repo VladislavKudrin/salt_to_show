@@ -37,7 +37,7 @@ class CategoryFilterView(ListView):
 			queryset, context = Product.objects.get_categoried_queryset(request=request, linked_data=linked_data)
 			queryset=queryset.authentic().available().prefetch_related('thumbnail')
 		else:
-			queryset = Product.objects.all().authentic().available().order_by('-timestamp')
+			queryset = Product.objects.select_related('brand').select_related('size').all().authentic().available().order_by('-timestamp').prefetch_related('thumbnail')
 		paginator = Paginator(queryset, items_per_page) # Show 25 contacts per page
 		page = request.GET.get('page')
 		try:
