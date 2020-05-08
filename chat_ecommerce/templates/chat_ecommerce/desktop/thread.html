@@ -1,7 +1,8 @@
 {% extends "base_no_footer.html" %}
 {% load static %}
 {% load msg_time %}
-{% load for_loop_extras %}
+{% load to_user_currency %}
+
 
 {% block content %}
 
@@ -644,15 +645,7 @@ button:focus {
 // adds to the current li class 'active' and it becomes gray
 $(document).ready(function ($) {
 
-		$.each($('.timestamp'), 
-            function(index, value){
-            myDate = new Date(($(value).html()));
-			var day = days[ myDate.getDay()];
-			var hour = (myDate.getHours()<10?'0':'') + myDate.getHours();
-			var min = (myDate.getMinutes()<10?'0':'') + myDate.getMinutes();
-			var date = day + ' '+ hour.toString() + ':' + min.toString()
-			$(this).html(date)
-            })//each-displayfilesupload
+		
 		
 	window.scrollTo(0,document.body.scrollHeight);
 	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom 
@@ -687,8 +680,6 @@ var msgInput = $("#id_message")
 
 
 
-
-
 var wsStart = 'ws://'
 if (loc.protocol == 'https:'){
 	wsStart = 'wss://'
@@ -699,131 +690,8 @@ var socket = new ReconnectingWebSocket(endpoint)
 var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 
 
-socket.onmessage = function(e) {
-
-	// var dialogs = $('#dialogs')
-	// var size_dialogs = $('#dialogs li').length
-	// var dialogss = $('.obj_id_s')
-	// threads 
-	// threads_ids_with_unred = {}
-	var active = document.querySelector(".active .obj_id_s")
-	storeid();
-	// console.log(arr) // ids of all threads / array 
-	var chatDataMsg = JSON.parse(e.data)
-	var username = chatDataMsg.username
-	var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
-	found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append
-	if (typeof found !== 'undefined' && found.length > 0) {
-		for (var i = 0; i < found.length; i++) {
-	    matched_id = found[i] // find element by its id 
-	    unread_thread = document.getElementById(String(matched_id))
-		    if (unread_thread===active){
-		    	console.log('I am not marking active element, I am not stupid')
-		    }
-		    else if (unread_thread.classList.contains('dot') === true) {
-		    	console.log('I am not marking since it is already marked')
-		    }
-		    else{
-		    	console.log("Marking with  dot")
-		    	unread_thread.classList.add("dot");
-		    }
-		}
-	}
-	else{
-		var active = document.querySelector(".active .obj_id_s")
-		Array.from(document.getElementsByClassName("dot")).forEach(
-		function(element, index, array) {
-		if (element === active){
-			// console.log('I am UNMARKIN active element, I am not stupid')
-			element.classList.remove("dot")
-    	}
-    }
-);
-	}
-	var now = new Date()
-	var day = days[ now.getDay()];
-	var hour = (now.getHours()<10?'0':'') + now.getHours();
-	var min = (now.getMinutes()<10?'0':'') + now.getMinutes();
-	var date = day + ' '+ hour.toString() + ':' + min.toString()
-	var opponent_username = chatDataMsg.opponent_username
-	var req = chatDataMsg.req
-	var chatHolder = $('#chat-items')
-	var opponent = document.getElementsByClassName("opponent")[0].id
-	if (opponent === opponent_username){
-
-		// console.log('pulling right')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-right'>" + "<div class='col-flex rounder-msg-cloud-right mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><span class='timestamp'>" + date + "</span></div></div></div></li>");
-	// console.log(req)
-	}
-	else{
-		var chatHolder = $('#chat-items')
-		// console.log('pulling left')
-	chatHolder.append("<li>" + "<div class='row'>"+ "<div class='col pull-left'>" + "<div class='col-flex rounder-msg-cloud-left mb-1 mt-1 p-2 pull-left msg-cloud'>" + chatDataMsg.message + "<br><span class='timestamp'>" + date + "</span></div></div></div></li>")
-
-	}
-	document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; 
-
-}
 
 
-
-socket.onopen = function(e) {
-	console.log('Websocket Opened')
-	// var chatDataMsg = JSON.parse(e.data)
-	// var backend_data = JSON.parse(e.data)
-	// var req = backend_data.req
-	// console.log(req)
-
-
-	// var url = window.location.href;
-	// console.log(url)
-	// if url contains 
-	// storeid();
-	// console.log(arr) // ids of all threads / array 
-	// console.log('open', e)
-	// var chatDataMsg = JSON.parse(e.data)
-	// console.log(chatDataMsg)
-	// var username = chatDataMsg.username
-	// var threads_by_user = chatDataMsg.threads_by_user // ids of all threads with unread notifications 
-	// found = arr.filter(value => threads_by_user.includes(value)) // arrays with ids of elements needed to append some shit 
-	// console.log(found)
-	// for (var i = 0; i < found.length; i++) {
- //    // Iterate over numeric indexes from 0 to 5, as everyone expects.
- //    console.log(found[i]);
- //    unredik = found[i]
- //    // find element by its id 
- //    var unred = $(`#${unredik}`)
- //    console.log(unred)
- //    // // unred.append("<div class='col' style='background-color:blue'></div>");
- //    // unred.classList.add('.fa heart');
- //    document.getElementById("32").className="dot_blue";
- //    console.log(unred)
-
-	// }
-	
-
-	// document.getElementById('chat-items').scrollTop = document.getElementById('chat-items').scrollHeight; //go to the bottom  
-	// console.log('open', e)
-	formData.submit(function(event){
-		event.preventDefault()
-		var msgText = msgInput.val()
-		var finalData = {
-			'message':msgText,
-			// 'current_url': url
-		}
-		//var formDataSerialized = formData.serialize()
-		socket.send(JSON.stringify(finalData))
-		formData[0].reset()
-	})//submit
-}//onopen
-
-socket.onerror = function(e) {
-	console.log('error', e)
-}//onerror
-
-socket.onclose = function(e) {
-	console.log('close', e)
-}//onclose
 
 
 //PerfectScrollbar
