@@ -38,8 +38,6 @@ urlpatterns = [
     url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(),name='marketing-pref'),
     url(r'^settings/$', RedirectView.as_view(url='/account')),
     url(r'^webhooks/mailchimp/$', MailChimpWebhookView.as_view(),name='webhook-mailchimp'),
-    url(r'^api/cart/', cart_detail_api_view, name='api-cart'),
-    url(r'^cart/', include("carts.urls",namespace='carts')),
     url(r'^checkout/payment/', include('billing.urls', namespace='payment')),
    #url(r'^accounts/login/$', RedirectView.as_view(url='/login') ),
     url(r'^accounts/login/$', RedirectView.as_view(url='/account')),
@@ -55,6 +53,7 @@ urlpatterns = [
     url(r'^terms/$', TermsPageView.as_view(), name='terms'),
     url(r'^faq/$', FAQPageView.as_view(), name='faq'),
     url(r'^users/(?P<username>[\w.@+-]+)/$', ProfileView.as_view(), name='profile'), 
+    url(r'^api/', include('bot.urls', namespace="api")),
 
 ]
 
