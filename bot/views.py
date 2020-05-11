@@ -17,7 +17,7 @@ class BotView(APIView):
 	def post(self, request):
 		json_string = request.body.decode("UTF-8")
 		update = telebot.types.Update.de_json(json_string)
-		bot.process_new_updaes([update])
+		bot.process_new_updates([update])
 
 		return Response({"code":200})
 
