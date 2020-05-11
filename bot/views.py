@@ -32,4 +32,9 @@ def start(message):
 
 @bot.message_handler(commands=['text'])
 def send_message(message):
-	bot.send_message(message.chat.id, 'hi again')
+	markup = telebot.types.ReplyKeyboardMarkup(row_width=2)
+	itembtn1 = types.KeyboardButton('a')
+	itembtn2 = types.KeyboardButton('v')
+	itembtn3 = types.KeyboardButton('d')
+	markup.add(itembtn1, itembtn2, itembtn3)
+	bot.send_message(chat_id, "Choose one letter:", reply_markup=markup)
