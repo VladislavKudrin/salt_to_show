@@ -87,6 +87,11 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 # Application definition
 

@@ -27,6 +27,7 @@ from .forms import *
 from addresses.models import Address
 from billing.models import BillingProfile, Card
 from orders.models import Order
+from bot.views import send_message_to_channel
 
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
@@ -197,6 +198,7 @@ class ProductCreateView(LoginRequiredMixin, RequestFormAttachMixin, CreateView):
 	def form_valid(self, form):
 		request = self.request
 		product = form.save()
+
 		url = product.get_absolute_url()
 		base_url = getattr(settings, 'BASE_URL', 'https://www.saltysalt.co')
 		path = "{base}{path}".format(base=base_url, path=url)
@@ -479,4 +481,18 @@ class ProductCheckoutView(LoginRequiredMixin, RequestFormAttachMixin, UpdateView
 		    # 'card_form': self.get_card(),
 		})
 		return kwargs
+
+
+def make_authentic(request, *args, **kwargs):
+	if request.user.is_authenticated() and request.user.is_admin:
+		id_ = kwargs.get('id')
+		product = Product.objects.get(id=id_)
+		product.authentic = 'authentic'
+		product.save()
+		send_message_to_channel(product)
+		return stay_where_you_are(request)
+
+
+
+
 

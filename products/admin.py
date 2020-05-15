@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.conf import settings
 
+
 from .models import Product, ProductImage, ProductThumbnail, ReportedProduct
 
 class ProductImageInline(admin.TabularInline):
@@ -15,22 +16,25 @@ class ProductImageInline(admin.TabularInline):
 		model=ProductImage
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ['__str__','get_absolute_url_admin', 'user', 'authentic', 'timestamp', 'slug', 'price']
+	list_display = ['__str__','get_absolute_url_admin', 'user', 'authentic', 'timestamp', 'slug', 'price', 'make_authentic']
 	inlines = [
 	ProductImageInline,
 	]
 	fieldsets = (
         ('Product info', {'fields': ('user', 'title', 'slug', 'description', 'price','national_shipping','condition', 'active', 'timestamp', 'currency_original', 'price_original' )}),
         ('Product brand, category and size', {'fields': ('brand','overcategory', 'sex', 'category', 'undercategory', 'size')}),
-    	('Authentity', {'fields': ('authentic','get_absolute_url_admin')}),
+    	('Authentity', {'fields': ('authentic','get_absolute_url_admin', 'make_authentic')}),
     )
 
 
-	readonly_fields = ['get_absolute_url_admin', 'timestamp']
+	readonly_fields = ['get_absolute_url_admin', 'timestamp', 'make_authentic']
 	def get_absolute_url_admin(self, obj):
 		return '<a href="{url}">Product</a>'.format(url=reverse('products:detail', kwargs={"slug":obj.slug}))
+	def make_authentic(self, obj):
+		return '<a href="{url}">Authenticate</a>'.format(url=reverse('products:make-authentic', kwargs={"id":obj.id} ))
 
-
+	make_authentic.short_description = 'Make Authentity'
+	make_authentic.allow_tags = True
 	get_absolute_url_admin.allow_tags=True
 	get_absolute_url_admin.short_description = 'Product Url'
 	class Meta:

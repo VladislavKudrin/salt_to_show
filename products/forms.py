@@ -226,6 +226,7 @@ class ImageForm(ProductCreateForm):
 		product.active = True
 		form_id = self.request.POST.get('form_id')
 		product.price_original = self.cleaned_data['price_original']
+		product.currency_original = self.request.user.region.currency
 		if self.request.user.is_admin:
 			product.authentic = 'authentic'
 		if commit:
