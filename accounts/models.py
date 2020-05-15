@@ -160,6 +160,14 @@ class User(AbstractBaseUser):
 	def is_admin(self):
 		return self.admin
 
+	def get_telegram(self):
+		try: 
+			user_telegram = self.user_telegram
+			return user_telegram
+		except:
+			return None
+
+
 class LanguagePreference(models.Model):
 	user     = models.ForeignKey(User, related_name='language')
 	language = models.CharField(max_length=120, default='en', choices=LANGUAGE_CHOISES)

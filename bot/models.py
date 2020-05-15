@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class User_telegram(models.Model):
-	user = models.ForeignKey(User, blank=True, null=True)
+	user = models.OneToOneField(User, blank=True, null=True, related_name='user_telegram')
 	chat_id = models.CharField(max_length=200,unique=True)
 	in_answer_mode = models.BooleanField(blank=False, default=False)
 	def __str__(self):

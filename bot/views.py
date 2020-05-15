@@ -26,6 +26,18 @@ class BotView(APIView):
 		return Response({"code":200})
 
 
+
+@bot.pre_checkout_query_handler(func=lambda query: True)
+def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
+	print(pre_checkout_query)
+	bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+
+@bot.message_handler(content_types='successful_payment')
+def process_successful_payment(message: types.Message):
+	print(message)
+
+
+
 @bot.message_handler(commands=['start'])
 def start(message):
 	user = User_telegram.objects.filter(chat_id=message.chat.id)
@@ -51,94 +63,198 @@ Is it correct address to send the item?
 <b>Name:</b> <i>"""+user_address.name+"""</i>
 <b>Post office:</b> <i>"""+user_address.post_office+"""</i>
 <b>Phone:</b> <i>"""+user_address.phone+"""</i>
-/yes or /no
 """
+						markup = types.InlineKeyboardMarkup()
+						btn1 = types.InlineKeyboardButton(text='Yes', callback_data='address_yes')
+						btn2 = types.InlineKeyboardButton(text='No', callback_data='address_no')
+						markup.row(btn1, btn2)
 						bot.send_message(message.chat.id, 
 								address_text,
-								parse_mode='HTML')
+								parse_mode='HTML', reply_markup=markup)
 					#pay mode
+			else:
+				markup = types.InlineKeyboardMarkup()
+				btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
+				markup.row(btn1)
+				bot.send_message(message.chat.id, 'ToDO Menu', reply_markup=markup)
 		else:
-			bot.send_message(message.chat.id, 'Please use /login to authenticate!')	
+			markup = types.InlineKeyboardMarkup()
+			btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
+			markup.row(btn1)
+			bot.send_message(message.chat.id, 'Please use "Login" to authenticate!', reply_markup=markup)	
 	else:
-		bot.send_message(message.chat.id, 'Welcome to SALT bot, please use /login to authenticate!')
+		markup = types.InlineKeyboardMarkup()
+		btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
+		markup.row(btn1)
+		bot.send_message(message.chat.id, 'Welcome to SALT bot, please use "Login" to authenticate!', reply_markup=markup)
 		user, created = User_telegram.objects.get_or_create(chat_id = message.chat.id)
 
-
-@bot.message_handler(commands=['login'])
-def login(message):
-	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
+###############LOGIN###############
+@bot.callback_query_handler(func=lambda c: c.data == 'login')
+def process_callback_login(callback_query: types.CallbackQuery):
+	bot.answer_callback_query(callback_query.id)
+	bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
+	user_telegram = User_telegram.objects.filter(chat_id=callback_query.from_user.id)
 	if user_telegram.exists():
 		user_telegram = user_telegram.first()
 		if user_telegram.is_logged_in:
 			user_telegram.exit_all_modes()
-			bot.send_message(message.chat.id, 'You are already logged in! Please use /logout for setting new account.')
+			markup = types.InlineKeyboardMarkup()
+			btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
+			markup.row(btn1)
+			bot.send_message(callback_query.from_user.id, 'You are already logged in! Please use "Logout" for setting new account.', reply_markup=markup)
 		else:
 			#begin login
 			user_telegram.exit_all_modes()
 			user_telegram.in_answer_mode=True
 			user_telegram.save()
-			bot.send_message(message.chat.id, 'Please, enter your email')
+			bot.send_message(callback_query.from_user.id, 'Please, enter your email')
 			LoginMode.objects.get_or_create(user_telegram=user_telegram)
 			#begin login
 	else:
 		bot.send_message(message.chat.id, 'Hello, first time around? Please use /start to tune our bot.')
+###############LOGIN################
 
-@bot.message_handler(commands=['logout'])
-def logout(message):
-	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
+
+###############LOGOUT###############
+@bot.callback_query_handler(func=lambda c: c.data == 'logout')
+def process_callback_logout(callback_query: types.CallbackQuery):
+	bot.answer_callback_query(callback_query.id)
+	bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
+	user_telegram = User_telegram.objects.filter(chat_id=callback_query.from_user.id)
 	if user_telegram.exists():
 		user_telegram = user_telegram.first()
 		user_telegram.exit_all_modes()
 		user_telegram.user=None
 		user_telegram.save()
-		bot.send_message(message.chat.id, 'Successfully logged out. Please, use /login to log in.')
+		markup = types.InlineKeyboardMarkup()
+		btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
+		markup.row(btn1)
+		bot.send_message(callback_query.from_user.id, 'Successfully logged out. Please, use "Login" to log in.', reply_markup=markup)
 	else:
-		bot.send_message(message.chat.id, 'Hello, first time around? Please use /start to tune our bot.')
-
-# @bot.callback_query_handler(func=lambda c: c.data == 'login')
-# def process_callback_login(callback_query: types.CallbackQuery):
-# 	bot.answer_callback_query(callback_query.id)
-# 	bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
-# 	user_telegram = User_telegram.objects.filter(chat_id=callback_query.from_user.id)
-# 	if user_telegram.exists():
-# 		user_telegram = user_telegram.first()
-# 		if user_telegram.is_logged_in:
-# 			user_telegram.exit_all_modes()
-# 			markup = types.InlineKeyboardMarkup()
-# 			btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
-# 			markup.row(btn1)
-# 			bot.send_message(callback_query.from_user.id, 'You are already logged in! Please use "Logout" for setting new account.', reply_markup=markup)
-# 		else:
-# 			#begin login
-# 			user_telegram.exit_all_modes()
-# 			user_telegram.in_answer_mode=True
-# 			user_telegram.save()
-# 			bot.send_message(callback_query.from_user.id, 'Please, enter your email')
-# 			LoginMode.objects.get_or_create(user_telegram=user_telegram)
-# 			#begin login
-# 	else:
-# 		bot.send_message(message.chat.id, 'Hello, first time around? Please use /start to tune our bot.')
-
-# @bot.message_handler(commands=['test'])
-# def test(message):
-# 	markup = types.InlineKeyboardMarkup()
-# 	btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-# 	markup.row(btn1)
-# 	bot.send_message(message.chat.id,'Welcome to SALT bot, please use "Login" to authenticate!', reply_markup=markup)
+		bot.send_message(callback_query.from_user.id, 'Hello, first time around? Please use /start to tune our bot.')
+###############LOGOUT###############
 
 
+###############PAY ADDRESS CONFIRMATION###############
+@bot.callback_query_handler(func=lambda c: c.data == 'address_yes' or c.data == 'address_no')
+def process_callback_address_confirmation(callback_query: types.CallbackQuery):
+	bot.answer_callback_query(callback_query.id)
+	bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
+	user_telegram = User_telegram.objects.filter(chat_id=callback_query.from_user.id)
+	if user_telegram.exists():
+		user_telegram = user_telegram.first()
+		if user_telegram.get_mode() == 'pay':
+			pay_mode = PayMode.objects.filter(user_telegram=user_telegram)
+			if pay_mode.exists():
+				pay_mode = pay_mode.first()
+				product = Product.objects.filter(slug=pay_mode.product_slug)
+				if product.exists():
+					product = product.first()
+					if not product.is_paid and product.is_payable and product.is_active and product.is_authentic:
+						product_img = product.thumbnail.first().get_absolute_url()
+						prices = [types.LabeledPrice('Price', int(product.price_original)*100),types.LabeledPrice('Shipping', int(product.national_shipping)*100)]
+						if callback_query.data == 'address_yes':
+							user_telegram.exit_all_modes()
+							bot.send_invoice(callback_query.from_user.id, 
+								title=product.title, 
+								description = product.description, 
+								invoice_payload=product.slug, 
+								provider_token='635983722:TEST:i53138327527',
+								currency='UAH',
+								prices=prices,
+								start_parameter=product.slug,
+								photo_url=product_img,
+								photo_height=512,  
+							    photo_width=512,
+							    photo_size=512				  
+								)
+						elif callback_query.data == 'address_no':
+							user_telegram.exit_all_modes()
+							markup = types.InlineKeyboardMarkup()
+							btn1 = types.InlineKeyboardButton(text='Change Address', url=settings.BASE_URL+reverse('accounts:user-update'))
+							btn2 = types.InlineKeyboardButton(text='BUY Again', url='https://t.me/saltish_bot?start='+product.slug)
+							markup.row(btn1, btn2)
+							bot.send_message(callback_query.from_user.id, 
+									'Choose:',
+									reply_markup=markup)
+					else:
+						user_telegram.exit_all_modes()
+						bot.send_message(callback_query.from_user.id, 'You cant buy this item.')
+				else:
+					bot.send_message(callback_query.from_user.id, 'There is no such item')
+###############PAY ADDRESS CONFIRMATION###############		
 
-@bot.pre_checkout_query_handler(func=lambda query: True)
-def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
-	print(pre_checkout_query)
-	bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
-
-@bot.message_handler(content_types='successful_payment')
-def process_successful_payment(message: types.Message):
-	print(message)
 
 
+###############LOGIN EMAIL PASSWORD AUTH###############
+def check_login_mode(message):
+	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
+	if user_telegram.exists():
+		user_telegram=user_telegram.first()
+		return user_telegram.get_mode() == 'login'
 
+@bot.message_handler(func=check_login_mode, content_types=['text'])
+def login_authentication(message):
+	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
+	if user_telegram.exists():
+		user_telegram=user_telegram.first()
+		login_mode = LoginMode.objects.filter(user_telegram=user_telegram)
+		if login_mode.exists():
+			login_mode = login_mode.first()
+			if not login_mode.email and not login_mode.password:
+				login_mode.email = message.text.lower()
+				login_mode.save()
+				bot.delete_message(message.chat.id, message.message_id)#delete 'Email'
+				bot.send_message(message.chat.id, 'Please, enter your password')
+			elif login_mode.email and not login_mode.password:
+				login_mode.password = message.text
+				login_mode.save()
+				user = authenticate(username=login_mode.email, password=login_mode.password)
+				if user is None:
+					user_telegram.exit_all_modes()
+					bot.delete_message(message.chat.id, message.message_id)#delete 'Password'
+					bot.delete_message(message.chat.id, str(int(message.message_id)-3))#delete 'Enter Email'
+					bot.delete_message(message.chat.id, str(int(message.message_id)-1))#delete 'Enter Password'
+					markup = types.InlineKeyboardMarkup()
+					btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
+					markup.row(btn1)
+					bot.send_message(message.chat.id, 'The password seems to be wrong. "Login" to try again.', reply_markup=markup)
+				else:
+					if user.get_telegram() is None:
+						user_telegram.user = user
+						user_telegram.save()
+						bot.delete_message(message.chat.id, message.message_id)#delete 'Password'
+						bot.delete_message(message.chat.id, str(int(message.message_id)-3))#delete 'Enter Email'
+						bot.delete_message(message.chat.id, str(int(message.message_id)-1))#delete 'Enter Password'
+						markup = types.InlineKeyboardMarkup()
+						btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
+						markup.row(btn1)
+						bot.send_message(message.chat.id, 'Success! Hello, ' + user.username + '.', reply_markup=markup)
+						user_telegram.exit_all_modes()
+					else:
+						markup = types.InlineKeyboardMarkup()
+						btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
+						markup.row(btn1)
+						bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
+						user_telegram.exit_all_modes()
+###############LOGIN EMAIL PASSWORD AUTH###############
+
+
+
+###############SIMPLE MESSAGE HANDLER###############
+@bot.message_handler(content_types=['text'])
+def send_message(message):				
+	bot.send_message(message.chat.id, message.text)
+###############SIMPLE MESSAGE HANDLER###############
+
+
+
+
+
+
+
+#############PRODUCT FUNCTION#############
 def send_message_to_channel(product):
 	users = User_telegram.objects.all()
 	images = ProductImage.objects.filter(product=product).order_by('image_order')
@@ -157,126 +273,28 @@ def send_message_to_channel(product):
 			else:
 				media_type=types.InputMediaPhoto(media=image.image)
 				media_types.append(media_type)
-		# markup = types.InlineKeyboardMarkup()
-		# button = types.InlineKeyboardButton(text='Go to Checkout', url='https://t.me/saltish_bot?start='+product.slug)
-		# markup.row(button)
 		bot.send_media_group('@saltish_channel', media=media_types)
-		# bot.send_message('@saltish_channel', reply_markup=markup, text = 'BUY')
+#############PRODUCT FUNCTION#############
 
 
+#############PRODUCT SOLD NOTIFICATION#############
+def send_message_to_seller(chat_id):
+	markup = types.InlineKeyboardMarkup()
+	btn1 = types.InlineKeyboardButton(text='Go to your orders', url=settings.BASE_URL+reverse('orders:list')+'?tab=sold')
+	markup.row(btn1)
+	bot.send_message(chat_id, 'Hi! You have just sold an item!', reply_markup=markup)
 
-@bot.message_handler(content_types=['text'])
-def modes_interaction(message):
-	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
-	if user_telegram.exists():
-		user_telegram=user_telegram.first()
-		# if login
-		if user_telegram.get_mode() == 'login':
-			login_mode = LoginMode.objects.filter(user_telegram=user_telegram)
-			if login_mode.exists():
-				login_mode = login_mode.first()
-				if not login_mode.email and not login_mode.password:
-					login_mode.email = message.text
-					login_mode.save()
-					bot.delete_message(message.chat.id, message.message_id)
-					bot.send_message(message.chat.id, 'Please, enter your password')
-				elif login_mode.email and not login_mode.password:
-					login_mode.password = message.text
-					login_mode.save()
-					user = authenticate(username=login_mode.email, password=login_mode.password)
-					if user is None:
-						user_telegram.exit_all_modes()
-						bot.delete_message(message.chat.id, message.message_id)
-						bot.send_message(message.chat.id, 'The password seems to be wrong. Type /login to try again.')
-					else:
-						user_telegram.user = user
-						user_telegram.save()
-						bot.delete_message(message.chat.id, message.message_id)
-						bot.send_message(message.chat.id, 'Success! Hello, ' + user.username + '.')
-						user_telegram.exit_all_modes()
-		#if login
-		#if pay
-		if user_telegram.get_mode() == 'pay':
-			pay_mode = PayMode.objects.filter(user_telegram=user_telegram)
-			if pay_mode.exists():
-				pay_mode = pay_mode.first()
-				product = Product.objects.filter(slug=pay_mode.product_slug)
-				if product.exists():
-					product = product.first()
-					if not product.is_paid and product.is_payable and product.is_active and product.is_authentic:
-						product_img = product.thumbnail.first().get_absolute_url()
-						prices = [types.LabeledPrice('Price', int(product.price_original)*100),types.LabeledPrice('Shipping', int(product.national_shipping)*100)]
-						if message.text == '/yes':
-							user_telegram.exit_all_modes()
-							bot.send_invoice(message.chat.id, 
-								title=product.title, 
-								description = product.description, 
-								invoice_payload=product.slug, 
-								provider_token='635983722:LIVE:i53138327527',
-								currency='UAH',
-								prices=prices,
-								start_parameter=product.slug,
-								photo_url=product_img,
-								photo_height=512,  
-							    photo_width=512,
-							    photo_size=512				  
-								)
-						elif message.text == '/no':
-							user_telegram.exit_all_modes()
-							bot.send_message(message.chat.id, 
-									'Please, go to <b><a href="'+settings.BASE_URL+reverse('accounts:user-update')+'">Change Address</a></b> and try to <b><ins><a href="https://t.me/saltish_bot?start='+product.slug+'">BUY</a></ins></b> again.',
-									parse_mode='HTML')
-					else:
-						user_telegram.exit_all_modes()
-						bot.send_message(message.chat.id, 'You cant buy this item.')
-				else:
-					bot.send_message(message.chat.id, 'There is no such item')
-		#if pay
-		else:
-			bot.send_message(message.chat.id, message.text)
-
-				
+#############PRODUCT SOLD NOTIFICATION#############
 
 
 
 
 
 
-@bot.message_handler(content_types=['text'])
-def send_message(message):
-	bot.send_poll(message.chat.id, question='How are you today?', options=['a','b','c'])
 
 
 
-# @bot.message_handler(commands=['product'])
-# def send_message(message):
-# 	product_slug = (message.text).split('/product ')
-# 	print(message)
-# # 	if len(product_slug) > 1:
-# # 		product_slug = product_slug[1]
-# # 		product = Product.objects.filter(slug=product_slug)
-# # 		if product.exists():
-# # 			product = product.first()
-# # 			images = ProductImage.objects.filter(product=product).order_by('image_order')
-# # 			images_dict = {}
-# # 			media_types = []
-# # 			if images.exists():
-# # 				for image in images:
-# # 					if image.image_order == 1:
-# # 						text = """🧂<b>Title:</b> <i>"""+product.title+"""</i>
-# # 🧂<b>Description:</b> <i>"""+product.description+"""</i>
-# # """"""🧂<b>Price:</b> <i>"""+str(product.price)+"""</i>
-# # """
-# # 						media_type=types.InputMediaPhoto(media=image.image, caption=text, parse_mode='HTML')
-# # 						media_types.append(media_type)
-# # 					else:
-# # 						media_type=types.InputMediaPhoto(media=image.image)
-# # 						media_types.append(media_type)
-# # 			bot.send_media_group(message.chat.id, media=media_types)
-# # 		else:
-# # 			bot.send_message(message.chat.id, 'There is no such item')
-# # 	else:
-# # 		bot.send_message(message.chat.id, 'Please enter product slug')
+
 		
 
 	
