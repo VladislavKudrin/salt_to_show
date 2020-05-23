@@ -160,14 +160,15 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								title=product.title, 
 								description = product.description, 
 								invoice_payload=product.slug, 
-								provider_token='635983722:TEST:i53138327527',
+								provider_token='632593626:TEST:i53138327527',
 								currency='UAH',
 								prices=prices,
 								start_parameter=product.slug,
 								photo_url=product_img,
 								photo_height=512,  
 							    photo_width=512,
-							    photo_size=512				  
+							    photo_size=512,
+							    is_flexible=True				  
 								)
 						elif callback_query.data == 'address_no':
 							user_telegram.exit_all_modes()
