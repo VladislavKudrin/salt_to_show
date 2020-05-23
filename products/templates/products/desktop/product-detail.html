@@ -6,6 +6,12 @@
 {% load checked_time %}
 {% block content %}
 
+
+
+{% load accounts_tags %}
+{% get_user_wishlist as user_wishlist %}
+
+
 <head>
 <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
 <input type="hidden" id='language_pref' name="language_pref" value="{{ request.session.language }}">

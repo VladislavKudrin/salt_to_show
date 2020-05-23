@@ -6,7 +6,7 @@
 	<span class='submit-span-wishlist'>
 
 
-		{% if product in request.user.wishes.all %}
+		{% if product in user_wishlist %}
 					<button type='submit' class='hidden-button hidden-button-outline'><i class='fas fa-heart fa-2x black-heart'></i></button>
 		{% else %}
 					<button type='submit' class='hidden-button hidden-button-outline'><i class='far fa-heart fa-2x black-heart'></i></button>

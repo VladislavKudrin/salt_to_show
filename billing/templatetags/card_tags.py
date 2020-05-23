@@ -7,6 +7,6 @@ register = template.Library()
 def get_user_card(context):
 	user = context['request'].user
 	if user.is_authenticated():
-		return user.billing_profile.default_card
+		return user.billing_profile.default_card.first()
 	else:
 		return None
