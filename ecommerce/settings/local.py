@@ -26,6 +26,11 @@ MESSAGE_TAGS = {
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
+
+#TELEGA
+BOT_TOKEN = '952860374:AAEtZPhGqcX3_Slu7K2nSpP3jc5B6aBWGsM'
+#TELEGA
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -47,9 +52,14 @@ EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
-BASE_URL = '127.0.0.1:8000'
+BASE_URL = 'https://5c6581b1.ngrok.io'
 BASE_URL_WITHOUT_WWW = '127.0.0.1:8000'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 #REGIONS
 ALLOWED_REGIONS = 'ua'
 
@@ -89,6 +99,7 @@ INSTALLED_APPS = [
 
 
 
+
     #our apps
     'chat_ecommerce',
     'addresses',
@@ -103,7 +114,8 @@ INSTALLED_APPS = [
     'categories',
     'image_uploader',
     'language_pref',
-    'liqpay'
+    'liqpay',
+    'bot'
 ]
 
 

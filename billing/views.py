@@ -63,7 +63,7 @@ class PayView(TemplateView):
         liqpay = LiqPay(LIQPAY_PUB_KEY, LIQPAY_PRIV_KEY)
         callback_url = settings.BASE_URL_WITHOUT_WWW + reverse('payment:pay_callback')
         if settings.TESTMODE:
-            callback_url = "https://enbarnzipr23p.x.pipedream.net"
+            callback_url = settings.BASE_URL + reverse('payment:pay_callback')
         order = Order.objects.by_request(request).first()
         billingprofile, created = BillingProfile.objects.new_or_get(request)
         if billingprofile:

@@ -16,7 +16,9 @@ urlpatterns = [
     url(r'^view/(?P<slug>[\w.@+-]+)/$', ProductDetailSlugView.as_view(), name='detail'),
     url(r'^existing/(?P<id>\d+)$', ProductUpdateView.as_view(), name='existing_file_example'),
     url(r'^fakelist/$', FakeProductsListView.as_view(), name='fake-list'),
+    url(r'^authenticate/(?P<id>\d+)$', make_authentic, name='make-authentic'),
     url(r'^(?P<filter>[\w.@+-=&]+)$', CategoryFilterView.as_view(), name='list-filter'),
+
 ]
 
 

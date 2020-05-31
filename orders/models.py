@@ -18,6 +18,9 @@ from ecommerce.utils import unique_order_id_generator
 from chat_ecommerce.models import Thread
 from products.models import Product
 from liqpay.liqpay3 import LiqPay
+from bot.views import send_message_to_seller
+
+
 LIQPAY_PRIV_KEY = getattr(settings, "LIQPAY_PRIVATE_KEY", "sandbox_tLSKnsdkFbQgIe8eiK8Y2RcaQ3XUJl29quSa4aSG")
 LIQPAY_PUB_KEY =  getattr(settings, "LIQPAY_PUBLIC_KEY", 'sandbox_i6955995458')
 import requests
@@ -145,7 +148,8 @@ class Order(models.Model):
 	def send_email(self, success=False):
 		buyer = self.billing_profile.email
 		order_id = self.order_id
-		seller = self.get_seller().email
+		seller = self.get_seller()
+		seller_email = seller.email
 		from_email = settings.DEFAULT_FROM_EMAIL
 		current_domain = settings.BASE_URL
 		item = self.product
@@ -170,7 +174,18 @@ class Order(models.Model):
 			txt_seller = get_template("orders/emails/item_sold.txt").render(context)
 			html_seller = get_template("orders/emails/item_sold.html").render(context)
 			subject_seller = _('Congratulations! You just have sold an item!')
-
+			sent_mail_seller=send_mail(
+					subject_seller,
+					txt_seller,
+					from_email,
+					[seller_email],
+					html_message=html_seller,
+					fail_silently=False, 
+					)
+			seller_telegram = seller.get_telegram()
+			if seller_telegram is not None:
+				print('hallo')
+				send_message_to_seller(seller_telegram.chat_id)
 		else:
 			try:
 				error = self.transaction.get_error(key='err_description')
@@ -185,7 +200,6 @@ class Order(models.Model):
 			html_ = get_template("orders/emails/inform_error_payment.html").render(context)
 			subject = _('Order Error')
 
-
 		sent_mail=send_mail(
 					subject,
 					txt_,
@@ -195,14 +209,8 @@ class Order(models.Model):
 					fail_silently=False, 
 					)
 
-		sent_mail2=send_mail(
-					subject_seller,
-					txt_seller,
-					from_email,
-					[seller],
-					html_message=html_seller,
-					fail_silently=False, 
-					)
+
+
 
 	def complete_this_order(self, request):
 		try:

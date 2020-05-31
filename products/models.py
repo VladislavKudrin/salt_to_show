@@ -287,6 +287,13 @@ def product_pre_save_reciever(sender, instance, *args, **kwargs):
 
 pre_save.connect(product_pre_save_reciever,sender=Product)
 
+# def product_post_save_reciever(sender, created, instance, *args, **kwargs):
+# 	if not created:
+# 		if instance.authentic == 'authentic':
+# 			from bot.views import send_message_to_telegram_
+# 			send_message_to_all_users(instance)
+# post_save.connect(product_post_save_reciever,sender=Product)
+
 
 class ProductImage(models.Model):
 	product 		= models.ForeignKey(Product, default=None, related_name='images')
@@ -353,7 +360,8 @@ class ProductThumbnail(models.Model):
 
 
 
-
+	def get_absolute_url(self):
+		return settings.BASE_URL + self.thumbnail.url
 
 
 

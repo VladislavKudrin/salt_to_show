@@ -29,6 +29,9 @@ CONTENT_TYPES = ['image', 'video']
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+#TELEGA
+BOT_TOKEN = '952860374:AAEtZPhGqcX3_Slu7K2nSpP3jc5B6aBWGsM'
+#TELEGA
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -84,6 +87,11 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 # Application definition
 
@@ -109,6 +117,7 @@ INSTALLED_APPS = [
     'compressor',
 
 
+
     #our apps
     'chat_ecommerce',
     'addresses',
@@ -123,7 +132,8 @@ INSTALLED_APPS = [
     'categories',
     'image_uploader',
     'language_pref',
-    'liqpay'
+    'liqpay',
+    'bot'
 
 ]
 
