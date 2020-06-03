@@ -256,7 +256,7 @@ def send_message(message):
 
 #############PRODUCT FUNCTION#############
 def send_message_to_channel(product):
-	users = User_telegram.objects.all()
+	# users = User_telegram.objects.all()
 	images = ProductImage.objects.filter(product=product).order_by('image_order')
 	media_types = []
 	if images.exists():
@@ -267,6 +267,7 @@ def send_message_to_channel(product):
 """"""🧂<b>Price:</b> <i>"""+str(product.price_original)+' '+product.currency_original+"""</i>
 """"""<b>.</b>
 """"""<b>.</b>
+""""""<b><ins><a href=""""+product.get_absolute_url+"""">SEE ON SALT</a></ins></b>
 """"""<b><ins><a href="https://t.me/saltish_bot?start="""+product.slug+"""">BUY</a></ins></b>"""
 				media_type=types.InputMediaPhoto(media=image.image, caption=text, parse_mode='HTML')
 				media_types.append(media_type)
