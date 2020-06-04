@@ -161,7 +161,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								title=product.title, 
 								description = product.description, 
 								invoice_payload=product.slug, 
-								provider_token='635983722:TEST:i53138327527',
+								provider_token='632593626:TEST:i53138327527',
 								currency='UAH',
 								prices=prices,
 								start_parameter=product.slug,
@@ -278,7 +278,7 @@ def send_message_to_channel(product):
 			else:
 				media_type=types.InputMediaPhoto(media=image.image)
 				media_types.append(media_type)
-		bot.send_media_group('@saltish_channel', media=media_types)
+		bot.send_media_group('@saltish_channel', media=media_types, timeout=1000)
 #############PRODUCT FUNCTION#############
 
 
