@@ -41,8 +41,15 @@ def process_successful_payment(message: types.Message):
 
 @bot.message_handler(commands=['start'])
 def start(message):
+	markup = types.InlineKeyboardMarkup()
 	user = User_telegram.objects.filter(chat_id=message.chat.id)
 	bot.delete_message(message.chat.id, message.message_id)
+
+	msg_welcome = "Чтобы начать оформление заказа, для начала нужно привязать бота к твоему аккаунту. Это займет меньше 2 минут. Для начала выбери ..."
+	btn_login = types.InlineKeyboardButton(text='Login', callback_data='login')
+	btn_register = types.InlineKeyboardButton(text='Register', url=settings.BASE_URL+reverse('login'))
+	btn_logout = types.InlineKeyboardButton(text='Logout', callback_data='logout')
+
 	if user.exists():
 		user = user.first()
 		if user.is_logged_in == True:
@@ -59,36 +66,29 @@ def start(message):
 					if user_address.exists():
 						user_address = user_address.first()
 						PayMode.objects.get_or_create(user_telegram=user, product_slug=product_slug)
-						address_text = """
-Is it correct address to send the item? 
-<b>Name:</b> <i>"""+user_address.name+"""</i>
-<b>Post office:</b> <i>"""+user_address.post_office+"""</i>
-<b>Phone:</b> <i>"""+user_address.phone+"""</i>
-"""
-						markup = types.InlineKeyboardMarkup()
+						context = {
+							'user_address_name':user_address.name,
+							'user_address_post_office':user_address.post_office,
+							'user_address_phone':user_address.phone,
+						}
+						address_text = get_template("emails/telegram_address_confirm.html").render(context)
 						btn1 = types.InlineKeyboardButton(text='Yes', callback_data='address_yes')
 						btn2 = types.InlineKeyboardButton(text='No', callback_data='address_no')
 						markup.row(btn1, btn2)
-						bot.send_message(message.chat.id, 
-								address_text,
-								parse_mode='HTML', reply_markup=markup)
-					#pay mode
+						bot.send_message(message.chat.id, address_text, parse_mode='HTML', reply_markup=markup)
+				#pay mode
 			else:
-				markup = types.InlineKeyboardMarkup()
-				btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
-				markup.row(btn1)
+				markup.row(btn_logout)
 				bot.send_message(message.chat.id, 'ToDO Menu', reply_markup=markup)
 		else:
-			markup = types.InlineKeyboardMarkup()
-			btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-			markup.row(btn1)
-			bot.send_message(message.chat.id, 'Please use "Login" to authenticate!', reply_markup=markup)	
+			markup.row(btn_login, btn_register)
+			bot.send_message(message.chat.id, msg_welcome, parse_mode='HTML', reply_markup=markup)	
 	else:
-		markup = types.InlineKeyboardMarkup()
-		btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-		markup.row(btn1)
-		bot.send_message(message.chat.id, 'Welcome to SALT bot, please use "Login" to authenticate!', reply_markup=markup)
+		markup.row(btn_login)
+		bot.send_message(message.chat.id, msg_welcome, reply_markup=markup)
 		user, created = User_telegram.objects.get_or_create(chat_id = message.chat.id)
+
+
 
 ###############LOGIN###############
 @bot.callback_query_handler(func=lambda c: c.data == 'login')
@@ -110,6 +110,7 @@ def process_callback_login(callback_query: types.CallbackQuery):
 			user_telegram.in_answer_mode=True
 			user_telegram.save()
 			bot.send_message(callback_query.from_user.id, 'Please, enter your email')
+			#, reply_markup=types.ReplyKeyboardRemove() 
 			LoginMode.objects.get_or_create(user_telegram=user_telegram)
 			#begin login
 	else:
@@ -246,7 +247,7 @@ def login_authentication(message):
 ###############SIMPLE MESSAGE HANDLER###############
 @bot.message_handler(content_types=['text'])
 def send_message(message):				
-	bot.send_message(message.chat.id, message.text)
+	bot.send_message(message.chat.id, "Didn't understand u!")
 ###############SIMPLE MESSAGE HANDLER###############
 
 
@@ -264,6 +265,7 @@ def send_message_to_channel(product):
 			'product_price':str(product.price_original),
 			'product_currency':product.currency_original,
 			'product_title':product.title,
+			'product_condition':product.condition.condition_ru,
 			'product_description':product.description,
 			'product_shipping_price':product.national_shipping,
 			'start_purchase_url': "https://t.me/saltish_bot?start="+product.slug,
