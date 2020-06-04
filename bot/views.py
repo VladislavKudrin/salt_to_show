@@ -9,6 +9,7 @@ import json
 from .models import User_telegram, LoginMode, PayMode
 from products.models import Product, ProductImage
 from addresses.models import Address
+from django.template.loader import get_template
 
 BOT_TOKEN = getattr(settings, "BOT_TOKEN", '')
 
@@ -257,24 +258,28 @@ def send_message(message):
 
 #############PRODUCT FUNCTION#############
 def send_message_to_channel(product):
-	users = User_telegram.objects.all()
+	# users = User_telegram.objects.all()
 	images = ProductImage.objects.filter(product=product).order_by('image_order')
+	context = {
+			'product_url':settings.BASE_URL+product.get_absolute_url(),
+			'product_price':str(product.price_original),
+			'product_currency':product.currency_original,
+			'product_title':product.title,
+			'product_description':product.description,
+			'product_shipping_price':product.national_shipping,
+			'start_purchase_url': "https://t.me/saltish_bot?start="+product.slug,
+	}
+	text = get_template("emails/telegram_new_item.html").render(context)
 	media_types = []
 	if images.exists():
 		for image in images:
 			if image.image_order == 1:
-				text = """🧂<b>Title:</b> <i>"""+product.title+"""</i>
-🧂<b>Description:</b> <i>"""+product.description+"""</i>
-""""""🧂<b>Price:</b> <i>"""+str(product.price_original)+' '+product.currency_original+"""</i>
-""""""<b>.</b>
-""""""<b>.</b>
-""""""<b><ins><a href="https://t.me/saltish_bot?start="""+product.slug+"""">BUY</a></ins></b>"""
 				media_type=types.InputMediaPhoto(media=image.image, caption=text, parse_mode='HTML')
 				media_types.append(media_type)
 			else:
 				media_type=types.InputMediaPhoto(media=image.image)
 				media_types.append(media_type)
-		bot.send_media_group('@saltish_channel', media=media_types)
+		bot.send_media_group('@saltish_channel', media=media_types, timeout=1000)
 #############PRODUCT FUNCTION#############
 
 
