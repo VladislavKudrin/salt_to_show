@@ -30,7 +30,8 @@ CONTENT_TYPES = ['image', 'video']
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 #TELEGA
-BOT_TOKEN = '952860374:AAEtZPhGqcX3_Slu7K2nSpP3jc5B6aBWGsM'
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+TELEGRAM_ACTIVATION_EXPIRED = os.environ.get('TELEGRAM_ACTIVATION_EXPIRED')
 #TELEGA
 
 # Quick-start development settings - unsuitable for production

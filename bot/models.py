@@ -10,6 +10,7 @@ from django.template.loader import get_template
 from ecommerce.utils import unique_key_generator
 User = get_user_model()
 
+
 class User_telegram(models.Model):
 	user = models.OneToOneField(User, blank=True, null=True, related_name='user_telegram')
 	chat_id = models.CharField(max_length=200,unique=True)
@@ -90,7 +91,7 @@ class PayMode(models.Model):
 class TelegramActivationQuerySet(models.query.QuerySet):
 	def confirmable(self):
 		now = timezone.now()
-		start_range = now - timedelta(minutes=5)
+		start_range = now - timedelta(minutes=settings.TELEGRAM_ACTIVATION_EXPIRED)
 		end_range = now
 
 		return self.filter(
@@ -112,24 +113,38 @@ class TelegramActivationManager(models.Manager):
 
 
 class TelegramActivation(models.Model):
-	chat_id   = models.CharField(max_length=200)
-	email     = models.EmailField(max_length=255, blank=True)
-	key       = models.CharField(max_length=120, blank=True,null=True)
-	timestamp = models.DateTimeField(auto_now_add = True)
-	expires   = models.IntegerField(default=5)#Minutes
-	activated = models.BooleanField(default=False)
-
-
+	user_telegram = models.OneToOneField(User_telegram, related_name='telegram_activation', null=True, blank=True)
+	chat_id       = models.CharField(max_length=200)
+	email         = models.EmailField(max_length=255, blank=True)
+	key           = models.CharField(max_length=120, blank=True,null=True)
+	timestamp     = models.DateTimeField(auto_now_add = True)
+	expires       = models.IntegerField(default=5)#Minutes
+	activated     = models.BooleanField(default=False)
+	update        = models.DateTimeField(auto_now = True)
 	objects = TelegramActivationManager()
 
 	def __str__(self):
 		return self.email
+
+	@property
+	def is_activated(self):
+		try:
+			self.user_telegram
+			if self.user_telegram is not None and self.activated:
+				return True
+			else:
+				return False
+		except:
+			return False
+
+
 
 	def can_activate(self):
 		qs=TelegramActivation.objects.filter(pk=self.pk).confirmable()
 		if qs.exists():
 			return True
 		return False
+
 
 	def regenerate(self):
 		self.key=None
@@ -164,11 +179,10 @@ class TelegramActivation(models.Model):
 
 
 def post_save_telegram_activation(sender, created, instance, *args, **kwargs):
-	if not instance.key:
-		instance.regenerate()
+	if instance.key:
+		print('JOPA')
 	else:
-		if instance.can_activate():
-			instance.send_activation()
+		instance.regenerate()
 
 def pre_save_telegram_activation(sender, instance, *args, **kwargs):
 	if not instance.key:

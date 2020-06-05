@@ -29,6 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 #TELEGA
 BOT_TOKEN = '952860374:AAEtZPhGqcX3_Slu7K2nSpP3jc5B6aBWGsM'
+TELEGRAM_ACTIVATION_EXPIRED = 10
 #TELEGA
 
 # Quick-start development settings - unsuitable for production
@@ -52,7 +53,7 @@ EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
-BASE_URL = 'https://51073a3b2af3.ngrok.io'
+BASE_URL = 'https://14fe60bbdc9c.ngrok.io'
 BASE_URL_WITHOUT_WWW = '127.0.0.1:8000'
 
 REST_FRAMEWORK = {

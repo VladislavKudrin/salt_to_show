@@ -5,6 +5,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.urls import reverse
 import json
+from django.contrib.auth import get_user_model
+
+
+
 
 from .models import User_telegram, LoginMode, PayMode, TelegramActivation
 from products.models import Product, ProductImage
@@ -18,7 +22,7 @@ from telebot import types
 
 bot = telebot.TeleBot(BOT_TOKEN)
 bot.set_webhook(url=settings.BASE_URL + "/api/telegram/")
-
+User = get_user_model()
 
 class BotView(APIView):
 	def post(self, request):
@@ -199,6 +203,7 @@ def check_login_mode(message):
 
 @bot.message_handler(func=check_login_mode, content_types=['text'])
 def login_authentication(message):
+	login_account_text = 'Go to your SALT account and enter key in form /mykey_(yourKey), where (yourKey) is key. You have '+ str(settings.TELEGRAM_ACTIVATION_EXPIRED) +' Minutes to do this. After that, you should send new activation!'
 	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
 	if user_telegram.exists():
 		user_telegram=user_telegram.first()
@@ -209,51 +214,51 @@ def login_authentication(message):
 				login_mode.email = message.text.lower()
 				login_mode.save()
 				bot.delete_message(message.chat.id, message.message_id)#delete 'Email'
-				activations = TelegramActivation.objects.filter(chat_id=message.chat.id, email=login_mode.email)
-				if activations.exists():
-					activations.delete()
-				TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
-				bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-				bot.send_message(message.chat.id, 'Go to your Email account and enter key in form /mykey_(yourKey), where (yourKey) is key from Email')
-				user_telegram.exit_all_modes()
-				# else:
-				# 	markup = types.InlineKeyboardMarkup()
-				# 	btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
-				# 	markup.row(btn1)
-				# 	bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
-				# 	user_telegram.exit_all_modes()
-				# bot.send_message(message.chat.id, 'Please, enter your password')
-			# elif login_mode.email and not login_mode.password:
-			# 	login_mode.password = message.text
-			# 	login_mode.save()
-			# 	user = authenticate(username=login_mode.email, password=login_mode.password)
-			# 	if user is None:
-			# 		user_telegram.exit_all_modes()
-			# 		bot.delete_message(message.chat.id, message.message_id)#delete 'Password'
-			# 		bot.delete_message(message.chat.id, str(int(message.message_id)-3))#delete 'Enter Email'
-			# 		bot.delete_message(message.chat.id, str(int(message.message_id)-1))#delete 'Enter Password'
-			# 		markup = types.InlineKeyboardMarkup()
-			# 		btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-			# 		markup.row(btn1)
-			# 		bot.send_message(message.chat.id, 'The password seems to be wrong. "Login" to try again.', reply_markup=markup)
-			# 	else:
-			# 		if user.get_telegram() is None:
-			# 			user_telegram.user = user
-			# 			user_telegram.save()
-			# 			bot.delete_message(message.chat.id, message.message_id)#delete 'Password'
-			# 			bot.delete_message(message.chat.id, str(int(message.message_id)-3))#delete 'Enter Email'
-			# 			bot.delete_message(message.chat.id, str(int(message.message_id)-1))#delete 'Enter Password'
-			# 			markup = types.InlineKeyboardMarkup()
-			# 			btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
-			# 			markup.row(btn1)
-			# 			bot.send_message(message.chat.id, 'Success! Hello, ' + user.username + '.', reply_markup=markup)
-			# 			user_telegram.exit_all_modes()
-			# 		else:
-			# 			markup = types.InlineKeyboardMarkup()
-			# 			btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
-			# 			markup.row(btn1)
-			# 			bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
-			# 			user_telegram.exit_all_modes()
+				user_salt = User.objects.filter(email=login_mode.email)
+				if user_salt.exists():##if salt user exists
+					activations = TelegramActivation.objects.filter(email=login_mode.email)
+					if activations.exists():##if activation exists
+						activation = activations.first()
+						if activation.is_activated:#if activation activated, tell that its already activated, contact us
+							bot.delete_message(message.chat.id, str(int(message.message_id)-1))
+							markup = types.InlineKeyboardMarkup()
+							btn1 = types.InlineKeyboardButton(text='Contact', url=settings.BASE_URL+reverse('contact'))
+							markup.row(btn1)
+							bot.send_message(message.chat.id, 'This Email is already successfully activated. If it wasnt you, contact us!', reply_markup=markup)
+							user_telegram.exit_all_modes()
+						else:#if not activated activation exists
+							if activation.can_activate():#if not activated activation exists and can be activated, send that can confirm it
+								markup_account = types.InlineKeyboardMarkup()
+								btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
+								markup_account.row(btn_account)
+								bot.delete_message(message.chat.id, str(int(message.message_id)-1))
+								bot.send_message(message.chat.id, 'Go to your SALT account and enter key in form /mykey_(yourKey), where (yourKey) is key.', reply_markup=markup_account)
+								user_telegram.exit_all_modes()
+							else:#if not activated activation exists and can't be activated, delete old activation and send new one OR TELL HIM THAT OLD ONE EXPIRED AND ASK IF HE WANTS TO SEND NEW ONE
+								markup_account = types.InlineKeyboardMarkup()
+								btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
+								markup_account.row(btn_account)
+								activations.delete()
+								TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
+								bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
+								user_telegram.exit_all_modes()
+
+					else:##if no activation exists, create new activation
+						markup_account = types.InlineKeyboardMarkup()
+						btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
+						markup_account.row(btn_account)
+						TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
+						bot.delete_message(message.chat.id, str(int(message.message_id)-1))
+						bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
+						user_telegram.exit_all_modes()
+				else:##if no salt user under this email
+					bot.delete_message(message.chat.id, str(int(message.message_id)-1))
+					markup = types.InlineKeyboardMarkup()
+					btn1 = types.InlineKeyboardButton(text='Register', url=settings.BASE_URL+reverse('login'))
+					btn2 = types.InlineKeyboardButton(text='Login', callback_data='login')
+					markup.row(btn1, btn2)
+					bot.send_message(message.chat.id, 'There is no user with this email, would you like to register? Or try again.', reply_markup=markup)
+					user_telegram.exit_all_modes()
 ###############LOGIN EMAIL PASSWORD AUTH###############
 
 
