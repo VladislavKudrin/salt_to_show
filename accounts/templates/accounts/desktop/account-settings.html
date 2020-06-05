@@ -119,9 +119,12 @@ textarea{
           {{user_form.email|as_crispy_field}}
           <a href='{% url "password_change" %}' class="btn hover-button button-white medium-button" role="button" aria-pressed="true" style="margin-bottom: 1rem;">{{ password_btn }}</a>
           {% if telegram_activation %}
-          <div class="form-group">
-            <label class="col-form-label  requiredField" for="id_telegram_activation" style="font-size: 10px; padding-top: 1px;">Telegram Key</label>
-            <input class='form-control labels-placement textinput textInput form-control' style="width: 60%!important" type="text" readonly="true" value="{{telegram_activation}}" id="id_telegram_activation">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="Telegram Key" aria-label="Telegram Key" aria-describedby="basic-addon2" value="{{telegram_activation}}">
+            <div class="input-group-append">
+              <button class="btn btn-outline-dark" type="button">Copy</button>
+              <a class="btn btn-outline-danger" href='{% url "api:delete_activation_key" %}' type="button">Delete Key</a>
+            </div>
           </div>
           {% endif %}
         </div>

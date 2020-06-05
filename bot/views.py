@@ -6,14 +6,14 @@ from rest_framework.views import APIView
 from django.urls import reverse
 import json
 from django.contrib.auth import get_user_model
+from django.template.loader import get_template
 
 
-
-
+from ecommerce.utils import stay_where_you_are
 from .models import User_telegram, LoginMode, PayMode, TelegramActivation
 from products.models import Product, ProductImage
 from addresses.models import Address
-from django.template.loader import get_template
+
 
 BOT_TOKEN = getattr(settings, "BOT_TOKEN", '')
 
@@ -31,7 +31,13 @@ class BotView(APIView):
 		bot.process_new_updates([update])
 		return Response({"code":200})
 
-
+def delete_activation_key_view(request):
+	user = request.user
+	if user.is_authenticated():
+		activations = TelegramActivation.objects.filter(email=user.email)
+		if activations.exists():
+			activations.delete()
+	return stay_where_you_are(request)
 
 @bot.pre_checkout_query_handler(func=lambda query: True)
 def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
@@ -230,12 +236,14 @@ def authenticate_with_key(message):
 							else:
 								markup = types.InlineKeyboardMarkup()
 								btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
+								markup.row(btn1)
 								bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
 					else:
 						markup = types.InlineKeyboardMarkup()
 						btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-						markup.row(btn1)
-						bot.send_message(message.chat.id, 'This key is not from your account. Please send another one or login', reply_markup=markup)
+						btn2 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
+						markup.row(btn1, btn2)
+						bot.send_message(message.chat.id, 'This key is not from your account. Please send another one or login. If you want to report a problem, contact us!', reply_markup=markup)
 				else:
 					markup = types.InlineKeyboardMarkup()
 					btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
@@ -263,41 +271,46 @@ def login_authentication(message):
 				bot.delete_message(message.chat.id, message.message_id)#delete 'Email'
 				user_salt = User.objects.filter(email=login_mode.email)
 				if user_salt.exists():##if salt user exists
-					activations = TelegramActivation.objects.filter(email=login_mode.email)
-					if activations.exists():##if activation exists
-						activation = activations.first()
-						if activation.is_activated:#if activation activated, tell that its already activated, contact us
-							bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-							markup = types.InlineKeyboardMarkup()
-							btn1 = types.InlineKeyboardButton(text='Contact', url=settings.BASE_URL+reverse('contact'))
-							markup.row(btn1)
-							bot.send_message(message.chat.id, 'This Email is already successfully activated. If it wasnt you, contact us!', reply_markup=markup)
-							user_telegram.exit_all_modes()
-						else:#if not activated activation exists
-							if activation.can_activate():#if not activated activation exists and can be activated, send that can confirm it. This should prevent spams
-								markup_account = types.InlineKeyboardMarkup()
-								btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
-								markup_account.row(btn_account)
+					if user_salt.first().get_telegram() is None:
+						activations = TelegramActivation.objects.filter(email=login_mode.email)
+						if activations.exists():##if activation exists
+							activation = activations.first()
+							if activation.is_activated:#if activation activated, tell that its already activated, contact us
 								bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-								bot.send_message(message.chat.id, 'Go to your SALT account and enter key in form /mykey_(yourKey), where (yourKey) is key.', reply_markup=markup_account)
+								markup = types.InlineKeyboardMarkup()
+								btn1 = types.InlineKeyboardButton(text='Contact', url=settings.BASE_URL+reverse('contact'))
+								markup.row(btn1)
+								bot.send_message(message.chat.id, 'This Email is already successfully activated. If it wasnt you, contact us!', reply_markup=markup)
 								user_telegram.exit_all_modes()
-							else:#if not activated activation exists and can't be activated, delete old activation and send new one OR TELL HIM THAT OLD ONE EXPIRED AND ASK IF HE WANTS TO SEND NEW ONE
-								markup_account = types.InlineKeyboardMarkup()
-								btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
-								markup_account.row(btn_account)
-								activations.delete()
-								TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
-								bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
-								user_telegram.exit_all_modes()
-
-					else:##if no activation exists, create new activation
-						markup_account = types.InlineKeyboardMarkup()
-						btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
-						markup_account.row(btn_account)
-						TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
-						bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-						bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
-						user_telegram.exit_all_modes()
+							else:#if not activated activation exists
+								if activation.can_activate():#if not activated activation exists and can be activated, send that can confirm it. This should prevent spams
+									markup_account = types.InlineKeyboardMarkup()
+									btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
+									markup_account.row(btn_account)
+									bot.delete_message(message.chat.id, str(int(message.message_id)-1))
+									bot.send_message(message.chat.id, 'Go to your SALT account and enter key in form /mykey_(yourKey), where (yourKey) is key. Or you can delete this key and ask for new one.', reply_markup=markup_account)
+									user_telegram.exit_all_modes()
+								else:#if not activated activation exists and can't be activated, delete old activation and send new one OR TELL HIM THAT OLD ONE EXPIRED AND ASK IF HE WANTS TO SEND NEW ONE
+									markup_account = types.InlineKeyboardMarkup()
+									btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
+									markup_account.row(btn_account)
+									activations.delete()
+									TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
+									bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
+									user_telegram.exit_all_modes()
+						else:##if no activation exists, create new activation
+							markup_account = types.InlineKeyboardMarkup()
+							btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
+							markup_account.row(btn_account)
+							TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
+							bot.delete_message(message.chat.id, str(int(message.message_id)-1))
+							bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
+							user_telegram.exit_all_modes()
+					else:
+						markup = types.InlineKeyboardMarkup()
+						btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
+						markup.row(btn1)
+						bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
 				else:##if no salt user under this email
 					bot.delete_message(message.chat.id, str(int(message.message_id)-1))
 					markup = types.InlineKeyboardMarkup()
