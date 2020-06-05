@@ -86,7 +86,7 @@
                   <div class=''>
                     <input type="text" name="holder" 
                     {% if user_card is not None %}
-                      value="{{ user_card.number }}"
+                      value="{{ user_card.holder }}"
                     {% endif %}
                     >
                   </div>
@@ -95,7 +95,7 @@
                   <label>{% trans 'Card number:' %}</label>
                     <input type="text" name="number" maxlength="16"
                     {% if user_card is not None %}
-                      value="{{ user_card.holder }}"
+                      value="{{ user_card.number }}"
                     {% endif %}
                     >
                 </div>

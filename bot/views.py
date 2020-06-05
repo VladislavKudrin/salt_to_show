@@ -200,6 +200,52 @@ def check_login_mode(message):
 	if user_telegram.exists():
 		user_telegram=user_telegram.first()
 		return user_telegram.get_mode() == 'login'
+##THIS AFTER SENDS KEY##
+@bot.message_handler(func=lambda c: c.text.split('_')[0] == '/mykey', content_types=['text'])
+def authenticate_with_key(message):
+	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
+	if user_telegram.exists():##check if exists
+		user_telegram = user_telegram.first()
+		if not user_telegram.is_logged_in:##check if logged in
+			arr_key = message.text.split('_')
+			if len(arr_key) == 2:##check if key 
+				key = message.text.split('_')[1]
+				activation = TelegramActivation.objects.filter(key=key, activated=False)
+				if activation.exists():##check if key exists
+					activation = activation.first()
+					if user_telegram.chat_id == activation.chat_id: ##check if its his/her key
+						user_salt = User.objects.filter(email=activation.email)
+						if user_salt.exists():## check if salt user exists
+							user_salt = user_salt.first()
+							if user_salt.get_telegram() is None:##check if telegram is not binded with salt user
+								user_telegram.user = user_salt
+								activation.activated = True
+								activation.save()
+								user_telegram.save()
+								markup = types.InlineKeyboardMarkup()
+								btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
+								markup.row(btn1)
+								bot.send_message(message.chat.id, 'Success! Hello, '+user_salt.username, reply_markup=markup)
+							else:
+								markup = types.InlineKeyboardMarkup()
+								btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
+								bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
+					else:
+						markup = types.InlineKeyboardMarkup()
+						btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
+						markup.row(btn1)
+						bot.send_message(message.chat.id, 'This key is not from your account. Please send another one or login', reply_markup=markup)
+				else:
+					markup = types.InlineKeyboardMarkup()
+					btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
+					markup.row(btn1)
+					bot.send_message(message.chat.id, 'There is no key like this or already activated, please Login to authenticate', reply_markup=markup)
+		else:
+			markup = types.InlineKeyboardMarkup()
+			btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
+			markup.row(btn1)
+			bot.send_message(message.chat.id, 'You are already logged in', reply_markup=markup)
+##THIS AFTER SENDS KEY##		
 
 @bot.message_handler(func=check_login_mode, content_types=['text'])
 def login_authentication(message):
@@ -227,7 +273,7 @@ def login_authentication(message):
 							bot.send_message(message.chat.id, 'This Email is already successfully activated. If it wasnt you, contact us!', reply_markup=markup)
 							user_telegram.exit_all_modes()
 						else:#if not activated activation exists
-							if activation.can_activate():#if not activated activation exists and can be activated, send that can confirm it
+							if activation.can_activate():#if not activated activation exists and can be activated, send that can confirm it. This should prevent spams
 								markup_account = types.InlineKeyboardMarkup()
 								btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
 								markup_account.row(btn_account)

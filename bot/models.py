@@ -153,36 +153,8 @@ class TelegramActivation(models.Model):
 			return True
 		return False
 
-	def send_activation(self):
-		if not self.activated:
-			if self.key:
-				key = self.key #use reverse
-				context = {
-						'key':key,
-
-				}
-				txt_ = get_template("bot/emails/activate_telegram.txt").render(context)
-				html_ = get_template("bot/emails/activate_telegram.html").render(context)
-				subject = 'Telegram Verification'
-				from_email = settings.DEFAULT_FROM_EMAIL
-				recipient_list = [self.email]
-				sent_mail=send_mail(
-					subject,
-					txt_,
-					from_email,
-					recipient_list,
-					html_message=html_,
-					fail_silently=False, 
-					)
-				return sent_mail
-			return False
 
 
-def post_save_telegram_activation(sender, created, instance, *args, **kwargs):
-	if instance.key:
-		print('JOPA')
-	else:
-		instance.regenerate()
 
 def pre_save_telegram_activation(sender, instance, *args, **kwargs):
 	if not instance.key:
@@ -191,7 +163,7 @@ def pre_save_telegram_activation(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(pre_save_telegram_activation, sender=TelegramActivation)
-post_save.connect(post_save_telegram_activation, sender=TelegramActivation)
+
 
 
 
