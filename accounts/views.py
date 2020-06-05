@@ -24,7 +24,7 @@ from addresses.forms import AddressForm
 from billing.models import BillingProfile, Card
 from billing.forms import CardForm
 from ecommerce.utils import add_message, custom_render
-
+from bot.models import TelegramActivation
 
 def region_init(request):
 	if request.is_ajax():
@@ -322,6 +322,10 @@ class AccountUpdateView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
 		context['password_btn'] = _('Change password')
 		context['save_btn'] = _('Save')
 		context['logout_btn'] = _('Logout')
+		telegram_activation = TelegramActivation.objects.filter(email=self.request.user.email)
+		if telegram_activation.exists():
+			if telegram_activation.first().can_activate():
+				context['telegram_activation'] = telegram_activation.first().key
 		if kwargs.get('form') is not None:
 			prefix = kwargs.get('form').prefix
 			context[prefix] = kwargs.get('form')
