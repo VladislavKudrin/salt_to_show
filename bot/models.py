@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import get_template
 
-from ecommerce.utils import unique_key_generator
+from ecommerce.utils import unique_telegram_key_generator
 User = get_user_model()
 
 
@@ -158,7 +158,7 @@ class TelegramActivation(models.Model):
 
 def pre_save_telegram_activation(sender, instance, *args, **kwargs):
 	if not instance.key:
-		instance.key = unique_key_generator(instance)
+		instance.key = unique_telegram_key_generator(instance=instance, size=8)
 
 
 

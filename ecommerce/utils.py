@@ -39,6 +39,15 @@ def unique_key_generator(instance):
     return key
 
 
+def unique_telegram_key_generator(instance, size):
+    key = random_string_generator(size=size)
+    Klass = instance.__class__
+    qs_exists = Klass.objects.filter(key=key).exists()
+    if qs_exists:
+        return unique_slug_generator(instance)
+    return key
+
+
 def unique_order_id_generator(instance):
     """
     This is for a Django project with order id field.

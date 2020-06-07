@@ -219,8 +219,12 @@ def check_login_mode(message):
 	if user_telegram.exists():
 		user_telegram=user_telegram.first()
 		return user_telegram.get_mode() == 'login'
+
+
+
+
 ##THIS AFTER SENDS KEY##
-@bot.message_handler(func=lambda c: c.text.split('_')[0] == '/mykey', content_types=['text'])
+@bot.message_handler(func=lambda c: c.text.split()[0] == '/mykey', content_types=['text'])
 def authenticate_with_key(message):
 	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
 
@@ -233,9 +237,9 @@ def authenticate_with_key(message):
 	if user_telegram.exists():##check if exists
 		user_telegram = user_telegram.first()
 		if not user_telegram.is_logged_in:##check if logged in
-			arr_key = message.text.split('_')
+			arr_key = message.text.split()
 			if len(arr_key) == 2:##check if key 
-				key = message.text.split('_')[1]
+				key = message.text.split()[1]
 				activation = TelegramActivation.objects.filter(key=key, activated=False)
 				if activation.exists():##check if key exists
 					activation = activation.first()
@@ -273,12 +277,27 @@ def authenticate_with_key(message):
 			btn1 = types.InlineKeyboardButton(text='Выйти', callback_data='logout')
 			markup.row(btn1)
 			bot.send_message(message.chat.id, already_logged_in_msg, reply_markup=markup)
+
+
+
 ##THIS AFTER SENDS KEY##		
 
 @bot.message_handler(func=check_login_mode, content_types=['text'])
 def login_authentication(message):
-	enter_key_msg = 'Теперь перейди в аккаунт на сайте SALT и скопируй ключ в настройках профиля. Введи его здесь следующим образом: /mykey_(твой ключ). У тебя есть '+ str(settings.TELEGRAM_ACTIVATION_EXPIRED) +'минут, после этого придется логиниться заново.'
-	enter_key_msg_2 = 'Теперь перейди в аккаунт на сайте SALT и скопируй ключ в настройках профиля. Введи его здесь следующим образом: /mykey_(твой ключ). Если что-то не получается, попробуй удалить ключ и залогиниться заново.'
+
+
+	enter_key_msg = """
+	Чтобы привязать свой SALT аккаунт к этому боту, перейди в настройки аккаунта и скопируй ключ.
+	Затем введи его здесь следующим образом: 
+	/mykey твойключ
+	У тебя есть целых """ + str(settings.TELEGRAM_ACTIVATION_EXPIRED) + """минут (после этого придется повторить логин)."""
+
+	enter_key_msg_2 = """
+	Чтобы привязать свой SALT аккаунт к этому боту, перейди в настройки аккаунта и скопируй ключ.
+	Затем введи его здесь следующим образом: 
+	/mykey твойключ
+	Если что-то не получается, попробуй удалить ключ и залогиниться заново."""
+
 	already_binded_msg = "Этот аккаунт уже привязан к SALT Bot. Если ты этого не делал_а или не можешь переключиться на другой аккаунт, свяжись с нами!"
 	no_user_msg = "Пользователя с таким мэйлом не существует, хочешь зарегистрироваться? Или может ты просто ошибся_лась, попробуй ввести свой мэйл еще раз!"
 	email_activated = "Этот мэйл уже успешно активирован. Если ты этого не делал_а, свяжись с нами!"
@@ -311,14 +330,14 @@ def login_authentication(message):
 							else:#if not activated activation exists
 								if activation.can_activate():#if not activated activation exists and can be activated, send that can confirm it. This should prevent spams
 									markup_account = types.InlineKeyboardMarkup()
-									btn_account = types.InlineKeyboardButton(text='Перейти в аккаунт на сайте SALT', url=settings.BASE_URL+reverse('accounts:user-update'))
+									btn_account = types.InlineKeyboardButton(text='Перейти на SALT', url=settings.BASE_URL+reverse('accounts:telegram-activation'))
 									markup_account.row(btn_account)
 									bot.delete_message(message.chat.id, str(int(message.message_id)-1))
 									bot.send_message(message.chat.id, enter_key_msg_2, reply_markup=markup_account)
 									user_telegram.exit_all_modes()
 								else:#if not activated activation exists and can't be activated, delete old activation and send new one OR TELL HIM THAT OLD ONE EXPIRED AND ASK IF HE WANTS TO SEND NEW ONE
 									markup_account = types.InlineKeyboardMarkup()
-									btn_account = types.InlineKeyboardButton(text='Перейти в аккаунт на сайте SALT', url=settings.BASE_URL+reverse('accounts:user-update'))
+									btn_account = types.InlineKeyboardButton(text='Перейти на SALT', url=settings.BASE_URL+reverse('accounts:telegram-activation'))
 									markup_account.row(btn_account)
 									activations.delete()
 									TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
@@ -326,7 +345,7 @@ def login_authentication(message):
 									user_telegram.exit_all_modes()
 						else:##if no activation exists, create new activation
 							markup_account = types.InlineKeyboardMarkup()
-							btn_account = types.InlineKeyboardButton(text='Перейти в аккаунт на сайте SALT', url=settings.BASE_URL+reverse('accounts:user-update'))
+							btn_account = types.InlineKeyboardButton(text='Перейти на SALT', url=settings.BASE_URL+reverse('accounts:telegram-activation'))
 							markup_account.row(btn_account)
 							TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
 							bot.delete_message(message.chat.id, str(int(message.message_id)-1))

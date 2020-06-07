@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<head>
+<style type="text/css">
+	input {border: 0 !important; outline:0!important}
+input:focus {outline:none!important;}
+
+</style>
+</head>
+
+<body>
+
+
+{% if telegram_activation %}
+
+
+
+
+
+
+
+	<div class="container">
+    <div class='row'>
+
+        <div class='col-6 mx-auto'>
+            <div class='text-center'>
+                <p class="heading">Ключ для твоего бота:</p>
+            </div>
+
+
+			<input style='padding-bottom: 10%; padding-top: 5%' type="text" class="form-control sub-heading" id='telega-key' placeholder="Telegram Key" aria-label="Telegram Key" aria-describedby="basic-addon2" value="{{telegram_activation}}">
+
+<!-- <a onclick="copyKey()"><i class="fas fa-copy"></i></a> -->
+			<button type="button"  class='btn button-black hover-button large-button btn-block' onclick="copyKey()">Копировать ключ</button>
+            <button type="button" class='btn btn-outline-danger hover-button large-button btn-block'>Удалить ключ</button>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+{% endif %}
+         
+
+
+
+
+
+</body>
+
+
+<script type="text/javascript">
+
+		function copyKey() {
+		var copyText = document.getElementById("telega-key");
+        copyText.select();
+		copyText.setSelectionRange(0, 99999)
+		document.execCommand("copy");
+		alert("Ключ скопирован: " + copyText.value);
+		}
+
+		
+		$(document).ready(function(){
+			copyKey()
+		});
+
+</script>
+
+{% endblock %}
+
+
+

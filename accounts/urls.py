@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^email/confirm/(?P<key>[0-9A-Za-z]+)/$', AccountEmailActivateView.as_view(), name='email-activate'),
     url(r'^email/resend-activation/$', AccountEmailActivateView.as_view(), name='resend-activation'),  
     url(r'^details/$',AccountUpdateView.as_view(), name='user-update'), 
+    url(r'^telegram-activation/$',TelegramActivationView.as_view(), name='telegram-activation'), 
 ]
 
 
