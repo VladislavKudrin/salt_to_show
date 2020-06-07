@@ -167,6 +167,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 
 	cant_buy_msg = "К сожалению, ты не можешь купить эту вещь 😟"
 	no_item_msg = "Ой, а такой вещи не существует 🧐"
+	wrong_address_msg = "Ничего страшного! Чтобы заказать на другой адрес, вот что нужно сделать: "
 
 	if user_telegram.exists():
 		user_telegram = user_telegram.first()
@@ -186,7 +187,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								title=product.title, 
 								description = product.description, 
 								invoice_payload=product.slug, 
-								provider_token='632593626:TEST:i53138327527',
+								provider_token='635983722:LIVE:i53138327527',
 								currency='UAH',
 								prices=prices,
 								start_parameter=product.slug,
@@ -194,17 +195,15 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								photo_height=512,  
 							    photo_width=512,
 							    photo_size=512,
-							    is_flexible=True				  
+							    is_flexible=False				  
 								)
 						elif callback_query.data == 'address_no':
 							user_telegram.exit_all_modes()
 							markup = types.InlineKeyboardMarkup()
-							btn1 = types.InlineKeyboardButton(text='Change Address', url=settings.BASE_URL+reverse('accounts:user-update'))
-							btn2 = types.InlineKeyboardButton(text='BUY Again', url='https://t.me/saltish_bot?start='+product.slug)
+							btn1 = types.InlineKeyboardButton(text='1. Изменить адрес', url=settings.BASE_URL+reverse('accounts:user-update'))
+							btn2 = types.InlineKeyboardButton(text='2. Нажать сюда', url='https://t.me/saltish_bot?start='+product.slug)
 							markup.row(btn1, btn2)
-							bot.send_message(callback_query.from_user.id, 
-									'Choose:',
-									reply_markup=markup)
+							bot.send_message(callback_query.from_user.id, wrong_address_msg, reply_markup=markup)
 					else:
 						user_telegram.exit_all_modes()
 						bot.send_message(callback_query.from_user.id, cant_buy_msg)

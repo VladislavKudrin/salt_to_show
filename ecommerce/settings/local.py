@@ -53,7 +53,7 @@ EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
-BASE_URL = 'https://14fe60bbdc9c.ngrok.io'
+BASE_URL = 'https://a58280f4fd0e.ngrok.io'
 BASE_URL_WITHOUT_WWW = '127.0.0.1:8000'
 
 REST_FRAMEWORK = {

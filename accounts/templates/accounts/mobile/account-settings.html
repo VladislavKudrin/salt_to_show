@@ -86,6 +86,15 @@
                   {{user_form.subscribed|as_crispy_field}}
                 </div>
               </div>
+               {% if telegram_activation %}
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="Telegram Key" aria-label="Telegram Key" aria-describedby="basic-addon2" value="{{telegram_activation}}">
+            <div class="input-group-append">
+              <button class="btn btn-outline-dark" type="button">Copy</button>
+              <a class="btn btn-outline-danger" href='{% url "api:delete_activation_key" %}' type="button">Delete Key</a>
+            </div>
+          </div>
+          {% endif %}
             </div>
           </div>
 
