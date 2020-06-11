@@ -25,10 +25,10 @@ telegra_activation_exp = str(settings.TELEGRAM_ACTIVATION_EXPIRED)
 
 # Messages
 msg_welcome = "Чтобы начать оформление заказа, для начала нужно привязать бота к твоему аккаунту. Это займет меньше 2 минут. Для начала выбери:"
-already_logged_in_msg = "Ты уже залогинен_а. Нажми на кнопку <Выйти>, чтобы настроить новый аккаунт."
+already_logged_in_msg = "Ты уже залогинен_а. Нажми на кнопку Логаут, чтобы настроить новый аккаунт."
 enter_email_msg = "Пожалуйста, введи свой мэйл."
 start_msg = "Привет, ты тут впервые?👋 Нажми на /start, чтобы настроить нашего бота."
-logout_msg = "Вы вышли из системы. Нажми на кнопку Login, чтобы войти."
+logout_msg = "Вы вышли из системы. Нажми на кнопку Логин, чтобы войти."
 start_msg = "Привет, ты тут впервые?👋 Нажми на /start, чтобы настроить нашего бота."
 cant_buy_msg = "К сожалению, ты не можешь купить эту вещь 😟"
 no_item_msg = "Ой, а такой вещи не существует 🧐"
@@ -62,7 +62,7 @@ change_address_url = base_url+'/account/details'
 # Buttons
 btn_login = types.InlineKeyboardButton(text='Логин', callback_data='login')
 btn_register = types.InlineKeyboardButton(text='Регистрация', url=register)
-btn_logout = types.InlineKeyboardButton(text='Отвязать бота', callback_data='logout')
+btn_logout = types.InlineKeyboardButton(text='Логаут', callback_data='logout')
 btn_contact = types.InlineKeyboardButton(text='Проблема?', url=support_url)
 btn_go_to_channel = types.InlineKeyboardButton(text='Выбрать другие айтемы на канале', url=channel_url, callback_data='logout')
 btn_address_yes = types.InlineKeyboardButton(text='Да', callback_data='address_yes')
@@ -109,6 +109,12 @@ markup_8.row(btn_get_key)
 # Markup with go to orders button
 markup_9 = copy.deepcopy(markup)
 markup_9.row(btn_go_to_orders)
+
+# Markup for start
+markup_10 = copy.deepcopy(markup)
+markup_10.row(btn_go_to_channel)
+markup_10.row(btn_login, btn_logout)
+markup_10.row(btn_contact)
 
 
 class BotView(APIView):
@@ -166,7 +172,11 @@ def start(message):
 						bot.send_message(message.chat.id, address_text, parse_mode='HTML', reply_markup=markup_2)
 				#pay mode
 			else:
-				bot.send_message(message.chat.id, 'ToDO Menu', reply_markup=markup_3)
+				context = {
+					'products': Product.objects.recent_10(),
+				}
+				reply = get_template("emails/telegram_start_menu.html").render(context)
+				bot.send_message(message.chat.id, reply, reply_markup=markup_10, parse_mode='HTML')
 		else:
 			bot.send_message(message.chat.id, msg_welcome, parse_mode='HTML', reply_markup=markup_4)	
 	else:
