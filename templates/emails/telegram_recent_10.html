@@ -1,0 +1,8 @@
+Ура!🎉 Привет, {{username}}
+
+Чтобы продолжить покупку, кликни на айтем из списка и нажми "Начать": 
+{% for product in products %}
+<a href="https://t.me/saltish_bot?start={{product.slug}}"><b>{{product.title}}</b></a>
+{% endfor %}
+
+

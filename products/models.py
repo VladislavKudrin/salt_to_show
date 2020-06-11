@@ -78,6 +78,8 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		threshold = date(2020, 3, 1) # not possible to buy items older than this 1th of March 
 		return self.filter(timestamp__gte=threshold)
 
+	def recent_10(self):
+		return self.available().payable().authentic().order_by('-timestamp')[:10]
 
 
 class ProductManager(models.Manager):
@@ -106,6 +108,9 @@ class ProductManager(models.Manager):
 
 	def payable(self):
 		return self.get_queryset().payable()
+
+	def recent_10(self):
+		return self.get_queryset().recent_10()
 
 	def get_categoried_queryset(self, request, linked_data=None):
 		context={}

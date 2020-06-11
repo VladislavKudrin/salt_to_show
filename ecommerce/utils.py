@@ -43,9 +43,10 @@ def unique_telegram_key_generator(instance, size):
     key = random_string_generator(size=size)
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(key=key).exists()
+    prefix = '/mykey_'
     if qs_exists:
-        return unique_slug_generator(instance)
-    return key
+        return prefix + unique_slug_generator(instance)
+    return prefix + key
 
 
 def unique_order_id_generator(instance):
