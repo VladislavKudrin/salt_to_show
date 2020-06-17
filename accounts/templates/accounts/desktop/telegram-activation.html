@@ -33,7 +33,7 @@ input:focus {outline:none!important;}
 
 			<input style='padding-bottom: 10%; padding-top: 5%' type="text" class="form-control sub-heading" id='telega-key' placeholder="Telegram Key" aria-label="Telegram Key" aria-describedby="basic-addon2" value="{{telegram_activation}}">
 
-			<button type="button"  class='btn button-black hover-button large-button btn-block' onclick="copyKey()">Копировать ключ</button>
+			<button type="button"  class='btn button-black hover-button large-button btn-block' onclick="copyKey()">Скопировать ключ</button>
             <a type="button" class='btn btn-outline-danger hover-button large-button btn-block' href='{% url "api:delete_activation_key" %}'>Удалить ключ</a>
             </form>
         </div>
@@ -60,15 +60,9 @@ input:focus {outline:none!important;}
 		function copyKey() {
 		var copyText = document.getElementById("telega-key");
         copyText.select();
-		copyText.setSelectionRange(0, 99999)
 		document.execCommand("copy");
 		alert("Ключ скопирован: " + copyText.value);
 		}
-
-		
-		$(document).ready(function(){
-			copyKey()
-		});
 		
 </script>
 

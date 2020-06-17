@@ -27,9 +27,8 @@ telegra_activation_exp = str(settings.TELEGRAM_ACTIVATION_EXPIRED)
 msg_welcome = "Чтобы начать оформление заказа, нужно привязать бота к твоему аккаунту. Это займет меньше 2 минут.\n\nДля начала выбери:"
 already_logged_in_msg = "Ты уже залогинен_а. Нажми на кнопку Логаут, чтобы настроить новый аккаунт."
 enter_email_msg = "Пожалуйста, введи свой мэйл."
-start_msg = "Привет, ты тут впервые?👋 Нажми на /start, чтобы настроить нашего бота."
+start_msg = 'Привет, ты тут впервые?👋 Нажми на "Начать", чтобы настроить нашего бота.'
 logout_msg = "Пока!🖐 Чтобы снова войти, нажми на кнопку Логин."
-# start_msg = "Привет, ты тут впервые?👋 Нажми на /start, чтобы настроить нашего бота."
 cant_buy_msg = "К сожалению, ты не можешь купить эту вещь 😟"
 no_item_msg = "Ой, а такой вещи не существует 🧐"
 wrong_address_msg = "Ничего страшного! Вот что нужно сделать, чтобы оформить заказ на другой адрес:"
@@ -43,15 +42,13 @@ enter_key_msg = """
 enter_key_msg_2 = """
 Чтобы привязать свой SALT аккаунт к этому боту, перейди в настройки аккаунта, скопируй ключ и вставь его сюда.\n\n 
 Если что-то не получается, попробуй удалить ключ и залогиниться заново."""
-# already_binded_msg = "Этот аккаунт уже привязан к SALT Bot. Если ты этого не делал_а или не можешь переключиться на другой аккаунт, свяжись с нами!"
 no_user_msg = """
 Пользователя с таким мэйлом не существует.\n\nМожет ты просто допустил_а ошибку? Нажми на Логин и попробуй ввести свой мэйл еще раз.\n\nИли ты хочешь зарегистрироваться? Тогда жми на кнопку Регистрация."""
 email_activated = "Этот мэйл уже успешно активирован. Если ты этого не делал_а, свяжись с нами! 📝"
 sold_msg = "У тебя только что купили вещичку! 🙌"
-sorry_msg = "Сори, я тебя не понимаю 🥺"
 
 # Urls 
-support_url = 'https://t.me/roman_salt'
+support_url = 'https://t.me/salt_roman'
 channel_url = 'https://t.me/saltish_channel'
 channel = '@saltish_channel'
 bot_start_url = 'https://t.me/saltish_bot?start='
@@ -267,7 +264,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 							user_telegram.exit_all_modes()
 							markup_change_address = types.InlineKeyboardMarkup()
 							btn1 = types.InlineKeyboardButton(text='1. Изменить адрес', url=change_address_url)
-							btn2 = types.InlineKeyboardButton(text='2. Нажать сюда, затем на Start ⬇️', url=bot_start_url+product.slug)
+							btn2 = types.InlineKeyboardButton(text='2. Нажать сюда, затем на "Начать" ⬇️', url=bot_start_url+product.slug)
 							markup_change_address.row(btn1)
 							markup_change_address.row(btn2)
 							bot.send_message(callback_query.from_user.id, wrong_address_msg, reply_markup=markup_change_address)
@@ -374,8 +371,14 @@ def login_authentication(message):
 ###############SIMPLE MESSAGE HANDLER###############
 @bot.message_handler(content_types=['text'])
 def send_message(message):	
-	bot.send_message(message.chat.id, sorry_msg)
+	context = {
+		'products': Product.objects.recent_10(),
+	}
+	reply = get_template("emails/telegram_react_nonsense.html").render(context)
+	bot.send_message(message.chat.id, reply, reply_markup=markup_10, parse_mode='HTML')
 ###############SIMPLE MESSAGE HANDLER###############
+
+
 
 
 #############PRODUCT FUNCTION#############
