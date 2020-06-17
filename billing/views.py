@@ -31,11 +31,13 @@ import requests
 
 
 def card_modal_update(request):
+
     if request.POST:
         billing_profile, created = BillingProfile.objects.new_or_get(request)
         card, created = Card.objects.new_or_get(billing_profile=billing_profile)
         form = CardModalForm(data=request.POST, instance=card)
         if request.is_ajax():
+            print('AJAX')
             if form.is_valid():
                 card = form.save() 
                 json_data={
@@ -53,6 +55,12 @@ def card_modal_update(request):
                 if card.is_valid_card():
                     return redirect('products:create')
             return stay_where_you_are(request)
+
+    return redirect('products:create')
+
+
+
+
 CURRENCY_ORIGINAL_TRANSFORMED = {
     'грн':'UAH'
 } 
