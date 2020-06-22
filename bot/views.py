@@ -132,8 +132,34 @@ def delete_activation_key_view(request):
 
 @bot.pre_checkout_query_handler(func=lambda query: True)
 def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
-	print(pre_checkout_query)
-	bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+	chat_id = pre_checkout_query.from_user.id
+	product_slug = pre_checkout_query.invoice_payload
+	product = Product.objects.filter(slug = product_slug, active=True)
+	if product.exists():
+		product = product.first()
+		if not product.is_paid and product.is_payable and product.is_active and product.is_authentic:
+			user_telegram = User_telegram.objects.filter(chat_id=chat_id)
+			if user_telegram.exists():
+				user_telegram = user_telegram.first()
+				billing_profile = user_telegram.get_billing_profile()
+				if billing_profile:
+					user_address = billing_profile.get_address()
+					if user_address:
+						from orders.models import Order
+						order, created = Order.objects.new_or_get(billing_profile, product)
+						order.shipping_address = user_address
+						order.save()
+						bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+					else:
+						bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+				else:
+					bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+			else:
+				bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+		else:
+			bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+	else:
+		bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
 
 @bot.message_handler(content_types='successful_payment')
 def process_successful_payment(message: types.Message):
@@ -250,7 +276,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								title=product.title, 
 								description = product.description, 
 								invoice_payload=product.slug, 
-								provider_token='635983722:LIVE:i53138327527',
+								provider_token='632593626:LIVE:i56982357197',
 								currency='UAH',
 								prices=prices,
 								start_parameter=product.slug,
