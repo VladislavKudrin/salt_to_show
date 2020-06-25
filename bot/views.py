@@ -18,7 +18,8 @@ import copy
 base_url = settings.BASE_URL
 BOT_TOKEN = getattr(settings, "BOT_TOKEN", '')
 bot = telebot.TeleBot(BOT_TOKEN)
-# bot.set_webhook(url=base_url + "/api/telegram/")
+if not settings.TESTSERVER and not settings.LIVE:
+	bot.set_webhook(url=base_url + "/api/telegram/")
 User = get_user_model()
 telegra_activation_exp = str(settings.TELEGRAM_ACTIVATION_EXPIRED)
 
@@ -46,7 +47,7 @@ no_user_msg = """
 Пользователя с таким мэйлом не существует.\n\nМожет ты просто допустил_а ошибку? Нажми на Логин и попробуй ввести свой мэйл еще раз.\n\nИли ты хочешь зарегистрироваться? Тогда жми на кнопку Регистрация."""
 email_activated = "Этот мэйл уже успешно активирован. Если ты этого не делал_а, свяжись с нами! 📝"
 sold_msg_channel = 'Продано 💥'
-buyer_sold_msg = 'Это было быстро, да? 🚀 Оплата твоего заказа прошла успешно. Мы проинформировали продавца отправить тебе купленную вещь в течение 24 часов.'
+buyer_bought_msg = 'Это было быстро, да? 🚀 Оплата твоего заказа прошла успешно. Мы проинформировали продавца отправить тебе купленную вещь в течение 24 часов.'
 
 # Urls 
 support_url = 'https://t.me/salt_roman'
@@ -55,7 +56,8 @@ channel = '@saltish_channel'
 bot_start_url = 'https://t.me/saltish_bot?start='
 register = base_url+'/login'
 get_code = base_url+'/account/telegram-activation'
-go_to_orders = base_url+'/orders/?tab=sold'
+go_to_orders_sold = base_url+'/orders/?tab=sold'
+go_to_orders_buy = base_url+'/orders/?tab=buy'
 change_address_url = base_url+'/account/details'
 
 # Buttons
@@ -67,7 +69,8 @@ btn_go_to_channel = types.InlineKeyboardButton(text='Выбрать другие
 btn_address_yes = types.InlineKeyboardButton(text='Да', callback_data='address_yes')
 btn_address_no = types.InlineKeyboardButton(text='Нет', callback_data='address_no')
 btn_get_key = types.InlineKeyboardButton(text='Перейти на SALT', url=get_code)
-btn_go_to_orders = types.InlineKeyboardButton(text='Перейти к заказам', url=go_to_orders)
+btn_go_to_orders_sold = types.InlineKeyboardButton(text='Перейти к заказам', url=go_to_orders_sold)
+btn_go_to_orders_buy = types.InlineKeyboardButton(text='Перейти к заказам', url=go_to_orders_buy)
 
 # Base markup
 markup = types.InlineKeyboardMarkup()
@@ -107,13 +110,17 @@ markup_8.row(btn_get_key)
 
 # Markup with go to orders button
 markup_9 = copy.deepcopy(markup)
-markup_9.row(btn_go_to_orders)
+markup_9.row(btn_go_to_orders_sold)
 
 # Markup for start
 markup_10 = copy.deepcopy(markup)
 markup_10.row(btn_go_to_channel)
 markup_10.row(btn_login, btn_logout)
 markup_10.row(btn_contact)
+
+# Markup with go to orders button
+markup_11 = copy.deepcopy(markup)
+markup_11.row(btn_go_to_orders_buy)
 
 
 class BotView(APIView):
@@ -192,7 +199,7 @@ def process_successful_payment(message: types.Message):
 						channel_message = channel_message.first()
 						bot.edit_message_caption(sold_msg_channel, channel_message.chat_id, channel_message.message_id)
 					if order.product:
-						bot.send_message(chat_id, buyer_sold_msg, reply_markup=markup_9)
+						bot.send_message(chat_id, buyer_bought_msg, reply_markup=markup_11)
 						order.send_email(success=True)	
 
 
