@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 16:49+0000\n"
-"PO-Revision-Date: 2020-04-26 18:58+0200\n"
+"POT-Creation-Date: 2020-05-28 08:07+0000\n"
+"PO-Revision-Date: 2020-05-28 10:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -204,7 +204,7 @@ msgid "Change password"
 msgstr "Змінити пароль"
 
 #: accounts/views.py:323
-#: products/templates/products/snippets/not_valid_card_modal.html:117
+#: products/templates/products/snippets/not_valid_card_modal.html:109
 #: products/views.py:301 templates/desktop/password_change_form.html:31
 #: templates/mobile/password_change_form.html:35
 msgid "Save"
@@ -290,64 +290,64 @@ msgstr ""
 "\n"
 "\n"
 
-#: categories/templates/categories/snippets/filter-box.html:326
+#: categories/templates/categories/snippets/filter-box.html:329
 #: products/forms.py:65
 msgid "Select a brand"
 msgstr "Обери бренд"
 
-#: categories/views.py:98
+#: categories/views.py:99
 msgid "Hide Filters"
 msgstr "Сховати фільтри"
 
-#: categories/views.py:99
+#: categories/views.py:100
 msgid "Show Filters"
 msgstr "Показати фільтри"
 
-#: categories/views.py:100
+#: categories/views.py:101
 msgid "Sort by"
 msgstr "Сортувати по"
 
-#: categories/views.py:101
+#: categories/views.py:102
 msgid "New first"
 msgstr "Спочатку новi"
 
-#: categories/views.py:102
+#: categories/views.py:103
 msgid "Low price first"
 msgstr "Спочатку дешеві"
 
-#: categories/views.py:103
+#: categories/views.py:104
 msgid "High price first"
 msgstr "Спочатку дорогі"
 
-#: categories/views.py:104 products/forms.py:66
+#: categories/views.py:105 products/forms.py:66
 msgid "Gender"
 msgstr "Стать"
 
-#: categories/views.py:105
+#: categories/views.py:106
 msgid "Type"
 msgstr "Тип"
 
-#: categories/views.py:106 products/forms.py:67
+#: categories/views.py:107 products/forms.py:67
 msgid "Category"
 msgstr "Категорiя"
 
-#: categories/views.py:107
+#: categories/views.py:108
 msgid "All"
 msgstr "Усi"
 
-#: categories/views.py:108 products/forms.py:68
+#: categories/views.py:109 products/forms.py:68
 msgid "Size"
 msgstr "Рoзмiр"
 
-#: categories/views.py:109 products/forms.py:69
+#: categories/views.py:110 products/forms.py:69
 msgid "Condition"
 msgstr "Стан"
 
-#: categories/views.py:110 ecommerce/views.py:148 products/forms.py:29
+#: categories/views.py:111 ecommerce/views.py:148 products/forms.py:29
 msgid "Brand"
 msgstr "Бренд"
 
-#: categories/views.py:111
+#: categories/views.py:112
 msgid "Price"
 msgstr "Цiна"
 
@@ -356,7 +356,7 @@ msgstr "Цiна"
 msgid "Please select a chat to start conversation"
 msgstr "Виберіть співрозмовника, щоб почати діалог"
 
-#: chat_ecommerce/templates/chat_ecommerce/mobile/thread.html:424
+#: chat_ecommerce/templates/chat_ecommerce/mobile/thread.html:426
 #: products/templatetags/msg_time.py:13
 msgid "Today"
 msgstr "Сьогодні"
@@ -932,7 +932,7 @@ msgstr "Оцініть замовлення:"
 
 #: orders/templates/orders/snippets/mobile/order_feedback.html:46
 #: orders/templates/orders/snippets/order_feedback.html:46
-#: products/templates/products/snippets/not_valid_card_modal.html:116
+#: products/templates/products/snippets/not_valid_card_modal.html:108
 msgid "Close"
 msgstr "Закрити"
 
@@ -1148,6 +1148,12 @@ msgstr "Забагато фотографій, макс. кількість 8"
 msgid "Price:"
 msgstr "Цiна:"
 
+#: products/templates/products/desktop/checkout.html:197
+#, fuzzy
+#| msgid "Shipping price in "
+msgid "Shipping price:"
+msgstr "Введи ціну у "
+
 #: products/templates/products/desktop/checkout.html:205
 #: products/templates/products/mobile/checkout.html:179
 msgid "To pay:"
@@ -1225,7 +1231,7 @@ msgid "Authentic"
 msgstr "Оригiнал"
 
 #: products/templates/products/mobile/checkout.html:169
-#: products/templates/products/mobile/product-detail.html:207
+#: products/templates/products/mobile/product-detail.html:211
 msgid "Shipping:"
 msgstr "Доставка:"
 
@@ -1278,7 +1284,7 @@ msgstr ""
 msgid "Name:"
 msgstr "Ім’я та прізвище:"
 
-#: products/templates/products/snippets/not_valid_card_modal.html:99
+#: products/templates/products/snippets/not_valid_card_modal.html:95
 msgid "Card number:"
 msgstr "Номер картки:"
 
@@ -1369,7 +1375,7 @@ msgid "Pay order"
 msgstr "Перейти до сплати"
 
 #: search/templates/search/snippets/search-form.html:60
-#: templates/base/navbar.html:282 templates/mobile/navbar.html:229
+#: templates/mobile/navbar.html:236
 msgid "Search"
 msgstr "Пошук"
 
@@ -1399,39 +1405,39 @@ msgstr "Умови"
 msgid "Privacy"
 msgstr "Прайвасi"
 
-#: templates/base/navbar.html:365 templates/desktop/navbar.html:249
+#: templates/base/navbar.html:257 templates/desktop/navbar.html:257
 msgctxt "account_dropdown_home "
 msgid "Home"
 msgstr "Аккаунт"
 
-#: templates/base/navbar.html:369 templates/base/sidebar.html:50
-#: templates/desktop/navbar.html:253 templates/mobile/navbar.html:151
+#: templates/base/navbar.html:261 templates/base/sidebar.html:49
+#: templates/desktop/navbar.html:261 templates/mobile/navbar.html:158
 msgid "Messages"
 msgstr "Повідомлення"
 
-#: templates/base/navbar.html:379 templates/base/sidebar.html:61
-#: templates/desktop/navbar.html:263 templates/mobile/navbar.html:162
+#: templates/base/navbar.html:271 templates/base/sidebar.html:60
+#: templates/desktop/navbar.html:271 templates/mobile/navbar.html:169
 msgid "My orders"
 msgstr "Мої ордери"
 
-#: templates/base/navbar.html:380 templates/base/sidebar.html:62
-#: templates/desktop/navbar.html:264 templates/mobile/navbar.html:163
+#: templates/base/navbar.html:272 templates/base/sidebar.html:61
+#: templates/desktop/navbar.html:272 templates/mobile/navbar.html:170
 msgid "My items"
 msgstr "Мої айтеми"
 
-#: templates/base/navbar.html:381 templates/base/sidebar.html:63
-#: templates/desktop/navbar.html:265 templates/mobile/navbar.html:164
+#: templates/base/navbar.html:273 templates/base/sidebar.html:62
+#: templates/desktop/navbar.html:273 templates/mobile/navbar.html:171
 msgid "Wishlist"
 msgstr "Улюблене"
 
-#: templates/base/navbar.html:382 templates/base/sidebar.html:64
-#: templates/desktop/navbar.html:266 templates/mobile/navbar.html:165
+#: templates/base/navbar.html:274 templates/base/sidebar.html:63
+#: templates/desktop/navbar.html:274 templates/mobile/navbar.html:172
 msgctxt "account_dropdown_history"
 msgid "History"
 msgstr "Переглянуте"
 
-#: templates/base/navbar.html:383 templates/base/sidebar.html:65
-#: templates/desktop/navbar.html:267 templates/mobile/navbar.html:166
+#: templates/base/navbar.html:275 templates/base/sidebar.html:64
+#: templates/desktop/navbar.html:275 templates/mobile/navbar.html:173
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -1526,8 +1532,8 @@ msgstr "Надіслати"
 msgid "BUYERS"
 msgstr "ПОКУПЦЯМ"
 
-#: templates/desktop/faq.html:87 templates/desktop/faq.html:142
-#: templates/mobile/faq.html:98 templates/mobile/faq.html:153
+#: templates/desktop/faq.html:87 templates/desktop/faq.html:146
+#: templates/mobile/faq.html:98 templates/mobile/faq.html:157
 msgid "SELLERS"
 msgstr "ПРОДАВЦЯМ"
 
@@ -1637,11 +1643,23 @@ msgstr ""
 "- Якщо товар, дійсно, не відповідає опису, ми повернемо вам гроші на вказану "
 "картку\n"
 
-#: templates/desktop/faq.html:145 templates/mobile/faq.html:156
+#: templates/desktop/faq.html:139 templates/mobile/faq.html:150
+msgid "liqpay-test-title"
+msgstr "На SALT можливо купити нові речі або тільки б\\у?"
+
+#: templates/desktop/faq.html:140 templates/mobile/faq.html:151
+msgid "liqpay-test-des"
+msgstr ""
+"Всі речі на нашому майданчику виключно категорії \"секонд-хенд\", тобто "
+"вторинного використання. На SALT немає нових речей, не зважаючи на те, що "
+"деякі речі вторинного використання можуть бути у відмінному стані, з бирками "
+"і коробкою."
+
+#: templates/desktop/faq.html:149 templates/mobile/faq.html:160
 msgid "I found a nice item in my closet. How to sell it on SALT?"
 msgstr "Я знайшов крутий айтем у своїй шафі. Як продати його на SALT?"
 
-#: templates/desktop/faq.html:146 templates/mobile/faq.html:157
+#: templates/desktop/faq.html:150 templates/mobile/faq.html:161
 msgid ""
 "\n"
 "- First, enter your card details in the profile settings (so that customers "
@@ -1661,11 +1679,11 @@ msgstr ""
 "- Після (успішної) двофакторної перевірки він з'явиться  у загальному "
 "каталозі\n"
 
-#: templates/desktop/faq.html:153 templates/mobile/faq.html:164
+#: templates/desktop/faq.html:157 templates/mobile/faq.html:168
 msgid "Someone purchased my item. When will I get the money?"
 msgstr "Хтось придбав мій айтем. Коли я отримаю гроші?"
 
-#: templates/desktop/faq.html:154 templates/mobile/faq.html:165
+#: templates/desktop/faq.html:158 templates/mobile/faq.html:169
 msgid ""
 "\n"
 "- Don’t worry - the money has already been debited from the buyer's card\n"
@@ -1687,11 +1705,11 @@ msgstr ""
 "- Якщо покупець не підтвердив доставку (або не зв’язався з нами) через 7 "
 "днів, гроші перераховуються автоматично на твою картку\n"
 
-#: templates/desktop/faq.html:162 templates/mobile/faq.html:173
+#: templates/desktop/faq.html:166 templates/mobile/faq.html:177
 msgid "What is the SALT commission for each transaction?"
 msgstr "Яка комісія SALT за кожну транзакцію?"
 
-#: templates/desktop/faq.html:163 templates/mobile/faq.html:174
+#: templates/desktop/faq.html:167 templates/mobile/faq.html:178
 msgid ""
 "\n"
 "- As for now - none. We will keep this platform free for as long as "
@@ -1700,8 +1718,8 @@ msgstr ""
 "\n"
 "- Жодної. Ми будемо тримати цю платформу безкоштовную як можна довше \n"
 
-#: templates/desktop/password_change_done.html:29
-#: templates/mobile/password_change_done.html:8
+#: templates/desktop/password_change_done.html:8
+#: templates/mobile/password_change_done.html:29
 msgid "Password changed successfully"
 msgstr "Пароль успішно змінений"
 
