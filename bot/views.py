@@ -21,7 +21,7 @@ import telebot
 from telebot import types
 
 bot = telebot.TeleBot(BOT_TOKEN)
-bot.set_webhook(url=settings.BASE_URL + "/api/telegram/")
+# bot.set_webhook(url=settings.BASE_URL + "/api/telegram/")
 User = get_user_model()
 
 class BotView(APIView):
