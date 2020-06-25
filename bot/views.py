@@ -18,7 +18,7 @@ import copy
 base_url = settings.BASE_URL
 BOT_TOKEN = getattr(settings, "BOT_TOKEN", '')
 bot = telebot.TeleBot(BOT_TOKEN)
-bot.set_webhook(url=base_url + "/api/telegram/")
+# bot.set_webhook(url=base_url + "/api/telegram/")
 User = get_user_model()
 telegra_activation_exp = str(settings.TELEGRAM_ACTIVATION_EXPIRED)
 
