@@ -62,6 +62,12 @@ class BillingProfile(models.Model):
 	def charge(self, order_obj, card=None):
 		return Charge.objects.do(self, order_obj, card)
 
+	def get_address(self):
+		try:
+			return self.address.first()
+		except:
+			return None
+
 	def get_cards(self):
 		try:
 			return self.card

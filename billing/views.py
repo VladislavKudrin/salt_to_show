@@ -31,31 +31,36 @@ import requests
 
 
 def card_modal_update(request):
+
     if request.POST:
-        if request.user.is_authenticated():
-            billing_profile, created = BillingProfile.objects.new_or_get(request)
-            card, created = Card.objects.new_or_get(billing_profile=billing_profile)
-            form = CardModalForm(data=request.POST, instance=card)
-            if request.is_ajax():
-                if form.is_valid():
-                    card = form.save() 
-                    json_data={
-                    'url': reverse('products:create')
-                    }
-                    return JsonResponse(json_data)
-                else:
-                    json_data={
-                    'error':form.errors
-                    }
-                    return JsonResponse(json_data)
-            else: 
-                if form.is_valid():
-                    card = form.save() 
-                    if card.is_valid_card():
-                        return redirect('products:create')
+        billing_profile, created = BillingProfile.objects.new_or_get(request)
+        card, created = Card.objects.new_or_get(billing_profile=billing_profile)
+        form = CardModalForm(data=request.POST, instance=card)
+        if request.is_ajax():
+            print('AJAX')
+            if form.is_valid():
+                card = form.save() 
+                json_data={
+                'url': reverse('products:create')
+                }
+                return JsonResponse(json_data)
+            else:
+                json_data={
+                'error':form.errors
+                }
+                return JsonResponse(json_data)
+        else: 
+            if form.is_valid():
+                card = form.save() 
+                if card.is_valid_card():
+                    return redirect('products:create')
             return stay_where_you_are(request)
-        else:
-            return redirect('login')
+
+    return redirect('products:create')
+
+
+
+
 CURRENCY_ORIGINAL_TRANSFORMED = {
     'грн':'UAH'
 } 
@@ -153,7 +158,7 @@ class PayToUserView(LoginRequiredMixin, View):
                     "action"                : "p2p",
                     "version"               : "3",
                     "amount"                : str(order.total),
-                    "currency"              : order.product.currency_original,
+                    "currency"              : CURRENCY_ORIGINAL_TRANSFORMED.get(order.product.currency_original),
                     "description"           : order.product.title,
                     "receiver_card"         : seller_billing_profile.card.first().number,
                     "order_id"              : order.order_id+'complete',

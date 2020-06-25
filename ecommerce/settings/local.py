@@ -26,7 +26,6 @@ MESSAGE_TAGS = {
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-
 #TELEGA
 BOT_TOKEN = '952860374:AAEtZPhGqcX3_Slu7K2nSpP3jc5B6aBWGsM'
 TELEGRAM_ACTIVATION_EXPIRED = 10
@@ -53,7 +52,7 @@ EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
-BASE_URL = 'https://14fe60bbdc9c.ngrok.io'
+BASE_URL = 'https://0390a012fe92.ngrok.io'
 BASE_URL_WITHOUT_WWW = '127.0.0.1:8000'
 
 REST_FRAMEWORK = {

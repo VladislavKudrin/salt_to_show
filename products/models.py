@@ -78,6 +78,8 @@ class ProductQuerySet(models.query.QuerySet):#создание отсеяных 
 		threshold = date(2020, 3, 1) # not possible to buy items older than this 1th of March 
 		return self.filter(timestamp__gte=threshold)
 
+	def recent_10(self):
+		return self.available().payable().authentic().order_by('-timestamp')[:10]
 
 
 class ProductManager(models.Manager):
@@ -106,6 +108,9 @@ class ProductManager(models.Manager):
 
 	def payable(self):
 		return self.get_queryset().payable()
+
+	def recent_10(self):
+		return self.get_queryset().recent_10()
 
 	def get_categoried_queryset(self, request, linked_data=None):
 		context={}
@@ -303,6 +308,15 @@ class ProductImage(models.Model):
 	def __str__(self):
 		return self.product.title + str(self.image_order)
 
+	def compress(self, size):
+		with Image.open(self.image) as image_pil:
+			im_io = BytesIO() 
+			image_pil.thumbnail(size)
+			image_pil.save(im_io, image_pil.format , quality=100) 
+			new_image = File(im_io, name=self.product.slug+str(self.image_order)+'.'+image_pil.format)
+			new_image.open()
+			return new_image
+
 	def to_thumbnail(self):
 		ProductThumbnail.objects.new_or_update(product=self.product, image=self.image)
 
@@ -362,7 +376,6 @@ class ProductThumbnail(models.Model):
 
 	def get_absolute_url(self):
 		return settings.BASE_URL + self.thumbnail.url
-
 
 
 

@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import get_template
 
-from ecommerce.utils import unique_key_generator
+from ecommerce.utils import unique_telegram_key_generator
 User = get_user_model()
 
 
@@ -121,7 +121,7 @@ class TelegramActivation(models.Model):
 	expires       = models.IntegerField(default=5)#Minutes
 	activated     = models.BooleanField(default=False)
 	update        = models.DateTimeField(auto_now = True)
-	objects = TelegramActivationManager()
+	objects       = TelegramActivationManager()
 
 	def __str__(self):
 		return self.email
@@ -158,7 +158,7 @@ class TelegramActivation(models.Model):
 
 def pre_save_telegram_activation(sender, instance, *args, **kwargs):
 	if not instance.key:
-		instance.key = unique_key_generator(instance)
+		instance.key = unique_telegram_key_generator(instance=instance, size=8)
 
 
 
@@ -166,7 +166,10 @@ pre_save.connect(pre_save_telegram_activation, sender=TelegramActivation)
 
 
 
-
+class ChannelProductMessage(models.Model):
+	chat_id      = models.CharField(max_length=200)
+	product_slug = models.CharField(max_length=255, blank=True, null=True)
+	message_id   = models.CharField(max_length=200,unique=True, null=True)
 
 
 

@@ -1,0 +1,99 @@
+{% load static %}
+{% load pagination_tags %}
+{% load i18n %}	
+{% load crispy_forms_tags %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Первый украинский маркетплейс брендовой одежды. Здесь только отборные бренды, нет фейков и безопасная покупка. Заходи и увидишь все сам_а.">
+  <title>SALT | Telegram Activation</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  {% compress css %}
+  <link href="{% static 'css/all.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/themes-base-jquery-ui.css' %}" rel="stylesheet" type="text/css">
+  {% endcompress %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <style type="text/css">
+
+	input {border: 0 !important; outline:0!important}
+	input:focus {outline:none!important;}
+
+  </style>
+</head>
+<body>
+    {% include 'mobile/navbar.html' %}
+	<div class='container-fluid main-wrapper'>
+
+
+
+{% if telegram_activation %}
+
+
+
+    <div class='row'>
+
+        <div class='col mx-auto'>
+            <div class='text-center'>
+                <p class="heading">Ключ для твоего бота:</p>
+            </div>
+
+
+			<input style='padding-bottom: 10%; padding-top: 5%' type="text" class="form-control sub-heading" id='telega-key' placeholder="Telegram Key" aria-label="Telegram Key" aria-describedby="basic-addon2" value="{{telegram_activation}}">
+
+<!-- <a onclick="copyKey()"><i class="fas fa-copy"></i></a> -->
+			<button type="button"  class='btn button-black hover-button large-button btn-block' onclick="copyKey()">Скопировать ключ</button>
+            <button type="button" class='btn btn-outline-danger hover-button large-button btn-block'>Удалить ключ</button>
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+
+{% endif %}
+
+
+
+		{% include 'mobile/footer.html' %}
+	</div>
+
+
+
+
+	<script type='application/javascript'>
+	
+
+		function copyKey() {
+		var copyText = document.getElementById("telega-key");
+    copyText.select();
+		// copyText.setSelectionRange(0, 99999)
+		document.execCommand("copy");
+		alert("Ключ скопирован: " + copyText.value);
+		}
+
+
+	</script>
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150733918-1"></script>
+	{% compress js file base %}	
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.bootstrap.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.lazyloadxt.jquerymobile.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jsrender.min.js' %}"></script>
+     <script type="application/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="application/javascript" src='{% static "js/ecommerce-mobile.js" %}'></script>
+    <script type="application/javascript" src='{% static "js/csrf.ajax.js" %}'></script>
+    <script type="application/javascript" defer src="{% static 'fontawesome/js/all.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.slidereveal.min.js' %}"></script>
+    {% endcompress %}
+</body>
+</html>

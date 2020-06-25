@@ -7,22 +7,114 @@ from django.urls import reverse
 import json
 from django.contrib.auth import get_user_model
 from django.template.loader import get_template
-
-
-from ecommerce.utils import stay_where_you_are
-from .models import User_telegram, LoginMode, PayMode, TelegramActivation
-from products.models import Product, ProductImage
-from addresses.models import Address
-
-
-BOT_TOKEN = getattr(settings, "BOT_TOKEN", '')
-
 import telebot
 from telebot import types
+from ecommerce.utils import stay_where_you_are
+from .models import User_telegram, LoginMode, PayMode, TelegramActivation, ChannelProductMessage
+from products.models import Product, ProductImage
+from addresses.models import Address
+import copy
 
+base_url = settings.BASE_URL
+BOT_TOKEN = getattr(settings, "BOT_TOKEN", '')
 bot = telebot.TeleBot(BOT_TOKEN)
-# bot.set_webhook(url=settings.BASE_URL + "/api/telegram/")
+bot.set_webhook(url=base_url + "/api/telegram/")
 User = get_user_model()
+telegra_activation_exp = str(settings.TELEGRAM_ACTIVATION_EXPIRED)
+
+
+# Messages
+msg_welcome = "Чтобы начать оформление заказа, нужно привязать бота к твоему аккаунту. Это займет меньше 2 минут.\n\nДля начала выбери:"
+already_logged_in_msg = "Ты уже залогинен_а. Нажми на кнопку Логаут, чтобы настроить новый аккаунт."
+enter_email_msg = "Пожалуйста, введи свой мэйл."
+start_msg = 'Привет, ты тут впервые?👋 Нажми на "Начать", чтобы настроить нашего бота.'
+logout_msg = "Пока!🖐 Чтобы снова войти, нажми на кнопку Логин."
+cant_buy_msg = "К сожалению, кто-то оказался быстрее 😟 Вещь продана!"
+no_item_msg = "Ой, а такой вещи не существует 🧐"
+wrong_address_msg = "Ничего страшного! Вот что нужно сделать, чтобы оформить заказ на другой адрес:"
+already_binded_msg = "Этот аккаунт уже привязан к SALT Bot.\n\nЕсли ты этого не делал_а или не можешь переключиться на другой аккаунт, свяжись с нами! 📝"
+wrong_key_msg = "Этот ключ не принадлежит твоему акканту. Пожалуйста, введи верный ключ.\n\nЕсли у тебя не получается это сделать, напиши нам! 📝"
+no_key_msg = "Такого ключа не существует или он уже был использован ранее. Пожалуйста, залогинься еще раз, чтобы получить новый ключ."
+already_logged_in_msg = "Ты уже залогинен_а."
+enter_key_msg = """
+Чтобы привязать свой SALT аккаунт к этому боту, перейди в настройки аккаунта, скопируй ключ и вставь его сюда.\n\n
+У тебя есть целых """ + telegra_activation_exp + """ минут (после этого придется повторить логин)."""
+enter_key_msg_2 = """
+Чтобы привязать свой SALT аккаунт к этому боту, перейди в настройки аккаунта, скопируй ключ и вставь его сюда.\n\n 
+Если что-то не получается, попробуй удалить ключ и залогиниться заново."""
+no_user_msg = """
+Пользователя с таким мэйлом не существует.\n\nМожет ты просто допустил_а ошибку? Нажми на Логин и попробуй ввести свой мэйл еще раз.\n\nИли ты хочешь зарегистрироваться? Тогда жми на кнопку Регистрация."""
+email_activated = "Этот мэйл уже успешно активирован. Если ты этого не делал_а, свяжись с нами! 📝"
+sold_msg_channel = 'Продано 💥'
+buyer_sold_msg = 'Это было быстро, да? 🚀 Оплата твоего заказа прошла успешно. Мы проинформировали продавца отправить тебе купленную вещь в течение 24 часов.'
+
+# Urls 
+support_url = 'https://t.me/salt_roman'
+channel_url = 'https://t.me/saltish_channel'
+channel = '@saltish_channel'
+bot_start_url = 'https://t.me/saltish_bot?start='
+register = base_url+'/login'
+get_code = base_url+'/account/telegram-activation'
+go_to_orders = base_url+'/orders/?tab=sold'
+change_address_url = base_url+'/account/details'
+
+# Buttons
+btn_login = types.InlineKeyboardButton(text='Логин', callback_data='login')
+btn_register = types.InlineKeyboardButton(text='Регистрация', url=register)
+btn_logout = types.InlineKeyboardButton(text='Логаут', callback_data='logout')
+btn_contact = types.InlineKeyboardButton(text='Проблема?', url=support_url)
+btn_go_to_channel = types.InlineKeyboardButton(text='Выбрать другие айтемы на канале', url=channel_url, callback_data='logout')
+btn_address_yes = types.InlineKeyboardButton(text='Да', callback_data='address_yes')
+btn_address_no = types.InlineKeyboardButton(text='Нет', callback_data='address_no')
+btn_get_key = types.InlineKeyboardButton(text='Перейти на SALT', url=get_code)
+btn_go_to_orders = types.InlineKeyboardButton(text='Перейти к заказам', url=go_to_orders)
+
+# Base markup
+markup = types.InlineKeyboardMarkup()
+
+# Markup leading to purchase
+markup_1 = copy.deepcopy(markup)
+markup_1.row(btn_go_to_channel)
+markup_1.row(btn_logout, btn_contact)
+
+# Markup address confirmation
+markup_2 = copy.deepcopy(markup)
+markup_2.row(btn_address_yes, btn_address_no)
+
+# Markup with logout button
+markup_3 = copy.deepcopy(markup)
+markup_3.row(btn_logout)
+
+# Markup with login and register buttons
+markup_4 = copy.deepcopy(markup)
+markup_4.row(btn_login, btn_register)
+
+# Markup with login button
+markup_5 = copy.deepcopy(markup)
+markup_5.row(btn_login)
+
+# Markup with contact button
+markup_6 = copy.deepcopy(markup)
+markup_6.row(btn_contact)
+
+# Markup with contact and login button
+markup_7 = copy.deepcopy(markup)
+markup_7.row(btn_logout, btn_contact)
+
+# Markup to get the key from account
+markup_8 = copy.deepcopy(markup)
+markup_8.row(btn_get_key)
+
+# Markup with go to orders button
+markup_9 = copy.deepcopy(markup)
+markup_9.row(btn_go_to_orders)
+
+# Markup for start
+markup_10 = copy.deepcopy(markup)
+markup_10.row(btn_go_to_channel)
+markup_10.row(btn_login, btn_logout)
+markup_10.row(btn_contact)
+
 
 class BotView(APIView):
 	def post(self, request):
@@ -41,25 +133,76 @@ def delete_activation_key_view(request):
 
 @bot.pre_checkout_query_handler(func=lambda query: True)
 def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
-	print(pre_checkout_query)
-	bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+	chat_id = pre_checkout_query.from_user.id
+	product_slug = pre_checkout_query.invoice_payload
+	product = Product.objects.filter(slug = product_slug, active=True)
+	if product.exists():
+		product = product.first()
+		if not product.is_paid and product.is_payable and product.is_active and product.is_authentic:
+			user_telegram = User_telegram.objects.filter(chat_id=chat_id)
+			if user_telegram.exists():
+				user_telegram = user_telegram.first()
+				billing_profile = user_telegram.get_billing_profile()
+				if billing_profile:
+					user_address = billing_profile.get_address()
+					if user_address:
+						from orders.models import Order
+						order, created = Order.objects.new_or_get(billing_profile, product)
+						order.shipping_address = user_address
+						order.save()
+						bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+					else:
+						bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+				else:
+					bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+			else:
+				bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+		else:
+			bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
+	else:
+		bot.answer_pre_checkout_query(pre_checkout_query.id, ok=False)
 
 @bot.message_handler(content_types='successful_payment')
 def process_successful_payment(message: types.Message):
-	print(message)
+	slug = message.successful_payment.invoice_payload
+	chat_id = message.from_user.id
+	product = Product.objects.filter(slug=slug)
+	if product.exists():
+		product = product.first()
+		user_telegram = User_telegram.objects.filter(chat_id=chat_id)
+		if user_telegram.exists():
+			user_telegram = user_telegram.first()
+			billing_profile = user_telegram.get_billing_profile()
+			if billing_profile:
+				from orders.models import Order
+				order = Order.objects.filter(
+						billing_profile=billing_profile, 
+						product=product, 
+						active=True,
+						status='created'
+						)
+				if order.exists():
+					order = order.first()
+					from orders.models import Transaction
+					transaction = Transaction.objects.new_or_get(order=order, data=message)	
+					order.status = "paid"
+					order.save()
+					channel_message = ChannelProductMessage.objects.filter(product_slug=slug)
+					if channel_message.exists():
+						channel_message = channel_message.first()
+						bot.edit_message_caption(sold_msg_channel, channel_message.chat_id, channel_message.message_id)
+					if order.product:
+						bot.send_message(chat_id, buyer_sold_msg, reply_markup=markup_9)
+						order.send_email(success=True)	
+
 
 
 
 @bot.message_handler(commands=['start'])
 def start(message):
-	markup = types.InlineKeyboardMarkup()
+
 	user = User_telegram.objects.filter(chat_id=message.chat.id)
 	bot.delete_message(message.chat.id, message.message_id)
-
-	msg_welcome = "Чтобы начать оформление заказа, для начала нужно привязать бота к твоему аккаунту. Это займет меньше 2 минут. Для начала выбери ..."
-	btn_login = types.InlineKeyboardButton(text='Login', callback_data='login')
-	btn_register = types.InlineKeyboardButton(text='Register', url=settings.BASE_URL+reverse('login'))
-	btn_logout = types.InlineKeyboardButton(text='Logout', callback_data='logout')
 
 	if user.exists():
 		user = user.first()
@@ -82,23 +225,20 @@ def start(message):
 							'user_address_post_office':user_address.post_office,
 							'user_address_phone':user_address.phone,
 						}
-						address_text = get_template("emails/telegram_address_confirm.html").render(context)
-						btn1 = types.InlineKeyboardButton(text='Yes', callback_data='address_yes')
-						btn2 = types.InlineKeyboardButton(text='No', callback_data='address_no')
-						markup.row(btn1, btn2)
-						bot.send_message(message.chat.id, address_text, parse_mode='HTML', reply_markup=markup)
+						address_text = get_template("bot/emails/telegram_address_confirm.html").render(context)
+						bot.send_message(message.chat.id, address_text, parse_mode='HTML', reply_markup=markup_2)
 				#pay mode
 			else:
-				markup.row(btn_logout)
-				bot.send_message(message.chat.id, 'ToDO Menu', reply_markup=markup)
+				context = {
+					'products': Product.objects.recent_10(),
+				}
+				reply = get_template("bot/emails/telegram_start_menu.html").render(context)
+				bot.send_message(message.chat.id, reply, reply_markup=markup_10, parse_mode='HTML')
 		else:
-			markup.row(btn_login, btn_register)
-			bot.send_message(message.chat.id, msg_welcome, parse_mode='HTML', reply_markup=markup)	
+			bot.send_message(message.chat.id, msg_welcome, parse_mode='HTML', reply_markup=markup_4)	
 	else:
-		markup.row(btn_login)
-		bot.send_message(message.chat.id, msg_welcome, reply_markup=markup)
+		bot.send_message(message.chat.id, msg_welcome, reply_markup=markup_4)
 		user, created = User_telegram.objects.get_or_create(chat_id = message.chat.id)
-
 
 
 ###############LOGIN###############
@@ -107,25 +247,22 @@ def process_callback_login(callback_query: types.CallbackQuery):
 	bot.answer_callback_query(callback_query.id)
 	bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
 	user_telegram = User_telegram.objects.filter(chat_id=callback_query.from_user.id)
+
 	if user_telegram.exists():
 		user_telegram = user_telegram.first()
 		if user_telegram.is_logged_in:
 			user_telegram.exit_all_modes()
-			markup = types.InlineKeyboardMarkup()
-			btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
-			markup.row(btn1)
-			bot.send_message(callback_query.from_user.id, 'You are already logged in! Please use "Logout" for setting new account.', reply_markup=markup)
+			bot.send_message(callback_query.from_user.id, already_logged_in_msg, reply_markup=markup_3)
 		else:
 			#begin login
 			user_telegram.exit_all_modes()
 			user_telegram.in_answer_mode=True
 			user_telegram.save()
-			bot.send_message(callback_query.from_user.id, 'Please, enter your email')
-			#, reply_markup=types.ReplyKeyboardRemove() 
+			bot.send_message(callback_query.from_user.id, enter_email_msg)
 			LoginMode.objects.get_or_create(user_telegram=user_telegram)
 			#begin login
 	else:
-		bot.send_message(message.chat.id, 'Hello, first time around? Please use /start to tune our bot.')
+		bot.send_message(message.chat.id, start_msg)
 ###############LOGIN################
 
 
@@ -135,17 +272,15 @@ def process_callback_logout(callback_query: types.CallbackQuery):
 	bot.answer_callback_query(callback_query.id)
 	bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
 	user_telegram = User_telegram.objects.filter(chat_id=callback_query.from_user.id)
+
 	if user_telegram.exists():
 		user_telegram = user_telegram.first()
 		user_telegram.exit_all_modes()
 		user_telegram.user=None
 		user_telegram.save()
-		markup = types.InlineKeyboardMarkup()
-		btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-		markup.row(btn1)
-		bot.send_message(callback_query.from_user.id, 'Successfully logged out. Please, use "Login" to log in.', reply_markup=markup)
+		bot.send_message(callback_query.from_user.id, logout_msg, reply_markup=markup_5)
 	else:
-		bot.send_message(callback_query.from_user.id, 'Hello, first time around? Please use /start to tune our bot.')
+		bot.send_message(callback_query.from_user.id, start_msg)
 ###############LOGOUT###############
 
 
@@ -173,7 +308,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								title=product.title, 
 								description = product.description, 
 								invoice_payload=product.slug, 
-								provider_token='632593626:TEST:i53138327527',
+								provider_token='635983722:LIVE:i53138327527',
 								currency='UAH',
 								prices=prices,
 								start_parameter=product.slug,
@@ -181,24 +316,22 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								photo_height=512,  
 							    photo_width=512,
 							    photo_size=512,
-							    is_flexible=True				  
+							    is_flexible=False				  
 								)
 						elif callback_query.data == 'address_no':
 							user_telegram.exit_all_modes()
-							markup = types.InlineKeyboardMarkup()
-							btn1 = types.InlineKeyboardButton(text='Change Address', url=settings.BASE_URL+reverse('accounts:user-update'))
-							btn2 = types.InlineKeyboardButton(text='BUY Again', url='https://t.me/saltish_bot?start='+product.slug)
-							markup.row(btn1, btn2)
-							bot.send_message(callback_query.from_user.id, 
-									'Choose:',
-									reply_markup=markup)
+							markup_change_address = types.InlineKeyboardMarkup()
+							btn1 = types.InlineKeyboardButton(text='1. Изменить адрес', url=change_address_url)
+							btn2 = types.InlineKeyboardButton(text='2. Нажать сюда, затем на "Начать" ⬇️', url=bot_start_url+product.slug)
+							markup_change_address.row(btn1)
+							markup_change_address.row(btn2)
+							bot.send_message(callback_query.from_user.id, wrong_address_msg, reply_markup=markup_change_address)
 					else:
 						user_telegram.exit_all_modes()
-						bot.send_message(callback_query.from_user.id, 'You cant buy this item.')
+						bot.send_message(callback_query.from_user.id, cant_buy_msg)
 				else:
-					bot.send_message(callback_query.from_user.id, 'There is no such item')
+					bot.send_message(callback_query.from_user.id, no_item_msg)
 ###############PAY ADDRESS CONFIRMATION###############		
-
 
 
 ###############LOGIN EMAIL PASSWORD AUTH###############
@@ -207,58 +340,48 @@ def check_login_mode(message):
 	if user_telegram.exists():
 		user_telegram=user_telegram.first()
 		return user_telegram.get_mode() == 'login'
+
+
 ##THIS AFTER SENDS KEY##
-@bot.message_handler(func=lambda c: c.text.split('_')[0] == '/mykey', content_types=['text'])
+@bot.message_handler(func=lambda c: c.text is not None and '/mykey' in c.text, content_types=['text'])
 def authenticate_with_key(message):
 	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
 	if user_telegram.exists():##check if exists
 		user_telegram = user_telegram.first()
 		if not user_telegram.is_logged_in:##check if logged in
-			arr_key = message.text.split('_')
-			if len(arr_key) == 2:##check if key 
-				key = message.text.split('_')[1]
-				activation = TelegramActivation.objects.filter(key=key, activated=False)
-				if activation.exists():##check if key exists
-					activation = activation.first()
-					if user_telegram.chat_id == activation.chat_id: ##check if its his/her key
-						user_salt = User.objects.filter(email=activation.email)
-						if user_salt.exists():## check if salt user exists
-							user_salt = user_salt.first()
-							if user_salt.get_telegram() is None:##check if telegram is not binded with salt user
-								user_telegram.user = user_salt
-								activation.activated = True
-								activation.save()
-								user_telegram.save()
-								markup = types.InlineKeyboardMarkup()
-								btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
-								markup.row(btn1)
-								bot.send_message(message.chat.id, 'Success! Hello, '+user_salt.username, reply_markup=markup)
-							else:
-								markup = types.InlineKeyboardMarkup()
-								btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
-								markup.row(btn1)
-								bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
-					else:
-						markup = types.InlineKeyboardMarkup()
-						btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-						btn2 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
-						markup.row(btn1, btn2)
-						bot.send_message(message.chat.id, 'This key is not from your account. Please send another one or login. If you want to report a problem, contact us!', reply_markup=markup)
+			key = message.text # be careful here
+			activation = TelegramActivation.objects.filter(key=key, activated=False)
+			if activation.exists():##check if key exists
+				activation = activation.first()
+				if user_telegram.chat_id == activation.chat_id: ##check if its his/her key
+					user_salt = User.objects.filter(email=activation.email)
+					if user_salt.exists():## check if salt user exists
+						user_salt = user_salt.first()
+						if user_salt.get_telegram() is None:##check if telegram is not binded with salt user
+							user_telegram.user = user_salt
+							activation.activated = True
+							activation.save()
+							user_telegram.save()
+							context = {
+								'products': Product.objects.recent_10(),
+								'username': user_salt.username
+							}
+							reply = get_template("bot/emails/telegram_recent_10.html").render(context)
+							bot.send_message(message.chat.id, reply, reply_markup=markup_1, parse_mode='HTML')
+
+						else:
+							bot.send_message(message.chat.id, already_binded_msg, reply_markup=markup_6)
 				else:
-					markup = types.InlineKeyboardMarkup()
-					btn1 = types.InlineKeyboardButton(text='Login', callback_data='login')
-					markup.row(btn1)
-					bot.send_message(message.chat.id, 'There is no key like this or already activated, please Login to authenticate', reply_markup=markup)
+					bot.send_message(message.chat.id, wrong_key, reply_markup=markup_7)
+			else:
+				bot.send_message(message.chat.id, no_key_msg, reply_markup=markup_5)
 		else:
-			markup = types.InlineKeyboardMarkup()
-			btn1 = types.InlineKeyboardButton(text='Logout', callback_data='logout')
-			markup.row(btn1)
-			bot.send_message(message.chat.id, 'You are already logged in', reply_markup=markup)
+			bot.send_message(message.chat.id, already_logged_in_msg, reply_markup=markup_3)
+
 ##THIS AFTER SENDS KEY##		
 
 @bot.message_handler(func=check_login_mode, content_types=['text'])
 def login_authentication(message):
-	login_account_text = 'Go to your SALT account and enter key in form /mykey_(yourKey), where (yourKey) is key. You have '+ str(settings.TELEGRAM_ACTIVATION_EXPIRED) +' Minutes to do this. After that, you should send new activation!'
 	user_telegram = User_telegram.objects.filter(chat_id=message.chat.id)
 	if user_telegram.exists():
 		user_telegram=user_telegram.first()
@@ -277,60 +400,41 @@ def login_authentication(message):
 							activation = activations.first()
 							if activation.is_activated:#if activation activated, tell that its already activated, contact us
 								bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-								markup = types.InlineKeyboardMarkup()
-								btn1 = types.InlineKeyboardButton(text='Contact', url=settings.BASE_URL+reverse('contact'))
-								markup.row(btn1)
-								bot.send_message(message.chat.id, 'This Email is already successfully activated. If it wasnt you, contact us!', reply_markup=markup)
+								bot.send_message(message.chat.id, email_activated, reply_markup=markup_6)
 								user_telegram.exit_all_modes()
 							else:#if not activated activation exists
 								if activation.can_activate():#if not activated activation exists and can be activated, send that can confirm it. This should prevent spams
-									markup_account = types.InlineKeyboardMarkup()
-									btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
-									markup_account.row(btn_account)
 									bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-									bot.send_message(message.chat.id, 'Go to your SALT account and enter key in form /mykey_(yourKey), where (yourKey) is key. Or you can delete this key and ask for new one.', reply_markup=markup_account)
+									bot.send_message(message.chat.id, enter_key_msg_2, reply_markup=markup_8)
 									user_telegram.exit_all_modes()
 								else:#if not activated activation exists and can't be activated, delete old activation and send new one OR TELL HIM THAT OLD ONE EXPIRED AND ASK IF HE WANTS TO SEND NEW ONE
-									markup_account = types.InlineKeyboardMarkup()
-									btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
-									markup_account.row(btn_account)
 									activations.delete()
 									TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
-									bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
+									bot.send_message(message.chat.id, enter_key_msg, reply_markup=markup_8)
 									user_telegram.exit_all_modes()
 						else:##if no activation exists, create new activation
-							markup_account = types.InlineKeyboardMarkup()
-							btn_account = types.InlineKeyboardButton(text='Go to SALT account', url=settings.BASE_URL+reverse('accounts:user-update'))
-							markup_account.row(btn_account)
 							TelegramActivation.objects.create(chat_id=message.chat.id, email=login_mode.email)
 							bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-							bot.send_message(message.chat.id, login_account_text, reply_markup=markup_account)
+							bot.send_message(message.chat.id, enter_key_msg, reply_markup=markup_8)
 							user_telegram.exit_all_modes()
 					else:
-						markup = types.InlineKeyboardMarkup()
-						btn1 = types.InlineKeyboardButton(text='Contact us', url=settings.BASE_URL + reverse('contact'))
-						markup.row(btn1)
-						bot.send_message(message.chat.id, 'Hey, this account is already binded with "SALT Bot". If you cant unbind it or it wasnt you who did bind it, please, contact us!', reply_markup=markup)
+						bot.send_message(message.chat.id, already_binded_msg, reply_markup=markup_6)
 				else:##if no salt user under this email
 					bot.delete_message(message.chat.id, str(int(message.message_id)-1))
-					markup = types.InlineKeyboardMarkup()
-					btn1 = types.InlineKeyboardButton(text='Register', url=settings.BASE_URL+reverse('login'))
-					btn2 = types.InlineKeyboardButton(text='Login', callback_data='login')
-					markup.row(btn1, btn2)
-					bot.send_message(message.chat.id, 'There is no user with this email, would you like to register? Or try again.', reply_markup=markup)
+					bot.send_message(message.chat.id, no_user_msg, reply_markup=markup_4)
 					user_telegram.exit_all_modes()
 ###############LOGIN EMAIL PASSWORD AUTH###############
 
 
-
 ###############SIMPLE MESSAGE HANDLER###############
 @bot.message_handler(content_types=['text'])
-def send_message(message):				
-	bot.send_message(message.chat.id, "Didn't understand u!")
+def send_message(message):	
+	context = {
+		'products': Product.objects.recent_10(),
+	}
+	reply = get_template("bot/emails/telegram_react_nonsense.html").render(context)
+	bot.send_message(message.chat.id, reply, reply_markup=markup_10, parse_mode='HTML')
 ###############SIMPLE MESSAGE HANDLER###############
-
-
-
 
 
 
@@ -340,35 +444,39 @@ def send_message_to_channel(product):
 	# users = User_telegram.objects.all()
 	images = ProductImage.objects.filter(product=product).order_by('image_order')
 	context = {
-			'product_url':settings.BASE_URL+product.get_absolute_url(),
+			'product_url':base_url+product.get_absolute_url(),
 			'product_price':str(product.price_original),
 			'product_currency':product.currency_original,
 			'product_title':product.title,
 			'product_condition':product.condition.condition_ru,
 			'product_description':product.description,
 			'product_shipping_price':product.national_shipping,
-			'start_purchase_url': "https://t.me/saltish_bot?start="+product.slug,
+			'start_purchase_url': bot_start_url+product.slug,
 	}
-	text = get_template("emails/telegram_new_item.html").render(context)
+	text = get_template("bot/emails/telegram_new_item.html").render(context)
 	media_types = []
 	if images.exists():
 		for image in images:
+			new_image = image.compress(size=(1000, 1000))
 			if image.image_order == 1:
-				media_type=types.InputMediaPhoto(media=image.image, caption=text, parse_mode='HTML')
+				media_type=types.InputMediaPhoto(media=new_image, caption=text, parse_mode='HTML')
 				media_types.append(media_type)
 			else:
-				media_type=types.InputMediaPhoto(media=image.image)
+				media_type=types.InputMediaPhoto(media=new_image)
 				media_types.append(media_type)
-		bot.send_media_group('@saltish_channel', media=media_types, timeout=1000)
+		message = bot.send_media_group(channel, media=media_types, timeout=1000)
+		ChannelProductMessage.objects.get_or_create(chat_id=channel, product_slug=product.slug, message_id=message[0].message_id)
+		new_image.close()
 #############PRODUCT FUNCTION#############
 
 
 #############PRODUCT SOLD NOTIFICATION#############
-def send_message_to_seller(chat_id):
-	markup = types.InlineKeyboardMarkup()
-	btn1 = types.InlineKeyboardButton(text='Go to your orders', url=settings.BASE_URL+reverse('orders:list')+'?tab=sold')
-	markup.row(btn1)
-	bot.send_message(chat_id, 'Hi! You have just sold an item!', reply_markup=markup)
+def send_message_to_seller(chat_id, item=None):
+	context = {
+		'product_title':item.title,
+	}
+	message = get_template("bot/emails/telegram_item_sold.html").render(context)
+	bot.send_message(chat_id, message, reply_markup=markup_9, parse_mode='HTML')
 
 #############PRODUCT SOLD NOTIFICATION#############
 

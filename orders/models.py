@@ -163,6 +163,7 @@ class Order(models.Model):
 							'total': self.total,
 							'order_id':order_id,
 							'item': item,
+							'item_title': item.title,
 							'faq_url': faq_url,
 							'orders_url': orders_url,
 							'item_url': item_url
@@ -184,8 +185,7 @@ class Order(models.Model):
 					)
 			seller_telegram = seller.get_telegram()
 			if seller_telegram is not None:
-				print('hallo')
-				send_message_to_seller(seller_telegram.chat_id)
+				send_message_to_seller(seller_telegram.chat_id, item)
 		else:
 			try:
 				error = self.transaction.get_error(key='err_description')

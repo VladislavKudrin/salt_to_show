@@ -409,3 +409,51 @@ class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
 
 
 
+class TelegramActivationView(LoginRequiredMixin, RequestFormAttachMixin, FormView):
+
+	def get_template_names(self):
+		if self.request.user_agent.is_mobile: 
+			return ['accounts/mobile/telegram-activation.html']
+		else:
+			return ['accounts/desktop/telegram-activation.html']
+
+
+	def get_context_data(self, *args, **kwargs):
+		context = {}
+		telegram_activation = TelegramActivation.objects.filter(email=self.request.user.email)
+		if telegram_activation.exists():
+			if telegram_activation.first().can_activate():
+				context['telegram_activation'] = telegram_activation.first().key
+		return context
+
+	# def get_object(self):
+	# 	self.object = self.request.user
+	# 	return self.request.user
+
+	# def form_valid(self, user_form, address_form, card_form):
+	# 	user_form.save(commit=True)
+	# 	address_form.save(commit=True)
+	# 	card_form.save(commit=True)
+	# 	return(HttpResponseRedirect(self.get_success_url()))
+
+	# def form_invalid(self, user_form, address_form, card_form):
+	# 	if user_form.errors:
+	# 		return super().form_invalid(user_form)
+	# 	if address_form.errors:
+	# 		return super().form_invalid(address_form)
+	# 	if card_form.errors:	
+	# 		return super().form_invalid(card_form)
+
+
+	# def post(self, request, *args, **kwargs):
+	# 	user_form = UserDetailChangeForm(data=self.request.POST, files=self.request.FILES, request=self.request, prefix='user_form', instance=self.get_object())
+	# 	address_form = AddressForm(data=self.request.POST, request=self.request, prefix='address_form', instance=self.get_address())
+	# 	card_form = CardForm(data=self.request.POST, request=self.request, prefix='card_form', instance=self.get_card())
+	# 	if user_form.is_valid() and address_form.is_valid() and card_form.is_valid():
+	# 		return self.form_valid(user_form, address_form, card_form)
+	# 	else:
+	# 		return self.form_invalid(user_form, address_form, card_form)
+	# 	return HttpResponseRedirect(self.get_success_url())
+
+
+
