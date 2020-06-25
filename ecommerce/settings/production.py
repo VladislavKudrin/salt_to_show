@@ -134,7 +134,8 @@ INSTALLED_APPS = [
     'image_uploader',
     'language_pref',
     'liqpay',
-    'bot'
+    'bot',
+    'telebot',
 
 ]
 
