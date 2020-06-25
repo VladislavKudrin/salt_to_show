@@ -91,7 +91,7 @@ class PayMode(models.Model):
 class TelegramActivationQuerySet(models.query.QuerySet):
 	def confirmable(self):
 		now = timezone.now()
-		start_range = now - timedelta(minutes=settings.TELEGRAM_ACTIVATION_EXPIRED)
+		start_range = now - timedelta(minutes=int(settings.TELEGRAM_ACTIVATION_EXPIRED))
 		end_range = now
 
 		return self.filter(
