@@ -158,7 +158,7 @@ class PayToUserView(LoginRequiredMixin, View):
                     "action"                : "p2p",
                     "version"               : "3",
                     "amount"                : str(order.total),
-                    "currency"              : order.product.currency_original,
+                    "currency"              : CURRENCY_ORIGINAL_TRANSFORMED.get(order.product.currency_original),
                     "description"           : order.product.title,
                     "receiver_card"         : seller_billing_profile.card.first().number,
                     "order_id"              : order.order_id+'complete',

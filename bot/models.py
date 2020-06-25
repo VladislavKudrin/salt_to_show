@@ -121,7 +121,7 @@ class TelegramActivation(models.Model):
 	expires       = models.IntegerField(default=5)#Minutes
 	activated     = models.BooleanField(default=False)
 	update        = models.DateTimeField(auto_now = True)
-	objects = TelegramActivationManager()
+	objects       = TelegramActivationManager()
 
 	def __str__(self):
 		return self.email
@@ -166,7 +166,10 @@ pre_save.connect(pre_save_telegram_activation, sender=TelegramActivation)
 
 
 
-
+class ChannelProductMessage(models.Model):
+	chat_id      = models.CharField(max_length=200)
+	product_slug = models.CharField(max_length=255, blank=True, null=True)
+	message_id   = models.CharField(max_length=200,unique=True, null=True)
 
 
 

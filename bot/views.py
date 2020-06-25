@@ -10,7 +10,7 @@ from django.template.loader import get_template
 import telebot
 from telebot import types
 from ecommerce.utils import stay_where_you_are
-from .models import User_telegram, LoginMode, PayMode, TelegramActivation
+from .models import User_telegram, LoginMode, PayMode, TelegramActivation, ChannelProductMessage
 from products.models import Product, ProductImage
 from addresses.models import Address
 import copy
@@ -29,7 +29,7 @@ already_logged_in_msg = "Ты уже залогинен_а. Нажми на кн
 enter_email_msg = "Пожалуйста, введи свой мэйл."
 start_msg = 'Привет, ты тут впервые?👋 Нажми на "Начать", чтобы настроить нашего бота.'
 logout_msg = "Пока!🖐 Чтобы снова войти, нажми на кнопку Логин."
-cant_buy_msg = "К сожалению, ты не можешь купить эту вещь 😟"
+cant_buy_msg = "К сожалению, кто-то оказался быстрее 😟 Вещь продана!"
 no_item_msg = "Ой, а такой вещи не существует 🧐"
 wrong_address_msg = "Ничего страшного! Вот что нужно сделать, чтобы оформить заказ на другой адрес:"
 already_binded_msg = "Этот аккаунт уже привязан к SALT Bot.\n\nЕсли ты этого не делал_а или не можешь переключиться на другой аккаунт, свяжись с нами! 📝"
@@ -45,7 +45,8 @@ enter_key_msg_2 = """
 no_user_msg = """
 Пользователя с таким мэйлом не существует.\n\nМожет ты просто допустил_а ошибку? Нажми на Логин и попробуй ввести свой мэйл еще раз.\n\nИли ты хочешь зарегистрироваться? Тогда жми на кнопку Регистрация."""
 email_activated = "Этот мэйл уже успешно активирован. Если ты этого не делал_а, свяжись с нами! 📝"
-sold_msg = "У тебя только что купили вещичку! 🙌"
+sold_msg_channel = 'Продано 💥'
+buyer_sold_msg = 'Это было быстро, да? 🚀 Оплата твоего заказа прошла успешно. Мы проинформировали продавца отправить тебе купленную вещь в течение 24 часов.'
 
 # Urls 
 support_url = 'https://t.me/salt_roman'
@@ -163,7 +164,39 @@ def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
 
 @bot.message_handler(content_types='successful_payment')
 def process_successful_payment(message: types.Message):
-	print(message)
+	slug = message.successful_payment.invoice_payload
+	chat_id = message.from_user.id
+	product = Product.objects.filter(slug=slug)
+	if product.exists():
+		product = product.first()
+		user_telegram = User_telegram.objects.filter(chat_id=chat_id)
+		if user_telegram.exists():
+			user_telegram = user_telegram.first()
+			billing_profile = user_telegram.get_billing_profile()
+			if billing_profile:
+				from orders.models import Order
+				order = Order.objects.filter(
+						billing_profile=billing_profile, 
+						product=product, 
+						active=True,
+						status='created'
+						)
+				if order.exists():
+					order = order.first()
+					from orders.models import Transaction
+					transaction = Transaction.objects.new_or_get(order=order, data=message)	
+					order.status = "paid"
+					order.save()
+					channel_message = ChannelProductMessage.objects.filter(product_slug=slug)
+					if channel_message.exists():
+						channel_message = channel_message.first()
+						bot.edit_message_caption(sold_msg_channel, channel_message.chat_id, channel_message.message_id)
+					if order.product:
+						bot.send_message(chat_id, buyer_sold_msg, reply_markup=markup_9)
+						order.send_email(success=True)	
+
+
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -192,14 +225,14 @@ def start(message):
 							'user_address_post_office':user_address.post_office,
 							'user_address_phone':user_address.phone,
 						}
-						address_text = get_template("emails/telegram_address_confirm.html").render(context)
+						address_text = get_template("bot/emails/telegram_address_confirm.html").render(context)
 						bot.send_message(message.chat.id, address_text, parse_mode='HTML', reply_markup=markup_2)
 				#pay mode
 			else:
 				context = {
 					'products': Product.objects.recent_10(),
 				}
-				reply = get_template("emails/telegram_start_menu.html").render(context)
+				reply = get_template("bot/emails/telegram_start_menu.html").render(context)
 				bot.send_message(message.chat.id, reply, reply_markup=markup_10, parse_mode='HTML')
 		else:
 			bot.send_message(message.chat.id, msg_welcome, parse_mode='HTML', reply_markup=markup_4)	
@@ -257,7 +290,6 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 	bot.answer_callback_query(callback_query.id)
 	bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
 	user_telegram = User_telegram.objects.filter(chat_id=callback_query.from_user.id)
-
 	if user_telegram.exists():
 		user_telegram = user_telegram.first()
 		if user_telegram.get_mode() == 'pay':
@@ -276,7 +308,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								title=product.title, 
 								description = product.description, 
 								invoice_payload=product.slug, 
-								provider_token='632593626:LIVE:i56982357197',
+								provider_token='635983722:LIVE:i53138327527',
 								currency='UAH',
 								prices=prices,
 								start_parameter=product.slug,
@@ -334,7 +366,7 @@ def authenticate_with_key(message):
 								'products': Product.objects.recent_10(),
 								'username': user_salt.username
 							}
-							reply = get_template("emails/telegram_recent_10.html").render(context)
+							reply = get_template("bot/emails/telegram_recent_10.html").render(context)
 							bot.send_message(message.chat.id, reply, reply_markup=markup_1, parse_mode='HTML')
 
 						else:
@@ -400,7 +432,7 @@ def send_message(message):
 	context = {
 		'products': Product.objects.recent_10(),
 	}
-	reply = get_template("emails/telegram_react_nonsense.html").render(context)
+	reply = get_template("bot/emails/telegram_react_nonsense.html").render(context)
 	bot.send_message(message.chat.id, reply, reply_markup=markup_10, parse_mode='HTML')
 ###############SIMPLE MESSAGE HANDLER###############
 
@@ -421,23 +453,30 @@ def send_message_to_channel(product):
 			'product_shipping_price':product.national_shipping,
 			'start_purchase_url': bot_start_url+product.slug,
 	}
-	text = get_template("emails/telegram_new_item.html").render(context)
+	text = get_template("bot/emails/telegram_new_item.html").render(context)
 	media_types = []
 	if images.exists():
 		for image in images:
+			new_image = image.compress(size=(1000, 1000))
 			if image.image_order == 1:
-				media_type=types.InputMediaPhoto(media=image.image, caption=text, parse_mode='HTML')
+				media_type=types.InputMediaPhoto(media=new_image, caption=text, parse_mode='HTML')
 				media_types.append(media_type)
 			else:
-				media_type=types.InputMediaPhoto(media=image.image)
+				media_type=types.InputMediaPhoto(media=new_image)
 				media_types.append(media_type)
-		bot.send_media_group(channel, media=media_types, timeout=1000)
+		message = bot.send_media_group(channel, media=media_types, timeout=1000)
+		ChannelProductMessage.objects.get_or_create(chat_id=channel, product_slug=product.slug, message_id=message[0].message_id)
+		new_image.close()
 #############PRODUCT FUNCTION#############
 
 
 #############PRODUCT SOLD NOTIFICATION#############
-def send_message_to_seller(chat_id):
-	bot.send_message(chat_id, sold_msg, reply_markup=markup_9)
+def send_message_to_seller(chat_id, item=None):
+	context = {
+		'product_title':item.title,
+	}
+	message = get_template("bot/emails/telegram_item_sold.html").render(context)
+	bot.send_message(chat_id, message, reply_markup=markup_9, parse_mode='HTML')
 
 #############PRODUCT SOLD NOTIFICATION#############
 

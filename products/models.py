@@ -308,6 +308,15 @@ class ProductImage(models.Model):
 	def __str__(self):
 		return self.product.title + str(self.image_order)
 
+	def compress(self, size):
+		with Image.open(self.image) as image_pil:
+			im_io = BytesIO() 
+			image_pil.thumbnail(size)
+			image_pil.save(im_io, image_pil.format , quality=100) 
+			new_image = File(im_io, name=self.product.slug+str(self.image_order)+'.'+image_pil.format)
+			new_image.open()
+			return new_image
+
 	def to_thumbnail(self):
 		ProductThumbnail.objects.new_or_update(product=self.product, image=self.image)
 
@@ -367,7 +376,6 @@ class ProductThumbnail(models.Model):
 
 	def get_absolute_url(self):
 		return settings.BASE_URL + self.thumbnail.url
-
 
 
 
