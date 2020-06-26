@@ -464,7 +464,7 @@ def send_message_to_channel(product):
 	media_types = []
 	if images.exists():
 		for image in images:
-			new_image = image.compress(size=(600, 600))
+			new_image = image.compress(size=(1000, 1000))
 			if image.image_order == 1:
 				media_type=types.InputMediaPhoto(media=new_image, caption=text, parse_mode='HTML')
 				media_types.append(media_type)
