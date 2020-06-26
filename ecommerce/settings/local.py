@@ -27,8 +27,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 
 #TELEGA
-BOT_TOKEN = '952860374:AAEtZPhGqcX3_Slu7K2nSpP3jc5B6aBWGsM'
+BOT_TOKEN = '1261478236:AAGtaxf4gqGf562PIcCXmkK7cHGjVQKNf5M'
 TELEGRAM_ACTIVATION_EXPIRED = 10
+CHANNEL_NAME = '@IRbBAgsaJI8J0xGb'
+BOT_NAME = 'saltish_test_bot'
+LIQPAY_BOT_KEY = '632593626:LIVE:i56982357197'
 #TELEGA
 
 # Quick-start development settings - unsuitable for production
@@ -52,7 +55,7 @@ EMAIL_HOST_PASSWORD = 'Ramankondrotiev123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SALT <info@saltish.co>'
-BASE_URL = 'https://0390a012fe92.ngrok.io'
+BASE_URL = 'https://281a20822a1e.ngrok.io'
 BASE_URL_WITHOUT_WWW = '127.0.0.1:8000'
 
 REST_FRAMEWORK = {

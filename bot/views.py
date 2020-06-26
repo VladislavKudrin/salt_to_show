@@ -51,9 +51,9 @@ buyer_bought_msg = 'Это было быстро, да? 🚀 Оплата тво
 
 # Urls 
 support_url = 'https://t.me/salt_roman'
-channel_url = 'https://t.me/saltish_channel'
-channel = '@saltish_channel'
-bot_start_url = 'https://t.me/saltish_bot?start='
+channel_url = 'https://t.me/'+settings.CHANNEL_NAME
+channel = settings.CHANNEL_NAME
+bot_start_url = 'https://t.me/'+settings.BOT_NAME+'?start='
 register = base_url+'/login'
 get_code = base_url+'/account/telegram-activation'
 go_to_orders_sold = base_url+'/orders/?tab=sold'
@@ -315,7 +315,7 @@ def process_callback_address_confirmation(callback_query: types.CallbackQuery):
 								title=product.title, 
 								description = product.description, 
 								invoice_payload=product.slug, 
-								provider_token='635983722:LIVE:i53138327527',
+								provider_token=settings.LIQPAY_BOT_KEY,
 								currency='UAH',
 								prices=prices,
 								start_parameter=product.slug,
@@ -464,7 +464,7 @@ def send_message_to_channel(product):
 	media_types = []
 	if images.exists():
 		for image in images:
-			new_image = image.compress(size=(1000, 1000))
+			new_image = image.compress(size=(600, 600))
 			if image.image_order == 1:
 				media_type=types.InputMediaPhoto(media=new_image, caption=text, parse_mode='HTML')
 				media_types.append(media_type)

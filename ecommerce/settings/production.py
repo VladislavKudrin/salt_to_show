@@ -32,6 +32,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 #TELEGA
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 TELEGRAM_ACTIVATION_EXPIRED = os.environ.get('TELEGRAM_ACTIVATION_EXPIRED')
+CHANNEL_NAME = '@saltish_channel'
+BOT_NAME = 'saltish_bot'
+LIQPAY_BOT_KEY = os.environ.get('LIQPAY_BOT_KEY')
 #TELEGA
 
 # Quick-start development settings - unsuitable for production
