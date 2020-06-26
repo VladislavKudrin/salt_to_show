@@ -375,7 +375,10 @@ class ProductThumbnail(models.Model):
 
 
 	def get_absolute_url(self):
-		return settings.BASE_URL + self.thumbnail.url
+		if not settings.LIVE and not settings.TESTSERVER:
+			return settings.BASE_URL + self.thumbnail.url
+		else:
+			return self.thumbnail.url
 
 
 

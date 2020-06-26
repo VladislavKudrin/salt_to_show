@@ -33,7 +33,8 @@ CHANNEL_NAME = '@IRbBAgsaJI8J0xGb'
 BOT_NAME = 'saltish_test_bot'
 LIQPAY_BOT_KEY = '632593626:LIVE:i56982357197'
 #TELEGA
-
+TESTSERVER = False
+LIVE = False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
